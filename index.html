@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Grammar Charging Station</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e0e7ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        #station-container {
+            text-align: center;
+        }
+        #station-svg {
+            border: 1px solid #ccc;
+            background-color: #fff;
+        }
+        .branch-label {
+            font-weight: bold;
+            fill: #333;
+        }
+        .port {
+            cursor: pointer;
+            stroke: #000;
+            stroke-width: 1;
+            transition: transform 0.3s ease;
+            fill: #FFD700; /* Golden yellow for charging ports */
+        }
+        .port:hover {
+            transform: scale(1.2);
+        }
+        .port-label {
+            font-size: 10px;
+            fill: #333;
+            text-anchor: middle;
+            pointer-events: none;
+        }
+        .pillar-label {
+            font-weight: bold;
+            fill: #333;
+            text-anchor: middle;
+        }
+        .electricity-box {
+            fill: #D3D3D3;
+            stroke: #696969;
+            stroke-width: 2;
+            rx: 5;
+        }
+        .box-number {
+            font-weight: bold;
+            fill: #4169E1;
+            text-anchor: middle;
+            font-size: 14px;
+        }
+        .charging-wire {
+            stroke: #FF4500; /* Orange-red for charging wires */
+            stroke-width: 2;
+            fill: none;
+        }
+        #modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+        }
+        #modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 8px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        #close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        #close:hover {
+            color: #000;
+        }
+        .explanation-title {
+            color: #333;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .explanation-text {
+            line-height: 1.6;
+            color: #555;
+        }
+        @keyframes extend {
+            from {
+                stroke-dashoffset: 1000;
+            }
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+        .animated-cable {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: extend 2s ease-in-out forwards;
+            stroke: #4169E1; /* Royal blue for cables */
+            stroke-width: 4;
+            fill: none;
+        }
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                fill: #FFD700;
+            }
+            50% {
+                transform: scale(1.1);
+                fill: #FFA500;
+            }
+        }
+        .port.animate {
+            animation: pulse 1s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div id="station-container">
+        <h1>Interactive Grammar Charging Station</h1>
+        <p>Click on the pillar levels or charging ports to power up your grammar knowledge!</p>
+        <svg id="station-svg" width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+            <!-- Ground (Concrete) -->
+            <rect x="0" y="550" width="800" height="50" fill="#A9A9A9" />
+            
+            <!-- Pillar (Thicker Central Charging Station Pole) -->
+            <rect x="390" y="100" width="20" height="400" fill="#708090" style="stroke: #2F4F4F; stroke-width: 2;" class="animated-cable" />
+            <!-- Bigger and Bold Top Sign -->
+            <rect x="320" y="60" width="160" height="40" fill="#4169E1" rx="5" />
+            <text x="400" y="90" fill="white" text-anchor="middle" font-weight="bold" font-size="18">Grammar Station</text>
+            
+            <!-- Pillar Labels (Four Levels of Sentences - Numbering from Bottom: 1 at bottom, 4 at top) -->
+            <text x="430" y="450" class="pillar-label" style="cursor: pointer;" onclick="showExplanation('simple')">1. Simple Sentence</text>
+            <text x="430" y="350" class="pillar-label" style="cursor: pointer;" onclick="showExplanation('compound')">2. Compound Sentence</text>
+            <text x="430" y="250" class="pillar-label" style="cursor: pointer;" onclick="showExplanation('complex')">3. Complex Sentence</text>
+            <text x="430" y="150" class="pillar-label" style="cursor: pointer;" onclick="showExplanation('compound-complex')">4. Compound-Complex Sentence</text>
+            
+            <!-- Section 1: Parts of Speech (Left Top - Curved Cable to Bigger Box) -->
+            <path d="M 400 130 Q 300 100 200 130" class="animated-cable" />
+            <!-- Bigger Electricity Box 1 -->
+            <rect x="160" y="80" width="80" height="100" class="electricity-box" />
+            <text x="200" y="115" class="branch-label" font-size="12">Parts of Speech</text>
+            <text x="200" y="145" class="box-number">1</text>
+            <!-- Scattered Ports and Non-Overlapping Charging Wires for Section 1 -->
+            <circle cx="80" cy="60" r="12" class="port" onclick="showExplanation('nouns')" />
+            <text x="80" y="65" class="port-label">Nouns</text>
+            <line x1="80" y1="60" x2="200" y2="130" class="charging-wire" />
+            <circle cx="120" cy="200" r="12" class="port" onclick="showExplanation('pronouns')" />
+            <text x="120" y="205" class="port-label">Pronouns</text>
+            <line x1="120" y1="200" x2="200" y2="130" class="charging-wire" />
+            <circle cx="40" cy="120" r="12" class="port" onclick="showExplanation('adjectives-adverbs')" />
+            <text x="40" y="125" class="port-label">Adjectives & Adverbs</text>
+            <line x1="40" y1="120" x2="200" y2="130" class="charging-wire" />
+            <circle cx="140" cy="30" r="12" class="port" onclick="showExplanation('verbs')" />
+            <text x="140" y="35" class="port-label">Verbs</text>
+            <line x1="140" y1="30" x2="200" y2="130" class="charging-wire" />
+            <circle cx="100" cy="220" r="12" class="port" onclick="showExplanation('prepositions')" />
+            <text x="100" y="225" class="port-label">Prepositions</text>
+            <line x1="100" y1="220" x2="200" y2="130" class="charging-wire" />
+            
+            <!-- Section 2: Nonfinite Verbs (Left Bottom - Curved Cable to Bigger Box) -->
+            <path d="M 400 350 Q 300 380 200 350" class="animated-cable" />
+            <!-- Bigger Electricity Box 2 -->
+            <rect x="160" y="300" width="80" height="100" class="electricity-box" />
+            <text x="200" y="335" class="branch-label" font-size="12">Nonfinite Verbs</text>
+            <text x="200" y="365" class="box-number">2</text>
+            <!-- Scattered Ports and Non-Overlapping Charging Wires for Section 2 -->
+            <circle cx="80" cy="280" r="12" class="port" onclick="showExplanation('infinitive')" />
+            <text x="80" y="285" class="port-label">Infinitive Verbs</text>
+            <line x1="80" y1="280" x2="200" y2="350" class="charging-wire" />
+            <circle cx="120" cy="420" r="12" class="port" onclick="showExplanation('gerund')" />
+            <text x="120" y="425" class="port-label">Gerund</text>
+            <line x1="120" y1="420" x2="200" y2="350" class="charging-wire" />
+            <circle cx="40" cy="340" r="12" class="port" onclick="showExplanation('present-participle')" />
+            <text x="40" y="345" class="port-label">Present Participle</text>
+            <line x1="40" y1="340" x2="200" y2="350" class="charging-wire" />
+            <circle cx="140" cy="270" r="12" class="port" onclick="showExplanation('past-participle')" />
+            <text x="140" y="275" class="port-label">Past Participle</text>
+            <line x1="140" y1="270" x2="200" y2="350" class="charging-wire" />
+            
+            <!-- Section 3: Clauses (Right Top - Curved Cable to Bigger Box) -->
+            <path d="M 400 130 Q 500 100 600 130" class="animated-cable" />
+            <!-- Bigger Electricity Box 3 -->
+            <rect x="560" y="80" width="80" height="100" class="electricity-box" />
+            <text x="600" y="115" class="branch-label" font-size="12">Clauses</text>
+            <text x="600" y="145" class="box-number">3</text>
+            <!-- Scattered Ports and Non-Overlapping Charging Wires for Section 3 -->
+            <circle cx="680" cy="60" r="12" class="port" onclick="showExplanation('noun-clause')" />
+            <text x="680" y="65" class="port-label">Noun Clause</text>
+            <line x1="680" y1="60" x2="600" y2="130" class="charging-wire" />
+            <circle cx="640" cy="200" r="12" class="port" onclick="showExplanation('adjective-clause')" />
+            <text x="640" y="205" class="port-label">Adjective Clause</text>
+            <line x1="640" y1="200" x2="600" y2="130" class="charging-wire" />
+            <circle cx="720" cy="120" r="12" class="port" onclick="showExplanation('adverb-clause')" />
+            <text x="720" y="125" class="port-label">Adverb Clause</text>
+            <line x1="720" y1="120" x2="600" y2="130" class="charging-wire" />
+            
+            <!-- Section 4: Special Sentence Structures (Right Bottom - Curved Cable to Bigger Box) -->
+            <path d="M 400 350 Q 500 380 600 350" class="animated-cable" />
+            <!-- Bigger Electricity Box 4 -->
+            <rect x="560" y="300" width="80" height="100" class="electricity-box" />
+            <text x="600" y="335" class="branch-label" font-size="12">Special Sentence Structures</text>
+            <text x="600" y="365" class="box-number">4</text>
+            <!-- Scattered Ports and Non-Overlapping Charging Wires for Section 4 -->
+            <circle cx="680" cy="280" r="12" class="port" onclick="showExplanation('questions')" />
+            <text x="680" y="285" class="port-label">Questions</text>
+            <line x1="680" y1="280" x2="600" y2="350" class="charging-wire" />
+            <circle cx="640" cy="420" r="12" class="port" onclick="showExplanation('exclamations')" />
+            <text x="640" y="425" class="port-label">Exclamations</text>
+            <line x1="640" y1="420" x2="600" y2="350" class="charging-wire" />
+            <circle cx="720" cy="340" r="12" class="port" onclick="showExplanation('inverted')" />
+            <text x="720" y="345" class="port-label">Inverted</text>
+            <line x1="720" y1="340" x2="600" y2="350" class="charging-wire" />
+            <circle cx="600" cy="270" r="12" class="port" onclick="showExplanation('subjunctive')" />
+            <text x="600" y="275" class="port-label">Subjunctive Mood</text>
+            <line x1="600" y1="270" x2="600" y2="350" class="charging-wire" />
+        </svg>
+    </div>
+
+    <!-- Modal for Explanations -->
+    <div id="modal">
+        <div id="modal-content">
+            <span id="close">&times;</span>
+            <h2 id="modal-title" class="explanation-title"></h2>
+            <p id="modal-text" class="explanation-text"></p>
+        </div>
+    </div>
+
+    <script>
+        // Explanations data (unchanged)
+        const explanations = {
+            simple: { title: "Simple Sentence", text: "A simple sentence consists of one independent clause with a subject and a predicate. It expresses a complete thought. Example: 'The cat sleeps.'" },
+            compound: { title: "Compound Sentence", text: "A compound sentence joins two or more independent clauses with coordinating conjunctions (and, but, or, etc.). Example: 'I like tea, and she likes coffee.'" },
+            complex: { title: "Complex Sentence", text: "A complex sentence contains one independent clause and at least one dependent clause. Example: 'Although it rained, we went outside.'" },
+            'compound-complex': { title: "Compound-Complex Sentence", text: "A compound-complex sentence combines at least two independent clauses and one or more dependent clauses. Example: 'I wanted to stay home because it was raining, but my friend insisted we go out.'" },
+            nouns: { title: "Nouns", text: "A noun is a word that names a person, place, thing, idea, or quality. Types include common, proper, abstract, and concrete nouns. Example: 'dog', 'London', 'happiness'." },
+            pronouns: { title: "Pronouns", text: "A pronoun replaces a noun to avoid repetition. Types include personal (I, you), possessive (mine, yours), reflexive (myself). Example: 'She went to the store' instead of repeating the name." },
+            'adjectives-adverbs': { title: "Adjectives & Adverbs", text: "Adjectives describe nouns (e.g., 'big house'). Adverbs modify verbs, adjectives, or other adverbs (e.g., 'run quickly'). They add detail to sentences." },
+            verbs: { title: "Verbs", text: "A verb expresses an action, occurrence, or state of being. Types include action (run), linking (is), and helping (can run). Essential for predicates." },
+            prepositions: { title: "Prepositions", text: "A preposition shows the relationship between a noun/pronoun and other words (e.g., in, on, at). Forms prepositional phrases: 'The book is on the table'." },
+            infinitive: { title: "Infinitive Verbs", text: "An infinitive is the base form of a verb, often with 'to' (to run). Used as nouns, adjectives, or adverbs. Example: 'To err is human'." },
+            gerund: { title: "Gerund", text: "A gerund is a verb form ending in -ing that functions as a noun. Example: 'Swimming is fun' (swimming is the subject)." },
+            'present-participle': { title: "Present Participle", text: "A present participle ends in -ing and acts as an adjective or part of continuous tenses. Example: 'The running water' or 'I am running'." },
+            'past-participle': { title: "Past Participle", text: "A past participle (often -ed or irregular) used in perfect tenses or as adjectives. Example: 'The broken vase' or 'I have eaten'." },
+            'noun-clause': { title: "Noun Clause", text: "A noun clause acts as a noun (subject, object, etc.). Introduced by words like that, who, what. Example: 'What she said surprised me'." },
+            'adjective-clause': { title: "Adjective Clause", text: "An adjective clause modifies a noun, starting with relative pronouns (who, which, that). Example: 'The book that I read was great'." },
+            'adverb-clause': { title: "Adverb Clause", text: "An adverb clause modifies a verb, adjective, or adverb, showing time, cause, etc. Example: 'I will call when I arrive'." },
+            questions: { title: "Questions", text: "Questions seek information or confirmation. Types: yes/no (Do you like it?), wh- (What is your name?), rhetorical. Invert subject-verb often." },
+            exclamations: { title: "Exclamations", text: "Exclamatory sentences express strong emotion, often ending with !. Example: 'What a beautiful day!' Uses inversion or interjections like 'Wow!'." },
+            inverted: { title: "Inverted Sentences", text: "Inversion reverses normal subject-verb order for emphasis or questions. Example: 'Never have I seen such beauty!' Common in literature." },
+            subjunctive: { title: "Subjunctive Mood", text: "The subjunctive mood expresses wishes, hypotheticals, or demands. Uses base verb form: 'If I were rich...' or 'I suggest that he go'."
+        };
+
+        // Modal functionality
+        const modal = document.getElementById('modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalText = document.getElementById('modal-text');
+        const close = document.getElementById('close');
+
+        function showExplanation(key) {
+            const exp = explanations[key];
+            if (exp) {
+                modalTitle.textContent = exp.title;
+                modalText.textContent = exp.text;
+                modal.style.display = 'flex';
+                // Animate ports on click
+                event.target.classList.add('animate');
+                setTimeout(() => event.target.classList.remove('animate'), 1000);
+            }
+        }
+
+        close.onclick = function() {
+            modal.style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Trigger initial animations on load
+        window.onload = function() {
+            const ports = document.querySelectorAll('.port');
+            ports.forEach((port, index) => {
+                setTimeout(() => port.classList.add('animate'), index * 200);
+            });
+        };
+    </script>
+</body>
+</html>
