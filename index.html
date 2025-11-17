@@ -6,8 +6,8 @@
     <title>Interactive Grammar Charging Station</title>
     <style>
         body {
-            font-family: 'Georgia', serif; /* More artistic font */
-            background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e); /* Cosmic night sky for artistic flair */
+            font-family: 'Courier New', monospace; /* Mechanical, monospace font */
+            background: linear-gradient(to bottom, #1a1a1a, #2d2d2d, #404040); /* Dark metallic industrial gradient */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -16,61 +16,66 @@
             padding: 20px;
             box-sizing: border-box;
             color: #fff;
+            position: relative; /* For robot positioning */
         }
         #station-container {
             text-align: center;
+            z-index: 1;
         }
         #station-svg {
-            border: 1px solid #ccc;
-            background-color: rgba(255,255,255,0.1); /* Semi-transparent for ethereal effect */
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); /* Golden glow */
+            border: 2px solid #808080; /* Thick metal border */
+            background: linear-gradient(to bottom, #333333, #555555); /* Metallic SVG bg */
+            border-radius: 0; /* Sharp edges for mechanical */
+            box-shadow: 0 0 20px rgba(139, 69, 19, 0.5); /* Bronze glow */
         }
         .branch-label {
             font-weight: bold;
-            fill: #fff;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            fill: #FFFFFF; /* White for high contrast */
+            text-anchor: middle;
+            font-size: 11px; /* Slightly smaller to fit */
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8); /* Strong shadow for readability */
         }
         .port {
             cursor: pointer;
-            stroke: #000;
-            stroke-width: 1;
+            stroke: #C0C0C0; /* Silver stroke */
+            stroke-width: 2;
             transition: transform 0.3s ease;
-            filter: url(#glow); /* Artistic glow */
-            fill: url(#portGradient); /* Gradient fill */
+            filter: url(#metalGlow);
+            fill: url(#portGradient);
         }
         .port:hover {
             transform: scale(1.2);
-            filter: url(#glowHover);
+            filter: url(#metalGlowHover);
         }
         .port-label {
             font-size: 10px;
-            fill: #333;
+            fill: #FFFFFF; /* White for contrast on dark bg */
             text-anchor: middle;
             pointer-events: none;
-            text-shadow: 1px 1px 1px #fff;
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.9);
         }
         .pillar-label {
             font-weight: bold;
-            fill: #fff;
+            fill: #FFFFFF;
             text-anchor: middle;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+            font-size: 12px;
         }
         .electricity-box {
-            fill: url(#boxGradient);
-            stroke: #FFD700;
-            stroke-width: 2;
-            rx: 10; /* More rounded for softness */
+            fill: url(#boxGradient); /* Dark metallic gradient */
+            stroke: #B87333; /* Copper stroke */
+            stroke-width: 3;
+            rx: 5; /* Slight round for bolted look */
         }
         .box-number {
             font-weight: bold;
-            fill: #FFD700;
+            fill: #FFD700; /* Gold for contrast */
             text-anchor: middle;
-            font-size: 16px;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            font-size: 18px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
         }
         .charging-wire {
-            stroke: url(#wireGradient); /* Gradient for wires */
+            stroke: url(#wireGradient); /* Copper gradient */
             stroke-width: 3;
             fill: none;
             filter: url(#wireGlow);
@@ -83,21 +88,22 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.7);
+            background-color: rgba(0,0,0,0.8);
             justify-content: center;
             align-items: center;
         }
         #modal-content {
-            background: linear-gradient(to bottom, #fff, #f0f0f0);
+            background: linear-gradient(to bottom, #2d2d2d, #404040); /* Dark metallic modal */
             margin: auto;
             padding: 20px;
-            border: 1px solid #FFD700;
+            border: 2px solid #B87333; /* Copper border */
             width: 80%;
             max-width: 600px;
-            border-radius: 15px;
+            border-radius: 5px;
             max-height: 80vh;
             overflow-y: auto;
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+            box-shadow: 0 0 30px rgba(184, 115, 51, 0.7); /* Copper glow */
+            color: #fff;
         }
         #close {
             color: #aaa;
@@ -110,13 +116,13 @@
             color: #FFD700;
         }
         .explanation-title {
-            color: #333;
-            border-bottom: 2px solid #FFD700;
+            color: #FFFFFF;
+            border-bottom: 2px solid #B87333;
             padding-bottom: 10px;
         }
         .explanation-text {
             line-height: 1.6;
-            color: #555;
+            color: #CCCCCC; /* Light gray for readability */
         }
         @keyframes extend {
             from {
@@ -129,33 +135,122 @@
         .animated-cable {
             stroke-dasharray: 1000;
             stroke-dashoffset: 1000;
-            animation: extend 2s ease-in-out forwards;
-            stroke: url(#cableGradient); /* Artistic gradient */
-            stroke-width: 5;
+            animation: extend 2s ease-in-out forwards, flow 1s linear infinite; /* Add flowing animation */
+            stroke: url(#cableGradient); /* Steel blue gradient */
+            stroke-width: 6;
             fill: none;
             filter: url(#cableGlow);
+        }
+        @keyframes flow {
+            from {
+                stroke-dashoffset: 0;
+            }
+            to {
+                stroke-dashoffset: -1000;
+            }
+        }
+        .charging-wire {
+            stroke-dasharray: 10 5; /* Dashed for current effect */
+            animation: flowWire 0.5s linear infinite; /* Flowing dash */
+        }
+        @keyframes flowWire {
+            from {
+                stroke-dashoffset: 0;
+            }
+            to {
+                stroke-dashoffset: -15;
+            }
         }
         @keyframes pulse {
             0%, 100% {
                 transform: scale(1);
-                filter: url(#glow);
+                filter: url(#metalGlow);
+                r: 12;
             }
             50% {
                 transform: scale(1.1);
-                filter: url(#glowHover);
+                filter: url(#metalGlowHover);
+                r: 14;
             }
         }
         .port.animate {
             animation: pulse 1s ease-in-out;
         }
         h1 {
-            color: #FFD700;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            color: #B87333; /* Copper title */
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
             font-size: 2.5em;
+            font-weight: bold;
         }
         p {
-            color: #ddd;
-            font-style: italic;
+            color: #CCCCCC;
+            font-style: normal; /* Remove italic for mechanical */
+        }
+        /* Robot Animation Styles - Free Movement with Cutie Design */
+        #robot-container {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 100px;
+            height: 100px;
+            z-index: 2;
+        }
+        #robot {
+            animation: walk 4s ease-in-out infinite;
+        }
+        @keyframes walk {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(-20px);
+            }
+        }
+        .robot-head {
+            fill: #FFB6C1; /* Pink for cuteness */
+            stroke: #FF69B4; /* Hot pink stroke */
+            stroke-width: 2;
+        }
+        .robot-body {
+            fill: #87CEEB; /* Sky blue body */
+            stroke: #4169E1; /* Royal blue stroke */
+            stroke-width: 2;
+        }
+        .robot-leg {
+            fill: #98FB98; /* Pale green legs */
+            stroke: #32CD32; /* Lime green stroke */
+            stroke-width: 1;
+            animation: legSwing 1s ease-in-out infinite alternate;
+        }
+        .robot-leg.left {
+            animation-delay: -0.5s;
+        }
+        @keyframes legSwing {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-5px);
+            }
+            60% {
+                transform: translateY(-3px);
+            }
+        }
+        .robot-antenna {
+            stroke: #FFD700; /* Gold antenna */
+            stroke-width: 3;
+            stroke-linecap: round;
+            fill: none;
+        }
+        .robot-eye {
+            fill: #000; /* Black eyes */
+            r: 2;
+        }
+        .robot-mouth {
+            fill: none;
+            stroke: #FF69B4; /* Smiling mouth */
+            stroke-width: 2;
+            d: "M 45 25 Q 50 30 55 25"; /* Curved smile */
         }
     </style>
 </head>
@@ -164,39 +259,39 @@
         <h1>Interactive Grammar Charging Station</h1>
         <p>Click on the pillar levels or charging ports to power up your grammar knowledge!</p>
         <svg id="station-svg" width="800" height="600" xmlns="http://www.w3.org/2000/svg">
-            <!-- Definitions for artistic effects -->
+            <!-- Definitions for mechanical metal effects -->
             <defs>
-                <!-- Gradient for ports -->
-                <radialGradient id="portGradient" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1" />
-                    <stop offset="100%" style="stop-color:#FFA500;stop-opacity:1" />
-                </radialGradient>
-                <!-- Gradient for boxes -->
+                <!-- Gradient for ports (silver to steel) -->
+                <linearGradient id="portGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#C0C0C0;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#808080;stop-opacity:1" />
+                </linearGradient>
+                <!-- Gradient for boxes (dark steel) -->
                 <linearGradient id="boxGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" style="stop-color:#D3D3D3;stop-opacity:1" />
-                    <stop offset="100%" style="stop-color:#A9A9A9;stop-opacity:1" />
+                    <stop offset="0%" style="stop-color:#404040;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#1a1a1a;stop-opacity:1" />
                 </linearGradient>
-                <!-- Gradient for wires -->
+                <!-- Gradient for wires (copper) -->
                 <linearGradient id="wireGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" style="stop-color:#FF4500;stop-opacity:1" />
-                    <stop offset="100%" style="stop-color:#FF6347;stop-opacity:1" />
+                    <stop offset="0%" style="stop-color:#B87333;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#CD7F32;stop-opacity:1" />
                 </linearGradient>
-                <!-- Gradient for cables -->
+                <!-- Gradient for cables (steel) -->
                 <linearGradient id="cableGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" style="stop-color:#4169E1;stop-opacity:1" />
-                    <stop offset="100%" style="stop-color:#0000FF;stop-opacity:1" />
+                    <stop offset="0%" style="stop-color:#4682B4;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#2F4F4F;stop-opacity:1" />
                 </linearGradient>
-                <!-- Glow filter for ports -->
-                <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-                    <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                <!-- Metal glow filter for ports -->
+                <filter id="metalGlow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
                     <feMerge> 
                         <feMergeNode in="coloredBlur"/>
                         <feMergeNode in="SourceGraphic"/>
                     </feMerge>
                 </filter>
-                <!-- Stronger glow on hover -->
-                <filter id="glowHover" x="-50%" y="-50%" width="200%" height="200%">
-                    <feGaussianBlur stdDeviation="5" result="coloredBlur"/>
+                <!-- Stronger metal shine on hover -->
+                <filter id="metalGlowHover" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
                     <feMerge> 
                         <feMergeNode in="coloredBlur"/>
                         <feMergeNode in="SourceGraphic"/>
@@ -204,7 +299,7 @@
                 </filter>
                 <!-- Glow for cables -->
                 <filter id="cableGlow" x="-50%" y="-50%" width="200%" height="200%">
-                    <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                    <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
                     <feMerge> 
                         <feMergeNode in="coloredBlur"/>
                         <feMergeNode in="SourceGraphic"/>
@@ -212,40 +307,38 @@
                 </filter>
                 <!-- Glow for wires -->
                 <filter id="wireGlow" x="-50%" y="-50%" width="200%" height="200%">
-                    <feGaussianBlur stdDeviation="1" result="coloredBlur"/>
+                    <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
                     <feMerge> 
                         <feMergeNode in="coloredBlur"/>
                         <feMergeNode in="SourceGraphic"/>
                     </feMerge>
                 </filter>
-                <!-- Artistic stars pattern for background -->
-                <pattern id="stars" patternUnits="userSpaceOnUse" width="100" height="100">
-                    <circle cx="10" cy="10" r="1" fill="#FFD700" opacity="0.8"/>
-                    <circle cx="80" cy="20" r="0.5" fill="#FFA500" opacity="0.6"/>
-                    <circle cx="50" cy="80" r="1.5" fill="#FFD700" opacity="0.7"/>
+                <!-- Rivet pattern for mechanical texture -->
+                <pattern id="rivets" patternUnits="userSpaceOnUse" width="20" height="20">
+                    <circle cx="10" cy="10" r="2" fill="#696969" />
                 </pattern>
             </defs>
-            <!-- Subtle starry background overlay -->
-            <rect x="0" y="0" width="800" height="600" fill="url(#stars)" opacity="0.3"/>
+            <!-- Riveted texture overlay on SVG -->
+            <rect x="0" y="0" width="800" height="600" fill="url(#rivets)" opacity="0.1"/>
             
-            <!-- Ground (Concrete with gradient) -->
-            <rect x="0" y="550" width="800" height="50" fill="url(#boxGradient)" />
+            <!-- Ground (Rusted metal) -->
+            <rect x="0" y="550" width="800" height="50" fill="#8B4513" />
             
-            <!-- Pillar (Thicker with gradient fill) -->
+            <!-- Pillar (Thicker with metal gradient) -->
             <linearGradient id="pillarGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" style="stop-color:#708090;stop-opacity:1" />
-                <stop offset="100%" style="stop-color:#2F4F4F;stop-opacity:1" />
+                <stop offset="0%" style="stop-color:#696969;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#404040;stop-opacity:1" />
             </linearGradient>
-            <rect x="390" y="100" width="20" height="400" fill="url(#pillarGradient)" style="stroke: #2F4F4F; stroke-width: 2;" class="animated-cable" filter="url(#cableGlow)" />
-            <!-- Bigger and Bold Top Sign with gradient -->
+            <rect x="390" y="100" width="20" height="400" fill="url(#pillarGradient)" style="stroke: #808080; stroke-width: 3;" class="animated-cable" filter="url(#cableGlow)" />
+            <!-- Top Sign with metal gradient -->
             <linearGradient id="signGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style="stop-color:#4169E1;stop-opacity:1" />
-                <stop offset="100%" style="stop-color:#0000FF;stop-opacity:1" />
+                <stop offset="0%" style="stop-color:#B87333;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#8B4513;stop-opacity:1" />
             </linearGradient>
-            <rect x="320" y="60" width="160" height="40" fill="url(#signGradient)" rx="10" filter="url(#glow)" />
-            <text x="400" y="90" fill="white" text-anchor="middle" font-weight="bold" font-size="18" filter="url(#glow)">Grammar Station</text>
+            <rect x="320" y="60" width="160" height="40" fill="url(#signGradient)" rx="5" stroke="#CD853F" stroke-width="2" />
+            <text x="400" y="90" fill="#FFFFFF" text-anchor="middle" font-weight="bold" font-size="18" filter="url(#metalGlow)">Grammar Station</text>
             
-            <!-- Pillar Labels (Four Levels of Sentences - Numbering from Bottom) -->
+            <!-- Pillar Labels -->
             <text x="430" y="450" class="pillar-label" style="cursor: pointer;" onclick="showExplanation('simple')">1. Simple Sentence</text>
             <text x="430" y="350" class="pillar-label" style="cursor: pointer;" onclick="showExplanation('compound')">2. Compound Sentence</text>
             <text x="430" y="250" class="pillar-label" style="cursor: pointer;" onclick="showExplanation('complex')">3. Complex Sentence</text>
@@ -254,8 +347,8 @@
             <!-- Section 1: Parts of Speech -->
             <path d="M 400 130 Q 300 100 200 130" class="animated-cable" />
             <rect x="160" y="80" width="80" height="100" class="electricity-box" />
-            <text x="200" y="115" class="branch-label" font-size="12">Parts of Speech</text>
-            <text x="200" y="145" class="box-number">1</text>
+            <text x="200" y="110" class="branch-label">Parts of Speech</text> <!-- Adjusted y to fit better -->
+            <text x="200" y="140" class="box-number">1</text>
             <circle cx="80" cy="60" r="12" class="port" onclick="showExplanation('nouns')" />
             <text x="80" y="65" class="port-label">Nouns</text>
             <line x1="80" y1="60" x2="200" y2="130" class="charging-wire" />
@@ -275,8 +368,8 @@
             <!-- Section 2: Nonfinite Verbs -->
             <path d="M 400 350 Q 300 380 200 350" class="animated-cable" />
             <rect x="160" y="300" width="80" height="100" class="electricity-box" />
-            <text x="200" y="335" class="branch-label" font-size="12">Nonfinite Verbs</text>
-            <text x="200" y="365" class="box-number">2</text>
+            <text x="200" y="330" class="branch-label">Nonfinite Verbs</text> <!-- Adjusted y -->
+            <text x="200" y="360" class="box-number">2</text>
             <circle cx="80" cy="280" r="12" class="port" onclick="showExplanation('infinitive')" />
             <text x="80" y="285" class="port-label">Infinitive Verbs</text>
             <line x1="80" y1="280" x2="200" y2="350" class="charging-wire" />
@@ -293,8 +386,8 @@
             <!-- Section 3: Clauses -->
             <path d="M 400 130 Q 500 100 600 130" class="animated-cable" />
             <rect x="560" y="80" width="80" height="100" class="electricity-box" />
-            <text x="600" y="115" class="branch-label" font-size="12">Clauses</text>
-            <text x="600" y="145" class="box-number">3</text>
+            <text x="600" y="110" class="branch-label">Clauses</text> <!-- Adjusted y -->
+            <text x="600" y="140" class="box-number">3</text>
             <circle cx="680" cy="60" r="12" class="port" onclick="showExplanation('noun-clause')" />
             <text x="680" y="65" class="port-label">Noun Clause</text>
             <line x1="680" y1="60" x2="600" y2="130" class="charging-wire" />
@@ -308,8 +401,8 @@
             <!-- Section 4: Special Sentence Structures -->
             <path d="M 400 350 Q 500 380 600 350" class="animated-cable" />
             <rect x="560" y="300" width="80" height="100" class="electricity-box" />
-            <text x="600" y="335" class="branch-label" font-size="12">Special Sentence Structures</text>
-            <text x="600" y="365" class="box-number">4</text>
+            <text x="600" y="330" class="branch-label">Special Sentence Structures</text> <!-- Adjusted y -->
+            <text x="600" y="360" class="box-number">4</text>
             <circle cx="680" cy="280" r="12" class="port" onclick="showExplanation('questions')" />
             <text x="680" y="285" class="port-label">Questions</text>
             <line x1="680" y1="280" x2="600" y2="350" class="charging-wire" />
@@ -322,6 +415,30 @@
             <circle cx="600" cy="270" r="12" class="port" onclick="showExplanation('subjunctive')" />
             <text x="600" y="275" class="port-label">Subjunctive Mood</text>
             <line x1="600" y1="270" x2="600" y2="350" class="charging-wire" />
+        </svg>
+    </div>
+
+    <!-- Cutie Robot with Free Movement -->
+    <div id="robot-container">
+        <svg id="robot" width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <!-- Antenna -->
+            <line x1="50" y1="5" x2="50" y2="15" class="robot-antenna" />
+            <circle cx="50" cy="5" r="3" fill="#FFD700" />
+            <!-- Robot Head -->
+            <circle cx="50" cy="20" r="15" class="robot-head" />
+            <!-- Eyes -->
+            <circle cx="45" cy="18" r="2" class="robot-eye" />
+            <circle cx="55" cy="18" r="2" class="robot-eye" />
+            <!-- Smile -->
+            <path d="M 45 25 Q 50 30 55 25" class="robot-mouth" />
+            <!-- Robot Body -->
+            <rect x="35" y="35" width="30" height="30" rx="10" class="robot-body" /> <!-- Rounded for cuteness -->
+            <!-- Robot Arms (chubby) -->
+            <rect x="20" y="40" width="18" height="8" rx="4" class="robot-body" />
+            <rect x="62" y="40" width="18" height="8" rx="4" class="robot-body" />
+            <!-- Robot Legs (short and stubby) -->
+            <rect x="42" y="70" width="6" height="15" rx="3" class="robot-leg left" transform-origin="45 82.5" />
+            <rect x="52" y="70" width="6" height="15" rx="3" class="robot-leg" transform-origin="55 82.5" />
         </svg>
     </div>
 
