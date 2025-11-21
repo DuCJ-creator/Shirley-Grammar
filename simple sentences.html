@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Grammar: 5 Sentence Patterns</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;600&family=Noto+Sans+TC:wght@400;500;700&display=swap');
+
+        :root {
+            --bg-gradient-start: #FFF1EB;
+            --bg-gradient-end: #ACE0F9;
+            --card-bg: #FFFFFF;
+            
+            /* Component Colors (Pastel & Happy) */
+            --c-s: #A0C4FF; /* Subject - Blue */
+            --c-v: #FFADAD; /* Verb - Red */
+            --c-o: #CAFFBF; /* Object - Green */
+            --c-c: #FDFFB6; /* Complement - Yellow */
+            --c-io: #BDB2FF; /* Indirect - Purple */
+            --c-do: #9BF6FF; /* Direct - Cyan */
+            
+            --text-main: #4A4A4A;
+            --text-sub: #7F8C8D;
+            --text-accent: #FF9F1C;
+
+            --font-en: 'Fredoka', sans-serif;
+            --font-cn: 'Noto Sans TC', sans-serif;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: var(--font-cn);
+            overflow: hidden;
+        }
+
+        /* --- Main Stage --- */
+        #app-stage {
+            width: 90%;
+            max-width: 1200px;
+            aspect-ratio: 16/9;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border: 10px solid #fff;
+            backdrop-filter: blur(10px);
+        }
+
+        /* --- Floating Bubbles Decor --- */
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8), rgba(255,255,255,0.1));
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            animation: floatUp linear infinite;
+            z-index: 0;
+            pointer-events: none;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(120vh) scale(0.8); opacity: 0; }
+            20% { opacity: 0.6; }
+            80% { opacity: 0.6; }
+            100% { transform: translateY(-20vh) scale(1.2); opacity: 0; }
+        }
+
+        /* --- Layout Sections --- */
+        .header {
+            height: 18%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            z-index: 10;
+            padding-bottom: 10px;
+        }
+
+        .formula-title {
+            font-family: var(--font-en);
+            font-size: 3rem;
+            color: var(--text-main);
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 0px #fff;
+            transform: scale(0.8);
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+        .formula-title.active { transform: scale(1); opacity: 1; }
+
+        .formula-sub {
+            font-size: 1.1rem;
+            color: var(--text-sub);
+            margin-top: 5px;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        /* Animation Zone */
+        .anim-zone {
+            flex-grow: 1;
+            position: relative;
+            z-index: 5;
+        }
+
+        .block {
+            width: 100px;
+            height: 100px;
+            border-radius: 25px;
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: var(--font-en);
+            font-weight: 600;
+            font-size: 2.2rem;
+            color: #555;
+            background: white;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .block span { font-size: 0.8rem; font-weight: 400; margin-top: 2px; opacity: 0.6; }
+        
+        /* Specific Component Colors */
+        .b-s { background: var(--c-s); }
+        .b-v { background: var(--c-v); }
+        .b-o { background: var(--c-o); }
+        .b-c { background: var(--c-c); }
+        .b-io { background: var(--c-io); }
+        .b-do { background: var(--c-do); }
+
+        /* Content Card Zone */
+        .content-zone {
+            height: 35%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            padding-bottom: 20px;
+        }
+
+        .info-card {
+            background: white;
+            width: 75%;
+            padding: 25px 40px;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            text-align: center;
+            position: absolute; /* Stack them */
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .info-card.show { opacity: 1; transform: translateY(0); }
+
+        /* Usage Card Specifics */
+        .usage-badge {
+            background: var(--text-accent);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .usage-text {
+            font-size: 1.4rem;
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* Example Card Specifics */
+        .level-badge {
+            padding: 5px 15px;
+            border-radius: 15px;
+            color: white;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            font-weight: bold;
+            font-family: var(--font-en);
+        }
+        .lvl-low { background: #81B29A; }
+        .lvl-mid { background: #F2CC8F; }
+        .lvl-high { background: #E07A5F; }
+
+        .ex-en { font-family: var(--font-en); font-size: 1.8rem; color: var(--text-main); margin-bottom: 5px; }
+        .ex-cn { font-size: 1.2rem; color: var(--text-sub); }
+
+        /* Progress Bar */
+        .progress-container {
+            height: 8px;
+            width: 100%;
+            background: #f0f0f0;
+            position: absolute;
+            bottom: 0;
+        }
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #FFADAD, #A0C4FF);
+            transition: width 0.5s linear;
+        }
+
+        /* --- Overlays (Start, Quiz, End) --- */
+        .overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255,255,255,0.98);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            transition: opacity 0.5s;
+            opacity: 0;
+            pointer-events: none;
+        }
+        .overlay.active { opacity: 1; pointer-events: all; }
+
+        .big-title {
+            font-family: var(--font-en);
+            font-size: 4rem;
+            color: var(--text-main);
+            margin-bottom: 10px;
+        }
+
+        .btn-primary {
+            padding: 15px 40px;
+            font-size: 1.5rem;
+            background: var(--c-s);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: var(--font-en);
+            font-weight: 600;
+            box-shadow: 0 10px 20px rgba(160, 196, 255, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin: 10px;
+        }
+        .btn-primary:hover { transform: scale(1.05); box-shadow: 0 15px 25px rgba(160, 196, 255, 0.6); }
+        
+        .btn-secondary {
+            background: var(--c-v);
+            box-shadow: 0 10px 20px rgba(255, 173, 173, 0.4);
+        }
+        .btn-secondary:hover { box-shadow: 0 15px 25px rgba(255, 173, 173, 0.6); }
+
+        /* Quiz Styles */
+        .quiz-question { font-size: 2.2rem; margin-bottom: 40px; color: var(--text-main); font-family: var(--font-en); text-align: center; width: 80%; }
+        .quiz-options { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+        .quiz-btn {
+            padding: 15px 30px; font-size: 1.2rem; border: 3px solid #eee; background: white;
+            border-radius: 20px; cursor: pointer; font-family: var(--font-en); color: var(--text-main);
+            transition: all 0.2s;
+        }
+        .quiz-btn:hover { border-color: var(--c-s); transform: translateY(-3px); }
+        .quiz-btn.correct { background: var(--c-o); border-color: var(--c-o); color: white; }
+        .quiz-btn.wrong { background: var(--c-v); border-color: var(--c-v); color: white; }
+
+        /* Music Toggle */
+        .music-btn {
+            position: absolute; top: 20px; right: 20px; font-size: 1.8rem; cursor: pointer; z-index: 200;
+            background: white; width: 50px; height: 50px; border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: transform 0.2s;
+        }
+        .music-btn:hover { transform: scale(1.1); }
+
+    </style>
+</head>
+<body>
+
+    <div id="app-stage">
+        <!-- Music Toggle -->
+        <div class="music-btn" id="musicToggle">🔇</div>
+        
+        <!-- Bubbles Container -->
+        <div id="bubbles"></div>
+
+        <!-- Header -->
+        <div class="header">
+            <div class="formula-title" id="headerTitle">S + V</div>
+            <div class="formula-sub" id="headerSub">Subject + Verb</div>
+        </div>
+
+        <!-- Animation Stage -->
+        <div class="anim-zone" id="animStage"></div>
+
+        <!-- Content Area (Usage & Examples) -->
+        <div class="content-zone">
+            <!-- Usage Card -->
+            <div class="info-card" id="usageCard">
+                <div class="usage-badge">How to use</div>
+                <div class="usage-text" id="usageText">動作不需要受詞</div>
+            </div>
+            
+            <!-- Example Card -->
+            <div class="info-card" id="exampleCard">
+                <div class="level-badge" id="exBadge">Basic</div>
+                <div class="ex-en" id="exEn">Birds fly.</div>
+                <div class="ex-cn" id="exCn">鳥兒飛翔。</div>
+            </div>
+        </div>
+
+        <!-- Progress -->
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <!-- 1. Start Screen -->
+        <div class="overlay active" id="startScreen">
+            <div class="big-title">English Grammar</div>
+            <p style="font-size: 1.5rem; color: #888; margin-bottom: 30px;">The 5 Happy Sentence Patterns</p>
+            <button class="btn-primary" onclick="startLesson()">Start Learning 🎵</button>
+        </div>
+
+        <!-- 2. Quiz Screen -->
+        <div class="overlay" id="quizScreen">
+            <h2 style="color: #AAA; margin-bottom: 10px;">Quiz Time!</h2>
+            <div style="color: var(--c-s); font-weight: bold; margin-bottom: 20px;" id="quizProgress">Question 1/5</div>
+            <div class="quiz-question" id="qText">Question goes here</div>
+            <div class="quiz-options" id="qOptions"></div>
+            <div id="qMsg" style="height: 30px; margin-top: 20px; font-weight: bold; font-size: 1.2rem;"></div>
+        </div>
+
+        <!-- 3. Result Screen -->
+        <div class="overlay" id="resultScreen">
+            <div class="big-title">Great Job! 🎉</div>
+            <p style="font-size: 1.4rem; color: #666; margin-bottom: 40px; width: 60%; text-align: center;">
+                You've practiced all the patterns. What would you like to do next?
+            </p>
+            <div style="display: flex; gap: 20px;">
+                <button class="btn-primary" onclick="startQuiz()">One more challenge</button>
+                <button class="btn-primary btn-secondary" onclick="resetApp()">Back to Start</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Data: Content & Usage ---
+        const grammarData = [
+            {
+                id: 'sv',
+                formula: 'S + Vi',
+                desc: 'Subject + Intransitive Verb',
+                // Explicit Usage Explanation
+                usage: '這個句型表示「主詞自己做動作」。動作到此為止，後面不需要接受動作的對象（受詞）。',
+                blocks: ['S', 'Vi'],
+                examples: [
+                    { lvl: 'low', en: "Time flies.", cn: "時光飛逝。" },
+                    { lvl: 'mid', en: "The sun rises in the east.", cn: "太陽從東方升起。" },
+                    { lvl: 'high', en: "The negotiation failed completely.", cn: "談判徹底失敗了。" }
+                ]
+            },
+            {
+                id: 'svc',
+                formula: 'S + Vl + C',
+                desc: 'Subject + Linking Verb + Complement',
+                usage: '連綴動詞像「等號 (=)」一樣，用來連接主詞和補語，說明主詞的「狀態」或「身分」。',
+                blocks: ['S', 'Vl', 'C'],
+                examples: [
+                    { lvl: 'low', en: "She is a teacher.", cn: "她是一位老師。" },
+                    { lvl: 'mid', en: "The idea sounds great.", cn: "這個主意聽起來很棒。" },
+                    { lvl: 'high', en: "He remained silent during the meeting.", cn: "他在會議期間保持沈默。" }
+                ]
+            },
+            {
+                id: 'svo',
+                formula: 'S + Vt + O',
+                desc: 'Subject + Transitive Verb + Object',
+                usage: '這是最常見的句型。主詞做了一個動作，這個動作會影響到一個對象（受詞）。',
+                blocks: ['S', 'Vt', 'O'],
+                examples: [
+                    { lvl: 'low', en: "I love music.", cn: "我愛音樂。" },
+                    { lvl: 'mid', en: "They discussed the plan.", cn: "他們討論了這個計畫。" },
+                    { lvl: 'high', en: "The government implemented new policies.", cn: "政府實施了新政策。" }
+                ]
+            },
+            {
+                id: 'svoo',
+                formula: 'S + Vt + iO + dO',
+                desc: 'Subj + Verb + Ind. Obj + Dir. Obj',
+                usage: '通常表示「給予」或「傳遞」。會有兩個對象：一個是東西（直接受詞），一個是收受的人（間接受詞）。',
+                blocks: ['S', 'Vt', 'iO', 'dO'],
+                examples: [
+                    { lvl: 'low', en: "Show me the money.", cn: "把錢秀給我看。" },
+                    { lvl: 'mid', en: "He bought her a flower.", cn: "他買了一朵花給她。" },
+                    { lvl: 'high', en: "The award granted him international recognition.", cn: "這個獎項給予了他國際認可。" }
+                ]
+            },
+            {
+                id: 'svoc',
+                formula: 'S + Vt + O + OC',
+                desc: 'Subj + Verb + Obj + Obj Comp',
+                usage: '主詞做的動作，讓受詞產生了變化，或者賦予受詞某種狀態。補語是用來補充說明受詞的。',
+                blocks: ['S', 'Vt', 'O', 'OC'],
+                examples: [
+                    { lvl: 'low', en: "Keep the room clean.", cn: "保持房間乾淨。" },
+                    { lvl: 'mid', en: "They named the baby Joy.", cn: "他們把嬰兒取名為 Joy。" },
+                    { lvl: 'high', en: "We consider the matter settled.", cn: "我們認為這件事已經解決了。" }
+                ]
+            }
+        ];
+
+        // --- Audio System (Generated) ---
+        const AudioSys = {
+            ctx: new (window.AudioContext || window.webkitAudioContext)(),
+            muted: true,
+            bgmInterval: null,
+            
+            toggle() {
+                this.muted = !this.muted;
+                if(!this.muted) {
+                    this.ctx.resume();
+                    this.startBGM();
+                } else {
+                    this.ctx.suspend();
+                    clearInterval(this.bgmInterval);
+                }
+                return this.muted;
+            },
+
+            playTone(freq, type, dur, vol) {
+                if(this.muted) return;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+                gain.gain.setValueAtTime(vol, this.ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + dur);
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start();
+                osc.stop(this.ctx.currentTime + dur);
+            },
+
+            playChord() {
+                // Major chord
+                this.playTone(349.23, 'sine', 1.0, 0.05); // F4
+                setTimeout(() => this.playTone(440.00, 'sine', 1.0, 0.05), 50); // A4
+                setTimeout(() => this.playTone(523.25, 'sine', 1.0, 0.05), 100); // C5
+            },
+
+            playPop() {
+                this.playTone(600 + Math.random()*200, 'triangle', 0.1, 0.05);
+            },
+
+            playSuccess() {
+                this.playTone(523.25, 'square', 0.2, 0.05);
+                setTimeout(() => this.playTone(659.25, 'square', 0.4, 0.05), 100);
+            },
+
+            playError() {
+                this.playTone(200, 'sawtooth', 0.3, 0.08);
+            },
+
+            startBGM() {
+                if(this.bgmInterval) clearInterval(this.bgmInterval);
+                let i = 0;
+                const notes = [261.63, 329.63, 392.00, 523.25, 392.00, 329.63];
+                this.bgmInterval = setInterval(() => {
+                    if(!this.muted) {
+                        this.playTone(notes[i], 'sine', 1.5, 0.015);
+                        i = (i + 1) % notes.length;
+                    }
+                }, 600);
+            }
+        };
+
+        // --- UI Elements ---
+        const els = {
+            stage: document.getElementById('animStage'),
+            headerTitle: document.getElementById('headerTitle'),
+            headerSub: document.getElementById('headerSub'),
+            usageCard: document.getElementById('usageCard'),
+            usageText: document.getElementById('usageText'),
+            exCard: document.getElementById('exampleCard'),
+            exBadge: document.getElementById('exBadge'),
+            exEn: document.getElementById('exEn'),
+            exCn: document.getElementById('exCn'),
+            bar: document.getElementById('progressBar'),
+            musicBtn: document.getElementById('musicToggle'),
+            screens: {
+                start: document.getElementById('startScreen'),
+                quiz: document.getElementById('quizScreen'),
+                result: document.getElementById('resultScreen')
+            }
+        };
+
+        // --- Helper Functions ---
+        const sleep = ms => new Promise(r => setTimeout(r, ms));
+        
+        function createBubbles() {
+            const container = document.getElementById('bubbles');
+            for(let i=0; i<15; i++) {
+                const b = document.createElement('div');
+                b.className = 'bubble';
+                const size = Math.random() * 60 + 20;
+                b.style.width = size + 'px';
+                b.style.height = size + 'px';
+                b.style.left = Math.random() * 100 + '%';
+                b.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                b.style.animationDelay = (Math.random() * 5) + 's';
+                container.appendChild(b);
+            }
+        }
+
+        function clearActiveCards() {
+            els.usageCard.classList.remove('show');
+            els.exCard.classList.remove('show');
+        }
+
+        // --- Main Animation Sequence ---
+        async function startLesson() {
+            els.screens.start.classList.remove('active');
+            
+            // Unmute by default on start if user hasn't toggled
+            if(AudioSys.muted) {
+                AudioSys.toggle();
+                els.musicBtn.innerText = "🔊";
+            }
+
+            for (let i = 0; i < grammarData.length; i++) {
+                const data = grammarData[i];
+                
+                // Update Progress
+                els.bar.style.width = `${(i / grammarData.length) * 100}%`;
+
+                // 1. Setup Header
+                els.headerTitle.classList.remove('active');
+                els.headerSub.style.opacity = 0;
+                clearActiveCards();
+                els.stage.innerHTML = ''; // Clear blocks
+
+                await sleep(500);
+                
+                // Show Formula
+                els.headerTitle.innerText = data.formula;
+                els.headerSub.innerText = data.desc;
+                els.headerTitle.classList.add('active');
+                AudioSys.playChord();
+                
+                await sleep(600);
+                els.headerSub.style.opacity = 1;
+
+                // 2. Animate Blocks
+                const positions = getBlockPositions(data.blocks.length);
+                
+                for (let j = 0; j < data.blocks.length; j++) {
+                    const bCode = data.blocks[j];
+                    const block = document.createElement('div');
+                    let typeClass = 'b-s';
+                    if(bCode.startsWith('V')) typeClass = 'b-v';
+                    else if(bCode === 'O') typeClass = 'b-o';
+                    else if(bCode === 'C' || bCode === 'OC') typeClass = 'b-c';
+                    else if(bCode === 'iO') typeClass = 'b-io';
+                    else if(bCode === 'dO') typeClass = 'b-do';
+
+                    block.className = `block ${typeClass}`;
+                    block.innerHTML = `${bCode}<span>${getLabel(bCode)}</span>`;
+                    block.style.left = `${positions[j]}%`;
+                    els.stage.appendChild(block);
+                    
+                    // Pop in
+                    await sleep(100);
+                    requestAnimationFrame(() => {
+                        block.style.transform = 'translate(-50%, -50%) scale(1)';
+                    });
+                    AudioSys.playPop();
+                    await sleep(500);
+                }
+
+                // 3. SHOW USAGE (New Feature)
+                await sleep(500);
+                els.usageText.innerText = data.usage;
+                els.usageCard.classList.add('show');
+                
+                // Keep usage visible for reading
+                await sleep(4000); 
+                els.usageCard.classList.remove('show');
+                await sleep(500);
+
+                // 4. SHOW EXAMPLES (Low -> Mid -> High)
+                for (let k = 0; k < data.examples.length; k++) {
+                    const ex = data.examples[k];
+                    
+                    // Update content
+                    els.exBadge.className = `level-badge lvl-${ex.lvl}`;
+                    els.exBadge.innerText = ex.lvl === 'low' ? 'Basic' : ex.lvl === 'mid' ? 'Intermediate' : 'Advanced';
+                    els.exEn.innerText = ex.en;
+                    els.exCn.innerText = ex.cn;
+
+                    // Show card
+                    els.exCard.classList.add('show');
+                    AudioSys.playPop();
+                    
+                    // Wait reading time
+                    await sleep(3000);
+                    
+                    // Hide to prep for next
+                    els.exCard.classList.remove('show');
+                    await sleep(400);
+                }
+            }
+
+            // Lesson Complete
+            els.bar.style.width = '100%';
+            await sleep(1000);
+            startQuiz();
+        }
+
+        function getBlockPositions(count) {
+            if (count === 2) return [35, 65];
+            if (count === 3) return [25, 50, 75];
+            if (count === 4) return [20, 40, 60, 80];
+            return [50];
+        }
+
+        function getLabel(code) {
+            const map = {
+                'S': 'Subject', 'Vi': 'Intransitive', 'Vt': 'Transitive',
+                'Vl': 'Linking', 'O': 'Object', 'C': 'Complement',
+                'OC': 'Complement', 'iO': 'Indirect', 'dO': 'Direct'
+            };
+            return map[code] || '';
+        }
+
+        // --- Quiz System ---
+        let quizCount = 0;
+        const MAX_QUIZ = 5;
+
+        function startQuiz() {
+            quizCount = 0;
+            els.screens.start.classList.remove('active');
+            els.screens.result.classList.remove('active');
+            els.screens.quiz.classList.add('active');
+            nextQuestion();
+        }
+
+        function nextQuestion() {
+            if(quizCount >= MAX_QUIZ) {
+                endQuiz();
+                return;
+            }
+
+            quizCount++;
+            document.getElementById('quizProgress').innerText = `Question ${quizCount}/${MAX_QUIZ}`;
+            document.getElementById('qMsg').innerText = "";
+
+            // Generate Question
+            const rPattern = grammarData[Math.floor(Math.random() * grammarData.length)];
+            const rEx = rPattern.examples[Math.floor(Math.random() * rPattern.examples.length)];
+            
+            document.getElementById('qText').innerText = rEx.en;
+            const optsContainer = document.getElementById('qOptions');
+            optsContainer.innerHTML = '';
+
+            // Options
+            let options = [rPattern.formula];
+            while(options.length < 3) {
+                const wrong = grammarData[Math.floor(Math.random() * grammarData.length)].formula;
+                if(!options.includes(wrong)) options.push(wrong);
+            }
+            options.sort(() => Math.random() - 0.5);
+
+            options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'quiz-btn';
+                btn.innerText = opt;
+                btn.onclick = () => handleAnswer(btn, opt, rPattern.formula);
+                optsContainer.appendChild(btn);
+            });
+        }
+
+        function handleAnswer(btn, selected, correct) {
+            const allBtns = document.querySelectorAll('.quiz-btn');
+            allBtns.forEach(b => b.disabled = true); // Lock buttons
+
+            if(selected === correct) {
+                btn.classList.add('correct');
+                document.getElementById('qMsg').innerText = "Correct! 🎉";
+                document.getElementById('qMsg').style.color = "#4CAF50";
+                AudioSys.playSuccess();
+                setTimeout(nextQuestion, 1500);
+            } else {
+                btn.classList.add('wrong');
+                document.getElementById('qMsg').innerText = `Oops! It's ${correct}`;
+                document.getElementById('qMsg').style.color = "#FF5252";
+                AudioSys.playError();
+                // Highlight correct one
+                allBtns.forEach(b => {
+                    if(b.innerText === correct) b.classList.add('correct');
+                });
+                setTimeout(nextQuestion, 2500);
+            }
+        }
+
+        function endQuiz() {
+            els.screens.quiz.classList.remove('active');
+            els.screens.result.classList.add('active');
+            AudioSys.playChord();
+        }
+
+        function resetApp() {
+            els.screens.result.classList.remove('active');
+            els.screens.start.classList.add('active');
+            // Reset visuals
+            els.stage.innerHTML = '';
+            els.headerTitle.innerText = "S + V";
+            els.headerTitle.classList.remove('active');
+            els.bar.style.width = '0%';
+            clearActiveCards();
+        }
+
+        // --- Initialization ---
+        els.musicBtn.onclick = () => {
+            const isMuted = AudioSys.toggle();
+            els.musicBtn.innerText = isMuted ? "🔇" : "🔊";
+        };
+
+        window.onload = createBubbles;
+
+    </script>
+</body>
+</html>
