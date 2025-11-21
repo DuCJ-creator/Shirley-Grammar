@@ -6,8 +6,8 @@
     <title>Interactive Grammar Charging Station</title>
     <style>
         body {
-            font-family: 'Courier New', monospace; /* Mechanical, monospace font */
-            background: linear-gradient(to bottom, #1a1a1a, #2d2d2d, #404040); /* Dark metallic industrial gradient */
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(to bottom, #1a1a1a, #2d2d2d, #404040);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -16,28 +16,28 @@
             padding: 20px;
             box-sizing: border-box;
             color: #fff;
-            position: relative; /* For robot positioning */
+            position: relative;
         }
         #station-container {
             text-align: center;
             z-index: 1;
         }
         #station-svg {
-            border: 2px solid #808080; /* Thick metal border */
-            background: linear-gradient(to bottom, #333333, #555555); /* Metallic SVG bg */
-            border-radius: 0; /* Sharp edges for mechanical */
-            box-shadow: 0 0 20px rgba(139, 69, 19, 0.5); /* Bronze glow */
+            border: 2px solid #808080;
+            background: linear-gradient(to bottom, #333333, #555555);
+            border-radius: 0;
+            box-shadow: 0 0 20px rgba(139, 69, 19, 0.5);
         }
         .branch-label {
             font-weight: bold;
-            fill: #FFFFFF; /* White for high contrast */
+            fill: #FFFFFF;
             text-anchor: middle;
-            font-size: 11px; /* Slightly smaller to fit */
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.8); /* Strong shadow for readability */
+            font-size: 11px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
         }
         .port {
             cursor: pointer;
-            stroke: #C0C0C0; /* Silver stroke */
+            stroke: #C0C0C0;
             stroke-width: 2;
             transition: transform 0.3s ease;
             filter: url(#metalGlow);
@@ -49,7 +49,7 @@
         }
         .port-label {
             font-size: 10px;
-            fill: #FFFFFF; /* White for contrast on dark bg */
+            fill: #FFFFFF;
             text-anchor: middle;
             pointer-events: none;
             text-shadow: 1px 1px 1px rgba(0,0,0,0.9);
@@ -60,22 +60,26 @@
             text-anchor: middle;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
             font-size: 12px;
+            cursor: pointer;
+        }
+        .pillar-label:hover {
+            fill: #FFD700;
         }
         .electricity-box {
-            fill: url(#boxGradient); /* Dark metallic gradient */
-            stroke: #B87333; /* Copper stroke */
+            fill: url(#boxGradient);
+            stroke: #B87333;
             stroke-width: 3;
-            rx: 5; /* Slight round for bolted look */
+            rx: 5;
         }
         .box-number {
             font-weight: bold;
-            fill: #FFD700; /* Gold for contrast */
+            fill: #FFD700;
             text-anchor: middle;
             font-size: 18px;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
         }
         .charging-wire {
-            stroke: url(#wireGradient); /* Copper gradient */
+            stroke: url(#wireGradient);
             stroke-width: 3;
             fill: none;
             filter: url(#wireGlow);
@@ -93,16 +97,16 @@
             align-items: center;
         }
         #modal-content {
-            background: linear-gradient(to bottom, #2d2d2d, #404040); /* Dark metallic modal */
+            background: linear-gradient(to bottom, #2d2d2d, #404040);
             margin: auto;
             padding: 20px;
-            border: 2px solid #B87333; /* Copper border */
+            border: 2px solid #B87333;
             width: 80%;
             max-width: 600px;
             border-radius: 5px;
             max-height: 80vh;
             overflow-y: auto;
-            box-shadow: 0 0 30px rgba(184, 115, 51, 0.7); /* Copper glow */
+            box-shadow: 0 0 30px rgba(184, 115, 51, 0.7);
             color: #fff;
         }
         #close {
@@ -122,7 +126,7 @@
         }
         .explanation-text {
             line-height: 1.6;
-            color: #CCCCCC; /* Light gray for readability */
+            color: #CCCCCC;
         }
         @keyframes extend {
             from {
@@ -135,8 +139,8 @@
         .animated-cable {
             stroke-dasharray: 1000;
             stroke-dashoffset: 1000;
-            animation: extend 2s ease-in-out forwards, flow 1s linear infinite; /* Add flowing animation */
-            stroke: url(#cableGradient); /* Steel blue gradient */
+            animation: extend 2s ease-in-out forwards, flow 1s linear infinite;
+            stroke: url(#cableGradient);
             stroke-width: 6;
             fill: none;
             filter: url(#cableGlow);
@@ -150,8 +154,8 @@
             }
         }
         .charging-wire {
-            stroke-dasharray: 10 5; /* Dashed for current effect */
-            animation: flowWire 0.5s linear infinite; /* Flowing dash */
+            stroke-dasharray: 10 5;
+            animation: flowWire 0.5s linear infinite;
         }
         @keyframes flowWire {
             from {
@@ -177,16 +181,15 @@
             animation: pulse 1s ease-in-out;
         }
         h1 {
-            color: #B87333; /* Copper title */
+            color: #B87333;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
             font-size: 2.5em;
             font-weight: bold;
         }
         p {
             color: #CCCCCC;
-            font-style: normal; /* Remove italic for mechanical */
+            font-style: normal;
         }
-        /* Robot Animation Styles - Free Movement with Cutie Design */
         #robot-container {
             position: absolute;
             bottom: 20px;
@@ -207,18 +210,18 @@
             }
         }
         .robot-head {
-            fill: #FFB6C1; /* Pink for cuteness */
-            stroke: #FF69B4; /* Hot pink stroke */
+            fill: #FFB6C1;
+            stroke: #FF69B4;
             stroke-width: 2;
         }
         .robot-body {
-            fill: #87CEEB; /* Sky blue body */
-            stroke: #4169E1; /* Royal blue stroke */
+            fill: #87CEEB;
+            stroke: #4169E1;
             stroke-width: 2;
         }
         .robot-leg {
-            fill: #98FB98; /* Pale green legs */
-            stroke: #32CD32; /* Lime green stroke */
+            fill: #98FB98;
+            stroke: #32CD32;
             stroke-width: 1;
             animation: legSwing 1s ease-in-out infinite alternate;
         }
@@ -237,20 +240,20 @@
             }
         }
         .robot-antenna {
-            stroke: #FFD700; /* Gold antenna */
+            stroke: #FFD700;
             stroke-width: 3;
             stroke-linecap: round;
             fill: none;
         }
         .robot-eye {
-            fill: #000; /* Black eyes */
+            fill: #000;
             r: 2;
         }
         .robot-mouth {
             fill: none;
-            stroke: #FF69B4; /* Smiling mouth */
+            stroke: #FF69B4;
             stroke-width: 2;
-            d: "M 45 25 Q 50 30 55 25"; /* Curved smile */
+            d: "M 45 25 Q 50 30 55 25";
         }
     </style>
 </head>
@@ -339,32 +342,15 @@
             <text x="400" y="90" fill="#FFFFFF" text-anchor="middle" font-weight="bold" font-size="18" filter="url(#metalGlow)">Grammar Station</text>
             
             <!-- Pillar Labels -->
-            <text x="430" y="450" class="pillar-label" style="cursor: pointer;" onclick="function showExplanation(key) {
-    // 如果是simple sentence，直接跳转
-    if (key === 'simple') {
-        window.open('https://ducj-creator.github.io/Shirley-Grammar/simple%20sentences/', '_blank');
-        return; // 直接返回，不显示模态框
-    }
-    
-    const exp = explanations[key];
-    if (exp) {
-        modalTitle.textContent = exp.title;
-        modalText.textContent = exp.text;
-        modal.style.display = 'flex';
-        // Animate ports on click
-        event.target.classList.add('animate');
-        setTimeout(() => event.target.classList.remove('animate'), 1000);
-    }
-}
-                ('simple')">1. Simple Sentence</text>
-            <text x="430" y="350" class="pillar-label" style="cursor: pointer;" onclick="showExplanation('compound')">2. Compound Sentence</text>
-            <text x="430" y="250" class="pillar-label" style="cursor: pointer;" onclick="showExplanation('complex')">3. Complex Sentence</text>
-            <text x="430" y="150" class="pillar-label" style="cursor: pointer;" onclick="showExplanation('compound-complex')">4. Compound-Complex Sentence</text>
+            <text x="430" y="450" class="pillar-label" onclick="redirectToSimpleSentence()">1. Simple Sentence</text>
+            <text x="430" y="350" class="pillar-label" onclick="showExplanation('compound')">2. Compound Sentence</text>
+            <text x="430" y="250" class="pillar-label" onclick="showExplanation('complex')">3. Complex Sentence</text>
+            <text x="430" y="150" class="pillar-label" onclick="showExplanation('compound-complex')">4. Compound-Complex Sentence</text>
             
             <!-- Section 1: Parts of Speech -->
             <path d="M 400 130 Q 300 100 200 130" class="animated-cable" />
             <rect x="160" y="80" width="80" height="100" class="electricity-box" />
-            <text x="200" y="110" class="branch-label">Parts of Speech</text> <!-- Adjusted y to fit better -->
+            <text x="200" y="110" class="branch-label">Parts of Speech</text>
             <text x="200" y="140" class="box-number">1</text>
             <circle cx="80" cy="60" r="12" class="port" onclick="showExplanation('nouns')" />
             <text x="80" y="65" class="port-label">Nouns</text>
@@ -385,7 +371,7 @@
             <!-- Section 2: Nonfinite Verbs -->
             <path d="M 400 350 Q 300 380 200 350" class="animated-cable" />
             <rect x="160" y="300" width="80" height="100" class="electricity-box" />
-            <text x="200" y="330" class="branch-label">Nonfinite Verbs</text> <!-- Adjusted y -->
+            <text x="200" y="330" class="branch-label">Nonfinite Verbs</text>
             <text x="200" y="360" class="box-number">2</text>
             <circle cx="80" cy="280" r="12" class="port" onclick="showExplanation('infinitive')" />
             <text x="80" y="285" class="port-label">Infinitive Verbs</text>
@@ -403,7 +389,7 @@
             <!-- Section 3: Clauses -->
             <path d="M 400 130 Q 500 100 600 130" class="animated-cable" />
             <rect x="560" y="80" width="80" height="100" class="electricity-box" />
-            <text x="600" y="110" class="branch-label">Clauses</text> <!-- Adjusted y -->
+            <text x="600" y="110" class="branch-label">Clauses</text>
             <text x="600" y="140" class="box-number">3</text>
             <circle cx="680" cy="60" r="12" class="port" onclick="showExplanation('noun-clause')" />
             <text x="680" y="65" class="port-label">Noun Clause</text>
@@ -418,7 +404,7 @@
             <!-- Section 4: Special Sentence Structures -->
             <path d="M 400 350 Q 500 380 600 350" class="animated-cable" />
             <rect x="560" y="300" width="80" height="100" class="electricity-box" />
-            <text x="600" y="330" class="branch-label">Special Sentence Structures</text> <!-- Adjusted y -->
+            <text x="600" y="330" class="branch-label">Special Sentence Structures</text>
             <text x="600" y="360" class="box-number">4</text>
             <circle cx="680" cy="280" r="12" class="port" onclick="showExplanation('questions')" />
             <text x="680" y="285" class="port-label">Questions</text>
@@ -449,7 +435,7 @@
             <!-- Smile -->
             <path d="M 45 25 Q 50 30 55 25" class="robot-mouth" />
             <!-- Robot Body -->
-            <rect x="35" y="35" width="30" height="30" rx="10" class="robot-body" /> <!-- Rounded for cuteness -->
+            <rect x="35" y="35" width="30" height="30" rx="10" class="robot-body" />
             <!-- Robot Arms (chubby) -->
             <rect x="20" y="40" width="18" height="8" rx="4" class="robot-body" />
             <rect x="62" y="40" width="18" height="8" rx="4" class="robot-body" />
@@ -469,7 +455,7 @@
     </div>
 
     <script>
-        // Explanations data (unchanged)
+        // Explanations data
         const explanations = {
             simple: { title: "Simple Sentence", text: "A simple sentence consists of one independent clause with a subject and a predicate. It expresses a complete thought. Example: 'The cat sleeps.'" },
             compound: { title: "Compound Sentence", text: "A compound sentence joins two or more independent clauses with coordinating conjunctions (and, but, or, etc.). Example: 'I like tea, and she likes coffee.'" },
@@ -490,7 +476,7 @@
             questions: { title: "Questions", text: "Questions seek information or confirmation. Types: yes/no (Do you like it?), wh- (What is your name?), rhetorical. Invert subject-verb often." },
             exclamations: { title: "Exclamations", text: "Exclamatory sentences express strong emotion, often ending with !. Example: 'What a beautiful day!' Uses inversion or interjections like 'Wow!'." },
             inverted: { title: "Inverted Sentences", text: "Inversion reverses normal subject-verb order for emphasis or questions. Example: 'Never have I seen such beauty!' Common in literature." },
-            subjunctive: { title: "Subjunctive Mood", text: "The subjunctive mood expresses wishes, hypotheticals, or demands. Uses base verb form: 'If I were rich...' or 'I suggest that he go'."
+            subjunctive: { title: "Subjunctive Mood", text: "The subjunctive mood expresses wishes, hypotheticals, or demands. Uses base verb form: 'If I were rich...' or 'I suggest that he go'." }
         };
 
         // Modal functionality
@@ -499,15 +485,28 @@
         const modalText = document.getElementById('modal-text');
         const close = document.getElementById('close');
 
+        // Function to redirect to Simple Sentence page
+        function redirectToSimpleSentence() {
+            window.location.href = 'https://ducj-creator.github.io/Shirley-Grammar/simple%20sentences/';
+        }
+
         function showExplanation(key) {
+            // If it's simple sentence, redirect instead of showing modal
+            if (key === 'simple') {
+                redirectToSimpleSentence();
+                return;
+            }
+            
             const exp = explanations[key];
             if (exp) {
                 modalTitle.textContent = exp.title;
                 modalText.textContent = exp.text;
                 modal.style.display = 'flex';
                 // Animate ports on click
-                event.target.classList.add('animate');
-                setTimeout(() => event.target.classList.remove('animate'), 1000);
+                if (event && event.target) {
+                    event.target.classList.add('animate');
+                    setTimeout(() => event.target.classList.remove('animate'), 1000);
+                }
             }
         }
 
