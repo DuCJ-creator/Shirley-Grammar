@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Level 2 Compound Sentences - Cinematic Lesson</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;500;700&family=Poppins:wght@300;600;800&display=swap');
+
+        :root {
+            --bg-color: #f4f7f6;
+            --accent-blue: #5d9cec;
+            --accent-green: #a0d468;
+            --accent-red: #ed5565;
+            --accent-yellow: #ffce54;
+            --accent-purple: #ac92ec;
+            --accent-teal: #4fc1e9;
+            --accent-orange: #fc6e51;
+            --text-dark: #434a54;
+            --text-light: #ffffff;
+            --box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #2c3e50; /* Dark outer background for cinema feel */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Poppins', 'Noto Sans TC', sans-serif;
+            overflow: hidden;
+        }
+
+        /* The Stage - 16:9 Aspect Ratio */
+        #stage {
+            width: 100%;
+            max-width: 1280px;
+            aspect-ratio: 16/9;
+            background: var(--bg-color);
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        /* Background Decor */
+        .bg-shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.1;
+            z-index: 0;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(50px, 50px) rotate(180deg); }
+            100% { transform: translate(0, 0) rotate(360deg); }
+        }
+
+        /* Main Content Area */
+        #content-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 80%; /* Leave space for subtitles */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        /* Subtitle Area */
+        #subtitle-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 20%;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 20;
+            padding-bottom: 20px;
+            text-align: center;
+        }
+
+        .sub-en {
+            color: #fff;
+            font-size: 1.8rem;
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            margin-bottom: 5px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.5s ease;
+        }
+
+        .sub-tc {
+            color: #ddd;
+            font-size: 1.4rem;
+            font-weight: 300;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.5s ease 0.1s;
+        }
+
+        .sub-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Sentence Blocks */
+        .sentence-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            width: 90%;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .clause {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 15px;
+            box-shadow: var(--box-shadow);
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            position: relative;
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+            transform: scale(0.9);
+            opacity: 0;
+            min-width: 200px;
+            text-align: center;
+        }
+
+        .clause.show {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        /* Connector Elements */
+        .connector-zone {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100px;
+            position: relative;
+        }
+
+        .punctuation {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--text-dark);
+            opacity: 0;
+            transition: all 0.3s;
+        }
+
+        .conjunction-bubble {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--accent-blue);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 800;
+            font-size: 1.2rem;
+            box-shadow: 0 5px 15px rgba(93, 156, 236, 0.4);
+            transform: scale(0);
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin-top: 5px;
+            text-transform: uppercase;
+        }
+
+        .conjunction-bubble.pop {
+            transform: scale(1);
+        }
+
+        /* Title Elements */
+        .main-title {
+            font-size: 4rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            letter-spacing: -2px;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.8s ease;
+        }
+
+        .sub-title {
+            font-size: 2rem;
+            color: #888;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease 0.2s;
+        }
+
+        /* FANBOYS List */
+        .fanboys-list {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .fb-letter {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #ccc;
+            transition: all 0.3s;
+        }
+        .fb-letter.active {
+            color: var(--accent-blue);
+            transform: scale(1.2);
+        }
+
+        /* Progress Bar */
+        #progress-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 5px;
+            background: var(--accent-orange);
+            width: 0%;
+            z-index: 30;
+            transition: width 0.2s linear;
+        }
+
+        /* Helper Classes for Colors */
+        .c-for { background-color: var(--accent-red); box-shadow: 0 5px 15px rgba(237, 85, 101, 0.4); }
+        .c-and { background-color: var(--accent-blue); box-shadow: 0 5px 15px rgba(93, 156, 236, 0.4); }
+        .c-nor { background-color: var(--text-dark); box-shadow: 0 5px 15px rgba(67, 74, 84, 0.4); }
+        .c-but { background-color: var(--accent-orange); box-shadow: 0 5px 15px rgba(252, 110, 81, 0.4); }
+        .c-or { background-color: var(--accent-yellow); color: #555; box-shadow: 0 5px 15px rgba(255, 206, 84, 0.4); }
+        .c-yet { background-color: var(--accent-purple); box-shadow: 0 5px 15px rgba(172, 146, 236, 0.4); }
+        .c-so { background-color: var(--accent-green); box-shadow: 0 5px 15px rgba(160, 212, 104, 0.4); }
+        .c-semi { background-color: #656d78; border-radius: 10px; width: auto; padding: 0 20px; }
+
+    </style>
+</head>
+<body>
+
+    <div id="stage">
+        <!-- Background shapes -->
+        <div class="bg-shape" style="width: 300px; height: 300px; background: #e6e9ed; top: -50px; left: -50px;"></div>
+        <div class="bg-shape" style="width: 200px; height: 200px; background: #e6e9ed; bottom: 50px; right: -50px; animation-delay: -5s;"></div>
+        <div class="bg-shape" style="width: 150px; height: 150px; background: #dae1e7; top: 20%; right: 20%; animation-delay: -10s;"></div>
+
+        <!-- Content Layer -->
+        <div id="content-layer">
+            <div id="title-group" style="display: none; text-align: center;">
+                <div class="main-title">Compound Sentences</div>
+                <div class="sub-title">Level 2--Compound Sentences</div>
+            </div>
+
+            <div id="fanboys-display" class="fanboys-list" style="display: none;">
+                <div class="fb-letter" id="fb-f">F</div>
+                <div class="fb-letter" id="fb-a">A</div>
+                <div class="fb-letter" id="fb-n">N</div>
+                <div class="fb-letter" id="fb-b">B</div>
+                <div class="fb-letter" id="fb-o">O</div>
+                <div class="fb-letter" id="fb-y">Y</div>
+                <div class="fb-letter" id="fb-s">S</div>
+            </div>
+
+            <div id="sentence-area" class="sentence-wrapper" style="display: none;">
+                <div class="clause" id="clause1">I drank some water</div>
+                
+                <div class="connector-zone">
+                    <div class="punctuation" id="comma">,</div>
+                    <div class="conjunction-bubble" id="conjunction">FOR</div>
+                </div>
+
+                <div class="clause" id="clause2">I was thirsty</div>
+            </div>
+        </div>
+
+        <!-- Subtitles -->
+        <div id="subtitle-container">
+            <div class="sub-en" id="sub-en"></div>
+            <div class="sub-tc" id="sub-tc"></div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div id="progress-bar"></div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const els = {
+            titleGroup: document.getElementById('title-group'),
+            mainTitle: document.querySelector('.main-title'),
+            subTitle: document.querySelector('.sub-title'),
+            fanboysDisplay: document.getElementById('fanboys-display'),
+            sentenceArea: document.getElementById('sentence-area'),
+            clause1: document.getElementById('clause1'),
+            clause2: document.getElementById('clause2'),
+            comma: document.getElementById('comma'),
+            conjunction: document.getElementById('conjunction'),
+            subEn: document.getElementById('sub-en'),
+            subTc: document.getElementById('sub-tc'),
+            progressBar: document.getElementById('progress-bar'),
+            fbLetters: {
+                f: document.getElementById('fb-f'),
+                a: document.getElementById('fb-a'),
+                n: document.getElementById('fb-n'),
+                b: document.getElementById('fb-b'),
+                o: document.getElementById('fb-o'),
+                y: document.getElementById('fb-y'),
+                s: document.getElementById('fb-s'),
+            }
+        };
+
+        // Helper functions for animation
+        function showSubtitles(en, tc) {
+            els.subEn.classList.remove('sub-visible');
+            els.subTc.classList.remove('sub-visible');
+            
+            setTimeout(() => {
+                els.subEn.textContent = en;
+                els.subTc.textContent = tc;
+                els.subEn.classList.add('sub-visible');
+                els.subTc.classList.add('sub-visible');
+            }, 500);
+        }
+
+        function hideSubtitles() {
+            els.subEn.classList.remove('sub-visible');
+            els.subTc.classList.remove('sub-visible');
+        }
+
+        function resetLetters() {
+            Object.values(els.fbLetters).forEach(el => el.classList.remove('active'));
+        }
+
+        function highlightLetter(char) {
+            resetLetters();
+            if(char && els.fbLetters[char.toLowerCase()]) {
+                els.fbLetters[char.toLowerCase()].classList.add('active');
+            }
+        }
+
+        function setSentence(c1, c2, conn, type) {
+            // Reset
+            els.clause1.classList.remove('show');
+            els.clause2.classList.remove('show');
+            els.comma.style.opacity = '0';
+            els.conjunction.classList.remove('pop');
+            
+            // Clean classes
+            els.conjunction.className = 'conjunction-bubble'; 
+
+            setTimeout(() => {
+                els.clause1.textContent = c1;
+                els.clause2.textContent = c2;
+                els.conjunction.textContent = conn;
+                
+                if (type) els.conjunction.classList.add('c-' + type);
+
+                // Animate In
+                els.clause1.classList.add('show');
+                
+                setTimeout(() => {
+                    if(conn !== ';') els.comma.style.opacity = '1'; // Show comma if not semicolon
+                    els.conjunction.classList.add('pop');
+                }, 600);
+
+                setTimeout(() => {
+                    els.clause2.classList.add('show');
+                }, 1200);
+
+            }, 600);
+        }
+
+        // Timeline Sequence
+        // Each step: duration (ms), action (function)
+        const timeline = [
+            // 1. Intro Title
+            {
+                duration: 4000,
+                action: () => {
+                    els.titleGroup.style.display = 'block';
+                    setTimeout(() => {
+                        els.mainTitle.style.opacity = '1';
+                        els.mainTitle.style.transform = 'translateY(0)';
+                    }, 100);
+                    setTimeout(() => {
+                        els.subTitle.style.opacity = '1';
+                        els.subTitle.style.transform = 'translateY(0)';
+                    }, 800);
+                    showSubtitles("Welcome to Level 2--Compound Sentences.", "歡迎來到第二級句型：複合句。");
+                }
+            },
+            // 2. What is it?
+            {
+                duration: 5000,
+                action: () => {
+                    showSubtitles("A Compound Sentence joins two independent clauses.", "複合句將兩個獨立的子句連接在一起。");
+                }
+            },
+            // 3. The Formula
+            {
+                duration: 5000,
+                action: () => {
+                    els.titleGroup.style.opacity = '0'; // Fade out title
+                    setTimeout(() => els.titleGroup.style.display = 'none', 800);
+                    
+                    els.sentenceArea.style.display = 'flex';
+                    els.sentenceArea.style.opacity = '1';
+                    
+                    els.clause1.textContent = "Complete Sentence";
+                    els.clause2.textContent = "Complete Sentence";
+                    els.conjunction.textContent = "+";
+                    els.comma.textContent = ",";
+                    
+                    els.clause1.classList.add('show');
+                    setTimeout(() => els.clause2.classList.add('show'), 500);
+                    setTimeout(() => els.conjunction.classList.add('pop'), 1000);
+                    
+                    showSubtitles("We need a comma and a conjunction to glue them.", "我們需要一個逗號和一個連接詞把它們黏起來。");
+                }
+            },
+            // 4. FANBOYS Intro
+            {
+                duration: 4000,
+                action: () => {
+                    els.sentenceArea.style.opacity = '0'; // Hide sentences briefly
+                    els.fanboysDisplay.style.display = 'flex';
+                    showSubtitles("We call these connectors: FANBOYS.", "我們稱這些連接詞為：FANBOYS。");
+                }
+            },
+            // 5. For
+            {
+                duration: 6000,
+                action: () => {
+                    els.sentenceArea.style.opacity = '1';
+                    highlightLetter('f');
+                    setSentence("I drank some water", "I was thirsty", "for", "for");
+                    showSubtitles("I drank some water, for I was thirsty.", "我喝了點水，因我很渴。(for = because)");
+                }
+            },
+            // 6. And
+            {
+                duration: 6000,
+                action: () => {
+                    highlightLetter('a');
+                    setSentence("He bought a pen", "he bought a book", "and", "and");
+                    showSubtitles("He bought a pen, and he bought a book.", "他買了一支筆，而且他買了一本書。");
+                }
+            },
+            // 7. Nor
+            {
+                duration: 7000,
+                action: () => {
+                    highlightLetter('n');
+                    setSentence("He doesn't like apples", "does he like oranges", "nor", "nor");
+                    showSubtitles("He doesn't like apples, nor does he like oranges.", "他不喜歡蘋果，也不喜歡柳橙。(注意倒裝)");
+                }
+            },
+            // 8. But
+            {
+                duration: 6000,
+                action: () => {
+                    highlightLetter('b');
+                    setSentence("I wanted to go", "it started raining", "but", "but");
+                    showSubtitles("I wanted to go, but it started raining.", "我想去，可是開始下雨了。");
+                }
+            },
+            // 9. Or
+            {
+                duration: 6000,
+                action: () => {
+                    highlightLetter('o');
+                    setSentence("We can go to the park", "we can stay home", "or", "or");
+                    showSubtitles("We can go to the park, or we can stay home.", "我們可以去公園，或者我們可以待在家。");
+                }
+            },
+            // 10. Yet
+            {
+                duration: 6000,
+                action: () => {
+                    highlightLetter('y');
+                    setSentence("It was cold", "he wore a t-shirt", "yet", "yet");
+                    showSubtitles("It was cold, yet he wore a T-shirt.", "天氣很冷，然而他穿著T恤。(Unexpected contrast)");
+                }
+            },
+            // 11. So
+            {
+                duration: 6000,
+                action: () => {
+                    highlightLetter('s');
+                    setSentence("I was tired", "I went to bed", "so", "so");
+                    showSubtitles("I was tired, so I went to bed.", "我很累，所以我去睡覺了。");
+                }
+            },
+            // 12. Semicolon Intro
+            {
+                duration: 5000,
+                action: () => {
+                    resetLetters();
+                    els.fanboysDisplay.style.opacity = '0'; // Fade out fanboys
+                    
+                    // Prepare stage for semicolon
+                    els.clause1.classList.remove('show');
+                    els.clause2.classList.remove('show');
+                    els.conjunction.classList.remove('pop');
+                    els.comma.style.opacity = '0';
+
+                    showSubtitles("There is another way: The Semicolon.", "還有另一種方法：分號 (;)。");
+                }
+            },
+            // 13. Semicolon Example
+            {
+                duration: 6000,
+                action: () => {
+                    // Visual hack: Hide comma, make bubble look like nothing or just text
+                    els.comma.style.display = 'none'; // Remove comma completely
+                    
+                    els.clause1.textContent = "I love ice cream";
+                    els.clause2.textContent = "it is delicious";
+                    els.conjunction.textContent = ";";
+                    els.conjunction.className = "conjunction-bubble c-semi"; // Special style
+                    
+                    els.clause1.classList.add('show');
+                    setTimeout(() => els.conjunction.classList.add('pop'), 600);
+                    setTimeout(() => els.clause2.classList.add('show'), 1200);
+
+                    showSubtitles("I love ice cream; it is delicious.", "我愛冰淇淋；它很美味。(Strong connection)");
+                }
+            },
+            // 14. Outro
+            {
+                duration: 5000,
+                action: () => {
+                    els.sentenceArea.style.opacity = '0';
+                    els.titleGroup.style.display = 'block';
+                    els.titleGroup.style.opacity = '0'; // Prepare fade in
+                    
+                    setTimeout(() => {
+                        els.mainTitle.textContent = "Great Job!";
+                        els.subTitle.textContent = "You mastered Compound Sentences.";
+                        els.mainTitle.style.opacity = '1';
+                        els.subTitle.style.opacity = '1';
+                    }, 500);
+                    
+                    showSubtitles("Thanks for watching.", "謝謝觀看。");
+                }
+            }
+        ];
+
+        // Player Engine
+        let currentStep = 0;
+        let totalDuration = timeline.reduce((acc, item) => acc + item.duration, 0);
+        let elapsed = 0;
+
+        function playTimeline() {
+            if (currentStep >= timeline.length) return;
+
+            const step = timeline[currentStep];
+            step.action();
+
+            // Recursion for next step
+            setTimeout(() => {
+                currentStep++;
+                playTimeline();
+            }, step.duration);
+        }
+
+        // Progress Bar Updater
+        function updateProgress() {
+            const interval = 100; // update every 100ms
+            const timer = setInterval(() => {
+                elapsed += interval;
+                const percent = Math.min((elapsed / totalDuration) * 100, 100);
+                els.progressBar.style.width = percent + '%';
+                
+                if (elapsed >= totalDuration) clearInterval(timer);
+            }, interval);
+        }
+
+        // Start
+        window.onload = () => {
+            setTimeout(() => {
+                playTimeline();
+                updateProgress();
+            }, 500); // Small buffer before start
+        };
+
+    </script>
+</body>
+</html>
