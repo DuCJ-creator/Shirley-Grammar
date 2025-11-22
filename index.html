@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Grammar Charging Station</title>
+    <title>Shirley's E-Charger</title>
     <style>
         body {
             font-family: 'Courier New', monospace;
@@ -17,6 +17,7 @@
             box-sizing: border-box;
             color: #fff;
             position: relative;
+            overflow-x: hidden;
         }
         #station-container {
             text-align: center;
@@ -32,7 +33,7 @@
             font-weight: bold;
             fill: #FFFFFF;
             text-anchor: middle;
-            font-size: 11px;
+            font-size: 14px;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
         }
         .port {
@@ -48,18 +49,19 @@
             filter: url(#metalGlowHover);
         }
         .port-label {
-            font-size: 10px;
+            font-size: 12px;
             fill: #FFFFFF;
             text-anchor: middle;
             pointer-events: none;
             text-shadow: 1px 1px 1px rgba(0,0,0,0.9);
+            font-weight: bold;
         }
         .pillar-label {
             font-weight: bold;
             fill: #FFFFFF;
             text-anchor: middle;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
-            font-size: 12px;
+            font-size: 14px;
             cursor: pointer;
         }
         .pillar-label:hover {
@@ -75,7 +77,7 @@
             font-weight: bold;
             fill: #FFD700;
             text-anchor: middle;
-            font-size: 18px;
+            font-size: 20px;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
         }
         .charging-wire {
@@ -123,10 +125,12 @@
             color: #FFFFFF;
             border-bottom: 2px solid #B87333;
             padding-bottom: 10px;
+            font-size: 24px;
         }
         .explanation-text {
             line-height: 1.6;
             color: #CCCCCC;
+            font-size: 16px;
         }
         @keyframes extend {
             from {
@@ -189,24 +193,29 @@
         p {
             color: #CCCCCC;
             font-style: normal;
+            font-size: 16px;
         }
+        
+        /* 大號機器人樣式 */
         #robot-container {
             position: absolute;
             bottom: 20px;
             right: 20px;
-            width: 100px;
-            height: 100px;
+            width: 200px;
+            height: 300px;
             z-index: 2;
         }
         #robot {
             animation: walk 4s ease-in-out infinite;
+            width: 100%;
+            height: 100%;
         }
         @keyframes walk {
             0%, 100% {
                 transform: translateX(0);
             }
             50% {
-                transform: translateX(-20px);
+                transform: translateX(-10px);
             }
         }
         .robot-head {
@@ -247,19 +256,136 @@
         }
         .robot-eye {
             fill: #000;
-            r: 2;
         }
         .robot-mouth {
             fill: none;
             stroke: #FF69B4;
             stroke-width: 2;
-            d: "M 45 25 Q 50 30 55 25";
+        }
+        
+        /* 翻轉卡片樣式 */
+        .flip-card {
+            position: absolute;
+            top: 100px;
+            left: 30px;
+            width: 120px;
+            height: 150px;
+            perspective: 1000px;
+            cursor: pointer;
+            z-index: 3;
+        }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border: 3px solid #B87333;
+            border-radius: 10px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            padding: 0;
+            margin: 0;
+        }
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
+        .card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 7px;
+        }
+        
+        /* 放大圖片樣式 */
+        #image-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            justify-content: center;
+            align-items: center;
+        }
+        #image-modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            border: 3px solid #B87333;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(184, 115, 51, 0.7);
+        }
+        #image-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        #image-close:hover {
+            color: #FFD700;
+        }
+        
+        /* 紅色按鈕樣式 */
+        .red-button {
+            fill: #FF4444;
+            stroke: #CC0000;
+            stroke-width: 2;
+            rx: 8;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .red-button:hover {
+            fill: #FF6666;
+            filter: url(#redGlow);
+        }
+        .red-button-text {
+            fill: white;
+            font-weight: bold;
+            text-anchor: middle;
+            font-size: 12px;
+            pointer-events: none;
+        }
+        
+        /* 柱子塊狀樣式 */
+        .pillar-block {
+            fill: url(#pillarBlockGradient);
+            stroke: #B87333;
+            stroke-width: 2;
+            rx: 5;
+            filter: url(#blockGlow);
+        }
+        .pillar-wire {
+            stroke: url(#pillarWireGradient);
+            stroke-width: 4;
+            fill: none;
+            filter: url(#pillarWireGlow);
+            stroke-dasharray: 10 5;
+            animation: flowWire 0.3s linear infinite;
         }
     </style>
 </head>
 <body>
     <div id="station-container">
-        <h1>Interactive Grammar Charging Station</h1>
+        <h1>Shirley's E-Charger</h1>
         <p>Click on the pillar levels or charging ports to power up your grammar knowledge!</p>
         <svg id="station-svg" width="800" height="600" xmlns="http://www.w3.org/2000/svg">
             <!-- Definitions for mechanical metal effects -->
@@ -283,6 +409,16 @@
                 <linearGradient id="cableGradient" x1="0%" y1="0%" x2="100%" y2="0%">
                     <stop offset="0%" style="stop-color:#4682B4;stop-opacity:1" />
                     <stop offset="100%" style="stop-color:#2F4F4F;stop-opacity:1" />
+                </linearGradient>
+                <!-- Gradient for pillar blocks -->
+                <linearGradient id="pillarBlockGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#606060;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#303030;stop-opacity:1" />
+                </linearGradient>
+                <!-- Gradient for pillar wires -->
+                <linearGradient id="pillarWireGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#FFA500;stop-opacity:1" />
                 </linearGradient>
                 <!-- Metal glow filter for ports -->
                 <filter id="metalGlow" x="-50%" y="-50%" width="200%" height="200%">
@@ -316,6 +452,30 @@
                         <feMergeNode in="SourceGraphic"/>
                     </feMerge>
                 </filter>
+                <!-- Glow for red buttons -->
+                <filter id="redGlow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur stdDeviation="5" result="coloredBlur"/>
+                    <feMerge> 
+                        <feMergeNode in="coloredBlur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
+                <!-- Glow for pillar blocks -->
+                <filter id="blockGlow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                    <feMerge> 
+                        <feMergeNode in="coloredBlur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
+                <!-- Glow for pillar wires -->
+                <filter id="pillarWireGlow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                    <feMerge> 
+                        <feMergeNode in="coloredBlur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
                 <!-- Rivet pattern for mechanical texture -->
                 <pattern id="rivets" patternUnits="userSpaceOnUse" width="20" height="20">
                     <circle cx="10" cy="10" r="2" fill="#696969" />
@@ -333,25 +493,39 @@
                 <stop offset="100%" style="stop-color:#404040;stop-opacity:1" />
             </linearGradient>
             <rect x="390" y="100" width="20" height="400" fill="url(#pillarGradient)" style="stroke: #808080; stroke-width: 3;" class="animated-cable" filter="url(#cableGlow)" />
+            
+            <!-- Pillar Blocks with Electricity -->
+            <rect x="370" y="120" width="60" height="60" class="pillar-block" onclick="showExplanation('simple')" />
+            <line x1="400" y1="180" x2="400" y2="200" class="pillar-wire" />
+            <rect x="370" y="200" width="60" height="60" class="pillar-block" onclick="showExplanation('compound')" />
+            <line x1="400" y1="260" x2="400" y2="280" class="pillar-wire" />
+            <rect x="370" y="280" width="60" height="60" class="pillar-block" onclick="showExplanation('complex')" />
+            <line x1="400" y1="340" x2="400" y2="360" class="pillar-wire" />
+            <rect x="370" y="360" width="60" height="60" class="pillar-block" onclick="showExplanation('compound-complex')" />
+            
+            <!-- Pillar Labels (Sentence Types) -->
+            <text x="400" y="150" class="pillar-label" font-size="14">1. Simple</text>
+            <text x="400" y="230" class="pillar-label" font-size="14">2. Compound</text>
+            <text x="400" y="310" class="pillar-label" font-size="14">3. Complex</text>
+            <text x="400" y="390" class="pillar-label" font-size="14">4. Compound-Complex</text>
+            
             <!-- Top Sign with metal gradient -->
             <linearGradient id="signGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" style="stop-color:#B87333;stop-opacity:1" />
                 <stop offset="100%" style="stop-color:#8B4513;stop-opacity:1" />
             </linearGradient>
             <rect x="320" y="60" width="160" height="40" fill="url(#signGradient)" rx="5" stroke="#CD853F" stroke-width="2" />
-            <text x="400" y="90" fill="#FFFFFF" text-anchor="middle" font-weight="bold" font-size="18" filter="url(#metalGlow)">Grammar Station</text>
+            <text x="400" y="90" fill="#FFFFFF" text-anchor="middle" font-weight="bold" font-size="18" filter="url(#metalGlow)">Sentence Structures</text>
             
-            <!-- Pillar Labels -->
-            <text x="430" y="450" class="pillar-label" onclick="redirectToSimpleSentence()">1. Simple Sentence</text>
-            <text x="430" y="350" class="pillar-label" onclick="showExplanation('compound')">2. Compound Sentence</text>
-            <text x="430" y="250" class="pillar-label" onclick="showExplanation('complex')">3. Complex Sentence</text>
-            <text x="430" y="150" class="pillar-label" onclick="showExplanation('compound-complex')">4. Compound-Complex Sentence</text>
-            
-            <!-- Section 1: Parts of Speech -->
+            <!-- Section I: Parts of Speech -->
             <path d="M 400 130 Q 300 100 200 130" class="animated-cable" />
             <rect x="160" y="80" width="80" height="100" class="electricity-box" />
-            <text x="200" y="110" class="branch-label">Parts of Speech</text>
-            <text x="200" y="140" class="box-number">1</text>
+            
+            <!-- Red Button for Section I -->
+            <rect x="140" y="60" width="120" height="40" class="red-button" onclick="showExplanation('parts-of-speech')" />
+            <text x="200" y="75" class="red-button-text">I. Parts of</text>
+            <text x="200" y="90" class="red-button-text">Speech</text>
+            
             <circle cx="80" cy="60" r="12" class="port" onclick="showExplanation('nouns')" />
             <text x="80" y="65" class="port-label">Nouns</text>
             <line x1="80" y1="60" x2="200" y2="130" class="charging-wire" />
@@ -368,11 +542,15 @@
             <text x="100" y="225" class="port-label">Prepositions</text>
             <line x1="100" y1="220" x2="200" y2="130" class="charging-wire" />
             
-            <!-- Section 2: Nonfinite Verbs -->
+            <!-- Section II: Nonfinite Verbs -->
             <path d="M 400 350 Q 300 380 200 350" class="animated-cable" />
             <rect x="160" y="300" width="80" height="100" class="electricity-box" />
-            <text x="200" y="330" class="branch-label">Nonfinite Verbs</text>
-            <text x="200" y="360" class="box-number">2</text>
+            
+            <!-- Red Button for Section II -->
+            <rect x="140" y="280" width="120" height="40" class="red-button" onclick="showExplanation('nonfinite-verbs')" />
+            <text x="200" y="295" class="red-button-text">II. Non-finite</text>
+            <text x="200" y="310" class="red-button-text">Verbs</text>
+            
             <circle cx="80" cy="280" r="12" class="port" onclick="showExplanation('infinitive')" />
             <text x="80" y="285" class="port-label">Infinitive Verbs</text>
             <line x1="80" y1="280" x2="200" y2="350" class="charging-wire" />
@@ -386,11 +564,14 @@
             <text x="140" y="275" class="port-label">Past Participle</text>
             <line x1="140" y1="270" x2="200" y2="350" class="charging-wire" />
             
-            <!-- Section 3: Clauses -->
+            <!-- Section III: Clauses -->
             <path d="M 400 130 Q 500 100 600 130" class="animated-cable" />
             <rect x="560" y="80" width="80" height="100" class="electricity-box" />
-            <text x="600" y="110" class="branch-label">Clauses</text>
-            <text x="600" y="140" class="box-number">3</text>
+            
+            <!-- Red Button for Section III -->
+            <rect x="540" y="60" width="120" height="40" class="red-button" onclick="showExplanation('clauses')" />
+            <text x="600" y="75" class="red-button-text">III. Clauses</text>
+            
             <circle cx="680" cy="60" r="12" class="port" onclick="showExplanation('noun-clause')" />
             <text x="680" y="65" class="port-label">Noun Clause</text>
             <line x1="680" y1="60" x2="600" y2="130" class="charging-wire" />
@@ -401,11 +582,15 @@
             <text x="720" y="125" class="port-label">Adverb Clause</text>
             <line x1="720" y1="120" x2="600" y2="130" class="charging-wire" />
             
-            <!-- Section 4: Special Sentence Structures -->
+            <!-- Section IV: Special Sentence Structures -->
             <path d="M 400 350 Q 500 380 600 350" class="animated-cable" />
             <rect x="560" y="300" width="80" height="100" class="electricity-box" />
-            <text x="600" y="330" class="branch-label">Special Sentence Structures</text>
-            <text x="600" y="360" class="box-number">4</text>
+            
+            <!-- Red Button for Section IV -->
+            <rect x="540" y="280" width="120" height="40" class="red-button" onclick="showExplanation('special-sentences')" />
+            <text x="600" y="295" class="red-button-text">IV. Special</text>
+            <text x="600" y="310" class="red-button-text">Sentences</text>
+            
             <circle cx="680" cy="280" r="12" class="port" onclick="showExplanation('questions')" />
             <text x="680" y="285" class="port-label">Questions</text>
             <line x1="680" y1="280" x2="600" y2="350" class="charging-wire" />
@@ -421,28 +606,44 @@
         </svg>
     </div>
 
-    <!-- Cutie Robot with Free Movement -->
+    <!-- 大號機器人手持翻轉卡片 -->
     <div id="robot-container">
-        <svg id="robot" width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <!-- Antenna -->
-            <line x1="50" y1="5" x2="50" y2="15" class="robot-antenna" />
-            <circle cx="50" cy="5" r="3" fill="#FFD700" />
-            <!-- Robot Head -->
-            <circle cx="50" cy="20" r="15" class="robot-head" />
-            <!-- Eyes -->
-            <circle cx="45" cy="18" r="2" class="robot-eye" />
-            <circle cx="55" cy="18" r="2" class="robot-eye" />
-            <!-- Smile -->
-            <path d="M 45 25 Q 50 30 55 25" class="robot-mouth" />
-            <!-- Robot Body -->
-            <rect x="35" y="35" width="30" height="30" rx="10" class="robot-body" />
-            <!-- Robot Arms (chubby) -->
-            <rect x="20" y="40" width="18" height="8" rx="4" class="robot-body" />
-            <rect x="62" y="40" width="18" height="8" rx="4" class="robot-body" />
-            <!-- Robot Legs (short and stubby) -->
-            <rect x="42" y="70" width="6" height="15" rx="3" class="robot-leg left" transform-origin="45 82.5" />
-            <rect x="52" y="70" width="6" height="15" rx="3" class="robot-leg" transform-origin="55 82.5" />
+        <svg id="robot" width="200" height="300" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
+            <!-- 機器人身體 -->
+            <rect x="50" y="90" width="100" height="80" rx="15" class="robot-body" />
+            
+            <!-- 機器人頭部 -->
+            <circle cx="100" cy="60" r="25" class="robot-head" />
+            
+            <!-- 天線 -->
+            <line x1="100" y1="35" x2="100" y2="15" class="robot-antenna" />
+            <circle cx="100" cy="15" r="4" fill="#FFD700" />
+            
+            <!-- 眼睛 -->
+            <circle cx="92" cy="55" r="3" class="robot-eye" />
+            <circle cx="108" cy="55" r="3" class="robot-eye" />
+            
+            <!-- 微笑 -->
+            <path d="M 90 70 Q 100 80 110 70" class="robot-mouth" />
+            
+            <!-- 腿部 -->
+            <rect x="70" y="175" width="12" height="25" rx="4" class="robot-leg left" />
+            <rect x="118" y="175" width="12" height="25" rx="4" class="robot-leg" />
         </svg>
+        
+        <!-- 翻轉卡片 -->
+        <div class="flip-card" onclick="flipCard()">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <img src="https://ducj-creator.github.io/Shirley-Grammar/assets/sentence%20structure.png" 
+                         alt="Sentence Structure" class="card-image">
+                </div>
+                <div class="flip-card-back">
+                    <img src="https://ducj-creator.github.io/Shirley-Grammar/assets/key%20grammar%20concepts.png" 
+                         alt="Key Grammar Concepts" class="card-image">
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Modal for Explanations -->
@@ -454,9 +655,96 @@
         </div>
     </div>
 
+    <!-- Image Modal for enlarged view -->
+    <div id="image-modal">
+        <span id="image-close">&times;</span>
+        <img id="image-modal-content" src="" alt="Enlarged view">
+    </div>
+
+    <!-- Audio for flip card effect -->
+    <audio id="flipSound" src="https://assets.mixkit.co/sfx/preview/mixkit-electric-arc-2581.mp3" preload="auto"></audio>
+
     <script>
-        // Explanations data
+        // 從CSV文件加載語法點鏈接
+        const CSV_URL = 'https://ducj-creator.github.io/Shirley-Grammar/shirley%20grammar%20key%20points.csv';
+        let grammarLinks = {};
+
+        // 加載CSV數據
+        async function loadCSVData() {
+            try {
+                const response = await fetch(CSV_URL);
+                const csvText = await response.text();
+                grammarLinks = parseCSV(csvText);
+                console.log(`Loaded ${Object.keys(grammarLinks).length} grammar links from CSV`);
+            } catch (error) {
+                console.error('Error loading CSV:', error);
+                // 如果加載失敗，使用默認數據
+                grammarLinks = {
+                    'simple': 'https://ducj-creator.github.io/Shirley-Grammar/simple/',
+                    'compound': 'https://ducj-creator.github.io/Shirley-Grammar/compound/',
+                    'complex': 'https://ducj-creator.github.io/Shirley-Grammar/complex/',
+                    'compound-complex': 'https://ducj-creator.github.io/Shirley-Grammar/compound-complex/'
+                };
+            }
+        }
+
+        // 解析CSV數據
+        function parseCSV(csvText) {
+            const lines = csvText.split('\n');
+            const result = {};
+            
+            // 跳過標題行，從第二行開始
+            for (let i = 1; i < lines.length; i++) {
+                const line = lines[i].trim();
+                if (line && !line.startsWith('#')) {
+                    const columns = line.split(',');
+                    if (columns.length >= 3) {
+                        const key = columns[1].trim();
+                        const url = columns[2].trim();
+                        if (key && url) {
+                            result[key] = url;
+                        }
+                    }
+                }
+            }
+            return result;
+        }
+
+        // 翻轉卡片功能
+        function flipCard() {
+            const card = document.querySelector('.flip-card');
+            card.classList.toggle('flipped');
+            
+            // 播放電流音效
+            const flipSound = document.getElementById('flipSound');
+            flipSound.currentTime = 0;
+            flipSound.play();
+            
+            // 顯示放大圖片
+            const frontImg = document.querySelector('.flip-card-front .card-image');
+            const backImg = document.querySelector('.flip-card-back .card-image');
+            const modalImg = document.getElementById('image-modal-content');
+            
+            if (card.classList.contains('flipped')) {
+                modalImg.src = backImg.src;
+            } else {
+                modalImg.src = frontImg.src;
+            }
+            
+            document.getElementById('image-modal').style.display = 'flex';
+        }
+
+        // 關閉圖片模態框
+        document.getElementById('image-close').onclick = function() {
+            document.getElementById('image-modal').style.display = 'none';
+        }
+
+        // 語法點解釋數據
         const explanations = {
+            'parts-of-speech': { title: "Parts of Speech", text: "The eight parts of speech are the basic categories of words in English grammar: nouns, pronouns, verbs, adjectives, adverbs, prepositions, conjunctions, and interjections." },
+            'nonfinite-verbs': { title: "Non-finite Verbs", text: "Non-finite verbs are verb forms that do not show tense, person, or number. They include infinitives, gerunds, and participles." },
+            'clauses': { title: "Clauses", text: "A clause is a group of words that contains a subject and a verb. There are two main types: independent clauses and dependent clauses." },
+            'special-sentences': { title: "Special Sentences", text: "Special sentence structures include questions, exclamations, inverted sentences, and sentences using the subjunctive mood." },
             simple: { title: "Simple Sentence", text: "A simple sentence consists of one independent clause with a subject and a predicate. It expresses a complete thought. Example: 'The cat sleeps.'" },
             compound: { title: "Compound Sentence", text: "A compound sentence joins two or more independent clauses with coordinating conjunctions (and, but, or, etc.). Example: 'I like tea, and she likes coffee.'" },
             complex: { title: "Complex Sentence", text: "A complex sentence contains one independent clause and at least one dependent clause. Example: 'Although it rained, we went outside.'" },
@@ -485,24 +773,21 @@
         const modalText = document.getElementById('modal-text');
         const close = document.getElementById('close');
 
-        // Function to redirect to Simple Sentence page
-        function redirectToSimpleSentence() {
-            window.location.href = 'https://ducj-creator.github.io/Shirley-Grammar/simple%20sentences/';
-        }
-
         function showExplanation(key) {
-            // If it's simple sentence, redirect instead of showing modal
-            if (key === 'simple') {
-                redirectToSimpleSentence();
-                return;
-            }
-            
             const exp = explanations[key];
             if (exp) {
+                // 檢查是否有對應的鏈接
+                if (grammarLinks[key]) {
+                    // 自動在新標籤頁打開
+                    window.open(grammarLinks[key], '_blank');
+                    return; // 不顯示模態框
+                }
+                
+                // 沒有鏈接的項目顯示模態框
                 modalTitle.textContent = exp.title;
                 modalText.textContent = exp.text;
                 modal.style.display = 'flex';
-                // Animate ports on click
+                
                 if (event && event.target) {
                     event.target.classList.add('animate');
                     setTimeout(() => event.target.classList.remove('animate'), 1000);
@@ -520,8 +805,12 @@
             }
         }
 
-        // Trigger initial animations on load
-        window.onload = function() {
+        // 頁面加載時初始化
+        window.onload = async function() {
+            // 加載CSV數據
+            await loadCSVData();
+            
+            // 觸發初始動畫
             const ports = document.querySelectorAll('.port');
             ports.forEach((port, index) => {
                 setTimeout(() => port.classList.add('animate'), index * 200);
