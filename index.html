@@ -18,6 +18,7 @@
             color: #fff;
             position: relative;
             overflow-x: hidden;
+            cursor: none; /* 隱藏默認鼠標 */
         }
         #station-container {
             text-align: center;
@@ -373,8 +374,10 @@
             position: absolute;
             width: 60px;
             height: 30px;
-            z-index: 5;
-            pointer-events: auto;
+            z-index: 100;
+            pointer-events: none; /* 讓鼠標事件穿透 */
+            transition: transform 0.1s ease-out;
+            transform-origin: center;
         }
         
         .car-body {
@@ -394,84 +397,83 @@
             fill: #333333;
             stroke: #000000;
             stroke-width: 1;
+            animation: wheelSpin 0.5s linear infinite;
+        }
+        
+        @keyframes wheelSpin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
         }
         
         .car-light {
             fill: #FFFF00;
+            animation: lightBlink 1s infinite alternate;
+        }
+        
+        @keyframes lightBlink {
+            from {
+                opacity: 0.7;
+            }
+            to {
+                opacity: 1;
+            }
         }
         
         .car-charger {
             fill: #FF6B6B;
         }
         
-        @keyframes carDrive {
+        .car-floating {
+            animation: carFloat 3s ease-in-out infinite;
+        }
+        
+        @keyframes carFloat {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-5px) rotate(2deg);
+            }
+            75% {
+                transform: translateY(3px) rotate(-2deg);
+            }
+        }
+        
+        /* 充電效果 */
+        .charging-effect {
+            position: absolute;
+            width: 80px;
+            height: 40px;
+            background: radial-gradient(circle, #00ff00 0%, transparent 70%);
+            opacity: 0;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 99;
+        }
+        
+        .charging-animation {
+            animation: chargePulse 0.5s ease-out;
+        }
+        
+        @keyframes chargePulse {
             0% {
-                left: 80px;
-                top: 60px;
-            }
-            10% {
-                left: 120px;
-                top: 200px;
-            }
-            20% {
-                left: 40px;
-                top: 120px;
-            }
-            30% {
-                left: 140px;
-                top: 30px;
-            }
-            40% {
-                left: 100px;
-                top: 220px;
-            }
-            50% {
-                left: 680px;
-                top: 60px;
-            }
-            60% {
-                left: 640px;
-                top: 200px;
-            }
-            70% {
-                left: 720px;
-                top: 120px;
-            }
-            80% {
-                left: 600px;
-                top: 280px;
-            }
-            90% {
-                left: 640px;
-                top: 420px;
+                transform: scale(0.5);
+                opacity: 0.8;
             }
             100% {
-                left: 80px;
-                top: 60px;
-            }
-        }
-        
-        .car-driving {
-            animation: carDrive 20s linear infinite;
-        }
-        
-        .car-bounce {
-            animation: carDrive 20s linear infinite, carBounce 0.5s ease-in-out infinite;
-        }
-        
-        @keyframes carBounce {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-3px);
+                transform: scale(1.5);
+                opacity: 0;
             }
         }
     </style>
 </head>
 <body>
     <div id="station-container">
-        <h1>Shirley's E-Charger</h1>
+        <h1>Shirley's Grammar E-Charger</h1>
         <p>Click on the pillar levels or charging ports to power up your grammar knowledge!</p>
         <svg id="station-svg" width="800" height="600" xmlns="http://www.w3.org/2000/svg">
             <!-- Definitions for mechanical metal effects -->
@@ -693,7 +695,7 @@
     </div>
 
     <!-- 電動車 -->
-    <div id="electric-car" class="car-driving">
+    <div id="electric-car" class="car-floating">
         <svg width="60" height="30" viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg">
             <!-- 車身 -->
             <rect x="5" y="8" width="50" height="14" rx="5" class="car-body" />
@@ -717,6 +719,9 @@
                   fill="#FFD700" stroke="#FFA500" stroke-width="0.5" />
         </svg>
     </div>
+
+    <!-- 充電效果 -->
+    <div id="charging-effect" class="charging-effect"></div>
 
     <!-- 大號機器人手持翻轉卡片 -->
     <div id="robot-container">
@@ -967,34 +972,98 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
             }
         }
 
-        // 電動車功能
+        // 電動車跟隨鼠標功能
         function initElectricCar() {
             const car = document.getElementById('electric-car');
             const carSound = document.getElementById('carSound');
+            const chargingEffect = document.getElementById('charging-effect');
             
-            // 設置電動車初始位置
-            car.style.left = '80px';
-            car.style.top = '60px';
+            let mouseX = 0;
+            let mouseY = 0;
+            let carX = 0;
+            let carY = 0;
             
-            // 循環播放電動車音效
-            setInterval(() => {
-                carSound.currentTime = 0;
-                carSound.play().catch(e => console.log('Audio play failed:', e));
-            }, 20000);
+            // 追蹤鼠標位置
+            document.addEventListener('mousemove', function(e) {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+            
+            // 平滑跟隨動畫
+            function animateCar() {
+                // 計算車子應該移動到的位置（鼠標位置偏移，讓車子在鼠標下方）
+                const targetX = mouseX - 30; // 讓車子中心對準鼠標
+                const targetY = mouseY - 15;
+                
+                // 平滑移動
+                carX += (targetX - carX) * 0.1;
+                carY += (targetY - carY) * 0.1;
+                
+                // 設置車子位置
+                car.style.left = carX + 'px';
+                car.style.top = carY + 'px';
+                
+                // 根據移動方向輕微旋轉車子，創造更自然的感覺
+                const dx = targetX - carX;
+                const rotation = Math.atan2(dx, 10) * 5; // 輕微旋轉效果
+                car.style.transform = `rotate(${rotation}deg)`;
+                
+                // 更新充電效果位置
+                chargingEffect.style.left = (carX - 10) + 'px';
+                chargingEffect.style.top = (carY - 5) + 'px';
+                
+                requestAnimationFrame(animateCar);
+            }
+            
+            // 檢查是否在充電端口附近
+            function checkChargingPorts() {
+                const ports = document.querySelectorAll('.port');
+                let isCharging = false;
+                
+                ports.forEach(port => {
+                    const rect = port.getBoundingClientRect();
+                    const portCenterX = rect.left + rect.width / 2;
+                    const portCenterY = rect.top + rect.height / 2;
+                    
+                    // 計算車子與端口的距離
+                    const distance = Math.sqrt(
+                        Math.pow(carX - portCenterX, 2) + 
+                        Math.pow(carY - portCenterY, 2)
+                    );
+                    
+                    // 如果在充電範圍內
+                    if (distance < 50) {
+                        isCharging = true;
+                        if (!chargingEffect.classList.contains('charging-animation')) {
+                            chargingEffect.classList.add('charging-animation');
+                            // 播放充電音效
+                            carSound.currentTime = 0;
+                            carSound.play().catch(e => console.log('Audio play failed:', e));
+                        }
+                    }
+                });
+                
+                if (!isCharging) {
+                    chargingEffect.classList.remove('charging-animation');
+                }
+            }
+            
+            // 開始動畫
+            animateCar();
+            
+            // 定期檢查充電狀態
+            setInterval(checkChargingPorts, 100);
             
             // 點擊電動車時的特殊效果
-            car.addEventListener('click', function() {
-                showStatus('Electric car is charging at different grammar ports!');
-                carSound.currentTime = 0;
-                carSound.play().catch(e => console.log('Audio play failed:', e));
+            car.addEventListener('click', function(e) {
+                e.stopPropagation(); // 防止事件冒泡
+                showStatus('Electric car ready to charge! Move me to any grammar port!');
                 
                 // 添加點擊動畫
-                car.classList.remove('car-driving');
-                car.classList.add('car-bounce');
+                car.style.transform = 'scale(1.2) rotate(10deg)';
                 setTimeout(() => {
-                    car.classList.remove('car-bounce');
-                    car.classList.add('car-driving');
-                }, 1000);
+                    car.style.transform = '';
+                }, 500);
             });
         }
 
