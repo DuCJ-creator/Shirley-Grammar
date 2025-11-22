@@ -263,7 +263,7 @@
             stroke-width: 2;
         }
         
-        /* 翻轉卡片樣式 */
+             /* 翻轉卡片樣式 - 修正放大功能 */
         .flip-card {
             position: absolute;
             top: 100px;
@@ -273,6 +273,11 @@
             perspective: 1000px;
             cursor: pointer;
             z-index: 3;
+            transition: all 0.3s ease;
+        }
+        .flip-card:hover {
+            transform: scale(1.8); /* 放大比例調整 */
+            z-index: 10; /* 確保在最上層 */
         }
         .flip-card-inner {
             position: relative;
@@ -300,6 +305,7 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.3);
             padding: 0;
             margin: 0;
+            overflow: hidden; /* 確保內容不會溢出 */
         }
         .flip-card-back {
             transform: rotateY(180deg);
@@ -307,8 +313,9 @@
         .card-image {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain; /* 改為 contain 確保完整顯示圖片 */
             border-radius: 7px;
+            transition: transform 0.3s ease;
         }
         
         /* 紅色按鈕樣式 */
@@ -483,10 +490,10 @@
             <rect x="370" y="360" width="60" height="60" class="pillar-block" onclick="handlePillarClick('compound-complex')" />
             
             <!-- Pillar Labels (Sentence Types) -->
-            <text x="400" y="150" class="pillar-label" font-size="14">1. Simple</text>
-            <text x="400" y="230" class="pillar-label" font-size="14">2. Compound</text>
-            <text x="400" y="310" class="pillar-label" font-size="14">3. Complex</text>
-            <text x="400" y="390" class="pillar-label" font-size="14">4. Compound-Complex</text>
+            <text x="400" y="150" class="pillar-label" font-size="14" onclick="handlePillarClick('simple')">1. Simple</text>
+            <text x="400" y="230" class="pillar-label" font-size="14" onclick="handlePillarClick('compound')">2. Compound</text>
+            <text x="400" y="310" class="pillar-label" font-size="14" onclick="handlePillarClick('complex')">3. Complex</text>
+            <text x="400" y="390" class="pillar-label" font-size="14" onclick="handlePillarClick('compound-complex')">4. Compound-Complex</text>
             
             <!-- Top Sign with metal gradient -->
             <linearGradient id="signGradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -610,7 +617,7 @@
             <rect x="118" y="175" width="12" height="25" rx="4" class="robot-leg" />
         </svg>
         
-        <!-- 翻轉卡片 -->
+        <!-- 翻轉卡片 - 添加放大功能 -->
         <div class="flip-card" onclick="flipCard()">
             <div class="flip-card-inner">
                 <div class="flip-card-front">
@@ -694,6 +701,12 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
                 grammarLinks = parseCSV(grammarCSV);
                 console.log('Grammar links loaded:', grammarLinks);
                 showStatus(`Loaded ${Object.keys(grammarLinks).length} grammar links`, 3000);
+                
+                // 測試句子結構連結
+                console.log('Simple link:', grammarLinks['simple']);
+                console.log('Compound link:', grammarLinks['compound']);
+                console.log('Complex link:', grammarLinks['complex']);
+                console.log('Compound-complex link:', grammarLinks['compound-complex']);
             } catch (error) {
                 console.error('Error loading grammar links:', error);
                 showStatus('Error loading grammar links', 3000);
@@ -710,16 +723,21 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
             }, duration);
         }
 
-        // 處理柱子點擊
+        // 處理柱子點擊 - 修正大小寫問題
         function handlePillarClick(key) {
             console.log('Pillar clicked:', key, 'URL:', grammarLinks[key]);
-            if (grammarLinks[key]) {
+            
+            // 確保使用小寫鍵值查找
+            const lowerKey = key.toLowerCase();
+            
+            if (grammarLinks[lowerKey]) {
                 showStatus(`Redirecting to ${key}...`);
                 setTimeout(() => {
-                    window.open(grammarLinks[key], '_blank');
+                    window.open(grammarLinks[lowerKey], '_blank');
                 }, 500);
             } else {
-                showStatus(`No link found for ${key}`);
+                console.log('Available keys:', Object.keys(grammarLinks));
+                showStatus(`No link found for ${key}. Available: ${Object.keys(grammarLinks).join(', ')}`);
                 showExplanation(key);
             }
         }
@@ -727,10 +745,14 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
         // 處理端口點擊
         function handlePortClick(key) {
             console.log('Port clicked:', key, 'URL:', grammarLinks[key]);
-            if (grammarLinks[key]) {
+            
+            // 確保使用小寫鍵值查找
+            const lowerKey = key.toLowerCase();
+            
+            if (grammarLinks[lowerKey]) {
                 showStatus(`Redirecting to ${key}...`);
                 setTimeout(() => {
-                    window.open(grammarLinks[key], '_blank');
+                    window.open(grammarLinks[lowerKey], '_blank');
                 }, 500);
             } else {
                 showStatus(`No link found for ${key}`);
@@ -744,7 +766,7 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
             showExplanation(key);
         }
 
-        // 翻轉卡片功能
+        // 翻轉卡片功能 - 添加放大效果
         function flipCard() {
             const card = document.querySelector('.flip-card');
             card.classList.toggle('flipped');
