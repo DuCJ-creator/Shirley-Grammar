@@ -263,7 +263,7 @@
             stroke-width: 2;
         }
         
-             /* 翻轉卡片樣式 - 修正放大功能 */
+        /* 翻轉卡片樣式 */
         .flip-card {
             position: absolute;
             top: 100px;
@@ -276,8 +276,8 @@
             transition: all 0.3s ease;
         }
         .flip-card:hover {
-            transform: scale(1.8); /* 放大比例調整 */
-            z-index: 10; /* 確保在最上層 */
+            transform: scale(1.8);
+            z-index: 10;
         }
         .flip-card-inner {
             position: relative;
@@ -305,7 +305,7 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.3);
             padding: 0;
             margin: 0;
-            overflow: hidden; /* 確保內容不會溢出 */
+            overflow: hidden;
         }
         .flip-card-back {
             transform: rotateY(180deg);
@@ -313,7 +313,7 @@
         .card-image {
             width: 100%;
             height: 100%;
-            object-fit: contain; /* 改為 contain 確保完整顯示圖片 */
+            object-fit: contain;
             border-radius: 7px;
             transition: transform 0.3s ease;
         }
@@ -367,11 +367,111 @@
             z-index: 1000;
             font-size: 12px;
         }
+        
+        /* 電動車樣式 */
+        #electric-car {
+            position: absolute;
+            width: 60px;
+            height: 30px;
+            z-index: 5;
+            pointer-events: auto;
+        }
+        
+        .car-body {
+            fill: #4CAF50;
+            stroke: #2E7D32;
+            stroke-width: 2;
+            rx: 5;
+        }
+        
+        .car-window {
+            fill: #87CEEB;
+            stroke: #4682B4;
+            stroke-width: 1;
+        }
+        
+        .car-wheel {
+            fill: #333333;
+            stroke: #000000;
+            stroke-width: 1;
+        }
+        
+        .car-light {
+            fill: #FFFF00;
+        }
+        
+        .car-charger {
+            fill: #FF6B6B;
+        }
+        
+        @keyframes carDrive {
+            0% {
+                left: 80px;
+                top: 60px;
+            }
+            10% {
+                left: 120px;
+                top: 200px;
+            }
+            20% {
+                left: 40px;
+                top: 120px;
+            }
+            30% {
+                left: 140px;
+                top: 30px;
+            }
+            40% {
+                left: 100px;
+                top: 220px;
+            }
+            50% {
+                left: 680px;
+                top: 60px;
+            }
+            60% {
+                left: 640px;
+                top: 200px;
+            }
+            70% {
+                left: 720px;
+                top: 120px;
+            }
+            80% {
+                left: 600px;
+                top: 280px;
+            }
+            90% {
+                left: 640px;
+                top: 420px;
+            }
+            100% {
+                left: 80px;
+                top: 60px;
+            }
+        }
+        
+        .car-driving {
+            animation: carDrive 20s linear infinite;
+        }
+        
+        .car-bounce {
+            animation: carDrive 20s linear infinite, carBounce 0.5s ease-in-out infinite;
+        }
+        
+        @keyframes carBounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-3px);
+            }
+        }
     </style>
 </head>
 <body>
     <div id="station-container">
-        <h1>Shirley's Grammar E-Charger</h1>
+        <h1>Shirley's E-Charger</h1>
         <p>Click on the pillar levels or charging ports to power up your grammar knowledge!</p>
         <svg id="station-svg" width="800" height="600" xmlns="http://www.w3.org/2000/svg">
             <!-- Definitions for mechanical metal effects -->
@@ -592,6 +692,32 @@
         </svg>
     </div>
 
+    <!-- 電動車 -->
+    <div id="electric-car" class="car-driving">
+        <svg width="60" height="30" viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg">
+            <!-- 車身 -->
+            <rect x="5" y="8" width="50" height="14" rx="5" class="car-body" />
+            
+            <!-- 車窗 -->
+            <rect x="35" y="10" width="15" height="6" rx="2" class="car-window" />
+            
+            <!-- 車輪 -->
+            <circle cx="15" cy="25" r="4" class="car-wheel" />
+            <circle cx="45" cy="25" r="4" class="car-wheel" />
+            
+            <!-- 車燈 -->
+            <circle cx="55" cy="12" r="2" class="car-light" />
+            
+            <!-- 充電插頭 -->
+            <rect x="10" y="5" width="8" height="3" rx="1" class="car-charger" />
+            <rect x="12" y="2" width="4" height="3" rx="1" class="car-charger" />
+            
+            <!-- 閃電標誌 -->
+            <path d="M 25 12 L 28 15 L 26 15 L 29 18 L 27 18 L 30 21 L 27 21 L 25 18 L 27 18 L 24 15 L 26 15 Z" 
+                  fill="#FFD700" stroke="#FFA500" stroke-width="0.5" />
+        </svg>
+    </div>
+
     <!-- 大號機器人手持翻轉卡片 -->
     <div id="robot-container">
         <svg id="robot" width="200" height="300" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
@@ -617,7 +743,7 @@
             <rect x="118" y="175" width="12" height="25" rx="4" class="robot-leg" />
         </svg>
         
-        <!-- 翻轉卡片 - 添加放大功能 -->
+        <!-- 翻轉卡片 -->
         <div class="flip-card" onclick="flipCard()">
             <div class="flip-card-inner">
                 <div class="flip-card-front">
@@ -646,6 +772,8 @@
 
     <!-- Audio for flip card effect -->
     <audio id="flipSound" src="https://assets.mixkit.co/sfx/preview/mixkit-electric-arc-2581.mp3" preload="auto"></audio>
+    <!-- 電動車音效 -->
+    <audio id="carSound" src="https://assets.mixkit.co/sfx/preview/mixkit-electric-car-2393.mp3" preload="auto"></audio>
 
     <script>
         // CSV 數據 - 修正所有連結
@@ -766,7 +894,7 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
             showExplanation(key);
         }
 
-        // 翻轉卡片功能 - 添加放大效果
+        // 翻轉卡片功能
         function flipCard() {
             const card = document.querySelector('.flip-card');
             card.classList.toggle('flipped');
@@ -839,6 +967,37 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
             }
         }
 
+        // 電動車功能
+        function initElectricCar() {
+            const car = document.getElementById('electric-car');
+            const carSound = document.getElementById('carSound');
+            
+            // 設置電動車初始位置
+            car.style.left = '80px';
+            car.style.top = '60px';
+            
+            // 循環播放電動車音效
+            setInterval(() => {
+                carSound.currentTime = 0;
+                carSound.play().catch(e => console.log('Audio play failed:', e));
+            }, 20000);
+            
+            // 點擊電動車時的特殊效果
+            car.addEventListener('click', function() {
+                showStatus('Electric car is charging at different grammar ports!');
+                carSound.currentTime = 0;
+                carSound.play().catch(e => console.log('Audio play failed:', e));
+                
+                // 添加點擊動畫
+                car.classList.remove('car-driving');
+                car.classList.add('car-bounce');
+                setTimeout(() => {
+                    car.classList.remove('car-bounce');
+                    car.classList.add('car-driving');
+                }, 1000);
+            });
+        }
+
         // 頁面加載時初始化
         window.onload = function() {
             // 加載語法點連結
@@ -849,6 +1008,9 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
             ports.forEach((port, index) => {
                 setTimeout(() => port.classList.add('animate'), index * 200);
             });
+            
+            // 初始化電動車
+            initElectricCar();
             
             console.log('Available grammar keys:', Object.keys(grammarLinks));
         };
