@@ -311,39 +311,6 @@
             border-radius: 7px;
         }
         
-        /* 放大圖片樣式 */
-        #image-modal {
-            display: none;
-            position: fixed;
-            z-index: 2000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.9);
-            justify-content: center;
-            align-items: center;
-        }
-        #image-modal-content {
-            max-width: 90%;
-            max-height: 90%;
-            border: 3px solid #B87333;
-            border-radius: 10px;
-            box-shadow: 0 0 30px rgba(184, 115, 51, 0.7);
-        }
-        #image-close {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            color: #fff;
-            font-size: 40px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        #image-close:hover {
-            color: #FFD700;
-        }
-        
         /* 紅色按鈕樣式 */
         .red-button {
             fill: #FF4444;
@@ -380,6 +347,18 @@
             filter: url(#pillarWireGlow);
             stroke-dasharray: 10 5;
             animation: flowWire 0.3s linear infinite;
+        }
+        
+        .status-message {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            z-index: 1000;
+            font-size: 12px;
         }
     </style>
 </head>
@@ -495,13 +474,13 @@
             <rect x="390" y="100" width="20" height="400" fill="url(#pillarGradient)" style="stroke: #808080; stroke-width: 3;" class="animated-cable" filter="url(#cableGlow)" />
             
             <!-- Pillar Blocks with Electricity -->
-            <rect x="370" y="120" width="60" height="60" class="pillar-block" onclick="showExplanation('simple')" />
+            <rect x="370" y="120" width="60" height="60" class="pillar-block" onclick="handlePillarClick('simple')" />
             <line x1="400" y1="180" x2="400" y2="200" class="pillar-wire" />
-            <rect x="370" y="200" width="60" height="60" class="pillar-block" onclick="showExplanation('compound')" />
+            <rect x="370" y="200" width="60" height="60" class="pillar-block" onclick="handlePillarClick('compound')" />
             <line x1="400" y1="260" x2="400" y2="280" class="pillar-wire" />
-            <rect x="370" y="280" width="60" height="60" class="pillar-block" onclick="showExplanation('complex')" />
+            <rect x="370" y="280" width="60" height="60" class="pillar-block" onclick="handlePillarClick('complex')" />
             <line x1="400" y1="340" x2="400" y2="360" class="pillar-wire" />
-            <rect x="370" y="360" width="60" height="60" class="pillar-block" onclick="showExplanation('compound-complex')" />
+            <rect x="370" y="360" width="60" height="60" class="pillar-block" onclick="handlePillarClick('compound-complex')" />
             
             <!-- Pillar Labels (Sentence Types) -->
             <text x="400" y="150" class="pillar-label" font-size="14">1. Simple</text>
@@ -522,23 +501,23 @@
             <rect x="160" y="80" width="80" height="100" class="electricity-box" />
             
             <!-- Red Button for Section I -->
-            <rect x="140" y="60" width="120" height="40" class="red-button" onclick="showExplanation('parts-of-speech')" />
+            <rect x="140" y="60" width="120" height="40" class="red-button" onclick="handleSectionClick('parts-of-speech')" />
             <text x="200" y="75" class="red-button-text">I. Parts of</text>
             <text x="200" y="90" class="red-button-text">Speech</text>
             
-            <circle cx="80" cy="60" r="12" class="port" onclick="showExplanation('nouns')" />
+            <circle cx="80" cy="60" r="12" class="port" onclick="handlePortClick('nouns')" />
             <text x="80" y="65" class="port-label">Nouns</text>
             <line x1="80" y1="60" x2="200" y2="130" class="charging-wire" />
-            <circle cx="120" cy="200" r="12" class="port" onclick="showExplanation('pronouns')" />
+            <circle cx="120" cy="200" r="12" class="port" onclick="handlePortClick('pronouns')" />
             <text x="120" y="205" class="port-label">Pronouns</text>
             <line x1="120" y1="200" x2="200" y2="130" class="charging-wire" />
-            <circle cx="40" cy="120" r="12" class="port" onclick="showExplanation('adjectives-adverbs')" />
+            <circle cx="40" cy="120" r="12" class="port" onclick="handlePortClick('adjectives-adverbs')" />
             <text x="40" y="125" class="port-label">Adjectives & Adverbs</text>
             <line x1="40" y1="120" x2="200" y2="130" class="charging-wire" />
-            <circle cx="140" cy="30" r="12" class="port" onclick="showExplanation('verbs')" />
+            <circle cx="140" cy="30" r="12" class="port" onclick="handlePortClick('verbs')" />
             <text x="140" y="35" class="port-label">Verbs</text>
             <line x1="140" y1="30" x2="200" y2="130" class="charging-wire" />
-            <circle cx="100" cy="220" r="12" class="port" onclick="showExplanation('prepositions')" />
+            <circle cx="100" cy="220" r="12" class="port" onclick="handlePortClick('prepositions')" />
             <text x="100" y="225" class="port-label">Prepositions</text>
             <line x1="100" y1="220" x2="200" y2="130" class="charging-wire" />
             
@@ -547,20 +526,20 @@
             <rect x="160" y="300" width="80" height="100" class="electricity-box" />
             
             <!-- Red Button for Section II -->
-            <rect x="140" y="280" width="120" height="40" class="red-button" onclick="showExplanation('nonfinite-verbs')" />
+            <rect x="140" y="280" width="120" height="40" class="red-button" onclick="handleSectionClick('nonfinite-verbs')" />
             <text x="200" y="295" class="red-button-text">II. Non-finite</text>
             <text x="200" y="310" class="red-button-text">Verbs</text>
             
-            <circle cx="80" cy="280" r="12" class="port" onclick="showExplanation('infinitive')" />
+            <circle cx="80" cy="280" r="12" class="port" onclick="handlePortClick('infinitive')" />
             <text x="80" y="285" class="port-label">Infinitive Verbs</text>
             <line x1="80" y1="280" x2="200" y2="350" class="charging-wire" />
-            <circle cx="120" cy="420" r="12" class="port" onclick="showExplanation('gerund')" />
+            <circle cx="120" cy="420" r="12" class="port" onclick="handlePortClick('gerund')" />
             <text x="120" y="425" class="port-label">Gerund</text>
             <line x1="120" y1="420" x2="200" y2="350" class="charging-wire" />
-            <circle cx="40" cy="340" r="12" class="port" onclick="showExplanation('present-participle')" />
+            <circle cx="40" cy="340" r="12" class="port" onclick="handlePortClick('present-participle')" />
             <text x="40" y="345" class="port-label">Present Participle</text>
             <line x1="40" y1="340" x2="200" y2="350" class="charging-wire" />
-            <circle cx="140" cy="270" r="12" class="port" onclick="showExplanation('past-participle')" />
+            <circle cx="140" cy="270" r="12" class="port" onclick="handlePortClick('past-participle')" />
             <text x="140" y="275" class="port-label">Past Participle</text>
             <line x1="140" y1="270" x2="200" y2="350" class="charging-wire" />
             
@@ -569,16 +548,16 @@
             <rect x="560" y="80" width="80" height="100" class="electricity-box" />
             
             <!-- Red Button for Section III -->
-            <rect x="540" y="60" width="120" height="40" class="red-button" onclick="showExplanation('clauses')" />
+            <rect x="540" y="60" width="120" height="40" class="red-button" onclick="handleSectionClick('clauses')" />
             <text x="600" y="75" class="red-button-text">III. Clauses</text>
             
-            <circle cx="680" cy="60" r="12" class="port" onclick="showExplanation('noun-clause')" />
+            <circle cx="680" cy="60" r="12" class="port" onclick="handlePortClick('noun-clause')" />
             <text x="680" y="65" class="port-label">Noun Clause</text>
             <line x1="680" y1="60" x2="600" y2="130" class="charging-wire" />
-            <circle cx="640" cy="200" r="12" class="port" onclick="showExplanation('adjective-clause')" />
+            <circle cx="640" cy="200" r="12" class="port" onclick="handlePortClick('adjective-clause')" />
             <text x="640" y="205" class="port-label">Adjective Clause</text>
             <line x1="640" y1="200" x2="600" y2="130" class="charging-wire" />
-            <circle cx="720" cy="120" r="12" class="port" onclick="showExplanation('adverb-clause')" />
+            <circle cx="720" cy="120" r="12" class="port" onclick="handlePortClick('adverb-clause')" />
             <text x="720" y="125" class="port-label">Adverb Clause</text>
             <line x1="720" y1="120" x2="600" y2="130" class="charging-wire" />
             
@@ -587,20 +566,20 @@
             <rect x="560" y="300" width="80" height="100" class="electricity-box" />
             
             <!-- Red Button for Section IV -->
-            <rect x="540" y="280" width="120" height="40" class="red-button" onclick="showExplanation('special-sentences')" />
+            <rect x="540" y="280" width="120" height="40" class="red-button" onclick="handleSectionClick('special-sentences')" />
             <text x="600" y="295" class="red-button-text">IV. Special</text>
             <text x="600" y="310" class="red-button-text">Sentences</text>
             
-            <circle cx="680" cy="280" r="12" class="port" onclick="showExplanation('questions')" />
+            <circle cx="680" cy="280" r="12" class="port" onclick="handlePortClick('questions')" />
             <text x="680" y="285" class="port-label">Questions</text>
             <line x1="680" y1="280" x2="600" y2="350" class="charging-wire" />
-            <circle cx="640" cy="420" r="12" class="port" onclick="showExplanation('exclamations')" />
+            <circle cx="640" cy="420" r="12" class="port" onclick="handlePortClick('exclamations')" />
             <text x="640" y="425" class="port-label">Exclamations</text>
             <line x1="640" y1="420" x2="600" y2="350" class="charging-wire" />
-            <circle cx="720" cy="340" r="12" class="port" onclick="showExplanation('inverted')" />
+            <circle cx="720" cy="340" r="12" class="port" onclick="handlePortClick('inverted')" />
             <text x="720" y="345" class="port-label">Inverted</text>
             <line x1="720" y1="340" x2="600" y2="350" class="charging-wire" />
-            <circle cx="600" cy="270" r="12" class="port" onclick="showExplanation('subjunctive')" />
+            <circle cx="600" cy="270" r="12" class="port" onclick="handlePortClick('subjunctive')" />
             <text x="600" y="275" class="port-label">Subjunctive Mood</text>
             <line x1="600" y1="270" x2="600" y2="350" class="charging-wire" />
         </svg>
@@ -655,38 +634,35 @@
         </div>
     </div>
 
-    <!-- Image Modal for enlarged view -->
-    <div id="image-modal">
-        <span id="image-close">&times;</span>
-        <img id="image-modal-content" src="" alt="Enlarged view">
-    </div>
+    <!-- Status Message -->
+    <div id="status-message" class="status-message" style="display: none;"></div>
 
     <!-- Audio for flip card effect -->
     <audio id="flipSound" src="https://assets.mixkit.co/sfx/preview/mixkit-electric-arc-2581.mp3" preload="auto"></audio>
 
     <script>
-        // 從CSV文件加載語法點鏈接
-        const CSV_URL = 'https://ducj-creator.github.io/Shirley-Grammar/shirley%20grammar%20key%20points.csv';
-        let grammarLinks = {};
-
-        // 加載CSV數據
-        async function loadCSVData() {
-            try {
-                const response = await fetch(CSV_URL);
-                const csvText = await response.text();
-                grammarLinks = parseCSV(csvText);
-                console.log(`Loaded ${Object.keys(grammarLinks).length} grammar links from CSV`);
-            } catch (error) {
-                console.error('Error loading CSV:', error);
-                // 如果加載失敗，使用默認數據
-                grammarLinks = {
-                    'simple': 'https://ducj-creator.github.io/Shirley-Grammar/simple/',
-                    'compound': 'https://ducj-creator.github.io/Shirley-Grammar/compound/',
-                    'complex': 'https://ducj-creator.github.io/Shirley-Grammar/complex/',
-                    'compound-complex': 'https://ducj-creator.github.io/Shirley-Grammar/compound-complex/'
-                };
-            }
-        }
+        // CSV 數據 - 直接嵌入在代碼中
+        const grammarCSV = `no.,key point,url
+S-1,simple,https://ducj-creator.github.io/Shirley-Grammar/simple/
+S-2,compound,https://ducj-creator.github.io/Shirley-Grammar/compound/
+S-3,complex,https://ducj-creator.github.io/Shirley-Grammar/complex/
+S-4,compound-complex,https://ducj-creator.github.io/Shirley-Grammar/compound-complex/
+P-1,nouns,https://ducj-creator.github.io/Shirley-Grammar/nouns/
+P-2,pronouns,https://ducj-creator.github.io/Shirley-Grammar/pronouns/
+P-3,adjectives-adverbs,https://ducj-creator.github.io/Shirley-Grammar/adjectives-adverbs/
+P-4,verbs,https://ducj-creator.github.io/Shirley-Grammar/verbs/
+P-5,prepositions,https://ducj-creator.github.io/Shirley-Grammar/prepositions/
+V-1,infinitive,https://ducj-creator.github.io/Shirley-Grammar/infinitive/
+V-2,gerund,https://ducj-creator.github.io/Shirley-Grammar/gerund/
+V-3,present-participle,https://ducj-creator.github.io/Shirley-Grammar/present-participle/
+V-4,past-participle,https://ducj-creator.github.io/Shirley-Grammar/past-participle/
+C-1,noun-clause,https://ducj-creator.github.io/Shirley-Grammar/noun-clause/
+C-2,adjective-clause,https://ducj-creator.github.io/Shirley-Grammar/adjective-clause/
+C-3,adverb-clause,https://ducj-creator.github.io/Shirley-Grammar/adverb-clause/
+SS-1,questions,https://ducj-creator.github.io/Shirley-Grammar/questions/
+SS-2,exclamations,https://ducj-creator.github.io/Shirley-Grammar/exclamations/
+SS-3,inverted,https://ducj-creator.github.io/Shirley-Grammar/inverted/
+SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
 
         // 解析CSV數據
         function parseCSV(csvText) {
@@ -696,7 +672,7 @@
             // 跳過標題行，從第二行開始
             for (let i = 1; i < lines.length; i++) {
                 const line = lines[i].trim();
-                if (line && !line.startsWith('#')) {
+                if (line) {
                     const columns = line.split(',');
                     if (columns.length >= 3) {
                         const key = columns[1].trim();
@@ -710,6 +686,64 @@
             return result;
         }
 
+        // 加載語法點連結
+        let grammarLinks = {};
+        
+        function loadGrammarLinks() {
+            try {
+                grammarLinks = parseCSV(grammarCSV);
+                console.log('Grammar links loaded:', grammarLinks);
+                showStatus(`Loaded ${Object.keys(grammarLinks).length} grammar links`, 3000);
+            } catch (error) {
+                console.error('Error loading grammar links:', error);
+                showStatus('Error loading grammar links', 3000);
+            }
+        }
+
+        // 顯示狀態訊息
+        function showStatus(message, duration = 2000) {
+            const statusEl = document.getElementById('status-message');
+            statusEl.textContent = message;
+            statusEl.style.display = 'block';
+            setTimeout(() => {
+                statusEl.style.display = 'none';
+            }, duration);
+        }
+
+        // 處理柱子點擊
+        function handlePillarClick(key) {
+            console.log('Pillar clicked:', key, 'URL:', grammarLinks[key]);
+            if (grammarLinks[key]) {
+                showStatus(`Redirecting to ${key}...`);
+                setTimeout(() => {
+                    window.open(grammarLinks[key], '_blank');
+                }, 500);
+            } else {
+                showStatus(`No link found for ${key}`);
+                showExplanation(key);
+            }
+        }
+
+        // 處理端口點擊
+        function handlePortClick(key) {
+            console.log('Port clicked:', key, 'URL:', grammarLinks[key]);
+            if (grammarLinks[key]) {
+                showStatus(`Redirecting to ${key}...`);
+                setTimeout(() => {
+                    window.open(grammarLinks[key], '_blank');
+                }, 500);
+            } else {
+                showStatus(`No link found for ${key}`);
+                showExplanation(key);
+            }
+        }
+
+        // 處理章節點擊
+        function handleSectionClick(key) {
+            console.log('Section clicked:', key);
+            showExplanation(key);
+        }
+
         // 翻轉卡片功能
         function flipCard() {
             const card = document.querySelector('.flip-card');
@@ -720,23 +754,7 @@
             flipSound.currentTime = 0;
             flipSound.play();
             
-            // 顯示放大圖片
-            const frontImg = document.querySelector('.flip-card-front .card-image');
-            const backImg = document.querySelector('.flip-card-back .card-image');
-            const modalImg = document.getElementById('image-modal-content');
-            
-            if (card.classList.contains('flipped')) {
-                modalImg.src = backImg.src;
-            } else {
-                modalImg.src = frontImg.src;
-            }
-            
-            document.getElementById('image-modal').style.display = 'flex';
-        }
-
-        // 關閉圖片模態框
-        document.getElementById('image-close').onclick = function() {
-            document.getElementById('image-modal').style.display = 'none';
+            showStatus('Card flipped!');
         }
 
         // 語法點解釋數據
@@ -776,14 +794,6 @@
         function showExplanation(key) {
             const exp = explanations[key];
             if (exp) {
-                // 檢查是否有對應的鏈接
-                if (grammarLinks[key]) {
-                    // 自動在新標籤頁打開
-                    window.open(grammarLinks[key], '_blank');
-                    return; // 不顯示模態框
-                }
-                
-                // 沒有鏈接的項目顯示模態框
                 modalTitle.textContent = exp.title;
                 modalText.textContent = exp.text;
                 modal.style.display = 'flex';
@@ -792,6 +802,8 @@
                     event.target.classList.add('animate');
                     setTimeout(() => event.target.classList.remove('animate'), 1000);
                 }
+            } else {
+                showStatus(`No explanation found for ${key}`);
             }
         }
 
@@ -806,15 +818,17 @@
         }
 
         // 頁面加載時初始化
-        window.onload = async function() {
-            // 加載CSV數據
-            await loadCSVData();
+        window.onload = function() {
+            // 加載語法點連結
+            loadGrammarLinks();
             
             // 觸發初始動畫
             const ports = document.querySelectorAll('.port');
             ports.forEach((port, index) => {
                 setTimeout(() => port.classList.add('animate'), index * 200);
             });
+            
+            console.log('Available grammar keys:', Object.keys(grammarLinks));
         };
     </script>
 </body>
