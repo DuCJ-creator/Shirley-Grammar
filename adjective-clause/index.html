@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shirley's Relative Clauses Learning Platform | 形容詞子句學習平台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #8a2be2;
+            --secondary: #9370db;
+            --accent: #ff69b4;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --success: #28a745;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft JhengHei', '微軟正黑體', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+        
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tab {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            flex: 1;
+            text-align: center;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tab:hover {
+            background-color: rgba(138, 43, 226, 0.1);
+        }
+        
+        .tab.active {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+        }
+        
+        h3 {
+            color: var(--secondary);
+            margin: 1.5rem 0 1rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        th {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .example {
+            background-color: #f0f7ff;
+            border-left: 4px solid var(--accent);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .interactive-element {
+            background-color: var(--light);
+            border: 2px dashed var(--secondary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+        
+        .btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn:hover {
+            background-color: #ff5ba3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(255, 105, 180, 0.3);
+        }
+        
+        .animation-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 1rem;
+        }
+        
+        .clause-animation {
+            height: 200px;
+            background: linear-gradient(135deg, #9370db, #8a2be2);
+            border-radius: 10px;
+            margin: 1.5rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+            background-color: var(--dark);
+            color: white;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .highlight {
+            background-color: #fff9e6;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .clause-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+            margin: 1rem 0;
+        }
+        
+        .clause-item {
+            background: #f0f7ff;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            margin: 1.5rem 0;
+        }
+        
+        .comparison-table th {
+            background-color: var(--secondary);
+        }
+        
+        .note-box {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .usage-diagram {
+            text-align: center;
+            margin: 2rem 0;
+        }
+        
+        .diagram-container {
+            display: flex;
+            justify-content: center;
+            margin: 1.5rem 0;
+        }
+        
+        .diagram {
+            width: 100%;
+            max-width: 600px;
+            height: 300px;
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .diagram-item {
+            position: absolute;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 120px;
+        }
+        
+        .connector-word {
+            color: var(--accent);
+            font-weight: bold;
+        }
+        
+        .antecedent {
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .tab {
+                flex: none;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .clause-list {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Shirley's Relative Clauses Learning Platform</h1>
+            <p class="subtitle">形容詞子句學習平台</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="tabs">
+            <div class="tab active" data-tab="intro">形容詞子句介紹 | Relative Clauses Introduction</div>
+            <div class="tab" data-tab="pronouns">關係代名詞 | Relative Pronouns</div>
+            <div class="tab" data-tab="adverbs">關係副詞 | Relative Adverbs</div>
+            <div class="tab" data-tab="restrictive">限定與非限定 | Restrictive vs Non-Restrictive</div>
+            <div class="tab" data-tab="special">特殊用法 | Special Usage</div>
+            <div class="tab" data-tab="reduction">簡化形容詞子句 | Reducing Relative Clauses</div>
+        </div>
+        
+        <!-- 形容詞子句介紹 -->
+        <div class="tab-content active" id="intro">
+            <h2>形容詞子句介紹 | Relative Clauses Introduction</h2>
+            
+            <div class="card">
+                <h3>什麼是形容詞子句？ | What is a Relative Clause?</h3>
+                <p>形容詞子句又稱關係子句，由關係代名詞(who, whom, whose, which, that)或關係副詞(when, where, why)所引導，用於修飾一個先前出現的名詞，又稱先行詞。</p>
+                <p>A relative clause, also known as an adjective clause, is introduced by relative pronouns (who, whom, whose, which, that) or relative adverbs (when, where, why) and is used to modify a previously mentioned noun, also known as an antecedent.</p>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> The man <span class="highlight">who is standing there</span> is my teacher. | 站在那裡的那個男人是我的老師。</p>
+                    <p><strong>例子 Example:</strong> This is the book <span class="highlight">that I bought yesterday</span>. | 這是我昨天買的書。</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>形容詞子句的基本結構 | Basic Structure of Relative Clauses</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>先行詞 Antecedent</th>
+                            <th>關係詞 Relative Word</th>
+                            <th>例子 Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>人 (person)</td>
+                            <td>who, whom, that</td>
+                            <td>The woman <span class="highlight">who lives next door</span> is a doctor.</td>
+                        </tr>
+                        <tr>
+                            <td>物 (thing)</td>
+                            <td>which, that</td>
+                            <td>The book <span class="highlight">which is on the table</span> is mine.</td>
+                        </tr>
+                        <tr>
+                            <td>所有格 (possessive)</td>
+                            <td>whose</td>
+                            <td>The student <span class="highlight">whose father is a teacher</span> studies hard.</td>
+                        </tr>
+                        <tr>
+                            <td>地點 (place)</td>
+                            <td>where</td>
+                            <td>This is the house <span class="highlight">where I was born</span>.</td>
+                        </tr>
+                        <tr>
+                            <td>時間 (time)</td>
+                            <td>when</td>
+                            <td>I remember the day <span class="highlight">when we first met</span>.</td>
+                        </tr>
+                        <tr>
+                            <td>原因 (reason)</td>
+                            <td>why</td>
+                            <td>That is the reason <span class="highlight">why I'm late</span>.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="card">
+                <h3>形容詞子句的用法 | Uses of Relative Clauses</h3>
+                <p>形容詞子句在句子中主要用來修飾名詞，提供更多關於該名詞的資訊。</p>
+                <p>Relative clauses are mainly used to modify nouns in a sentence, providing more information about that noun.</p>
+                
+                <div class="usage-diagram">
+                    <div class="diagram-container">
+                        <div class="diagram">
+                            <div class="diagram-item" style="top: 20px; left: 50px;">先行詞<br>Antecedent</div>
+                            <div class="diagram-item" style="top: 20px; right: 50px;">關係詞<br>Relative Word</div>
+                            <div class="diagram-item" style="top: 120px; left: 150px;">主詞<br>Subject</div>
+                            <div class="diagram-item" style="top: 120px; right: 150px;">受詞<br>Object</div>
+                            <div class="diagram-item" style="bottom: 20px; left: 250px;">所有格<br>Possessive</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="interactive-element">
+                <h3>形容詞子句練習 | Relative Clause Practice</h3>
+                <p>識別句子中的形容詞子句</p>
+                <p>Identify the relative clause in the sentence</p>
+                <div class="clause-animation" id="clauseAnimation">
+                    The book that I'm reading is very interesting.
+                </div>
+                <div class="animation-controls">
+                    <button class="btn" id="playAnimation">
+                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
+                    </button>
+                    <button class="btn" id="pauseAnimation">
+                        <i class="fas fa-pause"></i> 暫停 | Pause
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 關係代名詞 -->
+        <div class="tab-content" id="pronouns">
+            <h2>關係代名詞 | Relative Pronouns</h2>
+            
+            <div class="card">
+                <h3>who, whom, that (先行詞為人) | who, whom, that (for people)</h3>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> She is a teacher <span class="highlight">who teaches English writing</span>.</p>
+                    <p>她是一位教英語寫作的老師。</p>
+                    <p><em>(who 在子句中作主詞，可以用that代替，不可以省略)</em></p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> She is a teacher <span class="highlight">whom many of her students respect</span>.</p>
+                    <p>她是一位許多學生尊敬的老師。</p>
+                    <p><em>(whom 在子句中作受詞，可以用that 代替，也可以省略)</em></p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> Young people <span class="highlight">who abuse their aged parents</span> should be condemned.</p>
+                    <p>虐待年邁父母的年輕人應該受到譴責。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> A patient <span class="highlight">to whom doctors tell white lies</span> may enjoy a longer life.</p>
+                    <p>醫生對其說善意謊言的病人可能會享受更長的壽命。</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>whose (所有格：... 的) | whose (possessive: ...'s)</h3>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> The students <span class="highlight">whose English grammar is weak</span> will find English writing particularly challenging.</p>
+                    <p>英語語法薄弱的學生會發現英語寫作特別具有挑戰性。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> Her brother, <span class="highlight">whose hair is long</span>, is a professional dancer.</p>
+                    <p>她的哥哥，頭髮很長，是一名專業舞者。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> The house <span class="highlight">whose roof is old</span> belongs to the government.</p>
+                    <p>屋頂老舊的房子屬於政府。</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>which, that (先行詞為物) | which, that (for things)</h3>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> I like the dress <span class="highlight">that/which my brother brought me</span>.</p>
+                    <p>我喜歡我哥哥給我帶來的連衣裙。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> We live in Taiwan, <span class="highlight">which has a variety of delicious foods</span>.</p>
+                    <p>我們住在台灣，那裡有各種各樣的美食。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> I bought a new computer <span class="highlight">that is not very expensive</span>.</p>
+                    <p>我買了一台不太貴的新電腦。</p>
+                </div>
+            </div>
+            
+            <div class="interactive-element">
+                <h3>關係代名詞練習 | Relative Pronoun Practice</h3>
+                <p>選擇正確的關係代名詞完成句子</p>
+                <p>Select the correct relative pronoun to complete the sentence</p>
+                <div class="clause-animation" id="pronounAnimation">
+                    The woman ______ lives next door is a doctor.
+                </div>
+                <div class="animation-controls">
+                    <button class="btn" id="playPronounAnimation">
+                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
+                    </button>
+                    <button class="btn" id="pausePronounAnimation">
+                        <i class="fas fa-pause"></i> 暫停 | Pause
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 關係副詞 -->
+        <div class="tab-content" id="adverbs">
+            <h2>關係副詞 | Relative Adverbs</h2>
+            
+            <div class="card">
+                <h3>where, when, why (修飾地點，時間，原因) | where, when, why (modifying place, time, reason)</h3>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> I come from New Zealand, a country <span class="highlight">where there are more sheep than people</span>.</p>
+                    <p>我來自紐西蘭，一個羊比人多的國家。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> They had a meal at the bar <span class="highlight">where they met each other the first time two years ago</span>.</p>
+                    <p>他們在兩年前第一次見面的酒吧吃了一頓飯。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> I will never forget the day <span class="highlight">when I first arrived in Taipei</span>.</p>
+                    <p>我永遠不會忘記我第一次到達台北的那一天。</p>
+                    <p><em>(that/ on which)</em></p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> We haven't met each other since the year <span class="highlight">when we graduated from university</span>.</p>
+                    <p>自從我們大學畢業的那一年以來，我們就沒有見過面。</p>
+                    <p><em>(that/ in which)</em></p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> Being afraid of gaining weight is the main reason <span class="highlight">why the girl is on a diet</span>.</p>
+                    <p>害怕增重是這個女孩節食的主要原因。</p>
+                    <p><em>(that/ for which)</em></p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>關係副詞的替代用法 | Alternative Uses of Relative Adverbs</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>關係副詞 Relative Adverb</th>
+                            <th>替代用法 Alternative</th>
+                            <th>例子 Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>where</td>
+                            <td>preposition + which</td>
+                            <td>the house where I live = the house in which I live</td>
+                        </tr>
+                        <tr>
+                            <td>when</td>
+                            <td>preposition + which</td>
+                            <td>the day when we met = the day on which we met</td>
+                        </tr>
+                        <tr>
+                            <td>why</td>
+                            <td>for which</td>
+                            <td>the reason why I came = the reason for which I came</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="interactive-element">
+                <h3>關係副詞練習 | Relative Adverb Practice</h3>
+                <p>選擇正確的關係副詞完成句子</p>
+                <p>Select the correct relative adverb to complete the sentence</p>
+                <div class="clause-animation" id="adverbAnimation">
+                    I remember the day ______ we first met.
+                </div>
+                <div class="animation-controls">
+                    <button class="btn" id="playAdverbAnimation">
+                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
+                    </button>
+                    <button class="btn" id="pauseAdverbAnimation">
+                        <i class="fas fa-pause"></i> 暫停 | Pause
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 限定與非限定 -->
+        <div class="tab-content" id="restrictive">
+            <h2>限定與非限定 | Restrictive vs Non-Restrictive</h2>
+            
+            <div class="card">
+                <h3>限定關係子句 | Restrictive Relative Clauses</h3>
+                <p>限定關係子句用來限定或修飾先行詞，前面通常不加逗號(，)，含有句子的重要信息，拿掉限定關係子句，句子的意義會不完整。</p>
+                <p>Restrictive relative clauses are used to limit or modify the antecedent, usually without a comma before them, containing important information of the sentence. If the restrictive relative clause is removed, the meaning of the sentence will be incomplete.</p>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> I like the photo <span class="highlight">that you just posted on your FB</span>.</p>
+                    <p>我喜歡你剛剛在臉書上發布的照片。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> The student <span class="highlight">who sits in the back of the room</span> asks a lot of questions.</p>
+                    <p>坐在教室後面的學生問了很多問題。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> Children <span class="highlight">who are addicted to computer games</span> will feel isolated from the real world.</p>
+                    <p>沉迷於電腦遊戲的孩子會感到與現實世界隔絕。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> People <span class="highlight">who like to cooperate with others</span> usually have better interpersonal relationships.</p>
+                    <p>喜歡與他人合作的人通常有更好的人際關係。</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>非限定關係子句 | Non-Restrictive Relative Clauses</h3>
+                <p>非限定關係子句用來補充或附加說明先行詞, 前面通常有逗號, 關係代名詞不能是that。拿掉非限定關係子句, 句子的意義不會有重大的改變。</p>
+                <p>Non-restrictive relative clauses are used to supplement or add additional information about the antecedent, usually with a comma before them, and the relative pronoun cannot be "that". If the non-restrictive relative clause is removed, the meaning of the sentence will not change significantly.</p>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> Their English teacher, <span class="highlight">who just came back from the US</span>, is sharing with them his trip to the US.</p>
+                    <p>他們的英語老師，剛從美國回來，正在與他們分享他的美國之旅。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> Jenny, <span class="highlight">whose mother is sick</span>, has to ask for a leave from school.</p>
+                    <p>珍妮，她的母親生病了，不得不向學校請假。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> Minneapolis, <span class="highlight">which has a population of about 400,000</span>, is the largest city in Minnesota.</p>
+                    <p>明尼阿波利斯，人口約40萬，是明尼蘇達州最大的城市。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> Andy has two sisters, <span class="highlight">both of whom are doctors</span>.</p>
+                    <p>安迪有兩個姐妹，她們都是醫生。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> The baseball team, <span class="highlight">many of whose players come from southern Taiwan</span>, won the championship.</p>
+                    <p>這支棒球隊，其許多球員來自台灣南部，贏得了冠軍。</p>
+                </div>
+            </div>
+            
+            <div class="interactive-element">
+                <h3>限定與非限定練習 | Restrictive vs Non-Restrictive Practice</h3>
+                <p>區分限定與非限定關係子句</p>
+                <p>Distinguish between restrictive and non-restrictive relative clauses</p>
+                <div class="clause-animation" id="restrictiveAnimation">
+                    My brother, who lives in London, is a doctor.
+                </div>
+                <div class="animation-controls">
+                    <button class="btn" id="playRestrictiveAnimation">
+                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
+                    </button>
+                    <button class="btn" id="pauseRestrictiveAnimation">
+                        <i class="fas fa-pause"></i> 暫停 | Pause
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 特殊用法 -->
+        <div class="tab-content" id="special">
+            <h2>特殊用法 | Special Usage</h2>
+            
+            <div class="card">
+                <h3>as/which 引導非限定關係子句 | as/which Introducing Non-Restrictive Relative Clauses</h3>
+                <p>as/which 可以引導非限定關係子句，代表前面整個句子。</p>
+                <p>as/which can introduce non-restrictive relative clauses, representing the entire preceding sentence.</p>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> He is very honest, <span class="highlight">as/which we can tell</span>.</p>
+                    <p>他非常誠實，這一點我們可以看出來。</p>
+                </div>
+                
+                <div class="note-box">
+                    <p><strong>as vs which 的區別：</strong></p>
+                    <p>as 引導的非限定關係子句，常有「正如，正像」的含義，並且可以放在主句前，後，或分割主句；而 which 引導的只可放在主句後，並且，當主句和子句之間存在因果關係時，關係詞只用which。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>as 的例子 Examples with as:</strong></p>
+                    <p><span class="highlight">As is known to many people</span>, the US is a developed country.</p>
+                    <p>The US is a developed country, <span class="highlight">as is known to many people</span>.</p>
+                    <p>The US, <span class="highlight">as is known to many people</span>, is a developed country.</p>
+                    <p><em>一些固定表達： as we can see; as is well known; as often happens;</em></p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>which 的例子 Examples with which:</strong></p>
+                    <p>Andy was late for school again and again, <span class="highlight">which made his teacher very angry</span>.</p>
+                    <p>These desks are made of marble, <span class="highlight">which made them very heavy</span>.</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>關係代名詞只能用that 的情況 | Cases Where Only "that" Can Be Used</h3>
+                
+                <div class="example">
+                    <p><strong>先行詞有最高級修飾：</strong> This is the most interesting book <span class="highlight">that I have ever read</span>.</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>先行詞同時有人和物：</strong> I saw Jenny and her dog <span class="highlight">that were running in the park</span>.</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>先行詞前有first, last, next, only, very, every 等修飾：</strong> Auckland is the first city <span class="highlight">that I lived in New Zealand</span>.</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>先行詞為不定代名詞時：</strong> Is there anything <span class="highlight">that you want to say</span>?</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>由who, which 開頭的疑問句，為避免混淆，子句中用that：</strong></p>
+                    <p>Who is the woman <span class="highlight">that just asked the question</span>?</p>
+                    <p>Which is the book <span class="highlight">that you recommend the most</span>?</p>
+                </div>
+            </div>
+            
+            <div class="interactive-element">
+                <h3>特殊用法練習 | Special Usage Practice</h3>
+                <p>選擇正確的關係詞完成句子</p>
+                <p>Select the correct relative word to complete the sentence</p>
+                <div class="clause-animation" id="specialAnimation">
+                    This is the best movie ______ I have ever seen.
+                </div>
+                <div class="animation-controls">
+                    <button class="btn" id="playSpecialAnimation">
+                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
+                    </button>
+                    <button class="btn" id="pauseSpecialAnimation">
+                        <i class="fas fa-pause"></i> 暫停 | Pause
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 簡化形容詞子句 -->
+        <div class="tab-content" id="reduction">
+            <h2>簡化形容詞子句 | Reducing Relative Clauses</h2>
+            
+            <div class="card">
+                <h3>形容詞子句的簡化 | Reduction of Relative Clauses</h3>
+                <p>一些關係子句可以被縮略為非限定動詞，意思不變。</p>
+                <p>Some relative clauses can be reduced to non-finite verbs without changing the meaning.</p>
+                
+                <div class="example">
+                    <p><strong>完整句子 Full Sentence:</strong> The boy <span class="highlight">who is sitting at the back</span> is my brother.</p>
+                    <p><strong>簡化句子 Reduced Sentence:</strong> The boy <span class="highlight">sitting at the back</span> is my brother.</p>
+                    <p>坐在後面的男孩是我的兄弟。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>完整句子 Full Sentence:</strong> All the books <span class="highlight">that were written by the author</span> are popular.</p>
+                    <p><strong>簡化句子 Reduced Sentence:</strong> All the books <span class="highlight">written by the author</span> are popular.</p>
+                    <p>這位作者寫的所有書都很受歡迎。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>完整句子 Full Sentence:</strong> I am a teacher <span class="highlight">who teaches English at ChungHsin School</span>.</p>
+                    <p><strong>簡化句子 Reduced Sentence:</strong> I am a teacher <span class="highlight">teaching English at ChungHsin School</span>.</p>
+                    <p>我是一名在中興學校教英語的老師。</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>簡化規則 | Reduction Rules</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>情況 Situation</th>
+                            <th>規則 Rule</th>
+                            <th>例子 Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>主動語態</td>
+                            <td>省略關係代名詞和be動詞，保留現在分詞</td>
+                            <td>The man who is standing there → The man standing there</td>
+                        </tr>
+                        <tr>
+                            <td>被動語態</td>
+                            <td>省略關係代名詞和be動詞，保留過去分詞</td>
+                            <td>The book that was written by him → The book written by him</td>
+                        </tr>
+                        <tr>
+                            <td>有助動詞</td>
+                            <td>不能簡化</td>
+                            <td>The student who can speak English → 不能簡化</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="interactive-element">
+                <h3>簡化練習 | Reduction Practice</h3>
+                <p>將形容詞子句簡化</p>
+                <p>Reduce the relative clause</p>
+                <div class="clause-animation" id="reductionAnimation">
+                    The woman who is wearing a red dress is my sister.
+                </div>
+                <div class="animation-controls">
+                    <button class="btn" id="playReductionAnimation">
+                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
+                    </button>
+                    <button class="btn" id="pauseReductionAnimation">
+                        <i class="fas fa-pause"></i> 暫停 | Pause
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Shirley's Relative Clauses Learning Platform | 形容詞子句學習平台</p>
+        <p>© 2025 Shirley's Grammar E-Charger</p>
+    </footer>
+
+    <script>
+        // 選項卡功能
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // 移除所有活動標籤和內容
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // 添加活動類到當前標籤
+                tab.classList.add('active');
+                
+                // 顯示對應的內容
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+                
+                // 播放切換音效
+                playSound('click');
+            });
+        });
+        
+        // 動畫控制
+        let animationInterval;
+        
+        // 形容詞子句介紹動畫
+        document.getElementById('playAnimation').addEventListener('click', () => {
+            const animation = document.getElementById('clauseAnimation');
+            
+            let count = 0;
+            const sentences = [
+                {sentence: 'The book <span class="highlight">that I\'m reading</span> is very interesting.', explanation: '形容詞子句: that I\'m reading'},
+                {sentence: 'The woman <span class="highlight">who lives next door</span> is a doctor.', explanation: '形容詞子句: who lives next door'},
+                {sentence: 'This is the house <span class="highlight">where I was born</span>.', explanation: '形容詞子句: where I was born'},
+                {sentence: 'I remember the day <span class="highlight">when we first met</span>.', explanation: '形容詞子句: when we first met'},
+                {sentence: 'The student <span class="highlight">whose father is a teacher</span> studies hard.', explanation: '形容詞子句: whose father is a teacher'}
+            ];
+            
+            clearInterval(animationInterval);
+            animationInterval = setInterval(() => {
+                animation.innerHTML = `${sentences[count].sentence}<br><small>${sentences[count].explanation}</small>`;
+                count = (count + 1) % sentences.length;
+            }, 2000);
+            
+            // 播放音效
+            playSound('success');
+        });
+        
+        document.getElementById('pauseAnimation').addEventListener('click', () => {
+            clearInterval(animationInterval);
+            // 播放音效
+            playSound('click');
+        });
+        
+        // 關係代名詞動畫
+        document.getElementById('playPronounAnimation').addEventListener('click', () => {
+            const animation = document.getElementById('pronounAnimation');
+            
+            let count = 0;
+            const sentences = [
+                {pronoun: '<span class="highlight">who</span>'},
+                {pronoun: '<span class="highlight">that</span>'},
+                {pronoun: '<span class="highlight">which</span>'},
+                {pronoun: '<span class="highlight">whose</span>'},
+                {pronoun: '<span class="highlight">whom</span>'}
+            ];
+            
+            clearInterval(animationInterval);
+            animationInterval = setInterval(() => {
+                animation.innerHTML = `The woman ${sentences[count].pronoun} lives next door is a doctor.`;
+                count = (count + 1) % sentences.length;
+            }, 2000);
+            
+            // 播放音效
+            playSound('success');
+        });
+        
+        document.getElementById('pausePronounAnimation').addEventListener('click', () => {
+            clearInterval(animationInterval);
+            // 播放音效
+            playSound('click');
+        });
+        
+        // 關係副詞動畫
+        document.getElementById('playAdverbAnimation').addEventListener('click', () => {
+            const animation = document.getElementById('adverbAnimation');
+            
+            let count = 0;
+            const sentences = [
+                {adverb: '<span class="highlight">when</span>'},
+                {adverb: '<span class="highlight">where</span>'},
+                {adverb: '<span class="highlight">why</span>'},
+                {adverb: '<span class="highlight">that</span>'},
+                {adverb: '<span class="highlight">on which</span>'}
+            ];
+            
+            clearInterval(animationInterval);
+            animationInterval = setInterval(() => {
+                animation.innerHTML = `I remember the day ${sentences[count].adverb} we first met.`;
+                count = (count + 1) % sentences.length;
+            }, 2000);
+            
+            // 播放音效
+            playSound('success');
+        });
+        
+        document.getElementById('pauseAdverbAnimation').addEventListener('click', () => {
+            clearInterval(animationInterval);
+            // 播放音效
+            playSound('click');
+        });
+        
+        // 限定與非限定動畫
+        document.getElementById('playRestrictiveAnimation').addEventListener('click', () => {
+            const animation = document.getElementById('restrictiveAnimation');
+            
+            let count = 0;
+            const sentences = [
+                {sentence: 'My brother, <span class="highlight">who lives in London</span>, is a doctor.', type: '非限定 Non-Restrictive'},
+                {sentence: 'The man <span class="highlight">who lives next door</span> is a doctor.', type: '限定 Restrictive'},
+                {sentence: 'Taipei, <span class="highlight">which is the capital of Taiwan</span>, is a busy city.', type: '非限定 Non-Restrictive'},
+                {sentence: 'The book <span class="highlight">that I\'m reading</span> is very interesting.', type: '限定 Restrictive'},
+                {sentence: 'My car, <span class="highlight">which is very old</span>, broke down again.', type: '非限定 Non-Restrictive'}
+            ];
+            
+            clearInterval(animationInterval);
+            animationInterval = setInterval(() => {
+                animation.innerHTML = `${sentences[count].sentence}<br><small>${sentences[count].type}</small>`;
+                count = (count + 1) % sentences.length;
+            }, 2000);
+            
+            // 播放音效
+            playSound('success');
+        });
+        
+        document.getElementById('pauseRestrictiveAnimation').addEventListener('click', () => {
+            clearInterval(animationInterval);
+            // 播放音效
+            playSound('click');
+        });
+        
+        // 特殊用法動畫
+        document.getElementById('playSpecialAnimation').addEventListener('click', () => {
+            const animation = document.getElementById('specialAnimation');
+            
+            let count = 0;
+            const sentences = [
+                {word: '<span class="highlight">that</span>'},
+                {word: '<span class="highlight">which</span>'},
+                {word: '<span class="highlight">who</span>'},
+                {word: '<span class="highlight">whom</span>'},
+                {word: '<span class="highlight">whose</span>'}
+            ];
+            
+            clearInterval(animationInterval);
+            animationInterval = setInterval(() => {
+                animation.innerHTML = `This is the best movie ${sentences[count].word} I have ever seen.`;
+                count = (count + 1) % sentences.length;
+            }, 2000);
+            
+            // 播放音效
+            playSound('success');
+        });
+        
+        document.getElementById('pauseSpecialAnimation').addEventListener('click', () => {
+            clearInterval(animationInterval);
+            // 播放音效
+            playSound('click');
+        });
+        
+        // 簡化動畫
+        document.getElementById('playReductionAnimation').addEventListener('click', () => {
+            const animation = document.getElementById('reductionAnimation');
+            
+            let count = 0;
+            const sentences = [
+                {full: 'The woman <span class="highlight">who is wearing a red dress</span> is my sister.', reduced: 'The woman <span class="highlight">wearing a red dress</span> is my sister.'},
+                {full: 'The book <span class="highlight">that was written by him</span> is popular.', reduced: 'The book <span class="highlight">written by him</span> is popular.'},
+                {full: 'The boy <span class="highlight">who is sitting at the back</span> is my brother.', reduced: 'The boy <span class="highlight">sitting at the back</span> is my brother.'},
+                {full: 'I am a teacher <span class="highlight">who teaches English</span>.', reduced: 'I am a teacher <span class="highlight">teaching English</span>.'},
+                {full: 'All the books <span class="highlight">that were written by the author</span> are popular.', reduced: 'All the books <span class="highlight">written by the author</span> are popular.'}
+            ];
+            
+            clearInterval(animationInterval);
+            animationInterval = setInterval(() => {
+                if (count % 2 === 0) {
+                    animation.innerHTML = `${sentences[Math.floor(count/2)].full}<br><small>完整句子 Full Sentence</small>`;
+                } else {
+                    animation.innerHTML = `${sentences[Math.floor(count/2)].reduced}<br><small>簡化句子 Reduced Sentence</small>`;
+                }
+                count = (count + 1) % (sentences.length * 2);
+            }, 2000);
+            
+            // 播放音效
+            playSound('success');
+        });
+        
+        document.getElementById('pauseReductionAnimation').addEventListener('click', () => {
+            clearInterval(animationInterval);
+            // 播放音效
+            playSound('click');
+        });
+        
+        // 音效函數
+        function playSound(type) {
+            // 在實際應用中，這裡會播放相應的音效
+            // 由於這是一個示例，我們只模擬音效播放
+            console.log(`Playing ${type} sound`);
+        }
+        
+        // 初始加載時播放歡迎音效
+        window.addEventListener('load', () => {
+            playSound('welcome');
+        });
+    </script>
+</body>
+</html>
