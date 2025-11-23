@@ -2,10 +2,9 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Happy Grammar: 5 Sentence Patterns</title>
     <style>
-        /* 原有樣式保持不變 */
         @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;600&family=Noto+Sans+TC:wght@400;500;700&display=swap');
 
         :root {
@@ -29,6 +28,11 @@
             --font-cn: 'Noto Sans TC', sans-serif;
         }
 
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
         body, html {
             margin: 0;
             padding: 0;
@@ -40,22 +44,54 @@
             align-items: center;
             font-family: var(--font-cn);
             overflow: hidden;
+            touch-action: manipulation;
         }
 
         /* --- Main Stage --- */
         #app-stage {
-            width: 90%;
+            width: 95%;
             max-width: 1200px;
-            aspect-ratio: 16/9;
+            height: 95vh;
+            max-height: 800px;
             background-color: rgba(255, 255, 255, 0.9);
-            border-radius: 30px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             position: relative;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            border: 10px solid #fff;
+            border: 8px solid #fff;
             backdrop-filter: blur(10px);
+        }
+
+        /* 手機橫向模式調整 */
+        @media (max-height: 500px) and (orientation: landscape) {
+            #app-stage {
+                height: 98vh;
+                max-height: none;
+            }
+            
+            .header {
+                height: 15% !important;
+                padding-bottom: 5px !important;
+            }
+            
+            .content-zone {
+                height: 30% !important;
+                padding-bottom: 10px !important;
+            }
+            
+            .formula-title {
+                font-size: 2rem !important;
+            }
+            
+            .info-card {
+                padding: 15px 20px !important;
+            }
+            
+            .usage-text, .ex-en {
+                font-size: 1.2rem !important;
+            }
         }
 
         /* --- Floating Bubbles Decor --- */
@@ -88,23 +124,27 @@
 
         .formula-title {
             font-family: var(--font-en);
-            font-size: 3rem;
+            font-size: 2.5rem;
             color: var(--text-main);
             font-weight: 600;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
             text-shadow: 2px 2px 0px #fff;
             transform: scale(0.8);
             opacity: 0;
             transition: all 0.5s ease;
+            text-align: center;
+            padding: 0 10px;
         }
         .formula-title.active { transform: scale(1); opacity: 1; }
 
         .formula-sub {
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: var(--text-sub);
             margin-top: 5px;
             opacity: 0;
             transition: opacity 0.5s;
+            text-align: center;
+            padding: 0 10px;
         }
 
         /* Animation Zone */
@@ -112,12 +152,13 @@
             flex-grow: 1;
             position: relative;
             z-index: 5;
+            overflow: hidden;
         }
 
         .block {
-            width: 100px;
-            height: 100px;
-            border-radius: 25px;
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
             position: absolute;
             top: 50%;
             transform: translate(-50%, -50%) scale(0);
@@ -127,13 +168,18 @@
             align-items: center;
             font-family: var(--font-en);
             font-weight: 600;
-            font-size: 2.2rem;
+            font-size: 1.8rem;
             color: #555;
             background: white;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
             transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        .block span { font-size: 0.8rem; font-weight: 400; margin-top: 2px; opacity: 0.6; }
+        .block span { 
+            font-size: 0.7rem; 
+            font-weight: 400; 
+            margin-top: 2px; 
+            opacity: 0.6; 
+        }
         
         /* Specific Component Colors */
         .b-s { background: var(--c-s); }
@@ -150,15 +196,15 @@
             justify-content: center;
             align-items: center;
             z-index: 10;
-            padding-bottom: 20px;
+            padding-bottom: 15px;
         }
 
         .info-card {
             background: white;
-            width: 75%;
-            padding: 25px 40px;
-            border-radius: 25px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            width: 85%;
+            padding: 20px 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
             text-align: center;
             position: absolute; /* Stack them */
             opacity: 0;
@@ -175,25 +221,25 @@
         .usage-badge {
             background: var(--text-accent);
             color: white;
-            padding: 5px 15px;
-            border-radius: 15px;
-            font-size: 1rem;
-            margin-bottom: 10px;
+            padding: 5px 12px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
             font-weight: bold;
         }
         .usage-text {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             color: var(--text-main);
-            line-height: 1.6;
+            line-height: 1.5;
         }
 
         /* Example Card Specifics */
         .level-badge {
-            padding: 5px 15px;
-            border-radius: 15px;
+            padding: 5px 12px;
+            border-radius: 12px;
             color: white;
-            font-size: 0.9rem;
-            margin-bottom: 10px;
+            font-size: 0.8rem;
+            margin-bottom: 8px;
             text-transform: uppercase;
             font-weight: bold;
             font-family: var(--font-en);
@@ -202,12 +248,22 @@
         .lvl-mid { background: #F2CC8F; }
         .lvl-high { background: #E07A5F; }
 
-        .ex-en { font-family: var(--font-en); font-size: 1.8rem; color: var(--text-main); margin-bottom: 5px; }
-        .ex-cn { font-size: 1.2rem; color: var(--text-sub); }
+        .ex-en { 
+            font-family: var(--font-en); 
+            font-size: 1.5rem; 
+            color: var(--text-main); 
+            margin-bottom: 5px; 
+            line-height: 1.3;
+        }
+        .ex-cn { 
+            font-size: 1rem; 
+            color: var(--text-sub); 
+            line-height: 1.3;
+        }
 
         /* Progress Bar */
         .progress-container {
-            height: 8px;
+            height: 6px;
             width: 100%;
             background: #f0f0f0;
             position: absolute;
@@ -233,65 +289,118 @@
             transition: opacity 0.5s;
             opacity: 0;
             pointer-events: none;
+            padding: 20px;
+            text-align: center;
         }
         .overlay.active { opacity: 1; pointer-events: all; }
 
         .big-title {
             font-family: var(--font-en);
-            font-size: 4rem;
+            font-size: 3rem;
             color: var(--text-main);
             margin-bottom: 10px;
+            line-height: 1.2;
         }
 
         .btn-primary {
-            padding: 15px 40px;
-            font-size: 1.5rem;
+            padding: 14px 30px;
+            font-size: 1.3rem;
             background: var(--c-s);
             color: white;
             border: none;
-            border-radius: 50px;
+            border-radius: 40px;
             cursor: pointer;
             font-family: var(--font-en);
             font-weight: 600;
-            box-shadow: 0 10px 20px rgba(160, 196, 255, 0.4);
+            box-shadow: 0 8px 15px rgba(160, 196, 255, 0.4);
             transition: transform 0.2s, box-shadow 0.2s;
-            margin: 10px;
+            margin: 8px;
+            min-width: 180px;
+            min-height: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .btn-primary:hover { transform: scale(1.05); box-shadow: 0 15px 25px rgba(160, 196, 255, 0.6); }
+        .btn-primary:hover, .btn-primary:active { 
+            transform: scale(1.05); 
+            box-shadow: 0 12px 20px rgba(160, 196, 255, 0.6); 
+        }
         
         .btn-secondary {
             background: var(--c-v);
-            box-shadow: 0 10px 20px rgba(255, 173, 173, 0.4);
+            box-shadow: 0 8px 15px rgba(255, 173, 173, 0.4);
         }
-        .btn-secondary:hover { box-shadow: 0 15px 25px rgba(255, 173, 173, 0.6); }
+        .btn-secondary:hover, .btn-secondary:active { 
+            box-shadow: 0 12px 20px rgba(255, 173, 173, 0.6); 
+        }
 
         /* Quiz Styles */
-        .quiz-question { font-size: 2.2rem; margin-bottom: 40px; color: var(--text-main); font-family: var(--font-en); text-align: center; width: 80%; }
-        .quiz-options { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
-        .quiz-btn {
-            padding: 15px 30px; font-size: 1.2rem; border: 3px solid #eee; background: white;
-            border-radius: 20px; cursor: pointer; font-family: var(--font-en); color: var(--text-main);
-            transition: all 0.2s;
+        .quiz-question { 
+            font-size: 1.8rem; 
+            margin-bottom: 30px; 
+            color: var(--text-main); 
+            font-family: var(--font-en); 
+            text-align: center; 
+            width: 90%; 
+            line-height: 1.3;
         }
-        .quiz-btn:hover { border-color: var(--c-s); transform: translateY(-3px); }
+        .quiz-options { 
+            display: flex; 
+            justify-content: center; 
+            gap: 15px; 
+            flex-wrap: wrap; 
+            width: 100%;
+        }
+        .quiz-btn {
+            padding: 12px 20px; 
+            font-size: 1.1rem; 
+            border: 3px solid #eee; 
+            background: white;
+            border-radius: 15px; 
+            cursor: pointer; 
+            font-family: var(--font-en); 
+            color: var(--text-main);
+            transition: all 0.2s;
+            min-width: 120px;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .quiz-btn:hover, .quiz-btn:active { 
+            border-color: var(--c-s); 
+            transform: translateY(-3px); 
+        }
         .quiz-btn.correct { background: var(--c-o); border-color: var(--c-o); color: white; }
         .quiz-btn.wrong { background: var(--c-v); border-color: var(--c-v); color: white; }
 
-        /* Music Toggle */
-        .music-btn {
-            position: absolute; top: 20px; right: 20px; font-size: 1.8rem; cursor: pointer; z-index: 200;
-            background: white; width: 50px; height: 50px; border-radius: 50%; display: flex; justify-content: center; align-items: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: transform 0.2s;
+        /* Control Buttons */
+        .control-buttons {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            gap: 10px;
+            z-index: 200;
         }
-        .music-btn:hover { transform: scale(1.1); }
 
-        /* 新增暫停按鈕樣式 */
-        .pause-btn {
-            position: absolute; top: 20px; right: 80px; font-size: 1.8rem; cursor: pointer; z-index: 200;
-            background: white; width: 50px; height: 50px; border-radius: 50%; display: flex; justify-content: center; align-items: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: transform 0.2s;
+        .control-btn {
+            font-size: 1.5rem;
+            cursor: pointer;
+            background: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+            user-select: none;
         }
-        .pause-btn:hover { transform: scale(1.1); }
+        .control-btn:hover, .control-btn:active { 
+            transform: scale(1.1); 
+        }
 
         /* 暫停覆蓋層 */
         .pause-overlay {
@@ -306,25 +415,140 @@
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.3s;
+            padding: 20px;
+            text-align: center;
         }
         .pause-overlay.active { opacity: 1; pointer-events: all; }
         .pause-overlay h2 {
             font-family: var(--font-en);
-            font-size: 3rem;
+            font-size: 2.5rem;
             color: var(--text-main);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
+        /* 手機小螢幕調整 */
+        @media (max-width: 480px) {
+            #app-stage {
+                width: 98%;
+                height: 98vh;
+                border-radius: 15px;
+                border-width: 5px;
+            }
+            
+            .formula-title {
+                font-size: 2rem;
+            }
+            
+            .formula-sub {
+                font-size: 0.9rem;
+            }
+            
+            .block {
+                width: 70px;
+                height: 70px;
+                font-size: 1.5rem;
+                border-radius: 15px;
+            }
+            
+            .block span {
+                font-size: 0.6rem;
+            }
+            
+            .info-card {
+                width: 90%;
+                padding: 15px 20px;
+            }
+            
+            .usage-text {
+                font-size: 1.1rem;
+            }
+            
+            .ex-en {
+                font-size: 1.3rem;
+            }
+            
+            .ex-cn {
+                font-size: 0.9rem;
+            }
+            
+            .big-title {
+                font-size: 2.5rem;
+            }
+            
+            .btn-primary {
+                padding: 12px 25px;
+                font-size: 1.2rem;
+                min-width: 160px;
+                min-height: 50px;
+            }
+            
+            .quiz-question {
+                font-size: 1.6rem;
+            }
+            
+            .quiz-btn {
+                padding: 10px 15px;
+                font-size: 1rem;
+                min-width: 100px;
+                min-height: 45px;
+            }
+            
+            .control-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1.3rem;
+            }
+            
+            .pause-overlay h2 {
+                font-size: 2rem;
+            }
+        }
+
+        /* 手機橫向模式調整 */
+        @media (max-height: 500px) and (orientation: landscape) {
+            #app-stage {
+                height: 98vh;
+                max-height: none;
+            }
+            
+            .header {
+                height: 15% !important;
+                padding-bottom: 5px !important;
+            }
+            
+            .content-zone {
+                height: 30% !important;
+                padding-bottom: 10px !important;
+            }
+            
+            .formula-title {
+                font-size: 2rem !important;
+            }
+            
+            .info-card {
+                padding: 15px 20px !important;
+            }
+            
+            .usage-text, .ex-en {
+                font-size: 1.2rem !important;
+            }
+            
+            .block {
+                width: 60px !important;
+                height: 60px !important;
+                font-size: 1.3rem !important;
+            }
+        }
     </style>
 </head>
 <body>
 
     <div id="app-stage">
-        <!-- 新增暫停按鈕 -->
-        <div class="pause-btn" id="pauseToggle">⏸️</div>
-        
-        <!-- Music Toggle -->
-        <div class="music-btn" id="musicToggle">🔇</div>
+        <!-- 控制按鈕 -->
+        <div class="control-buttons">
+            <div class="control-btn pause-btn" id="pauseToggle">⏸️</div>
+            <div class="control-btn music-btn" id="musicToggle">🔇</div>
+        </div>
         
         <!-- 暫停覆蓋層 -->
         <div class="pause-overlay" id="pauseOverlay">
@@ -369,7 +593,7 @@
         <!-- 1. Start Screen -->
         <div class="overlay active" id="startScreen">
             <div class="big-title">English Grammar</div>
-            <p style="font-size: 1.5rem; color: #888; margin-bottom: 30px;">The 5 Happy Sentence Patterns</p>
+            <p style="font-size: 1.3rem; color: #888; margin-bottom: 30px; line-height: 1.4;">The 5 Happy Sentence Patterns</p>
             <button class="btn-primary" onclick="startLesson()">Start Learning 🎵</button>
         </div>
 
@@ -385,10 +609,10 @@
         <!-- 3. Result Screen -->
         <div class="overlay" id="resultScreen">
             <div class="big-title">Great Job! 🎉</div>
-            <p style="font-size: 1.4rem; color: #666; margin-bottom: 40px; width: 60%; text-align: center;">
+            <p style="font-size: 1.2rem; color: #666; margin-bottom: 40px; width: 90%; text-align: center; line-height: 1.4;">
                 You've practiced all the patterns. What would you like to do next?
             </p>
-            <div style="display: flex; gap: 20px;">
+            <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center;">
                 <button class="btn-primary" onclick="startQuiz()">One more challenge</button>
                 <button class="btn-primary btn-secondary" onclick="resetApp()">Back to Start</button>
             </div>
@@ -463,11 +687,18 @@
 
         // --- Audio System (Generated) ---
         const AudioSys = {
-            ctx: new (window.AudioContext || window.webkitAudioContext)(),
+            ctx: null,
             muted: true,
             bgmInterval: null,
             
+            init() {
+                // 延遲初始化音頻上下文，避免iOS限制
+                this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+            },
+            
             toggle() {
+                if (!this.ctx) this.init();
+                
                 this.muted = !this.muted;
                 if(!this.muted) {
                     this.ctx.resume();
@@ -480,7 +711,7 @@
             },
 
             playTone(freq, type, dur, vol) {
-                if(this.muted) return;
+                if(this.muted || !this.ctx) return;
                 const osc = this.ctx.createOscillator();
                 const gain = this.ctx.createGain();
                 osc.type = type;
@@ -518,7 +749,7 @@
                 let i = 0;
                 const notes = [261.63, 329.63, 392.00, 523.25, 392.00, 329.63];
                 this.bgmInterval = setInterval(() => {
-                    if(!this.muted) {
+                    if(!this.muted && this.ctx) {
                         this.playTone(notes[i], 'sine', 1.5, 0.015);
                         i = (i + 1) % notes.length;
                     }
@@ -562,7 +793,9 @@
                 els.pauseBtn.innerHTML = '▶️';
                 
                 // 暫停音效
-                AudioSys.ctx.suspend();
+                if (AudioSys.ctx) {
+                    AudioSys.ctx.suspend();
+                }
                 
                 // 創建一個Promise，當恢復時解決它
                 pausePromise = new Promise(resolve => {
@@ -574,7 +807,7 @@
                 els.pauseBtn.innerHTML = '⏸️';
                 
                 // 恢復音效
-                if (!AudioSys.muted) {
+                if (!AudioSys.muted && AudioSys.ctx) {
                     AudioSys.ctx.resume();
                 }
                 
@@ -607,10 +840,11 @@
         // --- Helper Functions ---
         function createBubbles() {
             const container = document.getElementById('bubbles');
-            for(let i=0; i<15; i++) {
+            // 減少泡泡數量以提升手機效能
+            for(let i=0; i<10; i++) {
                 const b = document.createElement('div');
                 b.className = 'bubble';
-                const size = Math.random() * 60 + 20;
+                const size = Math.random() * 50 + 15;
                 b.style.width = size + 'px';
                 b.style.height = size + 'px';
                 b.style.left = Math.random() * 100 + '%';
@@ -837,6 +1071,22 @@
         els.pauseBtn.onclick = togglePause;
 
         window.onload = createBubbles;
+
+        // 防止手機上的雙擊縮放
+        document.addEventListener('touchstart', function(e) {
+            if (e.touches.length > 1) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function(e) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                e.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
 
     </script>
 </body>
