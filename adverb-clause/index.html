@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shirley's Adverb Clauses Learning Platform | 副詞子句學習平台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #d2691e;
+            --secondary: #cd853f;
+            --accent: #ff8c00;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --success: #28a745;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft JhengHei', '微軟正黑體', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+        
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tab {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            flex: 1;
+            text-align: center;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tab:hover {
+            background-color: rgba(210, 105, 30, 0.1);
+        }
+        
+        .tab.active {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+        }
+        
+        h3 {
+            color: var(--secondary);
+            margin: 1.5rem 0 1rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        th {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .example {
+            background-color: #f0f7ff;
+            border-left: 4px solid var(--accent);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .interactive-element {
+            background-color: var(--light);
+            border: 2px dashed var(--secondary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+        
+        .btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn:hover {
+            background-color: #e67e00;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(255, 140, 0, 0.3);
+        }
+        
+        .animation-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 1rem;
+        }
+        
+        .clause-animation {
+            height: 200px;
+            background: linear-gradient(135deg, #cd853f, #d2691e);
+            border-radius: 10px;
+            margin: 1.5rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+            background-color: var(--dark);
+            color: white;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .highlight {
+            background-color: #fff9e6;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .clause-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+            margin: 1rem 0;
+        }
+        
+        .clause-item {
+            background: #f0f7ff;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            margin: 1.5rem 0;
+        }
+        
+        .comparison-table th {
+            background-color: var(--secondary);
+        }
+        
+        .note-box {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .usage-diagram {
+            text-align: center;
+            margin: 2rem 0;
+        }
+        
+        .diagram-container {
+            display: flex;
+            justify-content: center;
+            margin: 1.5rem 0;
+        }
+        
+        .diagram {
+            width: 100%;
+            max-width: 600px;
+            height: 300px;
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .diagram-item {
+            position: absolute;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 120px;
+        }
+        
+        .connector-word {
+            color: var(--accent);
+            font-weight: bold;
+        }
+        
+        .antecedent {
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .tab {
+                flex: none;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .clause-list {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Shirley's Adverb Clauses Learning Platform</h1>
+            <p class="subtitle">副詞子句學習平台</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="tabs">
+            <div class="tab active" data-tab="intro">副詞子句介紹 | Adverb Clauses Introduction</div>
+            <div class="tab" data-tab="time">時間副詞子句 | Time Clauses</div>
+            <div class="tab" data-tab="place">地點副詞子句 | Place Clauses</div>
+            <div class="tab" data-tab="reason">原因副詞子句 | Reason Clauses</div>
+            <div class="tab" data-tab="result">結果副詞子句 | Result Clauses</div>
+            <div class="tab" data-tab="purpose">目的副詞子句 | Purpose Clauses</div>
+            <div class="tab" data-tab="concession">讓步副詞子句 | Concession Clauses</div>
+            <div class="tab" data-tab="condition">條件副詞子句 | Condition Clauses</div>
+            <div class="tab" data-tab="manner">方式副詞子句 | Manner Clauses</div>
+            <div class="tab" data-tab="comparison">比較副詞子句 | Comparison Clauses</div>
+            <div class="tab" data-tab="reduction">獨立分詞構句 | Absolute Construction</div>
+        </div>
+        
+        <!-- 副詞子句介紹 -->
+        <div class="tab-content active" id="intro">
+            <h2>副詞子句介紹 | Adverb Clauses Introduction</h2>
+            
+            <div class="card">
+                <h3>什麼是副詞子句？ | What is an Adverb Clause?</h3>
+                <p>副詞子句，即從屬子句當副詞來使用，具有副詞的功能，說明時間、地點、原因、結果、目的、讓步，條件、方式、比較等方面的邏輯關係。</p>
+                <p>An adverb clause is a subordinate clause that functions as an adverb, explaining logical relationships in terms of time, place, reason, result, purpose, concession, condition, manner, comparison, etc.</p>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">When the doorbell rang</span>, I was taking a shower. | 當門鈴響時，我正在淋浴。</p>
+                    <p><strong>例子 Example:</strong> She was late <span class="highlight">because she had missed the train</span>. | 她遲到了，因為她錯過了火車。</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>副詞子句的基本結構 | Basic Structure of Adverb Clauses</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>類型 Type</th>
+                            <th>連接詞 Connectors</th>
+                            <th>例子 Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>時間 Time</td>
+                            <td>when, while, as, before, after, since, until</td>
+                            <td>I will call you <span class="highlight">when I arrive</span>.</td>
+                        </tr>
+                        <tr>
+                            <td>地點 Place</td>
+                            <td>where, wherever</td>
+                            <td>Stay <span class="highlight">where you are</span>.</td>
+                        </tr>
+                        <tr>
+                            <td>原因 Reason</td>
+                            <td>because, since, as</td>
+                            <td>He left early <span class="highlight">because he was tired</span>.</td>
+                        </tr>
+                        <tr>
+                            <td>結果 Result</td>
+                            <td>so...that, such...that</td>
+                            <td>It was <span class="highlight">so cold that the lake froze</span>.</td>
+                        </tr>
+                        <tr>
+                            <td>目的 Purpose</td>
+                            <td>so that, in order that</td>
+                            <td>She studied hard <span class="highlight">so that she could pass the exam</span>.</td>
+                        </tr>
+                        <tr>
+                            <td>讓步 Concession</td>
+                            <td>although, though, even though</td>
+                            <td><span class="highlight">Although it was raining</span>, we went for a walk.</td>
+                        </tr>
+                        <tr>
+                            <td>條件 Condition</td>
+                            <td>if, unless, provided that</td>
+                            <td><span class="highlight">If it rains</span>, we will stay home.</td>
+                        </tr>
+                        <tr>
+                            <td>方式 Manner</td>
+                            <td>as, as if, as though</td>
+                            <td>He acted <span class="highlight">as if he knew everything</span>.</td>
+                        </tr>
+                        <tr>
+                            <td>比較 Comparison</td>
+                            <td>than, as...as</td>
+                            <td>She is taller <span class="highlight">than I am</span>.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="card">
+                <h3>副詞子句的位置 | Position of Adverb Clauses</h3>
+                <p>副詞子句置於主句前時，子句後需要加逗號。</p>
+                <p>When an adverb clause is placed before the main clause, a comma is needed after the clause.</p>
+                
+                <div class="example">
+                    <p><strong>子句在前 Clause First:</strong> <span class="highlight">If it rains tomorrow</span>, the game will be postponed.</p>
+                    <p><strong>子句在後 Clause Last:</strong> The game will be postponed <span class="highlight">if it rains tomorrow</span>.</p>
+                </div>
+            </div>
+            
+            <div class="interactive-element">
+                <h3>副詞子句練習 | Adverb Clause Practice</h3>
+                <p>識別句子中的副詞子句</p>
+                <p>Identify the adverb clause in the sentence</p>
+                <div class="clause-animation" id="clauseAnimation">
+                    When the doorbell rang, I was taking a shower.
+                </div>
+                <div class="animation-controls">
+                    <button class="btn" id="playAnimation">
+                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
+                    </button>
+                    <button class="btn" id="pauseAnimation">
+                        <i class="fas fa-pause"></i> 暫停 | Pause
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 時間副詞子句 -->
+        <div class="tab-content" id="time">
+            <h2>時間副詞子句 | Time Clauses</h2>
+            
+            <div class="card">
+                <h3>時間副詞子句連接詞 | Time Clause Connectors</h3>
+                <p>when, whenever, as, while, before, after, since, till, until, the minute, the moment, the second, the instant, every time, the day, as soon as, no sooner…than, hardly…when, scarcely…when</p>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">When the doorbell rang</span>, I was taking a shower.</p>
+                    <p>當門鈴響時，我正在淋浴。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">Whenever I feel tired of studying</span>, I start to play a video game.</p>
+                    <p>每當我對學習感到疲倦時，我就開始玩電子遊戲。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">As the natural environment shrinks in the face of human expansion</span>, wild animals are left homeless.</p>
+                    <p>隨著自然環境在人類擴張面前縮小，野生動物無家可歸。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">While I was enjoying my dinner</span>, my brother came home.</p>
+                    <p>當我正在享用晚餐時，我的兄弟回家了。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> We should take steps to conserve endangered animals <span class="highlight">before it is too late</span>.</p>
+                    <p>我們應該採取措施保護瀕危動物，以免為時已晚。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> It has been more than ten years <span class="highlight">since our family moved to this city</span>.</p>
+                    <p>自從我們家搬到這個城市已經十多年了。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> We violate an animal's rights <span class="highlight">the minute/the moment we catch it for entertainment</span>.</p>
+                    <p>我們捕捉動物用於娛樂的那一刻，就侵犯了動物的權利。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">As soon as the food web is broken</span>, the whole ecosystem could be forever changed.</p>
+                    <p>一旦食物網被破壞，整個生態系統可能會永遠改變。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> We had <span class="highlight">no sooner</span> started cooking <span class="highlight">than</span> there was a power cut.</p>
+                    <p>我們剛開始做飯就停電了。</p>
+                    <p>(No sooner had we started cooking than there was a power cut.)</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> We had <span class="highlight">hardly/scarcely</span> started cooking <span class="highlight">when</span> there was a power cut.</p>
+                    <p>我們剛開始做飯就停電了。</p>
+                    <p>(Hardly/Scarcely had we started cooking when there was a power cut.)</p>
+                </div>
+            </div>
+            
+            <div class="interactive-element">
+                <h3>時間副詞子句練習 | Time Clause Practice</h3>
+                <p>選擇正確的連接詞完成句子</p>
+                <p>Select the correct connector to complete the sentence</p>
+                <div class="clause-animation" id="timeAnimation">
+                    ______ I feel tired, I take a break.
+                </div>
+                <div class="animation-controls">
+                    <button class="btn" id="playTimeAnimation">
+                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
+                    </button>
+                    <button class="btn" id="pauseTimeAnimation">
+                        <i class="fas fa-pause"></i> 暫停 | Pause
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 地點副詞子句 -->
+        <div class="tab-content" id="place">
+            <h2>地點副詞子句 | Place Clauses</h2>
+            
+            <div class="card">
+                <h3>地點副詞子句連接詞 | Place Clause Connectors</h3>
+                <p>where, wherever, anywhere, everywhere</p>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">Where there is smoke</span>, there is fire.</p>
+                    <p>有煙的地方就有火。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> Her son follows her around <span class="highlight">wherever she goes</span>.</p>
+                    <p>無論她去哪裡，她的兒子都跟著她。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> You can find warm-hearted people <span class="highlight">everywhere/anywhere you go</span>.</p>
+                    <p>無論你去哪裡，都能找到熱心的人。</p>
+                </div>
+            </div>
+            
+            <div class="interactive-element">
+                <h3>地點副詞子句練習 | Place Clause Practice</h3>
+                <p>選擇正確的連接詞完成句子</p>
+                <p>Select the correct connector to complete the sentence</p>
+                <div class="clause-animation" id="placeAnimation">
+                    I will follow you ______ you go.
+                </div>
+                <div class="animation-controls">
+                    <button class="btn" id="playPlaceAnimation">
+                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
+                    </button>
+                    <button class="btn" id="pausePlaceAnimation">
+                        <i class="fas fa-pause"></i> 暫停 | Pause
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 原因副詞子句 -->
+        <div class="tab-content" id="reason">
+            <h2>原因副詞子句 | Reason Clauses</h2>
+            
+            <div class="card">
+                <h3>原因副詞子句連接詞 | Reason Clause Connectors</h3>
+                <p>because, since, as, now that, considering that, seeing that, given that</p>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> She was late <span class="highlight">because she had missed the train</span>.</p>
+                    <p>她遲到了，因為她錯過了火車。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">Since you don't feel well</span>, you can take a rest at home.</p>
+                    <p>既然你感覺不舒服，你可以在家休息。</p>
+                    <p><em>(既然... 一般表示雙方共知的理由)</em></p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">As he is the only child in the three-generation family</span>, he has always been taken good care of.</p>
+                    <p>由於他是三代同堂家庭中唯一的孩子，他一直受到很好的照顧。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">Now that you are a grown-up</span>, you should be aware of your responsibilities.</p>
+                    <p>既然你已經長大了，你應該意識到自己的責任。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> The school requires that all freshmen live on campus, <span class="highlight">considering that this will help them study more effectively</span>.</p>
+                    <p>學校要求所有新生住校，考慮到這將幫助他們更有效地學習。</p>
+                </div>
+            </div>
+            
+            <div class="interactive-element">
+                <h3>原因副詞子句練習 | Reason Clause Practice</h3>
+                <p>選擇正確的連接詞完成句子</p>
+                <p>Select the correct connector to complete the sentence</p>
+                <div class="clause-animation" id="reasonAnimation">
+                    ______ you are here, let's start the meeting.
+                </div>
+                <div class="animation-controls">
+                    <button class="btn" id="playReasonAnimation">
+                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
+                    </button>
+                    <button class="btn" id="pauseReasonAnimation">
+                        <i class="fas fa-pause"></i> 暫停 | Pause
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 結果副詞子句 -->
+        <div class="tab-content" id="result">
+            <h2>結果副詞子句 | Result Clauses</h2>
+            
+            <div class="card">
+                <h3>結果副詞子句連接詞 | Result Clause Connectors</h3>
+                <p>so…that, such…that</p>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> His business is <span class="highlight">so</span> successful <span class="highlight">that</span> he has decided to open another store.</p>
+                    <p>他的生意非常成功，以至於他決定開另一家店。</p>
+                    <p>(such a success that he has decided to open another store.)</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> There were <span class="highlight">so</span> many restaurants in the area <span class="highlight">that</span> we could not make up our mind what to eat.</p>
+                    <p>該地區有如此多的餐廳，以至於我們無法決定吃什麼。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> She has saved <span class="highlight">so</span> little money <span class="highlight">that</span> she has to give up her travel plan.</p>
+                    <p>她存了這麼少的錢，以至於她不得不放棄她的旅行計劃。</p>
+                </div>
+            </div>
+            
+            <div class="interactive-element">
+                <h3>結果副詞子句練習 | Result Clause Practice</h3>
+                <p>選擇正確的連接詞完成句子</p>
+                <p>Select the correct connector to complete the sentence</p>
+                <div class="clause-animation" id="resultAnimation">
+                    It was ______ cold ______ the lake froze.
+                </div>
+                <div class="animation-controls">
+                    <button class="btn" id="playResultAnimation">
+                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
+                    </button>
+                    <button class="btn" id="pauseResultAnimation">
+                        <i class="fas fa-pause"></i> 暫停 | Pause
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 目的副詞子句 -->
+        <div class="tab-content" id="purpose">
+            <h2>目的副詞子句 | Purpose Clauses</h2>
+            
+            <div class="card">
+                <h3>目的副詞子句連接詞 | Purpose Clause Connectors</h3>
+                <p>so that; in order that, lest, in case, for fear that (以防), in the hope that</p>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> The new manager extended the employees' working hours <span class="highlight">so that / in order that he could make more money</span>.</p>
+                    <p>新經理延長了員工的工作時間，以便他能賺更多的錢。</p>
+                    <p><em>(in order that 較為正式)</em></p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> Deforestation must be prevented <span class="highlight">for fear that creatures and plants in forests lost their natural habitats</span>.</p>
+                    <p>必須防止森林砍伐，以免森林中的生物和植物失去其自然棲息地。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> Take your umbrella with you <span class="highlight">in case it may/should rain</span>.</p>
+                    <p>帶上你的雨傘，以防下雨。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> All animal experiments should be closely monitored <span class="highlight">in the hope that animal suffering might be reduced</span>.</p>
+                    <p>所有動物實驗都應受到密切監控，以期減少動物的痛苦。</p>
+                </div>
+            </div>
+            
+            <div class="interactive-element">
+                <h3>目的副詞子句練習 | Purpose Clause Practice</h3>
+                <p>選擇正確的連接詞完成句子</p>
+                <p>Select the correct connector to complete the sentence</p>
+                <div class="clause-animation" id="purposeAnimation">
+                    She studied hard ______ she could pass the exam.
+                </div>
+                <div class="animation-controls">
+                    <button class="btn" id="playPurposeAnimation">
+                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
+                    </button>
+                    <button class="btn" id="pausePurposeAnimation">
+                        <i class="fas fa-pause"></i> 暫停 | Pause
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 讓步副詞子句 -->
+        <div class="tab-content" id="concession">
+            <h2>讓步副詞子句 | Concession Clauses</h2>
+            
+            <div class="card">
+                <h3>讓步副詞子句連接詞 | Concession Clause Connectors</h3>
+                <p>though/although, even though, even if；no matter…; in spite of the fact that, while, whatever, whoever, however, whichever</p>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">Though/Although the exam was difficult</span>, I did it well.</p>
+                    <p>儘管考試很難，我還是考得很好。</p>
+                    <p><em>(儘管)</em></p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">Even though the exam was easy</span>, I failed.</p>
+                    <p>儘管考試很容易，我還是沒通過。</p>
+                    <p><em>(儘管)</em></p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">While I believe it is true</span>, I cannot prove it.</p>
+                    <p>雖然我相信這是真的，但我無法證明。</p>
+                    <p><em>(儘管，雖然。語氣較輕)</em></p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">Even if you have insurance</span>, you will still have to pay a lot yourself.</p>
+                    <p>即使你有保險，你仍然需要自己支付很多。</p>
+                    <p><em>(就算，即使)</em></p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">Whatever/ No matter what he does</span>, he always tries his best.</p>
+                    <p>無論他做什麼，他總是盡力而為。</p>
+                    <p><em>(無論做什麼)</em></p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">However / No matter how tired I am</span>, I can hold on.</p>
+                    <p>無論我多累，我都能堅持。</p>
+                    <p><em>(無論多累)</em></p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">Whoever you are</span>, you have to obey the rules.</p>
+                    <p>無論你是誰，你都必須遵守規則。</p>
+                </div>
+            </div>
+            
+            <div class="interactive-element">
+                <h3>讓步副詞子句練習 | Concession Clause Practice</h3>
+                <p>選擇正確的連接詞完成句子</p>
+                <p>Select the correct connector to complete the sentence</p>
+                <div class="clause-animation" id="concessionAnimation">
+                    ______ it was raining, we went for a walk.
+                </div>
+                <div class="animation-controls">
+                    <button class="btn" id="playConcessionAnimation">
+                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
+                    </button>
+                    <button class="btn" id="pauseConcessionAnimation">
+                        <i class="fas fa-pause"></i> 暫停 | Pause
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 條件副詞子句 -->
+        <div class="tab-content" id="condition">
+            <h2>條件副詞子句 | Condition Clauses</h2>
+            
+            <div class="card">
+                <h3>條件副詞子句連接詞 | Condition Clause Connectors</h3>
+                <p>if, unless, as/so long as, only if, providing/provided that, suppose that, in case that, on condition that</p>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">If it rains tomorrow</span>, the game will be postponed.</p>
+                    <p>如果明天下雨，比賽將被推遲。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> You'll miss the bus <span class="highlight">unless you hurry up</span>.</p>
+                    <p>除非你趕快，否則你會錯過巴士。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">In case that there is a fire emergency</span>, you should have your house insured.</p>
+                    <p>萬一發生火災緊急情況，你應該為你的房子投保。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> My parents allow me to play video games <span class="highlight">as long as /on (the) condition that I finish my homework first</span>.</p>
+                    <p>只要我先完成作業，我的父母就允許我玩電子遊戲。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">Provided that the animals kept in the zoo do not suffer</span>, there seems little reason why zoos should be condemned.</p>
+                    <p>只要關在動物園裡的動物不受苦，似乎沒有什麼理由譴責動物園。</p>
+                </div>
+            </div>
+            
+            <div class="note-box">
+                <p><strong>注意：</strong>條件句的另一個重要特點是「假設語氣」。具體請看第四模塊之「假設語氣」。</p>
+                <p><strong>Note:</strong> Another important feature of conditional sentences is the "subjunctive mood". Please refer to the "Subjunctive Mood" section in Module IV for details.</p>
+            </div>
+            
+            <div class="interactive-element">
+                <h3>條件副詞子句練習 | Condition Clause Practice</h3>
+                <p>選擇正確的連接詞完成句子</p>
+                <p>Select the correct connector to complete the sentence</p>
+                <div class="clause-animation" id="conditionAnimation">
+                    ______ it rains, we will stay home.
+                </div>
+                <div class="animation-controls">
+                    <button class="btn" id="playConditionAnimation">
+                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
+                    </button>
+                    <button class="btn" id="pauseConditionAnimation">
+                        <i class="fas fa-pause"></i> 暫停 | Pause
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 方式副詞子句 -->
+        <div class="tab-content" id="manner">
+            <h2>方式副詞子句 | Manner Clauses</h2>
+            
+            <div class="card">
+                <h3>方式副詞子句連接詞 | Manner Clause Connectors</h3>
+                <p>as, as if, as though, how, the way</p>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> When in Rome, do <span class="highlight">as the Roman do</span>.</p>
+                    <p>入鄉隨俗。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> Dog lovers treat their dogs <span class="highlight">the way they may treat their children</span>.</p>
+                    <p>愛狗人士對待他們的狗就像對待他們的孩子一樣。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> Some pet lovers, however, show indifference to their family members <span class="highlight">as if (as though) the members were inferior to the pets</span>.</p>
+                    <p>然而，一些寵物愛好者對他們的家人表現出冷漠，彷彿家人不如寵物。</p>
+                    <p><em>(彷彿，好像)</em></p>
+                </div>
+            </div>
+            
+            <div class="interactive-element">
+                <h3>方式副詞子句練習 | Manner Clause Practice</h3>
+                <p>選擇正確的連接詞完成句子</p>
+                <p>Select the correct connector to complete the sentence</p>
+                <div class="clause-animation" id="mannerAnimation">
+                    He acted ______ he knew everything.
+                </div>
+                <div class="animation-controls">
+                    <button class="btn" id="playMannerAnimation">
+                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
+                    </button>
+                    <button class="btn" id="pauseMannerAnimation">
+                        <i class="fas fa-pause"></i> 暫停 | Pause
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 比較副詞子句 -->
+        <div class="tab-content" id="comparison">
+            <h2>比較副詞子句 | Comparison Clauses</h2>
+            
+            <div class="card">
+                <h3>比較副詞子句連接詞 | Comparison Clause Connectors</h3>
+                <p>as, than, the more…the more; as…as, not so…as; no…more than</p>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">The more</span> we know about the wildlife, <span class="highlight">the better</span> we will live in the future.</p>
+                    <p>我們對野生動物的了解越多，我們將來的生活就會越好。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> Animals have a right to life <span class="highlight">just as humans have a right to life</span>.</p>
+                    <p>動物有生存的權利，就像人類有生存的權利一樣。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> People do not love animals <span class="highlight">as much as they claim</span>.</p>
+                    <p>人們並不像他們聲稱的那樣愛動物。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> No one can run faster <span class="highlight">than Jacky does</span>.</p>
+                    <p>沒有人能跑得比傑基快。</p>
+                </div>
+            </div>
+            
+            <div class="interactive-element">
+                <h3>比較副詞子句練習 | Comparison Clause Practice</h3>
+                <p>選擇正確的連接詞完成句子</p>
+                <p>Select the correct connector to complete the sentence</p>
+                <div class="clause-animation" id="comparisonAnimation">
+                    She is taller ______ I am.
+                </div>
+                <div class="animation-controls">
+                    <button class="btn" id="playComparisonAnimation">
+                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
+                    </button>
+                    <button class="btn" id="pauseComparisonAnimation">
+                        <i class="fas fa-pause"></i> 暫停 | Pause
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 獨立分詞構句 -->
+        <div class="tab-content" id="reduction">
+            <h2>獨立分詞構句 | Absolute Construction</h2>
+            
+            <div class="card">
+                <h3>獨立分詞構句 | Absolute Construction</h3>
+                <p>表示時間、條件、方式、伴隨狀況等的副詞子句，可以被改成一種叫「獨立分詞構句」的描述性的短語(不是句子)。</p>
+                <p>Adverb clauses expressing time, condition, manner, accompanying circumstances, etc., can be changed into a descriptive phrase called an "absolute construction" (not a sentence).</p>
+                
+                <div class="example">
+                    <p><strong>獨立分詞構句 Absolute Construction:</strong> <span class="highlight">The meeting being over</span>, all of the members went home.</p>
+                    <p><strong>副詞子句 Adverb Clause:</strong> <span class="highlight">When the meeting was over</span>, all of the members went home.</p>
+                    <p>會議結束，所有的成員都回家了。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>獨立分詞構句 Absolute Construction:</strong> <span class="highlight">Her work done</span>, she took a nap.</p>
+                    <p><strong>副詞子句 Adverb Clause:</strong> <span class="highlight">When her work was done</span>, she took a nap.</p>
+                    <p>工作做完了，她小睡了一下。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>獨立分詞構句 Absolute Construction:</strong> <span class="highlight">Time permitting</span>, I can give you a ride home.</p>
+                    <p><strong>副詞子句 Adverb Clause:</strong> <span class="highlight">If time permits</span>, I can give you a ride home.</p>
+                    <p>時間允許的話，我可以送你回家。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>獨立分詞構句 Absolute Construction:</strong> <span class="highlight">There being a power cut</span>, I had to go to bed early.</p>
+                    <p><strong>副詞子句 Adverb Clause:</strong> <span class="highlight">Because there was a power cut</span>, I had to go to bed early.</p>
+                    <p>停電了，我只好早睡。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>獨立分詞構句 Absolute Construction:</strong> <span class="highlight">The last bus gone</span>, we had to walk home.</p>
+                    <p><strong>副詞子句 Adverb Clause:</strong> <span class="highlight">Because the last bus was gone</span>, we had to walk home.</p>
+                    <p>最後一班巴士走了，我們只能走路回家。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>獨立分詞構句 Absolute Construction:</strong> <span class="highlight">Nobody to come tomorrow</span>, we will cancel the meeting.</p>
+                    <p><strong>副詞子句 Adverb Clause:</strong> <span class="highlight">If nobody comes tomorrow</span>, we will cancel the meeting.</p>
+                    <p>如果明天沒有人來，我們就取消會議。</p>
+                </div>
+            </div>
+            
+            <div class="interactive-element">
+                <h3>獨立分詞構句練習 | Absolute Construction Practice</h3>
+                <p>將副詞子句轉換為獨立分詞構句</p>
+                <p>Convert adverb clauses to absolute constructions</p>
+                <div class="clause-animation" id="reductionAnimation">
+                    When the meeting was over, we went home.
+                </div>
+                <div class="animation-controls">
+                    <button class="btn" id="playReductionAnimation">
+                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
+                    </button>
+                    <button class="btn" id="pauseReductionAnimation">
+                        <i class="fas fa-pause"></i> 暫停 | Pause
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Shirley's Adverb Clauses Learning Platform | 副詞子句學習平台</p>
+        <p>© 2025 Shirley's Grammar E-Charger</p>
+    </footer>
+
+    <script>
+        // 選項卡功能
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // 移除所有活動標籤和內容
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // 添加活動類到當前標籤
+                tab.classList.add('active');
+                
+                // 顯示對應的內容
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+                
+                // 播放切換音效
+                playSound('click');
+            });
+        });
+        
+        // 動畫控制
+        let animationInterval;
+        
+        // 副詞子句介紹動畫
+        document.getElementById('playAnimation').addEventListener('click', () => {
+            const animation = document.getElementById('clauseAnimation');
+            
+            let count = 0;
+            const sentences = [
+                {sentence: '<span class="highlight">When the doorbell rang</span>, I was taking a shower.', explanation: '時間副詞子句 Time Clause'},
+                {sentence: 'She was late <span class="highlight">because she had missed the train</span>.', explanation: '原因副詞子句 Reason Clause'},
+                {sentence: '<span class="highlight">If it rains tomorrow</span>, the game will be postponed.', explanation: '條件副詞子句 Condition Clause'},
+                {sentence: '<span class="highlight">Although it was raining</span>, we went for a walk.', explanation: '讓步副詞子句 Concession Clause'},
+                {sentence: 'He acted <span class="highlight">as if he knew everything</span>.', explanation: '方式副詞子句 Manner Clause'}
+            ];
+            
+            clearInterval(animationInterval);
+            animationInterval = setInterval(() => {
+                animation.innerHTML = `${sentences[count].sentence}<br><small>${sentences[count].explanation}</small>`;
+                count = (count + 1) % sentences.length;
+            }, 2000);
+            
+            // 播放音效
+            playSound('success');
+        });
+        
+        document.getElementById('pauseAnimation').addEventListener('click', () => {
+            clearInterval(animationInterval);
+            // 播放音效
+            playSound('click');
+        });
+        
+        // 時間副詞子句動畫
+        document.getElementById('playTimeAnimation').addEventListener('click', () => {
+            const animation = document.getElementById('timeAnimation');
+            
+            let count = 0;
+            const connectors = [
+                {connector: '<span class="highlight">When</span>'},
+                {connector: '<span class="highlight">Whenever</span>'},
+                {connector: '<span class="highlight">While</span>'},
+                {connector: '<span class="highlight">As soon as</span>'},
+                {connector: '<span class="highlight">Before</span>'}
+            ];
+            
+            clearInterval(animationInterval);
+            animationInterval = setInterval(() => {
+                animation.innerHTML = `${connectors[count].connector} I feel tired, I take a break.`;
+                count = (count + 1) % connectors.length;
+            }, 2000);
+            
+            // 播放音效
+            playSound('success');
+        });
+        
+        document.getElementById('pauseTimeAnimation').addEventListener('click', () => {
+            clearInterval(animationInterval);
+            // 播放音效
+            playSound('click');
+        });
+        
+        // 地點副詞子句動畫
+        document.getElementById('playPlaceAnimation').addEventListener('click', () => {
+            const animation = document.getElementById('placeAnimation');
+            
+            let count = 0;
+            const connectors = [
+                {connector: '<span class="highlight">wherever</span>'},
+                {connector: '<span class="highlight">where</span>'},
+                {connector: '<span class="highlight">anywhere</span>'},
+                {connector: '<span class="highlight">everywhere</span>'}
+            ];
+            
+            clearInterval(animationInterval);
+            animationInterval = setInterval(() => {
+                animation.innerHTML = `I will follow you ${connectors[count].connector} you go.`;
+                count = (count + 1) % connectors.length;
+            }, 2000);
+            
+            // 播放音效
+            playSound('success');
+        });
+        
+        document.getElementById('pausePlaceAnimation').addEventListener('click', () => {
+            clearInterval(animationInterval);
+            // 播放音效
+            playSound('click');
+        });
+        
+        // 原因副詞子句動畫
+        document.getElementById('playReasonAnimation').addEventListener('click', () => {
+            const animation = document.getElementById('reasonAnimation');
+            
+            let count = 0;
+            const connectors = [
+                {connector: '<span class="highlight">Since</span>'},
+                {connector: '<span class="highlight">Because</span>'},
+                {connector: '<span class="highlight">As</span>'},
+                {connector: '<span class="highlight">Now that</span>'}
+            ];
+            
+            clearInterval(animationInterval);
+            animationInterval = setInterval(() => {
+                animation.innerHTML = `${connectors[count].connector} you are here, let's start the meeting.`;
+                count = (count + 1) % connectors.length;
+            }, 2000);
+            
+            // 播放音效
+            playSound('success');
+        });
+        
+        document.getElementById('pauseReasonAnimation').addEventListener('click', () => {
+            clearInterval(animationInterval);
+            // 播放音效
+            playSound('click');
+        });
+        
+        // 結果副詞子句動畫
+        document.getElementById('playResultAnimation').addEventListener('click', () => {
+            const animation = document.getElementById('resultAnimation');
+            
+            let count = 0;
+            const connectors = [
+                {so: '<span class="highlight">so</span>', that: '<span class="highlight">that</span>'},
+                {so: '<span class="highlight">such</span>', that: '<span class="highlight">that</span>'}
+            ];
+            
+            clearInterval(animationInterval);
+            animationInterval = setInterval(() => {
+                animation.innerHTML = `It was ${connectors[count].so} cold ${connectors[count].that} the lake froze.`;
+                count = (count + 1) % connectors.length;
+            }, 2000);
+            
+            // 播放音效
+            playSound('success');
+        });
+        
+        document.getElementById('pauseResultAnimation').addEventListener('click', () => {
+            clearInterval(animationInterval);
+            // 播放音效
+            playSound('click');
+        });
+        
+        // 目的副詞子句動畫
+        document.getElementById('playPurposeAnimation').addEventListener('click', () => {
+            const animation = document.getElementById('purposeAnimation');
+            
+            let count = 0;
+            const connectors = [
+                {connector: '<span class="highlight">so that</span>'},
+                {connector: '<span class="highlight">in order that</span>'},
+                {connector: '<span class="highlight">in case</span>'},
+                {connector: '<span class="highlight">for fear that</span>'}
+            ];
+            
+            clearInterval(animationInterval);
+            animationInterval = setInterval(() => {
+                animation.innerHTML = `She studied hard ${connectors[count].connector} she could pass the exam.`;
+                count = (count + 1) % connectors.length;
+            }, 2000);
+            
+            // 播放音效
+            playSound('success');
+        });
+        
+        document.getElementById('pausePurposeAnimation').addEventListener('click', () => {
+            clearInterval(animationInterval);
+            // 播放音效
+            playSound('click');
+        });
+        
+        // 讓步副詞子句動畫
+        document.getElementById('playConcessionAnimation').addEventListener('click', () => {
+            const animation = document.getElementById('concessionAnimation');
+            
+            let count = 0;
+            const connectors = [
+                {connector: '<span class="highlight">Although</span>'},
+                {connector: '<span class="highlight">Though</span>'},
+                {connector: '<span class="highlight">Even though</span>'},
+                {connector: '<span class="highlight">While</span>'}
+            ];
+            
+            clearInterval(animationInterval);
+            animationInterval = setInterval(() => {
+                animation.innerHTML = `${connectors[count].connector} it was raining, we went for a walk.`;
+                count = (count + 1) % connectors.length;
+            }, 2000);
+            
+            // 播放音效
+            playSound('success');
+        });
+        
+        document.getElementById('pauseConcessionAnimation').addEventListener('click', () => {
+            clearInterval(animationInterval);
+            // 播放音效
+            playSound('click');
+        });
+        
+        // 條件副詞子句動畫
+        document.getElementById('playConditionAnimation').addEventListener('click', () => {
+            const animation = document.getElementById('conditionAnimation');
+            
+            let count = 0;
+            const connectors = [
+                {connector: '<span class="highlight">If</span>'},
+                {connector: '<span class="highlight">Unless</span>'},
+                {connector: '<span class="highlight">Provided that</span>'},
+                {connector: '<span class="highlight">In case</span>'}
+            ];
+            
+            clearInterval(animationInterval);
+            animationInterval = setInterval(() => {
+                animation.innerHTML = `${connectors[count].connector} it rains, we will stay home.`;
+                count = (count + 1) % connectors.length;
+            }, 2000);
+            
+            // 播放音效
+            playSound('success');
+        });
+        
+        document.getElementById('pauseConditionAnimation').addEventListener('click', () => {
+            clearInterval(animationInterval);
+            // 播放音效
+            playSound('click');
+        });
+        
+        // 方式副詞子句動畫
+        document.getElementById('playMannerAnimation').addEventListener('click', () => {
+            const animation = document.getElementById('mannerAnimation');
+            
+            let count = 0;
+            const connectors = [
+                {connector: '<span class="highlight">as if</span>'},
+                {connector: '<span class="highlight">as though</span>'},
+                {connector: '<span class="highlight">as</span>'},
+                {connector: '<span class="highlight">the way</span>'}
+            ];
+            
+            clearInterval(animationInterval);
+            animationInterval = setInterval(() => {
+                animation.innerHTML = `He acted ${connectors[count].connector} he knew everything.`;
+                count = (count + 1) % connectors.length;
+            }, 2000);
+            
+            // 播放音效
+            playSound('success');
+        });
+        
+        document.getElementById('pauseMannerAnimation').addEventListener('click', () => {
+            clearInterval(animationInterval);
+            // 播放音效
+            playSound('click');
+        });
+        
+        // 比較副詞子句動畫
+        document.getElementById('playComparisonAnimation').addEventListener('click', () => {
+            const animation = document.getElementById('comparisonAnimation');
+            
+            let count = 0;
+            const connectors = [
+                {connector: '<span class="highlight">than</span>'},
+                {connector: '<span class="highlight">as</span>'},
+                {connector: '<span class="highlight">just as</span>'}
+            ];
+            
+            clearInterval(animationInterval);
+            animationInterval = setInterval(() => {
+                animation.innerHTML = `She is taller ${connectors[count].connector} I am.`;
+                count = (count + 1) % connectors.length;
+            }, 2000);
+            
+            // 播放音效
+            playSound('success');
+        });
+        
+        document.getElementById('pauseComparisonAnimation').addEventListener('click', () => {
+            clearInterval(animationInterval);
+            // 播放音效
+            playSound('click');
+        });
+        
+        // 獨立分詞構句動畫
+        document.getElementById('playReductionAnimation').addEventListener('click', () => {
+            const animation = document.getElementById('reductionAnimation');
+            
+            let count = 0;
+            const sentences = [
+                {full: 'When the meeting was over, we went home.', reduced: '<span class="highlight">The meeting being over</span>, we went home.'},
+                {full: 'Because there was a power cut, I had to go to bed early.', reduced: '<span class="highlight">There being a power cut</span>, I had to go to bed early.'},
+                {full: 'If time permits, I can give you a ride home.', reduced: '<span class="highlight">Time permitting</span>, I can give you a ride home.'},
+                {full: 'When her work was done, she took a nap.', reduced: '<span class="highlight">Her work done</span>, she took a nap.'},
+                {full: 'Because the last bus was gone, we had to walk home.', reduced: '<span class="highlight">The last bus gone</span>, we had to walk home.'}
+            ];
+            
+            clearInterval(animationInterval);
+            animationInterval = setInterval(() => {
+                if (count % 2 === 0) {
+                    animation.innerHTML = `${sentences[Math.floor(count/2)].full}<br><small>副詞子句 Adverb Clause</small>`;
+                } else {
+                    animation.innerHTML = `${sentences[Math.floor(count/2)].reduced}<br><small>獨立分詞構句 Absolute Construction</small>`;
+                }
+                count = (count + 1) % (sentences.length * 2);
+            }, 2000);
+            
+            // 播放音效
+            playSound('success');
+        });
+        
+        document.getElementById('pauseReductionAnimation').addEventListener('click', () => {
+            clearInterval(animationInterval);
+            // 播放音效
+            playSound('click');
+        });
+        
+        // 音效函數
+        function playSound(type) {
+            // 在實際應用中，這裡會播放相應的音效
+            // 由於這是一個示例，我們只模擬音效播放
+            console.log(`Playing ${type} sound`);
+        }
+        
+        // 初始加載時播放歡迎音效
+        window.addEventListener('load', () => {
+            playSound('welcome');
+        });
+    </script>
+</body>
+</html>
