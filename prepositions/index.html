@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>介係詞探險 | Preposition Adventure</title>
+    <style>
+        :root {
+            --primary: #6d5d94;
+            --secondary: #a68bb5;
+            --accent: #f4a261;
+            --light: #f8f4e9;
+            --dark: #2a2d34;
+            --success: #8db596;
+            --warning: #e76f51;
+            --info: #4a8fe7;
+            --phrasal: #e9c46a;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--light) 0%, #e9e4d6 100%);
+            color: var(--dark);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .language-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .language-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .volume-control {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .volume-control:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .main-content {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 20px;
+        }
+        
+        .animation-section {
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .animation-container {
+            width: 100%;
+            height: 300px;
+            background-color: var(--light);
+            border-radius: 15px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        
+        button:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .preposition-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        
+        .preposition-btn {
+            background-color: var(--info);
+            padding: 6px 12px;
+            font-size: 0.9rem;
+        }
+        
+        .phrasal-btn {
+            background-color: var(--phrasal);
+            color: var(--dark);
+        }
+        
+        .info-section {
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+        }
+        
+        .tab-container {
+            margin-bottom: 20px;
+        }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid var(--secondary);
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: var(--dark);
+            font-weight: 600;
+            position: relative;
+        }
+        
+        .tab.active {
+            color: var(--primary);
+        }
+        
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary);
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 15px;
+            background-color: rgba(246, 241, 235, 0.5);
+            border-radius: 10px;
+            min-height: 200px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .example {
+            margin: 15px 0;
+            padding: 15px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .level {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .beginner {
+            background-color: var(--success);
+            color: white;
+        }
+        
+        .intermediate {
+            background-color: var(--accent);
+            color: white;
+        }
+        
+        .advanced {
+            background-color: var(--warning);
+            color: white;
+        }
+        
+        .phrase-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .phrase-item {
+            padding: 8px 12px;
+            background-color: white;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .phrasal-item {
+            border-left: 4px solid var(--phrasal);
+        }
+        
+        .quiz-section {
+            width: 100%;
+            padding: 20px;
+            margin-top: 20px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 15px;
+        }
+        
+        .quiz-container {
+            display: none;
+        }
+        
+        .quiz-container.active {
+            display: block;
+        }
+        
+        .question {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .option {
+            padding: 15px;
+            background-color: white;
+            border: 2px solid var(--secondary);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .option:hover {
+            background-color: rgba(166, 139, 181, 0.1);
+        }
+        
+        .option.correct {
+            background-color: var(--success);
+            color: white;
+        }
+        
+        .option.incorrect {
+            background-color: var(--warning);
+            color: white;
+        }
+        
+        .quiz-result {
+            text-align: center;
+            padding: 20px;
+            display: none;
+        }
+        
+        .quiz-result.active {
+            display: block;
+        }
+        
+        .score {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 10px 0;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background-color: var(--primary);
+            width: 0%;
+            transition: width 0.5s;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: var(--dark);
+            color: white;
+            margin-top: 20px;
+        }
+        
+        /* 響應式設計 */
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .options {
+                grid-template-columns: 1fr;
+            }
+            
+            .phrase-list {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .animation-container {
+                height: 250px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .tabs {
+                flex-wrap: wrap;
+            }
+            
+            .tab {
+                flex: 1;
+                min-width: 120px;
+                text-align: center;
+            }
+            
+            .animation-container {
+                height: 200px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <button class="volume-control" id="volumeToggle">🔊 音效開啟</button>
+            <h1>介係詞探險</h1>
+            <div class="subtitle">Preposition Adventure</div>
+            <button class="language-toggle" id="languageToggle">EN/中文</button>
+        </header>
+        
+        <div class="main-content">
+            <section class="animation-section">
+                <div class="animation-container" id="animationContainer">
+                    <canvas id="prepositionCanvas"></canvas>
+                </div>
+                <div class="controls">
+                    <button id="playBtn">播放</button>
+                    <button id="pauseBtn">暫停</button>
+                    <button id="resetBtn">重置</button>
+                    <button id="nextSceneBtn">下一個場景</button>
+                </div>
+                <div class="preposition-buttons" id="prepositionButtons">
+                    <!-- 動態生成介係詞按鈕 -->
+                </div>
+                <div class="progress-bar">
+                    <div class="progress" id="progressBar"></div>
+                </div>
+            </section>
+            
+            <section class="info-section">
+                <div class="tab-container">
+                    <div class="tabs">
+                        <div class="tab active" data-tab="intro">介紹</div>
+                        <div class="tab" data-tab="basic">基礎用法</div>
+                        <div class="tab" data-tab="nouns">名詞搭配</div>
+                        <div class="tab" data-tab="phrasal">Phrasal Verbs</div>
+                        <div class="tab" data-tab="phrases">常用片語</div>
+                    </div>
+                    
+                    <div class="tab-content active" id="intro">
+                        <h2>什麼是介係詞？</h2>
+                        <p>介係詞是用來表示名詞或代詞與句子中其他詞之間關係的詞語。</p>
+                        <p>Prepositions are words that show the relationship between a noun or pronoun and other words in a sentence.</p>
+                        <div class="example">
+                            <span class="level beginner">初級</span>
+                            <p>The book is <strong>on</strong> the table. (書在桌子上。)</p>
+                            <p>She arrived <strong>at</strong> 10 o'clock. (她在十點到達。)</p>
+                        </div>
+                        <p>介係詞的出現通常意味著一個片語的開始，而片語可為句子的主詞及動詞添加意思。因此，若要引導讀者理解介系詞片語的含意，選擇正確的介系詞十分重要。</p>
+                    </div>
+                    
+                    <div class="tab-content" id="basic">
+                        <h2>基礎介係詞用法</h2>
+                        <div class="example">
+                            <h3>IN</h3>
+                            <p><strong>空間：</strong> in a garden, in a room</p>
+                            <p><strong>水體：</strong> in the sea, in a river</p>
+                            <p><strong>線條：</strong> in a row, in a queue</p>
+                            <p><strong>地點：</strong> in Taiwan, in Taipei</p>
+                            <p><strong>時間：</strong> in April, in 2014, in a few weeks</p>
+                        </div>
+                        <div class="example">
+                            <h3>AT</h3>
+                            <p><strong>地點：</strong> at the bus-stop, at the door</p>
+                            <p><strong>位置：</strong> at the top, at the bottom</p>
+                            <p><strong>人群：</strong> at the back of the class</p>
+                            <p><strong>地點動詞：</strong> at the cinema, at work</p>
+                            <p><strong>時間：</strong> at 10:30, at two pm</p>
+                        </div>
+                        <div class="example">
+                            <h3>ON</h3>
+                            <p><strong>表面：</strong> on the table, on the desk</p>
+                            <p><strong>島嶼：</strong> on Maui, on Green Island</p>
+                            <p><strong>方向：</strong> on the left, on the right</p>
+                            <p><strong>時間：</strong> on Monday, on October 29th</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="nouns">
+                        <h2>名詞與介係詞搭配</h2>
+                        <div class="example">
+                            <h3>FOR</h3>
+                            <p>A check <strong>for</strong> $50</p>
+                            <p>A demand <strong>for</strong> something</p>
+                            <p>A need <strong>for</strong> something</p>
+                            <p>A reason <strong>for</strong> doing something</p>
+                        </div>
+                        <div class="example">
+                            <h3>IN</h3>
+                            <p>A rise <strong>in</strong> something</p>
+                            <p>A fall <strong>in</strong> something</p>
+                            <p>A decrease <strong>in</strong> something</p>
+                        </div>
+                        <div class="example">
+                            <h3>OF</h3>
+                            <p>A cause <strong>of</strong> something</p>
+                            <p>A picture <strong>of</strong> someone</p>
+                        </div>
+                        <div class="example">
+                            <h3>TO</h3>
+                            <p>Damage <strong>to</strong> something</p>
+                            <p>An invitation <strong>to</strong> an activity</p>
+                            <p>A reaction <strong>to</strong> something</p>
+                            <p>A solution <strong>to</strong> a problem</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="phrasal">
+                        <h2>常用Phrasal Verbs</h2>
+                        <div class="example">
+                            <h3>Turn + 介係詞</h3>
+                            <div class="phrase-list">
+                                <div class="phrase-item phrasal-item"><strong>Turn in</strong> - 上交；就寢</div>
+                                <div class="phrase-item phrasal-item"><strong>Turn on</strong> - 打開；使興奮</div>
+                                <div class="phrase-item phrasal-item"><strong>Turn off</strong> - 關閉；使厭煩</div>
+                                <div class="phrase-item phrasal-item"><strong>Turn up</strong> - 出現；調高音量</div>
+                                <div class="phrase-item phrasal-item"><strong>Turn down</strong> - 拒絕；調低音量</div>
+                                <div class="phrase-item phrasal-item"><strong>Turn out</strong> - 結果是；出席</div>
+                            </div>
+                        </div>
+                        <div class="example">
+                            <h3>Give + 介係詞</h3>
+                            <div class="phrase-list">
+                                <div class="phrase-item phrasal-item"><strong>Give up</strong> - 放棄</div>
+                                <div class="phrase-item phrasal-item"><strong>Give in</strong> - 屈服；讓步</div>
+                                <div class="phrase-item phrasal-item"><strong>Give out</strong> - 分發；用盡</div>
+                                <div class="phrase-item phrasal-item"><strong>Give away</strong> - 贈送；洩露</div>
+                                <div class="phrase-item phrasal-item"><strong>Give back</strong> - 歸還</div>
+                            </div>
+                        </div>
+                        <div class="example">
+                            <h3>其他常用Phrasal Verbs</h3>
+                            <div class="phrase-list">
+                                <div class="phrase-item phrasal-item"><strong>Look up</strong> - 查詢；抬頭看</div>
+                                <div class="phrase-item phrasal-item"><strong>Look after</strong> - 照顧</div>
+                                <div class="phrase-item phrasal-item"><strong>Look for</strong> - 尋找</div>
+                                <div class="phrase-item phrasal-item"><strong>Get up</strong> - 起床</div>
+                                <div class="phrase-item phrasal-item"><strong>Get on</strong> - 進展；上車</div>
+                                <div class="phrase-item phrasal-item"><strong>Get off</strong> - 下車；離開</div>
+                                <div class="phrase-item phrasal-item"><strong>Put on</strong> - 穿上；上演</div>
+                                <div class="phrase-item phrasal-item"><strong>Take off</strong> - 起飛；脫下</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="phrases">
+                        <h2>常用介係詞片語</h2>
+                        <div class="phrase-list">
+                            <div class="phrase-item"><strong>At first</strong> - 起初</div>
+                            <div class="phrase-item"><strong>By accident</strong> - 意外地</div>
+                            <div class="phrase-item"><strong>For now</strong> - 目前</div>
+                            <div class="phrase-item"><strong>From now on</strong> - 從現在開始</div>
+                            <div class="phrase-item"><strong>Under age</strong> - 未成年</div>
+                            <div class="phrase-item"><strong>Without fail</strong> - 必定</div>
+                            <div class="phrase-item"><strong>By the way</strong> - 順便一提</div>
+                            <div class="phrase-item"><strong>For example</strong> - 例如</div>
+                            <div class="phrase-item"><strong>Under control</strong> - 受控制</div>
+                            <div class="phrase-item"><strong>Without exception</strong> - 無例外</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="quiz-section">
+                <h2>測驗時間！</h2>
+                <p>測試你對介係詞和Phrasal Verbs的理解。</p>
+                <button id="startQuiz">開始測驗</button>
+                
+                <div class="quiz-container" id="quizContainer">
+                    <div class="question" id="question"></div>
+                    <div class="options" id="options"></div>
+                    <button id="nextQuestion" style="display: none;">下一題</button>
+                </div>
+                
+                <div class="quiz-result" id="quizResult">
+                    <h2>測驗完成！</h2>
+                    <div class="score" id="score"></div>
+                    <p id="resultMessage"></p>
+                    <button id="restartQuiz">再試一次</button>
+                </div>
+            </section>
+        </div>
+        
+        <footer>
+            <p>介係詞探險 - 學習英語介係詞的有趣方式</p>
+            <p>Preposition Adventure - A fun way to learn English prepositions</p>
+        </footer>
+    </div>
+
+    <script>
+        // 音效管理
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        const audioContext = new AudioContext();
+        let isSoundEnabled = true;
+        
+        // 音效函數
+        function playSound(type) {
+            if (!isSoundEnabled) return;
+            
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            switch(type) {
+                case 'correct':
+                    oscillator.frequency.setValueAtTime(880, audioContext.currentTime);
+                    gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+                    break;
+                case 'incorrect':
+                    oscillator.frequency.setValueAtTime(220, audioContext.currentTime);
+                    gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+                    break;
+                case 'click':
+                    oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime);
+                    gainNode.gain.setValueAtTime(0.05, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.1);
+                    break;
+                case 'transition':
+                    oscillator.frequency.setValueAtTime(659.25, audioContext.currentTime);
+                    oscillator.frequency.setValueAtTime(783.99, audioContext.currentTime + 0.1);
+                    gainNode.gain.setValueAtTime(0.05, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.2);
+                    break;
+                case 'complete':
+                    // 播放一個簡單的音階
+                    const frequencies = [523.25, 659.25, 783.99, 1046.50];
+                    let time = audioContext.currentTime;
+                    
+                    frequencies.forEach(freq => {
+                        const osc = audioContext.createOscillator();
+                        const gain = audioContext.createGain();
+                        
+                        osc.connect(gain);
+                        gain.connect(audioContext.destination);
+                        
+                        osc.frequency.setValueAtTime(freq, time);
+                        gain.gain.setValueAtTime(0.05, time);
+                        gain.gain.exponentialRampToValueAtTime(0.001, time + 0.1);
+                        
+                        osc.start(time);
+                        osc.stop(time + 0.1);
+                        
+                        time += 0.1;
+                    });
+                    return;
+            }
+            
+            oscillator.start();
+            oscillator.stop(audioContext.currentTime + 0.5);
+        }
+        
+        // 音效控制
+        document.getElementById('volumeToggle').addEventListener('click', function() {
+            isSoundEnabled = !isSoundEnabled;
+            this.textContent = isSoundEnabled ? "🔊 音效開啟" : "🔇 音效關閉";
+            playSound('click');
+        });
+        
+        // 語言切換功能
+        document.getElementById('languageToggle').addEventListener('click', function() {
+            const currentLang = this.textContent;
+            this.textContent = currentLang === 'EN/中文' ? '中/English' : 'EN/中文';
+            playSound('click');
+        });
+        
+        // 標籤切換功能
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabId = tab.getAttribute('data-tab');
+                
+                tabs.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(tc => tc.classList.remove('active'));
+                
+                tab.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+                playSound('click');
+            });
+        });
+        
+        // 動畫控制
+        const canvas = document.getElementById('prepositionCanvas');
+        const ctx = canvas.getContext('2d');
+        const playBtn = document.getElementById('playBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const nextSceneBtn = document.getElementById('nextSceneBtn');
+        const progressBar = document.getElementById('progressBar');
+        const prepositionButtons = document.getElementById('prepositionButtons');
+        
+        // 設置Canvas大小
+        function resizeCanvas() {
+            const container = document.getElementById('animationContainer');
+            canvas.width = container.clientWidth;
+            canvas.height = container.clientHeight;
+        }
+        
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+        
+        // 場景定義
+        const scenes = [
+            {
+                title: "IN - 在...裡面",
+                objects: [
+                    { type: 'person', x: 150, y: 150, width: 30, height: 50, color: '#6d5d94' },
+                    { type: 'house', x: 100, y: 100, width: 100, height: 80, color: '#a68bb5' }
+                ],
+                text: "The person is IN the house.",
+                translation: "人在房子裡面。"
+            },
+            {
+                title: "ON - 在...上面",
+                objects: [
+                    { type: 'book', x: 150, y: 120, width: 40, height: 30, color: '#f4a261' },
+                    { type: 'table', x: 100, y: 150, width: 120, height: 20, color: '#8db596' }
+                ],
+                text: "The book is ON the table.",
+                translation: "書在桌子上。"
+            },
+            {
+                title: "AT - 在...地點",
+                objects: [
+                    { type: 'person', x: 150, y: 150, width: 30, height: 50, color: '#6d5d94' },
+                    { type: 'busstop', x: 100, y: 120, width: 80, height: 40, color: '#e76f51' }
+                ],
+                text: "She is AT the bus stop.",
+                translation: "她在公車站。"
+            },
+            {
+                title: "UNDER - 在...下面",
+                objects: [
+                    { type: 'cat', x: 150, y: 180, width: 40, height: 20, color: '#4a8fe7' },
+                    { type: 'table', x: 100, y: 150, width: 120, height: 20, color: '#8db596' }
+                ],
+                text: "The cat is UNDER the table.",
+                translation: "貓在桌子下面。"
+            },
+            {
+                title: "BETWEEN - 在...之間",
+                objects: [
+                    { type: 'ball', x: 120, y: 150, radius: 15, color: '#f4a261' },
+                    { type: 'box', x: 180, y: 150, width: 40, height: 40, color: '#6d5d94' },
+                    { type: 'triangle', x: 150, y: 150, size: 20, color: '#e76f51' }
+                ],
+                text: "The triangle is BETWEEN the ball and the box.",
+                translation: "三角形在球和盒子之間。"
+            },
+            {
+                title: "Phrasal Verb - TURN IN",
+                objects: [
+                    { type: 'person', x: 150, y: 150, width: 30, height: 50, color: '#6d5d94' },
+                    { type: 'bed', x: 100, y: 120, width: 100, height: 60, color: '#a68bb5' },
+                    { type: 'paper', x: 200, y: 100, width: 30, height: 40, color: '#f4a261' }
+                ],
+                text: "It's time to TURN IN. (就寢)",
+                translation: "該睡覺了。"
+            },
+            {
+                title: "Phrasal Verb - GIVE UP",
+                objects: [
+                    { type: 'person', x: 150, y: 150, width: 30, height: 50, color: '#6d5d94' },
+                    { type: 'puzzle', x: 100, y: 120, width: 80, height: 60, color: '#e76f51' },
+                    { type: 'hands', x: 150, y: 180, width: 60, height: 10, color: '#8db596' }
+                ],
+                text: "Don't GIVE UP on your dreams.",
+                translation: "不要放棄你的夢想。"
+            }
+        ];
+        
+        let currentScene = 0;
+        let animationId;
+        let isPlaying = false;
+        let progress = 0;
+        
+        // 生成介係詞按鈕
+        const prepositions = ['IN', 'ON', 'AT', 'UNDER', 'BETWEEN', 'TURN IN', 'GIVE UP'];
+        prepositions.forEach(prep => {
+            const btn = document.createElement('button');
+            btn.className = prep.includes(' ') ? 'preposition-btn phrasal-btn' : 'preposition-btn';
+            btn.textContent = prep;
+            btn.addEventListener('click', () => {
+                // 找到包含此介係詞的場景
+                const sceneIndex = scenes.findIndex(scene => 
+                    scene.text.includes(prep) || scene.title.includes(prep));
+                if (sceneIndex !== -1) {
+                    currentScene = sceneIndex;
+                    drawScene();
+                    playSound('transition');
+                }
+            });
+            prepositionButtons.appendChild(btn);
+        });
+        
+        // 繪製場景
+        function drawScene() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // 繪製背景
+            ctx.fillStyle = '#f8f4e9';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            const scene = scenes[currentScene];
+            
+            // 繪製對象
+            scene.objects.forEach(obj => {
+                ctx.fillStyle = obj.color;
+                
+                if (obj.type === 'person') {
+                    // 簡單的人物繪製
+                    ctx.fillRect(obj.x, obj.y, obj.width, obj.height);
+                    // 頭部
+                    ctx.beginPath();
+                    ctx.arc(obj.x + obj.width/2, obj.y - 10, 15, 0, Math.PI * 2);
+                    ctx.fill();
+                } else if (obj.type === 'house') {
+                    // 房屋繪製
+                    ctx.fillRect(obj.x, obj.y + 20, obj.width, obj.height - 20);
+                    // 屋頂
+                    ctx.beginPath();
+                    ctx.moveTo(obj.x - 10, obj.y + 20);
+                    ctx.lineTo(obj.x + obj.width/2, obj.y);
+                    ctx.lineTo(obj.x + obj.width + 10, obj.y + 20);
+                    ctx.closePath();
+                    ctx.fill();
+                } else if (obj.type === 'book') {
+                    ctx.fillRect(obj.x, obj.y, obj.width, obj.height);
+                    // 書本細節
+                    ctx.strokeStyle = '#2a2d34';
+                    ctx.lineWidth = 2;
+                    ctx.strokeRect(obj.x, obj.y, obj.width, obj.height);
+                    ctx.beginPath();
+                    ctx.moveTo(obj.x + 10, obj.y);
+                    ctx.lineTo(obj.x + 10, obj.y + obj.height);
+                    ctx.stroke();
+                } else if (obj.type === 'table') {
+                    ctx.fillRect(obj.x, obj.y, obj.width, obj.height);
+                    // 桌腳
+                    ctx.fillRect(obj.x + 10, obj.y + obj.height, 10, 30);
+                    ctx.fillRect(obj.x + obj.width - 20, obj.y + obj.height, 10, 30);
+                } else if (obj.type === 'busstop') {
+                    ctx.fillRect(obj.x, obj.y, obj.width, obj.height);
+                    // 站牌柱
+                    ctx.fillRect(obj.x + obj.width/2 - 5, obj.y + obj.height, 10, 40);
+                } else if (obj.type === 'cat') {
+                    // 簡單的貓繪製
+                    ctx.fillRect(obj.x, obj.y, obj.width, obj.height);
+                    // 耳朵
+                    ctx.beginPath();
+                    ctx.moveTo(obj.x, obj.y);
+                    ctx.lineTo(obj.x - 10, obj.y - 10);
+                    ctx.lineTo(obj.x + 10, obj.y);
+                    ctx.closePath();
+                    ctx.fill();
+                    ctx.beginPath();
+                    ctx.moveTo(obj.x + obj.width, obj.y);
+                    ctx.lineTo(obj.x + obj.width + 10, obj.y - 10);
+                    ctx.lineTo(obj.x + obj.width - 10, obj.y);
+                    ctx.closePath();
+                    ctx.fill();
+                } else if (obj.type === 'ball') {
+                    ctx.beginPath();
+                    ctx.arc(obj.x, obj.y, obj.radius, 0, Math.PI * 2);
+                    ctx.fill();
+                } else if (obj.type === 'box') {
+                    ctx.fillRect(obj.x, obj.y, obj.width, obj.height);
+                } else if (obj.type === 'triangle') {
+                    ctx.beginPath();
+                    ctx.moveTo(obj.x, obj.y - obj.size);
+                    ctx.lineTo(obj.x - obj.size, obj.y + obj.size);
+                    ctx.lineTo(obj.x + obj.size, obj.y + obj.size);
+                    ctx.closePath();
+                    ctx.fill();
+                } else if (obj.type === 'bed') {
+                    // 床的繪製
+                    ctx.fillRect(obj.x, obj.y, obj.width, obj.height);
+                    // 枕頭
+                    ctx.fillStyle = '#f8f4e9';
+                    ctx.fillRect(obj.x + 10, obj.y + 10, 30, 20);
+                    ctx.fillRect(obj.x + obj.width - 40, obj.y + 10, 30, 20);
+                    ctx.fillStyle = obj.color;
+                } else if (obj.type === 'paper') {
+                    ctx.fillRect(obj.x, obj.y, obj.width, obj.height);
+                    // 紙張細節
+                    ctx.strokeStyle = '#2a2d34';
+                    ctx.lineWidth = 1;
+                    ctx.strokeRect(obj.x, obj.y, obj.width, obj.height);
+                    for(let i = 5; i < obj.height; i += 10) {
+                        ctx.beginPath();
+                        ctx.moveTo(obj.x + 5, obj.y + i);
+                        ctx.lineTo(obj.x + obj.width - 5, obj.y + i);
+                        ctx.stroke();
+                    }
+                } else if (obj.type === 'puzzle') {
+                    // 拼圖繪製
+                    ctx.fillRect(obj.x, obj.y, obj.width, obj.height);
+                    // 拼圖細節
+                    ctx.strokeStyle = '#2a2d34';
+                    ctx.lineWidth = 2;
+                    ctx.strokeRect(obj.x, obj.y, obj.width, obj.height);
+                    // 拼圖缺口
+                    ctx.beginPath();
+                    ctx.arc(obj.x + 20, obj.y + 10, 5, 0, Math.PI * 2);
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.arc(obj.x + obj.width - 20, obj.y + obj.height - 10, 5, 0, Math.PI * 2);
+                    ctx.stroke();
+                } else if (obj.type === 'hands') {
+                    // 手勢繪製 - 表示放棄
+                    ctx.fillRect(obj.x, obj.y, obj.width, obj.height);
+                }
+            });
+            
+            // 繪製標題和說明文字
+            ctx.fillStyle = '#2a2d34';
+            ctx.font = 'bold 18px Arial';
+            ctx.fillText(scene.title, 20, 30);
+            
+            ctx.font = '16px Arial';
+            ctx.fillText(scene.text, 20, canvas.height - 40);
+            ctx.fillText(scene.translation, 20, canvas.height - 20);
+        }
+        
+        // 動畫函數
+        function animate() {
+            if (!isPlaying) return;
+            
+            // 更新進度
+            progress += 0.5;
+            if (progress > 100) {
+                progress = 0;
+                currentScene = (currentScene + 1) % scenes.length;
+                playSound('transition');
+            }
+            
+            progressBar.style.width = `${progress}%`;
+            
+            // 輕微動畫效果 - 對象輕微移動
+            const scene = scenes[currentScene];
+            scene.objects.forEach((obj, index) => {
+                if (obj.type === 'person' || obj.type === 'cat') {
+                    obj.y = obj.y + Math.sin(progress / 10 + index) * 2;
+                }
+                // Phrasal verbs 場景的特殊動畫
+                if (scene.title.includes('TURN IN') && obj.type === 'person') {
+                    obj.x = 150 + Math.sin(progress / 5) * 10;
+                }
+                if (scene.title.includes('GIVE UP') && obj.type === 'hands') {
+                    obj.y = 180 + Math.sin(progress / 5) * 5;
+                }
+            });
+            
+            drawScene();
+            animationId = requestAnimationFrame(animate);
+        }
+        
+        // 控制按鈕事件
+        playBtn.addEventListener('click', () => {
+            if (!isPlaying) {
+                isPlaying = true;
+                animate();
+                playSound('click');
+            }
+        });
+        
+        pauseBtn.addEventListener('click', () => {
+            isPlaying = false;
+            cancelAnimationFrame(animationId);
+            playSound('click');
+        });
+        
+        resetBtn.addEventListener('click', () => {
+            isPlaying = false;
+            cancelAnimationFrame(animationId);
+            progress = 0;
+            progressBar.style.width = '0%';
+            drawScene();
+            playSound('click');
+        });
+        
+        nextSceneBtn.addEventListener('click', () => {
+            currentScene = (currentScene + 1) % scenes.length;
+            progress = 0;
+            progressBar.style.width = '0%';
+            drawScene();
+            playSound('transition');
+        });
+        
+        // 初始繪製
+        drawScene();
+        
+        // 測驗功能
+        const startQuizBtn = document.getElementById('startQuiz');
+        const quizContainer = document.getElementById('quizContainer');
+        const questionElement = document.getElementById('question');
+        const optionsElement = document.getElementById('options');
+        const nextQuestionBtn = document.getElementById('nextQuestion');
+        const quizResult = document.getElementById('quizResult');
+        const scoreElement = document.getElementById('score');
+        const resultMessageElement = document.getElementById('resultMessage');
+        const restartQuizBtn = document.getElementById('restartQuiz');
+        
+        const quizQuestions = [
+            {
+                question: "The cat is ___ the table.",
+                options: ["on", "in", "at", "by"],
+                correct: 0,
+                explanation: "正確答案是 'on'，表示貓在桌子上面。"
+            },
+            {
+                question: "We will meet ___ 3 o'clock.",
+                options: ["on", "in", "at", "for"],
+                correct: 2,
+                explanation: "正確答案是 'at'，用於特定的時間點。"
+            },
+            {
+                question: "She is interested ___ learning French.",
+                options: ["on", "in", "at", "for"],
+                correct: 1,
+                explanation: "正確答案是 'in'，固定搭配 'interested in'。"
+            },
+            {
+                question: "The book was written ___ a famous author.",
+                options: ["on", "in", "at", "by"],
+                correct: 3,
+                explanation: "正確答案是 'by'，表示由誰創作。"
+            },
+            {
+                question: "He apologized ___ his mistake.",
+                options: ["on", "in", "at", "for"],
+                correct: 3,
+                explanation: "正確答案是 'for'，固定搭配 'apologize for'。"
+            },
+            {
+                question: "There is a picture ___ my family on the wall.",
+                options: ["on", "of", "at", "for"],
+                correct: 1,
+                explanation: "正確答案是 'of'，表示所屬關係。"
+            },
+            {
+                question: "The solution ___ this problem is not easy.",
+                options: ["on", "in", "at", "to"],
+                correct: 3,
+                explanation: "正確答案是 'to'，固定搭配 'solution to'。"
+            },
+            {
+                question: "She arrived ___ the airport just in time.",
+                options: ["on", "in", "at", "for"],
+                correct: 2,
+                explanation: "正確答案是 'at'，用於特定地點。"
+            },
+            {
+                question: "It's late, I should ___ now.",
+                options: ["turn in", "turn on", "turn off", "turn up"],
+                correct: 0,
+                explanation: "正確答案是 'turn in'，意思是就寢。"
+            },
+            {
+                question: "Don't ___ on your dreams.",
+                options: ["give up", "give in", "give out", "give away"],
+                correct: 0,
+                explanation: "正確答案是 'give up'，意思是放棄。"
+            }
+        ];
+        
+        let currentQuestion = 0;
+        let score = 0;
+        
+        startQuizBtn.addEventListener('click', startQuiz);
+        nextQuestionBtn.addEventListener('click', showNextQuestion);
+        restartQuizBtn.addEventListener('click', startQuiz);
+        
+        function startQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            startQuizBtn.style.display = 'none';
+            quizContainer.classList.add('active');
+            quizResult.classList.remove('active');
+            showQuestion();
+            playSound('click');
+        }
+        
+        function showQuestion() {
+            const question = quizQuestions[currentQuestion];
+            questionElement.textContent = question.question;
+            
+            optionsElement.innerHTML = '';
+            question.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.classList.add('option');
+                optionElement.textContent = option;
+                optionElement.addEventListener('click', () => selectOption(index));
+                optionsElement.appendChild(optionElement);
+            });
+            
+            nextQuestionBtn.style.display = 'none';
+        }
+        
+        function selectOption(selectedIndex) {
+            const question = quizQuestions[currentQuestion];
+            const options = optionsElement.querySelectorAll('.option');
+            
+            options.forEach((option, index) => {
+                option.classList.remove('correct', 'incorrect');
+                if (index === question.correct) {
+                    option.classList.add('correct');
+                } else if (index === selectedIndex) {
+                    option.classList.add('incorrect');
+                }
+                option.style.pointerEvents = 'none';
+            });
+            
+            if (selectedIndex === question.correct) {
+                score++;
+                playSound('correct');
+            } else {
+                playSound('incorrect');
+            }
+            
+            nextQuestionBtn.style.display = 'block';
+        }
+        
+        function showNextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < quizQuestions.length) {
+                showQuestion();
+                playSound('click');
+            } else {
+                showResult();
+            }
+        }
+        
+        function showResult() {
+            quizContainer.classList.remove('active');
+            quizResult.classList.add('active');
+            
+            scoreElement.textContent = `${score} / ${quizQuestions.length}`;
+            
+            let message;
+            if (score === quizQuestions.length) {
+                message = "太棒了！你完全掌握了這些介係詞和Phrasal Verbs！";
+                playSound('complete');
+            } else if (score >= quizQuestions.length * 0.7) {
+                message = "做得很好！你對介係詞和Phrasal Verbs有很好的理解。";
+            } else if (score >= quizQuestions.length * 0.5) {
+                message = "不錯的嘗試！繼續練習會更好。";
+            } else {
+                message = "沒關係！再多練習一下介係詞和Phrasal Verbs吧。";
+            }
+            
+            resultMessageElement.textContent = message;
+        }
+    </script>
+</body>
+</html>
