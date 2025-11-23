@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shirley's Questions Learning Platform | 疑問句學習平台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4169e1;
+            --secondary: #6495ed;
+            --accent: #ff6b6b;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --success: #28a745;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft JhengHei', '微軟正黑體', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+        
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tab {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            flex: 1;
+            text-align: center;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tab:hover {
+            background-color: rgba(65, 105, 225, 0.1);
+        }
+        
+        .tab.active {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+        }
+        
+        h3 {
+            color: var(--secondary);
+            margin: 1.5rem 0 1rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        th {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .example {
+            background-color: #f0f7ff;
+            border-left: 4px solid var(--accent);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .interactive-element {
+            background-color: var(--light);
+            border: 2px dashed var(--secondary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+        
+        .btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn:hover {
+            background-color: #ff5252;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(255, 107, 107, 0.3);
+        }
+        
+        .animation-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 1rem;
+        }
+        
+        .question-animation {
+            height: 200px;
+            background: linear-gradient(135deg, #6495ed, #4169e1);
+            border-radius: 10px;
+            margin: 1.5rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+            background-color: var(--dark);
+            color: white;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .highlight {
+            background-color: #fff9e6;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .question-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+            margin: 1rem 0;
+        }
+        
+        .question-item {
+            background: #f0f7ff;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            margin: 1.5rem 0;
+        }
+        
+        .comparison-table th {
+            background-color: var(--secondary);
+        }
+        
+        .note-box {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .usage-diagram {
+            text-align: center;
+            margin: 2rem 0;
+        }
+        
+        .diagram-container {
+            display: flex;
+            justify-content: center;
+            margin: 1.5rem 0;
+        }
+        
+        .diagram {
+            width: 100%;
+            max-width: 600px;
+            height: 300px;
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .diagram-item {
+            position: absolute;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 120px;
+        }
+        
+        .connector-word {
+            color: var(--accent);
+            font-weight: bold;
+        }
+        
+        .antecedent {
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        .qa-pair {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+        }
+        
+        .question {
+            flex: 1;
+            padding: 10px;
+            background: #f0f7ff;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        
+        .answer {
+            flex: 1;
+            padding: 10px;
+            background: #e8f5e9;
+            border-radius: 5px;
+        }
+        
+        @media (max-width: 768px) {
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .tab {
+                flex: none;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .question-list {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .qa-pair {
+                flex-direction: column;
+            }
+            
+            .question, .answer {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Shirley's Questions Learning Platform</h1>
+            <p class="subtitle">疑問句學習平台</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="tabs">
+            <div class="tab active" data-tab="intro">疑問句介紹 | Questions Introduction</div>
+            <div class="tab" data-tab="yesno">Yes/No 疑問句 | Yes/No Questions</div>
+            <div class="tab" data-tab="wh">WH 疑問句 | WH Questions</div>
+            <div class="tab" data-tab="tag">附加問句 | Tag Questions</div>
+        </div>
+        
+        <!-- 疑問句介紹 -->
+        <div class="tab-content active" id="intro">
+            <h2>疑問句介紹 | Questions Introduction</h2>
+            
+            <div class="card">
+                <h3>什麼是疑問句？ | What are Questions?</h3>
+                <p>疑問句是用來提出問題的句子，在英語中有多種形式，包括Yes/No疑問句、WH疑問句和附加問句。</p>
+                <p>Questions are sentences used to ask for information. In English, there are various forms including Yes/No questions, WH questions, and tag questions.</p>
+                
+                <div class="example">
+                    <p><strong>Yes/No Question:</strong> <span class="highlight">Is the actor handsome?</span> | 這個演員帥嗎？</p>
+                    <p><strong>WH Question:</strong> <span class="highlight">What is he doing?</span> | 他在做什麼？</p>
+                    <p><strong>Tag Question:</strong> <span class="highlight">You are coming, aren't you?</span> | 你會來，對吧？</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>疑問句的基本結構 | Basic Structure of Questions</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>類型 Type</th>
+                            <th>結構 Structure</th>
+                            <th>例子 Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Yes/No 疑問句</td>
+                            <td>Auxiliary + Subject + ... ?</td>
+                            <td>Is he a teacher?</td>
+                        </tr>
+                        <tr>
+                            <td>WH 疑問句</td>
+                            <td>WH + Auxiliary + Subject + ... ?</td>
+                            <td>Where do you live?</td>
+                        </tr>
+                        <tr>
+                            <td>附加問句</td>
+                            <td>Statement, + Auxiliary + Subject?</td>
+                            <td>You like coffee, don't you?</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="card">
+                <h3>疑問句的用法 | Uses of Questions</h3>
+                <p>疑問句在英語交流中扮演著重要角色，用於獲取信息、確認事實、表達好奇等。</p>
+                <p>Questions play an important role in English communication, used to obtain information, confirm facts, express curiosity, etc.</p>
+                
+                <div class="usage-diagram">
+                    <div class="diagram-container">
+                        <div class="diagram">
+                            <div class="diagram-item" style="top: 20px; left: 50px;">獲取信息<br>Obtain Information</div>
+                            <div class="diagram-item" style="top: 20px; right: 50px;">確認事實<br>Confirm Facts</div>
+                            <div class="diagram-item" style="top: 120px; left: 150px;">表達好奇<br>Express Curiosity</div>
+                            <div class="diagram-item" style="top: 120px; right: 150px;">尋求幫助<br>Seek Help</div>
+                            <div class="diagram-item" style="bottom: 20px; left: 250px;">提出建議<br>Make Suggestions</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="interactive-element">
+                <h3>疑問句練習 | Question Practice</h3>
+                <p>識別不同類型的疑問句</p>
+                <p>Identify different types of questions</p>
+                <div class="question-animation" id="questionAnimation">
+                    Is the actor handsome?
+                </div>
+                <div class="animation-controls">
+                    <button class="btn" id="playAnimation">
+                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
+                    </button>
+                    <button class="btn" id="pauseAnimation">
+                        <i class="fas fa-pause"></i> 暫停 | Pause
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Yes/No 疑問句 -->
+        <div class="tab-content" id="yesno">
+            <h2>Yes/No 疑問句 | Yes/No Questions</h2>
+            
+            <div class="card">
+                <h3>Yes/No 疑問句結構 | Yes/No Question Structure</h3>
+                <p>Yes/No疑問句的基本結構是：Auxiliary + Subject + ... ?</p>
+                <p>The basic structure of Yes/No questions is: Auxiliary + Subject + ... ?</p>
+                
+                <div class="qa-pair">
+                    <div class="question">
+                        <p><strong>Question:</strong> Is the actor handsome?</p>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Answer:</strong> Yes, he is. / No, he isn't.</p>
+                    </div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">
+                        <p><strong>Question:</strong> Were you tired yesterday?</p>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Answer:</strong> Yes, I was. / No, I wasn't.</p>
+                    </div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">
+                        <p><strong>Question:</strong> Do you like sushi?</p>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Answer:</strong> Yes, I do. / No, I don't.</p>
+                    </div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">
+                        <p><strong>Question:</strong> Does this machine need batteries?</p>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Answer:</strong> Yes, it does. / No, it doesn't.</p>
+                    </div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">
+                        <p><strong>Question:</strong> Did Bob buy lunch?</p>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Answer:</strong> Yes, he did. / No, he didn't.</p>
+                    </div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">
+                        <p><strong>Question:</strong> Have you had lunch?</p>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Answer:</strong> Yes, I have. / No, I haven't.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>不同時態的Yes/No疑問句 | Yes/No Questions in Different Tenses</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>時態 Tense</th>
+                            <th>結構 Structure</th>
+                            <th>例子 Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>現在簡單式</td>
+                            <td>Do/Does + Subject + Verb...?</td>
+                            <td>Do you speak English?</td>
+                        </tr>
+                        <tr>
+                            <td>過去簡單式</td>
+                            <td>Did + Subject + Verb...?</td>
+                            <td>Did you see the movie?</td>
+                        </tr>
+                        <tr>
+                            <td>現在進行式</td>
+                            <td>Am/Is/Are + Subject + Verb-ing...?</td>
+                            <td>Are you studying now?</td>
+                        </tr>
+                        <tr>
+                            <td>過去進行式</td>
+                            <td>Was/Were + Subject + Verb-ing...?</td>
+                            <td>Were you sleeping when I called?</td>
+                        </tr>
+                        <tr>
+                            <td>現在完成式</td>
+                            <td>Have/Has + Subject + Past Participle...?</td>
+                            <td>Have you finished your homework?</td>
+                        </tr>
+                        <tr>
+                            <td>未來式</td>
+                            <td>Will + Subject + Verb...?</td>
+                            <td>Will you come to the party?</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="interactive-element">
+                <h3>Yes/No疑問句練習 | Yes/No Question Practice</h3>
+                <p>將陳述句轉換為Yes/No疑問句</p>
+                <p>Convert statements to Yes/No questions</p>
+                <div class="question-animation" id="yesnoAnimation">
+                    He is a teacher.
+                </div>
+                <div class="animation-controls">
+                    <button class="btn" id="playYesnoAnimation">
+                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
+                    </button>
+                    <button class="btn" id="pauseYesnoAnimation">
+                        <i class="fas fa-pause"></i> 暫停 | Pause
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- WH 疑問句 -->
+        <div class="tab-content" id="wh">
+            <h2>WH 疑問句 | WH Questions</h2>
+            
+            <div class="card">
+                <h3>WH 疑問句結構 | WH Question Structure</h3>
+                <p>WH疑問句的基本結構是：WH + Auxiliary + Subject + ... ?</p>
+                <p>The basic structure of WH questions is: WH + Auxiliary + Subject + ... ?</p>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">What is he doing?</span> | 他在做什麼？</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">When do you study?</span> | 你什麼時候學習？</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">Where did you buy that shirt?</span> | 你在哪裡買的那件襯衫？</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">How have you been lately?</span> | 你最近怎麼樣？</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">Who did you call?</span> | 你給誰打電話了？</p>
+                    <p><em>(比較: Who called you? 誰給你打電話了？)</em></p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">Why will you leave?</span> | 你為什麼要離開？</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>WH疑問詞的用法 | Usage of WH Question Words</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>疑問詞 Question Word</th>
+                            <th>用途 Purpose</th>
+                            <th>例子 Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>What</td>
+                            <td>詢問事物、活動</td>
+                            <td>What is your name?</td>
+                        </tr>
+                        <tr>
+                            <td>When</td>
+                            <td>詢問時間</td>
+                            <td>When is your birthday?</td>
+                        </tr>
+                        <tr>
+                            <td>Where</td>
+                            <td>詢問地點</td>
+                            <td>Where do you live?</td>
+                        </tr>
+                        <tr>
+                            <td>Why</td>
+                            <td>詢問原因</td>
+                            <td>Why are you late?</td>
+                        </tr>
+                        <tr>
+                            <td>Who</td>
+                            <td>詢問人（主格）</td>
+                            <td>Who is that man?</td>
+                        </tr>
+                        <tr>
+                            <td>Whom</td>
+                            <td>詢問人（受格）</td>
+                            <td>Whom did you meet?</td>
+                        </tr>
+                        <tr>
+                            <td>Whose</td>
+                            <td>詢問所有權</td>
+                            <td>Whose book is this?</td>
+                        </tr>
+                        <tr>
+                            <td>Which</td>
+                            <td>詢問選擇</td>
+                            <td>Which one do you prefer?</td>
+                        </tr>
+                        <tr>
+                            <td>How</td>
+                            <td>詢問方式、狀態</td>
+                            <td>How are you feeling?</td>
+                        </tr>
+                        <tr>
+                            <td>How many</td>
+                            <td>詢問數量（可數）</td>
+                            <td>How many students are there?</td>
+                        </tr>
+                        <tr>
+                            <td>How much</td>
+                            <td>詢問數量（不可數）</td>
+                            <td>How much water do you need?</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="interactive-element">
+                <h3>WH疑問句練習 | WH Question Practice</h3>
+                <p>選擇正確的WH疑問詞完成句子</p>
+                <p>Select the correct WH question word to complete the sentence</p>
+                <div class="question-animation" id="whAnimation">
+                    ______ is your birthday?
+                </div>
+                <div class="animation-controls">
+                    <button class="btn" id="playWhAnimation">
+                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
+                    </button>
+                    <button class="btn" id="pauseWhAnimation">
+                        <i class="fas fa-pause"></i> 暫停 | Pause
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 附加問句 -->
+        <div class="tab-content" id="tag">
+            <h2>附加問句 | Tag Questions</h2>
+            
+            <div class="card">
+                <h3>附加問句結構 | Tag Question Structure</h3>
+                <p>在英文中, 附加問句是指由助動詞及代名詞(代替主詞)組成的一種簡短問，附加在直述句後面(因而叫附加句)，用以尋求對方的認同、確認、亦或澄清事實。</p>
+                <p>In English, a tag question is a short question formed by an auxiliary verb and a pronoun (replacing the subject), attached after a declarative sentence (hence the name tag question), used to seek the other party's agreement, confirmation, or clarification of facts.</p>
+                
+                <div class="note-box">
+                    <p><strong>特點：</strong>直述句為肯定，附加句為否定；反之亦然。</p>
+                    <p><strong>Characteristic:</strong> If the declarative sentence is positive, the tag is negative; if the declarative sentence is negative, the tag is positive.</p>
+                </div>
+                
+                <h4>1. 肯定陳述句 + 否定附加句 | Positive Statement + Negative Tag</h4>
+                
+                <div class="qa-pair">
+                    <div class="question">
+                        <p><strong>Tag Question:</strong> You are coming, <span class="highlight">aren't you</span>?</p>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Answer:</strong> Yes, I am. / No, I'm not.</p>
+                    </div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">
+                        <p><strong>Tag Question:</strong> We have finished, <span class="highlight">haven't we</span>?</p>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Answer:</strong> Yes, we have. / No, we haven't.</p>
+                    </div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">
+                        <p><strong>Tag Question:</strong> You like coffee, <span class="highlight">don't you</span>?</p>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Answer:</strong> Yes, I do. / No, I don't.</p>
+                    </div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">
+                        <p><strong>Tag Question:</strong> They will help, <span class="highlight">won't they</span>?</p>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Answer:</strong> Yes, they will. / No, they won't.</p>
+                    </div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">
+                        <p><strong>Tag Question:</strong> I can come, <span class="highlight">can't I</span>?</p>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Answer:</strong> Yes, you can. / No, you can't.</p>
+                    </div>
+                </div>
+                
+                <h4>2. 否定陳述句 + 肯定附加句 | Negative Statement + Positive Tag</h4>
+                
+                <div class="qa-pair">
+                    <div class="question">
+                        <p><strong>Tag Question:</strong> It isn't raining, <span class="highlight">is it</span>?</p>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Answer:</strong> Yes, it is. / No, it isn't.</p>
+                    </div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">
+                        <p><strong>Tag Question:</strong> We have never seen that, <span class="highlight">have we</span>?</p>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Answer:</strong> Yes, we have. / No, we haven't.</p>
+                    </div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">
+                        <p><strong>Tag Question:</strong> You don't like coffee, <span class="highlight">do you</span>?</p>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Answer:</strong> Yes, I do. / No, I don't.</p>
+                        <p><em>(這裡翻譯時，需要考慮中文的表達習慣：不，我喜歡；是的，我不喜歡。)</em></p>
+                    </div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">
+                        <p><strong>Tag Question:</strong> They will not help, <span class="highlight">will they</span>?</p>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Answer:</strong> Yes, they will. / No, they won't.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>特殊情況 | Special Cases</h3>
+                
+                <div class="example">
+                    <p><strong>否定副詞的使用：</strong>直述句裡否定副詞的使用，如hardly，barely， seldom等，已經含有否定的意思，故附加句會用肯定式。</p>
+                    <p><strong>Use of Negative Adverbs:</strong> When negative adverbs such as hardly, barely, seldom, etc. are used in the declarative sentence, which already contain a negative meaning, the tag will be positive.</p>
+                    <p>She seldom calls her parents, <span class="highlight">does she</span>? (她很少給她父母親打電話，對嗎？)</p>
+                    <p>Yes, she does. / No, she doesn't.</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>代名詞的確定：</strong></p>
+                    <p>直述句的主詞為名字，則大致根據性別來選he/she。如：John teaches English, <span class="highlight">doesn't he</span>?</p>
+                    <p>直述句的主詞為this/that，代名詞為it；these/those則為they。如：This is a hard decision, <span class="highlight">isn't it</span>?</p>
+                    <p>直述句為there be 句型，附加句的代名詞為there。如：There is no such thing as a free lunch, <span class="highlight">is there</span>?</p>
+                    <p>直述句的主詞為I，代名詞仍為I。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>助動詞的確定：</strong></p>
+                    <p>助動詞由直述句的時態及主詞來確定，基本保持一致。</p>
+                    <p>You won't tell anyone, <span class="highlight">will you</span>?</p>
+                    <p>I said that already, <span class="highlight">didn't I</span>?</p>
+                    <p>Your mum hadn't met your girlfriend before you got married, <span class="highlight">had she</span>?</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>特殊情況：</strong>如果直述句裡的助動詞是am, 肯定式的附加句為am I/ ，但否定句的附加句一般為 aren't I？</p>
+                    <p>I'm never on time, <span class="highlight">am I</span>?</p>
+                    <p>I'm going to receive an email from you with the details, <span class="highlight">aren't I</span>?</p>
+                </div>
+            </div>
+            
+            <div class="note-box">
+                <p><strong>注意：</strong>tag questions 附加句一般用於口語表達，寫作中，除非是敘述文裡的對話，否則很少會用到。但在口語中是很重要經常被使用的部分。</p>
+                <p><strong>Note:</strong> Tag questions are generally used in spoken expression. In writing, unless it's dialogue in a narrative, they are rarely used. However, they are an important and frequently used part of spoken language.</p>
+            </div>
+            
+            <div class="interactive-element">
+                <h3>附加問句練習 | Tag Question Practice</h3>
+                <p>為陳述句添加正確的附加問句</p>
+                <p>Add the correct tag question to the statement</p>
+                <div class="question-animation" id="tagAnimation">
+                    You like coffee, ______?
+                </div>
+                <div class="animation-controls">
+                    <button class="btn" id="playTagAnimation">
+                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
+                    </button>
+                    <button class="btn" id="pauseTagAnimation">
+                        <i class="fas fa-pause"></i> 暫停 | Pause
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Shirley's Questions Learning Platform | 疑問句學習平台</p>
+        <p>© 2025 Shirley's Grammar E-Charger</p>
+    </footer>
+
+    <script>
+        // 選項卡功能
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // 移除所有活動標籤和內容
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // 添加活動類到當前標籤
+                tab.classList.add('active');
+                
+                // 顯示對應的內容
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+                
+                // 播放切換音效
+                playSound('click');
+            });
+        });
+        
+        // 動畫控制
+        let animationInterval;
+        
+        // 疑問句介紹動畫
+        document.getElementById('playAnimation').addEventListener('click', () => {
+            const animation = document.getElementById('questionAnimation');
+            
+            let count = 0;
+            const sentences = [
+                {sentence: 'Is the actor handsome?', type: 'Yes/No Question'},
+                {sentence: 'What is he doing?', type: 'WH Question'},
+                {sentence: 'You are coming, aren\'t you?', type: 'Tag Question'},
+                {sentence: 'Do you like sushi?', type: 'Yes/No Question'},
+                {sentence: 'Where do you live?', type: 'WH Question'}
+            ];
+            
+            clearInterval(animationInterval);
+            animationInterval = setInterval(() => {
+                animation.innerHTML = `${sentences[count].sentence}<br><small>${sentences[count].type}</small>`;
+                count = (count + 1) % sentences.length;
+            }, 2000);
+            
+            // 播放音效
+            playSound('success');
+        });
+        
+        document.getElementById('pauseAnimation').addEventListener('click', () => {
+            clearInterval(animationInterval);
+            // 播放音效
+            playSound('click');
+        });
+        
+        // Yes/No疑問句動畫
+        document.getElementById('playYesnoAnimation').addEventListener('click', () => {
+            const animation = document.getElementById('yesnoAnimation');
+            
+            let count = 0;
+            const sentences = [
+                {statement: 'He is a teacher.', question: 'Is he a teacher?'},
+                {statement: 'She likes coffee.', question: 'Does she like coffee?'},
+                {statement: 'They went to the park.', question: 'Did they go to the park?'},
+                {statement: 'We have finished our work.', question: 'Have we finished our work?'},
+                {statement: 'You will come to the party.', question: 'Will you come to the party?'}
+            ];
+            
+            clearInterval(animationInterval);
+            animationInterval = setInterval(() => {
+                if (count % 2 === 0) {
+                    animation.innerHTML = `${sentences[Math.floor(count/2)].statement}<br><small>陳述句 Statement</small>`;
+                } else {
+                    animation.innerHTML = `${sentences[Math.floor(count/2)].question}<br><small>疑問句 Question</small>`;
+                }
+                count = (count + 1) % (sentences.length * 2);
+            }, 2000);
+            
+            // 播放音效
+            playSound('success');
+        });
+        
+        document.getElementById('pauseYesnoAnimation').addEventListener('click', () => {
+            clearInterval(animationInterval);
+            // 播放音效
+            playSound('click');
+        });
+        
+        // WH疑問句動畫
+        document.getElementById('playWhAnimation').addEventListener('click', () => {
+            const animation = document.getElementById('whAnimation');
+            
+            let count = 0;
+            const sentences = [
+                {question: '<span class="highlight">When</span> is your birthday?'},
+                {question: '<span class="highlight">Where</span> do you live?'},
+                {question: '<span class="highlight">What</span> is your name?'},
+                {question: '<span class="highlight">Why</span> are you late?'},
+                {question: '<span class="highlight">How</span> are you feeling?'}
+            ];
+            
+            clearInterval(animationInterval);
+            animationInterval = setInterval(() => {
+                animation.innerHTML = `${sentences[count].question}`;
+                count = (count + 1) % sentences.length;
+            }, 2000);
+            
+            // 播放音效
+            playSound('success');
+        });
+        
+        document.getElementById('pauseWhAnimation').addEventListener('click', () => {
+            clearInterval(animationInterval);
+            // 播放音效
+            playSound('click');
+        });
+        
+        // 附加問句動畫
+        document.getElementById('playTagAnimation').addEventListener('click', () => {
+            const animation = document.getElementById('tagAnimation');
+            
+            let count = 0;
+            const sentences = [
+                {statement: 'You like coffee,', tag: '<span class="highlight">don\'t you</span>?'},
+                {statement: 'She is a teacher,', tag: '<span class="highlight">isn\'t she</span>?'},
+                {statement: 'They will help,', tag: '<span class="highlight">won\'t they</span>?'},
+                {statement: 'We have finished,', tag: '<span class="highlight">haven\'t we</span>?'},
+                {statement: 'He can swim,', tag: '<span class="highlight">can\'t he</span>?'}
+            ];
+            
+            clearInterval(animationInterval);
+            animationInterval = setInterval(() => {
+                animation.innerHTML = `${sentences[count].statement} ${sentences[count].tag}`;
+                count = (count + 1) % sentences.length;
+            }, 2000);
+            
+            // 播放音效
+            playSound('success');
+        });
+        
+        document.getElementById('pauseTagAnimation').addEventListener('click', () => {
+            clearInterval(animationInterval);
+            // 播放音效
+            playSound('click');
+        });
+        
+        // 音效函數
+        function playSound(type) {
+            // 在實際應用中，這裡會播放相應的音效
+            // 由於這是一個示例，我們只模擬音效播放
+            console.log(`Playing ${type} sound`);
+        }
+        
+        // 初始加載時播放歡迎音效
+        window.addEventListener('load', () => {
+            playSound('welcome');
+        });
+    </script>
+</body>
+</html>
