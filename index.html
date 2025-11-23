@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shirley's E-Charger - Responsive</title>
+    <title>Shirley's E-Charger - Enhanced</title>
     <style>
         body {
             font-family: 'Courier New', monospace;
@@ -18,8 +18,27 @@
             color: #fff;
             position: relative;
             overflow-x: hidden;
-            cursor: none; /* 隱藏默認鼠標 */
+            cursor: auto; /* 恢復默認鼠標 */
         }
+        
+        /* 自定義鼠標指針 */
+        .custom-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, #FFD700 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            mix-blend-mode: difference;
+            animation: cursorPulse 2s infinite;
+        }
+        
+        @keyframes cursorPulse {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.2); opacity: 1; }
+        }
+        
         #station-container {
             text-align: center;
             z-index: 1;
@@ -41,13 +60,15 @@
             cursor: pointer;
             stroke: #C0C0C0;
             stroke-width: 2;
-            transition: transform 0.3s ease;
+            transition: all 0.3s ease;
             filter: url(#metalGlow);
             fill: url(#portGradient);
         }
         .port:hover {
             transform: scale(1.2);
             filter: url(#metalGlowHover);
+            stroke: #FFD700;
+            stroke-width: 3;
         }
         .port-label {
             font-size: 12px;
@@ -64,9 +85,11 @@
             text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
             font-size: 14px;
             cursor: pointer;
+            transition: all 0.3s ease;
         }
         .pillar-label:hover {
             fill: #FFD700;
+            font-size: 16px;
         }
         .electricity-box {
             fill: url(#boxGradient);
@@ -331,6 +354,8 @@
         .red-button:hover {
             fill: #FF6666;
             filter: url(#redGlow);
+            stroke: #FFD700;
+            stroke-width: 3;
         }
         .red-button-text {
             fill: white;
@@ -347,6 +372,13 @@
             stroke-width: 2;
             rx: 5;
             filter: url(#blockGlow);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .pillar-block:hover {
+            stroke: #FFD700;
+            stroke-width: 3;
+            filter: url(#metalGlowHover);
         }
         .pillar-wire {
             stroke: url(#pillarWireGradient);
@@ -468,6 +500,36 @@
                 transform: scale(1.5);
                 opacity: 0;
             }
+        }
+        
+        /* 懸停提示 */
+        .tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            pointer-events: none;
+            z-index: 1000;
+            white-space: nowrap;
+            border: 1px solid #B87333;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+        
+        /* 點擊區域高亮 */
+        .clickable-highlight {
+            position: absolute;
+            background: radial-gradient(circle, rgba(255,215,0,0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 99;
+            animation: highlightPulse 2s infinite;
+        }
+        
+        @keyframes highlightPulse {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.1); }
         }
         
         /* 響應式設計 - 調整載具顯示模式 */
@@ -665,6 +727,15 @@
     </style>
 </head>
 <body>
+    <!-- 自定義鼠標指針 -->
+    <div class="custom-cursor" id="customCursor"></div>
+    
+    <!-- 點擊區域高亮 -->
+    <div class="clickable-highlight" id="clickableHighlight" style="display: none;"></div>
+    
+    <!-- 懸停提示 -->
+    <div class="tooltip" id="tooltip" style="display: none;"></div>
+
     <div id="station-container">
         <h1>Shirley's Grammar E-Charger</h1>
         <p>Click on the pillar levels or charging ports to power up your grammar knowledge!</p>
@@ -785,10 +856,10 @@
             <rect x="370" y="360" width="60" height="60" class="pillar-block" onclick="handlePillarClick('compound-complex')" />
             
             <!-- Pillar Labels (Sentence Types) -->
-            <text x="400" y="150" class="pillar-label" font-size="14" onclick="handlePillarClick('simple')">1. Simple</text>
-            <text x="400" y="230" class="pillar-label" font-size="14" onclick="handlePillarClick('compound')">2. Compound</text>
-            <text x="400" y="310" class="pillar-label" font-size="14" onclick="handlePillarClick('complex')">3. Complex</text>
-            <text x="400" y="390" class="pillar-label" font-size="14" onclick="handlePillarClick('compound-complex')">4. Compound-Complex</text>
+            <text x="400" y="150" class="pillar-label" onclick="handlePillarClick('simple')">1. Simple</text>
+            <text x="400" y="230" class="pillar-label" onclick="handlePillarClick('compound')">2. Compound</text>
+            <text x="400" y="310" class="pillar-label" onclick="handlePillarClick('complex')">3. Complex</text>
+            <text x="400" y="390" class="pillar-label" onclick="handlePillarClick('compound-complex')">4. Compound-Complex</text>
             
             <!-- Top Sign with metal gradient -->
             <linearGradient id="signGradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -1165,16 +1236,118 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
             }
         }
 
-        // 電動車跟隨鼠標功能
+        // 自定義鼠標指針
+        function initCustomCursor() {
+            const cursor = document.getElementById('customCursor');
+            
+            document.addEventListener('mousemove', function(e) {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+            
+            // 在可點擊元素上改變鼠標樣式
+            const clickableElements = document.querySelectorAll('.port, .pillar-label, .pillar-block, .red-button, .flip-card');
+            clickableElements.forEach(el => {
+                el.addEventListener('mouseenter', function() {
+                    cursor.style.transform = 'scale(1.5)';
+                    cursor.style.background = 'radial-gradient(circle, #FF4500 0%, transparent 70%)';
+                });
+                
+                el.addEventListener('mouseleave', function() {
+                    cursor.style.transform = 'scale(1)';
+                    cursor.style.background = 'radial-gradient(circle, #FFD700 0%, transparent 70%)';
+                });
+            });
+        }
+
+        // 懸停提示功能
+        function initTooltips() {
+            const tooltip = document.getElementById('tooltip');
+            const highlight = document.getElementById('clickableHighlight');
+            
+            // 為所有可點擊元素添加懸停提示
+            const elementsWithTooltips = {
+                '.port': {
+                    'nouns': 'Learn about Nouns',
+                    'pronouns': 'Learn about Pronouns',
+                    'adjectives-adverbs': 'Learn about Adjectives & Adverbs',
+                    'verbs': 'Learn about Verbs',
+                    'prepositions': 'Learn about Prepositions',
+                    'infinitive': 'Learn about Infinitive Verbs',
+                    'gerund': 'Learn about Gerunds',
+                    'present-participle': 'Learn about Present Participles',
+                    'past-participle': 'Learn about Past Participles',
+                    'noun-clause': 'Learn about Noun Clauses',
+                    'adjective-clause': 'Learn about Adjective Clauses',
+                    'adverb-clause': 'Learn about Adverb Clauses',
+                    'questions': 'Learn about Questions',
+                    'exclamations': 'Learn about Exclamations',
+                    'inverted': 'Learn about Inverted Sentences',
+                    'subjunctive': 'Learn about Subjunctive Mood'
+                },
+                '.pillar-label': {
+                    'simple': 'Simple Sentences - One independent clause',
+                    'compound': 'Compound Sentences - Multiple independent clauses',
+                    'complex': 'Complex Sentences - One independent + dependent clauses',
+                    'compound-complex': 'Compound-Complex Sentences - Multiple independent + dependent clauses'
+                },
+                '.red-button': {
+                    'parts-of-speech': 'Parts of Speech Section',
+                    'nonfinite-verbs': 'Non-finite Verbs Section',
+                    'clauses': 'Clauses Section',
+                    'special-sentences': 'Special Sentences Section'
+                },
+                '.pillar-block': {
+                    'simple': 'Click to learn about Simple Sentences',
+                    'compound': 'Click to learn about Compound Sentences',
+                    'complex': 'Click to learn about Complex Sentences',
+                    'compound-complex': 'Click to learn about Compound-Complex Sentences'
+                }
+            };
+            
+            Object.keys(elementsWithTooltips).forEach(selector => {
+                const elements = document.querySelectorAll(selector);
+                elements.forEach(el => {
+                    const key = el.getAttribute('onclick')?.match(/'([^']+)'/)?.[1];
+                    if (key && elementsWithTooltips[selector][key]) {
+                        el.addEventListener('mouseenter', function(e) {
+                            tooltip.textContent = elementsWithTooltips[selector][key];
+                            tooltip.style.display = 'block';
+                            
+                            // 顯示點擊區域高亮
+                            const rect = el.getBoundingClientRect();
+                            highlight.style.width = (rect.width + 20) + 'px';
+                            highlight.style.height = (rect.height + 20) + 'px';
+                            highlight.style.left = (rect.left - 10) + 'px';
+                            highlight.style.top = (rect.top - 10) + 'px';
+                            highlight.style.display = 'block';
+                        });
+                        
+                        el.addEventListener('mousemove', function(e) {
+                            tooltip.style.left = (e.clientX + 15) + 'px';
+                            tooltip.style.top = (e.clientY + 15) + 'px';
+                        });
+                        
+                        el.addEventListener('mouseleave', function() {
+                            tooltip.style.display = 'none';
+                            highlight.style.display = 'none';
+                        });
+                    }
+                });
+            });
+        }
+
+        // 電動車跟隨鼠標功能 - 優化版本
         function initElectricCar() {
             const car = document.getElementById('electric-car');
             const carSound = document.getElementById('carSound');
             const chargingEffect = document.getElementById('charging-effect');
             
-            let mouseX = 0;
-            let mouseY = 0;
-            let carX = 0;
-            let carY = 0;
+            let mouseX = window.innerWidth / 2;
+            let mouseY = window.innerHeight / 2;
+            let carX = mouseX;
+            let carY = mouseY;
+            let isCarActive = false;
             
             // 追蹤鼠標位置
             document.addEventListener('mousemove', function(e) {
@@ -1182,24 +1355,48 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
                 mouseY = e.clientY;
             });
             
+            // 點擊激活電動車
+            document.addEventListener('click', function(e) {
+                // 如果點擊的不是可點擊元素，激活電動車
+                if (!e.target.closest('.port, .pillar-label, .pillar-block, .red-button, .flip-card')) {
+                    isCarActive = !isCarActive;
+                    showStatus(isCarActive ? 
+                        'Electric car activated! Move mouse to control it.' : 
+                        'Electric car deactivated.');
+                }
+            });
+            
             // 平滑跟隨動畫
             function animateCar() {
-                // 計算車子應該移動到的位置（鼠標位置偏移，讓車子在鼠標下方）
-                const targetX = mouseX - 30; // 讓車子中心對準鼠標
-                const targetY = mouseY - 15;
-                
-                // 平滑移動
-                carX += (targetX - carX) * 0.1;
-                carY += (targetY - carY) * 0.1;
-                
-                // 設置車子位置
-                car.style.left = carX + 'px';
-                car.style.top = carY + 'px';
-                
-                // 根據移動方向輕微旋轉車子，創造更自然的感覺
-                const dx = targetX - carX;
-                const rotation = Math.atan2(dx, 10) * 5; // 輕微旋轉效果
-                car.style.transform = `rotate(${rotation}deg)`;
+                if (isCarActive) {
+                    // 計算車子應該移動到的位置（鼠標位置偏移，讓車子在鼠標右下方）
+                    const targetX = mouseX + 20;
+                    const targetY = mouseY + 20;
+                    
+                    // 平滑移動
+                    carX += (targetX - carX) * 0.1;
+                    carY += (targetY - carY) * 0.1;
+                    
+                    // 設置車子位置
+                    car.style.left = carX + 'px';
+                    car.style.top = carY + 'px';
+                    
+                    // 根據移動方向輕微旋轉車子，創造更自然的感覺
+                    const dx = targetX - carX;
+                    const rotation = Math.atan2(dx, 10) * 3; // 輕微旋轉效果
+                    car.style.transform = `rotate(${rotation}deg)`;
+                } else {
+                    // 不激活時，車子回到默認位置
+                    const defaultX = window.innerWidth - 100;
+                    const defaultY = window.innerHeight - 100;
+                    
+                    carX += (defaultX - carX) * 0.05;
+                    carY += (defaultY - carY) * 0.05;
+                    
+                    car.style.left = carX + 'px';
+                    car.style.top = carY + 'px';
+                    car.style.transform = 'rotate(0deg)';
+                }
                 
                 // 更新充電效果位置
                 chargingEffect.style.left = (carX - 10) + 'px';
@@ -1225,7 +1422,7 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
                     );
                     
                     // 如果在充電範圍內
-                    if (distance < 50) {
+                    if (distance < 50 && isCarActive) {
                         isCharging = true;
                         if (!chargingEffect.classList.contains('charging-animation')) {
                             chargingEffect.classList.add('charging-animation');
@@ -1233,6 +1430,14 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
                             carSound.currentTime = 0;
                             carSound.play().catch(e => console.log('Audio play failed:', e));
                         }
+                        
+                        // 高亮顯示端口
+                        port.style.stroke = '#00FF00';
+                        port.style.strokeWidth = '4';
+                    } else {
+                        // 重置端口樣式
+                        port.style.stroke = '';
+                        port.style.strokeWidth = '';
                     }
                 });
                 
@@ -1250,7 +1455,10 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
             // 點擊電動車時的特殊效果
             car.addEventListener('click', function(e) {
                 e.stopPropagation(); // 防止事件冒泡
-                showStatus('Electric car ready to charge! Move me to any grammar port!');
+                isCarActive = !isCarActive;
+                showStatus(isCarActive ? 
+                    'Electric car activated! Move mouse to control it.' : 
+                    'Electric car deactivated.');
                 
                 // 添加點擊動畫
                 car.style.transform = 'scale(1.2) rotate(10deg)';
@@ -1267,10 +1475,10 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
             
             if (isMobile) {
                 // 移動設備優化
-                document.body.style.cursor = 'default'; // 恢復默認鼠標
+                document.body.style.cursor = 'default';
                 
-                // 調整電動車跟隨速度
-                window.carFollowSpeed = 0.05; // 更慢的跟隨速度
+                // 在移動設備上禁用電動車跟隨
+                window.isCarActive = false;
                 
                 // 添加觸摸事件支持
                 initTouchEvents();
@@ -1285,14 +1493,6 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
 
         // 初始化觸摸事件
         function initTouchEvents() {
-            const car = document.getElementById('electric-car');
-            
-            // 添加觸摸事件
-            car.addEventListener('touchstart', function(e) {
-                e.preventDefault();
-                showStatus('Electric car ready! Drag me to any grammar port!');
-            }, { passive: false });
-            
             // 為端口添加觸摸事件
             const ports = document.querySelectorAll('.port, .pillar-label, .pillar-block, .red-button');
             ports.forEach(port => {
@@ -1303,6 +1503,14 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
                     setTimeout(() => {
                         this.style.transform = '';
                     }, 300);
+                    
+                    // 觸摸時直接觸發點擊
+                    const clickEvent = new MouseEvent('click', {
+                        view: window,
+                        bubbles: true,
+                        cancelable: true
+                    });
+                    this.dispatchEvent(clickEvent);
                 }, { passive: false });
             });
         }
@@ -1317,6 +1525,12 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
             ports.forEach((port, index) => {
                 setTimeout(() => port.classList.add('animate'), index * 200);
             });
+            
+            // 初始化自定義鼠標指針
+            initCustomCursor();
+            
+            // 初始化懸停提示
+            initTooltips();
             
             // 初始化電動車
             initElectricCar();
