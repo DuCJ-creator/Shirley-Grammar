@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shirley's Gerund Learning Platform | 動名詞學習平台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #5d8aa8;
+            --secondary: #7ba7cc;
+            --accent: #ffb347;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --success: #28a745;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft JhengHei', '微軟正黑體', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+        
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tab {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            flex: 1;
+            text-align: center;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tab:hover {
+            background-color: rgba(93, 138, 168, 0.1);
+        }
+        
+        .tab.active {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+        }
+        
+        h3 {
+            color: var(--secondary);
+            margin: 1.5rem 0 1rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        th {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .example {
+            background-color: #f0f7ff;
+            border-left: 4px solid var(--accent);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .interactive-element {
+            background-color: var(--light);
+            border: 2px dashed var(--secondary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+        
+        .btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn:hover {
+            background-color: #ffa533;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(255, 179, 71, 0.3);
+        }
+        
+        .animation-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 1rem;
+        }
+        
+        .gerund-animation {
+            height: 200px;
+            background: linear-gradient(135deg, #7ba7cc, #5d8aa8);
+            border-radius: 10px;
+            margin: 1.5rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+            background-color: var(--dark);
+            color: white;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .highlight {
+            background-color: #fff9e6;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .gerund-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+            margin: 1rem 0;
+        }
+        
+        .gerund-item {
+            background: #f0f7ff;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .usage-diagram {
+            text-align: center;
+            margin: 2rem 0;
+        }
+        
+        .diagram-container {
+            display: flex;
+            justify-content: center;
+            margin: 1.5rem 0;
+        }
+        
+        .diagram {
+            width: 100%;
+            max-width: 600px;
+            height: 300px;
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .diagram-item {
+            position: absolute;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 120px;
+        }
+        
+        @media (max-width: 768px) {
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .tab {
+                flex: none;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .gerund-list {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Shirley's Gerund Learning Platform</h1>
+            <p class="subtitle">動名詞學習平台</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="tabs">
+            <div class="tab active" data-tab="intro">動名詞介紹 | Gerund Introduction</div>
+            <div class="tab" data-tab="subject">作主詞 | As Subject</div>
+            <div class="tab" data-tab="object">作受詞 | As Object</div>
+            <div class="tab" data-tab="preposition">介系詞受詞 | After Prepositions</div>
+            <div class="tab" data-tab="complement">作補語 | As Complement</div>
+            <div class="tab" data-tab="modifier">作限定詞 | As Modifier</div>
+        </div>
+        
+        <!-- 動名詞介紹 -->
+        <div class="tab-content active" id="intro">
+            <h2>動名詞介紹 | Gerund Introduction</h2>
+            
+            <div class="card">
+                <h3>什麼是動名詞？ | What is a Gerund?</h3>
+                <p>動名詞由動詞加-ing構成，在句子中扮演名詞的角色，具有名詞的功能。</p>
+                <p>A gerund is formed by adding -ing to a verb and functions as a noun in a sentence.</p>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">Swimming</span> is good exercise. | 游泳是很好的運動。</p>
+                    <p><strong>例子 Example:</strong> I enjoy <span class="highlight">reading</span>. | 我喜歡閱讀。</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>動名詞的形式 | Gerund Forms</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>動詞 Verb</th>
+                            <th>動名詞 Gerund</th>
+                            <th>例子 Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>work</td>
+                            <td>working</td>
+                            <td>Working from home is common now.</td>
+                        </tr>
+                        <tr>
+                            <td>read</td>
+                            <td>reading</td>
+                            <td>Reading helps you learn new things.</td>
+                        </tr>
+                        <tr>
+                            <td>swim</td>
+                            <td>swimming</td>
+                            <td>Swimming is my favorite sport.</td>
+                        </tr>
+                        <tr>
+                            <td>study</td>
+                            <td>studying</td>
+                            <td>Studying English requires practice.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="card">
+                <h3>動名詞的用法 | Uses of Gerunds</h3>
+                <p>動名詞在句子中可以擔任多種角色：</p>
+                <p>Gerunds can serve various roles in a sentence:</p>
+                
+                <div class="usage-diagram">
+                    <div class="diagram-container">
+                        <div class="diagram">
+                            <div class="diagram-item" style="top: 20px; left: 50px;">主詞<br>Subject</div>
+                            <div class="diagram-item" style="top: 20px; right: 50px;">受詞<br>Object</div>
+                            <div class="diagram-item" style="top: 120px; left: 150px;">介系詞受詞<br>After Prepositions</div>
+                            <div class="diagram-item" style="top: 120px; right: 150px;">補語<br>Complement</div>
+                            <div class="diagram-item" style="bottom: 20px; left: 250px;">限定詞<br>Modifier</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="interactive-element">
+                <h3>動名詞練習 | Gerund Practice</h3>
+                <p>將動詞轉換為動名詞形式</p>
+                <p>Convert verbs to gerund form</p>
+                <div class="gerund-animation" id="gerundAnimation">
+                    Verb: work → Gerund: ______
+                </div>
+                <div class="animation-controls">
+                    <button class="btn" id="playAnimation">
+                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
+                    </button>
+                    <button class="btn" id="pauseAnimation">
+                        <i class="fas fa-pause"></i> 暫停 | Pause
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 作主詞 -->
+        <div class="tab-content" id="subject">
+            <h2>作主詞 | As Subject</h2>
+            
+            <div class="card">
+                <h3>動名詞作主詞 | Gerunds as Subjects</h3>
+                <p>動名詞可以在句子中擔任主詞的角色。</p>
+                <p>Gerunds can function as the subject of a sentence.</p>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">Working from home</span> isolates employees from the corporate culture.</p>
+                    <p>指「在家上班」這件事情，而非誰正在在家上班。</p>
+                    <p>Refers to "working from home" as a concept, not who is currently working from home.</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">Reading extensively</span> helps you learn vocabulary and grammar.</p>
+                    <p>廣泛閱讀有助於你學習詞彙和語法。</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>特殊句型：It 為虛構主詞 | Special Pattern: It as Dummy Subject</h3>
+                <p>當動名詞作主詞時，可以使用 It 作為形式主詞，將真正的動名詞主詞放在句末。</p>
+                <p>When a gerund is the subject, we can use "It" as a dummy subject and place the actual gerund subject at the end of the sentence.</p>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">It is simply a waste of time playing video games.</span></p>
+                    <p>玩電子遊戲簡直是浪費時間。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">It's no use crying after you fail a test.</span></p>
+                    <p>考試失敗後哭泣是沒有用的。</p>
+                </div>
+            </div>
+            
+            <div class="interactive-element">
+                <h3>主詞練習 | Subject Practice</h3>
+                <p>選擇正確的動名詞形式完成句子</p>
+                <p>Select the correct gerund form to complete the sentence</p>
+                <div class="gerund-animation" id="subjectAnimation">
+                    ______ (exercise) regularly is important for health.
+                </div>
+                <div class="animation-controls">
+                    <button class="btn" id="playSubjectAnimation">
+                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
+                    </button>
+                    <button class="btn" id="pauseSubjectAnimation">
+                        <i class="fas fa-pause"></i> 暫停 | Pause
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 作受詞 -->
+        <div class="tab-content" id="object">
+            <h2>作受詞 | As Object</h2>
+            
+            <div class="card">
+                <h3>動名詞作動詞的受詞 | Gerunds as Objects of Verbs</h3>
+                <p>某些動詞後面必須接動名詞作受詞，需要在平時記憶和積累。</p>
+                <p>Some verbs must be followed by a gerund as the object, which needs to be memorized and accumulated over time.</p>
+                
+                <div class="gerund-list">
+                    <div class="gerund-item">admit</div>
+                    <div class="gerund-item">avoid</div>
+                    <div class="gerund-item">forgive</div>
+                    <div class="gerund-item">permit</div>
+                    <div class="gerund-item">advise</div>
+                    <div class="gerund-item">consider</div>
+                    <div class="gerund-item">postpone</div>
+                    <div class="gerund-item">practice</div>
+                    <div class="gerund-item">enjoy</div>
+                    <div class="gerund-item">mind</div>
+                    <div class="gerund-item">prevent</div>
+                    <div class="gerund-item">finish</div>
+                    <div class="gerund-item">suggest</div>
+                    <div class="gerund-item">forbid</div>
+                    <div class="gerund-item">risk</div>
+                    <div class="gerund-item">quit</div>
+                    <div class="gerund-item">can't help</div>
+                    <div class="gerund-item">can't stand</div>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> Educators <span class="highlight">advise sending</span> children to schools instead of keeping them at home.</p>
+                    <p>教育工作者建議送孩子上學而不是把他們留在家裡。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> You should <span class="highlight">quit smoking</span> as it damages your health.</p>
+                    <p>你應該戒菸，因為它會損害你的健康。</p>
+                </div>
+            </div>
+            
+            <div class="interactive-element">
+                <h3>受詞練習 | Object Practice</h3>
+                <p>選擇正確的動詞形式完成句子</p>
+                <p>Select the correct verb form to complete the sentence</p>
+                <div class="gerund-animation" id="objectAnimation">
+                    I enjoy ______ (read) novels in my free time.
+                </div>
+                <div class="animation-controls">
+                    <button class="btn" id="playObjectAnimation">
+                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
+                    </button>
+                    <button class="btn" id="pauseObjectAnimation">
+                        <i class="fas fa-pause"></i> 暫停 | Pause
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 介系詞受詞 -->
+        <div class="tab-content" id="preposition">
+            <h2>介系詞受詞 | After Prepositions</h2>
+            
+            <div class="card">
+                <h3>動名詞作介系詞的受詞 | Gerunds as Objects of Prepositions</h3>
+                <p>動名詞經常出現在介系詞後面，作為介系詞的受詞。</p>
+                <p>Gerunds often appear after prepositions, serving as the object of the preposition.</p>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> I am <span class="highlight">looking forward to attending</span> the party.</p>
+                    <p>我期待參加派對。</p>
+                    <p><em>注意: 這裡的 "to" 是介系詞，不是不定詞符號</em></p>
+                    <p><em>Note: "to" here is a preposition, not the infinitive marker</em></p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> Many workers are <span class="highlight">opposed to increasing</span> taxes.</p>
+                    <p>許多工人反對增加稅收。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> She is <span class="highlight">committed to studying</span> abroad.</p>
+                    <p>她致力於出國留學。</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>常見接動名詞的介系詞片語 | Common Prepositional Phrases with Gerunds</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>片語 Phrase</th>
+                            <th>意思 Meaning</th>
+                            <th>例子 Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>look forward to</td>
+                            <td>期待</td>
+                            <td>I look forward to seeing you.</td>
+                        </tr>
+                        <tr>
+                            <td>be opposed to</td>
+                            <td>反對</td>
+                            <td>He is opposed to changing the plan.</td>
+                        </tr>
+                        <tr>
+                            <td>be committed to</td>
+                            <td>致力於</td>
+                            <td>She is committed to improving her skills.</td>
+                        </tr>
+                        <tr>
+                            <td>be used to</td>
+                            <td>習慣於</td>
+                            <td>I am used to working late.</td>
+                        </tr>
+                        <tr>
+                            <td>be accustomed to</td>
+                            <td>習慣於</td>
+                            <td>He is accustomed to living alone.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="interactive-element">
+                <h3>介系詞練習 | Preposition Practice</h3>
+                <p>選擇正確的動名詞形式完成句子</p>
+                <p>Select the correct gerund form to complete the sentence</p>
+                <div class="gerund-animation" id="prepositionAnimation">
+                    She is looking forward to ______ (travel) to Japan.
+                </div>
+                <div class="animation-controls">
+                    <button class="btn" id="playPrepositionAnimation">
+                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
+                    </button>
+                    <button class="btn" id="pausePrepositionAnimation">
+                        <i class="fas fa-pause"></i> 暫停 | Pause
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 作補語 -->
+        <div class="tab-content" id="complement">
+            <h2>作補語 | As Complement</h2>
+            
+            <div class="card">
+                <h3>動名詞作連綴動詞後的補語 | Gerunds as Complements after Linking Verbs</h3>
+                <p>動名詞可以在連綴動詞（如be動詞）後作主詞補語。</p>
+                <p>Gerunds can function as subject complements after linking verbs (such as be verbs).</p>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> The top task of many companies is <span class="highlight">offering high salaries</span>.</p>
+                    <p>許多公司的首要任務是提供高薪。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> The main reason for job-hopping is <span class="highlight">taking up new challenges</span>.</p>
+                    <p>跳槽的主要原因是接受新挑戰。</p>
+                </div>
+                
+                <p class="highlight">注意：在這裡，be + v-ing 並非現在進行式，而是動名詞作補語。</p>
+                <p class="highlight">Note: Here, be + v-ing is not the present continuous tense, but a gerund functioning as a complement.</p>
+            </div>
+            
+            <div class="interactive-element">
+                <h3>補語練習 | Complement Practice</h3>
+                <p>選擇正確的動名詞形式完成句子</p>
+                <p>Select the correct gerund form to complete the sentence</p>
+                <div class="gerund-animation" id="complementAnimation">
+                    His favorite activity is ______ (swim) in the ocean.
+                </div>
+                <div class="animation-controls">
+                    <button class="btn" id="playComplementAnimation">
+                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
+                    </button>
+                    <button class="btn" id="pauseComplementAnimation">
+                        <i class="fas fa-pause"></i> 暫停 | Pause
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 作限定詞 -->
+        <div class="tab-content" id="modifier">
+            <h2>作限定詞 | As Modifier</h2>
+            
+            <div class="card">
+                <h3>動名詞作名詞前的限定詞 | Gerunds as Modifiers before Nouns</h3>
+                <p>動名詞可以放在名詞前，作為限定詞使用。</p>
+                <p>Gerunds can be placed before nouns, functioning as modifiers.</p>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">swimming</span> pool</p>
+                    <p>游泳池</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">drinking</span> water</p>
+                    <p>飲用水</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">working</span> experience</p>
+                    <p>工作經驗</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">dancing</span> hall</p>
+                    <p>舞廳</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">dining</span> room</p>
+                    <p>餐廳</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>常見的動名詞限定詞組合 | Common Gerund-Noun Combinations</h3>
+                <div class="gerund-list">
+                    <div class="gerund-item">reading room</div>
+                    <div class="gerund-item">writing desk</div>
+                    <div class="gerund-item">sleeping bag</div>
+                    <div class="gerund-item">waiting room</div>
+                    <div class="gerund-item">parking lot</div>
+                    <div class="gerund-item">shopping mall</div>
+                    <div class="gerund-item">cooking class</div>
+                    <div class="gerund-item">training program</div>
+                </div>
+            </div>
+            
+            <div class="interactive-element">
+                <h3>限定詞練習 | Modifier Practice</h3>
+                <p>選擇正確的動名詞形式完成詞組</p>
+                <p>Select the correct gerund form to complete the phrase</p>
+                <div class="gerund-animation" id="modifierAnimation">
+                    ______ (swim) pool
+                </div>
+                <div class="animation-controls">
+                    <button class="btn" id="playModifierAnimation">
+                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
+                    </button>
+                    <button class="btn" id="pauseModifierAnimation">
+                        <i class="fas fa-pause"></i> 暫停 | Pause
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Shirley's Gerund Learning Platform | 動名詞學習平台</p>
+        <p>© 2023 英語語法學習 | English Grammar Learning</p>
+    </footer>
+
+    <script>
+        // 選項卡功能
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // 移除所有活動標籤和內容
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // 添加活動類到當前標籤
+                tab.classList.add('active');
+                
+                // 顯示對應的內容
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+                
+                // 播放切換音效
+                playSound('click');
+            });
+        });
+        
+        // 動畫控制
+        let animationInterval;
+        
+        // 動名詞介紹動畫
+        document.getElementById('playAnimation').addEventListener('click', () => {
+            const animation = document.getElementById('gerundAnimation');
+            animation.innerHTML = 'Verb: work → Gerund: ______';
+            
+            let count = 0;
+            const verbs = [
+                {verb: 'work', gerund: 'working'},
+                {verb: 'read', gerund: 'reading'},
+                {verb: 'swim', gerund: 'swimming'},
+                {verb: 'study', gerund: 'studying'},
+                {verb: 'write', gerund: 'writing'}
+            ];
+            
+            clearInterval(animationInterval);
+            animationInterval = setInterval(() => {
+                animation.innerHTML = `Verb: ${verbs[count].verb} → Gerund: <span style="color: var(--accent); text-decoration: underline;">${verbs[count].gerund}</span>`;
+                count = (count + 1) % verbs.length;
+            }, 1500);
+            
+            // 播放音效
+            playSound('success');
+        });
+        
+        document.getElementById('pauseAnimation').addEventListener('click', () => {
+            clearInterval(animationInterval);
+            // 播放音效
+            playSound('click');
+        });
+        
+        // 主詞動畫
+        document.getElementById('playSubjectAnimation').addEventListener('click', () => {
+            const animation = document.getElementById('subjectAnimation');
+            animation.innerHTML = '______ (exercise) regularly is important for health.';
+            
+            let count = 0;
+            const sentences = [
+                {verb: 'exercise', gerund: 'Exercising'},
+                {verb: 'read', gerund: 'Reading'},
+                {verb: 'walk', gerund: 'Walking'},
+                {verb: 'study', gerund: 'Studying'},
+                {verb: 'swim', gerund: 'Swimming'}
+            ];
+            
+            clearInterval(animationInterval);
+            animationInterval = setInterval(() => {
+                animation.innerHTML = `<span style="color: var(--accent); text-decoration: underline;">${sentences[count].gerund}</span> regularly is important for health.`;
+                count = (count + 1) % sentences.length;
+            }, 1500);
+            
+            // 播放音效
+            playSound('success');
+        });
+        
+        document.getElementById('pauseSubjectAnimation').addEventListener('click', () => {
+            clearInterval(animationInterval);
+            // 播放音效
+            playSound('click');
+        });
+        
+        // 受詞動畫
+        document.getElementById('playObjectAnimation').addEventListener('click', () => {
+            const animation = document.getElementById('objectAnimation');
+            animation.innerHTML = 'I enjoy ______ (read) novels in my free time.';
+            
+            let count = 0;
+            const sentences = [
+                {verb: 'read', gerund: 'reading'},
+                {verb: 'watch', gerund: 'watching'},
+                {verb: 'play', gerund: 'playing'},
+                {verb: 'listen', gerund: 'listening'},
+                {verb: 'cook', gerund: 'cooking'}
+            ];
+            
+            clearInterval(animationInterval);
+            animationInterval = setInterval(() => {
+                animation.innerHTML = `I enjoy <span style="color: var(--accent); text-decoration: underline;">${sentences[count].gerund}</span> in my free time.`;
+                count = (count + 1) % sentences.length;
+            }, 1500);
+            
+            // 播放音效
+            playSound('success');
+        });
+        
+        document.getElementById('pauseObjectAnimation').addEventListener('click', () => {
+            clearInterval(animationInterval);
+            // 播放音效
+            playSound('click');
+        });
+        
+        // 介系詞動畫
+        document.getElementById('playPrepositionAnimation').addEventListener('click', () => {
+            const animation = document.getElementById('prepositionAnimation');
+            animation.innerHTML = 'She is looking forward to ______ (travel) to Japan.';
+            
+            let count = 0;
+            const sentences = [
+                {verb: 'travel', gerund: 'traveling'},
+                {verb: 'go', gerund: 'going'},
+                {verb: 'see', gerund: 'seeing'},
+                {verb: 'meet', gerund: 'meeting'},
+                {verb: 'visit', gerund: 'visiting'}
+            ];
+            
+            clearInterval(animationInterval);
+            animationInterval = setInterval(() => {
+                animation.innerHTML = `She is looking forward to <span style="color: var(--accent); text-decoration: underline;">${sentences[count].gerund}</span> to Japan.`;
+                count = (count + 1) % sentences.length;
+            }, 1500);
+            
+            // 播放音效
+            playSound('success');
+        });
+        
+        document.getElementById('pausePrepositionAnimation').addEventListener('click', () => {
+            clearInterval(animationInterval);
+            // 播放音效
+            playSound('click');
+        });
+        
+        // 補語動畫
+        document.getElementById('playComplementAnimation').addEventListener('click', () => {
+            const animation = document.getElementById('complementAnimation');
+            animation.innerHTML = 'His favorite activity is ______ (swim) in the ocean.';
+            
+            let count = 0;
+            const sentences = [
+                {verb: 'swim', gerund: 'swimming'},
+                {verb: 'run', gerund: 'running'},
+                {verb: 'dance', gerund: 'dancing'},
+                {verb: 'sing', gerund: 'singing'},
+                {verb: 'paint', gerund: 'painting'}
+            ];
+            
+            clearInterval(animationInterval);
+            animationInterval = setInterval(() => {
+                animation.innerHTML = `His favorite activity is <span style="color: var(--accent); text-decoration: underline;">${sentences[count].gerund}</span> in the ocean.`;
+                count = (count + 1) % sentences.length;
+            }, 1500);
+            
+            // 播放音效
+            playSound('success');
+        });
+        
+        document.getElementById('pauseComplementAnimation').addEventListener('click', () => {
+            clearInterval(animationInterval);
+            // 播放音效
+            playSound('click');
+        });
+        
+        // 限定詞動畫
+        document.getElementById('playModifierAnimation').addEventListener('click', () => {
+            const animation = document.getElementById('modifierAnimation');
+            animation.innerHTML = '______ (swim) pool';
+            
+            let count = 0;
+            const phrases = [
+                {verb: 'swim', gerund: 'Swimming'},
+                {verb: 'read', gerund: 'Reading'},
+                {verb: 'wait', gerund: 'Waiting'},
+                {verb: 'dine', gerund: 'Dining'},
+                {verb: 'park', gerund: 'Parking'}
+            ];
+            
+            clearInterval(animationInterval);
+            animationInterval = setInterval(() => {
+                animation.innerHTML = `<span style="color: var(--accent); text-decoration: underline;">${phrases[count].gerund}</span> pool`;
+                count = (count + 1) % phrases.length;
+            }, 1500);
+            
+            // 播放音效
+            playSound('success');
+        });
+        
+        document.getElementById('pauseModifierAnimation').addEventListener('click', () => {
+            clearInterval(animationInterval);
+            // 播放音效
+            playSound('click');
+        });
+        
+        // 音效函數
+        function playSound(type) {
+            // 在實際應用中，這裡會播放相應的音效
+            // 由於這是一個示例，我們只模擬音效播放
+            console.log(`Playing ${type} sound`);
+        }
+        
+        // 初始加載時播放歡迎音效
+        window.addEventListener('load', () => {
+            playSound('welcome');
+        });
+    </script>
+</body>
+</html>
