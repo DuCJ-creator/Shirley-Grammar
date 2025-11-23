@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Level 2 Compound Sentences - Cinematic Lesson</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;500;700&family=Poppins:wght@300;600;800&display=swap');
@@ -21,6 +21,11 @@
             --box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
         body, html {
             margin: 0;
             padding: 0;
@@ -32,18 +37,50 @@
             align-items: center;
             font-family: 'Poppins', 'Noto Sans TC', sans-serif;
             overflow: hidden;
+            touch-action: manipulation;
         }
 
         /* The Stage - 16:9 Aspect Ratio */
         #stage {
-            width: 100%;
+            width: 95%;
             max-width: 1280px;
-            aspect-ratio: 16/9;
+            height: 95vh;
+            max-height: 800px;
             background: var(--bg-color);
             position: relative;
             overflow: hidden;
             border-radius: 8px;
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        /* 手機橫向模式調整 */
+        @media (max-height: 500px) and (orientation: landscape) {
+            #stage {
+                height: 98vh;
+                max-height: none;
+            }
+            
+            .main-title {
+                font-size: 2.5rem !important;
+            }
+            
+            .sub-title {
+                font-size: 1.5rem !important;
+            }
+            
+            .clause {
+                padding: 15px 20px !important;
+                font-size: 1.2rem !important;
+                min-width: 150px !important;
+            }
+            
+            .sub-en {
+                font-size: 1.4rem !important;
+            }
+            
+            .sub-tc {
+                font-size: 1.1rem !important;
+            }
         }
 
         /* Background Decor */
@@ -94,23 +131,25 @@
 
         .sub-en {
             color: #fff;
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 600;
             text-shadow: 0 2px 4px rgba(0,0,0,0.5);
             margin-bottom: 5px;
             opacity: 0;
             transform: translateY(10px);
             transition: all 0.5s ease;
+            line-height: 1.3;
         }
 
         .sub-tc {
             color: #ddd;
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             font-weight: 300;
             text-shadow: 0 2px 4px rgba(0,0,0,0.5);
             opacity: 0;
             transform: translateY(10px);
             transition: all 0.5s ease 0.1s;
+            line-height: 1.3;
         }
 
         .sub-visible {
@@ -123,24 +162,25 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 20px;
+            gap: 15px;
             width: 90%;
             opacity: 0;
             transition: opacity 0.5s;
+            flex-wrap: wrap;
         }
 
         .clause {
             background: white;
-            padding: 20px 30px;
-            border-radius: 15px;
+            padding: 15px 25px;
+            border-radius: 12px;
             box-shadow: var(--box-shadow);
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             color: var(--text-dark);
             position: relative;
             transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
             transform: scale(0.9);
             opacity: 0;
-            min-width: 200px;
+            min-width: 180px;
             text-align: center;
         }
 
@@ -155,12 +195,12 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            width: 100px;
+            width: 80px;
             position: relative;
         }
 
         .punctuation {
-            font-size: 3rem;
+            font-size: 2.5rem;
             font-weight: bold;
             color: var(--text-dark);
             opacity: 0;
@@ -168,8 +208,8 @@
         }
 
         .conjunction-bubble {
-            width: 80px;
-            height: 80px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
             background: var(--accent-blue);
             color: white;
@@ -177,7 +217,7 @@
             justify-content: center;
             align-items: center;
             font-weight: 800;
-            font-size: 1.2rem;
+            font-size: 1rem;
             box-shadow: 0 5px 15px rgba(93, 156, 236, 0.4);
             transform: scale(0);
             transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -191,33 +231,39 @@
 
         /* Title Elements */
         .main-title {
-            font-size: 4rem;
+            font-size: 3rem;
             font-weight: 800;
             color: var(--text-dark);
-            margin-bottom: 20px;
-            letter-spacing: -2px;
+            margin-bottom: 15px;
+            letter-spacing: -1px;
             opacity: 0;
             transform: translateY(-20px);
             transition: all 0.8s ease;
+            text-align: center;
+            padding: 0 10px;
         }
 
         .sub-title {
-            font-size: 2rem;
+            font-size: 1.5rem;
             color: #888;
             opacity: 0;
             transform: translateY(20px);
             transition: all 0.8s ease 0.2s;
+            text-align: center;
+            padding: 0 10px;
         }
 
         /* FANBOYS List */
         .fanboys-list {
             display: flex;
-            gap: 15px;
-            margin-bottom: 30px;
+            gap: 12px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .fb-letter {
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: 800;
             color: #ccc;
             transition: all 0.3s;
@@ -239,6 +285,58 @@
             transition: width 0.2s linear;
         }
 
+        /* Control Buttons */
+        .control-buttons {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            gap: 10px;
+            z-index: 200;
+        }
+
+        .control-btn {
+            font-size: 1.3rem;
+            cursor: pointer;
+            background: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+            user-select: none;
+        }
+        .control-btn:hover, .control-btn:active { 
+            transform: scale(1.1); 
+        }
+
+        /* 暫停覆蓋層 */
+        .pause-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255,255,255,0.85);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 150;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            padding: 20px;
+            text-align: center;
+        }
+        .pause-overlay.active { opacity: 1; pointer-events: all; }
+        .pause-overlay h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+        }
+
         /* Helper Classes for Colors */
         .c-for { background-color: var(--accent-red); box-shadow: 0 5px 15px rgba(237, 85, 101, 0.4); }
         .c-and { background-color: var(--accent-blue); box-shadow: 0 5px 15px rgba(93, 156, 236, 0.4); }
@@ -249,11 +347,112 @@
         .c-so { background-color: var(--accent-green); box-shadow: 0 5px 15px rgba(160, 212, 104, 0.4); }
         .c-semi { background-color: #656d78; border-radius: 10px; width: auto; padding: 0 20px; }
 
+        /* 手機小螢幕調整 */
+        @media (max-width: 480px) {
+            #stage {
+                width: 98%;
+                height: 98vh;
+                border-radius: 5px;
+            }
+            
+            .main-title {
+                font-size: 2.2rem;
+            }
+            
+            .sub-title {
+                font-size: 1.2rem;
+            }
+            
+            .clause {
+                padding: 12px 20px;
+                font-size: 1.1rem;
+                min-width: 150px;
+            }
+            
+            .conjunction-bubble {
+                width: 60px;
+                height: 60px;
+                font-size: 0.9rem;
+            }
+            
+            .connector-zone {
+                width: 60px;
+            }
+            
+            .punctuation {
+                font-size: 2rem;
+            }
+            
+            .sub-en {
+                font-size: 1.3rem;
+            }
+            
+            .sub-tc {
+                font-size: 1rem;
+            }
+            
+            .fb-letter {
+                font-size: 1.3rem;
+            }
+            
+            .control-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1.1rem;
+            }
+            
+            .pause-overlay h2 {
+                font-size: 2rem;
+            }
+        }
+
+        /* 手機橫向模式調整 */
+        @media (max-height: 500px) and (orientation: landscape) {
+            #stage {
+                height: 98vh;
+                max-height: none;
+            }
+            
+            .main-title {
+                font-size: 2.5rem !important;
+            }
+            
+            .sub-title {
+                font-size: 1.5rem !important;
+            }
+            
+            .clause {
+                padding: 15px 20px !important;
+                font-size: 1.2rem !important;
+                min-width: 150px !important;
+            }
+            
+            .sub-en {
+                font-size: 1.4rem !important;
+            }
+            
+            .sub-tc {
+                font-size: 1.1rem !important;
+            }
+        }
     </style>
 </head>
 <body>
 
     <div id="stage">
+        <!-- 控制按鈕 -->
+        <div class="control-buttons">
+            <div class="control-btn pause-btn" id="pauseToggle">⏸️</div>
+            <div class="control-btn music-btn" id="musicToggle">🔇</div>
+        </div>
+        
+        <!-- 暫停覆蓋層 -->
+        <div class="pause-overlay" id="pauseOverlay">
+            <h2>Paused</h2>
+            <p style="font-size: 1.2rem; color: #666; margin-bottom: 30px;">點擊繼續按鈕或暫停鍵恢復</p>
+            <button class="control-btn" style="font-size: 1.5rem; width: 60px; height: 60px;" onclick="togglePause()">▶️</button>
+        </div>
+        
         <!-- Background shapes -->
         <div class="bg-shape" style="width: 300px; height: 300px; background: #e6e9ed; top: -50px; left: -50px;"></div>
         <div class="bg-shape" style="width: 200px; height: 200px; background: #e6e9ed; bottom: 50px; right: -50px; animation-delay: -5s;"></div>
@@ -299,6 +498,78 @@
     </div>
 
     <script>
+        // --- Audio System (Generated) ---
+        const AudioSys = {
+            ctx: null,
+            muted: true,
+            bgmInterval: null,
+            
+            init() {
+                // 延遲初始化音頻上下文，避免iOS限制
+                this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+            },
+            
+            toggle() {
+                if (!this.ctx) this.init();
+                
+                this.muted = !this.muted;
+                if(!this.muted) {
+                    this.ctx.resume();
+                    this.startBGM();
+                } else {
+                    this.ctx.suspend();
+                    clearInterval(this.bgmInterval);
+                }
+                return this.muted;
+            },
+
+            playTone(freq, type, dur, vol) {
+                if(this.muted || !this.ctx) return;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+                gain.gain.setValueAtTime(vol, this.ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + dur);
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start();
+                osc.stop(this.ctx.currentTime + dur);
+            },
+
+            playChord() {
+                // Major chord
+                this.playTone(349.23, 'sine', 1.0, 0.05); // F4
+                setTimeout(() => this.playTone(440.00, 'sine', 1.0, 0.05), 50); // A4
+                setTimeout(() => this.playTone(523.25, 'sine', 1.0, 0.05), 100); // C5
+            },
+
+            playPop() {
+                this.playTone(600 + Math.random()*200, 'triangle', 0.1, 0.05);
+            },
+
+            playSuccess() {
+                this.playTone(523.25, 'square', 0.2, 0.05);
+                setTimeout(() => this.playTone(659.25, 'square', 0.4, 0.05), 100);
+            },
+
+            playError() {
+                this.playTone(200, 'sawtooth', 0.3, 0.08);
+            },
+
+            startBGM() {
+                if(this.bgmInterval) clearInterval(this.bgmInterval);
+                let i = 0;
+                const notes = [261.63, 329.63, 392.00, 523.25, 392.00, 329.63];
+                this.bgmInterval = setInterval(() => {
+                    if(!this.muted && this.ctx) {
+                        this.playTone(notes[i], 'sine', 1.5, 0.015);
+                        i = (i + 1) % notes.length;
+                    }
+                }, 600);
+            }
+        };
+
         // DOM Elements
         const els = {
             titleGroup: document.getElementById('title-group'),
@@ -313,6 +584,9 @@
             subEn: document.getElementById('sub-en'),
             subTc: document.getElementById('sub-tc'),
             progressBar: document.getElementById('progress-bar'),
+            musicBtn: document.getElementById('musicToggle'),
+            pauseBtn: document.getElementById('pauseToggle'),
+            pauseOverlay: document.getElementById('pauseOverlay'),
             fbLetters: {
                 f: document.getElementById('fb-f'),
                 a: document.getElementById('fb-a'),
@@ -323,6 +597,64 @@
                 s: document.getElementById('fb-s'),
             }
         };
+
+        // --- 暫停系統 ---
+        let isPaused = false;
+        let pauseResolve = null;
+        let pausePromise = null;
+
+        function togglePause() {
+            isPaused = !isPaused;
+            
+            if (isPaused) {
+                // 暫停狀態
+                els.pauseOverlay.classList.add('active');
+                els.pauseBtn.innerHTML = '▶️';
+                
+                // 暫停音效
+                if (AudioSys.ctx) {
+                    AudioSys.ctx.suspend();
+                }
+                
+                // 創建一個Promise，當恢復時解決它
+                pausePromise = new Promise(resolve => {
+                    pauseResolve = resolve;
+                });
+            } else {
+                // 恢復狀態
+                els.pauseOverlay.classList.remove('active');
+                els.pauseBtn.innerHTML = '⏸️';
+                
+                // 恢復音效
+                if (!AudioSys.muted && AudioSys.ctx) {
+                    AudioSys.ctx.resume();
+                }
+                
+                // 解決Promise，讓等待的動畫繼續
+                if (pauseResolve) {
+                    pauseResolve();
+                    pauseResolve = null;
+                }
+            }
+        }
+
+        // 修改sleep函數以支持暫停
+        async function sleep(ms) {
+            const start = Date.now();
+            let elapsed = 0;
+            
+            while (elapsed < ms) {
+                if (isPaused) {
+                    await pausePromise;
+                    // 重新計算剩餘時間
+                    elapsed = Date.now() - start;
+                } else {
+                    const remaining = ms - elapsed;
+                    await new Promise(r => setTimeout(r, Math.min(100, remaining)));
+                    elapsed = Date.now() - start;
+                }
+            }
+        }
 
         // Helper functions for animation
         function showSubtitles(en, tc) {
@@ -372,14 +704,17 @@
 
                 // Animate In
                 els.clause1.classList.add('show');
+                AudioSys.playPop();
                 
                 setTimeout(() => {
                     if(conn !== ';') els.comma.style.opacity = '1'; // Show comma if not semicolon
                     els.conjunction.classList.add('pop');
+                    AudioSys.playPop();
                 }, 600);
 
                 setTimeout(() => {
                     els.clause2.classList.add('show');
+                    AudioSys.playPop();
                 }, 1200);
 
             }, 600);
@@ -402,6 +737,7 @@
                         els.subTitle.style.transform = 'translateY(0)';
                     }, 800);
                     showSubtitles("Welcome to Level 2--Compound Sentences.", "歡迎來到第二級句型：複合句。");
+                    AudioSys.playChord();
                 }
             },
             // 2. What is it?
@@ -431,6 +767,7 @@
                     setTimeout(() => els.conjunction.classList.add('pop'), 1000);
                     
                     showSubtitles("We need a comma and a conjunction to glue them.", "我們需要一個逗號和一個連接詞把它們黏起來。");
+                    AudioSys.playChord();
                 }
             },
             // 4. FANBOYS Intro
@@ -557,6 +894,7 @@
                     }, 500);
                     
                     showSubtitles("Thanks for watching.", "謝謝觀看。");
+                    AudioSys.playChord();
                 }
             }
         ];
@@ -565,6 +903,7 @@
         let currentStep = 0;
         let totalDuration = timeline.reduce((acc, item) => acc + item.duration, 0);
         let elapsed = 0;
+        let progressInterval;
 
         function playTimeline() {
             if (currentStep >= timeline.length) return;
@@ -581,14 +920,15 @@
 
         // Progress Bar Updater
         function updateProgress() {
-            const interval = 100; // update every 100ms
-            const timer = setInterval(() => {
-                elapsed += interval;
-                const percent = Math.min((elapsed / totalDuration) * 100, 100);
-                els.progressBar.style.width = percent + '%';
-                
-                if (elapsed >= totalDuration) clearInterval(timer);
-            }, interval);
+            progressInterval = setInterval(() => {
+                if (!isPaused) {
+                    elapsed += 100;
+                    const percent = Math.min((elapsed / totalDuration) * 100, 100);
+                    els.progressBar.style.width = percent + '%';
+                    
+                    if (elapsed >= totalDuration) clearInterval(progressInterval);
+                }
+            }, 100);
         }
 
         // Start
@@ -596,8 +936,39 @@
             setTimeout(() => {
                 playTimeline();
                 updateProgress();
+                
+                // Unmute by default on start if user hasn't toggled
+                if(AudioSys.muted) {
+                    AudioSys.toggle();
+                    els.musicBtn.innerText = "🔊";
+                }
             }, 500); // Small buffer before start
         };
+
+        // --- 初始化控制按鈕 ---
+        els.musicBtn.onclick = () => {
+            const isMuted = AudioSys.toggle();
+            els.musicBtn.innerText = isMuted ? "🔇" : "🔊";
+        };
+
+        // 綁定暫停按鈕事件
+        els.pauseBtn.onclick = togglePause;
+
+        // 防止手機上的雙擊縮放
+        document.addEventListener('touchstart', function(e) {
+            if (e.touches.length > 1) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function(e) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                e.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
 
     </script>
 </body>
