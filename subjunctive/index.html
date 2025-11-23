@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shirley's Subjunctive Mood Learning Platform | 虛擬語氣學習平台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4caf50;
+            --secondary: #81c784;
+            --accent: #ff9800;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --success: #28a745;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft JhengHei', '微軟正黑體', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+        
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tab {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            flex: 1;
+            text-align: center;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tab:hover {
+            background-color: rgba(76, 175, 80, 0.1);
+        }
+        
+        .tab.active {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+        }
+        
+        h3 {
+            color: var(--secondary);
+            margin: 1.5rem 0 1rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        th {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .example {
+            background-color: #f0f7ff;
+            border-left: 4px solid var(--accent);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .interactive-element {
+            background-color: var(--light);
+            border: 2px dashed var(--secondary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+        
+        .btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn:hover {
+            background-color: #e68900;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(255, 152, 0, 0.3);
+        }
+        
+        .animation-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 1rem;
+        }
+        
+        .subjunctive-animation {
+            height: 200px;
+            background: linear-gradient(135deg, #81c784, #4caf50);
+            border-radius: 10px;
+            margin: 1.5rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+            background-color: var(--dark);
+            color: white;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .highlight {
+            background-color: #fff9e6;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .subjunctive-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+            margin: 1rem 0;
+        }
+        
+        .subjunctive-item {
+            background: #f0f7ff;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            margin: 1.5rem 0;
+        }
+        
+        .comparison-table th {
+            background-color: var(--secondary);
+        }
+        
+        .note-box {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .usage-diagram {
+            text-align: center;
+            margin: 2rem 0;
+        }
+        
+        .diagram-container {
+            display: flex;
+            justify-content: center;
+            margin: 1.5rem 0;
+        }
+        
+        .diagram {
+            width: 100%;
+            max-width: 600px;
+            height: 300px;
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .diagram-item {
+            position: absolute;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 120px;
+        }
+        
+        .connector-word {
+            color: var(--accent);
+            font-weight: bold;
+        }
+        
+        .antecedent {
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        .qa-pair {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+        }
+        
+        .question {
+            flex: 1;
+            padding: 10px;
+            background: #f0f7ff;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        
+        .answer {
+            flex: 1;
+            padding: 10px;
+            background: #e8f5e9;
+            border-radius: 5px;
+        }
+        
+        .structure-box {
+            background: #f8f9fa;
+            border: 2px solid var(--accent);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .structure-title {
+            color: var(--primary);
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .structure-content {
+            font-family: monospace;
+            font-size: 1.2rem;
+            text-align: center;
+            line-height: 1.8;
+        }
+        
+        .normal-sentence {
+            color: var(--dark);
+            font-style: italic;
+        }
+        
+        .subjunctive-sentence {
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        .quiz-container {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .quiz-question {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+        
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .quiz-option {
+            padding: 10px 15px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .quiz-option:hover {
+            background: #f0f7ff;
+            border-color: var(--secondary);
+        }
+        
+        .quiz-option.correct {
+            background: #d4edda;
+            border-color: var(--success);
+        }
+        
+        .quiz-option.incorrect {
+            background: #f8d7da;
+            border-color: #dc3545;
+        }
+        
+        @media (max-width: 768px) {
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .tab {
+                flex: none;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .subjunctive-list {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .qa-pair {
+                flex-direction: column;
+            }
+            
+            .question, .answer {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Shirley's Subjunctive Mood Learning Platform</h1>
+            <p class="subtitle">虛擬語氣學習平台</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="tabs">
+            <div class="tab active" data-tab="intro">虛擬語氣介紹 | Subjunctive Introduction</div>
+            <div class="tab" data-tab="if">If 條件句 | Conditional Sentences</div>
+            <div class="tab" data-tab="wish">Wish 用法 | Usage of Wish</div>
+            <div class="tab" data-tab="demand">要求/命令/建議 | Demand/Command/Suggestion</div>
+            <div class="tab" data-tab="special">特殊結構 | Special Structures</div>
+            <div class="tab" data-tab="quiz">測驗練習 | Quiz Practice</div>
+        </div>
+        
+        <!-- 虛擬語氣介紹 -->
+        <div class="tab-content active" id="intro">
+            <h2>虛擬語氣介紹 | Subjunctive Mood Introduction</h2>
+            
+            <div class="card">
+                <h3>什麼是虛擬語氣？ | What is Subjunctive Mood?</h3>
+                <p>虛擬語氣是英語中的一種動詞形式，用來表達與事實相反、願望、建議、命令或假設的情況。它通常用於表達非真實的、想像的或希望發生的情境。</p>
+                <p>The subjunctive mood is a verb form in English used to express situations that are contrary to fact, wishes, suggestions, commands, or hypothetical situations. It is typically used to express unreal, imagined, or desired situations.</p>
+                
+                <div class="example">
+                    <p><strong>事實語氣 Indicative Mood:</strong> <span class="normal-sentence">I am at home now.</span></p>
+                    <p><strong>虛擬語氣 Subjunctive Mood:</strong> <span class="subjunctive-sentence">I wish I were at home now.</span></p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>虛擬語氣的基本類型 | Basic Types of Subjunctive Mood</h3>
+                
+                <div class="structure-box">
+                    <div class="structure-title">虛擬語氣的主要類型 | Main Types of Subjunctive Mood</div>
+                    <div class="structure-content">
+                        <p>1. If 條件句 | If Conditional Sentences</p>
+                        <p>2. Wish 表達願望 | Expressing Wishes with Wish</p>
+                        <p>3. 要求/命令/建議 | Demands/Commands/Suggestions</p>
+                        <p>4. 特殊結構 | Special Structures</p>
+                    </div>
+                </div>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>類型 Type</th>
+                            <th>用途 Usage</th>
+                            <th>例子 Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>If 條件句</td>
+                            <td>表達假設情況</td>
+                            <td>If I were you, I would study harder.</td>
+                        </tr>
+                        <tr>
+                            <td>Wish 用法</td>
+                            <td>表達願望</td>
+                            <td>I wish I had more time.</td>
+                        </tr>
+                        <tr>
+                            <td>要求/命令/建議</td>
+                            <td>表達建議或命令</td>
+                            <td>I suggest that he be on time.</td>
+                        </tr>
+                        <tr>
+                            <td>特殊結構</td>
+                            <td>特定句型</td>
+                            <td>It's time we went home.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="card">
+                <h3>虛擬語氣的用法 | Uses of Subjunctive Mood</h3>
+                <p>虛擬語氣在英語中用於表達非真實情況、願望、建議、命令或假設情境。</p>
+                <p>The subjunctive mood is used in English to express unreal situations, wishes, suggestions, commands, or hypothetical scenarios.</p>
+                
+                <div class="usage-diagram">
+                    <div class="diagram-container">
+                        <div class="diagram">
+                            <div class="diagram-item" style="top: 20px; left: 50px;">假設情況<br>Hypothetical Situations</div>
+                            <div class="diagram-item" style="top: 20px; right: 50px;">願望表達<br>Wish Expression</div>
+                            <div class="diagram-item" style="top: 120px; left: 150px;">建議命令<br>Suggestions/Commands</div>
+                            <div class="diagram-item" style="top: 120px; right: 150px;">非真實情況<br>Unreal Situations</div>
+                            <div class="diagram-item" style="bottom: 20px; left: 250px;">正式文體<br>Formal Style</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="interactive-element">
+                <h3>虛擬語氣練習 | Subjunctive Mood Practice</h3>
+                <p>識別不同類型的虛擬語氣</p>
+                <p>Identify different types of subjunctive mood</p>
+                <div class="subjunctive-animation" id="subjunctiveAnimation">
+                    If I were you, I would study harder.
+                </div>
+                <div class="animation-controls">
+                    <button class="btn" id="playAnimation">
+                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
+                    </button>
+                    <button class="btn" id="pauseAnimation">
+                        <i class="fas fa-pause"></i> 暫停 | Pause
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- If 條件句 -->
+        <div class="tab-content" id="if">
+            <h2>If 條件句 | Conditional Sentences</h2>
+            
+            <div class="card">
+                <h3>If 條件句類型 | Types of Conditional Sentences</h3>
+                <p>If 條件句是由兩部分組成的複雜句：一半是帶if的從屬條件子句，另一半是含情態助動詞的主要子句。</p>
+                <p>Conditional sentences consist of two parts: a subordinate clause with "if" and a main clause with a modal auxiliary verb.</p>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>類型 Type</th>
+                            <th>結構 Structure</th>
+                            <th>例句 Example</th>
+                            <th>中文翻譯 Chinese Translation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Zero Conditional<br>表達基本事實</td>
+                            <td>主句和子句都用現在簡單式</td>
+                            <td>If you heat ice, it melts.</td>
+                            <td>把冰加熱，冰就會融化。</td>
+                        </tr>
+                        <tr>
+                            <td>First Conditional<br>將來可能發生</td>
+                            <td>主句：將來簡單式<br>子句：現在簡單式</td>
+                            <td>You will miss the bus if you don't leave soon.</td>
+                            <td>你再不走就趕不上巴士了。</td>
+                        </tr>
+                        <tr>
+                            <td>Second Conditional<br>與將來事實相反</td>
+                            <td>主句：情態助動詞+動詞<br>子句：過去簡單式</td>
+                            <td>If I inherited a billion dollars, I would travel to the moon.</td>
+                            <td>如果我繼承了10億元，我就會到月球去旅行。</td>
+                        </tr>
+                        <tr>
+                            <td>Third Conditional<br>與過去事實相反</td>
+                            <td>主句：情態助動詞 + have done<br>子句：過去完成式 (had done)</td>
+                            <td>She would have gone to your birthday party if she hadn't been sick.</td>
+                            <td>她如果沒有生病，就去你的生日會了。</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="note-box">
+                    <p><strong>注意:</strong> 當條件子句放在主句前時，句子之間需要用逗號。</p>
+                    <p><strong>Note:</strong> When the conditional clause comes before the main clause, a comma is needed between the sentences.</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>If 省略與倒裝 | If Omission and Inversion</h3>
+                <p>在虛擬語氣中，if 可以被省略，此時需要將助動詞提前形成倒裝結構。</p>
+                <p>In subjunctive mood, "if" can be omitted, requiring the auxiliary verb to be moved forward to form an inversion structure.</p>
+                
+                <div class="qa-pair">
+                    <div class="question">
+                        <p><strong>正常語序 Normal Order:</strong> <span class="normal-sentence">If I were you, I wouldn't get involved.</span></p>
+                    </div>
+                    <div class="answer">
+                        <p><strong>倒裝語序 Inverted Order:</strong> <span class="subjunctive-sentence">Were I you, I wouldn't get involved.</span></p>
+                    </div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">
+                        <p><strong>正常語序 Normal Order:</strong> <span class="normal-sentence">If I had known, I would have offered help.</span></p>
+                    </div>
+                    <div class="answer">
+                        <p><strong>倒裝語序 Inverted Order:</strong> <span class="subjunctive-sentence">Had I known, I would have offered help.</span></p>
+                    </div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">
+                        <p><strong>正常語序 Normal Order:</strong> <span class="normal-sentence">If you should have any questions, please email me.</span></p>
+                    </div>
+                    <div class="answer">
+                        <p><strong>倒裝語序 Inverted Order:</strong> <span class="subjunctive-sentence">Should you have any questions, please email me.</span></p>
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <p><strong>特殊結構 Special Structure:</strong> <span class="subjunctive-sentence">But for your help, we couldn't have succeeded in the experiment.</span></p>
+                    <p>如果沒有你的幫助，我們的實驗不會成功的。</p>
+                    <p><em>(if 暗藏在文中)</em></p>
+                </div>
+            </div>
+            
+            <div class="interactive-element">
+                <h3>If 條件句練習 | If Conditional Practice</h3>
+                <p>將陳述句轉換為If條件句</p>
+                <p>Convert declarative sentences to If conditionals</p>
+                <div class="subjunctive-animation" id="ifAnimation">
+                    If I had more time, I would travel around the world.
+                </div>
+                <div class="animation-controls">
+                    <button class="btn" id="playIfAnimation">
+                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
+                    </button>
+                    <button class="btn" id="pauseIfAnimation">
+                        <i class="fas fa-pause"></i> 暫停 | Pause
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Wish 用法 -->
+        <div class="tab-content" id="wish">
+            <h2>Wish 用法 | Usage of Wish</h2>
+            
+            <div class="card">
+                <h3>Wish 的用法 | Usage of Wish</h3>
+                <p>Wish 用於表達與現在、將來或過去事實相反的願望。</p>
+                <p>Wish is used to express wishes contrary to present, future, or past facts.</p>
+                
+                <div class="structure-box">
+                    <div class="structure-title">Wish 的結構 | Wish Structure</div>
+                    <div class="structure-content">
+                        <p>現在：wish + 過去式</p>
+                        <p>將來：wish + would/could + 動詞原形</p>
+                        <p>過去：wish + 過去完成式</p>
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <p><strong>與現在相反 Contrary to Present:</strong> <span class="subjunctive-sentence">I wish I were home.</span></p>
+                    <p>我希望我在家。（意思是：我現在不在家）</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>與將來相反 Contrary to Future:</strong> <span class="subjunctive-sentence">I wish it would rain tomorrow.</span></p>
+                    <p>我希望明天下雨。（意思是：明天不會下雨）</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>與過去相反 Contrary to Past:</strong> <span class="subjunctive-sentence">I wish I could not have left my laptop in your home.</span></p>
+                    <p>我希望我沒有把筆電落在你家。（意思是：我把筆電落在你家了）</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>Wish 與 Hope 的區別 | Difference between Wish and Hope</h3>
+                <p>Wish 用於表達與事實相反的願望，而 Hope 用於表達可能實現的願望。</p>
+                <p>Wish is used to express wishes contrary to fact, while Hope is used to express wishes that may come true.</p>
+                
+                <div class="qa-pair">
+                    <div class="question">
+                        <p><strong>Wish (與事實相反):</strong> <span class="subjunctive-sentence">I wish I were taller.</span></p>
+                        <p>我希望我更高。（事實：我不高）</p>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Hope (可能實現):</strong> <span class="normal-sentence">I hope you have a good trip.</span></p>
+                        <p>我希望你旅途愉快。（可能實現）</p>
+                    </div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">
+                        <p><strong>Wish (與事實相反):</strong> <span class="subjunctive-sentence">I wish I had studied harder for the exam.</span></p>
+                        <p>我希望我為考試更努力學習。（事實：我沒有努力學習）</p>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Hope (可能實現):</strong> <span class="normal-sentence">I hope you pass the exam.</span></p>
+                        <p>我希望你通過考試。（可能實現）</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="interactive-element">
+                <h3>Wish 用法練習 | Wish Usage Practice</h3>
+                <p>練習使用Wish表達不同時間的願望</p>
+                <p>Practice using Wish to express wishes at different times</p>
+                <div class="subjunctive-animation" id="wishAnimation">
+                    I wish I had more time to travel.
+                </div>
+                <div class="animation-controls">
+                    <button class="btn" id="playWishAnimation">
+                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
+                    </button>
+                    <button class="btn" id="pauseWishAnimation">
+                        <i class="fas fa-pause"></i> 暫停 | Pause
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 要求/命令/建議 -->
+        <div class="tab-content" id="demand">
+            <h2>要求/命令/建議 | Demand/Command/Suggestion</h2>
+            
+            <div class="card">
+                <h3>表示「要求」、「命令」、「建議」的名詞子句</h3>
+                <p>當主句的動詞表示請求、命令、建議時，名詞子句中使用虛擬語氣 (should + 動詞原形)。</p>
+                
+                <h4>相關動詞 | Related Verbs</h4>
+                <div class="subjunctive-list">
+                    <div class="subjunctive-item">advise</div>
+                    <div class="subjunctive-item">agree</div>
+                    <div class="subjunctive-item">determine</div>
+                    <div class="subjunctive-item">demand</div>
+                    <div class="subjunctive-item">command</div>
+                    <div class="subjunctive-item">request</div>
+                    <div class="subjunctive-item">recommend</div>
+                    <div class="subjunctive-item">require</div>
+                    <div class="subjunctive-item">suggest</div>
+                    <div class="subjunctive-item">urge</div>
+                    <div class="subjunctive-item">order</div>
+                    <div class="subjunctive-item">insist</div>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="subjunctive-sentence">I suggest that he (should) study for the upcoming exam.</span></p>
+                    <p>我建議他應該為即將到來的考試學習。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="subjunctive-sentence">The audience demand that the media (should) provide unbiased information.</span></p>
+                    <p>觀眾要求媒體提供公正無偏見的信息。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="subjunctive-sentence">The boss requests that all employees (should) be notified of the meeting.</span></p>
+                    <p>老闆要求所有員工都應被告知會議事宜。</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>相關名詞和形容詞 | Related Nouns and Adjectives</h3>
+                
+                <h4>相關名詞 | Related Nouns</h4>
+                <div class="subjunctive-list">
+                    <div class="subjunctive-item">advice</div>
+                    <div class="subjunctive-item">agreement</div>
+                    <div class="subjunctive-item">command</div>
+                    <div class="subjunctive-item">decision</div>
+                    <div class="subjunctive-item">demand</div>
+                    <div class="subjunctive-item">determination</div>
+                    <div class="subjunctive-item">insistence</div>
+                    <div class="subjunctive-item">preference</div>
+                    <div class="subjunctive-item">proposal</div>
+                    <div class="subjunctive-item">request</div>
+                    <div class="subjunctive-item">requirement</div>
+                    <div class="subjunctive-item">order</div>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="subjunctive-sentence">They made a suggestion that we (should) be early.</span></p>
+                    <p>他們建議我們應該早到。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="subjunctive-sentence">He made a proposal that the company (should) buy more land.</span></p>
+                    <p>他提議公司應該購買更多土地。</p>
+                </div>
+                
+                <h4>相關形容詞 | Related Adjectives</h4>
+                <div class="subjunctive-list">
+                    <div class="subjunctive-item">advisable</div>
+                    <div class="subjunctive-item">anxious</div>
+                    <div class="subjunctive-item">urgent</div>
+                    <div class="subjunctive-item">crucial</div>
+                    <div class="subjunctive-item">desirable</div>
+                    <div class="subjunctive-item">vital</div>
+                    <div class="subjunctive-item">important</div>
+                    <div class="subjunctive-item">natural</div>
+                    <div class="subjunctive-item">necessary</div>
+                    <div class="subjunctive-item">compulsory</div>
+                    <div class="subjunctive-item">imperative</div>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="subjunctive-sentence">It is advisable that she (should) take a vacation for a week.</span></p>
+                    <p>建議她應該休假一周。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="subjunctive-sentence">It was essential that the technology (should) advance rapidly.</span></p>
+                    <p>技術必須快速發展。</p>
+                </div>
+            </div>
+            
+            <div class="interactive-element">
+                <h3>要求/命令/建議練習 | Demand/Command/Suggestion Practice</h3>
+                <p>練習使用虛擬語氣表達要求、命令和建議</p>
+                <p>Practice using subjunctive mood to express demands, commands and suggestions</p>
+                <div class="subjunctive-animation" id="demandAnimation">
+                    I suggest that he (should) attend the meeting.
+                </div>
+                <div class="animation-controls">
+                    <button class="btn" id="playDemandAnimation">
+                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
+                    </button>
+                    <button class="btn" id="pauseDemandAnimation">
+                        <i class="fas fa-pause"></i> 暫停 | Pause
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 特殊結構 -->
+        <div class="tab-content" id="special">
+            <h2>特殊結構 | Special Structures</h2>
+            
+            <div class="card">
+                <h3>常見特殊結構表假設 | Common Special Structures for Hypothetical Situations</h3>
+                
+                <div class="example">
+                    <p><strong>It's time 結構:</strong> <span class="subjunctive-sentence">It's time we went home.</span></p>
+                    <p>是我們回家的時候了。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>It's high time 結構:</strong> <span class="subjunctive-sentence">It's high time I bought a new computer.</span></p>
+                    <p>是我買新電腦的時候了。（表達在時間上已經有一點晚了）</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>Would rather 結構:</strong> <span class="subjunctive-sentence">I would rather (that) you came another time.</span></p>
+                    <p>我寧願你改天再來。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>Would rather 結構:</strong> <span class="subjunctive-sentence">She'd rather (that) he weren't so angry.</span></p>
+                    <p>她寧願他沒有這麼生氣。</p>
+                </div>
+                
+                <div class="note-box">
+                    <p><strong>注意:</strong> 當主句的主詞與子句的主詞不一樣時，子句用過去式。</p>
+                    <p><strong>Note:</strong> When the subject of the main clause is different from the subject of the subordinate clause, the subordinate clause uses past tense.</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>其他特殊結構 | Other Special Structures</h3>
+                
+                <div class="example">
+                    <p><strong>As if / As though 結構:</strong> <span class="subjunctive-sentence">He talks as if he were an expert.</span></p>
+                    <p>他說起話來好像他是專家一樣。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>If only 結構:</strong> <span class="subjunctive-sentence">If only I had more time!</span></p>
+                    <p>要是我有更多時間就好了！</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>But for 結構:</strong> <span class="subjunctive-sentence">But for your help, we couldn't have succeeded.</span></p>
+                    <p>要不是你的幫助，我們不可能成功。</p>
+                </div>
+            </div>
+            
+            <div class="interactive-element">
+                <h3>特殊結構練習 | Special Structures Practice</h3>
+                <p>練習使用特殊結構表達虛擬語氣</p>
+                <p>Practice using special structures to express subjunctive mood</p>
+                <div class="subjunctive-animation" id="specialAnimation">
+                    It's time we started the project.
+                </div>
+                <div class="animation-controls">
+                    <button class="btn" id="playSpecialAnimation">
+                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
+                    </button>
+                    <button class="btn" id="pauseSpecialAnimation">
+                        <i class="fas fa-pause"></i> 暫停 | Pause
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 測驗練習 -->
+        <div class="tab-content" id="quiz">
+            <h2>測驗練習 | Quiz Practice</h2>
+            
+            <div class="card">
+                <h3>虛擬語氣測驗 | Subjunctive Mood Quiz</h3>
+                <p>測試您對虛擬語氣的掌握程度</p>
+                <p>Test your understanding of subjunctive mood</p>
+                
+                <div class="quiz-container" id="quiz1">
+                    <div class="quiz-question">1. 如果我是你，我會更努力學習。</div>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-correct="true">If I were you, I would study harder.</div>
+                        <div class="quiz-option">If I was you, I would study harder.</div>
+                        <div class="quiz-option">If I am you, I will study harder.</div>
+                        <div class="quiz-option">If I have been you, I would study harder.</div>
+                    </div>
+                </div>
+                
+                <div class="quiz-container" id="quiz2">
+                    <div class="quiz-question">2. 我希望我昨天沒有遲到。</div>
+                    <div class="quiz-options">
+                        <div class="quiz-option">I wish I am not late yesterday.</div>
+                        <div class="quiz-option">I wish I was not late yesterday.</div>
+                        <div class="quiz-option" data-correct="true">I wish I hadn't been late yesterday.</div>
+                        <div class="quiz-option">I wish I wouldn't be late yesterday.</div>
+                    </div>
+                </div>
+                
+                <div class="quiz-container" id="quiz3">
+                    <div class="quiz-question">3. 老師建議我們應該每天練習英語。</div>
+                    <div class="quiz-options">
+                        <div class="quiz-option">The teacher suggests that we practice English every day.</div>
+                        <div class="quiz-option">The teacher suggests that we practiced English every day.</div>
+                        <div class="quiz-option" data-correct="true">The teacher suggests that we (should) practice English every day.</div>
+                        <div class="quiz-option">The teacher suggests that we will practice English every day.</div>
+                    </div>
+                </div>
+                
+                <div class="quiz-container" id="quiz4">
+                    <div class="quiz-question">4. 是時候我們開始這個項目了。</div>
+                    <div class="quiz-options">
+                        <div class="quiz-option">It's time we start this project.</div>
+                        <div class="quiz-option" data-correct="true">It's time we started this project.</div>
+                        <div class="quiz-option">It's time we will start this project.</div>
+                        <div class="quiz-option">It's time we are starting this project.</div>
+                    </div>
+                </div>
+                
+                <div class="quiz-container" id="quiz5">
+                    <div class="quiz-question">5. 如果昨天沒有下雨，我們就會去野餐了。</div>
+                    <div class="quiz-options">
+                        <div class="quiz-option">If it didn't rain yesterday, we would go for a picnic.</div>
+                        <div class="quiz-option" data-correct="true">If it hadn't rained yesterday, we would have gone for a picnic.</div>
+                        <div class="quiz-option">If it doesn't rain yesterday, we would go for a picnic.</div>
+                        <div class="quiz-option">If it hadn't rained yesterday, we would go for a picnic.</div>
+                    </div>
+                </div>
+                
+                <div class="animation-controls">
+                    <button class="btn" id="checkAnswers">
+                        <i class="fas fa-check"></i> 檢查答案 | Check Answers
+                    </button>
+                    <button class="btn" id="resetQuiz">
+                        <i class="fas fa-redo"></i> 重新開始 | Reset Quiz
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Shirley's Subjunctive Mood Learning Platform | 虛擬語氣學習平台</p>
+        <p>© 2025 Shirley's Grammar</p>
+    </footer>
+
+    <script>
+        // 標籤切換功能
+        document.addEventListener('DOMContentLoaded', function() {
+            // 標籤切換
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // 移除所有標籤和內容的active類
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    
+                    // 添加active類到當前標籤和對應內容
+                    tab.classList.add('active');
+                    const tabId = tab.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+            
+            // 虛擬語氣動畫功能
+            const subjunctiveExamples = [
+                "If I were you, I would study harder.",
+                "I wish I had more time to travel.",
+                "It's time we started the project.",
+                "I suggest that he (should) attend the meeting.",
+                "Had I known, I would have helped."
+            ];
+            
+            let currentExampleIndex = 0;
+            let animationInterval;
+            
+            function startSubjunctiveAnimation(animationElement) {
+                let index = 0;
+                const text = subjunctiveExamples[currentExampleIndex];
+                animationElement.textContent = '';
+                
+                animationInterval = setInterval(() => {
+                    if (index < text.length) {
+                        animationElement.textContent += text.charAt(index);
+                        index++;
+                    } else {
+                        clearInterval(animationInterval);
+                        // 切換到下一個例子
+                        setTimeout(() => {
+                            currentExampleIndex = (currentExampleIndex + 1) % subjunctiveExamples.length;
+                            startSubjunctiveAnimation(animationElement);
+                        }, 2000);
+                    }
+                }, 50);
+            }
+            
+            function pauseSubjunctiveAnimation() {
+                clearInterval(animationInterval);
+            }
+            
+            // 為每個標籤的動畫按鈕添加事件監聽器
+            document.getElementById('playAnimation')?.addEventListener('click', () => {
+                startSubjunctiveAnimation(document.getElementById('subjunctiveAnimation'));
+            });
+            
+            document.getElementById('pauseAnimation')?.addEventListener('click', () => {
+                pauseSubjunctiveAnimation();
+            });
+            
+            // If 條件句動畫
+            const ifExamples = [
+                "If I had more time, I would travel around the world.",
+                "If it rains tomorrow, we will cancel the picnic.",
+                "If I had known, I would have helped.",
+                "If you heat ice, it melts."
+            ];
+            
+            let ifExampleIndex = 0;
+            let ifAnimationInterval;
+            
+            function startIfAnimation() {
+                let index = 0;
+                const text = ifExamples[ifExampleIndex];
+                const animationElement = document.getElementById('ifAnimation');
+                animationElement.textContent = '';
+                
+                ifAnimationInterval = setInterval(() => {
+                    if (index < text.length) {
+                        animationElement.textContent += text.charAt(index);
+                        index++;
+                    } else {
+                        clearInterval(ifAnimationInterval);
+                        setTimeout(() => {
+                            ifExampleIndex = (ifExampleIndex + 1) % ifExamples.length;
+                            startIfAnimation();
+                        }, 2000);
+                    }
+                }, 50);
+            }
+            
+            function pauseIfAnimation() {
+                clearInterval(ifAnimationInterval);
+            }
+            
+            document.getElementById('playIfAnimation')?.addEventListener('click', () => {
+                startIfAnimation();
+            });
+            
+            document.getElementById('pauseIfAnimation')?.addEventListener('click', () => {
+                pauseIfAnimation();
+            });
+            
+            // Wish 用法動畫
+            const wishExamples = [
+                "I wish I had more time to travel.",
+                "I wish it would stop raining.",
+                "I wish I hadn't eaten so much.",
+                "I wish I were taller."
+            ];
+            
+            let wishExampleIndex = 0;
+            let wishAnimationInterval;
+            
+            function startWishAnimation() {
+                let index = 0;
+                const text = wishExamples[wishExampleIndex];
+                const animationElement = document.getElementById('wishAnimation');
+                animationElement.textContent = '';
+                
+                wishAnimationInterval = setInterval(() => {
+                    if (index < text.length) {
+                        animationElement.textContent += text.charAt(index);
+                        index++;
+                    } else {
+                        clearInterval(wishAnimationInterval);
+                        setTimeout(() => {
+                            wishExampleIndex = (wishExampleIndex + 1) % wishExamples.length;
+                            startWishAnimation();
+                        }, 2000);
+                    }
+                }, 50);
+            }
+            
+            function pauseWishAnimation() {
+                clearInterval(wishAnimationInterval);
+            }
+            
+            document.getElementById('playWishAnimation')?.addEventListener('click', () => {
+                startWishAnimation();
+            });
+            
+            document.getElementById('pauseWishAnimation')?.addEventListener('click', () => {
+                pauseWishAnimation();
+            });
+            
+            // 要求/命令/建議動畫
+            const demandExamples = [
+                "I suggest that he (should) attend the meeting.",
+                "The teacher demanded that we (should) be quiet.",
+                "It is important that she (should) arrive on time.",
+                "They requested that the report (should) be submitted by Friday."
+            ];
+            
+            let demandExampleIndex = 0;
+            let demandAnimationInterval;
+            
+            function startDemandAnimation() {
+                let index = 0;
+                const text = demandExamples[demandExampleIndex];
+                const animationElement = document.getElementById('demandAnimation');
+                animationElement.textContent = '';
+                
+                demandAnimationInterval = setInterval(() => {
+                    if (index < text.length) {
+                        animationElement.textContent += text.charAt(index);
+                        index++;
+                    } else {
+                        clearInterval(demandAnimationInterval);
+                        setTimeout(() => {
+                            demandExampleIndex = (demandExampleIndex + 1) % demandExamples.length;
+                            startDemandAnimation();
+                        }, 2000);
+                    }
+                }, 50);
+            }
+            
+            function pauseDemandAnimation() {
+                clearInterval(demandAnimationInterval);
+            }
+            
+            document.getElementById('playDemandAnimation')?.addEventListener('click', () => {
+                startDemandAnimation();
+            });
+            
+            document.getElementById('pauseDemandAnimation')?.addEventListener('click', () => {
+                pauseDemandAnimation();
+            });
+            
+            // 特殊結構動畫
+            const specialExamples = [
+                "It's time we started the project.",
+                "I'd rather you came tomorrow.",
+                "It's high time she bought a new car.",
+                "He talks as if he were an expert."
+            ];
+            
+            let specialExampleIndex = 0;
+            let specialAnimationInterval;
+            
+            function startSpecialAnimation() {
+                let index = 0;
+                const text = specialExamples[specialExampleIndex];
+                const animationElement = document.getElementById('specialAnimation');
+                animationElement.textContent = '';
+                
+                specialAnimationInterval = setInterval(() => {
+                    if (index < text.length) {
+                        animationElement.textContent += text.charAt(index);
+                        index++;
+                    } else {
+                        clearInterval(specialAnimationInterval);
+                        setTimeout(() => {
+                            specialExampleIndex = (specialExampleIndex + 1) % specialExamples.length;
+                            startSpecialAnimation();
+                        }, 2000);
+                    }
+                }, 50);
+            }
+            
+            function pauseSpecialAnimation() {
+                clearInterval(specialAnimationInterval);
+            }
+            
+            document.getElementById('playSpecialAnimation')?.addEventListener('click', () => {
+                startSpecialAnimation();
+            });
+            
+            document.getElementById('pauseSpecialAnimation')?.addEventListener('click', () => {
+                pauseSpecialAnimation();
+            });
+            
+            // 測驗功能
+            document.getElementById('checkAnswers')?.addEventListener('click', () => {
+                const quizOptions = document.querySelectorAll('.quiz-option');
+                
+                quizOptions.forEach(option => {
+                    if (option.hasAttribute('data-correct')) {
+                        option.classList.add('correct');
+                    } else {
+                        option.classList.add('incorrect');
+                    }
+                });
+            });
+            
+            document.getElementById('resetQuiz')?.addEventListener('click', () => {
+                const quizOptions = document.querySelectorAll('.quiz-option');
+                
+                quizOptions.forEach(option => {
+                    option.classList.remove('correct', 'incorrect');
+                });
+            });
+            
+            // 測驗選項點擊事件
+            const quizOptions = document.querySelectorAll('.quiz-option');
+            quizOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // 移除同一個問題中其他選項的樣式
+                    const parentContainer = this.closest('.quiz-container');
+                    const siblings = parentContainer.querySelectorAll('.quiz-option');
+                    siblings.forEach(sibling => {
+                        sibling.classList.remove('correct', 'incorrect');
+                    });
+                    
+                    // 為當前選項添加樣式
+                    if (this.hasAttribute('data-correct')) {
+                        this.classList.add('correct');
+                    } else {
+                        this.classList.add('incorrect');
+                    }
+                });
+            });
+            
+            // 初始化第一個動畫
+            startSubjunctiveAnimation(document.getElementById('subjunctiveAnimation'));
+        });
+    </script>
+</body>
+</html>
