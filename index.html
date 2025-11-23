@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shirley's E-Charger</title>
+    <title>Shirley's E-Charger - Responsive</title>
     <style>
         body {
             font-family: 'Courier New', monospace;
@@ -467,6 +467,199 @@
             100% {
                 transform: scale(1.5);
                 opacity: 0;
+            }
+        }
+        
+        /* 響應式設計 - 調整載具顯示模式 */
+        @media (max-width: 1200px) {
+            #robot-container {
+                width: 150px;
+                height: 225px;
+            }
+            
+            .flip-card {
+                width: 100px;
+                height: 125px;
+            }
+            
+            #electric-car {
+                width: 50px;
+                height: 25px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            #robot-container {
+                position: relative;
+                width: 120px;
+                height: 180px;
+                bottom: 0;
+                right: 0;
+                margin: 20px auto;
+            }
+            
+            .flip-card {
+                position: relative;
+                top: 0;
+                left: 0;
+                width: 80px;
+                height: 100px;
+                margin: 10px auto;
+            }
+            
+            .flip-card:hover {
+                transform: scale(1.3);
+            }
+            
+            #electric-car {
+                width: 40px;
+                height: 20px;
+            }
+            
+            /* 調整充電站SVG大小 */
+            #station-svg {
+                width: 100%;
+                height: auto;
+                max-width: 800px;
+            }
+            
+            /* 調整標題和文字大小 */
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            p {
+                font-size: 14px;
+            }
+            
+            body {
+                padding: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #robot-container {
+                width: 100px;
+                height: 150px;
+            }
+            
+            .flip-card {
+                width: 60px;
+                height: 75px;
+            }
+            
+            #electric-car {
+                width: 30px;
+                height: 15px;
+            }
+            
+            h1 {
+                font-size: 1.5em;
+            }
+            
+            p {
+                font-size: 12px;
+            }
+            
+            /* 調整端口和標籤大小 */
+            .port {
+                r: 8;
+            }
+            
+            .port-label {
+                font-size: 10px;
+            }
+            
+            .pillar-label {
+                font-size: 10px;
+            }
+            
+            body {
+                padding: 5px;
+            }
+        }
+
+        /* 針對橫向移動設備的優化 */
+        @media (max-height: 500px) and (orientation: landscape) {
+            #robot-container {
+                width: 80px;
+                height: 120px;
+                bottom: 10px;
+                right: 10px;
+            }
+            
+            .flip-card {
+                width: 50px;
+                height: 62px;
+                top: 50px;
+                left: 15px;
+            }
+            
+            #electric-car {
+                width: 25px;
+                height: 12px;
+            }
+            
+            body {
+                padding: 10px;
+                min-height: auto;
+            }
+            
+            #station-container {
+                margin-top: 20px;
+            }
+        }
+
+        /* 高DPI屏幕優化 */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            .port, .pillar-block, .red-button {
+                stroke-width: 1.5;
+            }
+            
+            .charging-wire, .pillar-wire {
+                stroke-width: 2;
+            }
+        }
+
+        /* 觸摸設備優化 */
+        @media (hover: none) and (pointer: coarse) {
+            .port:hover, .pillar-label:hover, .red-button:hover {
+                transform: none;
+                filter: none;
+            }
+            
+            .port:active, .pillar-label:active, .red-button:active {
+                transform: scale(1.1);
+                filter: url(#metalGlowHover);
+            }
+            
+            .flip-card:hover {
+                transform: none;
+            }
+            
+            .flip-card:active {
+                transform: scale(1.3);
+            }
+            
+            body {
+                cursor: default;
+            }
+        }
+
+        /* 打印樣式 */
+        @media print {
+            #robot-container, #electric-car, .flip-card {
+                display: none;
+            }
+            
+            body {
+                background: white;
+                color: black;
+            }
+            
+            #station-svg {
+                border: 1px solid #000;
+                box-shadow: none;
             }
         }
     </style>
@@ -1067,6 +1260,53 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
             });
         }
 
+        // 檢測設備類型並調整載具行為
+        function adjustForDevice() {
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            const isTablet = /iPad|Android|Tablet/i.test(navigator.userAgent) && !isMobile;
+            
+            if (isMobile) {
+                // 移動設備優化
+                document.body.style.cursor = 'default'; // 恢復默認鼠標
+                
+                // 調整電動車跟隨速度
+                window.carFollowSpeed = 0.05; // 更慢的跟隨速度
+                
+                // 添加觸摸事件支持
+                initTouchEvents();
+            } else if (isTablet) {
+                // 平板設備優化
+                window.carFollowSpeed = 0.08;
+            } else {
+                // 桌面設備
+                window.carFollowSpeed = 0.1;
+            }
+        }
+
+        // 初始化觸摸事件
+        function initTouchEvents() {
+            const car = document.getElementById('electric-car');
+            
+            // 添加觸摸事件
+            car.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                showStatus('Electric car ready! Drag me to any grammar port!');
+            }, { passive: false });
+            
+            // 為端口添加觸摸事件
+            const ports = document.querySelectorAll('.port, .pillar-label, .pillar-block, .red-button');
+            ports.forEach(port => {
+                port.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    // 觸摸時添加視覺反饋
+                    this.style.transform = 'scale(1.1)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 300);
+                }, { passive: false });
+            });
+        }
+
         // 頁面加載時初始化
         window.onload = function() {
             // 加載語法點連結
@@ -1080,6 +1320,12 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
             
             // 初始化電動車
             initElectricCar();
+            
+            // 添加設備檢測
+            adjustForDevice();
+            
+            // 監聽窗口大小變化
+            window.addEventListener('resize', adjustForDevice);
             
             console.log('Available grammar keys:', Object.keys(grammarLinks));
         };
