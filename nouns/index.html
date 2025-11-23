@@ -96,6 +96,12 @@
       border-bottom: 1px dashed #e0e0e0;
     }
 
+    h3 {
+      color: var(--deep-olive);
+      margin: 20px 0 15px;
+      font-size: 1.3rem;
+    }
+
     .bilingual {
       display: flex;
       flex-wrap: wrap;
@@ -120,14 +126,16 @@
       border-radius: 0 8px 8px 0;
     }
 
+    /* 表格樣式 */
     table {
       width: 100%;
       border-collapse: collapse;
       margin: 20px 0;
+      font-size: 0.95rem;
     }
 
     th, td {
-      padding: 12px;
+      padding: 10px 12px;
       text-align: left;
       border-bottom: 1px solid #eee;
     }
@@ -135,42 +143,118 @@
     th {
       background-color: var(--mist-gray);
       color: var(--deep-olive);
+      font-weight: 600;
+      white-space: nowrap;
     }
 
     tr:hover td {
       background-color: #fafafa;
     }
 
+    /* 緊湊型單字表格 */
+    .compact-table {
+      font-size: 0.9rem;
+    }
+
+    .compact-table th,
+    .compact-table td {
+      padding: 8px 10px;
+    }
+
+    .word-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 15px 0;
+    }
+
+    .word-table th {
+      background: var(--deep-olive);
+      color: white;
+      padding: 10px;
+      font-weight: 600;
+    }
+
+    .word-table td {
+      padding: 10px;
+      border: 1px solid #e0e0e0;
+    }
+
+    .word-table tr:nth-child(even) {
+      background-color: #f8f9fa;
+    }
+
+    /* 響應式表格 */
+    .responsive-table {
+      overflow-x: auto;
+      margin: 15px 0;
+    }
+
+    .word-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px;
+      margin: 15px 0;
+    }
+
+    .word-card {
+      background: #f8f9fa;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #e9ecef;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .word-card:hover {
+      background: #e9ecef;
+      transform: translateY(-2px);
+    }
+
     .example-list {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
       margin: 20px 0;
     }
 
     .example-item {
-      padding: 14px;
+      padding: 12px;
       background: #f8f9fa;
-      border-radius: 10px;
+      border-radius: 8px;
       border: 1px solid #eee;
       position: relative;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 0.95rem;
+    }
+
+    .example-item:hover {
+      background: #e9ecef;
+      transform: translateY(-2px);
     }
 
     .play-btn {
       position: absolute;
-      top: 10px;
-      right: 10px;
+      top: 8px;
+      right: 8px;
       background: var(--accent-gold);
       color: white;
-      width: 28px;
-      height: 28px;
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 12px;
+      font-size: 10px;
       cursor: pointer;
       border: none;
+      transition: all 0.2s;
+    }
+
+    .play-btn:hover {
+      background: var(--deep-olive);
+      transform: scale(1.1);
     }
 
     .highlight {
@@ -198,10 +282,192 @@
       color: #2e7d32;
     }
 
+    /* 測驗樣式 */
+    .quiz-container {
+      background: #f8f9fa;
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+
+    .quiz-question {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: var(--deep-olive);
+    }
+
+    .quiz-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 10px;
+    }
+
+    .quiz-option {
+      padding: 12px 16px;
+      background: white;
+      border: 2px solid #e9ecef;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .quiz-option:hover {
+      border-color: var(--elegant-rose);
+    }
+
+    .quiz-option.correct {
+      background: #d4edda;
+      border-color: #28a745;
+      color: #155724;
+    }
+
+    .quiz-option.incorrect {
+      background: #f8d7da;
+      border-color: #dc3545;
+      color: #721c24;
+    }
+
+    .quiz-feedback {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 8px;
+      display: none;
+    }
+
+    .quiz-feedback.correct {
+      background: #d4edda;
+      border: 1px solid #c3e6cb;
+      color: #155724;
+    }
+
+    .quiz-feedback.incorrect {
+      background: #f8d7da;
+      border: 1px solid #f5c6cb;
+      color: #721c24;
+    }
+
+    .quiz-next {
+      background: var(--deep-olive);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 15px;
+      display: none;
+    }
+
+    /* 練習區樣式 */
+    .practice-section {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 25px 0;
+      border-left: 4px solid var(--accent-gold);
+    }
+
+    .practice-title {
+      font-size: 1.3rem;
+      color: var(--deep-olive);
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .practice-title::before {
+      content: "💡";
+      font-size: 1.2rem;
+    }
+
+    /* 響應式設計 */
     @media (max-width: 768px) {
-      .bilingual { flex-direction: column; }
-      .en, .zh { min-width: 100%; }
-      h1 { font-size: 2.2rem; }
+      .container {
+        padding: 20px 15px;
+      }
+
+      h1 {
+        font-size: 2.2rem;
+        margin: 15px 0 30px;
+      }
+
+      h2 {
+        font-size: 1.6rem;
+      }
+
+      .bilingual {
+        flex-direction: column;
+      }
+
+      .en, .zh {
+        min-width: 100%;
+      }
+
+      .section {
+        padding: 20px;
+        margin: 20px 0;
+      }
+
+      table {
+        font-size: 0.85rem;
+      }
+
+      th, td {
+        padding: 8px 10px;
+      }
+
+      .compact-table th,
+      .compact-table td {
+        padding: 6px 8px;
+      }
+
+      .word-grid {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 8px;
+      }
+
+      .example-list {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .quiz-options {
+        grid-template-columns: 1fr;
+      }
+
+      .controls button {
+        padding: 8px 16px;
+        margin: 0 4px 8px;
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 15px 10px;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      h2 {
+        font-size: 1.4rem;
+      }
+
+      table {
+        font-size: 0.8rem;
+      }
+
+      .word-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .word-card {
+        padding: 8px;
+        font-size: 0.85rem;
+      }
     }
   </style>
 </head>
@@ -210,8 +476,8 @@
     <h1>Shirley's Nouns 名詞解析</h1>
 
     <div class="controls">
-      <button id="pauseBtn">⏸️ 暫停動畫</button>
-      <button id="playBtn">▶️ 繼續</button>
+      <button onclick="scrollToPractice()">🎯 前往練習區</button>
+      <button onclick="showQuiz()">📝 綜合測驗</button>
     </div>
 
     <!-- 定義 -->
@@ -225,206 +491,360 @@
           <span class="highlight">名詞</span>是用來命名<strong>人、地方、事物或概念</strong>的詞。
         </div>
       </div>
-      <button class="play-btn" onclick="speak('A noun is a word that names a person, place, thing, or idea.')">🔊</button>
     </div>
 
     <!-- 分類 -->
     <div class="section">
       <h2>Types of Nouns 名詞的分類</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>English</th>
-            <th>中文</th>
-            <th>Examples 例句</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>Common nouns</td><td>普通名詞</td><td>city, name, month</td></tr>
-          <tr><td>Proper nouns</td><td>專有名詞</td><td>Taipei, Shirley, July</td></tr>
-          <tr><td>Concrete nouns</td><td>具體名詞</td><td>star, car, phone</td></tr>
-          <tr><td>Abstract nouns</td><td>抽象名詞</td><td>strength, happiness, pursuit</td></tr>
-          <tr><td>Compound nouns</td><td>複合名詞</td><td>toothpaste, seat belt, sister-in-law</td></tr>
-          <tr><td>Collective nouns</td><td>集合名詞</td><td>police, class, family, audience</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- 數：可數 vs 不可數 -->
-    <div class="section">
-      <h2>Number: Countable vs Uncountable 名詞的數</h2>
-
-      <h3>Countable Nouns (可數名詞)</h3>
-      <div class="example-list">
-        <div class="example-item">computer → computers <button class="play-btn" onclick="speak('computer computers')">🔊</button></div>
-        <div class="example-item">peach → peaches <button class="play-btn" onclick="speak('peach peaches')">🔊</button></div>
-        <div class="example-item">brush → brushes <button class="play-btn" onclick="speak('brush brushes')">🔊</button></div>
-        <div class="example-item">family → families <button class="play-btn" onclick="speak('family families')">🔊</button></div>
-        <div class="example-item">photo → photos <button class="play-btn" onclick="speak('photo photos')">🔊</button></div>
-        <div class="example-item">hero → heroes <button class="play-btn" onclick="speak('hero heroes')">🔊</button></div>
-        <div class="example-item">life → lives <button class="play-btn" onclick="speak('life lives')">🔊</button></div>
-        <div class="example-item">knife → knives <button class="play-btn" onclick="speak('knife knives')">🔊</button></div>
-      </div>
-
-      <h3>Irregular Plurals (不規則複數)</h3>
-      <div class="example-list">
-        <div class="example-item">man → men <button class="play-btn" onclick="speak('man men')">🔊</button></div>
-        <div class="example-item">foot → feet <button class="play-btn" onclick="speak('foot feet')">🔊</button></div>
-        <div class="example-item">deer → deer <button class="play-btn" onclick="speak('deer deer')">🔊</button></div>
-        <div class="example-item">bacterium → bacteria <button class="play-btn" onclick="speak('bacterium bacteria')">🔊</button></div>
-        <div class="example-item">datum → data <button class="play-btn" onclick="speak('datum data')">🔊</button></div>
-        <div class="example-item">crisis → crises <button class="play-btn" onclick="speak('crisis crises')">🔊</button></div>
-        <div class="example-item">analysis → analyses <button class="play-btn" onclick="speak('analysis analyses')">🔊</button></div>
-      </div>
-
-      <h3>Uncountable Nouns (不可數名詞)</h3>
-      <p>These are treated as <strong>singular</strong>. Use with: some, any, much, (a) little.</p>
-      <div class="example-list">
-        <div class="example-item">music</div>
-        <div class="example-item">art</div>
-        <div class="example-item">advice</div>
-        <div class="example-item">information</div>
-        <div class="example-item">news</div>
-        <div class="example-item">furniture</div>
-        <div class="example-item">luggage</div>
-        <div class="example-item">evidence</div>
-        <div class="example-item">currency</div>
-        <div class="example-item">power</div>
-        <div class="example-item">equipment</div>
-        <div class="example-item">rice</div>
-      </div>
-
-      <div class="note">
-        ✦ Use measure words: <strong>a piece of advice/information/news/furniture</strong>, <strong>a grain of rice</strong>
-      </div>
-
-      <div class="tip">
-        ✔ The news <strong>is</strong> interesting. （不可數名詞當單數）
-      </div>
-
-      <h3>Words with Dual Meaning</h3>
-      <table>
-        <tr><th>Uncountable</th><th>Countable</th></tr>
-        <tr><td>paper (紙)</td><td>papers (論文/報紙)</td></tr>
-        <tr><td>room (空間)</td><td>rooms (房間)</td></tr>
-        <tr><td>work (工作)</td><td>a work (一件作品)</td></tr>
-        <tr><td>experience (經驗)</td><td>experiences (經歷)</td></tr>
-        <tr><td>iron (鐵)</td><td>an iron (熨斗)</td></tr>
-        <tr><td>chicken (雞肉)</td><td>a chicken (小雞)</td></tr>
-        <tr><td>hair (頭髮)</td><td>a hair (一根毛髮)</td></tr>
-        <tr><td>light (光)</td><td>a light (一盞燈)</td></tr>
-        <tr><td>time (時間)</td><td>times (次數)</td></tr>
-      </table>
-
-      <div class="warning">
-        ❗ Only plural form: <strong>belongings, findings, savings, surroundings</strong>
+      <div class="responsive-table">
+        <table class="compact-table">
+          <thead>
+            <tr>
+              <th>類型</th>
+              <th>中文</th>
+              <th>例子</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Common nouns</td><td>普通名詞</td><td>city, name, month</td></tr>
+            <tr><td>Proper nouns</td><td>專有名詞</td><td>Taipei, Shirley, July</td></tr>
+            <tr><td>Concrete nouns</td><td>具體名詞</td><td>star, car, phone</td></tr>
+            <tr><td>Abstract nouns</td><td>抽象名詞</td><td>love, happiness, time</td></tr>
+            <tr><td>Compound nouns</td><td>複合名詞</td><td>toothpaste, classroom</td></tr>
+            <tr><td>Collective nouns</td><td>集合名詞</td><td>family, team, class</td></tr>
+          </tbody>
+        </table>
       </div>
     </div>
 
-    <!-- 集合名詞 -->
+    <!-- 可數 vs 不可數 -->
     <div class="section">
-      <h2>Collective Nouns 集合名詞</h2>
-      <div class="bilingual">
-        <div class="en">
-          <p>The police <strong>are</strong> coming. → plural (individuals)</p>
-          <p>The family next door <strong>is</strong> very quiet. → singular (unit as a whole)</p>
-          <p>My family <strong>are</strong> always arguing. → plural (members acting separately)</p>
-        </div>
-        <div class="zh">
-          <p>The police <strong>are</strong> coming. → 複數（強調個體）</p>
-          <p>隔壁那戶人家<strong>很安靜</strong>。→ 單數（視為一個整體）</p>
-          <p>我家<strong>人總是吵架</strong>。→ 複數（強調成員各自行為）</p>
-        </div>
+      <h2>Countable vs Uncountable Nouns 可數 vs 不可數名詞</h2>
+
+      <h3>📊 可數名詞規則變化</h3>
+      <div class="responsive-table">
+        <table class="compact-table">
+          <thead>
+            <tr>
+              <th>規則</th>
+              <th>例子</th>
+              <th>複數</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>一般加 s</td><td>book</td><td>books</td></tr>
+            <tr><td>s, sh, ch, x, o 加 es</td><td>box</td><td>boxes</td></tr>
+            <tr><td>子音 + y 改 ies</td><td>city</td><td>cities</td></tr>
+            <tr><td>f, fe 改 ves</td><td>knife</td><td>knives</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>🔀 不規則複數變化</h3>
+      <div class="word-grid">
+        <div class="word-card" onclick="speak('man men')">man → men</div>
+        <div class="word-card" onclick="speak('woman women')">woman → women</div>
+        <div class="word-card" onclick="speak('child children')">child → children</div>
+        <div class="word-card" onclick="speak('foot feet')">foot → feet</div>
+        <div class="word-card" onclick="speak('tooth teeth')">tooth → teeth</div>
+        <div class="word-card" onclick="speak('mouse mice')">mouse → mice</div>
+        <div class="word-card" onclick="speak('goose geese')">goose → geese</div>
+        <div class="word-card" onclick="speak('fish fish')">fish → fish</div>
+      </div>
+
+      <h3>🚫 常見不可數名詞</h3>
+      <div class="responsive-table">
+        <table class="compact-table">
+          <thead>
+            <tr>
+              <th>類別</th>
+              <th>例子</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>液體</td><td>water, milk, coffee</td></tr>
+            <tr><td>材料</td><td>wood, metal, glass</td></tr>
+            <tr><td>食物</td><td>rice, bread, cheese</td></tr>
+            <tr><td>抽象概念</td><td>love, time, information</td></tr>
+            <tr><td>學科</td><td>math, history, physics</td></tr>
+            <tr><td>其他</td><td>money, news, advice</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>🔄 雙重意義名詞</h3>
+      <div class="responsive-table">
+        <table class="word-table">
+          <thead>
+            <tr>
+              <th>不可數意義</th>
+              <th>可數意義</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>paper (紙)</td><td>a paper (論文)</td></tr>
+            <tr><td>light (光)</td><td>a light (燈)</td></tr>
+            <tr><td>time (時間)</td><td>times (次數)</td></tr>
+            <tr><td>work (工作)</td><td>a work (作品)</td></tr>
+            <tr><td>hair (頭髮)</td><td>a hair (一根髮)</td></tr>
+            <tr><td>experience (經驗)</td><td>experiences (經歷)</td></tr>
+          </tbody>
+        </table>
       </div>
     </div>
 
     <!-- 所有格 -->
     <div class="section">
       <h2>Possessive Case 名詞所有格</h2>
-      <div class="example-list">
-        <div class="example-item">Henry’s birthday party <button class="play-btn" onclick="speak('Henry’s birthday party')">🔊</button></div>
-        <div class="example-item">students’ phones <button class="play-btn" onclick="speak('students’ phones')">🔊</button></div>
-        <div class="example-item">children’s health <button class="play-btn" onclick="speak('children’s health')">🔊</button></div>
-        <div class="example-item">ten minutes’ walk <button class="play-btn" onclick="speak('ten minutes’ walk')">🔊</button></div>
-        <div class="example-item">the purpose of antibiotics <button class="play-btn" onclick="speak('the purpose of antibiotics')">🔊</button></div>
-        <div class="example-item">the cost of living <button class="play-btn" onclick="speak('the cost of living')">🔊</button></div>
+      <div class="responsive-table">
+        <table class="compact-table">
+          <thead>
+            <tr>
+              <th>規則</th>
+              <th>例子</th>
+              <th>說明</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>單數 + 's</td><td>John's car</td><td>約翰的車</td></tr>
+            <tr><td>複數 s + '</td><td>students' books</td><td>學生們的書</td></tr>
+            <tr><td>不規則複數 + 's</td><td>children's toys</td><td>孩子們的玩具</td></tr>
+            <tr><td>時間 + '</td><td>today's news</td><td>今天的新聞</td></tr>
+            <tr><td>of + 名詞</td><td>the color of the car</td><td>車子的顏色</td></tr>
+          </tbody>
+        </table>
       </div>
     </div>
 
     <!-- 冠詞 -->
     <div class="section">
       <h2>Articles 冠詞用法</h2>
-      <div class="bilingual">
-        <div class="en">
-          <p><strong>a/an</strong>: singular, countable, non-specific<br>
-          → My brother is <strong>an</strong> honest boy. (honest → /ɒ/ = vowel sound)<br>
-          → She lives in <strong>a</strong> house. (house → /h/ = consonant sound)</p>
-          <p><strong>the</strong>: specific or previously mentioned<br>
-          → I need to see <strong>a</strong> doctor. (any doctor)<br>
-          → I need to see <strong>the</strong> doctor. (the one we know)</p>
-          <p><strong>a number of</strong> = some (plural verb)<br>
-          → A number of students <strong>were</strong> absent.</p>
-          <p><strong>the number of</strong> = the total amount (singular verb)<br>
-          → The number of students <strong>is</strong> increasing.</p>
-          <p>No article: by air, on foot, at night, after school, at home, go to class, in fact...</p>
-        </div>
-        <div class="zh">
-          <p><strong>a/an</strong>：單數、可數、未特指<br>
-          → 我弟弟是<strong>一個</strong>誠實的男孩。（honest 發音以母音開頭）<br>
-          → 她住在<strong>一棟</strong>房子裡。（house 以子音開頭）</p>
-          <p><strong>the</strong>：特指或前文提過<br>
-          → 我需要看<strong>一個</strong>醫生。（不特定）<br>
-          → 我需要看<strong>那個</strong>醫生。（雙方都知道）</p>
-          <p><strong>a number of</strong> = 一些（動詞用複數）<br>
-          → 一些學生<strong>缺席了</strong>。</p>
-          <p><strong>the number of</strong> = 數量（動詞用單數）<br>
-          → 學生人數<strong>正在增加</strong>。</p>
-          <p>不加冠詞：by air（搭飛機）, on foot（步行）, at night（晚上）...</p>
-        </div>
+      <div class="responsive-table">
+        <table class="compact-table">
+          <thead>
+            <tr>
+              <th>冠詞</th>
+              <th>用法</th>
+              <th>例子</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>a</td><td>子音開頭</td><td>a book, a university</td></tr>
+            <tr><td>an</td><td>母音開頭</td><td>an apple, an hour</td></tr>
+            <tr><td>the</td><td>特指</td><td>the sun, the President</td></tr>
+            <tr><td>無冠詞</td><td>專有名詞</td><td>Taiwan, English</td></tr>
+          </tbody>
+        </table>
       </div>
     </div>
 
     <!-- 常見錯誤 -->
     <div class="section">
       <h2>Common Mistakes 常見錯誤</h2>
-      <div class="warning">
-        ❌ I like dog. → ✅ I like dogs. / I like a dog. / I like the dog.<br>
-        ❌ Can you open window? → ✅ Can you open <strong>the</strong> window?<br>
-        ❌ The news are... → ✅ The news <strong>is</strong>...<br>
-        ❌ Many informations → ✅ Much information / Some information
+      <div class="responsive-table">
+        <table class="compact-table">
+          <thead>
+            <tr>
+              <th>錯誤</th>
+              <th>正確</th>
+              <th>說明</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>I like dog.</td><td>I like dogs.</td><td>可數名詞要加s</td></tr>
+            <tr><td>many informations</td><td>much information</td><td>information不可數</td></tr>
+            <tr><td>the news are</td><td>the news is</td><td>news是單數</td></tr>
+            <tr><td>a advice</td><td>some advice</td><td>advice不可數</td></tr>
+          </tbody>
+        </table>
       </div>
-      <div class="tip">
-        ✔ Remember: <strong>(a) little</strong> → uncountable; <strong>(a) few</strong> → countable<br>
-        ✔ a little = some (肯定); little = almost none (否定)
+    </div>
+
+    <!-- 練習區 -->
+    <div class="section" id="practiceSection">
+      <h2>📚 名詞練習區</h2>
+      
+      <div class="practice-section">
+        <div class="practice-title">可數 vs 不可數名詞練習</div>
+        <div class="quiz-container">
+          <div class="quiz-question">選擇正確的用法：</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="checkPracticeAnswer(this, 'correct')">
+              I need some information.
+            </div>
+            <div class="quiz-option" onclick="checkPracticeAnswer(this, 'incorrect')">
+              I need some informations.
+            </div>
+            <div class="quiz-option" onclick="checkPracticeAnswer(this, 'correct')">
+              There are many books on the shelf.
+            </div>
+            <div class="quiz-option" onclick="checkPracticeAnswer(this, 'incorrect')">
+              There are many furniture in the room.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="practice-section">
+        <div class="practice-title">複數形式練習</div>
+        <div class="word-grid">
+          <div class="word-card" onclick="speakAndCheck(this, 'child', 'children')">child</div>
+          <div class="word-card" onclick="speakAndCheck(this, 'man', 'men')">man</div>
+          <div class="word-card" onclick="speakAndCheck(this, 'woman', 'women')">woman</div>
+          <div class="word-card" onclick="speakAndCheck(this, 'foot', 'feet')">foot</div>
+          <div class="word-card" onclick="speakAndCheck(this, 'tooth', 'teeth')">tooth</div>
+          <div class="word-card" onclick="speakAndCheck(this, 'mouse', 'mice')">mouse</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 測驗區 -->
+    <div class="section" id="quizSection" style="display: none;">
+      <h2>📝 名詞綜合測驗</h2>
+      <div class="quiz-container">
+        <div class="quiz-question" id="quizQuestion"></div>
+        <div class="quiz-options" id="quizOptions"></div>
+        <div class="quiz-feedback" id="quizFeedback"></div>
+        <button class="quiz-next" onclick="nextQuestion()" id="nextQuestionBtn">下一題</button>
       </div>
     </div>
   </div>
 
   <script>
-    // 高雅配色 + 動畫控制
-    document.getElementById('pauseBtn').addEventListener('click', () => {
-      document.body.style.animationPlayState = 'paused';
-    });
-    document.getElementById('playBtn').addEventListener('click', () => {
-      document.body.style.animationPlayState = 'running';
-    });
+    // 測驗數據
+    const quizzes = [
+      {
+        question: "Which of these is a proper noun?",
+        options: ["city", "Taipei", "book", "happiness"],
+        correct: 1,
+        explanation: "Taipei 是專有名詞，首字母大寫"
+      },
+      {
+        question: "Which noun is uncountable?",
+        options: ["apple", "information", "chair", "student"],
+        correct: 1,
+        explanation: "information 是不可數名詞，沒有複數形式"
+      },
+      {
+        question: "What is the plural of 'child'?",
+        options: ["childs", "childes", "children", "childies"],
+        correct: 2,
+        explanation: "child 的複數是不規則變化 children"
+      }
+    ];
 
-    // 真人發音（使用 Web Speech API，支援 Chrome/Firefox）
+    // 控制按鈕功能
+    function scrollToPractice() {
+      document.getElementById('practiceSection').scrollIntoView({ 
+        behavior: 'smooth' 
+      });
+    }
+
+    function showQuiz() {
+      document.getElementById('quizSection').style.display = 'block';
+      document.getElementById('practiceSection').scrollIntoView({ 
+        behavior: 'smooth' 
+      });
+      startQuiz();
+    }
+
+    // 測驗功能
+    let currentQuizIndex = 0;
+
+    function startQuiz() {
+      currentQuizIndex = 0;
+      showQuestion();
+    }
+
+    function showQuestion() {
+      const quiz = quizzes[currentQuizIndex];
+      document.getElementById('quizQuestion').textContent = `第 ${currentQuizIndex + 1} 題：${quiz.question}`;
+      
+      const optionsContainer = document.getElementById('quizOptions');
+      optionsContainer.innerHTML = '';
+      
+      quiz.options.forEach((option, index) => {
+        const optionElement = document.createElement('div');
+        optionElement.className = 'quiz-option';
+        optionElement.textContent = option;
+        optionElement.onclick = () => checkAnswer(index);
+        optionsContainer.appendChild(optionElement);
+      });
+      
+      document.getElementById('quizFeedback').style.display = 'none';
+      document.getElementById('nextQuestionBtn').style.display = 'none';
+    }
+
+    function checkAnswer(selectedIndex) {
+      const quiz = quizzes[currentQuizIndex];
+      const options = document.querySelectorAll('.quiz-option');
+      const feedback = document.getElementById('quizFeedback');
+      
+      options.forEach((option, index) => {
+        if (index === quiz.correct) {
+          option.classList.add('correct');
+        }
+        if (index === selectedIndex && index !== quiz.correct) {
+          option.classList.add('incorrect');
+        }
+      });
+      
+      if (selectedIndex === quiz.correct) {
+        feedback.textContent = `✅ 正確！${quiz.explanation}`;
+        feedback.className = 'quiz-feedback correct';
+      } else {
+        feedback.textContent = `❌ 錯誤！${quiz.explanation}`;
+        feedback.className = 'quiz-feedback incorrect';
+      }
+      
+      feedback.style.display = 'block';
+      document.getElementById('nextQuestionBtn').style.display = 'block';
+    }
+
+    function nextQuestion() {
+      currentQuizIndex++;
+      if (currentQuizIndex < quizzes.length) {
+        showQuestion();
+      } else {
+        document.getElementById('quizQuestion').textContent = '測驗完成！感謝您的參與！';
+        document.getElementById('quizOptions').innerHTML = '';
+        document.getElementById('quizFeedback').style.display = 'none';
+        document.getElementById('nextQuestionBtn').style.display = 'none';
+      }
+    }
+
+    // 練習功能
+    function checkPracticeAnswer(element, result) {
+      const allOptions = element.parentElement.querySelectorAll('.quiz-option');
+      allOptions.forEach(opt => {
+        opt.onclick = null;
+        if (opt === element) {
+          opt.classList.add(result === 'correct' ? 'correct' : 'incorrect');
+        }
+      });
+    }
+
+    function speakAndCheck(element, singular, plural) {
+      speak(`${singular} ${plural}`);
+      element.style.background = '#e8f5e9';
+      setTimeout(() => {
+        element.style.background = '';
+      }, 1000);
+    }
+
+    // 語音功能
     function speak(text) {
       if ('speechSynthesis' in window) {
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = 'en-US';
         utterance.rate = 0.95;
         utterance.pitch = 1.1;
-        speechSynthesis.cancel(); // 避免重複
+        speechSynthesis.cancel();
         speechSynthesis.speak(utterance);
       } else {
         alert('此瀏覽器不支援語音朗讀。建議使用 Chrome 或 Edge。');
       }
     }
-
-    // 初始化時移除任何自動動畫（保持高雅靜謐感）
-    // 所有互動皆由使用者觸發（符合教學需求）
   </script>
 </body>
 </html>
