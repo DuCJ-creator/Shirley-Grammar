@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shirley's Present Participle Learning Platform | 現在分詞學習平台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4682b4;
+            --secondary: #6a9acd;
+            --accent: #ff7f50;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --success: #28a745;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft JhengHei', '微軟正黑體', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+        
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tab {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            flex: 1;
+            text-align: center;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tab:hover {
+            background-color: rgba(70, 130, 180, 0.1);
+        }
+        
+        .tab.active {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+        }
+        
+        h3 {
+            color: var(--secondary);
+            margin: 1.5rem 0 1rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        th {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .example {
+            background-color: #f0f7ff;
+            border-left: 4px solid var(--accent);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .interactive-element {
+            background-color: var(--light);
+            border: 2px dashed var(--secondary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+        
+        .btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn:hover {
+            background-color: #ff6b3a;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(255, 127, 80, 0.3);
+        }
+        
+        .animation-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 1rem;
+        }
+        
+        .participle-animation {
+            height: 200px;
+            background: linear-gradient(135deg, #6a9acd, #4682b4);
+            border-radius: 10px;
+            margin: 1.5rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+            background-color: var(--dark);
+            color: white;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .highlight {
+            background-color: #fff9e6;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .participle-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+            margin: 1rem 0;
+        }
+        
+        .participle-item {
+            background: #f0f7ff;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .usage-diagram {
+            text-align: center;
+            margin: 2rem 0;
+        }
+        
+        .diagram-container {
+            display: flex;
+            justify-content: center;
+            margin: 1.5rem 0;
+        }
+        
+        .diagram {
+            width: 100%;
+            max-width: 600px;
+            height: 300px;
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .diagram-item {
+            position: absolute;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 120px;
+        }
+        
+        .note-box {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .tab {
+                flex: none;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .participle-list {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Shirley's Present Participle Learning Platform</h1>
+            <p class="subtitle">現在分詞學習平台</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="tabs">
+            <div class="tab active" data-tab="intro">現在分詞介紹 | Present Participle Introduction</div>
+            <div class="tab" data-tab="complement">作補語 | As Complement</div>
+            <div class="tab" data-tab="modifier">作修飾語 | As Modifier</div>
+            <div class="tab" data-tab="object-complement">作受詞補語 | As Object Complement</div>
+            <div class="tab" data-tab="phrase">現在分詞片語 | Participle Phrases</div>
+        </div>
+        
+        <!-- 現在分詞介紹 -->
+        <div class="tab-content active" id="intro">
+            <h2>現在分詞介紹 | Present Participle Introduction</h2>
+            
+            <div class="card">
+                <h3>什麼是現在分詞？ | What is a Present Participle?</h3>
+                <p>現在分詞由動詞加-ing構成，表達「主動」或「正在」的意味。一般充當形容詞的功能。</p>
+                <p>A present participle is formed by adding -ing to a verb, expressing "active" or "ongoing" meaning. It generally functions as an adjective.</p>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> The <span class="highlight">boring</span> lecture made students sleepy. | 無聊的講座讓學生們昏昏欲睡。</p>
+                    <p><strong>例子 Example:</strong> The <span class="highlight">crying</span> child needed attention. | 哭泣的孩子需要關注。</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>現在分詞的形式 | Present Participle Forms</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>動詞 Verb</th>
+                            <th>現在分詞 Present Participle</th>
+                            <th>例子 Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>work</td>
+                            <td>working</td>
+                            <td>the working mother</td>
+                        </tr>
+                        <tr>
+                            <td>interest</td>
+                            <td>interesting</td>
+                            <td>an interesting book</td>
+                        </tr>
+                        <tr>
+                            <td>excite</td>
+                            <td>exciting</td>
+                            <td>an exciting game</td>
+                        </tr>
+                        <tr>
+                            <td>challenge</td>
+                            <td>challenging</td>
+                            <td>a challenging task</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="card">
+                <h3>現在分詞的用法 | Uses of Present Participles</h3>
+                <p>現在分詞在句子中可以擔任多種角色：</p>
+                <p>Present participles can serve various roles in a sentence:</p>
+                
+                <div class="usage-diagram">
+                    <div class="diagram-container">
+                        <div class="diagram">
+                            <div class="diagram-item" style="top: 20px; left: 50px;">補語<br>Complement</div>
+                            <div class="diagram-item" style="top: 20px; right: 50px;">修飾語<br>Modifier</div>
+                            <div class="diagram-item" style="top: 120px; left: 150px;">受詞補語<br>Object Complement</div>
+                            <div class="diagram-item" style="top: 120px; right: 150px;">分詞片語<br>Participle Phrase</div>
+                            <div class="diagram-item" style="bottom: 20px; left: 250px;">進行式<br>Continuous Tense</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>現在分詞與進行式 | Present Participles and Continuous Tenses</h3>
+                <p>現在分詞的一種基本用法是與 be 一起形成動詞的各種進行式。</p>
+                <p>One basic use of present participles is with "be" to form various continuous tenses of verbs.</p>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> She <span class="highlight">is studying</span> for her exam. | 她正在為考試學習。</p>
+                    <p><strong>例子 Example:</strong> They <span class="highlight">were working</span> when I called. | 我打電話時他們正在工作。</p>
+                </div>
+                
+                <div class="note-box">
+                    <p><strong>注意：</strong>現在分詞作為形容詞使用時，與進行式中的現在分詞形式相同，但功能不同。</p>
+                    <p><strong>Note:</strong> When present participles are used as adjectives, they have the same form as in continuous tenses but serve different functions.</p>
+                </div>
+            </div>
+            
+            <div class="interactive-element">
+                <h3>現在分詞練習 | Present Participle Practice</h3>
+                <p>將動詞轉換為現在分詞形式</p>
+                <p>Convert verbs to present participle form</p>
+                <div class="participle-animation" id="participleAnimation">
+                    Verb: interest → Present Participle: ______
+                </div>
+                <div class="animation-controls">
+                    <button class="btn" id="playAnimation">
+                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
+                    </button>
+                    <button class="btn" id="pauseAnimation">
+                        <i class="fas fa-pause"></i> 暫停 | Pause
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 作補語 -->
+        <div class="tab-content" id="complement">
+            <h2>作補語 | As Complement</h2>
+            
+            <div class="card">
+                <h3>現在分詞作連綴動詞後的補語 | Present Participles as Complements after Linking Verbs</h3>
+                <p>現在分詞可以在連綴動詞（如be動詞）後作主詞補語。</p>
+                <p>Present participles can function as subject complements after linking verbs (such as be verbs).</p>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> Some advertisements are <span class="highlight">misleading and cheating</span>.</p>
+                    <p>一些廣告具有誤導性和欺騙性。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> The reason for the alcohol ban sounds <span class="highlight">convincing</span>.</p>
+                    <p>禁酒的理由聽起來很有說服力。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> The movie was <span class="highlight">exciting</span> from beginning to end.</p>
+                    <p>這部電影從頭到尾都很精彩。</p>
+                </div>
+            </div>
+            
+            <div class="interactive-element">
+                <h3>補語練習 | Complement Practice</h3>
+                <p>選擇正確的現在分詞形式完成句子</p>
+                <p>Select the correct present participle form to complete the sentence</p>
+                <div class="participle-animation" id="complementAnimation">
+                    The news was ______ (shock) to everyone.
+                </div>
+                <div class="animation-controls">
+                    <button class="btn" id="playComplementAnimation">
+                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
+                    </button>
+                    <button class="btn" id="pauseComplementAnimation">
+                        <i class="fas fa-pause"></i> 暫停 | Pause
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 作修飾語 -->
+        <div class="tab-content" id="modifier">
+            <h2>作修飾語 | As Modifier</h2>
+            
+            <div class="card">
+                <h3>現在分詞作名詞的修飾語 | Present Participles as Modifiers of Nouns</h3>
+                <p>現在分詞可以放在名詞前或後，作為修飾語使用。</p>
+                <p>Present participles can be placed before or after nouns, functioning as modifiers.</p>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> English writing is a <span class="highlight">challenging</span> task.</p>
+                    <p>英語寫作是一項具有挑戰性的任務。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> The <span class="highlight">crying</span> baby woke the whole family up.</p>
+                    <p>哭泣的嬰兒把全家人都吵醒了。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> Employees <span class="highlight">working at home</span> have fewer interruptions and distractions.</p>
+                    <p>在家工作的員工受到較少的干擾和分心。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> The man <span class="highlight">standing by the door</span> is my brother.</p>
+                    <p>站在門邊的那個人是我的兄弟。</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>常見的現在分詞修飾語 | Common Present Participle Modifiers</h3>
+                <div class="participle-list">
+                    <div class="participle-item">boring lecture</div>
+                    <div class="participle-item">exciting news</div>
+                    <div class="participle-item">interesting story</div>
+                    <div class="participle-item">surprising result</div>
+                    <div class="participle-item">tiring journey</div>
+                    <div class="participle-item">amazing performance</div>
+                    <div class="participle-item">fascinating book</div>
+                    <div class="participle-item">confusing instructions</div>
+                </div>
+            </div>
+            
+            <div class="interactive-element">
+                <h3>修飾語練習 | Modifier Practice</h3>
+                <p>選擇正確的現在分詞形式完成句子</p>
+                <p>Select the correct present participle form to complete the sentence</p>
+                <div class="participle-animation" id="modifierAnimation">
+                    The ______ (run) water was cold and refreshing.
+                </div>
+                <div class="animation-controls">
+                    <button class="btn" id="playModifierAnimation">
+                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
+                    </button>
+                    <button class="btn" id="pauseModifierAnimation">
+                        <i class="fas fa-pause"></i> 暫停 | Pause
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 作受詞補語 -->
+        <div class="tab-content" id="object-complement">
+            <h2>作受詞補語 | As Object Complement</h2>
+            
+            <div class="card">
+                <h3>現在分詞作受詞補語 | Present Participles as Object Complements</h3>
+                <p>現在分詞可以在某些動詞後作受詞補語。</p>
+                <p>Present participles can function as object complements after certain verbs.</p>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> People under great work stress find life <span class="highlight">frustrating and depressing</span>.</p>
+                    <p>工作壓力大的人覺得生活令人沮喪和壓抑。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> The girl kept her boyfriend <span class="highlight">waiting</span> for two hours.</p>
+                    <p>那個女孩讓她的男朋友等了兩個小時。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> I saw him <span class="highlight">running</span> in the park.</p>
+                    <p>我看到他在公園裡跑步。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> We heard the children <span class="highlight">laughing</span> outside.</p>
+                    <p>我們聽到孩子們在外面笑。</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>常見接現在分詞作受詞補語的動詞 | Verbs Commonly Followed by Present Participle Object Complements</h3>
+                <div class="participle-list">
+                    <div class="participle-item">see</div>
+                    <div class="participle-item">hear</div>
+                    <div class="participle-item">watch</div>
+                    <div class="participle-item">notice</div>
+                    <div class="participle-item">find</div>
+                    <div class="participle-item">keep</div>
+                    <div class="participle-item">leave</div>
+                    <div class="participle-item">catch</div>
+                </div>
+            </div>
+            
+            <div class="interactive-element">
+                <h3>受詞補語練習 | Object Complement Practice</h3>
+                <p>選擇正確的現在分詞形式完成句子</p>
+                <p>Select the correct present participle form to complete the sentence</p>
+                <div class="participle-animation" id="objectComplementAnimation">
+                    I saw the dog ______ (chase) its tail.
+                </div>
+                <div class="animation-controls">
+                    <button class="btn" id="playObjectComplementAnimation">
+                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
+                    </button>
+                    <button class="btn" id="pauseObjectComplementAnimation">
+                        <i class="fas fa-pause"></i> 暫停 | Pause
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 現在分詞片語 -->
+        <div class="tab-content" id="phrase">
+            <h2>現在分詞片語 | Participle Phrases</h2>
+            
+            <div class="card">
+                <h3>現在分詞片語作形容詞使用 | Present Participle Phrases as Adjectives</h3>
+                <p>現在分詞片語可以作為形容詞使用，通常放在句首或句尾。</p>
+                <p>Present participle phrases can function as adjectives, usually placed at the beginning or end of a sentence.</p>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">Hearing the noise</span>, she woke up.</p>
+                    <p>聽到噪音，她醒了。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">Facing high competition</span>, people may suffer great pressure.</p>
+                    <p>面對激烈的競爭，人們可能會承受巨大的壓力。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">Being confronted with economic pressure</span>, women have to go outside to work.</p>
+                    <p>面對經濟壓力，女性不得不外出工作。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> The man, <span class="highlight">feeling tired</span>, decided to take a break.</p>
+                    <p>那個男人感到疲倦，決定休息一下。</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>現在分詞片語的用法 | Uses of Present Participle Phrases</h3>
+                <p>現在分詞片語可以表示時間、原因、條件、讓步等關係。</p>
+                <p>Present participle phrases can express relationships of time, reason, condition, concession, etc.</p>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>關係 Relationship</th>
+                            <th>例子 Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>時間 Time</td>
+                            <td>Walking down the street, I met an old friend.</td>
+                        </tr>
+                        <tr>
+                            <td>原因 Reason</td>
+                            <td>Feeling tired, he went to bed early.</td>
+                        </tr>
+                        <tr>
+                            <td>條件 Condition</td>
+                            <td>Working hard, you will succeed.</td>
+                        </tr>
+                        <tr>
+                            <td>讓步 Concession</td>
+                            <td>Knowing the truth, she still couldn't believe it.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="interactive-element">
+                <h3>分詞片語練習 | Participle Phrase Practice</h3>
+                <p>選擇正確的現在分詞形式完成句子</p>
+                <p>Select the correct present participle form to complete the sentence</p>
+                <div class="participle-animation" id="phraseAnimation">
+                    ______ (walk) in the park, I saw a beautiful bird.
+                </div>
+                <div class="animation-controls">
+                    <button class="btn" id="playPhraseAnimation">
+                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
+                    </button>
+                    <button class="btn" id="pausePhraseAnimation">
+                        <i class="fas fa-pause"></i> 暫停 | Pause
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Shirley's Present Participle Learning Platform | 現在分詞學習平台</p>
+        <p>© 2025 Shirley's Grammar E-Charger</p>
+    </footer>
+
+    <script>
+        // 選項卡功能
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // 移除所有活動標籤和內容
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // 添加活動類到當前標籤
+                tab.classList.add('active');
+                
+                // 顯示對應的內容
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+                
+                // 播放切換音效
+                playSound('click');
+            });
+        });
+        
+        // 動畫控制
+        let animationInterval;
+        
+        // 現在分詞介紹動畫
+        document.getElementById('playAnimation').addEventListener('click', () => {
+            const animation = document.getElementById('participleAnimation');
+            animation.innerHTML = 'Verb: interest → Present Participle: ______';
+            
+            let count = 0;
+            const verbs = [
+                {verb: 'interest', participle: 'interesting'},
+                {verb: 'excite', participle: 'exciting'},
+                {verb: 'bore', participle: 'boring'},
+                {verb: 'challenge', participle: 'challenging'},
+                {verb: 'surprise', participle: 'surprising'}
+            ];
+            
+            clearInterval(animationInterval);
+            animationInterval = setInterval(() => {
+                animation.innerHTML = `Verb: ${verbs[count].verb} → Present Participle: <span style="color: var(--accent); text-decoration: underline;">${verbs[count].participle}</span>`;
+                count = (count + 1) % verbs.length;
+            }, 1500);
+            
+            // 播放音效
+            playSound('success');
+        });
+        
+        document.getElementById('pauseAnimation').addEventListener('click', () => {
+            clearInterval(animationInterval);
+            // 播放音效
+            playSound('click');
+        });
+        
+        // 補語動畫
+        document.getElementById('playComplementAnimation').addEventListener('click', () => {
+            const animation = document.getElementById('complementAnimation');
+            animation.innerHTML = 'The news was ______ (shock) to everyone.';
+            
+            let count = 0;
+            const sentences = [
+                {verb: 'shock', participle: 'shocking'},
+                {verb: 'excite', participle: 'exciting'},
+                {verb: 'surprise', participle: 'surprising'},
+                {verb: 'amaze', participle: 'amazing'},
+                {verb: 'disappoint', participle: 'disappointing'}
+            ];
+            
+            clearInterval(animationInterval);
+            animationInterval = setInterval(() => {
+                animation.innerHTML = `The news was <span style="color: var(--accent); text-decoration: underline;">${sentences[count].participle}</span> to everyone.`;
+                count = (count + 1) % sentences.length;
+            }, 1500);
+            
+            // 播放音效
+            playSound('success');
+        });
+        
+        document.getElementById('pauseComplementAnimation').addEventListener('click', () => {
+            clearInterval(animationInterval);
+            // 播放音效
+            playSound('click');
+        });
+        
+        // 修飾語動畫
+        document.getElementById('playModifierAnimation').addEventListener('click', () => {
+            const animation = document.getElementById('modifierAnimation');
+            animation.innerHTML = 'The ______ (run) water was cold and refreshing.';
+            
+            let count = 0;
+            const sentences = [
+                {verb: 'run', participle: 'running'},
+                {verb: 'fall', participle: 'falling'},
+                {verb: 'flow', participle: 'flowing'},
+                {verb: 'drip', participle: 'dripping'},
+                {verb: 'bubble', participle: 'bubbling'}
+            ];
+            
+            clearInterval(animationInterval);
+            animationInterval = setInterval(() => {
+                animation.innerHTML = `The <span style="color: var(--accent); text-decoration: underline;">${sentences[count].participle}</span> water was cold and refreshing.`;
+                count = (count + 1) % sentences.length;
+            }, 1500);
+            
+            // 播放音效
+            playSound('success');
+        });
+        
+        document.getElementById('pauseModifierAnimation').addEventListener('click', () => {
+            clearInterval(animationInterval);
+            // 播放音效
+            playSound('click');
+        });
+        
+        // 受詞補語動畫
+        document.getElementById('playObjectComplementAnimation').addEventListener('click', () => {
+            const animation = document.getElementById('objectComplementAnimation');
+            animation.innerHTML = 'I saw the dog ______ (chase) its tail.';
+            
+            let count = 0;
+            const sentences = [
+                {verb: 'chase', participle: 'chasing'},
+                {verb: 'run', participle: 'running'},
+                {verb: 'play', participle: 'playing'},
+                {verb: 'bark', participle: 'barking'},
+                {verb: 'jump', participle: 'jumping'}
+            ];
+            
+            clearInterval(animationInterval);
+            animationInterval = setInterval(() => {
+                animation.innerHTML = `I saw the dog <span style="color: var(--accent); text-decoration: underline;">${sentences[count].participle}</span> its tail.`;
+                count = (count + 1) % sentences.length;
+            }, 1500);
+            
+            // 播放音效
+            playSound('success');
+        });
+        
+        document.getElementById('pauseObjectComplementAnimation').addEventListener('click', () => {
+            clearInterval(animationInterval);
+            // 播放音效
+            playSound('click');
+        });
+        
+        // 分詞片語動畫
+        document.getElementById('playPhraseAnimation').addEventListener('click', () => {
+            const animation = document.getElementById('phraseAnimation');
+            animation.innerHTML = '______ (walk) in the park, I saw a beautiful bird.';
+            
+            let count = 0;
+            const sentences = [
+                {verb: 'walk', participle: 'Walking'},
+                {verb: 'jog', participle: 'Jogging'},
+                {verb: 'run', participle: 'Running'},
+                {verb: 'sit', participle: 'Sitting'},
+                {verb: 'stand', participle: 'Standing'}
+            ];
+            
+            clearInterval(animationInterval);
+            animationInterval = setInterval(() => {
+                animation.innerHTML = `<span style="color: var(--accent); text-decoration: underline;">${sentences[count].participle}</span> in the park, I saw a beautiful bird.`;
+                count = (count + 1) % sentences.length;
+            }, 1500);
+            
+            // 播放音效
+            playSound('success');
+        });
+        
+        document.getElementById('pausePhraseAnimation').addEventListener('click', () => {
+            clearInterval(animationInterval);
+            // 播放音效
+            playSound('click');
+        });
+        
+        // 音效函數
+        function playSound(type) {
+            // 在實際應用中，這裡會播放相應的音效
+            // 由於這是一個示例，我們只模擬音效播放
+            console.log(`Playing ${type} sound`);
+        }
+        
+        // 初始加載時播放歡迎音效
+        window.addEventListener('load', () => {
+            playSound('welcome');
+        });
+    </script>
+</body>
+</html>
