@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Shirley's English Verb Learning Platform 英語動詞學習平台 |</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4a6fa5;
+            --secondary: #6b8cbc;
+            --accent: #ff9e4a;
+            --light: #f5f7fa;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft JhengHei', '微軟正黑體', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+        
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tab {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            flex: 1;
+            text-align: center;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tab:hover {
+            background-color: rgba(74, 111, 165, 0.1);
+        }
+        
+        .tab.active {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+        }
+        
+        h3 {
+            color: var(--secondary);
+            margin: 1.5rem 0 1rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        th {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .example {
+            background-color: #f0f7ff;
+            border-left: 4px solid var(--accent);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .interactive-element {
+            background-color: var(--light);
+            border: 2px dashed var(--secondary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+        
+        .btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn:hover {
+            background-color: #ff8c2e;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(255, 158, 74, 0.3);
+        }
+        
+        .animation-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 1rem;
+        }
+        
+        .verb-animation {
+            height: 200px;
+            background: linear-gradient(135deg, #6b8cbc, #4a6fa5);
+            border-radius: 10px;
+            margin: 1.5rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tense-visualization {
+            text-align: center;
+            margin: 2rem 0;
+        }
+        
+        .tense-visualization iframe {
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+            background-color: var(--dark);
+            color: white;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .highlight {
+            background-color: #fff9e6;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+        .audio-control {
+            display: inline-block;
+            margin-left: 10px;
+            cursor: pointer;
+            color: var(--primary);
+        }
+        
+        @media (max-width: 768px) {
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .tab {
+                flex: none;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>英語動詞學習平台</h1>
+            <p class="subtitle">Shirley's English Verb Learning Platform</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="tabs">
+            <div class="tab active" data-tab="types">動詞種類 | Verb Types</div>
+            <div class="tab" data-tab="tenses">時態 | Tenses</div>
+            <div class="tab" data-tab="voices">語態 | Voices</div>
+            <div class="tab" data-tab="keypoints">重點內容 | Key Points</div>
+        </div>
+        
+        <!-- 動詞種類 -->
+        <div class="tab-content active" id="types">
+            <h2>動詞種類 | Verb Types</h2>
+            
+            <div class="card">
+                <h3>連綴動詞 | Linking Verbs</h3>
+                <p>連綴動詞不表示動作，而是連接主語和描述主語的詞。</p>
+                <p>Linking verbs do not show action but connect the subject to a word that describes it.</p>
+                <div class="example">
+                    <p><strong>例子 Example:</strong> She <span class="highlight">is</span> a teacher. | 她是一名老師。</p>
+                    <p><strong>例子 Example:</strong> He <span class="highlight">feels</span> happy. | 他感到快樂。</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>及物動詞和不及物動詞 | Transitive and Intransitive Verbs</h3>
+                <p><strong>及物動詞 (Transitive verbs)</strong> 需要接受詞。</p>
+                <p><strong>不及物動詞 (Intransitive verbs)</strong> 不需要接受詞。</p>
+                <div class="example">
+                    <p><strong>及物 Transitive:</strong> She <span class="highlight">reads</span> a book. | 她讀一本書。</p>
+                    <p><strong>不及物 Intransitive:</strong> He <span class="highlight">sleeps</span>. | 他睡覺。</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>情態助動詞 | Modal Auxiliary Verbs</h3>
+                <p>情態助動詞後面接動詞原形，不受主語影響。</p>
+                <p>Modal auxiliary verbs are followed by the base form of the verb and are not affected by the subject.</p>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>單詞 Word</th>
+                            <th>意思 Meaning</th>
+                            <th>例子 Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>can</td>
+                            <td>能力; 允許; 請求; 可能性</td>
+                            <td>I can speak three languages. (能力)</td>
+                        </tr>
+                        <tr>
+                            <td>could</td>
+                            <td>能力; 請求; 猜測</td>
+                            <td>Could you open the window? (禮貌請求)</td>
+                        </tr>
+                        <tr>
+                            <td>may</td>
+                            <td>請求、允許; 祝願; 猜測</td>
+                            <td>May I open the window? (請求)</td>
+                        </tr>
+                        <tr>
+                            <td>might</td>
+                            <td>可能; 請求</td>
+                            <td>You might be disappointed. (可能)</td>
+                        </tr>
+                        <tr>
+                            <td>must</td>
+                            <td>必須; 命令; 猜測</td>
+                            <td>Students must do homework. (義務)</td>
+                        </tr>
+                        <tr>
+                            <td>ought to</td>
+                            <td>應該/應當; 可能性</td>
+                            <td>You ought to work harder next year. (應當)</td>
+                        </tr>
+                        <tr>
+                            <td>shall</td>
+                            <td>建議; 將/會</td>
+                            <td>Shall we leave now? (詢問意見)</td>
+                        </tr>
+                        <tr>
+                            <td>should</td>
+                            <td>應該/該</td>
+                            <td>You should finish the task on time. (責任)</td>
+                        </tr>
+                        <tr>
+                            <td>will</td>
+                            <td>未來可能/意願</td>
+                            <td>I will be away for a week.</td>
+                        </tr>
+                        <tr>
+                            <td>would</td>
+                            <td>希望/邀請</td>
+                            <td>Would you like to go skating with us?</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="card">
+                <h3>助動詞 | Auxiliary Verbs</h3>
+                <p>幫助主要動詞構成各種時態、語態、句型(如疑問句否定句)，沒有實際語意。</p>
+                <p>Auxiliary verbs help main verbs form various tenses, voices, and sentence patterns (such as questions and negatives), and have no actual meaning.</p>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>助動詞 Auxiliary Verb</th>
+                            <th>用法 Usage</th>
+                            <th>例子 Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>be (am/is/are/was/were)</td>
+                            <td>用於進行式和被動語態</td>
+                            <td>She is studying. (進行式)<br>The car was repaired. (被動語態)</td>
+                        </tr>
+                        <tr>
+                            <td>do/does/did</td>
+                            <td>用於簡單式疑問句和否定句</td>
+                            <td>Do you like coffee? (疑問句)<br>He doesn't live here. (否定句)</td>
+                        </tr>
+                        <tr>
+                            <td>have/has/had</td>
+                            <td>用於完成式</td>
+                            <td>I have finished my work. (現在完成式)<br>She had left before I arrived. (過去完成式)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="interactive-element">
+                <h3>動詞種類練習 | Verb Types Practice</h3>
+                <p>選擇正確的動詞類型完成句子</p>
+                <p>Select the correct verb type to complete the sentence</p>
+                <div class="verb-animation" id="verbAnimation">
+                    She ______ happy today.
+                </div>
+                <div class="animation-controls">
+                    <button class="btn" id="playAnimation">
+                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
+                    </button>
+                    <button class="btn" id="pauseAnimation">
+                        <i class="fas fa-pause"></i> 暫停 | Pause
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 時態 -->
+        <div class="tab-content" id="tenses">
+            <h2>時態 | Tenses</h2>
+            
+            <div class="card">
+                <h3>時態概述 | Tense Overview</h3>
+                <p>英語動詞時態表示動作發生的時間。</p>
+                <p>English verb tenses indicate the time when an action occurs.</p>
+                
+                <div class="tense-visualization">
+                    <h3>時態可視化 | Tense Visualization</h3>
+                    <p>點擊下方鏈接查看時態可視化圖表</p>
+                    <p>Click the link below to view the tense visualization chart</p>
+                    <a href="https://ducj-creator.github.io/Shirley-Grammar/verbs/tensevisual.html" target="_blank" class="btn">
+                        <i class="fas fa-external-link-alt"></i> 查看時態圖表 | View Tense Chart
+                    </a>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>簡單時態 | Simple Tenses</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>時態 Tense</th>
+                            <th>用法 Usage</th>
+                            <th>例子 Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>現在簡單式 Present Simple</td>
+                            <td>習慣、事實、常規</td>
+                            <td>She works every day.</td>
+                        </tr>
+                        <tr>
+                            <td>過去簡單式 Past Simple</td>
+                            <td>過去完成的動作</td>
+                            <td>He visited Paris last year.</td>
+                        </tr>
+                        <tr>
+                            <td>未來簡單式 Future Simple</td>
+                            <td>未來的動作或預測</td>
+                            <td>They will arrive tomorrow.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="card">
+                <h3>進行時態 | Continuous Tenses</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>時態 Tense</th>
+                            <th>用法 Usage</th>
+                            <th>例子 Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>現在進行式 Present Continuous</td>
+                            <td>現在正在進行的動作</td>
+                            <td>I am studying now.</td>
+                        </tr>
+                        <tr>
+                            <td>過去進行式 Past Continuous</td>
+                            <td>過去某一時刻正在進行的動作</td>
+                            <td>She was cooking when I called.</td>
+                        </tr>
+                        <tr>
+                            <td>未來進行式 Future Continuous</td>
+                            <td>未來某一時刻將進行的動作</td>
+                            <td>They will be traveling this time next week.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="card">
+                <h3>完成時態 | Perfect Tenses</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>時態 Tense</th>
+                            <th>用法 Usage</th>
+                            <th>例子 Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>現在完成式 Present Perfect</td>
+                            <td>過去發生但與現在有關的動作</td>
+                            <td>I have finished my homework.</td>
+                        </tr>
+                        <tr>
+                            <td>過去完成式 Past Perfect</td>
+                            <td>過去某時之前已完成的動作</td>
+                            <td>She had left before I arrived.</td>
+                        </tr>
+                        <tr>
+                            <td>未來完成式 Future Perfect</td>
+                            <td>未來某時之前將完成的動作</td>
+                            <td>By next year, I will have graduated.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="card">
+                <h3>完成進行時態 | Perfect Continuous Tenses</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>時態 Tense</th>
+                            <th>用法 Usage</th>
+                            <th>例子 Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>現在完成進行式 Present Perfect Continuous</td>
+                            <td>從過去持續到現在的動作</td>
+                            <td>I have been studying for two hours.</td>
+                        </tr>
+                        <tr>
+                            <td>過去完成進行式 Past Perfect Continuous</td>
+                            <td>過去某時之前持續的動作</td>
+                            <td>She had been waiting for an hour when he arrived.</td>
+                        </tr>
+                        <tr>
+                            <td>未來完成進行式 Future Perfect Continuous</td>
+                            <td>未來某時之前將持續的動作</td>
+                            <td>By next month, I will have been working here for five years.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="interactive-element">
+                <h3>時態練習 | Tense Practice</h3>
+                <p>選擇正確的時態完成句子</p>
+                <p>Select the correct tense to complete the sentence</p>
+                <div class="verb-animation" id="tenseAnimation">
+                    I ______ to school every day.
+                </div>
+                <div class="animation-controls">
+                    <button class="btn" id="playTenseAnimation">
+                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
+                    </button>
+                    <button class="btn" id="pauseTenseAnimation">
+                        <i class="fas fa-pause"></i> 暫停 | Pause
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 語態 -->
+        <div class="tab-content" id="voices">
+            <h2>語態 | Voices</h2>
+            
+            <div class="card">
+                <h3>主動語態 | Active Voice</h3>
+                <p>主語執行動作。</p>
+                <p>The subject performs the action.</p>
+                <div class="example">
+                    <p><strong>例子 Example:</strong> The cat <span class="highlight">chased</span> the mouse. | 貓追老鼠。</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>被動語態 | Passive Voice</h3>
+                <p>主語接受動作。基本構成是 be + 過去分詞。</p>
+                <p>The subject receives the action. Basic structure is be + past participle.</p>
+                <div class="example">
+                    <p><strong>例子 Example:</strong> The mouse <span class="highlight">was chased</span> by the cat. | 老鼠被貓追。</p>
+                </div>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>時態 Tense</th>
+                            <th>被動結構 Passive Structure</th>
+                            <th>例子 Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>現在簡單式 Present Simple</td>
+                            <td>am/is/are + past participle</td>
+                            <td>The car is not locked.</td>
+                        </tr>
+                        <tr>
+                            <td>過去簡單式 Past Simple</td>
+                            <td>was/were + past participle</td>
+                            <td>My purse was stolen.</td>
+                        </tr>
+                        <tr>
+                            <td>未來簡單式 Future Simple</td>
+                            <td>will be + past participle</td>
+                            <td>The meeting will be held next Wednesday.</td>
+                        </tr>
+                        <tr>
+                            <td>現在進行式 Present Continuous</td>
+                            <td>am/is/are being + past participle</td>
+                            <td>The meeting is being held now.</td>
+                        </tr>
+                        <tr>
+                            <td>現在完成式 Present Perfect</td>
+                            <td>has/have been + past participle</td>
+                            <td>The flight has been canceled due to bad weather.</td>
+                        </tr>
+                        <tr>
+                            <td>過去完成式 Past Perfect</td>
+                            <td>had been + past participle</td>
+                            <td>The flight had been canceled before the flight crew were ready.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="interactive-element">
+                <h3>語態轉換練習 | Voice Conversion Practice</h3>
+                <p>將主動語態轉換為被動語態</p>
+                <p>Convert active voice to passive voice</p>
+                <div class="verb-animation" id="voiceAnimation">
+                    The chef cooks the meal. → The meal ______ by the chef.
+                </div>
+                <div class="animation-controls">
+                    <button class="btn" id="playVoiceAnimation">
+                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
+                    </button>
+                    <button class="btn" id="pauseVoiceAnimation">
+                        <i class="fas fa-pause"></i> 暫停 | Pause
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 重點內容 -->
+        <div class="tab-content" id="keypoints">
+            <h2>重點內容 | Key Points</h2>
+            
+            <div class="card">
+                <h3>動詞的重要性 | Importance of Verbs</h3>
+                <p>動詞是英語學習中的重中之重。五種基本句型中，動詞都是核心。寫作時也一定要先釐清每一個句子的主動詞。</p>
+                <p>Verbs are the most important part of English learning. In the five basic sentence patterns, verbs are the core. When writing, it is essential to clarify the main verb of each sentence first.</p>
+            </div>
+            
+            <div class="card">
+                <h3>時態和語態的規律 | Patterns of Tenses and Voices</h3>
+                <p>主動詞有時態和語態的變化，但時態和語態都是有規律的，記住規律，多加練習。</p>
+                <p>Main verbs change in tense and voice, but these changes follow patterns. Remember the patterns and practice more.</p>
+            </div>
+            
+            <div class="card">
+                <h3>動詞短語 | Phrasal Verbs</h3>
+                <p>動詞還會跟各種介詞搭配，形成不同的動詞短語。如：put up, take in等，需要積累及記憶。</p>
+                <p>Verbs also combine with various prepositions to form different phrasal verbs. For example: put up, take in, etc. These need to be accumulated and memorized.</p>
+            </div>
+            
+            <div class="card">
+                <h3>重要提醒 | Important Reminders</h3>
+                <ul>
+                    <li>現在簡單式要注意動詞的第三人稱單數形式，如：She likes jogging.</li>
+                    <li>過去簡單式要注意過去式的不規則變化。</li>
+                    <li>完成時態要注意使用動詞的過去分詞，並注意過去分詞的不規則變化。</li>
+                    <li>助動詞 do, does, did, have, has, had 本身也可以做主要動詞，如：What do you do? I have had lunch 等。不要混淆。</li>
+                    <li>未來式中，will 一般表示臨時起意，而be going to 表示計畫好的事。如：It's cold; I'll close the window. I am going to buy a new phone.</li>
+                    <li>被動語態需要和 be + -ed 形容詞區分開, 如: I am excited. 不是被動語態。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>英語動詞學習平台 | Shirley's English Verb Learning Platform</p>
+        <p>© since 2025| Teacher Shirley</p>
+    </footer>
+
+    <script>
+        // 選項卡功能
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // 移除所有活動標籤和內容
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // 添加活動類到當前標籤
+                tab.classList.add('active');
+                
+                // 顯示對應的內容
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+                
+                // 播放切換音效
+                playSound('click');
+            });
+        });
+        
+        // 動畫控制
+        let animationInterval;
+        
+        document.getElementById('playAnimation').addEventListener('click', () => {
+            const animation = document.getElementById('verbAnimation');
+            animation.innerHTML = 'She ______ happy today.';
+            
+            let count = 0;
+            const verbs = ['is', 'looks', 'seems', 'appears', 'feels'];
+            
+            clearInterval(animationInterval);
+            animationInterval = setInterval(() => {
+                animation.innerHTML = `She <span style="color: var(--accent); text-decoration: underline;">${verbs[count]}</span> happy today.`;
+                count = (count + 1) % verbs.length;
+            }, 1500);
+            
+            // 播放音效
+            playSound('success');
+        });
+        
+        document.getElementById('pauseAnimation').addEventListener('click', () => {
+            clearInterval(animationInterval);
+            // 播放音效
+            playSound('click');
+        });
+        
+        // 時態動畫控制
+        document.getElementById('playTenseAnimation').addEventListener('click', () => {
+            const animation = document.getElementById('tenseAnimation');
+            animation.innerHTML = 'I ______ to school every day.';
+            
+            let count = 0;
+            const tenses = [
+                {verb: 'walk', tense: '現在簡單式 Present Simple'},
+                {verb: 'walked', tense: '過去簡單式 Past Simple'},
+                {verb: 'will walk', tense: '未來簡單式 Future Simple'},
+                {verb: 'am walking', tense: '現在進行式 Present Continuous'},
+                {verb: 'have walked', tense: '現在完成式 Present Perfect'},
+                {verb: 'have been walking', tense: '現在完成進行式 Present Perfect Continuous'}
+            ];
+            
+            clearInterval(animationInterval);
+            animationInterval = setInterval(() => {
+                animation.innerHTML = `I <span style="color: var(--accent); text-decoration: underline;">${tenses[count].verb}</span> to school every day. <br><small>${tenses[count].tense}</small>`;
+                count = (count + 1) % tenses.length;
+            }, 2000);
+            
+            // 播放音效
+            playSound('success');
+        });
+        
+        document.getElementById('pauseTenseAnimation').addEventListener('click', () => {
+            clearInterval(animationInterval);
+            // 播放音效
+            playSound('click');
+        });
+        
+        // 語態動畫控制
+        document.getElementById('playVoiceAnimation').addEventListener('click', () => {
+            const animation = document.getElementById('voiceAnimation');
+            animation.innerHTML = 'The chef cooks the meal. → The meal ______ by the chef.';
+            
+            let count = 0;
+            const voices = [
+                {verb: 'is cooked', voice: '現在簡單式被動 Present Simple Passive'},
+                {verb: 'was cooked', voice: '過去簡單式被動 Past Simple Passive'},
+                {verb: 'will be cooked', voice: '未來簡單式被動 Future Simple Passive'},
+                {verb: 'is being cooked', voice: '現在進行式被動 Present Continuous Passive'},
+                {verb: 'has been cooked', voice: '現在完成式被動 Present Perfect Passive'}
+            ];
+            
+            clearInterval(animationInterval);
+            animationInterval = setInterval(() => {
+                animation.innerHTML = `The chef cooks the meal. → The meal <span style="color: var(--accent); text-decoration: underline;">${voices[count].verb}</span> by the chef. <br><small>${voices[count].voice}</small>`;
+                count = (count + 1) % voices.length;
+            }, 2000);
+            
+            // 播放音效
+            playSound('success');
+        });
+        
+        document.getElementById('pauseVoiceAnimation').addEventListener('click', () => {
+            clearInterval(animationInterval);
+            // 播放音效
+            playSound('click');
+        });
+        
+        // 音效函數
+        function playSound(type) {
+            // 在實際應用中，這裡會播放相應的音效
+            // 由於這是一個示例，我們只模擬音效播放
+            console.log(`Playing ${type} sound`);
+        }
+        
+        // 初始加載時播放歡迎音效
+        window.addEventListener('load', () => {
+            playSound('welcome');
+        });
+    </script>
+</body>
+</html>
