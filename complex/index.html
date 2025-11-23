@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Level 2: Compound Sentences Animation</title>
     <style>
         /* --- 基础设置与配色 --- */
@@ -21,7 +21,12 @@
             --font-main: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+            -webkit-tap-highlight-color: transparent;
+        }
 
         body {
             background-color: var(--bg-color);
@@ -32,13 +37,15 @@
             align-items: center;
             height: 100vh;
             color: var(--text-main);
+            touch-action: manipulation;
         }
 
         /* --- 舞台容器 (16:9) --- */
         #stage-container {
-            width: 90vw;
+            width: 95vw;
             max-width: 1200px;
-            aspect-ratio: 16/9;
+            height: 95vh;
+            max-height: 800px;
             background: white;
             border-radius: 20px;
             box-shadow: 0 20px 50px rgba(0,0,0,0.05);
@@ -48,6 +55,32 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
+        }
+
+        /* 手機橫向模式調整 */
+        @media (max-height: 500px) and (orientation: landscape) {
+            #stage-container {
+                height: 98vh;
+                max-height: none;
+            }
+            
+            .clause {
+                padding: 15px 20px !important;
+                font-size: 1.4rem !important;
+            }
+            
+            .sub-en {
+                font-size: 1.1rem !important;
+            }
+            
+            .sub-cn {
+                font-size: 0.9rem !important;
+            }
+            
+            #top-label {
+                top: 20px !important;
+                font-size: 1rem !important;
+            }
         }
 
         /* --- 背景装饰元素 --- */
@@ -68,20 +101,21 @@
         /* --- 主要内容区域 --- */
         #main-scene {
             z-index: 10;
-            width: 80%;
+            width: 90%;
             height: 60%;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
             transition: all 0.5s ease;
+            flex-wrap: wrap;
         }
 
         /* --- 句子卡片 --- */
         .clause {
-            padding: 20px 30px;
+            padding: 20px 25px;
             border-radius: 15px;
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 600;
             box-shadow: 0 10px 20px rgba(0,0,0,0.08);
             transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -90,6 +124,7 @@
             white-space: nowrap;
             opacity: 0;
             transform: translateY(20px);
+            text-align: center;
         }
 
         .clause.simple { background-color: var(--card-1); color: var(--text-1); }
@@ -111,7 +146,7 @@
         .connector-wrapper.show { opacity: 1; transform: scale(1); }
 
         .comma {
-            font-size: 3rem;
+            font-size: 2.5rem;
             color: var(--text-main);
             line-height: 1;
             margin-bottom: -10px; /* Pull closer to word */
@@ -121,10 +156,10 @@
         .conjunction {
             background-color: var(--accent);
             color: var(--accent-text);
-            padding: 10px 20px;
+            padding: 10px 18px;
             border-radius: 50px; /* Pill shape */
             font-weight: 800;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             box-shadow: 0 5px 15px rgba(255, 171, 145, 0.4);
             position: relative;
         }
@@ -132,16 +167,16 @@
         .semicolon-box {
             background-color: var(--semi);
             color: var(--semi-text);
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: bold;
             box-shadow: 0 5px 15px rgba(179, 157, 219, 0.4);
-            margin: 0 20px;
+            margin: 0 15px;
             opacity: 0;
             transform: scale(0) rotate(-180deg);
             transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
@@ -157,6 +192,9 @@
             text-transform: uppercase;
             color: #90a4ae;
             font-weight: 700;
+            text-align: center;
+            width: 100%;
+            padding: 0 10px;
         }
 
         /* --- FANBOYS 列表展示 --- */
@@ -164,12 +202,15 @@
             position: absolute;
             top: 20%;
             display: flex;
-            gap: 15px;
+            gap: 12px;
             opacity: 0;
             pointer-events: none;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
         }
         .fb-item {
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: 900;
             color: #ddd;
             transition: all 0.3s;
@@ -184,10 +225,10 @@
         #subtitle-container {
             position: absolute;
             bottom: 40px;
-            width: 80%;
+            width: 90%;
             text-align: center;
             background: var(--subtitle-bg);
-            padding: 15px 25px;
+            padding: 15px 20px;
             border-radius: 10px;
             backdrop-filter: blur(5px);
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
@@ -197,15 +238,17 @@
         .sub-en {
             display: block;
             color: #fff;
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             margin-bottom: 5px;
             font-weight: 500;
+            line-height: 1.3;
         }
         .sub-cn {
             display: block;
             color: #cfd8dc;
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: 300;
+            line-height: 1.3;
         }
 
         /* --- 进度条 --- */
@@ -219,6 +262,58 @@
             transition: width 0.2s linear;
         }
 
+        /* --- 控制按鈕 --- */
+        .control-buttons {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            gap: 10px;
+            z-index: 200;
+        }
+
+        .control-btn {
+            font-size: 1.3rem;
+            cursor: pointer;
+            background: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+            user-select: none;
+        }
+        .control-btn:hover, .control-btn:active { 
+            transform: scale(1.1); 
+        }
+
+        /* --- 暫停覆蓋層 --- */
+        .pause-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255,255,255,0.85);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 150;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            padding: 20px;
+            text-align: center;
+        }
+        .pause-overlay.active { opacity: 1; pointer-events: all; }
+        .pause-overlay h2 {
+            font-family: var(--font-main);
+            font-size: 2.5rem;
+            color: var(--text-main);
+            margin-bottom: 15px;
+        }
+
         /* --- 辅助动画 --- */
         @keyframes pulse {
             0% { transform: scale(1); }
@@ -230,11 +325,101 @@
             border: 3px solid var(--accent);
         }
 
+        /* 手機小螢幕調整 */
+        @media (max-width: 480px) {
+            #stage-container {
+                width: 98%;
+                height: 98vh;
+                border-radius: 15px;
+            }
+            
+            .clause {
+                padding: 15px 20px;
+                font-size: 1.3rem;
+            }
+            
+            .conjunction {
+                padding: 8px 15px;
+                font-size: 1.1rem;
+            }
+            
+            .semicolon-box {
+                width: 45px;
+                height: 45px;
+                font-size: 1.8rem;
+            }
+            
+            .sub-en {
+                font-size: 1rem;
+            }
+            
+            .sub-cn {
+                font-size: 0.8rem;
+            }
+            
+            .fb-item {
+                font-size: 1.5rem;
+            }
+            
+            #top-label {
+                font-size: 1rem;
+                top: 20px;
+            }
+            
+            .control-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1.1rem;
+            }
+            
+            .pause-overlay h2 {
+                font-size: 2rem;
+            }
+        }
+
+        /* 手機橫向模式調整 */
+        @media (max-height: 500px) and (orientation: landscape) {
+            #stage-container {
+                height: 98vh;
+                max-height: none;
+            }
+            
+            .clause {
+                padding: 15px 20px !important;
+                font-size: 1.4rem !important;
+            }
+            
+            .sub-en {
+                font-size: 1.1rem !important;
+            }
+            
+            .sub-cn {
+                font-size: 0.9rem !important;
+            }
+            
+            #top-label {
+                top: 20px !important;
+                font-size: 1rem !important;
+            }
+        }
     </style>
 </head>
 <body>
 
     <div id="stage-container">
+        <!-- 控制按鈕 -->
+        <div class="control-buttons">
+            <div class="control-btn pause-btn" id="pauseToggle">⏸️</div>
+            <div class="control-btn music-btn" id="musicToggle">🔇</div>
+        </div>
+        
+        <!-- 暫停覆蓋層 -->
+        <div class="pause-overlay" id="pauseOverlay">
+            <h2>Paused</h2>
+            <p style="font-size: 1.2rem; color: #666; margin-bottom: 30px;">點擊繼續按鈕或暫停鍵恢復</p>
+            <button class="control-btn" style="font-size: 1.5rem; width: 60px; height: 60px;" onclick="togglePause()">▶️</button>
+        </div>
+        
         <!-- 背景装饰 -->
         <div class="bg-circle c1"></div>
         <div class="bg-circle c2"></div>
@@ -269,62 +454,137 @@
     </div>
 
     <script>
-        /* --- 音频引擎 (Web Audio API) --- */
-        // 简单的合成器，不需要外部文件
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        
-        function playSound(type) {
-            if (audioCtx.state === 'suspended') {
-                audioCtx.resume();
-            }
+        /* --- 音效系統 --- */
+        const AudioSys = {
+            ctx: null,
+            muted: true,
             
-            const osc = audioCtx.createOscillator();
-            const gainNode = audioCtx.createGain();
+            init() {
+                // 延遲初始化音頻上下文，避免iOS限制
+                this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+            },
             
-            osc.connect(gainNode);
-            gainNode.connect(audioCtx.destination);
-            
-            const now = audioCtx.currentTime;
+            toggle() {
+                if (!this.ctx) this.init();
+                
+                this.muted = !this.muted;
+                if(!this.muted) {
+                    this.ctx.resume();
+                } else {
+                    this.ctx.suspend();
+                }
+                return this.muted;
+            },
 
-            if (type === 'pop') {
-                // 气泡弹出声
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(400, now);
-                osc.frequency.exponentialRampToValueAtTime(800, now + 0.1);
-                gainNode.gain.setValueAtTime(0.3, now);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
-                osc.start(now);
-                osc.stop(now + 0.1);
-            } else if (type === 'snap') {
-                // 拼接声
-                osc.type = 'triangle';
-                osc.frequency.setValueAtTime(200, now);
-                osc.frequency.exponentialRampToValueAtTime(100, now + 0.1);
-                gainNode.gain.setValueAtTime(0.5, now);
-                gainNode.gain.linearRampToValueAtTime(0.01, now + 0.15);
-                osc.start(now);
-                osc.stop(now + 0.15);
-            } else if (type === 'magic') {
-                // 魔法音效
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(300, now);
-                osc.frequency.linearRampToValueAtTime(1200, now + 0.5);
-                gainNode.gain.setValueAtTime(0.1, now);
-                gainNode.gain.linearRampToValueAtTime(0, now + 0.5);
-                osc.start(now);
-                osc.stop(now + 0.5);
-            } else if (type === 'whoosh') {
-                // 滑动声
-                osc.type = 'square';
-                osc.frequency.setValueAtTime(100, now);
-                gainNode.gain.setValueAtTime(0.05, now);
-                gainNode.gain.linearRampToValueAtTime(0, now + 0.2);
-                osc.start(now);
-                osc.stop(now + 0.2);
+            playSound(type) {
+                if (this.muted || !this.ctx) return;
+                
+                const osc = this.ctx.createOscillator();
+                const gainNode = this.ctx.createGain();
+                
+                osc.connect(gainNode);
+                gainNode.connect(this.ctx.destination);
+                
+                const now = this.ctx.currentTime;
+
+                if (type === 'pop') {
+                    // 气泡弹出声
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(400, now);
+                    osc.frequency.exponentialRampToValueAtTime(800, now + 0.1);
+                    gainNode.gain.setValueAtTime(0.3, now);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+                    osc.start(now);
+                    osc.stop(now + 0.1);
+                } else if (type === 'snap') {
+                    // 拼接声
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(200, now);
+                    osc.frequency.exponentialRampToValueAtTime(100, now + 0.1);
+                    gainNode.gain.setValueAtTime(0.5, now);
+                    gainNode.gain.linearRampToValueAtTime(0.01, now + 0.15);
+                    osc.start(now);
+                    osc.stop(now + 0.15);
+                } else if (type === 'magic') {
+                    // 魔法音效
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(300, now);
+                    osc.frequency.linearRampToValueAtTime(1200, now + 0.5);
+                    gainNode.gain.setValueAtTime(0.1, now);
+                    gainNode.gain.linearRampToValueAtTime(0, now + 0.5);
+                    osc.start(now);
+                    osc.stop(now + 0.5);
+                } else if (type === 'whoosh') {
+                    // 滑动声
+                    osc.type = 'square';
+                    osc.frequency.setValueAtTime(100, now);
+                    gainNode.gain.setValueAtTime(0.05, now);
+                    gainNode.gain.linearRampToValueAtTime(0, now + 0.2);
+                    osc.start(now);
+                    osc.stop(now + 0.2);
+                }
+            }
+        };
+
+        /* --- 暫停系統 --- */
+        let isPaused = false;
+        let pauseResolve = null;
+        let pausePromise = null;
+
+        function togglePause() {
+            isPaused = !isPaused;
+            
+            if (isPaused) {
+                // 暫停狀態
+                document.getElementById('pauseOverlay').classList.add('active');
+                document.getElementById('pauseToggle').innerHTML = '▶️';
+                
+                // 暫停音效
+                if (AudioSys.ctx) {
+                    AudioSys.ctx.suspend();
+                }
+                
+                // 創建一個Promise，當恢復時解決它
+                pausePromise = new Promise(resolve => {
+                    pauseResolve = resolve;
+                });
+            } else {
+                // 恢復狀態
+                document.getElementById('pauseOverlay').classList.remove('active');
+                document.getElementById('pauseToggle').innerHTML = '⏸️';
+                
+                // 恢復音效
+                if (!AudioSys.muted && AudioSys.ctx) {
+                    AudioSys.ctx.resume();
+                }
+                
+                // 解決Promise，讓等待的動畫繼續
+                if (pauseResolve) {
+                    pauseResolve();
+                    pauseResolve = null;
+                }
             }
         }
 
-        /* --- 动画控制逻辑 --- */
+        // 修改sleep函數以支持暫停
+        async function sleep(ms) {
+            const start = Date.now();
+            let elapsed = 0;
+            
+            while (elapsed < ms) {
+                if (isPaused) {
+                    await pausePromise;
+                    // 重新計算剩餘時間
+                    elapsed = Date.now() - start;
+                } else {
+                    const remaining = ms - elapsed;
+                    await new Promise(r => setTimeout(r, Math.min(100, remaining)));
+                    elapsed = Date.now() - start;
+                }
+            }
+        }
+
+        /* --- 動畫控制邏輯 --- */
         const scene = document.getElementById('main-scene');
         const subEn = document.getElementById('sub-en');
         const subCn = document.getElementById('sub-cn');
@@ -398,19 +658,21 @@
             {
                 // 0: Intro
                 duration: 4000,
-                action: () => {
+                action: async () => {
                     topLabel.innerText = "Level 1: Simple Sentences";
                     clearStage();
                     const c1 = createClause("I like apples.");
                     scene.appendChild(c1);
-                    setTimeout(() => { c1.classList.add('show'); playSound('pop'); }, 500);
+                    await sleep(500);
+                    c1.classList.add('show'); 
+                    AudioSys.playSound('pop');
                     setSubtitle("Level 1: The Simple Sentence.", "Level 1：简单句。一个完整的主语加谓语。");
                 }
             },
             {
                 // 1: The Problem (Run-on)
                 duration: 5000,
-                action: () => {
+                action: async () => {
                     topLabel.innerText = "The Problem";
                     const c1 = scene.querySelector('.clause'); // Keep existing
                     const c2 = createClause("You like bananas.", "second");
@@ -418,19 +680,17 @@
                     
                     setSubtitle("But what if we want to connect two ideas?", "但如果我们想连接两个想法怎么办？");
                     
-                    setTimeout(() => { 
-                        c2.classList.add('show'); 
-                        playSound('pop');
-                        // 碰撞动画
-                        setTimeout(() => {
-                            c1.style.transform = "translateX(20px)";
-                            c2.style.transform = "translateX(-20px)";
-                            setTimeout(() => {
-                                c1.style.transform = "translateX(0)";
-                                c2.style.transform = "translateX(0)";
-                            }, 200);
-                        }, 1000);
-                    }, 1000);
+                    await sleep(1000);
+                    c2.classList.add('show'); 
+                    AudioSys.playSound('pop');
+                    
+                    // 碰撞动画
+                    await sleep(1000);
+                    c1.style.transform = "translateX(20px)";
+                    c2.style.transform = "translateX(-20px)";
+                    await sleep(200);
+                    c1.style.transform = "translateX(0)";
+                    c2.style.transform = "translateX(0)";
                 }
             },
             {
@@ -441,29 +701,28 @@
                     scene.innerHTML = ''; // Clear all
                     fanboysList.style.opacity = 1; // Show FANBOYS list
                     setSubtitle("Welcome to Level 2: Compound Sentences.", "欢迎来到 Level 2：复合句。我们需要胶水。");
-                    playSound('magic');
+                    AudioSys.playSound('magic');
                 }
             },
             {
                 // 3: FANBOYS Intro
                 duration: 4000,
-                action: () => {
+                action: async () => {
                     setSubtitle("We use 'FANBOYS' to remember the connectors.", "我们使用 'FANBOYS' 来记住这些连接词。");
                     // 依次高亮
                     const letters = ['f','a','n','b','o','y','s'];
-                    letters.forEach((l, i) => {
-                        setTimeout(() => {
-                            highlightFanboy(l);
-                            playSound('pop');
-                        }, i * 400);
-                    });
+                    for (let i = 0; i < letters.length; i++) {
+                        await sleep(400);
+                        highlightFanboy(letters[i]);
+                        AudioSys.playSound('pop');
+                    }
                 }
             },
             // --- Examples ---
             {
                 // 4: For
                 duration: 5000,
-                action: () => {
+                action: async () => {
                     fanboysList.style.opacity = 0.2; // Dim list
                     highlightFanboy('f');
                     clearStage();
@@ -476,9 +735,17 @@
                     scene.appendChild(glue);
                     scene.appendChild(c2);
 
-                    setTimeout(() => { c1.classList.add('show'); playSound('whoosh'); }, 100);
-                    setTimeout(() => { glue.classList.add('show'); playSound('snap'); }, 1000);
-                    setTimeout(() => { c2.classList.add('show'); playSound('whoosh'); }, 2000);
+                    await sleep(100);
+                    c1.classList.add('show'); 
+                    AudioSys.playSound('whoosh');
+                    
+                    await sleep(900);
+                    glue.classList.add('show'); 
+                    AudioSys.playSound('snap');
+                    
+                    await sleep(1000);
+                    c2.classList.add('show'); 
+                    AudioSys.playSound('whoosh');
 
                     setSubtitle("'For' explains a reason. (Like 'because')", "'For' 解释原因（像 because 一样）。注意前面的逗号！");
                 }
@@ -486,7 +753,7 @@
             {
                 // 5: And
                 duration: 4500,
-                action: () => {
+                action: async () => {
                     highlightFanboy('a');
                     clearStage();
                     
@@ -498,9 +765,17 @@
                     scene.appendChild(glue);
                     scene.appendChild(c2);
 
-                    setTimeout(() => { c1.classList.add('show'); playSound('whoosh');}, 100);
-                    setTimeout(() => { glue.classList.add('show'); playSound('snap');}, 800);
-                    setTimeout(() => { c2.classList.add('show'); playSound('whoosh');}, 1600);
+                    await sleep(100);
+                    c1.classList.add('show'); 
+                    AudioSys.playSound('whoosh');
+                    
+                    await sleep(700);
+                    glue.classList.add('show'); 
+                    AudioSys.playSound('snap');
+                    
+                    await sleep(800);
+                    c2.classList.add('show'); 
+                    AudioSys.playSound('whoosh');
 
                     setSubtitle("'And' adds one idea to another.", "'And' 将一个想法加到另一个想法上。");
                 }
@@ -508,7 +783,7 @@
             {
                 // 6: Nor
                 duration: 5000,
-                action: () => {
+                action: async () => {
                     highlightFanboy('n');
                     clearStage();
                     
@@ -520,9 +795,17 @@
                     scene.appendChild(glue);
                     scene.appendChild(c2);
 
-                    setTimeout(() => { c1.classList.add('show'); playSound('whoosh');}, 100);
-                    setTimeout(() => { glue.classList.add('show'); playSound('snap');}, 800);
-                    setTimeout(() => { c2.classList.add('show'); playSound('whoosh');}, 1600);
+                    await sleep(100);
+                    c1.classList.add('show'); 
+                    AudioSys.playSound('whoosh');
+                    
+                    await sleep(700);
+                    glue.classList.add('show'); 
+                    AudioSys.playSound('snap');
+                    
+                    await sleep(800);
+                    c2.classList.add('show'); 
+                    AudioSys.playSound('whoosh');
 
                     setSubtitle("'Nor' is for negative additions.", "'Nor' 用于否定的补充（我也不会跳舞）。");
                 }
@@ -530,7 +813,7 @@
             {
                 // 7: But
                 duration: 4500,
-                action: () => {
+                action: async () => {
                     highlightFanboy('b');
                     clearStage();
                     
@@ -542,9 +825,17 @@
                     scene.appendChild(glue);
                     scene.appendChild(c2);
 
-                    setTimeout(() => { c1.classList.add('show'); playSound('whoosh');}, 100);
-                    setTimeout(() => { glue.classList.add('show'); playSound('snap');}, 800);
-                    setTimeout(() => { c2.classList.add('show'); playSound('whoosh');}, 1600);
+                    await sleep(100);
+                    c1.classList.add('show'); 
+                    AudioSys.playSound('whoosh');
+                    
+                    await sleep(700);
+                    glue.classList.add('show'); 
+                    AudioSys.playSound('snap');
+                    
+                    await sleep(800);
+                    c2.classList.add('show'); 
+                    AudioSys.playSound('whoosh');
 
                     setSubtitle("'But' shows contrast.", "'But' 表示转折或对比。");
                 }
@@ -552,7 +843,7 @@
             {
                 // 8: Or
                 duration: 4500,
-                action: () => {
+                action: async () => {
                     highlightFanboy('o');
                     clearStage();
                     
@@ -564,9 +855,17 @@
                     scene.appendChild(glue);
                     scene.appendChild(c2);
 
-                    setTimeout(() => { c1.classList.add('show'); playSound('whoosh');}, 100);
-                    setTimeout(() => { glue.classList.add('show'); playSound('snap');}, 800);
-                    setTimeout(() => { c2.classList.add('show'); playSound('whoosh');}, 1600);
+                    await sleep(100);
+                    c1.classList.add('show'); 
+                    AudioSys.playSound('whoosh');
+                    
+                    await sleep(700);
+                    glue.classList.add('show'); 
+                    AudioSys.playSound('snap');
+                    
+                    await sleep(800);
+                    c2.classList.add('show'); 
+                    AudioSys.playSound('whoosh');
 
                     setSubtitle("'Or' presents a choice.", "'Or' 提出一种选择。");
                 }
@@ -574,7 +873,7 @@
             {
                 // 9: Yet
                 duration: 5000,
-                action: () => {
+                action: async () => {
                     highlightFanboy('y');
                     clearStage();
                     
@@ -586,9 +885,17 @@
                     scene.appendChild(glue);
                     scene.appendChild(c2);
 
-                    setTimeout(() => { c1.classList.add('show'); playSound('whoosh');}, 100);
-                    setTimeout(() => { glue.classList.add('show'); playSound('snap');}, 800);
-                    setTimeout(() => { c2.classList.add('show'); playSound('whoosh');}, 1600);
+                    await sleep(100);
+                    c1.classList.add('show'); 
+                    AudioSys.playSound('whoosh');
+                    
+                    await sleep(700);
+                    glue.classList.add('show'); 
+                    AudioSys.playSound('snap');
+                    
+                    await sleep(800);
+                    c2.classList.add('show'); 
+                    AudioSys.playSound('whoosh');
 
                     setSubtitle("'Yet' is like 'but', for unexpected results.", "'Yet' 像 'but'，用于意想不到的转折。");
                 }
@@ -596,7 +903,7 @@
             {
                 // 10: So
                 duration: 4500,
-                action: () => {
+                action: async () => {
                     highlightFanboy('s');
                     clearStage();
                     
@@ -608,9 +915,17 @@
                     scene.appendChild(glue);
                     scene.appendChild(c2);
 
-                    setTimeout(() => { c1.classList.add('show'); playSound('whoosh');}, 100);
-                    setTimeout(() => { glue.classList.add('show'); playSound('snap');}, 800);
-                    setTimeout(() => { c2.classList.add('show'); playSound('whoosh');}, 1600);
+                    await sleep(100);
+                    c1.classList.add('show'); 
+                    AudioSys.playSound('whoosh');
+                    
+                    await sleep(700);
+                    glue.classList.add('show'); 
+                    AudioSys.playSound('snap');
+                    
+                    await sleep(800);
+                    c2.classList.add('show'); 
+                    AudioSys.playSound('whoosh');
 
                     setSubtitle("'So' shows a result.", "'So' 表示结果。");
                 }
@@ -619,7 +934,7 @@
             {
                 // 11: Semicolon Intro
                 duration: 5000,
-                action: () => {
+                action: async () => {
                     highlightFanboy(null); // Clear highlight
                     fanboysList.style.opacity = 0; // Hide FANBOYS
                     
@@ -627,19 +942,17 @@
                     const glue = scene.querySelector('.connector-wrapper');
                     if(glue) glue.style.transform = 'scale(0)'; // Shrink glue
                     
-                    setTimeout(() => {
-                        if(glue) glue.remove();
-                        // Add Semicolon
-                        const semi = createSemicolon();
-                        // Insert between clauses
-                        const c2 = scene.querySelector('.clause.second');
-                        scene.insertBefore(semi, c2);
-                        
-                        setTimeout(() => {
-                            semi.classList.add('show');
-                            playSound('magic');
-                        }, 100);
-                    }, 500);
+                    await sleep(500);
+                    if(glue) glue.remove();
+                    // Add Semicolon
+                    const semi = createSemicolon();
+                    // Insert between clauses
+                    const c2 = scene.querySelector('.clause.second');
+                    scene.insertBefore(semi, c2);
+                    
+                    await sleep(100);
+                    semi.classList.add('show');
+                    AudioSys.playSound('magic');
 
                     setSubtitle("Or... use the Semicolon (;). No glue needed!", "或者……使用分号（;）。不需要任何连接词！");
                 }
@@ -647,7 +960,7 @@
             {
                 // 12: Semicolon Example 2
                 duration: 5000,
-                action: () => {
+                action: async () => {
                     clearStage();
                     const c1 = createClause("I love coding");
                     const semi = createSemicolon();
@@ -657,9 +970,17 @@
                     scene.appendChild(semi);
                     scene.appendChild(c2);
 
-                    setTimeout(() => { c1.classList.add('show'); playSound('pop');}, 100);
-                    setTimeout(() => { semi.classList.add('show'); playSound('magic');}, 800);
-                    setTimeout(() => { c2.classList.add('show'); playSound('pop');}, 1500);
+                    await sleep(100);
+                    c1.classList.add('show'); 
+                    AudioSys.playSound('pop');
+                    
+                    await sleep(700);
+                    semi.classList.add('show'); 
+                    AudioSys.playSound('magic');
+                    
+                    await sleep(700);
+                    c2.classList.add('show'); 
+                    AudioSys.playSound('pop');
 
                     setSubtitle("The semicolon connects two closely related sentences.", "分号连接两个关系非常紧密的句子。");
                 }
@@ -682,7 +1003,7 @@
                     scene.appendChild(box);
                     
                     setSubtitle("Congratulations! You mastered Level 2.", "恭喜！你已经掌握了 Level 2 复合句。");
-                    playSound('magic');
+                    AudioSys.playSound('magic');
                 }
             }
         ];
@@ -691,34 +1012,70 @@
         let currentStep = 0;
         let totalDuration = script.reduce((acc, cur) => acc + cur.duration, 0);
         let elapsed = 0;
+        let progressInterval;
 
-        function playScene() {
+        async function playScene() {
             if (currentStep >= script.length) {
-                // Loop or Stop? Let's stop at end.
                 return;
             }
 
             const step = script[currentStep];
-            step.action();
+            await step.action();
 
             // 进度条逻辑
             let stepElapsed = 0;
-            const progressInterval = setInterval(() => {
-                stepElapsed += 100;
-                elapsed += 100;
-                const pct = Math.min((elapsed / totalDuration) * 100, 100);
-                progressBar.style.width = `${pct}%`;
+            progressInterval = setInterval(() => {
+                if (!isPaused) {
+                    stepElapsed += 100;
+                    elapsed += 100;
+                    const pct = Math.min((elapsed / totalDuration) * 100, 100);
+                    progressBar.style.width = `${pct}%`;
+                    
+                    if (elapsed >= totalDuration) clearInterval(progressInterval);
+                }
             }, 100);
 
-            setTimeout(() => {
-                clearInterval(progressInterval);
-                currentStep++;
-                playScene();
-            }, step.duration);
+            await sleep(step.duration);
+            clearInterval(progressInterval);
+            currentStep++;
+            playScene();
         }
 
         // Start after a short delay to ensure DOM ready
-        setTimeout(playScene, 1000);
+        setTimeout(() => {
+            playScene();
+            
+            // Unmute by default on start if user hasn't toggled
+            if(AudioSys.muted) {
+                AudioSys.toggle();
+                document.getElementById('musicToggle').innerText = "🔊";
+            }
+        }, 1000);
+
+        // --- 初始化控制按鈕 ---
+        document.getElementById('musicToggle').onclick = () => {
+            const isMuted = AudioSys.toggle();
+            document.getElementById('musicToggle').innerText = isMuted ? "🔇" : "🔊";
+        };
+
+        // 綁定暫停按鈕事件
+        document.getElementById('pauseToggle').onclick = togglePause;
+
+        // 防止手機上的雙擊縮放
+        document.addEventListener('touchstart', function(e) {
+            if (e.touches.length > 1) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function(e) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                e.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
 
     </script>
 </body>
