@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shirley's Exclamation Learning Platform | 感嘆句學習平台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #ff6b6b;
+            --secondary: #ff8e8e;
+            --accent: #4ecdc4;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --success: #28a745;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft JhengHei', '微軟正黑體', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+        
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tab {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            flex: 1;
+            text-align: center;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tab:hover {
+            background-color: rgba(255, 107, 107, 0.1);
+        }
+        
+        .tab.active {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+        }
+        
+        h3 {
+            color: var(--secondary);
+            margin: 1.5rem 0 1rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        th {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .example {
+            background-color: #f0f7ff;
+            border-left: 4px solid var(--accent);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .interactive-element {
+            background-color: var(--light);
+            border: 2px dashed var(--secondary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+        
+        .btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn:hover {
+            background-color: #3dbcb4;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(78, 205, 196, 0.3);
+        }
+        
+        .animation-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 1rem;
+        }
+        
+        .exclamation-animation {
+            height: 200px;
+            background: linear-gradient(135deg, #ff8e8e, #ff6b6b);
+            border-radius: 10px;
+            margin: 1.5rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+            background-color: var(--dark);
+            color: white;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .highlight {
+            background-color: #fff9e6;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .exclamation-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+            margin: 1rem 0;
+        }
+        
+        .exclamation-item {
+            background: #f0f7ff;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            margin: 1.5rem 0;
+        }
+        
+        .comparison-table th {
+            background-color: var(--secondary);
+        }
+        
+        .note-box {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .usage-diagram {
+            text-align: center;
+            margin: 2rem 0;
+        }
+        
+        .diagram-container {
+            display: flex;
+            justify-content: center;
+            margin: 1.5rem 0;
+        }
+        
+        .diagram {
+            width: 100%;
+            max-width: 600px;
+            height: 300px;
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .diagram-item {
+            position: absolute;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 120px;
+        }
+        
+        .connector-word {
+            color: var(--accent);
+            font-weight: bold;
+        }
+        
+        .antecedent {
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        .qa-pair {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+        }
+        
+        .question {
+            flex: 1;
+            padding: 10px;
+            background: #f0f7ff;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        
+        .answer {
+            flex: 1;
+            padding: 10px;
+            background: #e8f5e9;
+            border-radius: 5px;
+        }
+        
+        .structure-box {
+            background: #f8f9fa;
+            border: 2px solid var(--accent);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .structure-title {
+            color: var(--primary);
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .structure-content {
+            font-family: monospace;
+            font-size: 1.2rem;
+            text-align: center;
+            line-height: 1.8;
+        }
+        
+        @media (max-width: 768px) {
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .tab {
+                flex: none;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .exclamation-list {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .qa-pair {
+                flex-direction: column;
+            }
+            
+            .question, .answer {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Shirley's Exclamation Learning Platform</h1>
+            <p class="subtitle">感嘆句學習平台</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="tabs">
+            <div class="tab active" data-tab="intro">感嘆句介紹 | Exclamation Introduction</div>
+            <div class="tab" data-tab="how">How 感嘆句 | How Exclamations</div>
+            <div class="tab" data-tab="what">What 感嘆句 | What Exclamations</div>
+            <div class="tab" data-tab="so-such">So/Such 加強語氣 | So/Such for Emphasis</div>
+        </div>
+        
+        <!-- 感嘆句介紹 -->
+        <div class="tab-content active" id="intro">
+            <h2>感嘆句介紹 | Exclamation Introduction</h2>
+            
+            <div class="card">
+                <h3>什麼是感嘆句？ | What are Exclamations?</h3>
+                <p>感嘆句是用來表達強烈情感的句子，如驚訝、喜悅、憤怒、讚美等。在英語中，感嘆句通常以感嘆號(!)結尾。</p>
+                <p>Exclamations are sentences used to express strong emotions such as surprise, joy, anger, admiration, etc. In English, exclamations usually end with an exclamation mark (!).</p>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">How beautiful the girl is!</span> | 這個女孩多麼漂亮啊！</p>
+                    <p><strong>例子 Example:</strong> <span class="highlight">What a beautiful girl she is!</span> | 她是一個多麼漂亮的女孩啊！</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>感嘆句的基本結構 | Basic Structure of Exclamations</h3>
+                
+                <div class="structure-box">
+                    <div class="structure-title">感嘆句的兩種基本結構 | Two Basic Structures of Exclamations</div>
+                    <div class="structure-content">
+                        <p>How + adj./adv. + (S + V) + ⋯！</p>
+                        <p>What + (a/an) + adj. + N + (S+V) + !</p>
+                    </div>
+                </div>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>結構 Structure</th>
+                            <th>組成 Components</th>
+                            <th>例子 Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>How 結構</td>
+                            <td>How + 形容詞/副詞 + (主詞 + 動詞)</td>
+                            <td>How beautiful she is!</td>
+                        </tr>
+                        <tr>
+                            <td>What 結構</td>
+                            <td>What + (a/an) + 形容詞 + 名詞 + (主詞 + 動詞)</td>
+                            <td>What a beautiful girl she is!</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="card">
+                <h3>感嘆句的用法 | Uses of Exclamations</h3>
+                <p>感嘆句在英語交流中扮演著重要角色，用於表達強烈的情感、讚美、驚訝等。</p>
+                <p>Exclamations play an important role in English communication, used to express strong emotions, admiration, surprise, etc.</p>
+                
+                <div class="usage-diagram">
+                    <div class="diagram-container">
+                        <div class="diagram">
+                            <div class="diagram-item" style="top: 20px; left: 50px;">表達讚美<br>Express Admiration</div>
+                            <div class="diagram-item" style="top: 20px; right: 50px;">表達驚訝<br>Express Surprise</div>
+                            <div class="diagram-item" style="top: 120px; left: 150px;">表達喜悅<br>Express Joy</div>
+                            <div class="diagram-item" style="top: 120px; right: 150px;">表達憤怒<br>Express Anger</div>
+                            <div class="diagram-item" style="bottom: 20px; left: 250px;">表達感嘆<br>Express Exclamation</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="interactive-element">
+                <h3>感嘆句練習 | Exclamation Practice</h3>
+                <p>識別不同類型的感嘆句</p>
+                <p>Identify different types of exclamations</p>
+                <div class="exclamation-animation" id="exclamationAnimation">
+                    How beautiful the girl is!
+                </div>
+                <div class="animation-controls">
+                    <button class="btn" id="playAnimation">
+                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
+                    </button>
+                    <button class="btn" id="pauseAnimation">
+                        <i class="fas fa-pause"></i> 暫停 | Pause
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- How 感嘆句 -->
+        <div class="tab-content" id="how">
+            <h2>How 感嘆句 | How Exclamations</h2>
+            
+            <div class="card">
+                <h3>How 感嘆句結構 | How Exclamation Structure</h3>
+                <p>How 感嘆句的基本結構是：How + adj./adv. + (S + V) + ⋯！</p>
+                <p>The basic structure of How exclamations is: How + adj./adv. + (S + V) + ⋯！</p>
+                
+                <div class="structure-box">
+                    <div class="structure-title">How 感嘆句結構 | How Exclamation Structure</div>
+                    <div class="structure-content">
+                        <p>How + Adjective/Adverb + Subject + Verb + !</p>
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">How beautiful the girl is!</span> | 這個女孩多麼漂亮啊！</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">How slowly the snail is crawling!</span> | 這隻蝸牛爬得多慢啊！</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">How famous Hemingway was!</span> | 海明威多麼有名啊！</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">How good they are!</span> | 他們多麼優秀啊！</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>How 感嘆句的詳細分析 | Detailed Analysis of How Exclamations</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>How</th>
+                            <th>Adjective/Adverb</th>
+                            <th>Subject</th>
+                            <th>Verb</th>
+                            <th>Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>How</td>
+                            <td>beautiful</td>
+                            <td>she (the girl)</td>
+                            <td>is</td>
+                            <td>How beautiful she is!</td>
+                        </tr>
+                        <tr>
+                            <td>How</td>
+                            <td>famous</td>
+                            <td>Hemingway</td>
+                            <td>was</td>
+                            <td>How famous Hemingway was!</td>
+                        </tr>
+                        <tr>
+                            <td>How</td>
+                            <td>good</td>
+                            <td>they (the students)</td>
+                            <td>are</td>
+                            <td>How good they are!</td>
+                        </tr>
+                        <tr>
+                            <td>How</td>
+                            <td>slowly</td>
+                            <td>the snail</td>
+                            <td>is moving</td>
+                            <td>How slowly the snail is moving!</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="card">
+                <h3>How 感嘆句的轉換 | Conversion of How Exclamations</h3>
+                <p>How 感嘆句可以從普通的陳述句轉換而來。</p>
+                <p>How exclamations can be converted from ordinary declarative sentences.</p>
+                
+                <div class="qa-pair">
+                    <div class="question">
+                        <p><strong>陳述句 Declarative:</strong> The girl is very beautiful.</p>
+                    </div>
+                    <div class="answer">
+                        <p><strong>感嘆句 Exclamation:</strong> How beautiful the girl is!</p>
+                    </div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">
+                        <p><strong>陳述句 Declarative:</strong> The snail is crawling very slowly.</p>
+                    </div>
+                    <div class="answer">
+                        <p><strong>感嘆句 Exclamation:</strong> How slowly the snail is crawling!</p>
+                    </div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">
+                        <p><strong>陳述句 Declarative:</strong> Hemingway was very famous.</p>
+                    </div>
+                    <div class="answer">
+                        <p><strong>感嘆句 Exclamation:</strong> How famous Hemingway was!</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="interactive-element">
+                <h3>How 感嘆句練習 | How Exclamation Practice</h3>
+                <p>將陳述句轉換為How感嘆句</p>
+                <p>Convert declarative sentences to How exclamations</p>
+                <div class="exclamation-animation" id="howAnimation">
+                    The girl is very beautiful.
+                </div>
+                <div class="animation-controls">
+                    <button class="btn" id="playHowAnimation">
+                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
+                    </button>
+                    <button class="btn" id="pauseHowAnimation">
+                        <i class="fas fa-pause"></i> 暫停 | Pause
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- What 感嘆句 -->
+        <div class="tab-content" id="what">
+            <h2>What 感嘆句 | What Exclamations</h2>
+            
+            <div class="card">
+                <h3>What 感嘆句結構 | What Exclamation Structure</h3>
+                <p>What 感嘆句的基本結構是：What + (a/an) + adj. + N + (S+V) + !</p>
+                <p>The basic structure of What exclamations is: What + (a/an) + adj. + N + (S+V) + !</p>
+                
+                <div class="structure-box">
+                    <div class="structure-title">What 感嘆句結構 | What Exclamation Structure</div>
+                    <div class="structure-content">
+                        <p>What + (a/an) + Adjective + Noun + (Subject + Verb) + !</p>
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">What a beautiful girl she is!</span> | 她是一個多麼漂亮的女孩啊！</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">What a famous writer Hemingway was!</span> | 海明威是一個多麼有名的作家啊！</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">What good students they are!</span> | 他們是多麼好的學生啊！</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>What 感嘆句的詳細分析 | Detailed Analysis of What Exclamations</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>What</th>
+                            <th>a/an</th>
+                            <th>Adjective</th>
+                            <th>Noun</th>
+                            <th>Subject</th>
+                            <th>Verb</th>
+                            <th>Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>What</td>
+                            <td>a</td>
+                            <td>beautiful</td>
+                            <td>girl</td>
+                            <td>she</td>
+                            <td>is</td>
+                            <td>What a beautiful girl she is!</td>
+                        </tr>
+                        <tr>
+                            <td>What</td>
+                            <td>a</td>
+                            <td>famous</td>
+                            <td>writer</td>
+                            <td>Hemingway</td>
+                            <td>was</td>
+                            <td>What a famous writer Hemingway was!</td>
+                        </tr>
+                        <tr>
+                            <td>What</td>
+                            <td>-</td>
+                            <td>good</td>
+                            <td>students</td>
+                            <td>they</td>
+                            <td>are</td>
+                            <td>What good students they are!</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="note-box">
+                    <p><strong>注意：</strong>當名詞為複數或不可數名詞時，不需要使用a/an。</p>
+                    <p><strong>Note:</strong> When the noun is plural or uncountable, a/an is not needed.</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>What 感嘆句的轉換 | Conversion of What Exclamations</h3>
+                <p>What 感嘆句可以從普通的陳述句轉換而來。</p>
+                <p>What exclamations can be converted from ordinary declarative sentences.</p>
+                
+                <div class="qa-pair">
+                    <div class="question">
+                        <p><strong>陳述句 Declarative:</strong> She is a very beautiful girl.</p>
+                    </div>
+                    <div class="answer">
+                        <p><strong>感嘆句 Exclamation:</strong> What a beautiful girl she is!</p>
+                    </div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">
+                        <p><strong>陳述句 Declarative:</strong> Hemingway was a very famous writer.</p>
+                    </div>
+                    <div class="answer">
+                        <p><strong>感嘆句 Exclamation:</strong> What a famous writer Hemingway was!</p>
+                    </div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">
+                        <p><strong>陳述句 Declarative:</strong> They are very good students.</p>
+                    </div>
+                    <div class="answer">
+                        <p><strong>感嘆句 Exclamation:</strong> What good students they are!</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="interactive-element">
+                <h3>What 感嘆句練習 | What Exclamation Practice</h3>
+                <p>將陳述句轉換為What感嘆句</p>
+                <p>Convert declarative sentences to What exclamations</p>
+                <div class="exclamation-animation" id="whatAnimation">
+                    She is a very beautiful girl.
+                </div>
+                <div class="animation-controls">
+                    <button class="btn" id="playWhatAnimation">
+                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
+                    </button>
+                    <button class="btn" id="pauseWhatAnimation">
+                        <i class="fas fa-pause"></i> 暫停 | Pause
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- So/Such 加強語氣 -->
+        <div class="tab-content" id="so-such">
+            <h2>So/Such 加強語氣 | So/Such for Emphasis</h2>
+            
+            <div class="card">
+                <h3>So/Such 加強語氣 | So/Such for Emphasis</h3>
+                <p>除了How和What感嘆句外，也可以用so和such來加強語氣，表達強烈的情感。</p>
+                <p>In addition to How and What exclamations, so and such can also be used to emphasize and express strong emotions.</p>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> The girl is <span class="highlight">so</span> beautiful.</p>
+                    <p><strong>例子 Example:</strong> She is <span class="highlight">such</span> a beautiful girl!</p>
+                    <p>這個女孩非常漂亮！</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> The snail is crawling <span class="highlight">so</span> slowly!</p>
+                    <p>這隻蝸牛爬得非常慢！</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>So 和 Such 的用法 | Usage of So and Such</h3>
+                
+                <div class="structure-box">
+                    <div class="structure-title">So 的結構 | So Structure</div>
+                    <div class="structure-content">
+                        <p>so + adjective/adverb</p>
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> The movie was <span class="highlight">so</span> interesting.</p>
+                    <p><strong>例子 Example:</strong> He runs <span class="highlight">so</span> fast!</p>
+                </div>
+                
+                <div class="structure-box">
+                    <div class="structure-title">Such 的結構 | Such Structure</div>
+                    <div class="structure-content">
+                        <p>such + (a/an) + adjective + noun</p>
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> It was <span class="highlight">such</span> an interesting movie.</p>
+                    <p><strong>例子 Example:</strong> He is <span class="highlight">such</span> a fast runner!</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>So/Such 與感嘆句的比較 | Comparison of So/Such and Exclamations</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>類型 Type</th>
+                            <th>結構 Structure</th>
+                            <th>例子 Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>How 感嘆句</td>
+                            <td>How + adj./adv. + S + V</td>
+                            <td>How beautiful she is!</td>
+                        </tr>
+                        <tr>
+                            <td>What 感嘆句</td>
+                            <td>What + (a/an) + adj. + N + S + V</td>
+                            <td>What a beautiful girl she is!</td>
+                        </tr>
+                        <tr>
+                            <td>So 加強語氣</td>
+                            <td>S + V + so + adj./adv.</td>
+                            <td>She is so beautiful!</td>
+                        </tr>
+                        <tr>
+                            <td>Such 加強語氣</td>
+                            <td>S + V + such + (a/an) + adj. + N</td>
+                            <td>She is such a beautiful girl!</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="card">
+                <h3>So/Such 的轉換練習 | So/Such Conversion Practice</h3>
+                
+                <div class="qa-pair">
+                    <div class="question">
+                        <p><strong>How 感嘆句:</strong> How beautiful the girl is!</p>
+                    </div>
+                    <div class="answer">
+                        <p><strong>So 加強語氣:</strong> The girl is so beautiful!</p>
+                    </div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">
+                        <p><strong>What 感嘆句:</strong> What a beautiful girl she is!</p>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Such 加強語氣:</strong> She is such a beautiful girl!</p>
+                    </div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">
+                        <p><strong>How 感嘆句:</strong> How slowly the snail is crawling!</p>
+                    </div>
+                    <div class="answer">
+                        <p><strong>So 加強語氣:</strong> The snail is crawling so slowly!</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="interactive-element">
+                <h3>So/Such 練習 | So/Such Practice</h3>
+                <p>將感嘆句轉換為So/Such加強語氣</p>
+                <p>Convert exclamations to So/Such emphasis</p>
+                <div class="exclamation-animation" id="soSuchAnimation">
+                    How beautiful the girl is!
+                </div>
+                <div class="animation-controls">
+                    <button class="btn" id="playSoSuchAnimation">
+                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
+                    </button>
+                    <button class="btn" id="pauseSoSuchAnimation">
+                        <i class="fas fa-pause"></i> 暫停 | Pause
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Shirley's Exclamation Learning Platform | 感嘆句學習平台</p>
+        <p>© 2025 Shirley's Grammar E-Charger</p>
+    </footer>
+
+    <script>
+        // 選項卡功能
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // 移除所有活動標籤和內容
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // 添加活動類到當前標籤
+                tab.classList.add('active');
+                
+                // 顯示對應的內容
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+                
+                // 播放切換音效
+                playSound('click');
+            });
+        });
+        
+        // 動畫控制
+        let animationInterval;
+        
+        // 感嘆句介紹動畫
+        document.getElementById('playAnimation').addEventListener('click', () => {
+            const animation = document.getElementById('exclamationAnimation');
+            
+            let count = 0;
+            const sentences = [
+                {sentence: 'How beautiful the girl is!', type: 'How Exclamation'},
+                {sentence: 'What a beautiful girl she is!', type: 'What Exclamation'},
+                {sentence: 'How slowly the snail is crawling!', type: 'How Exclamation'},
+                {sentence: 'What a famous writer Hemingway was!', type: 'What Exclamation'},
+                {sentence: 'How good they are!', type: 'How Exclamation'}
+            ];
+            
+            clearInterval(animationInterval);
+            animationInterval = setInterval(() => {
+                animation.innerHTML = `${sentences[count].sentence}<br><small>${sentences[count].type}</small>`;
+                count = (count + 1) % sentences.length;
+            }, 2000);
+            
+            // 播放音效
+            playSound('success');
+        });
+        
+        document.getElementById('pauseAnimation').addEventListener('click', () => {
+            clearInterval(animationInterval);
+            // 播放音效
+            playSound('click');
+        });
+        
+        // How感嘆句動畫
+        document.getElementById('playHowAnimation').addEventListener('click', () => {
+            const animation = document.getElementById('howAnimation');
+            
+            let count = 0;
+            const sentences = [
+                {declarative: 'The girl is very beautiful.', exclamation: 'How beautiful the girl is!'},
+                {declarative: 'The snail is crawling very slowly.', exclamation: 'How slowly the snail is crawling!'},
+                {declarative: 'Hemingway was very famous.', exclamation: 'How famous Hemingway was!'},
+                {declarative: 'They are very good students.', exclamation: 'How good they are!'},
+                {declarative: 'The movie was very interesting.', exclamation: 'How interesting the movie was!'}
+            ];
+            
+            clearInterval(animationInterval);
+            animationInterval = setInterval(() => {
+                if (count % 2 === 0) {
+                    animation.innerHTML = `${sentences[Math.floor(count/2)].declarative}<br><small>陳述句 Declarative</small>`;
+                } else {
+                    animation.innerHTML = `${sentences[Math.floor(count/2)].exclamation}<br><small>感嘆句 Exclamation</small>`;
+                }
+                count = (count + 1) % (sentences.length * 2);
+            }, 2000);
+            
+            // 播放音效
+            playSound('success');
+        });
+        
+        document.getElementById('pauseHowAnimation').addEventListener('click', () => {
+            clearInterval(animationInterval);
+            // 播放音效
+            playSound('click');
+        });
+        
+        // What感嘆句動畫
+        document.getElementById('playWhatAnimation').addEventListener('click', () => {
+            const animation = document.getElementById('whatAnimation');
+            
+            let count = 0;
+            const sentences = [
+                {declarative: 'She is a very beautiful girl.', exclamation: 'What a beautiful girl she is!'},
+                {declarative: 'Hemingway was a very famous writer.', exclamation: 'What a famous writer Hemingway was!'},
+                {declarative: 'They are very good students.', exclamation: 'What good students they are!'},
+                {declarative: 'It was a very interesting movie.', exclamation: 'What an interesting movie it was!'},
+                {declarative: 'He is a very fast runner.', exclamation: 'What a fast runner he is!'}
+            ];
+            
+            clearInterval(animationInterval);
+            animationInterval = setInterval(() => {
+                if (count % 2 === 0) {
+                    animation.innerHTML = `${sentences[Math.floor(count/2)].declarative}<br><small>陳述句 Declarative</small>`;
+                } else {
+                    animation.innerHTML = `${sentences[Math.floor(count/2)].exclamation}<br><small>感嘆句 Exclamation</small>`;
+                }
+                count = (count + 1) % (sentences.length * 2);
+            }, 2000);
+            
+            // 播放音效
+            playSound('success');
+        });
+        
+        document.getElementById('pauseWhatAnimation').addEventListener('click', () => {
+            clearInterval(animationInterval);
+            // 播放音效
+            playSound('click');
+        });
+        
+        // So/Such動畫
+        document.getElementById('playSoSuchAnimation').addEventListener('click', () => {
+            const animation = document.getElementById('soSuchAnimation');
+            
+            let count = 0;
+            const sentences = [
+                {exclamation: 'How beautiful the girl is!', emphasis: 'The girl is so beautiful!'},
+                {exclamation: 'What a beautiful girl she is!', emphasis: 'She is such a beautiful girl!'},
+                {exclamation: 'How slowly the snail is crawling!', emphasis: 'The snail is crawling so slowly!'},
+                {exclamation: 'What an interesting movie it was!', emphasis: 'It was such an interesting movie!'},
+                {exclamation: 'How fast he runs!', emphasis: 'He runs so fast!'}
+            ];
+            
+            clearInterval(animationInterval);
+            animationInterval = setInterval(() => {
+                if (count % 2 === 0) {
+                    animation.innerHTML = `${sentences[Math.floor(count/2)].exclamation}<br><small>感嘆句 Exclamation</small>`;
+                } else {
+                    animation.innerHTML = `${sentences[Math.floor(count/2)].emphasis}<br><small>加強語氣 Emphasis</small>`;
+                }
+                count = (count + 1) % (sentences.length * 2);
+            }, 2000);
+            
+            // 播放音效
+            playSound('success');
+        });
+        
+        document.getElementById('pauseSoSuchAnimation').addEventListener('click', () => {
+            clearInterval(animationInterval);
+            // 播放音效
+            playSound('click');
+        });
+        
+        // 音效函數
+        function playSound(type) {
+            // 在實際應用中，這裡會播放相應的音效
+            // 由於這是一個示例，我們只模擬音效播放
+            console.log(`Playing ${type} sound`);
+        }
+        
+        // 初始加載時播放歡迎音效
+        window.addEventListener('load', () => {
+            playSound('welcome');
+        });
+    </script>
+</body>
+</html>
