@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>16 English Tenses Visualization</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #F5F5F5;
+            --text-main: #333;
+            --accent-past: #7FA99B;      /* 綠：過去 */
+            --accent-present: #E2B368;   /* 黃：現在 */
+            --accent-future: #9B8EA9;    /* 紫：未來 */
+            --accent-would: #6F8FA3;     /* 藍灰：過去將來 (Would) */
+            --shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #e0e0e0;
+            font-family: 'Lato', 'Noto Sans TC', sans-serif;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 16:9 Container */
+        #stage {
+            width: 95vw;
+            height: 53.43vw; /* 16:9 based on width */
+            max-height: 95vh;
+            max-width: 168.88vh; /* 16:9 based on height */
+            background: white;
+            position: relative;
+            box-shadow: var(--shadow);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Grid System */
+        .main-content {
+            flex: 1;
+            position: relative;
+            padding: 4% 2% 0 8%; /* Left padding for Y-axis labels */
+            box-sizing: border-box;
+            transition: all 1s ease;
+        }
+
+        .grid-wrapper {
+            display: grid;
+            width: 75%; /* Initial width for 3 columns */
+            height: 85%;
+            grid-template-columns: repeat(3, 1fr); /* Start with 3 */
+            grid-template-rows: repeat(4, 1fr);
+            gap: 10px;
+            position: relative;
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            margin: 0 auto; /* Center horizontally */
+        }
+        
+        .grid-wrapper.expanded {
+            width: 98%; /* Expand for 4 columns */
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        /* Axis Labels */
+        .y-labels-container {
+            position: absolute;
+            left: 0;
+            top: 4%; /* Match padding-top of main-content */
+            height: 85%;
+            width: 8%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            z-index: 5;
+            padding-left: 10px;
+        }
+
+        .y-label {
+            height: 25%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #555;
+            text-align: left;
+            opacity: 0;
+            transition: opacity 1s;
+            line-height: 1.2;
+        }
+
+        .x-labels-container {
+            display: flex;
+            width: 75%; /* Match grid width */
+            margin: 0 auto;
+            justify-content: space-around;
+            padding-bottom: 10px;
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: absolute;
+            bottom: 0;
+            left: 8%; /* Match padding-left of main-content */
+        }
+        
+        .x-labels-container.expanded {
+            width: 98%;
+            left: 2%; /* Adjust for centering */
+        }
+
+        .x-label {
+            flex: 1;
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-weight: bold;
+            font-size: 1.1rem;
+            opacity: 0;
+            transition: opacity 1s;
+        }
+
+        /* Individual Cell */
+        .cell {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.5);
+            border-radius: 8px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s, transform 0.8s;
+            padding: 5px;
+        }
+        
+        .cell.visible { opacity: 1; transform: translateY(0); }
+        .cell.new-col { display: none; } /* Initially hidden */
+        .cell.new-col.active { display: flex; }
+
+        /* Cell Content */
+        .tense-title { 
+            font-size: 0.75rem; 
+            color: #999; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            margin-bottom: 4px; 
+            /* 調整位置，避免與橫軸重疊 */
+            margin-top: -5px;
+        }
+        .tense-ex { 
+            font-family: 'Playfair Display', serif; 
+            font-size: 1.1rem; 
+            color: var(--text-main); 
+            font-weight: bold; 
+            margin-bottom: 8px; 
+            white-space: nowrap; 
+            /* 調整位置，避免與橫軸重疊 */
+            margin-top: -5px;
+        }
+        
+        .svg-container { width: 100%; height: 45px; }
+        .graphic { width: 100%; height: 100%; overflow: visible; }
+
+        /* Colors */
+        .c-past { color: var(--accent-past); fill: var(--accent-past); stroke: var(--accent-past); }
+        .c-present { color: var(--accent-present); fill: var(--accent-present); stroke: var(--accent-present); }
+        .c-future { color: var(--accent-future); fill: var(--accent-future); stroke: var(--accent-future); }
+        .c-would { color: var(--accent-would); fill: var(--accent-would); stroke: var(--accent-would); }
+
+        /* Subtitle Footer */
+        .footer {
+            height: 12%;
+            background: rgba(255,255,255,0.95);
+            border-top: 1px solid #eee;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            padding: 5px 20px;
+        }
+        .sub-en { font-size: 1.1rem; color: #333; font-weight: 600; margin-bottom: 2px; }
+        .sub-zh { font-size: 0.95rem; color: #777; font-weight: 300; }
+
+        /* Animations */
+        .anim-draw { stroke-dasharray: 100; stroke-dashoffset: 100; animation: draw 1.5s forwards ease-in-out; }
+        @keyframes draw { to { stroke-dashoffset: 0; } }
+        
+        .pulse { animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { r: 5; opacity: 1; } 50% { r: 7; opacity: 0.6; } 100% { r: 5; opacity: 1; } }
+
+        /* Intro Overlay */
+        #intro {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 50;
+            transition: opacity 1s;
+        }
+        #intro h1 { font-family: 'Playfair Display'; font-size: 2.5rem; margin-bottom: 10px; }
+
+        /* 控制按鈕 */
+        .controls {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 100;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .control-btn {
+            background: rgba(255, 255, 255, 0.8);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: scale(1.1);
+        }
+        
+        .control-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: #555;
+        }
+        
+        /* 暫停指示器 */
+        .pause-indicator {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            z-index: 90;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div id="stage">
+    <div id="intro">
+        <h1>12 to 16 Tenses</h1>
+        <p style="color:#888">A Complete Visual Guide</p>
+    </div>
+
+    <!-- 控制按鈕 -->
+    <div class="controls">
+        <button class="control-btn" id="pauseBtn">
+            <svg viewBox="0 0 24 24">
+                <path id="pauseIcon" d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+            </svg>
+        </button>
+        <button class="control-btn" id="soundBtn">
+            <svg viewBox="0 0 24 24">
+                <path id="soundIcon" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+            </svg>
+        </button>
+    </div>
+    
+    <!-- 暫停指示器 -->
+    <div class="pause-indicator" id="pauseIndicator">已暫停</div>
+
+    <div class="main-content">
+        <!-- Y Axis Labels -->
+        <div class="y-labels-container">
+            <div class="y-label" id="yl-1">Simple<br><span style="font-size:0.7em;font-weight:300">簡單式</span></div>
+            <div class="y-label" id="yl-2">Progressive<br><span style="font-size:0.7em;font-weight:300">進行式</span></div>
+            <div class="y-label" id="yl-3">Perfect<br><span style="font-size:0.7em;font-weight:300">完成式</span></div>
+            <div class="y-label" id="yl-4">Perfect<br>Prog.<br><span style="font-size:0.7em;font-weight:300">完成進行</span></div>
+        </div>
+
+        <!-- The Grid -->
+        <div class="grid-wrapper" id="grid">
+            <!-- Generated by JS -->
+        </div>
+
+        <!-- X Axis Labels (Absolute positioned inside main content area relative to grid) -->
+        <div class="x-labels-container" id="xLabels">
+            <div class="x-label c-past">PAST<br>過去</div>
+            <div class="x-label c-present">PRESENT<br>現在</div>
+            <div class="x-label c-future">FUTURE<br>未來</div>
+            <!-- 4th Label added dynamically -->
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="sub-en" id="subEn"></div>
+        <div class="sub-zh" id="subZh"></div>
+    </div>
+</div>
+
+<script>
+    const tenses = [
+        // Past (Col 1)
+        { r:1, c:1, name:'Past Simple', ex:'I ate', type:'dot', class:'c-past', en:'Action completed in the past.', zh:'過去發生的動作。' },
+        { r:2, c:1, name:'Past Prog.', ex:'I was eating', type:'wave', class:'c-past', en:'Action ongoing in the past.', zh:'過去正在進行的動作。' },
+        { r:3, c:1, name:'Past Perfect', ex:'I had eaten', type:'bridge-back', class:'c-past', en:'Completed before another past action.', zh:'在過去某動作前已完成（過去的過去）。' },
+        { r:4, c:1, name:'Past Perf. Prog.', ex:'I had been eating', type:'spiral', class:'c-past', en:'Ongoing up to a past moment.', zh:'持續到過去某時刻的動作。' },
+
+        // Present (Col 2)
+        { r:1, c:2, name:'Present Simple', ex:'I eat', type:'dot', class:'c-present', en:'Fact, habit, or general truth.', zh:'現在的事實或習慣。' },
+        { r:2, c:2, name:'Present Prog.', ex:'I am eating', type:'wave', class:'c-present', en:'Happening right now.', zh:'此時此刻正在進行。' },
+        { r:3, c:2, name:'Present Perfect', ex:'I have eaten', type:'bridge-now', class:'c-present', en:'Past action relevant to now.', zh:'過去發生但對現在有影響。' },
+        { r:4, c:2, name:'Present Perf. Prog.', ex:'I have been eating', type:'spiral', class:'c-present', en:'Started in past, continuing now.', zh:'從過去一直持續到現在。' },
+
+        // Future (Col 3)
+        { r:1, c:3, name:'Future Simple', ex:'I will eat', type:'dot', class:'c-future', en:'Action will happen later.', zh:'將來會發生的動作。' },
+        { r:2, c:3, name:'Future Prog.', ex:'I will be eating', type:'wave', class:'c-future', en:'Ongoing at a future time.', zh:'未來某時刻正在進行。' },
+        { r:3, c:3, name:'Future Perfect', ex:'I will have eaten', type:'bridge-fwd', class:'c-future', en:'Finished by a future time.', zh:'未來某時刻之前將會完成。' },
+        { r:4, c:3, name:'Future Perf. Prog.', ex:'I will have been eating', type:'spiral', class:'c-future', en:'Ongoing up to a future time.', zh:'將會一直持續到未來某時刻。' },
+
+        // Future in Past / Would (Col 4 - The Expansion)
+        { r:1, c:4, name:'Future in Past', ex:'I would eat', type:'dash-dot', class:'c-would', en:'Future viewed from the past.', zh:'過去將來式：從過去看未來。' },
+        { r:2, c:4, name:'Cond. Prog.', ex:'I would be eating', type:'dash-wave', class:'c-would', en:'Would be ongoing.', zh:'（當時）將會正在進行。' },
+        { r:3, c:4, name:'Cond. Perfect', ex:'I would have eaten', type:'dash-bridge', class:'c-would', en:'Would have been done.', zh:'（當時）將會已經完成。' },
+        { r:4, c:4, name:'Cond. Perf. Prog.', ex:'I would have been...', type:'dash-spiral', class:'c-would', en:'Would have been ongoing.', zh:'（當時）將會一直持續。' }
+    ];
+
+    const grid = document.getElementById('grid');
+    const subEn = document.getElementById('subEn');
+    const subZh = document.getElementById('subZh');
+    const pauseBtn = document.getElementById('pauseBtn');
+    const soundBtn = document.getElementById('soundBtn');
+    const pauseIndicator = document.getElementById('pauseIndicator');
+    
+    // 狀態變量
+    let isPaused = false;
+    let isSoundOn = true;
+    let animationPaused = false;
+    let audioContext;
+    let oscillator;
+    
+    // 音效初始化
+    function initAudio() {
+        try {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        } catch (e) {
+            console.log('Web Audio API is not supported in this browser');
+            isSoundOn = false;
+            updateSoundButton();
+        }
+    }
+    
+    // 播放音效
+    function playSound(frequency = 440, duration = 0.1) {
+        if (!isSoundOn || !audioContext) return;
+        
+        try {
+            oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.value = frequency;
+            oscillator.type = 'sine';
+            
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + duration);
+        } catch (e) {
+            console.log('Error playing sound:', e);
+        }
+    }
+    
+    // 更新聲音按鈕狀態
+    function updateSoundButton() {
+        const soundIcon = document.getElementById('soundIcon');
+        if (isSoundOn) {
+            soundIcon.setAttribute('d', 'M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z');
+        } else {
+            soundIcon.setAttribute('d', 'M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z');
+        }
+    }
+    
+    // 更新暫停按鈕狀態
+    function updatePauseButton() {
+        const pauseIcon = document.getElementById('pauseIcon');
+        if (isPaused) {
+            pauseIcon.setAttribute('d', 'M8 5v14l11-7z');
+        } else {
+            pauseIcon.setAttribute('d', 'M6 19h4V5H6v14zm8-14v14h4V5h-4z');
+        }
+    }
+    
+    // Helper: Wait function (支持暫停)
+    const wait = ms => new Promise(async r => {
+        if (isPaused && !animationPaused) {
+            pauseIndicator.style.display = 'block';
+            animationPaused = true;
+        }
+        
+        let elapsed = 0;
+        const interval = 10;
+        
+        while (elapsed < ms) {
+            if (!isPaused) {
+                if (animationPaused) {
+                    pauseIndicator.style.display = 'none';
+                    animationPaused = false;
+                }
+                await new Promise(resolve => setTimeout(resolve, interval));
+                elapsed += interval;
+            } else {
+                if (!animationPaused) {
+                    pauseIndicator.style.display = 'block';
+                    animationPaused = true;
+                }
+                await new Promise(resolve => setTimeout(resolve, 100));
+            }
+        }
+        r();
+    });
+
+    // Helper: Create SVG Graphics
+    function makeSVG(type, cssClass) {
+        const ns = "http://www.w3.org/2000/svg";
+        const svg = document.createElementNS(ns, 'svg');
+        svg.setAttribute('class', `graphic ${cssClass}`);
+        svg.setAttribute('viewBox', '0 0 80 40');
+
+        let shape;
+        if(type.includes('dot')) {
+            shape = document.createElementNS(ns, 'circle');
+            shape.setAttribute('cx', 40); shape.setAttribute('cy', 20); shape.setAttribute('r', 5);
+            if(type.includes('dash')) shape.setAttribute('fill', 'none'); 
+            else shape.setAttribute('class', 'pulse');
+            if(type.includes('dash')) { shape.setAttribute('stroke', 'currentColor'); shape.setAttribute('stroke-width', 2); }
+            svg.appendChild(shape);
+        }
+        else if(type.includes('wave')) {
+            shape = document.createElementNS(ns, 'path');
+            shape.setAttribute('d', 'M20,20 Q30,5 40,20 T60,20');
+            shape.setAttribute('fill', 'none'); shape.setAttribute('stroke', 'currentColor'); shape.setAttribute('stroke-width', 3); shape.setAttribute('stroke-linecap', 'round');
+            if(type.includes('dash')) shape.setAttribute('stroke-dasharray', '4,4');
+            else shape.setAttribute('class', 'anim-draw');
+            svg.appendChild(shape);
+        }
+        else if(type.includes('bridge')) {
+            shape = document.createElementNS(ns, 'path');
+            // Arc shape
+            if(type.includes('back')) shape.setAttribute('d', 'M20,20 Q30,10 40,20');
+            else if(type.includes('now')) shape.setAttribute('d', 'M20,20 Q30,5 40,20');
+            else shape.setAttribute('d', 'M40,20 Q50,5 60,20');
+            
+            shape.setAttribute('fill', 'none'); shape.setAttribute('stroke', 'currentColor'); shape.setAttribute('stroke-width', 3);
+            if(type.includes('dash')) shape.setAttribute('stroke-dasharray', '4,4');
+            else shape.setAttribute('class', 'anim-draw');
+            svg.appendChild(shape);
+            
+            // Add Arrowhead or Dot
+            const tip = document.createElementNS(ns, 'circle');
+            tip.setAttribute('cx', type.includes('fwd')?60:40); tip.setAttribute('cy', 20); tip.setAttribute('r', 3); tip.setAttribute('fill', 'currentColor');
+            svg.appendChild(tip);
+        }
+        else if(type.includes('spiral')) {
+            shape = document.createElementNS(ns, 'path');
+            shape.setAttribute('d', 'M10,20 Q25,10 40,20 T60,20');
+            shape.setAttribute('fill', 'none'); shape.setAttribute('stroke', 'currentColor'); shape.setAttribute('stroke-width', 3);
+            if(type.includes('dash')) shape.setAttribute('stroke-dasharray', '4,4');
+            else shape.setAttribute('class', 'anim-draw');
+            
+            const stop = document.createElementNS(ns, 'rect');
+            stop.setAttribute('x', 60); stop.setAttribute('y', 15); stop.setAttribute('width', 2); stop.setAttribute('height', 10); stop.setAttribute('fill', 'currentColor');
+            
+            svg.appendChild(shape);
+            svg.appendChild(stop);
+        }
+
+        return svg;
+    }
+
+    function createCells() {
+        // Sort tenses by row then column so we can append correctly in grid flow
+        // But wait, grid auto-placement fills row by row if we define columns.
+        // Let's insert 16 divs. The 4th column ones will be hidden initially.
+        
+        // We need to insert them in the correct order for the DOM: Row 1 (1,2,3,4), Row 2...
+        // tenses array is organized by columns for data, let's map properly.
+        
+        let sortedTenses = [];
+        for(let r=1; r<=4; r++) {
+            for(let c=1; c<=4; c++) {
+                let t = tenses.find(x => x.r === r && x.c === c);
+                if(t) sortedTenses.push(t);
+            }
+        }
+
+        sortedTenses.forEach(t => {
+            const cell = document.createElement('div');
+            cell.className = `cell ${t.class}`;
+            if(t.c === 4) cell.classList.add('new-col'); // Hidden initially
+            cell.id = `cell-${t.r}-${t.c}`;
+
+            const svg = makeSVG(t.type, t.class);
+            const title = document.createElement('div'); title.className='tense-title'; title.innerText = t.name;
+            const ex = document.createElement('div'); ex.className='tense-ex'; ex.innerText = t.ex;
+
+            const svgCont = document.createElement('div'); svgCont.className='svg-container';
+            svgCont.appendChild(svg);
+
+            cell.appendChild(svgCont);
+            cell.appendChild(title);
+            cell.appendChild(ex);
+            
+            grid.appendChild(cell);
+        });
+    }
+
+    function setSubtitle(e, z) {
+        subEn.style.opacity = 0;
+        subZh.style.opacity = 0;
+        setTimeout(() => {
+            subEn.innerText = e;
+            subZh.innerText = z;
+            subEn.style.opacity = 1;
+            subZh.style.opacity = 1;
+        }, 300);
+    }
+
+    async function play() {
+        createCells();
+        await wait(500);
+        document.getElementById('intro').style.opacity = 0;
+        await wait(1000);
+        document.getElementById('intro').style.display = 'none';
+
+        // 1. Show Axis Labels
+        setSubtitle("Time flows from Past to Future.", "時間之河：從過去流向未來。");
+        playSound(523.25, 0.2); // C5
+        document.querySelectorAll('.x-label').forEach((el, i) => {
+            if(i<3) setTimeout(() => {
+                el.style.opacity = 1;
+                playSound(659.25 + i*65, 0.1); // E5, F5, G5
+            }, i*300);
+        });
+        await wait(1500);
+
+        setSubtitle("State indicates the shape of the action.", "狀態（縱軸）表示動作的樣貌。");
+        playSound(523.25, 0.2); // C5
+        document.querySelectorAll('.y-label').forEach((el, i) => {
+            setTimeout(() => {
+                el.style.opacity = 1;
+                playSound(392.00 + i*65, 0.1); // G4, A4, B4, C5
+            }, i*300);
+        });
+        await wait(2000);
+
+        // 2. Reveal 12 Tenses (Column by Column usually clearer for Time, but Row by Row better for aspect comparison. Let's do Row by Row)
+        
+        // Row 1: Simple
+        setSubtitle("Simple Tense: Just the facts.", "簡單式：單純陳述事實。");
+        playSound(523.25, 0.2); // C5
+        for(let c=1; c<=3; c++) {
+            let cell = document.getElementById(`cell-1-${c}`);
+            cell.classList.add('visible');
+            playSound(523.25 + c*65, 0.1); // C5, D5, E5
+            await wait(400);
+        }
+        await wait(1500);
+
+        // Row 2: Progressive
+        setSubtitle("Progressive: Ongoing action like a video.", "進行式：像影片一樣持續進行中。");
+        playSound(523.25, 0.2); // C5
+        for(let c=1; c<=3; c++) {
+            let cell = document.getElementById(`cell-2-${c}`);
+            cell.classList.add('visible');
+            playSound(523.25 + c*65, 0.1); // C5, D5, E5
+            await wait(400);
+        }
+        await wait(1500);
+
+        // Row 3: Perfect
+        setSubtitle("Perfect: Completed or connected to a point.", "完成式：強調「已經完成」或與某時刻的關聯。");
+        playSound(523.25, 0.2); // C5
+        for(let c=1; c<=3; c++) {
+            let cell = document.getElementById(`cell-3-${c}`);
+            cell.classList.add('visible');
+            playSound(523.25 + c*65, 0.1); // C5, D5, E5
+            await wait(400);
+        }
+        await wait(1500);
+
+        // Row 4: Perfect Progressive
+        setSubtitle("Perfect Progressive: Duration leading up to a point.", "完成進行式：一直持續到某個時間點。");
+        playSound(523.25, 0.2); // C5
+        for(let c=1; c<=3; c++) {
+            let cell = document.getElementById(`cell-4-${c}`);
+            cell.classList.add('visible');
+            playSound(523.25 + c*65, 0.1); // C5, D5, E5
+            await wait(400);
+        }
+        await wait(2000);
+
+        setSubtitle("This is the 12-Tense System we know.", "這就是我們熟悉的 12 種時態。");
+        playSound(659.25, 0.3); // E5
+        await wait(3000);
+
+        // 3. EXPANSION PHASE
+        setSubtitle("But wait... what if we look at the future from the past?", "但是...如果我們站在「過去」預測「未來」呢？");
+        playSound(783.99, 0.3); // G5
+        await wait(3000);
+
+        // Animate Width Expansion
+        document.getElementById('grid').classList.add('expanded');
+        document.getElementById('xLabels').classList.add('expanded');
+        
+        // Add 4th Label
+        const labelContainer = document.getElementById('xLabels');
+        const newLabel = document.createElement('div');
+        newLabel.className = 'x-label c-would';
+        newLabel.innerHTML = "FUTURE in PAST<br>過去將來";
+        newLabel.style.opacity = 0;
+        labelContainer.appendChild(newLabel);
+        
+        await wait(1500);
+        newLabel.style.opacity = 1;
+        playSound(880.00, 0.3); // A5
+        
+        // Show 4th Column Cells
+        setSubtitle("We change 'Will' to 'Would'. The 16 Tenses.", "將 Will 變成 Would，這就是完整的 16 時態。");
+        playSound(987.77, 0.3); // B5
+        
+        const col4 = document.querySelectorAll('.cell.new-col');
+        col4.forEach(c => c.classList.add('active')); // display:flex
+        
+        // Slight delay for opacity transition
+        await wait(100);
+        for(let r=1; r<=4; r++) {
+            let cell = document.getElementById(`cell-${r}-4`);
+            cell.classList.add('visible');
+            playSound(523.25 + r*65, 0.2); // C5, D5, E5, F5
+            await wait(500);
+        }
+
+        await wait(2000);
+        setSubtitle("16 Tenses. A complete map of English time.", "16 種時態，完整的英文時間地圖。");
+        playSound(1046.50, 0.5); // C6
+    }
+
+    // 事件監聽器
+    pauseBtn.addEventListener('click', () => {
+        isPaused = !isPaused;
+        updatePauseButton();
+        playSound(329.63, 0.1); // E4
+    });
+    
+    soundBtn.addEventListener('click', () => {
+        isSoundOn = !isSoundOn;
+        updateSoundButton();
+        if (isSoundOn) {
+            playSound(523.25, 0.1); // C5
+        }
+    });
+
+    window.onload = () => {
+        initAudio();
+        play();
+    };
+</script>
+
+</body>
+</html>
