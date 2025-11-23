@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Grammar: 5 Sentence Patterns</title>
     <style>
+        /* 原有樣式保持不變 */
         @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;600&family=Noto+Sans+TC:wght@400;500;700&display=swap');
 
         :root {
@@ -284,13 +285,53 @@
         }
         .music-btn:hover { transform: scale(1.1); }
 
+        /* 新增暫停按鈕樣式 */
+        .pause-btn {
+            position: absolute; top: 20px; right: 80px; font-size: 1.8rem; cursor: pointer; z-index: 200;
+            background: white; width: 50px; height: 50px; border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: transform 0.2s;
+        }
+        .pause-btn:hover { transform: scale(1.1); }
+
+        /* 暫停覆蓋層 */
+        .pause-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255,255,255,0.85);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 150;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        .pause-overlay.active { opacity: 1; pointer-events: all; }
+        .pause-overlay h2 {
+            font-family: var(--font-en);
+            font-size: 3rem;
+            color: var(--text-main);
+            margin-bottom: 20px;
+        }
+
     </style>
 </head>
 <body>
 
     <div id="app-stage">
+        <!-- 新增暫停按鈕 -->
+        <div class="pause-btn" id="pauseToggle">⏸️</div>
+        
         <!-- Music Toggle -->
         <div class="music-btn" id="musicToggle">🔇</div>
+        
+        <!-- 暫停覆蓋層 -->
+        <div class="pause-overlay" id="pauseOverlay">
+            <h2>Paused</h2>
+            <p style="font-size: 1.2rem; color: #666; margin-bottom: 30px;">點擊繼續按鈕或暫停鍵恢復</p>
+            <button class="btn-primary" onclick="togglePause()">繼續</button>
+        </div>
         
         <!-- Bubbles Container -->
         <div id="bubbles"></div>
@@ -498,6 +539,8 @@
             exCn: document.getElementById('exCn'),
             bar: document.getElementById('progressBar'),
             musicBtn: document.getElementById('musicToggle'),
+            pauseBtn: document.getElementById('pauseToggle'),
+            pauseOverlay: document.getElementById('pauseOverlay'),
             screens: {
                 start: document.getElementById('startScreen'),
                 quiz: document.getElementById('quizScreen'),
@@ -505,9 +548,63 @@
             }
         };
 
+        // --- 新增暫停系統 ---
+        let isPaused = false;
+        let pauseResolve = null;
+        let pausePromise = null;
+
+        function togglePause() {
+            isPaused = !isPaused;
+            
+            if (isPaused) {
+                // 暫停狀態
+                els.pauseOverlay.classList.add('active');
+                els.pauseBtn.innerHTML = '▶️';
+                
+                // 暫停音效
+                AudioSys.ctx.suspend();
+                
+                // 創建一個Promise，當恢復時解決它
+                pausePromise = new Promise(resolve => {
+                    pauseResolve = resolve;
+                });
+            } else {
+                // 恢復狀態
+                els.pauseOverlay.classList.remove('active');
+                els.pauseBtn.innerHTML = '⏸️';
+                
+                // 恢復音效
+                if (!AudioSys.muted) {
+                    AudioSys.ctx.resume();
+                }
+                
+                // 解決Promise，讓等待的動畫繼續
+                if (pauseResolve) {
+                    pauseResolve();
+                    pauseResolve = null;
+                }
+            }
+        }
+
+        // 修改sleep函數以支持暫停
+        async function sleep(ms) {
+            const start = Date.now();
+            let elapsed = 0;
+            
+            while (elapsed < ms) {
+                if (isPaused) {
+                    await pausePromise;
+                    // 重新計算剩餘時間
+                    elapsed = Date.now() - start;
+                } else {
+                    const remaining = ms - elapsed;
+                    await new Promise(r => setTimeout(r, Math.min(100, remaining)));
+                    elapsed = Date.now() - start;
+                }
+            }
+        }
+
         // --- Helper Functions ---
-        const sleep = ms => new Promise(r => setTimeout(r, ms));
-        
         function createBubbles() {
             const container = document.getElementById('bubbles');
             for(let i=0; i<15; i++) {
@@ -735,6 +832,9 @@
             const isMuted = AudioSys.toggle();
             els.musicBtn.innerText = isMuted ? "🔇" : "🔊";
         };
+
+        // 綁定暫停按鈕事件
+        els.pauseBtn.onclick = togglePause;
 
         window.onload = createBubbles;
 
