@@ -287,62 +287,71 @@
       document.getElementById("review-verb-list").innerHTML = msg;
     }
   }
+function parseCSV(csvText) {
+  const rows = csvText.trim().split(/\r?\n/).filter(Boolean);
+  if (!rows.length) return [];
 
-  function parseCSV(csvText) {
-    // 簡單 CSV parser（支援 quoted 欄）
-    const rows = csvText.trim().split(/\r?\n/).filter(Boolean);
-    if (!rows.length) return [];
+  const rawHeaders = splitCSVLine(rows[0]);
+  const headers = rawHeaders.map(h => normalizeHeader(h));
 
-    const first = splitCSVLine(rows[0]);
-    const hasHeader = first.some(h => /type|v1|v2|v3|meaning|example/i.test(h));
+  const data = [];
+  for (let i = 1; i < rows.length; i++) {
+    const cols = splitCSVLine(rows[i]);
+    const obj = {};
+    headers.forEach((h, idx) => {
+      obj[h] = (cols[idx] ?? "").trim();
+    });
 
-    let headers = [];
-    let startIdx = 0;
-    if (hasHeader) {
-      headers = first.map(h => h.trim());
-      startIdx = 1;
+    data.push({
+      type: obj.type || "",
+      v1: obj.v1 || "",
+      v1_example: obj.v1_example || "",
+      v2: obj.v2 || "",
+      v2_example: obj.v2_example || "",
+      v3: obj.v3 || "",
+      v3_example: obj.v3_example || "",
+      meaning: obj.meaning || ""
+    });
+  }
+
+  return data.filter(v => v.v1 && v.v2 && v.v3);
+}
+
+function normalizeHeader(h) {
+  const s = h.trim().toLowerCase();
+
+  if (s.includes("type")) return "type";
+  if (s.includes("v1") && s.includes("例句")) return "v1_example";
+  if (s.includes("v2") && s.includes("例句")) return "v2_example";
+  if (s.includes("v3") && s.includes("例句")) return "v3_example";
+
+  if (s.includes("v1")) return "v1";
+  if (s.includes("v2")) return "v2";
+  if (s.includes("v3")) return "v3";
+
+  if (s.includes("中文") || s.includes("meaning")) return "meaning";
+
+  // 其他欄位先原樣（但我們不一定會用到）
+  return s.replace(/\s+/g, "_");
+}
+
+function splitCSVLine(line) {
+  const result = [];
+  let cur = "", inQuotes = false;
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (ch === '"') {
+      if (inQuotes && line[i + 1] === '"') { cur += '"'; i++; }
+      else inQuotes = !inQuotes;
+    } else if (ch === ',' && !inQuotes) {
+      result.push(cur); cur = "";
     } else {
-      // fallback 預設順序
-      headers = ["type","v1","v1_example","v2","v2_example","v3","v3_example","meaning"];
-      startIdx = 0;
+      cur += ch;
     }
-
-    const data = [];
-    for (let i = startIdx; i < rows.length; i++) {
-      const cols = splitCSVLine(rows[i]);
-      const obj = {};
-      headers.forEach((h, idx) => obj[h] = (cols[idx] ?? "").trim());
-
-      // 欄位統一整理
-      data.push({
-        type: obj.type || "",
-        v1: obj.v1 || obj.V1 || "",
-        v1_example: obj.v1_example || obj.V1_example || obj.example1 || "",
-        v2: obj.v2 || obj.V2 || "",
-        v2_example: obj.v2_example || obj.V2_example || obj.example2 || "",
-        v3: obj.v3 || obj.V3 || "",
-        v3_example: obj.v3_example || obj.V3_example || obj.example3 || "",
-        meaning: obj.meaning || obj.translation || obj.chinese || ""
-      });
-    }
-    return data.filter(v => v.v1 && v.v2 && v.v3);
   }
-
-  function splitCSVLine(line) {
-    const result = [];
-    let cur = "", inQuotes = false;
-    for (let i=0;i<line.length;i++){
-      const ch = line[i];
-      if (ch === '"') {
-        if (inQuotes && line[i+1] === '"') { cur += '"'; i++; }
-        else inQuotes = !inQuotes;
-      } else if (ch === ',' && !inQuotes) {
-        result.push(cur); cur = "";
-      } else cur += ch;
-    }
-    result.push(cur);
-    return result;
-  }
+  result.push(cur);
+  return result;
+}
 
   function inferType(v1, v2, v3) {
     if (v1===v2 && v2===v3) return "AAA";
