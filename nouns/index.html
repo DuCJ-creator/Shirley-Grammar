@@ -381,6 +381,57 @@
       font-size: 1.2rem;
     }
 
+    /* 不規則複數練習平台樣式 */
+    .practice-platform {
+      background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
+      border-radius: 12px;
+      padding: 25px;
+      margin: 25px 0;
+      border: 2px solid var(--elegant-rose);
+      text-align: center;
+    }
+
+    .platform-title {
+      font-size: 1.4rem;
+      color: var(--deep-olive);
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .platform-title::before {
+      content: "🎮";
+      font-size: 1.3rem;
+    }
+
+    .platform-description {
+      color: var(--soft-charcoal);
+      margin-bottom: 20px;
+      font-size: 1rem;
+    }
+
+    .platform-button {
+      display: inline-block;
+      background: var(--elegant-rose);
+      color: white;
+      text-decoration: none;
+      padding: 12px 30px;
+      border-radius: 30px;
+      font-weight: 600;
+      transition: all 0.3s;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .platform-button:hover {
+      background: var(--deep-olive);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
     /* 響應式設計 */
     @media (max-width: 768px) {
       .container {
@@ -441,6 +492,14 @@
         margin: 0 4px 8px;
         font-size: 0.9rem;
       }
+
+      .practice-platform {
+        padding: 20px;
+      }
+
+      .platform-title {
+        font-size: 1.2rem;
+      }
     }
 
     @media (max-width: 480px) {
@@ -467,6 +526,15 @@
       .word-card {
         padding: 8px;
         font-size: 0.85rem;
+      }
+
+      .practice-platform {
+        padding: 15px;
+      }
+
+      .platform-button {
+        padding: 10px 20px;
+        font-size: 0.9rem;
       }
     }
   </style>
@@ -550,6 +618,26 @@
         <div class="word-card" onclick="speak('mouse mice')">mouse → mice</div>
         <div class="word-card" onclick="speak('goose geese')">goose → geese</div>
         <div class="word-card" onclick="speak('fish fish')">fish → fish</div>
+      </div>
+
+      <!-- 新增的不規則複數練習平台 -->
+      <div class="practice-platform">
+        <div class="platform-title">🎮 不規則複數練習平台</div>
+        <div class="platform-description">
+          想要更多不規則複數的練習嗎？點擊下方按鈕進入互動式練習平台，透過遊戲化學習強化記憶！
+        </div>
+        <a href="https://ducj-creator.github.io/Shirley-Grammar/irregular/nouns/" 
+           target="_blank" 
+           class="platform-button">
+          開始練習 →
+        </a>
+        <div class="note" style="margin-top: 15px; text-align: left;">
+          <strong>💡 平台特色：</strong><br>
+          • 互動式練習題目<br>
+          • 即時反饋與解析<br>
+          • 多種練習模式<br>
+          • 學習進度追蹤
+        </div>
       </div>
 
       <h3>🚫 常見不可數名詞</h3>
