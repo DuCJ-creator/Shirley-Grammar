@@ -294,6 +294,79 @@
             text-align: center;
             width: 120px;
         }
+
+        /* 新增的不規則動詞練習平台樣式 */
+        .practice-platform {
+            background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 2px solid var(--accent);
+            text-align: center;
+        }
+
+        .platform-title {
+            font-size: 1.4rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .platform-title::before {
+            content: "🎯";
+            font-size: 1.3rem;
+        }
+
+        .platform-description {
+            color: var(--dark);
+            margin-bottom: 20px;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .platform-button {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 10px 5px;
+        }
+
+        .platform-button:hover {
+            background: #d4941a;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(218, 165, 32, 0.3);
+        }
+
+        .platform-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .feature-item {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .feature-item i {
+            color: var(--primary);
+            margin-right: 8px;
+        }
         
         @media (max-width: 768px) {
             .tabs {
@@ -314,6 +387,18 @@
             
             .participle-list {
                 grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+
+            .platform-features {
+                grid-template-columns: 1fr;
+            }
+
+            .practice-platform {
+                padding: 20px;
+            }
+
+            .platform-title {
+                font-size: 1.2rem;
             }
         }
     </style>
@@ -417,6 +502,44 @@
                 <div class="note-box">
                     <p><strong>注意：</strong>過去分詞作為形容詞使用時，與完成式或被動語態中的過去分詞形式相同，但功能不同。</p>
                     <p><strong>Note:</strong> When past participles are used as adjectives, they have the same form as in perfect tenses or passive voice but serve different functions.</p>
+                </div>
+            </div>
+
+            <!-- 新增的不規則動詞練習平台 -->
+            <div class="practice-platform">
+                <div class="platform-title">🎯 不規則動詞練習平台</div>
+                <div class="platform-description">
+                    想要掌握不規則動詞的過去分詞變化嗎？點擊下方按鈕進入互動式練習平台，透過多種練習模式強化不規則動詞的記憶！
+                </div>
+                <a href="https://ducj-creator.github.io/Shirley-Grammar/irregular/verbs/" 
+                   target="_blank" 
+                   class="platform-button">
+                    <i class="fas fa-gamepad"></i> 開始練習不規則動詞
+                </a>
+                <div class="platform-features">
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>互動練習</strong><br>
+                        多種題型選擇
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-chart-line"></i>
+                        <strong>進度追蹤</strong><br>
+                        記錄學習成果
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-lightbulb"></i>
+                        <strong>即時反饋</strong><br>
+                        立即知道對錯
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-trophy"></i>
+                        <strong>成就系統</strong><br>
+                        激勵學習動力
+                    </div>
+                </div>
+                <div class="note-box" style="margin-top: 15px;">
+                    <strong>💡 學習提示：</strong> 過去分詞的學習需要掌握不規則動詞變化，建議每天練習10-15分鐘，持續一週即可看到明顯進步！
                 </div>
             </div>
             
