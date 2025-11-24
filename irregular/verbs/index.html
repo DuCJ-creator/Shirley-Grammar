@@ -114,7 +114,51 @@
 
     .hidden { display:none; }
 
-    /* ===== Quiz（一次 10 題一起寫） ===== */
+    /* ===== Review: 遮答案輸入區 ===== */
+    .review-inputs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin-top: 4px;
+    }
+    .review-inputs label {
+      font-size: .75rem;
+      color:#555;
+      margin-bottom: 2px;
+      display:block;
+    }
+    .review-inputs input {
+      width: 100%;
+      padding: 6px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: .9rem;
+      background:#fff;
+    }
+    .review-actions {
+      display:flex; gap:6px; margin-top:6px; flex-wrap:wrap;
+    }
+    .review-btn {
+      padding: 5px 10px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: .85rem;
+      background:#3498db; color:#fff;
+    }
+    .review-btn.secondary { background:#7f8c8d; }
+    .review-feedback {
+      margin-top:6px;
+      padding:6px;
+      background:#f8f9fa;
+      border-radius:6px;
+      font-size:.88rem;
+      line-height:1.4;
+    }
+    .ok { color:#1e7e34; font-weight:700; }
+    .bad { color:#c0392b; font-weight:700; }
+
+    /* ===== Quiz（更緊湊） ===== */
     .quiz-start { text-align:center; padding: 10px; }
     .quiz-start p { font-size: .9rem; margin-bottom: 4px; }
     .quiz-submit {
@@ -124,24 +168,42 @@
 
     .quiz-container { margin-top: 6px; }
     .quiz-hint {
-      background:#f1f7ff; border-left:4px solid #3498db; padding:6px 8px; border-radius:6px;
-      font-size:.9rem; margin-bottom: 8px;
-    }
-    .quiz-list { display: grid; gap: 6px; }
-    .quiz-item {
-      padding: 8px; border:1px solid #eee; border-radius:6px; background:#fafafa;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 6px; align-items:center;
-    }
-    .quiz-item .q-title { grid-column: 1 / -1; font-weight: 700; font-size: .95rem; }
-    .quiz-item label { font-size: .8rem; color:#555; }
-    .quiz-item input {
-      width: 100%; padding: 6px; border:1px solid #ddd; border-radius:4px; font-size:.9rem;
+      background:#f1f7ff; border-left:4px solid #3498db; padding:5px 7px; border-radius:6px;
+      font-size:.88rem; margin-bottom: 6px;
     }
 
-    .quiz-result {
-      margin-top: 10px; padding: 10px; background:#f8f9fa; border-radius:8px;
+    /* 每題一列：V1 | V2 | V3 */
+    .quiz-list { display: grid; gap: 4px; }
+    .quiz-item {
+      display:grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 4px;
+      align-items:center;
+      padding: 6px;
+      border:1px solid #eee;
+      border-radius:6px;
+      background:#fafafa;
     }
-    .result-score { font-size: 1.3rem; font-weight: 800; margin: 6px 0; color:#2c3e50; }
+    .quiz-item .q-title {
+      font-weight:700; font-size:.92rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }
+    .quiz-item .q-meaning {
+      font-weight:400; color:#666; font-size:.78rem;
+    }
+    .quiz-item input {
+      width:100%;
+      padding:5px 6px;
+      border:1px solid #ddd;
+      border-radius:4px;
+      font-size:.9rem;
+      height:30px;
+    }
+    .quiz-item input::placeholder { font-size:.8rem; color:#999; }
+
+    .quiz-result {
+      margin-top: 8px; padding: 8px; background:#f8f9fa; border-radius:8px;
+    }
+    .result-score { font-size: 1.25rem; font-weight: 800; margin: 6px 0; color:#2c3e50; }
     .result-item { padding:6px; border-bottom:1px solid #eee; font-size:.88rem; }
     .result-item.correct { background:#d4edda; }
     .result-item.incorrect { background:#f8d7da; }
@@ -149,7 +211,17 @@
     @media (max-width: 768px) {
       .verb-list { grid-template-columns: repeat(auto-fill, minmax(120px,1fr)); }
       .verb-forms { grid-template-columns: 1fr; }
-      .quiz-item { grid-template-columns: 1fr; }
+      .review-inputs { grid-template-columns: 1fr; }
+
+      .quiz-item{
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+          "title title"
+          "v2 v3";
+      }
+      .quiz-item .q-title-wrap{ grid-area:title; }
+      .quiz-item .v2{ grid-area:v2; }
+      .quiz-item .v3{ grid-area:v3; }
     }
   </style>
 </head>
@@ -189,7 +261,7 @@
     <!-- 複習模式 -->
     <div class="section" id="review-section">
       <h2 style="font-size:1.05rem;margin-bottom:4px;">複習不規則動詞</h2>
-      <p style="font-size:.85rem;color:#666;">點擊動詞查看詳細資訊</p>
+      <p style="font-size:.85rem;color:#666;">先自己寫 V2/V3，再翻答案</p>
 
       <div class="filter-options">
         <button class="filter-btn active" data-type="all">全部</button>
@@ -220,7 +292,7 @@
 
         <form id="quiz-form">
           <div class="quiz-list" id="quiz-list"></div>
-          <button type="submit" class="quiz-submit" style="width:100%;">一次提交答案</button>
+          <button type="submit" class="quiz-submit" style="width:100%;margin-top:6px;">一次提交答案</button>
         </form>
 
         <div class="quiz-result hidden" id="quiz-result"></div>
@@ -396,7 +468,7 @@
     });
   }
 
-  // ✅ Study vs Review 差異
+  // ✅ Study vs Review 差異：Review 先輸入再翻答案
   function showVerbDetail(mode, verb) {
     const detailContainer = document.getElementById(`${mode}-verb-detail`);
     const isReview = mode === "review";
@@ -416,16 +488,7 @@
 
           ${
             isReview
-              ? `
-                <div class="verb-form" id="${mode}-hidden-v2" style="display:none;">
-                  <h4>過去式 (V2)</h4>
-                  <p>${verb.v2} <button class="pronunciation-btn" data-word="${verb.v2}">🔊</button></p>
-                </div>
-                <div class="verb-form" id="${mode}-hidden-v3" style="display:none;">
-                  <h4>過去分詞 (V3)</h4>
-                  <p>${verb.v3} <button class="pronunciation-btn" data-word="${verb.v3}">🔊</button></p>
-                </div>
-              `
+              ? ``
               : `
                 <div class="verb-form">
                   <h4>過去式 (V2)</h4>
@@ -441,7 +504,25 @@
 
         ${
           isReview
-            ? `<button class="quiz-submit" id="reveal-btn" style="font-size:.85rem;padding:5px 10px;margin-top:4px;">顯示答案</button>`
+            ? `
+            <div class="review-inputs">
+              <div>
+                <label>我寫的 V2（過去式）</label>
+                <input id="rev-v2" type="text" placeholder="請輸入 V2">
+              </div>
+              <div>
+                <label>我寫的 V3（過去分詞）</label>
+                <input id="rev-v3" type="text" placeholder="請輸入 V3">
+              </div>
+            </div>
+
+            <div class="review-actions">
+              <button class="review-btn" id="rev-check">檢查 / 翻答案</button>
+              <button class="review-btn secondary" id="rev-clear">清空重寫</button>
+            </div>
+
+            <div class="review-feedback hidden" id="rev-feedback"></div>
+            `
             : ``
         }
 
@@ -470,13 +551,41 @@
       toggle.textContent = show ? "隱藏例句" : "顯示例句";
     };
 
-    // Review 模式：翻答案
+    // Review 檢查 + 翻答案
     if (isReview) {
-      const revealBtn = detailContainer.querySelector("#reveal-btn");
-      revealBtn.onclick = () => {
-        detailContainer.querySelector(`#${mode}-hidden-v2`).style.display = "block";
-        detailContainer.querySelector(`#${mode}-hidden-v3`).style.display = "block";
-        revealBtn.remove();
+      const v2Input = detailContainer.querySelector("#rev-v2");
+      const v3Input = detailContainer.querySelector("#rev-v3");
+      const feedback = detailContainer.querySelector("#rev-feedback");
+
+      detailContainer.querySelector("#rev-check").onclick = () => {
+        const a2 = (v2Input.value || "").trim().toLowerCase();
+        const a3 = (v3Input.value || "").trim().toLowerCase();
+        const c2 = (verb.v2 || "").toLowerCase();
+        const c3 = (verb.v3 || "").toLowerCase();
+
+        const v2Ok = a2 === c2;
+        const v3Ok = a3 === c3;
+
+        feedback.classList.remove("hidden");
+        feedback.innerHTML = `
+          <div><b>正確答案</b>：V2 = ${verb.v2} / V3 = ${verb.v3}</div>
+          <div style="margin-top:4px;">
+            V2：${v2Ok ? `<span class="ok">✓ 正確</span>` : `<span class="bad">✗ 錯誤</span>`}
+            （你寫：${a2 || "-"}）
+          </div>
+          <div>
+            V3：${v3Ok ? `<span class="ok">✓ 正確</span>` : `<span class="bad">✗ 錯誤</span>`}
+            （你寫：${a3 || "-"}）
+          </div>
+        `;
+      };
+
+      detailContainer.querySelector("#rev-clear").onclick = () => {
+        v2Input.value = "";
+        v3Input.value = "";
+        feedback.classList.add("hidden");
+        feedback.innerHTML = "";
+        v2Input.focus();
       };
     }
   }
@@ -512,13 +621,13 @@
       const item = document.createElement("div");
       item.className = "quiz-item";
       item.innerHTML = `
-        <div class="q-title">${idx+1}. ${v.v1} <small style="font-weight:400;color:#666;">(${v.meaning || ""})</small></div>
+        <div class="q-title-wrap">
+          <div class="q-title">${idx+1}. ${v.v1}</div>
+          <div class="q-meaning">${v.meaning || ""}</div>
+        </div>
 
-        <label>V2 過去式</label>
-        <input type="text" name="v2-${idx}" autocomplete="off" required />
-
-        <label>V3 過去分詞</label>
-        <input type="text" name="v3-${idx}" autocomplete="off" required />
+        <input class="v2" type="text" name="v2-${idx}" placeholder="V2" autocomplete="off" required />
+        <input class="v3" type="text" name="v3-${idx}" placeholder="V3" autocomplete="off" required />
       `;
       list.appendChild(item);
     });
