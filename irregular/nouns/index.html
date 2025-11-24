@@ -10,10 +10,9 @@
     *{box-sizing:border-box;margin:0;padding:0}
 
     :root{
-      /* 與不規則動詞區隔的配色：綠+橘 */
-      --primary:#16a085;      /* 綠 */
-      --primary-dark:#0e6f5f; /* 深綠 */
-      --accent:#f39c12;       /* 橘 */
+      --primary:#16a085;
+      --primary-dark:#0e6f5f;
+      --accent:#f39c12;
       --bg:#f4f7f6;
       --card:#ffffff;
       --muted:#6b7d84;
@@ -117,8 +116,7 @@
     .noun-header h3{font-size:1.1rem}
     .noun-category{
       padding:2px 8px;border-radius:10px;color:#fff;font-size:.75rem;font-weight:700;
-      background:var(--accent);
-      flex-shrink:0;
+      background:var(--accent);flex-shrink:0;
     }
 
     .noun-forms{
@@ -132,8 +130,7 @@
     .noun-form p{font-weight:700;font-size:.95rem;color:#0e2f2a;display:flex;align-items:center;gap:6px}
 
     .mask{
-      display:inline-block;
-      padding:2px 6px;border-radius:4px;background:#e9f3f1;color:#1b3b35;
+      display:inline-block;padding:2px 6px;border-radius:4px;background:#e9f3f1;color:#1b3b35;
       font-weight:700;letter-spacing:.5px;
     }
 
@@ -152,39 +149,29 @@
     }
     .example strong{font-style:normal}
 
-    /* Review: input row */
     .review-row{
-      display:flex;gap:6px;align-items:center;flex-wrap:wrap;
-      margin-top:4px;
+      display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:4px;
     }
     .review-input{
-      padding:6px 8px;border:1px solid #cfd9d6;border-radius:6px;font-size:.95rem;
-      min-width:140px;
+      padding:6px 8px;border:1px solid #cfd9d6;border-radius:6px;font-size:.95rem;min-width:140px;
     }
     .review-btn{
       padding:6px 10px;border:0;border-radius:6px;cursor:pointer;font-size:.85rem;font-weight:600;
       background:#e9f3f1;color:#0f3a33;
     }
     .review-btn.primary{background:var(--primary);color:#fff}
-    .review-feedback{
-      font-size:.85rem;margin-top:4px;font-weight:700;
-    }
+    .review-feedback{font-size:.85rem;margin-top:4px;font-weight:700}
     .ok{color:#1e7f4b}
     .bad{color:#c0392b}
 
-    /* Quiz compact */
     .quiz-start{padding:8px;text-align:center}
     .quiz-container{padding:4px}
-    .quiz-grid{
-      display:grid;grid-template-columns:1fr;gap:6px;margin-top:6px;
-    }
+    .quiz-grid{display:grid;grid-template-columns:1fr;gap:6px;margin-top:6px}
     .quiz-item{
       border:1px solid var(--line);border-radius:8px;padding:8px;background:#fbfdfc;
       display:grid;grid-template-columns:1fr auto;gap:6px;align-items:center;
     }
-    .quiz-q{
-      font-size:.95rem;font-weight:700;color:#113a33;
-    }
+    .quiz-q{font-size:.95rem;font-weight:700;color:#113a33}
     .quiz-q small{display:block;font-weight:500;color:var(--muted);margin-top:2px}
     .quiz-input{
       padding:6px 8px;border:1px solid #cfd9d6;border-radius:6px;font-size:.95rem;width:140px;
@@ -194,24 +181,16 @@
       cursor:pointer;font-size:.95rem;font-weight:700;margin-top:8px;
     }
 
-    .quiz-result{
-      margin-top:8px;padding:10px;background:#f7faf9;border-radius:8px;
-    }
-    .result-score{
-      font-size:1.4rem;font-weight:800;color:#0b2d27;margin:6px 0;
-    }
+    .quiz-result{margin-top:8px;padding:10px;background:#f7faf9;border-radius:8px}
+    .result-score{font-size:1.4rem;font-weight:800;color:#0b2d27;margin:6px 0}
     .result-details{margin-top:8px}
-    .result-item{
-      padding:6px;border-bottom:1px dashed var(--line);font-size:.9rem;
-    }
+    .result-item{padding:6px;border-bottom:1px dashed var(--line);font-size:.9rem}
     .result-item.correct{background:#e7f7ef}
     .result-item.incorrect{background:#fdebec}
 
     .hidden{display:none}
 
-    @media (min-width: 900px){
-      .quiz-grid{grid-template-columns:1fr 1fr}
-    }
+    @media (min-width: 900px){ .quiz-grid{grid-template-columns:1fr 1fr} }
     @media (max-width: 600px){
       .noun-list{grid-template-columns:repeat(auto-fill,minmax(120px,1fr))}
       .quiz-item{grid-template-columns:1fr}
@@ -234,7 +213,6 @@
     </div>
 
     <div class="content-area">
-      <!-- Learn -->
       <div class="section active" id="learn-section">
         <h2>學習不規則名詞</h2>
         <p>點擊名詞查看細節；🔊可播放發音</p>
@@ -243,7 +221,6 @@
         <div id="learn-noun-detail"></div>
       </div>
 
-      <!-- Review -->
       <div class="section" id="review-section">
         <h2>複習不規則名詞</h2>
         <p>Plural 先遮住，請先自己寫，再翻答案</p>
@@ -252,7 +229,6 @@
         <div id="review-noun-detail"></div>
       </div>
 
-      <!-- Quiz -->
       <div class="section" id="quiz-section">
         <h2>不規則名詞測驗</h2>
 
@@ -273,15 +249,11 @@
   </div>
 
 <script>
-/* =======================
-   CSV LOADER + PARSER
-======================= */
 const CSV_URL = "https://ducj-creator.github.io/Shirley-Grammar/irregular/nouns.csv";
 let nouns = [];
-let categoriesMap = new Map(); // num -> label
+let categoriesMap = new Map();
 
 function parseCSV(text){
-  // robust CSV parser (supports quotes)
   const rows = [];
   let i=0, field="", row=[], inQuotes=false;
   while(i < text.length){
@@ -295,7 +267,7 @@ function parseCSV(text){
       if(c === ","){ row.push(field); field=""; i++; continue; }
       if(c === "\n"){
         row.push(field); field="";
-        if(row.some(v=>v.trim()!=="")) rows.push(row);
+        if(row.some(v => v.trim() !== "")) rows.push(row);
         row=[]; i++; continue;
       }
       if(c === "\r"){ i++; continue; }
@@ -303,12 +275,12 @@ function parseCSV(text){
     }
   }
   row.push(field);
-  if(row.some(v=>v.trim()!=="")) rows.push(row);
+  if(row.some(v => v.trim() !== "")) rows.push(row);
   return rows;
 }
 
 function findCol(headers, candidates){
-  const lower = headers.map(h=>h.toLowerCase());
+  const lower = headers.map(h=>h.toLowerCase().replace(/\uFEFF/g,"").trim());
   for(const cand of candidates){
     const c = cand.toLowerCase();
     const idx = lower.findIndex(h=>h.includes(c));
@@ -324,30 +296,29 @@ async function loadNouns(){
   const table = parseCSV(text);
   if(table.length < 2) throw new Error("CSV 內容空白或格式不符");
 
-  const headers = table[0];
+  const headers = table[0].map(h=>h.replace(/\uFEFF/g,"").trim());
   const idxCategory = findCol(headers, ["category", "分類"]);
   const idxSingular = findCol(headers, ["singular", "單數"]);
   const idxTC = findCol(headers, ["traditional chinese", "中文", "chinese"]);
-  const idxSingSent = findCol(headers, ["singular sentence", "單數例句", "v1 例句"]);
+  const idxSingSent = findCol(headers, ["singular sentence", "單數例句"]);
   const idxPlural = findCol(headers, ["plural", "複數"]);
   const idxPluralSent = findCol(headers, ["plural sentence", "複數例句"]);
 
   if([idxCategory, idxSingular, idxTC, idxPlural].some(i=>i===-1)){
-    throw new Error("CSV 欄位名稱找不到，請確認 header 是否為 Category/Singular/Traditional Chinese/Plural 等");
+    throw new Error("CSV 欄位名稱找不到，請確認 header");
   }
 
   nouns = table.slice(1).map(r=>{
-    const categoryRaw = (r[idxCategory] || "").trim();
+    const categoryRaw = (r[idxCategory] || "").replace(/\uFEFF/g,"").trim();
     const numMatch = categoryRaw.match(/\d+/);
-    const categoryNum = numMatch ? numMatch[0] : categoryRaw;
+    const categoryNum = (numMatch ? numMatch[0] : categoryRaw).trim();
 
-    // 記住首次出現的 label
     if(categoryNum && !categoriesMap.has(categoryNum)){
       categoriesMap.set(categoryNum, categoryRaw || ("類別 " + categoryNum));
     }
 
     return {
-      categoryNum,
+      categoryNum: String(categoryNum || "other"),
       categoryLabel: categoryRaw || ("類別 " + categoryNum),
       singular: (r[idxSingular]||"").trim(),
       singular_chinese: (r[idxTC]||"").trim(),
@@ -358,9 +329,6 @@ async function loadNouns(){
   }).filter(n=>n.singular && n.plural);
 }
 
-/* =======================
-   APP INIT
-======================= */
 document.addEventListener("DOMContentLoaded", async () => {
   bindModeSwitch();
 
@@ -381,7 +349,7 @@ function showLoadError(msg){
   area.innerHTML = `
     <div style="padding:12px;color:#b3261e;font-weight:700;">
       讀取 CSV 失敗：${msg}<br/>
-      請確認 CSV 網址可開啟、或稍後再試。
+      請確認 CSV 網址可開啟，或稍後再試。
     </div>
   `;
 }
@@ -407,27 +375,27 @@ function bindModeSwitch(){
   });
 }
 
-/* =======================
-   FILTERS (dynamic)
-======================= */
+/* ======= FILTERS ======= */
 function buildFilters(){
   const learnFilters = document.getElementById("learn-filters");
   const reviewFilters = document.getElementById("review-filters");
-
   const orderedNums = Array.from(categoriesMap.keys()).sort((a,b)=>Number(a)-Number(b));
 
   const makeBtn = (num,label,container,mode)=>{
     const b=document.createElement("button");
     b.className="filter-btn";
-    b.dataset.category=num;
+    b.dataset.category=String(num);
     b.textContent=label;
     b.addEventListener("click", ()=>{
       container.querySelectorAll(".filter-btn").forEach(x=>x.classList.remove("active"));
       b.classList.add("active");
-      applyFilter(mode, num);
+      applyFilter(mode, String(num));
     });
     return b;
   };
+
+  learnFilters.innerHTML="";
+  reviewFilters.innerHTML="";
 
   const allBtnL = document.createElement("button");
   allBtnL.className="filter-btn active";
@@ -437,15 +405,17 @@ function buildFilters(){
     allBtnL.classList.add("active");
     applyFilter("learn","all");
   });
-  learnFilters.innerHTML=""; learnFilters.appendChild(allBtnL);
+  learnFilters.appendChild(allBtnL);
 
-  const allBtnR = allBtnL.cloneNode(true);
+  const allBtnR = document.createElement("button");
+  allBtnR.className="filter-btn active";
+  allBtnR.dataset.category="all"; allBtnR.textContent="全部";
   allBtnR.addEventListener("click", ()=>{
     reviewFilters.querySelectorAll(".filter-btn").forEach(x=>x.classList.remove("active"));
     allBtnR.classList.add("active");
     applyFilter("review","all");
   });
-  reviewFilters.innerHTML=""; reviewFilters.appendChild(allBtnR);
+  reviewFilters.appendChild(allBtnR);
 
   orderedNums.forEach(num=>{
     const label = categoriesMap.get(num) || ("類別 " + num);
@@ -454,17 +424,20 @@ function buildFilters(){
   });
 }
 
+/* ⭐ 修正重點：改用 display 來確保每次都有效 */
 function applyFilter(mode, category){
   const list = document.getElementById(`${mode}-noun-list`);
   list.querySelectorAll(".noun-item").forEach(item=>{
-    const c = item.dataset.category;
-    item.hidden = !(category==="all" || c===category);
+    const c = String(item.dataset.category || "");
+    if(category==="all" || c===String(category)){
+      item.style.display = "flex";
+    }else{
+      item.style.display = "none";
+    }
   });
 }
 
-/* =======================
-   LEARN MODE
-======================= */
+/* ======= LEARN ======= */
 function initLearnMode(){
   const nounList = document.getElementById("learn-noun-list");
   nounList.innerHTML="";
@@ -473,13 +446,14 @@ function initLearnMode(){
   nouns.forEach(noun=>{
     const item=document.createElement("div");
     item.className="noun-item";
-    item.dataset.category=noun.categoryNum;
+    item.dataset.category=String(noun.categoryNum);
     item.innerHTML=`<div>${noun.singular}</div><small>${noun.singular_chinese}</small>`;
     item.addEventListener("click", ()=>showNounDetail("learn", noun));
     nounList.appendChild(item);
   });
 
-  applyFilter("learn", document.querySelector("#learn-filters .filter-btn.active").dataset.category);
+  const active = document.querySelector("#learn-filters .filter-btn.active")?.dataset.category || "all";
+  applyFilter("learn", active);
 }
 
 function showNounDetail(mode, noun){
@@ -490,7 +464,6 @@ function showNounDetail(mode, noun){
     bindCardEvents(detail);
     return;
   }
-
   if(mode==="review"){
     detail.innerHTML = makeReviewCard(noun);
     bindCardEvents(detail);
@@ -538,9 +511,7 @@ function makeLearnCard(noun){
   </div>`;
 }
 
-/* =======================
-   REVIEW MODE (遮答案 + 輸入)
-======================= */
+/* ======= REVIEW ======= */
 function initReviewMode(){
   const nounList = document.getElementById("review-noun-list");
   nounList.innerHTML="";
@@ -549,13 +520,14 @@ function initReviewMode(){
   nouns.forEach(noun=>{
     const item=document.createElement("div");
     item.className="noun-item";
-    item.dataset.category=noun.categoryNum;
+    item.dataset.category=String(noun.categoryNum);
     item.innerHTML=`<div>${noun.singular}</div><small>${noun.singular_chinese}</small>`;
     item.addEventListener("click", ()=>showNounDetail("review", noun));
     nounList.appendChild(item);
   });
 
-  applyFilter("review", document.querySelector("#review-filters .filter-btn.active").dataset.category);
+  const active = document.querySelector("#review-filters .filter-btn.active")?.dataset.category || "all";
+  applyFilter("review", active);
 }
 
 function makeReviewCard(noun){
@@ -643,9 +615,7 @@ function bindReviewEvents(detail, noun){
   });
 }
 
-/* =======================
-   QUIZ MODE (10題一起 + 一次提交)
-======================= */
+/* ======= QUIZ ======= */
 let quizNouns=[], quizAnswers=[];
 
 function initQuizMode(){
@@ -664,8 +634,7 @@ function startQuiz(){
   document.getElementById("quiz-container").classList.remove("hidden");
   document.getElementById("quiz-result").classList.add("hidden");
 
-  document.getElementById("quiz-hint").innerHTML =
-    `題型提示：寫出<strong>複數 (Plural)</strong>`;
+  document.getElementById("quiz-hint").innerHTML = `題型提示：寫出<strong>複數 (Plural)</strong>`;
 
   const grid = document.getElementById("quiz-grid");
   grid.innerHTML="";
@@ -691,7 +660,6 @@ function submitQuiz(){
     quizAnswers[idx] = (inp.value||"").trim().toLowerCase();
   });
 
-  // 若有空白就提醒，但不阻止提交（可依你習慣改）
   const hasEmpty = quizAnswers.some(a=>!a);
   if(hasEmpty && !confirm("有題目未作答，仍要提交嗎？")) return;
 
@@ -728,11 +696,8 @@ function showQuizResult(){
   `;
 }
 
-/* =======================
-   CARD COMMON EVENTS
-======================= */
+/* ======= CARD COMMON ======= */
 function bindCardEvents(container){
-  // pronunciation
   container.querySelectorAll(".pronunciation-btn").forEach(btn=>{
     btn.addEventListener("click", ()=>{
       const w = btn.dataset.word;
@@ -741,7 +706,6 @@ function bindCardEvents(container){
     });
   });
 
-  // example toggle
   const toggle = container.querySelector(".example-toggle");
   const content = container.querySelector(".example-content");
   if(toggle && content){
@@ -753,9 +717,7 @@ function bindCardEvents(container){
   }
 }
 
-/* =======================
-   SPEECH
-======================= */
+/* ======= SPEECH ======= */
 function playAudio(text){
   if(!text) return;
   if("speechSynthesis" in window){
