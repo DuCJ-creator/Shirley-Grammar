@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>不規則名詞互動學習平台</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 15px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 8px;
+            font-size: 1.5rem;
+        }
+        
+        .description {
+            color: #7f8c8d;
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 0.9rem;
+        }
+        
+        .mode-selector {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .mode-btn {
+            padding: 8px 16px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .mode-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+        }
+        
+        .mode-btn.active {
+            background: #2c3e50;
+        }
+        
+        .content-area {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            min-height: 400px;
+        }
+        
+        .section {
+            display: none;
+        }
+        
+        .section.active {
+            display: block;
+        }
+        
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .filter-btn {
+            padding: 6px 12px;
+            background: #ecf0f1;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+        }
+        
+        .filter-btn.active {
+            background: #3498db;
+            color: white;
+        }
+        
+        .noun-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .noun-item {
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+            border-left: 3px solid #3498db;
+        }
+        
+        .noun-item:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+        }
+        
+        .noun-card {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            border-left: 4px solid #3498db;
+        }
+        
+        .noun-card:hover {
+            transform: translateY(-3px);
+        }
+        
+        .noun-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .noun-category {
+            padding: 3px 8px;
+            border-radius: 15px;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+        
+        .category-1 { background: #e74c3c; }
+        .category-2 { background: #f39c12; }
+        .category-3 { background: #3498db; }
+        .category-4 { background: #9b59b6; }
+        .category-5 { background: #1abc9c; }
+        .category-6 { background: #d35400; }
+        
+        .noun-forms {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .noun-form {
+            padding: 8px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .noun-form h4 {
+            margin-bottom: 3px;
+            color: #7f8c8d;
+            font-size: 0.8rem;
+        }
+        
+        .noun-form p {
+            font-weight: bold;
+            font-size: 0.95rem;
+            color: #2c3e50;
+        }
+        
+        .pronunciation-btn {
+            background: none;
+            border: none;
+            color: #3498db;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-left: 3px;
+        }
+        
+        .examples {
+            margin-top: 10px;
+        }
+        
+        .example {
+            margin-bottom: 8px;
+            padding: 8px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            font-style: italic;
+            font-size: 0.85rem;
+        }
+        
+        .example-toggle {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-top: 8px;
+        }
+        
+        .quiz-container {
+            text-align: center;
+        }
+        
+        .quiz-start {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .quiz-question {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+        
+        .quiz-form {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .quiz-input-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .quiz-input-group label {
+            width: 80px;
+            text-align: right;
+            margin-right: 10px;
+        }
+        
+        .quiz-input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .quiz-submit {
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+        
+        .quiz-result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .result-score {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 10px 0;
+        }
+        
+        .result-details {
+            text-align: left;
+            margin-top: 15px;
+        }
+        
+        .result-item {
+            padding: 8px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .result-item.correct {
+            background: #d4edda;
+        }
+        
+        .result-item.incorrect {
+            background: #f8d7da;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .back-btn {
+            background: #7f8c8d;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        @media (max-width: 768px) {
+            .noun-list {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+            
+            .noun-forms {
+                grid-template-columns: 1fr;
+            }
+            
+            .quiz-input-group {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .quiz-input-group label {
+                width: 100%;
+                text-align: left;
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Shirley's Irregular Nouns Learning Platform</h1>
+            <p class="description">不規則名詞互動學習平台;透過互動方式學習、複習和測驗不規則名詞的單複數形式，包含發音和例句</p>
+        </header>
+        
+        <div class="mode-selector">
+            <button class="mode-btn active" data-mode="learn">study Mode學習模式</button>
+            <button class="mode-btn" data-mode="review">Review Mode複習模式</button>
+            <button class="mode-btn" data-mode="quiz">Quiz Mode測驗模式</button>
+        </div>
+        
+        <div class="content-area">
+            <!-- study Mode 學習模式 -->
+            <div class="section active" id="learn-section">
+                <h2>學習不規則名詞</h2>
+                <p>點擊名詞查看詳細資訊，點擊喇叭圖標收聽發音</p>
+                
+                <div class="filter-options">
+                    <button class="filter-btn active" data-category="all">全部</button>
+                    <button class="filter-btn" data-category="1">加-s或-es</button>
+                    <button class="filter-btn" data-category="2">f/fe變ves</button>
+                    <button class="filter-btn" data-category="3">母音變化</button>
+                    <button class="filter-btn" data-category="4">零複數</button>
+                    <button class="filter-btn" data-category="5">外來語複數</button>
+                    <button class="filter-btn" data-category="6">歷史母音</button>
+                </div>
+                
+                <div class="noun-list" id="learn-noun-list">
+                    <!-- 名詞列表將在這裡動態生成 -->
+                </div>
+                
+                <div id="learn-noun-detail">
+                    <!-- 名詞詳細資訊將在這裡動態生成 -->
+                </div>
+            </div>
+            
+            <!-- 複習模式 -->
+            <div class="section" id="review-section">
+                <h2>Review Mode複習不規則名詞</h2>
+                <p>點擊名詞查看詳細資訊，加強記憶</p>
+                
+                <div class="filter-options">
+                    <button class="filter-btn active" data-category="all">全部</button>
+                    <button class="filter-btn" data-category="1">加-s或-es</button>
+                    <button class="filter-btn" data-category="2">f/fe變ves</button>
+                    <button class="filter-btn" data-category="3">母音變化</button>
+                    <button class="filter-btn" data-category="4">零複數</button>
+                    <button class="filter-btn" data-category="5">外來語複數</button>
+                    <button class="filter-btn" data-category="6">歷史母音</button>
+                </div>
+                
+                <div class="noun-list" id="review-noun-list">
+                    <!-- 名詞列表將在這裡動態生成 -->
+                </div>
+                
+                <div id="review-noun-detail">
+                    <!-- 名詞詳細資訊將在這裡動態生成 -->
+                </div>
+            </div>
+            
+            <!-- Quiz Mode測驗模式 -->
+            <div class="section" id="quiz-section">
+                <h2>不規則名詞測驗</h2>
+                
+                <div class="quiz-start" id="quiz-start">
+                    <p>測驗說明：請寫出所給名詞的複數形式</p>
+                    <p>系統將隨機挑選10個名詞，每題10分，滿分100分</p>
+                    <button class="quiz-submit" id="start-quiz-btn">開始測驗</button>
+                </div>
+                
+                <div class="quiz-container hidden" id="quiz-container">
+                    <div class="quiz-question" id="quiz-question">
+                        <!-- 測驗問題將在這裡動態生成 -->
+                    </div>
+                    
+                    <form class="quiz-form" id="quiz-form">
+                        <!-- 測驗表單將在這裡動態生成 -->
+                    </form>
+                    
+                    <button class="quiz-submit" id="submit-quiz-btn">提交答案</button>
+                    
+                    <div class="quiz-result hidden" id="quiz-result">
+                        <!-- 測驗結果將在這裡動態生成 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 名詞資料 - 使用您提供的CSV
+        const nouns = [
+            { category: "1", singular: "zoo", singular_chinese: "動物園", singular_sentence: "The zoo has a new panda.", plural: "zoos", plural_sentence: "We visited three zoos on our trip." },
+            { category: "1", singular: "video", singular_chinese: "影片/錄影", singular_sentence: "I watched a funny video online.", plural: "videos", plural_sentence: "She uploaded many videos to her channel." },
+            { category: "1", singular: "veto", singular_chinese: "否決", singular_sentence: "The president issued a veto on the bill.", plural: "vetoes", plural_sentence: "The council defeated the two vetoes." },
+            { category: "1", singular: "volcano", singular_chinese: "火山", singular_sentence: "Mount Fuji is an inactive volcano.", plural: "volcanoes", plural_sentence: "The Pacific Ring of Fire has many active volcanoes." },
+            { category: "1", singular: "tomato", singular_chinese: "番茄/西紅柿", singular_sentence: "He put a slice of tomato on his burger.", plural: "tomatoes", plural_sentence: "We bought a dozen tomatoes for the sauce." },
+            { category: "1", singular: "tattoo", singular_chinese: "刺青/紋身", singular_sentence: "He has one large dragon tattoo.", plural: "tattoos", plural_sentence: "The artist specializes in tribal tattoos." },
+            { category: "1", singular: "studio", singular_chinese: "工作室/錄音室", singular_sentence: "The artist works in a small studio.", plural: "studios", plural_sentence: "There are many film studios in Hollywood." },
+            { category: "1", singular: "soprano", singular_chinese: "女高音", singular_sentence: "The main soprano sang beautifully.", plural: "sopranos", plural_sentence: "The opera featured three leading sopranos." },
+            { category: "1", singular: "solo", singular_chinese: "獨奏/獨唱", singular_sentence: "He performed a guitar solo.", plural: "solos", plural_sentence: "The band played several instrumental solos." },
+            { category: "1", singular: "roof", singular_chinese: "屋頂", singular_sentence: "The old roof needs repair.", plural: "roofs", plural_sentence: "The houses had red tile roofs." },
+            { category: "1", singular: "proof", singular_chinese: "證據/校對", singular_sentence: "We need stronger proof of his guilt.", plural: "proofs", plural_sentence: "The editor sent back the page proofs." },
+            { category: "1", singular: "potato", singular_chinese: "馬鈴薯/土豆", singular_sentence: "I'll have one baked potato.", plural: "potatoes", plural_sentence: "She peeled a bag of potatoes." },
+            { category: "1", singular: "piano", singular_chinese: "鋼琴", singular_sentence: "My sister plays the piano.", plural: "pianos", plural_sentence: "The shop sold several expensive pianos." },
+            { category: "1", singular: "kilo", singular_chinese: "公斤", singular_sentence: "I need one kilo of apples.", plural: "kilos", plural_sentence: "The athlete gained five kilos of muscle." },
+            { category: "1", singular: "kangaroo", singular_chinese: "袋鼠", singular_sentence: "A young kangaroo is called a joey.", plural: "kangaroos", plural_sentence: "We saw many kangaroos in the field." },
+            { category: "1", singular: "hero", singular_chinese: "英雄", singular_sentence: "He is a local sporting hero.", plural: "heroes", plural_sentence: "We honor all fallen war heroes." },
+            { category: "1", singular: "gulf", singular_chinese: "海灣", singular_sentence: "The ship sailed across the vast gulf.", plural: "gulfs", plural_sentence: "The region is known for its shallow gulfs." },
+            { category: "1", singular: "grief", singular_chinese: "悲痛/不幸", singular_sentence: "His primary grief was the loss of his pet.", plural: "griefs", plural_sentence: "She shared her many personal griefs." },
+            { category: "1", singular: "fez", singular_chinese: "圓錐形平頂帽", singular_sentence: "He wore a bright red fez.", plural: "fezzes", plural_sentence: "The men wore traditional red fezzes." },
+            { category: "1", singular: "echo", singular_chinese: "回音", singular_sentence: "The cave produced a clear echo.", plural: "echoes", plural_sentence: "The old building created many echoes." },
+            { category: "1", singular: "cello", singular_chinese: "大提琴", singular_sentence: "She is practicing on her cello.", plural: "cellos", plural_sentence: "The symphony orchestra has four cellos." },
+            { category: "1", singular: "canto", singular_chinese: "詩篇/章節", singular_sentence: "We read the third canto of the epic poem.", plural: "cantos", plural_sentence: "The poem is divided into ten cantos." },
+            { category: "1", singular: "bamboo", singular_chinese: "竹子", singular_sentence: "A tall bamboo grew by the wall.", plural: "bamboos", plural_sentence: "The garden had various species of bamboos." },
+            { category: "1", singular: "beef", singular_chinese: "抱怨", singular_sentence: "The main beef I had was the high price.", plural: "beefs", plural_sentence: "The workers aired their many personal beefs." },
+            { category: "1", singular: "quiz", singular_chinese: "測驗", singular_sentence: "I have a math quiz tomorrow.", plural: "quizzes", plural_sentence: "The teacher gave us four quizzes this month." },
+            { category: "2", singular: "wife", singular_chinese: "妻子/太太", singular_sentence: "My wife is an excellent cook.", plural: "wives", plural_sentence: "The sailors missed their wives dearly." },
+            { category: "2", singular: "wolf", singular_chinese: "狼", singular_sentence: "A lone wolf howled at the moon.", plural: "wolves", plural_sentence: "The wolves hunted as a pack." },
+            { category: "2", singular: "wharf", singular_chinese: "碼頭", singular_sentence: "The ship docked at the main wharf.", plural: "wharves", plural_sentence: "The port had several busy wharves." },
+            { category: "2", singular: "thief", singular_chinese: "小偷/賊", singular_sentence: "A thief broke into the store last night.", plural: "thieves", plural_sentence: "The police caught the three thieves." },
+            { category: "2", singular: "self", singular_chinese: "自己", singular_sentence: "My true self is shy.", plural: "selves", plural_sentence: "We must all look after our selves." },
+            { category: "2", singular: "scarf", singular_chinese: "圍巾", singular_sentence: "I bought a warm woolen scarf.", plural: "scarves", plural_sentence: "She owns a collection of silk scarves." },
+            { category: "2", singular: "loaf", singular_chinese: "條 (麵包)", singular_sentence: "She bought a loaf of white bread.", plural: "loaves", plural_sentence: "The baker prepared ten loaves for the day." },
+            { category: "2", singular: "life", singular_chinese: "生命/生活", singular_sentence: "This cat has nine lives.", plural: "lives", plural_sentence: "Doctors work hard to save lives." },
+            { category: "2", singular: "leaf", singular_chinese: "葉子", singular_sentence: "An autumn leaf fell to the ground.", plural: "leaves", plural_sentence: "The trees shed their leaves in the fall." },
+            { category: "2", singular: "knife", singular_chinese: "刀子", singular_sentence: "Pass me that sharp knife.", plural: "knives", plural_sentence: "The chef sharpened his set of knives." },
+            { category: "2", singular: "hoof", singular_chinese: "蹄", singular_sentence: "The horse injured its front hoof.", plural: "hooves", plural_sentence: "The sound of hooves echoed on the road." },
+            { category: "2", singular: "half", singular_chinese: "一半", singular_sentence: "I ate one half of the sandwich.", plural: "halves", plural_sentence: "The referee divided the game into two halves." },
+            { category: "2", singular: "dwarf", singular_chinese: "矮人/侏儒", singular_sentence: "The garden had a stone dwarf.", plural: "dwarves", plural_sentence: "Snow White met seven dwarves." },
+            { category: "2", singular: "calf", singular_chinese: "小牛/小腿", singular_sentence: "The cow gave birth to a healthy calf.", plural: "calves", plural_sentence: "She stretched her tired calves after the run." },
+            { category: "3", singular: "woman", singular_chinese: "女人", singular_sentence: "This woman is a great leader.", plural: "women", plural_sentence: "The women gathered for a meeting." },
+            { category: "3", singular: "tooth", singular_chinese: "牙齒", singular_sentence: "I have one loose tooth.", plural: "teeth", plural_sentence: "The child lost several teeth." },
+            { category: "3", singular: "mouse", singular_chinese: "老鼠", singular_sentence: "A tiny mouse scurried across the floor.", plural: "mice", plural_sentence: "We set traps for the mice in the attic." },
+            { category: "3", singular: "man", singular_chinese: "男人", singular_sentence: "That man is my boss.", plural: "men", plural_sentence: "Many men were waiting outside the door." },
+            { category: "3", singular: "louse", singular_chinese: "蝨子", singular_sentence: "A single louse was found in his hair.", plural: "lice", plural_sentence: "The school had an outbreak of lice." },
+            { category: "3", singular: "goose", singular_chinese: "鵝", singular_sentence: "A white goose walked slowly.", plural: "geese", plural_sentence: "A flock of geese flew south for winter." },
+            { category: "3", singular: "foot", singular_chinese: "腳", singular_sentence: "My left foot hurts.", plural: "feet", plural_sentence: "He has large feet for his height." },
+            { category: "4", singular: "tuna", singular_chinese: "鮪魚", singular_sentence: "I ordered a tuna sandwich.", plural: "tuna", plural_sentence: "We caught two large tuna this morning." },
+            { category: "4", singular: "trout", singular_chinese: "鱒魚", singular_sentence: "A large brown trout was in the stream.", plural: "trout", plural_sentence: "The lake is stocked with rainbow trout." },
+            { category: "4", singular: "swine", singular_chinese: "豬/卑劣的人", singular_sentence: "The farmer raised one very large swine.", plural: "swine", plural_sentence: "They are breeding swine for market." },
+            { category: "4", singular: "shrimp", singular_chinese: "蝦", singular_sentence: "I ate one large shrimp.", plural: "shrimp", plural_sentence: "We ordered a plate of steamed shrimp." },
+            { category: "4", singular: "sheep", singular_chinese: "綿羊", singular_sentence: "A single sheep wandered away.", plural: "sheep", plural_sentence: "The farmer owns a hundred sheep." },
+            { category: "4", singular: "series", singular_chinese: "系列/序列", singular_sentence: "We watched a new TV series.", plural: "series", plural_sentence: "The library has two complete series of classic novels." },
+            { category: "4", singular: "species", singular_chinese: "物種", singular_sentence: "This is a rare species of bird.", plural: "species", plural_sentence: "The park is home to hundreds of plant species." },
+            { category: "4", singular: "salmon", singular_chinese: "鮭魚/三文魚", singular_sentence: "A single salmon jumped up the waterfall.", plural: "salmon", plural_sentence: "The river is known for its run of pink salmon." },
+            { category: "4", singular: "perch", singular_chinese: "鱸魚/棲息地", singular_sentence: "I caught a small perch in the river.", plural: "perch", plural_sentence: "Anglers rarely catch many perch here." },
+            { category: "4", singular: "offspring", singular_chinese: "子女/後代", singular_sentence: "The cat had one offspring.", plural: "offspring", plural_sentence: "The whale and its offspring swam north." },
+            { category: "4", singular: "moose", singular_chinese: "駝鹿", singular_sentence: "A large moose grazed near the cabin.", plural: "moose", plural_sentence: "We spotted two bull moose in the forest." },
+            { category: "4", singular: "means", singular_chinese: "方法/手段", singular_sentence: "This is a simple means to an end.", plural: "means", plural_sentence: "We must find the right means to solve the problem." },
+            { category: "4", singular: "grouse", singular_chinese: "鬆雞", singular_sentence: "A wild grouse flew out of the bush.", plural: "grouse", plural_sentence: "Hunters often search for grouse in the hills." },
+            { category: "4", singular: "fish", singular_chinese: "魚", singular_sentence: "I caught a single fish.", plural: "fish", plural_sentence: "There were many fish in the lake." },
+            { category: "4", singular: "deer", singular_chinese: "鹿", singular_sentence: "A majestic deer stood by the creek.", plural: "deer", plural_sentence: "We saw four deer grazing in the meadow." },
+            { category: "4", singular: "crossroads", singular_chinese: "十字路口", singular_sentence: "I waited at the crossroads for the bus.", plural: "crossroads", plural_sentence: "The map shows several major crossroads." },
+            { category: "4", singular: "cod", singular_chinese: "鱈魚", singular_sentence: "We bought a fillet of fresh cod.", plural: "cod", plural_sentence: "The trawler caught a large haul of cod." },
+            { category: "4", singular: "bison", singular_chinese: "野牛", singular_sentence: "A large male bison blocked the road.", plural: "bison", plural_sentence: "The herd of bison grazed peacefully." },
+            { category: "4", singular: "aircraft", singular_chinese: "飛機/航空器", singular_sentence: "A small aircraft landed safely.", plural: "aircraft", plural_sentence: "The runway was filled with military aircraft." },
+            { category: "5", singular: "stimulus", singular_chinese: "刺激/激勵", singular_sentence: "The loud noise was a sudden stimulus.", plural: "stimuli", plural_sentence: "The experiment involved different sensory stimuli." },
+            { category: "5", singular: "radius", singular_chinese: "半徑", singular_sentence: "The circle has a 5 cm radius.", plural: "radii", plural_sentence: "Calculate the area of the three circles with different radii." },
+            { category: "5", singular: "nucleus", singular_chinese: "細胞核/核心", singular_sentence: "The atom has a single, dense nucleus.", plural: "nuclei", plural_sentence: "Researchers study the behavior of unstable nuclei." },
+            { category: "5", singular: "locus", singular_chinese: "地點/軌跡", singular_sentence: "The gene is at a specific locus.", plural: "loci", plural_sentence: "Scientists have identified several possible loci." },
+            { category: "5", singular: "fungus", singular_chinese: "真菌", singular_sentence: "I found a large mushroom, a type of fungus.", plural: "fungi", plural_sentence: "The doctor treated the skin infection caused by fungi." },
+            { category: "5", singular: "focus", singular_chinese: "焦點/中心", singular_sentence: "The camera could not maintain its focus.", plural: "foci", plural_sentence: "The discussion had several different foci." },
+            { category: "5", singular: "bacillus", singular_chinese: "桿菌", singular_sentence: "The doctor identified a single bacillus.", plural: "bacilli", plural_sentence: "The sample was contaminated with various bacilli." },
+            { category: "5", singular: "alumnus", singular_chinese: "男校友", singular_sentence: "He is an esteemed alumnus.", plural: "alumni", plural_sentence: "The alumni association held a reunion." },
+            { category: "5", singular: "vita", singular_chinese: "履歷 (單篇)", singular_sentence: "I attached a short vita to my application.", plural: "vitae", plural_sentence: "Please submit two copies of your vitae." },
+            { category: "5", singular: "vertebra", singular_chinese: "椎骨", singular_sentence: "A single damaged vertebra caused the pain.", plural: "vertebrae", plural_sentence: "The human spine is made up of many vertebrae." },
+            { category: "5", singular: "nebula", singular_chinese: "星雲", singular_sentence: "A distant nebula shines brightly.", plural: "nebulae", plural_sentence: "Telescopes have captured images of countless nebulae." },
+            { category: "5", singular: "minutia", singular_chinese: "細節 (單個)", singular_sentence: "We overlooked a small minutia in the contract.", plural: "minutiae", plural_sentence: "Pay attention to all the financial minutiae." },
+            { category: "5", singular: "larva", singular_chinese: "幼蟲", singular_sentence: "The moth is in its larva stage.", plural: "larvae", plural_sentence: "Mosquito larvae live in stagnant water." },
+            { category: "5", singular: "formula", singular_chinese: "公式/配方", singular_sentence: "We must memorize this chemical formula.", plural: "formulae", plural_sentence: "The scientist proposed several new mathematical formulae." },
+            { category: "5", singular: "alumna", singular_chinese: "女校友", singular_sentence: "She is a distinguished alumna.", plural: "alumnae", plural_sentence: "The alumnae gathered for a conference." },
+            { category: "5", singular: "antenna", singular_chinese: "觸角", singular_sentence: "The beetle used its long antenna to feel around.", plural: "antennae", plural_sentence: "The insect's antennae waved in the air." },
+            { category: "5", singular: "stratum", singular_chinese: "地層/階層", singular_sentence: "The archaeologist discovered a new soil stratum.", plural: "strata", plural_sentence: "Scientists study the different geological strata." },
+            { category: "5", singular: "referendum", singular_chinese: "公民投票", singular_sentence: "The nation held a referendum on the issue.", plural: "referenda", plural_sentence: "Many countries hold regular referenda." },
+            { category: "5", singular: "phenomenon", singular_chinese: "現象", singular_sentence: "The aurora borealis is a stunning phenomenon.", plural: "phenomena", plural_sentence: "The lab recorded several unusual phenomena." },
+            { category: "5", singular: "ovum", singular_chinese: "卵子", singular_sentence: "A single ovum was fertilized.", plural: "ova", plural_sentence: "The lab examined several human ova." },
+            { category: "5", singular: "opus", singular_chinese: "作品/大作", singular_sentence: "Beethoven's last great work was opus 135.", plural: "opera", plural_sentence: "The museum showcases many original opera." },
+            { category: "5", singular: "memorandum", singular_chinese: "備忘錄", singular_sentence: "The boss sent a brief memorandum.", plural: "memoranda", plural_sentence: "The board reviewed the financial memoranda." },
+            { category: "5", singular: "medium", singular_chinese: "媒介/中等", singular_sentence: "Clay is a great artistic medium.", plural: "media", plural_sentence: "The news was reported by various media outlets." },
+            { category: "5", singular: "datum", singular_chinese: "資料 (單一事實)", singular_sentence: "One small datum supports the theory.", plural: "data", plural_sentence: "The researcher analyzed a large set of data." },
+            { category: "5", singular: "curriculum", singular_chinese: "課程", singular_sentence: "The school implemented a new curriculum.", plural: "curricula", plural_sentence: "The department overhauled all its curricula." },
+            { category: "5", singular: "corpus", singular_chinese: "文集/身體", singular_sentence: "Scholars studied the language corpus.", plural: "corpora", plural_sentence: "The university keeps several medical corpora." },
+            { category: "5", singular: "bacterium", singular_chinese: "細菌 (單個)", singular_sentence: "A single bacterium can multiply quickly.", plural: "bacteria", plural_sentence: "Bacteria are microscopic organisms." },
+            { category: "5", singular: "addendum", singular_chinese: "附錄/補遺", singular_sentence: "The contract included a small addendum.", plural: "addenda", plural_sentence: "Please read the three addenda to the report." },
+            { category: "5", singular: "thesis", singular_chinese: "論點/論文", singular_sentence: "Her thesis was on climate change.", plural: "theses", plural_sentence: "The students submitted their final theses." },
+            { category: "5", singular: "synopsis", singular_chinese: "概要/大綱", singular_sentence: "Please read the book's synopsis.", plural: "synopses", plural_sentence: "The critic published short synopses of the films." },
+            { category: "5", singular: "parenthesis", singular_chinese: "括弧", singular_sentence: "The number was in a single parenthesis.", plural: "parentheses", plural_sentence: "Use two parentheses to enclose the note." },
+            { category: "5", singular: "oasis", singular_chinese: "綠洲", singular_sentence: "We found a small oasis in the desert.", plural: "oases", plural_sentence: "The ancient trade routes connected several vital oases." },
+            { category: "5", singular: "hypothesis", singular_chinese: "假設", singular_sentence: "The scientist proposed a new hypothesis.", plural: "hypotheses", plural_sentence: "The experiment aimed to test three different hypotheses." },
+            { category: "5", singular: "ellipsis", singular_chinese: "省略號", singular_sentence: "A single ellipsis was used to show a pause.", plural: "ellipses", plural_sentence: "Use three ellipses to indicate omitted text." },
+            { category: "5", singular: "diagnosis", singular_chinese: "診斷", singular_sentence: "The doctor gave a clear diagnosis.", plural: "diagnoses", plural_sentence: "We asked for a second opinion on the two diagnoses." },
+            { category: "5", singular: "crisis", singular_chinese: "危機", singular_sentence: "The company faced a financial crisis.", plural: "crises", plural_sentence: "The government managed several economic crises." },
+            { category: "5", singular: "basis", singular_chinese: "基礎/根據", singular_sentence: "The argument lacked a solid basis.", plural: "bases", plural_sentence: "The report laid out the legal bases for the claim." },
+            { category: "5", singular: "axis", singular_chinese: "軸/軸線", singular_sentence: "The Earth rotates on its axis.", plural: "axes", plural_sentence: "The graph has two main axes." },
+            { category: "5", singular: "antithesis", singular_chinese: "對立面/對照", singular_sentence: "Her actions were the antithesis of her words.", plural: "antitheses", plural_sentence: "The philosophers debated several fundamental antitheses." },
+            { category: "5", singular: "analysis", singular_chinese: "分析", singular_sentence: "The final analysis was inconclusive.", plural: "analyses", plural_sentence: "We reviewed three statistical analyses." },
+            { category: "5", singular: "criterion", singular_chinese: "標準", singular_sentence: "The main criterion for selection is experience.", plural: "criteria", plural_sentence: "We must meet three essential criteria." },
+            { category: "5", singular: "phylum", singular_chinese: "門 (生物分類)", singular_sentence: "The organism belongs to a new phylum.", plural: "phyla", plural_sentence: "Biologists classify species into various phyla." },
+            { category: "5", singular: "genus", singular_chinese: "屬 (生物分類)", singular_sentence: "This species belongs to the Pinus genus.", plural: "genera", plural_sentence: "The scientists classified the organisms into different genera." },
+            { category: "5", singular: "vortex", singular_chinese: "渦流/旋渦", singular_sentence: "A strong vortex formed in the water.", plural: "vortices", plural_sentence: "The physicist studied various fluid vortices." },
+            { category: "5", singular: "vertex", singular_chinese: "頂點", singular_sentence: "The triangle has one upper vertex.", plural: "vertices", plural_sentence: "A cube has eight vertices." },
+            { category: "5", singular: "matrix", singular_chinese: "矩陣/模型", singular_sentence: "A 3x3 matrix was used.", plural: "matrices", plural_sentence: "We need to solve three simultaneous matrices." },
+            { category: "5", singular: "index", singular_chinese: "索引/指數", singular_sentence: "The book has a clear index.", plural: "indices", plural_sentence: "Economists track various market indices." },
+            { category: "5", singular: "appendix", singular_chinese: "附錄/闌尾", singular_sentence: "Check the appendix for the full data.", plural: "appendices", plural_sentence: "The book contains several useful appendices." },
+            { category: "5", singular: "apex", singular_chinese: "頂點/尖端", singular_sentence: "The eagle perched at the apex.", plural: "apices", plural_sentence: "The pyramid has three visible apices." },
+            { category: "5", singular: "château", singular_chinese: "城堡/莊園", singular_sentence: "The family owns a French château.", plural: "châteaux", plural_sentence: "The region is dotted with historic wine châteaux." },
+            { category: "5", singular: "tableau", singular_chinese: "畫面/活人畫", singular_sentence: "The scene formed a dramatic tableau.", plural: "tableaux", plural_sentence: "The festival featured several historical tableaux." },
+            { category: "5", singular: "beau", singular_chinese: "男朋友/花花公子", singular_sentence: "Her new beau is very handsome.", plural: "beaux", plural_sentence: "She was often seen with different beaux." },
+            { category: "5", singular: "faux pas", singular_chinese: "失禮/失態", singular_sentence: "Asking her age was a huge faux pas.", plural: "faux pas", plural_sentence: "He committed a series of social faux pas." },
+            { category: "5", singular: "libretto", singular_chinese: "歌劇腳本", singular_sentence: "The composer is writing a new libretto.", plural: "libretti", plural_sentence: "Puccini's famous libretti are widely studied." },
+            { category: "5", singular: "concerto", singular_chinese: "協奏曲", singular_sentence: "Mozart wrote a beautiful piano concerto.", plural: "concerti", plural_sentence: "The orchestra played two Italian concerti." },
+            { category: "5", singular: "codex", singular_chinese: "古抄本", singular_sentence: "Scholars analyzed the Mayan codex.", plural: "codices", plural_sentence: "The library holds three rare illuminated codices." },
+            { category: "5", singular: "erratum", singular_chinese: "錯誤 (印刷)", singular_sentence: "I found one small erratum in the text.", plural: "errata", plural_sentence: "The book included a page of errata." },
+            { category: "5", singular: "symposium", singular_chinese: "研討會", singular_sentence: "The university hosted a symposium.", plural: "symposia", plural_sentence: "Academic symposia are held throughout the year." },
+            { category: "5", singular: "syllabus", singular_chinese: "課程大綱", singular_sentence: "The professor handed out the syllabus.", plural: "syllabi", plural_sentence: "The department reviews its syllabi annually." },
+            { category: "5", singular: "graffito", singular_chinese: "塗鴉 (單個)", singular_sentence: "We saw a single graffito on the wall.", plural: "graffiti", plural_sentence: "The city walls were covered in colorful graffiti." },
+            { category: "5", singular: "die", singular_chinese: "骰子", singular_sentence: "I rolled a single die.", plural: "dice", plural_sentence: "We used two dice to play the game." },
+            { category: "5", singular: "bureau", singular_chinese: "局/辦事處", singular_sentence: "She works at a government bureau.", plural: "bureaux", plural_sentence: "The department has several regional bureaux." },
+            { category: "6", singular: "ox", singular_chinese: "公牛", singular_sentence: "The farmer used an ox to pull the cart.", plural: "oxen", plural_sentence: "A yoke of oxen plowed the field." },
+            { category: "6", singular: "child", singular_chinese: "孩子", singular_sentence: "My child is starting school soon.", plural: "children", plural_sentence: "Many children played happily in the park." }
+        ];
+
+        // 初始化應用
+        document.addEventListener('DOMContentLoaded', function() {
+            // 模式切換
+            const modeButtons = document.querySelectorAll('.mode-btn');
+            const sections = document.querySelectorAll('.section');
+            
+            modeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const mode = this.getAttribute('data-mode');
+                    
+                    // 更新按鈕狀態
+                    modeButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // 顯示對應的內容區域
+                    sections.forEach(section => section.classList.remove('active'));
+                    document.getElementById(`${mode}-section`).classList.add('active');
+                    
+                    // 初始化對應模式的內容
+                    if (mode === 'learn') {
+                        initLearnMode();
+                    } else if (mode === 'review') {
+                        initReviewMode();
+                    } else if (mode === 'quiz') {
+                        initQuizMode();
+                    }
+                });
+            });
+            
+            // 初始化學習模式
+            initLearnMode();
+            
+            // 初始化測驗模式開始按鈕
+            document.getElementById('start-quiz-btn').addEventListener('click', startQuiz);
+            document.getElementById('submit-quiz-btn').addEventListener('click', submitQuiz);
+        });
+
+        // 學習模式初始化
+        function initLearnMode() {
+            const nounList = document.getElementById('learn-noun-list');
+            nounList.innerHTML = '';
+            
+            // 添加名詞列表
+            nouns.forEach(noun => {
+                const item = document.createElement('div');
+                item.className = 'noun-item';
+                item.setAttribute('data-category', noun.category);
+                item.innerHTML = `
+                    <div>${noun.singular}</div>
+                    <small>${noun.singular_chinese}</small>
+                `;
+                
+                item.addEventListener('click', function() {
+                    showNounDetail('learn', noun);
+                });
+                
+                nounList.appendChild(item);
+            });
+            
+            // 添加篩選功能
+            const filterButtons = document.querySelectorAll('#learn-section .filter-btn');
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const category = this.getAttribute('data-category');
+                    
+                    // 更新按鈕狀態
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // 篩選名詞
+                    const items = document.querySelectorAll('#learn-noun-list .noun-item');
+                    items.forEach(item => {
+                        if (category === 'all' || item.getAttribute('data-category') === category) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        }
+
+        // 複習模式初始化
+        function initReviewMode() {
+            const nounList = document.getElementById('review-noun-list');
+            nounList.innerHTML = '';
+            
+            // 添加名詞列表
+            nouns.forEach(noun => {
+                const item = document.createElement('div');
+                item.className = 'noun-item';
+                item.setAttribute('data-category', noun.category);
+                item.innerHTML = `
+                    <div>${noun.singular}</div>
+                    <small>${noun.singular_chinese}</small>
+                `;
+                
+                item.addEventListener('click', function() {
+                    showNounDetail('review', noun);
+                });
+                
+                nounList.appendChild(item);
+            });
+            
+            // 添加篩選功能
+            const filterButtons = document.querySelectorAll('#review-section .filter-btn');
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const category = this.getAttribute('data-category');
+                    
+                    // 更新按鈕狀態
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // 篩選名詞
+                    const items = document.querySelectorAll('#review-noun-list .noun-item');
+                    items.forEach(item => {
+                        if (category === 'all' || item.getAttribute('data-category') === category) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        }
+
+        // 顯示名詞詳細資訊
+        function showNounDetail(mode, noun) {
+            const detailContainer = document.getElementById(`${mode}-noun-detail`);
+            
+            detailContainer.innerHTML = `
+                <div class="noun-card">
+                    <div class="noun-header">
+                        <h3>${noun.singular} - ${noun.singular_chinese}</h3>
+                        <span class="noun-category category-${noun.category}">類別 ${noun.category}</span>
+                    </div>
+                    <div class="noun-forms">
+                        <div class="noun-form">
+                            <h4>單數</h4>
+                            <p>${noun.singular} <button class="pronunciation-btn" data-word="${noun.singular}">🔊</button></p>
+                        </div>
+                        <div class="noun-form">
+                            <h4>複數</h4>
+                            <p>${noun.plural} <button class="pronunciation-btn" data-word="${noun.plural}">🔊</button></p>
+                        </div>
+                    </div>
+                    <div class="examples">
+                        <button class="example-toggle">顯示例句</button>
+                        <div class="example-content" style="display: none;">
+                            <div class="example">
+                                <strong>單數例句:</strong> ${noun.singular_sentence}
+                                <button class="pronunciation-btn" data-sentence="${noun.singular_sentence}">🔊</button>
+                            </div>
+                            <div class="example">
+                                <strong>複數例句:</strong> ${noun.plural_sentence}
+                                <button class="pronunciation-btn" data-sentence="${noun.plural_sentence}">🔊</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // 添加發音功能
+            const pronunciationButtons = detailContainer.querySelectorAll('.pronunciation-btn');
+            pronunciationButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const word = this.getAttribute('data-word');
+                    const sentence = this.getAttribute('data-sentence');
+                    playAudio(word || sentence);
+                });
+            });
+            
+            // 添加例句切換功能
+            const exampleToggle = detailContainer.querySelector('.example-toggle');
+            const exampleContent = detailContainer.querySelector('.example-content');
+            
+            exampleToggle.addEventListener('click', function() {
+                if (exampleContent.style.display === 'none') {
+                    exampleContent.style.display = 'block';
+                    exampleToggle.textContent = '隱藏例句';
+                } else {
+                    exampleContent.style.display = 'none';
+                    exampleToggle.textContent = '顯示例句';
+                }
+            });
+        }
+
+        // 測驗模式初始化
+        let quizNouns = [];
+        let currentQuizIndex = 0;
+        let userAnswers = [];
+        
+        function initQuizMode() {
+            document.getElementById('quiz-start').classList.remove('hidden');
+            document.getElementById('quiz-container').classList.add('hidden');
+            document.getElementById('quiz-result').classList.add('hidden');
+        }
+        
+        function startQuiz() {
+            // 隨機選擇10個名詞
+            quizNouns = [...nouns].sort(() => 0.5 - Math.random()).slice(0, 10);
+            currentQuizIndex = 0;
+            userAnswers = [];
+            
+            document.getElementById('quiz-start').classList.add('hidden');
+            document.getElementById('quiz-container').classList.remove('hidden');
+            
+            showQuizQuestion();
+        }
+        
+        function showQuizQuestion() {
+            const questionElement = document.getElementById('quiz-question');
+            const formElement = document.getElementById('quiz-form');
+            
+            if (currentQuizIndex >= quizNouns.length) {
+                return;
+            }
+            
+            const noun = quizNouns[currentQuizIndex];
+            
+            questionElement.innerHTML = `
+                <p>請寫出名詞「${noun.singular}」的複數形式：</p>
+                <p><small>中文: ${noun.singular_chinese}</small></p>
+            `;
+            
+            formElement.innerHTML = `
+                <div class="quiz-input-group">
+                    <label for="plural-answer">複數形式:</label>
+                    <input type="text" id="plural-answer" class="quiz-input" required>
+                </div>
+            `;
+        }
+        
+        function submitQuiz() {
+            const pluralAnswer = document.getElementById('plural-answer').value.trim().toLowerCase();
+            
+            if (!pluralAnswer) {
+                alert('請填寫答案');
+                return;
+            }
+            
+            const currentNoun = quizNouns[currentQuizIndex];
+            const isCorrect = pluralAnswer === currentNoun.plural.toLowerCase();
+            
+            userAnswers.push({
+                noun: currentNoun,
+                pluralAnswer: pluralAnswer,
+                isCorrect: isCorrect
+            });
+            
+            currentQuizIndex++;
+            
+            if (currentQuizIndex < quizNouns.length) {
+                showQuizQuestion();
+            } else {
+                showQuizResult();
+            }
+        }
+        
+        function showQuizResult() {
+            document.getElementById('quiz-container').classList.add('hidden');
+            document.getElementById('quiz-result').classList.remove('hidden');
+            
+            let score = 0;
+            let resultHTML = '';
+            
+            userAnswers.forEach((answer, index) => {
+                const noun = answer.noun;
+                
+                if (answer.isCorrect) {
+                    score += 10;
+                }
+                
+                resultHTML += `
+                    <div class="result-item ${answer.isCorrect ? 'correct' : 'incorrect'}">
+                        <p><strong>${index + 1}. ${noun.singular}</strong> (${noun.singular_chinese})</p>
+                        <p>你的答案: ${answer.pluralAnswer}</p>
+                        <p>正確答案: ${noun.plural}</p>
+                        <p>${answer.isCorrect ? '✓ 正確' : '✗ 錯誤'}</p>
+                    </div>
+                `;
+            });
+            
+            document.getElementById('quiz-result').innerHTML = `
+                <h3>測驗結果</h3>
+                <div class="result-score">${score} / 100</div>
+                <p>${score >= 60 ? '恭喜！表現不錯！' : '需要更多練習，加油！'}</p>
+                <div class="result-details">
+                    ${resultHTML}
+                </div>
+                <button class="quiz-submit" onclick="initQuizMode()">重新測驗</button>
+            `;
+        }
+
+        // 音效功能
+        function playAudio(text) {
+            // 使用Web Speech API進行語音合成
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.8;
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert('您的瀏覽器不支持語音合成功能');
+            }
+        }
+    </script>
+</body>
+</html>
