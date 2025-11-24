@@ -1,955 +1,542 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>不規則動詞互動學習平台</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        
-        body {
-            font-family: 'Noto Sans TC', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            min-height: 100vh;
-            padding: 15px;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        header {
-            text-align: center;
-            margin-bottom: 20px;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        
-        h1 {
-            color: #2c3e50;
-            margin-bottom: 8px;
-            font-size: 1.5rem;
-        }
-        
-        .description {
-            color: #7f8c8d;
-            max-width: 800px;
-            margin: 0 auto;
-            font-size: 0.9rem;
-        }
-        
-        .mode-selector {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        
-        .mode-btn {
-            padding: 8px 16px;
-            background: #3498db;
-            color: white;
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        
-        .mode-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
-        }
-        
-        .mode-btn.active {
-            background: #2c3e50;
-        }
-        
-        .content-area {
-            background: white;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            min-height: 400px;
-        }
-        
-        .section {
-            display: none;
-        }
-        
-        .section.active {
-            display: block;
-        }
-        
-        .filter-options {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 15px;
-        }
-        
-        .filter-btn {
-            padding: 6px 12px;
-            background: #ecf0f1;
-            border: none;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.85rem;
-        }
-        
-        .filter-btn.active {
-            background: #3498db;
-            color: white;
-        }
-        
-        .verb-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        
-        .verb-item {
-            padding: 10px;
-            background: #f8f9fa;
-            border-radius: 5px;
-            cursor: pointer;
-            text-align: center;
-            transition: all 0.3s ease;
-            border-left: 3px solid #3498db;
-        }
-        
-        .verb-item:hover {
-            background: #e9ecef;
-            transform: translateY(-2px);
-        }
-        
-        .verb-card {
-            background: white;
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 15px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-            border-left: 4px solid #3498db;
-        }
-        
-        .verb-card:hover {
-            transform: translateY(-3px);
-        }
-        
-        .verb-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        
-        .verb-type {
-            padding: 3px 8px;
-            border-radius: 15px;
-            color: white;
-            font-size: 0.75rem;
-            font-weight: bold;
-        }
-        
-        .type-AAA {
-            background: #e74c3c;
-        }
-        
-        .type-ABA {
-            background: #f39c12;
-        }
-        
-        .type-ABB {
-            background: #3498db;
-        }
-        
-        .type-ABC {
-            background: #9b59b6;
-        }
-        
-        .verb-forms {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-        
-        .verb-form {
-            padding: 8px;
-            background: #f8f9fa;
-            border-radius: 5px;
-        }
-        
-        .verb-form h4 {
-            margin-bottom: 3px;
-            color: #7f8c8d;
-            font-size: 0.8rem;
-        }
-        
-        .verb-form p {
-            font-weight: bold;
-            font-size: 0.95rem;
-            color: #2c3e50;
-        }
-        
-        .pronunciation-btn {
-            background: none;
-            border: none;
-            color: #3498db;
-            cursor: pointer;
-            font-size: 0.9rem;
-            margin-left: 3px;
-        }
-        
-        .examples {
-            margin-top: 10px;
-        }
-        
-        .example {
-            margin-bottom: 8px;
-            padding: 8px;
-            background: #f8f9fa;
-            border-radius: 5px;
-            font-style: italic;
-            font-size: 0.85rem;
-        }
-        
-        .example-toggle {
-            background: #3498db;
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            margin-top: 8px;
-        }
-        
-        .quiz-container {
-            text-align: center;
-        }
-        
-        .quiz-start {
-            text-align: center;
-            padding: 20px;
-        }
-        
-        .quiz-question {
-            font-size: 1.1rem;
-            margin-bottom: 15px;
-        }
-        
-        .quiz-form {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-            margin-bottom: 20px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        .quiz-question-item {
-            padding: 15px;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            background: #f8f9fa;
-        }
-        
-        .quiz-input-group {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 10px;
-        }
-        
-        .quiz-input-group label {
-            width: 100px;
-            text-align: right;
-            margin-right: 10px;
-        }
-        
-        .quiz-input {
-            flex: 1;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        
-        .quiz-submit {
-            padding: 12px 30px;
-            background: #3498db;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1.1rem;
-            margin-top: 20px;
-            transition: all 0.3s ease;
-        }
-        
-        .quiz-submit:hover {
-            background: #2980b9;
-            transform: translateY(-2px);
-        }
-        
-        .quiz-result {
-            margin-top: 20px;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 8px;
-        }
-        
-        .result-score {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #2c3e50;
-            margin: 10px 0;
-        }
-        
-        .result-details {
-            text-align: left;
-            margin-top: 15px;
-        }
-        
-        .result-item {
-            padding: 8px;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .result-item.correct {
-            background: #d4edda;
-        }
-        
-        .result-item.incorrect {
-            background: #f8d7da;
-        }
-        
-        .hidden {
-            display: none;
-        }
-        
-        .back-btn {
-            background: #7f8c8d;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            margin-bottom: 15px;
-        }
-        
-        .loading {
-            text-align: center;
-            padding: 20px;
-            color: #7f8c8d;
-        }
-        
-        @media (max-width: 768px) {
-            .verb-list {
-                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-            }
-            
-            .verb-forms {
-                grid-template-columns: 1fr;
-            }
-            
-            .quiz-input-group {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            
-            .quiz-input-group label {
-                width: 100%;
-                text-align: left;
-                margin-bottom: 5px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>不規則動詞互動學習平台</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    /* ===== 緊湊排版版 CSS ===== */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      line-height: 1.5;
+      color: #333;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      padding: 10px;
+    }
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    header {
+      text-align: center;
+      margin-bottom: 12px;
+      padding: 10px 12px;
+      background: rgba(255,255,255,0.95);
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    h1 { color: #2c3e50; margin-bottom: 4px; font-size: 1.35rem; }
+    .description { color: #7f8c8d; font-size: 0.85rem; }
+
+    .mode-selector {
+      display: flex; justify-content: center; flex-wrap: wrap;
+      gap: 6px; margin-bottom: 12px;
+    }
+    .mode-btn {
+      padding: 6px 12px; background: #3498db; color: #fff;
+      border: none; border-radius: 16px; cursor: pointer;
+      font-size: 0.85rem; font-weight: 500; transition: all .2s ease;
+      box-shadow: 0 1px 3px rgba(0,0,0,.1);
+    }
+    .mode-btn:hover { transform: translateY(-1px); }
+    .mode-btn.active { background: #2c3e50; }
+
+    .content-area {
+      background: #fff; border-radius: 8px; padding: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,.1);
+      min-height: 320px;
+    }
+
+    .section { display: none; }
+    .section.active { display: block; }
+
+    .filter-options {
+      display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 10px;
+    }
+    .filter-btn {
+      padding: 4px 10px; background: #ecf0f1; border: none; border-radius: 12px;
+      cursor: pointer; font-size: 0.8rem; transition: all .2s ease;
+    }
+    .filter-btn.active { background: #3498db; color: #fff; }
+
+    .verb-list {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 6px; margin-bottom: 10px;
+    }
+    .verb-item {
+      padding: 7px; background: #f8f9fa; border-radius: 6px; cursor: pointer;
+      text-align: center; border-left: 3px solid #3498db; transition: all .2s ease;
+      font-size: 0.9rem;
+    }
+    .verb-item small { font-size: 0.75rem; color: #666; }
+    .verb-item:hover { background: #e9ecef; transform: translateY(-1px); }
+
+    .verb-card {
+      background: #fff; border-radius: 8px; padding: 10px; margin-top: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,.08);
+      border-left: 4px solid #3498db;
+    }
+    .verb-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 6px;
+    }
+    .verb-header h3 { font-size: 1.05rem; }
+    .verb-type {
+      padding: 2px 7px; border-radius: 12px; color: #fff;
+      font-size: 0.72rem; font-weight: bold;
+    }
+    .type-AAA { background:#e74c3c; }
+    .type-ABA { background:#f39c12; }
+    .type-ABB { background:#3498db; }
+    .type-ABC { background:#9b59b6; }
+
+    .verb-forms {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(140px,1fr));
+      gap: 6px; margin-bottom: 6px;
+    }
+    .verb-form { padding: 6px; background:#f8f9fa; border-radius: 5px; }
+    .verb-form h4 { margin-bottom: 2px; color:#7f8c8d; font-size:.75rem; }
+    .verb-form p { font-weight:bold; font-size:.9rem; color:#2c3e50; }
+    .pronunciation-btn {
+      background: none; border: none; color:#3498db; cursor:pointer; font-size:.9rem;
+      margin-left: 2px;
+    }
+
+    .examples { margin-top: 6px; }
+    .example-toggle {
+      background:#3498db; color:#fff; border:none; padding:4px 8px;
+      border-radius:5px; cursor:pointer; font-size:.75rem;
+    }
+    .example { margin-top:6px; padding:6px; background:#f8f9fa; border-radius:5px;
+      font-style: italic; font-size:.82rem; }
+
+    .hidden { display:none; }
+
+    /* ===== Quiz（一次 10 題一起寫） ===== */
+    .quiz-start { text-align:center; padding: 10px; }
+    .quiz-start p { font-size: .9rem; margin-bottom: 4px; }
+    .quiz-submit {
+      padding: 8px 16px; background:#3498db; color:#fff; border:none; border-radius:6px;
+      cursor:pointer; font-size:.95rem; margin-top:8px;
+    }
+
+    .quiz-container { margin-top: 6px; }
+    .quiz-hint {
+      background:#f1f7ff; border-left:4px solid #3498db; padding:6px 8px; border-radius:6px;
+      font-size:.9rem; margin-bottom: 8px;
+    }
+    .quiz-list { display: grid; gap: 6px; }
+    .quiz-item {
+      padding: 8px; border:1px solid #eee; border-radius:6px; background:#fafafa;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 6px; align-items:center;
+    }
+    .quiz-item .q-title { grid-column: 1 / -1; font-weight: 700; font-size: .95rem; }
+    .quiz-item label { font-size: .8rem; color:#555; }
+    .quiz-item input {
+      width: 100%; padding: 6px; border:1px solid #ddd; border-radius:4px; font-size:.9rem;
+    }
+
+    .quiz-result {
+      margin-top: 10px; padding: 10px; background:#f8f9fa; border-radius:8px;
+    }
+    .result-score { font-size: 1.3rem; font-weight: 800; margin: 6px 0; color:#2c3e50; }
+    .result-item { padding:6px; border-bottom:1px solid #eee; font-size:.88rem; }
+    .result-item.correct { background:#d4edda; }
+    .result-item.incorrect { background:#f8d7da; }
+
+    @media (max-width: 768px) {
+      .verb-list { grid-template-columns: repeat(auto-fill, minmax(120px,1fr)); }
+      .verb-forms { grid-template-columns: 1fr; }
+      .quiz-item { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Shirley's Irregular Verbs Learning Platform</h1>
-            <p class="description">不規則動詞互動學習平台:透過互動方式學習、複習和測驗不規則動詞的三種形式，包含發音和例句</p>
-        </header>
-        
-        <div class="mode-selector">
-            <button class="mode-btn active" data-mode="learn"> Study Mode學習模式</button>
-            <button class="mode-btn" data-mode="review">Review Mode 複習模式</button>
-            <button class="mode-btn" data-mode="quiz">Quiz Mode 測驗模式</button>
-        </div>
-        
-        <div class="content-area">
-            <!-- 學習模式 -->
-            <div class="section active" id="learn-section">
-                <h2>學習不規則動詞</h2>
-                <p>點擊動詞查看詳細資訊，點擊喇叭圖標收聽發音</p>
-                
-                <div class="filter-options">
-                    <button class="filter-btn active" data-type="all">全部</button>
-                    <button class="filter-btn" data-type="AAA">AAA型</button>
-                    <button class="filter-btn" data-type="ABA">ABA型</button>
-                    <button class="filter-btn" data-type="ABB">ABB型</button>
-                    <button class="filter-btn" data-type="ABC">ABC型</button>
-                </div>
-                
-                <div class="loading" id="learn-loading">載入動詞資料中...</div>
-                <div class="verb-list" id="learn-verb-list">
-                    <!-- 動詞列表將在這裡動態生成 -->
-                </div>
-                
-                <div id="learn-verb-detail">
-                    <!-- 動詞詳細資訊將在這裡動態生成 -->
-                </div>
-            </div>
-            
-            <!-- 複習模式 -->
-            <div class="section" id="review-section">
-                <h2>複習不規則動詞</h2>
-                <p>點擊動詞查看詳細資訊，加強記憶</p>
-                
-                <div class="filter-options">
-                    <button class="filter-btn active" data-type="all">全部</button>
-                    <button class="filter-btn" data-type="AAA">AAA型</button>
-                    <button class="filter-btn" data-type="ABA">ABA型</button>
-                    <button class="filter-btn" data-type="ABB">ABB型</button>
-                    <button class="filter-btn" data-type="ABC">ABC型</button>
-                </div>
-                
-                <div class="loading" id="review-loading">載入動詞資料中...</div>
-                <div class="verb-list" id="review-verb-list">
-                    <!-- 動詞列表將在這裡動態生成 -->
-                </div>
-                
-                <div id="review-verb-detail">
-                    <!-- 動詞詳細資訊將在這裡動態生成 -->
-                </div>
-            </div>
-            
-            <!-- 測驗模式 -->
-            <div class="section" id="quiz-section">
-                <h2>不規則動詞測驗</h2>
-                
-                <div class="quiz-start" id="quiz-start">
-                    <p>測驗說明：請寫出所給動詞的過去式及過去分詞</p>
-                    <p>系統將隨機挑選10個動詞，每題10分，滿分100分</p>
-                    <button class="quiz-submit" id="start-quiz-btn">開始測驗</button>
-                </div>
-                
-                <div class="quiz-container hidden" id="quiz-container">
-                    <div class="quiz-question">
-                        <h3>請填寫以下動詞的過去式及過去分詞：</h3>
-                    </div>
-                    
-                    <form class="quiz-form" id="quiz-form">
-                        <!-- 測驗表單將在這裡動態生成 -->
-                    </form>
-                    
-                    <button class="quiz-submit" id="submit-quiz-btn">提交所有答案</button>
-                    
-                    <div class="quiz-result hidden" id="quiz-result">
-                        <!-- 測驗結果將在這裡動態生成 -->
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="container">
+  <header>
+    <h1>Shirley's Irregular Verbs Learning Platform</h1>
+    <p class="description">不規則動詞互動學習平台：學習、複習、測驗不規則動詞三態（含發音與例句）</p>
+  </header>
+
+  <div class="mode-selector">
+    <button class="mode-btn active" data-mode="learn">Study Mode 學習模式</button>
+    <button class="mode-btn" data-mode="review">Review Mode 複習模式</button>
+    <button class="mode-btn" data-mode="quiz">Quiz Mode 測驗模式</button>
+  </div>
+
+  <div class="content-area">
+    <!-- 學習模式 -->
+    <div class="section active" id="learn-section">
+      <h2 style="font-size:1.05rem;margin-bottom:4px;">學習不規則動詞</h2>
+      <p style="font-size:.85rem;color:#666;">點擊動詞查看詳細資訊</p>
+
+      <div class="filter-options">
+        <button class="filter-btn active" data-type="all">全部</button>
+        <button class="filter-btn" data-type="AAA">AAA型</button>
+        <button class="filter-btn" data-type="ABA">ABA型</button>
+        <button class="filter-btn" data-type="ABB">ABB型</button>
+        <button class="filter-btn" data-type="ABC">ABC型</button>
+      </div>
+
+      <div class="verb-list" id="learn-verb-list">
+        <div style="padding:8px;color:#888;">載入中...</div>
+      </div>
+      <div id="learn-verb-detail"></div>
     </div>
 
-    <script>
-        // 從CSV檔案載入動詞資料
-        let verbs = [];
+    <!-- 複習模式 -->
+    <div class="section" id="review-section">
+      <h2 style="font-size:1.05rem;margin-bottom:4px;">複習不規則動詞</h2>
+      <p style="font-size:.85rem;color:#666;">點擊動詞查看詳細資訊</p>
 
-        // 載入CSV資料
-        async function loadVerbsData() {
-            try {
-                console.log('開始載入CSV資料...');
-                const response = await fetch('https://ducj-creator.github.io/Shirley-Grammar/irregular/verbs.csv');
-                const csvText = await response.text();
-                
-                console.log('CSV原始資料:', csvText.substring(0, 500)); // 顯示前500個字符用於調試
-                
-                // 解析CSV
-                const lines = csvText.split('\n');
-                verbs = [];
-                
-                for (let i = 1; i < lines.length; i++) { // 跳過標題行
-                    const line = lines[i].trim();
-                    if (line) {
-                        const columns = parseCSVLine(line);
-                        console.log(`第${i}行解析結果:`, columns); // 調試用
-                        
-                        if (columns.length >= 8) {
-                            const verb = {
-                                type: columns[0].trim(),
-                                v1: columns[1].trim(),
-                                v1_example: columns[2].trim(),
-                                v2: columns[3].trim(),
-                                v2_example: columns[4].trim(),
-                                v3: columns[5].trim(),
-                                v3_example: columns[6].trim(),
-                                meaning: columns[7].trim()
-                            };
-                            // 檢查必要欄位是否都有值
-                            if (verb.v1 && verb.v2 && verb.v3) {
-                                verbs.push(verb);
-                            }
-                        }
-                    }
-                }
-                
-                console.log(`成功載入 ${verbs.length} 個動詞`, verbs.slice(0, 5)); // 顯示前5個動詞用於調試
-                
-                // 初始化所有模式
-                initAllModes();
-                
-            } catch (error) {
-                console.error('載入CSV資料失敗:', error);
-                document.querySelectorAll('.loading').forEach(el => {
-                    el.innerHTML = '載入資料失敗，請檢查網路連接或CSV檔案路徑';
-                });
-            }
-        }
+      <div class="filter-options">
+        <button class="filter-btn active" data-type="all">全部</button>
+        <button class="filter-btn" data-type="AAA">AAA型</button>
+        <button class="filter-btn" data-type="ABA">ABA型</button>
+        <button class="filter-btn" data-type="ABB">ABB型</button>
+        <button class="filter-btn" data-type="ABC">ABC型</button>
+      </div>
 
-        // 解析CSV行，處理引號內的逗號
-        function parseCSVLine(line) {
-            const result = [];
-            let current = '';
-            let inQuotes = false;
-            
-            for (let i = 0; i < line.length; i++) {
-                const char = line[i];
-                
-                if (char === '"') {
-                    inQuotes = !inQuotes;
-                } else if (char === ',' && !inQuotes) {
-                    // 移除前後引號
-                    let value = current.trim();
-                    if (value.startsWith('"') && value.endsWith('"')) {
-                        value = value.substring(1, value.length - 1);
-                    }
-                    result.push(value);
-                    current = '';
-                } else {
-                    current += char;
-                }
-            }
-            
-            // 處理最後一個欄位
-            let value = current.trim();
-            if (value.startsWith('"') && value.endsWith('"')) {
-                value = value.substring(1, value.length - 1);
-            }
-            result.push(value);
-            
-            return result;
-        }
+      <div class="verb-list" id="review-verb-list">
+        <div style="padding:8px;color:#888;">載入中...</div>
+      </div>
+      <div id="review-verb-detail"></div>
+    </div>
 
-        // 初始化所有模式
-        function initAllModes() {
-            console.log('初始化所有模式，動詞數量:', verbs.length);
-            
-            // 隱藏載入訊息
-            document.querySelectorAll('.loading').forEach(el => {
-                el.style.display = 'none';
-            });
-            
-            // 初始化學習模式
-            initLearnMode();
-            
-            // 初始化複習模式
-            initReviewMode();
-            
-            // 初始化測驗模式
-            initQuizMode();
-            
-            // 初始化測驗模式開始按鈕
-            document.getElementById('start-quiz-btn').addEventListener('click', startQuiz);
-            document.getElementById('submit-quiz-btn').addEventListener('click', submitQuiz);
-            
-            // 顯示載入的動詞數量
-            const description = document.querySelector('.description');
-            description.textContent += ` (已載入 ${verbs.length} 個動詞)`;
-        }
+    <!-- 測驗模式 -->
+    <div class="section" id="quiz-section">
+      <h2 style="font-size:1.05rem;margin-bottom:6px;">不規則動詞測驗</h2>
 
-        // 初始化應用
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM載入完成，開始初始化...');
-            
-            // 模式切換
-            const modeButtons = document.querySelectorAll('.mode-btn');
-            const sections = document.querySelectorAll('.section');
-            
-            modeButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const mode = this.getAttribute('data-mode');
-                    
-                    // 更新按鈕狀態
-                    modeButtons.forEach(btn => btn.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    // 顯示對應的內容區域
-                    sections.forEach(section => section.classList.remove('active'));
-                    document.getElementById(`${mode}-section`).classList.add('active');
-                    
-                    // 初始化對應模式的內容
-                    if (mode === 'learn') {
-                        initLearnMode();
-                    } else if (mode === 'review') {
-                        initReviewMode();
-                    } else if (mode === 'quiz') {
-                        initQuizMode();
-                    }
-                });
-            });
-            
-            // 開始載入資料
-            loadVerbsData();
+      <div class="quiz-start" id="quiz-start">
+        <p>測驗提示：寫出每個動詞的 <b>過去式(V2)</b> 與 <b>過去分詞(V3)</b></p>
+        <p>系統將隨機出 10 題，每題 10 分，滿分 100 分</p>
+        <button class="quiz-submit" id="start-quiz-btn">開始測驗</button>
+      </div>
+
+      <div class="quiz-container hidden" id="quiz-container">
+        <div class="quiz-hint">🌟 題型提示（只出現一次）：請寫 V2 / V3</div>
+
+        <form id="quiz-form">
+          <div class="quiz-list" id="quiz-list"></div>
+          <button type="submit" class="quiz-submit" style="width:100%;">一次提交答案</button>
+        </form>
+
+        <div class="quiz-result hidden" id="quiz-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const CSV_URL = "https://ducj-creator.github.io/Shirley-Grammar/irregular/verbs.csv";
+  let verbs = [];          // 從 CSV 載入後填入
+  let quizVerbs = [];      // 本次測驗 10 題
+
+  document.addEventListener("DOMContentLoaded", async () => {
+    // 1) 先載入 CSV
+    await loadVerbsFromCSV();
+
+    // 2) 模式切換
+    const modeButtons = document.querySelectorAll(".mode-btn");
+    const sections = document.querySelectorAll(".section");
+
+    modeButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const mode = btn.dataset.mode;
+
+        modeButtons.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        sections.forEach(s => s.classList.remove("active"));
+        document.getElementById(`${mode}-section`).classList.add("active");
+
+        if (mode === "learn") initLearnMode();
+        if (mode === "review") initReviewMode();
+        if (mode === "quiz") initQuizMode();
+      });
+    });
+
+    // 3) 初始化 learn
+    initLearnMode();
+
+    // Quiz btn
+    document.getElementById("start-quiz-btn").addEventListener("click", startQuiz);
+    document.getElementById("quiz-form").addEventListener("submit", submitQuiz);
+  });
+
+  /* ========== CSV 載入 + 解析 ========== */
+  async function loadVerbsFromCSV() {
+    try {
+      const res = await fetch(CSV_URL);
+      if (!res.ok) throw new Error("CSV 下載失敗");
+      const text = await res.text();
+      verbs = parseCSV(text);
+
+      // 若 CSV 沒有 type 欄，嘗試根據 v1/v2/v3 形態判斷
+      verbs.forEach(v => { if (!v.type) v.type = inferType(v.v1, v.v2, v.v3); });
+
+      // 更新列表
+      initLearnMode();
+      initReviewMode();
+    } catch (err) {
+      console.error(err);
+      const msg = `<div style="padding:8px;color:#c00;">CSV 載入失敗，請確認網址可連線</div>`;
+      document.getElementById("learn-verb-list").innerHTML = msg;
+      document.getElementById("review-verb-list").innerHTML = msg;
+    }
+  }
+
+  function parseCSV(csvText) {
+    // 簡單 CSV parser（支援 quoted 欄）
+    const rows = csvText.trim().split(/\r?\n/).filter(Boolean);
+    if (!rows.length) return [];
+
+    const first = splitCSVLine(rows[0]);
+    const hasHeader = first.some(h => /type|v1|v2|v3|meaning|example/i.test(h));
+
+    let headers = [];
+    let startIdx = 0;
+    if (hasHeader) {
+      headers = first.map(h => h.trim());
+      startIdx = 1;
+    } else {
+      // fallback 預設順序
+      headers = ["type","v1","v1_example","v2","v2_example","v3","v3_example","meaning"];
+      startIdx = 0;
+    }
+
+    const data = [];
+    for (let i = startIdx; i < rows.length; i++) {
+      const cols = splitCSVLine(rows[i]);
+      const obj = {};
+      headers.forEach((h, idx) => obj[h] = (cols[idx] ?? "").trim());
+
+      // 欄位統一整理
+      data.push({
+        type: obj.type || "",
+        v1: obj.v1 || obj.V1 || "",
+        v1_example: obj.v1_example || obj.V1_example || obj.example1 || "",
+        v2: obj.v2 || obj.V2 || "",
+        v2_example: obj.v2_example || obj.V2_example || obj.example2 || "",
+        v3: obj.v3 || obj.V3 || "",
+        v3_example: obj.v3_example || obj.V3_example || obj.example3 || "",
+        meaning: obj.meaning || obj.translation || obj.chinese || ""
+      });
+    }
+    return data.filter(v => v.v1 && v.v2 && v.v3);
+  }
+
+  function splitCSVLine(line) {
+    const result = [];
+    let cur = "", inQuotes = false;
+    for (let i=0;i<line.length;i++){
+      const ch = line[i];
+      if (ch === '"') {
+        if (inQuotes && line[i+1] === '"') { cur += '"'; i++; }
+        else inQuotes = !inQuotes;
+      } else if (ch === ',' && !inQuotes) {
+        result.push(cur); cur = "";
+      } else cur += ch;
+    }
+    result.push(cur);
+    return result;
+  }
+
+  function inferType(v1, v2, v3) {
+    if (v1===v2 && v2===v3) return "AAA";
+    if (v1===v3 && v1!==v2) return "ABA";
+    if (v2===v3 && v1!==v2) return "ABB";
+    return "ABC";
+  }
+
+  /* ========== Learn / Review ========== */
+  function initLearnMode() {
+    renderVerbList("learn");
+    bindFilters("learn");
+  }
+  function initReviewMode() {
+    renderVerbList("review");
+    bindFilters("review");
+  }
+
+  function renderVerbList(mode) {
+    const verbList = document.getElementById(`${mode}-verb-list`);
+    if (!verbs.length) {
+      verbList.innerHTML = `<div style="padding:8px;color:#888;">載入中...</div>`;
+      return;
+    }
+    verbList.innerHTML = "";
+    verbs.forEach(verb => {
+      const item = document.createElement("div");
+      item.className = "verb-item";
+      item.dataset.type = verb.type;
+      item.innerHTML = `<div>${verb.v1}</div><small>${verb.meaning || ""}</small>`;
+      item.addEventListener("click", () => showVerbDetail(mode, verb));
+      verbList.appendChild(item);
+    });
+  }
+
+  function bindFilters(mode) {
+    const filterButtons = document.querySelectorAll(`#${mode}-section .filter-btn`);
+    filterButtons.forEach(button => {
+      button.onclick = () => {
+        const type = button.dataset.type;
+        filterButtons.forEach(b => b.classList.remove("active"));
+        button.classList.add("active");
+
+        document.querySelectorAll(`#${mode}-verb-list .verb-item`).forEach(item => {
+          item.style.display = (type === "all" || item.dataset.type === type) ? "block" : "none";
         });
+      };
+    });
+  }
 
-        // 學習模式初始化
-        function initLearnMode() {
-            console.log('初始化學習模式，動詞數量:', verbs.length);
-            
-            const verbList = document.getElementById('learn-verb-list');
-            const loadingElement = document.getElementById('learn-loading');
-            
-            if (verbs.length === 0) {
-                loadingElement.innerHTML = '尚未載入動詞資料';
-                loadingElement.style.display = 'block';
-                return;
-            }
-            
-            verbList.innerHTML = '';
-            loadingElement.style.display = 'none';
-            
-            // 添加動詞列表
-            verbs.forEach(verb => {
-                const item = document.createElement('div');
-                item.className = 'verb-item';
-                item.setAttribute('data-type', verb.type);
-                item.innerHTML = `
-                    <div>${verb.v1}</div>
-                    <small>${verb.meaning}</small>
-                `;
-                
-                item.addEventListener('click', function() {
-                    showVerbDetail('learn', verb);
-                });
-                
-                verbList.appendChild(item);
-            });
-            
-            // 添加篩選功能
-            const filterButtons = document.querySelectorAll('#learn-section .filter-btn');
-            filterButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const type = this.getAttribute('data-type');
-                    
-                    // 更新按鈕狀態
-                    filterButtons.forEach(btn => btn.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    // 篩選動詞
-                    const items = document.querySelectorAll('#learn-verb-list .verb-item');
-                    items.forEach(item => {
-                        if (type === 'all' || item.getAttribute('data-type') === type) {
-                            item.style.display = 'block';
-                        } else {
-                            item.style.display = 'none';
-                        }
-                    });
-                });
-            });
-        }
+  function showVerbDetail(mode, verb) {
+    const detailContainer = document.getElementById(`${mode}-verb-detail`);
+    detailContainer.innerHTML = `
+      <div class="verb-card">
+        <div class="verb-header">
+          <h3>${verb.v1} - ${verb.meaning || ""}</h3>
+          <span class="verb-type type-${verb.type}">${verb.type}</span>
+        </div>
 
-        // 複習模式初始化
-        function initReviewMode() {
-            console.log('初始化複習模式，動詞數量:', verbs.length);
-            
-            const verbList = document.getElementById('review-verb-list');
-            const loadingElement = document.getElementById('review-loading');
-            
-            if (verbs.length === 0) {
-                loadingElement.innerHTML = '尚未載入動詞資料';
-                loadingElement.style.display = 'block';
-                return;
-            }
-            
-            verbList.innerHTML = '';
-            loadingElement.style.display = 'none';
-            
-            // 添加動詞列表
-            verbs.forEach(verb => {
-                const item = document.createElement('div');
-                item.className = 'verb-item';
-                item.setAttribute('data-type', verb.type);
-                item.innerHTML = `
-                    <div>${verb.v1}</div>
-                    <small>${verb.meaning}</small>
-                `;
-                
-                item.addEventListener('click', function() {
-                    showVerbDetail('review', verb);
-                });
-                
-                verbList.appendChild(item);
-            });
-            
-            // 添加篩選功能
-            const filterButtons = document.querySelectorAll('#review-section .filter-btn');
-            filterButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const type = this.getAttribute('data-type');
-                    
-                    // 更新按鈕狀態
-                    filterButtons.forEach(btn => btn.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    // 篩選動詞
-                    const items = document.querySelectorAll('#review-verb-list .verb-item');
-                    items.forEach(item => {
-                        if (type === 'all' || item.getAttribute('data-type') === type) {
-                            item.style.display = 'block';
-                        } else {
-                            item.style.display = 'none';
-                        }
-                    });
-                });
-            });
-        }
+        <div class="verb-forms">
+          <div class="verb-form">
+            <h4>原形 (V1)</h4>
+            <p>${verb.v1} <button class="pronunciation-btn" data-word="${verb.v1}">🔊</button></p>
+          </div>
+          <div class="verb-form">
+            <h4>過去式 (V2)</h4>
+            <p>${verb.v2} <button class="pronunciation-btn" data-word="${verb.v2}">🔊</button></p>
+          </div>
+          <div class="verb-form">
+            <h4>過去分詞 (V3)</h4>
+            <p>${verb.v3} <button class="pronunciation-btn" data-word="${verb.v3}">🔊</button></p>
+          </div>
+        </div>
 
-        // 顯示動詞詳細資訊
-        function showVerbDetail(mode, verb) {
-            const detailContainer = document.getElementById(`${mode}-verb-detail`);
-            
-            detailContainer.innerHTML = `
-                <div class="verb-card">
-                    <div class="verb-header">
-                        <h3>${verb.v1} - ${verb.meaning}</h3>
-                        <span class="verb-type type-${verb.type}">${verb.type}</span>
-                    </div>
-                    <div class="verb-forms">
-                        <div class="verb-form">
-                            <h4>原形 (V1)</h4>
-                            <p>${verb.v1} <button class="pronunciation-btn" data-word="${verb.v1}">🔊</button></p>
-                        </div>
-                        <div class="verb-form">
-                            <h4>過去式 (V2)</h4>
-                            <p>${verb.v2} <button class="pronunciation-btn" data-word="${verb.v2}">🔊</button></p>
-                        </div>
-                        <div class="verb-form">
-                            <h4>過去分詞 (V3)</h4>
-                            <p>${verb.v3} <button class="pronunciation-btn" data-word="${verb.v3}">🔊</button></p>
-                        </div>
-                    </div>
-                    <div class="examples">
-                        <button class="example-toggle">顯示例句</button>
-                        <div class="example-content" style="display: none;">
-                            <div class="example">
-                                <strong>原形例句:</strong> ${verb.v1_example}
-                                <button class="pronunciation-btn" data-sentence="${verb.v1_example}">🔊</button>
-                            </div>
-                            <div class="example">
-                                <strong>過去式例句:</strong> ${verb.v2_example}
-                                <button class="pronunciation-btn" data-sentence="${verb.v2_example}">🔊</button>
-                            </div>
-                            <div class="example">
-                                <strong>過去分詞例句:</strong> ${verb.v3_example}
-                                <button class="pronunciation-btn" data-sentence="${verb.v3_example}">🔊</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-            
-            // 添加發音功能
-            const pronunciationButtons = detailContainer.querySelectorAll('.pronunciation-btn');
-            pronunciationButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const word = this.getAttribute('data-word');
-                    const sentence = this.getAttribute('data-sentence');
-                    playAudio(word || sentence);
-                });
-            });
-            
-            // 添加例句切換功能
-            const exampleToggle = detailContainer.querySelector('.example-toggle');
-            const exampleContent = detailContainer.querySelector('.example-content');
-            
-            exampleToggle.addEventListener('click', function() {
-                if (exampleContent.style.display === 'none') {
-                    exampleContent.style.display = 'block';
-                    exampleToggle.textContent = '隱藏例句';
-                } else {
-                    exampleContent.style.display = 'none';
-                    exampleToggle.textContent = '顯示例句';
-                }
-            });
-        }
+        <div class="examples">
+          <button class="example-toggle">顯示例句</button>
+          <div class="example-content" style="display:none;">
+            ${verb.v1_example ? `<div class="example"><b>V1:</b> ${verb.v1_example} <button class="pronunciation-btn" data-sentence="${verb.v1_example}">🔊</button></div>` : ""}
+            ${verb.v2_example ? `<div class="example"><b>V2:</b> ${verb.v2_example} <button class="pronunciation-btn" data-sentence="${verb.v2_example}">🔊</button></div>` : ""}
+            ${verb.v3_example ? `<div class="example"><b>V3:</b> ${verb.v3_example} <button class="pronunciation-btn" data-sentence="${verb.v3_example}">🔊</button></div>` : ""}
+          </div>
+        </div>
+      </div>
+    `;
 
-        // 測驗模式初始化
-        let quizVerbs = [];
-        let userAnswers = [];
-        
-        function initQuizMode() {
-            document.getElementById('quiz-start').classList.remove('hidden');
-            document.getElementById('quiz-container').classList.add('hidden');
-            document.getElementById('quiz-result').classList.add('hidden');
-        }
-        
-        function startQuiz() {
-            if (verbs.length === 0) {
-                alert('動詞資料尚未載入完成，請稍後再試');
-                return;
-            }
-            
-            // 隨機選擇10個動詞
-            quizVerbs = [...verbs].sort(() => 0.5 - Math.random()).slice(0, 10);
-            userAnswers = [];
-            
-            document.getElementById('quiz-start').classList.add('hidden');
-            document.getElementById('quiz-container').classList.remove('hidden');
-            document.getElementById('quiz-result').classList.add('hidden');
-            
-            showAllQuizQuestions();
-        }
-        
-        function showAllQuizQuestions() {
-            const formElement = document.getElementById('quiz-form');
-            formElement.innerHTML = '';
-            
-            quizVerbs.forEach((verb, index) => {
-                const questionItem = document.createElement('div');
-                questionItem.className = 'quiz-question-item';
-                questionItem.innerHTML = `
-                    <div class="quiz-question">
-                        <p><strong>第 ${index + 1} 題：</strong>請寫出動詞「${verb.v1}」的過去式及過去分詞</p>
-                        <p><small>意思: ${verb.meaning}</small></p>
-                    </div>
-                    <div class="quiz-input-group">
-                        <label for="v2-answer-${index}">過去式 (V2):</label>
-                        <input type="text" id="v2-answer-${index}" class="quiz-input" placeholder="請輸入過去式">
-                    </div>
-                    <div class="quiz-input-group">
-                        <label for="v3-answer-${index}">過去分詞 (V3):</label>
-                        <input type="text" id="v3-answer-${index}" class="quiz-input" placeholder="請輸入過去分詞">
-                    </div>
-                `;
-                
-                formElement.appendChild(questionItem);
-            });
-        }
-        
-        function submitQuiz() {
-            userAnswers = [];
-            let allFilled = true;
-            
-            // 收集所有答案
-            quizVerbs.forEach((verb, index) => {
-                const v2Input = document.getElementById(`v2-answer-${index}`);
-                const v3Input = document.getElementById(`v3-answer-${index}`);
-                
-                const v2Answer = v2Input.value.trim().toLowerCase();
-                const v3Answer = v3Input.value.trim().toLowerCase();
-                
-                // 檢查是否所有題目都已填寫
-                if (!v2Answer || !v3Answer) {
-                    allFilled = false;
-                    // 標記未填寫的題目
-                    const questionItem = v2Input.closest('.quiz-question-item');
-                    questionItem.style.borderColor = '#e74c3c';
-                } else {
-                    // 重置邊框顏色
-                    const questionItem = v2Input.closest('.quiz-question-item');
-                    questionItem.style.borderColor = '#e0e0e0';
-                }
-                
-                const isV2Correct = v2Answer === verb.v2.toLowerCase();
-                const isV3Correct = v3Answer === verb.v3.toLowerCase();
-                
-                userAnswers.push({
-                    verb: verb,
-                    v2Answer: v2Answer,
-                    v3Answer: v3Answer,
-                    isV2Correct: isV2Correct,
-                    isV3Correct: isV3Correct
-                });
-            });
-            
-            if (!allFilled) {
-                alert('請填寫所有題目的答案！');
-                return;
-            }
-            
-            showQuizResult();
-        }
-        
-        function showQuizResult() {
-            document.getElementById('quiz-container').classList.add('hidden');
-            document.getElementById('quiz-result').classList.remove('hidden');
-            
-            let score = 0;
-            let resultHTML = '';
-            
-            userAnswers.forEach((answer, index) => {
-                const verb = answer.verb;
-                const isCorrect = answer.isV2Correct && answer.isV3Correct;
-                
-                if (isCorrect) {
-                    score += 10;
-                }
-                
-                resultHTML += `
-                    <div class="result-item ${isCorrect ? 'correct' : 'incorrect'}">
-                        <p><strong>${index + 1}. ${verb.v1}</strong> (${verb.meaning})</p>
-                        <p>你的答案: V2=${answer.v2Answer}, V3=${answer.v3Answer}</p>
-                        <p>正確答案: V2=${verb.v2}, V3=${verb.v3}</p>
-                        <p>${isCorrect ? '✓ 正確' : '✗ 錯誤'}</p>
-                    </div>
-                `;
-            });
-            
-            document.getElementById('quiz-result').innerHTML = `
-                <h3>測驗結果</h3>
-                <div class="result-score">${score} / 100</div>
-                <p>${score >= 60 ? '恭喜！表現不錯！' : '需要更多練習，加油！'}</p>
-                <div class="result-details">
-                    ${resultHTML}
-                </div>
-                <button class="quiz-submit" onclick="initQuizMode()">重新測驗</button>
-            `;
-        }
+    detailContainer.querySelectorAll(".pronunciation-btn").forEach(btn => {
+      btn.onclick = () => playAudio(btn.dataset.word || btn.dataset.sentence);
+    });
 
-        // 音效功能
-        function playAudio(text) {
-            // 使用Web Speech API進行語音合成
-            if ('speechSynthesis' in window) {
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'en-US';
-                utterance.rate = 0.8;
-                window.speechSynthesis.speak(utterance);
-            } else {
-                alert('您的瀏覽器不支持語音合成功能');
-            }
-        }
-    </script>
+    const toggle = detailContainer.querySelector(".example-toggle");
+    const content = detailContainer.querySelector(".example-content");
+    toggle.onclick = () => {
+      const show = content.style.display === "none";
+      content.style.display = show ? "block" : "none";
+      toggle.textContent = show ? "隱藏例句" : "顯示例句";
+    };
+  }
+
+  /* ========== Quiz（一次 10 題、一次提交） ========== */
+  function initQuizMode() {
+    document.getElementById("quiz-start").classList.remove("hidden");
+    document.getElementById("quiz-container").classList.add("hidden");
+    document.getElementById("quiz-result").classList.add("hidden");
+    document.getElementById("quiz-list").innerHTML = "";
+  }
+
+  function startQuiz() {
+    if (!verbs.length) {
+      alert("動詞資料尚未載入完成");
+      return;
+    }
+
+    quizVerbs = [...verbs].sort(() => Math.random() - 0.5).slice(0, 10);
+
+    document.getElementById("quiz-start").classList.add("hidden");
+    document.getElementById("quiz-container").classList.remove("hidden");
+    document.getElementById("quiz-result").classList.add("hidden");
+
+    renderQuizList();
+  }
+
+  function renderQuizList() {
+    const list = document.getElementById("quiz-list");
+    list.innerHTML = "";
+
+    quizVerbs.forEach((v, idx) => {
+      const item = document.createElement("div");
+      item.className = "quiz-item";
+      item.innerHTML = `
+        <div class="q-title">${idx+1}. ${v.v1} <small style="font-weight:400;color:#666;">(${v.meaning || ""})</small></div>
+
+        <label>V2 過去式</label>
+        <input type="text" name="v2-${idx}" autocomplete="off" required />
+
+        <label>V3 過去分詞</label>
+        <input type="text" name="v3-${idx}" autocomplete="off" required />
+      `;
+      list.appendChild(item);
+    });
+  }
+
+  function submitQuiz(e) {
+    e.preventDefault();
+
+    let score = 0;
+    let detailsHTML = "";
+
+    quizVerbs.forEach((v, idx) => {
+      const v2Input = document.querySelector(`input[name="v2-${idx}"]`).value.trim().toLowerCase();
+      const v3Input = document.querySelector(`input[name="v3-${idx}"]`).value.trim().toLowerCase();
+      const v2Correct = v2Input === (v.v2 || "").toLowerCase();
+      const v3Correct = v3Input === (v.v3 || "").toLowerCase();
+      const isCorrect = v2Correct && v3Correct;
+
+      if (isCorrect) score += 10;
+
+      detailsHTML += `
+        <div class="result-item ${isCorrect ? "correct" : "incorrect"}">
+          <div><b>${idx+1}. ${v.v1}</b> (${v.meaning || ""})</div>
+          <div>你的答案：V2=${v2Input || "-"} / V3=${v3Input || "-"}</div>
+          <div>正確答案：V2=${v.v2} / V3=${v.v3}</div>
+          <div>${isCorrect ? "✓ 正確" : "✗ 錯誤"}</div>
+        </div>
+      `;
+    });
+
+    const resultEl = document.getElementById("quiz-result");
+    resultEl.innerHTML = `
+      <h3 style="font-size:1.05rem;">測驗結果</h3>
+      <div class="result-score">${score} / 100</div>
+      <p style="font-size:.9rem;">${score >= 60 ? "恭喜！表現不錯！" : "需要更多練習，加油！"}</p>
+      <div style="margin-top:6px;">${detailsHTML}</div>
+      <div style="text-align:center;margin-top:8px;">
+        <button class="quiz-submit" type="button" onclick="initQuizMode()">重新測驗</button>
+      </div>
+    `;
+
+    resultEl.classList.remove("hidden");
+    // 捲到結果區
+    resultEl.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  /* ========== TTS 發音 ========== */
+  function playAudio(text) {
+    if (!text) return;
+    if ("speechSynthesis" in window) {
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = "en-US";
+      u.rate = 0.8;
+      window.speechSynthesis.speak(u);
+    } else {
+      alert("您的瀏覽器不支持語音合成功能");
+    }
+  }
+</script>
 </body>
 </html>
