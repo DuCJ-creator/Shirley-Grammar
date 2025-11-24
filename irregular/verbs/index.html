@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>不規則動詞互動學習平台</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 15px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 8px;
+            font-size: 1.5rem;
+        }
+        
+        .description {
+            color: #7f8c8d;
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 0.9rem;
+        }
+        
+        .mode-selector {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .mode-btn {
+            padding: 8px 16px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .mode-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+        }
+        
+        .mode-btn.active {
+            background: #2c3e50;
+        }
+        
+        .content-area {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            min-height: 400px;
+        }
+        
+        .section {
+            display: none;
+        }
+        
+        .section.active {
+            display: block;
+        }
+        
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .filter-btn {
+            padding: 6px 12px;
+            background: #ecf0f1;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+        }
+        
+        .filter-btn.active {
+            background: #3498db;
+            color: white;
+        }
+        
+        .verb-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .verb-item {
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+            border-left: 3px solid #3498db;
+        }
+        
+        .verb-item:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+        }
+        
+        .verb-card {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            border-left: 4px solid #3498db;
+        }
+        
+        .verb-card:hover {
+            transform: translateY(-3px);
+        }
+        
+        .verb-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .verb-type {
+            padding: 3px 8px;
+            border-radius: 15px;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+        
+        .type-AAA {
+            background: #e74c3c;
+        }
+        
+        .type-ABA {
+            background: #f39c12;
+        }
+        
+        .type-ABB {
+            background: #3498db;
+        }
+        
+        .type-ABC {
+            background: #9b59b6;
+        }
+        
+        .verb-forms {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .verb-form {
+            padding: 8px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .verb-form h4 {
+            margin-bottom: 3px;
+            color: #7f8c8d;
+            font-size: 0.8rem;
+        }
+        
+        .verb-form p {
+            font-weight: bold;
+            font-size: 0.95rem;
+            color: #2c3e50;
+        }
+        
+        .pronunciation-btn {
+            background: none;
+            border: none;
+            color: #3498db;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-left: 3px;
+        }
+        
+        .examples {
+            margin-top: 10px;
+        }
+        
+        .example {
+            margin-bottom: 8px;
+            padding: 8px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            font-style: italic;
+            font-size: 0.85rem;
+        }
+        
+        .example-toggle {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-top: 8px;
+        }
+        
+        .quiz-container {
+            text-align: center;
+        }
+        
+        .quiz-start {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .quiz-question {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+        
+        .quiz-form {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .quiz-input-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .quiz-input-group label {
+            width: 80px;
+            text-align: right;
+            margin-right: 10px;
+        }
+        
+        .quiz-input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .quiz-submit {
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+        
+        .quiz-result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .result-score {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 10px 0;
+        }
+        
+        .result-details {
+            text-align: left;
+            margin-top: 15px;
+        }
+        
+        .result-item {
+            padding: 8px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .result-item.correct {
+            background: #d4edda;
+        }
+        
+        .result-item.incorrect {
+            background: #f8d7da;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .back-btn {
+            background: #7f8c8d;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        @media (max-width: 768px) {
+            .verb-list {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+            
+            .verb-forms {
+                grid-template-columns: 1fr;
+            }
+            
+            .quiz-input-group {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .quiz-input-group label {
+                width: 100%;
+                text-align: left;
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Shirley's Irregular Verbs Learning Platform</h1>
+            <p class="description">不規則動詞互動學習平台:透過互動方式學習、複習和測驗不規則動詞的三種形式，包含發音和例句</p>
+        </header>
+        
+        <div class="mode-selector">
+            <button class="mode-btn active" data-mode="learn"> Study Mode學習模式</button>
+            <button class="mode-btn" data-mode="review">Review Mode 複習模式</button>
+            <button class="mode-btn" data-mode="quiz">Quiz Mode 測驗模式</button>
+        </div>
+        
+        <div class="content-area">
+            <!-- 學習模式 -->
+            <div class="section active" id="learn-section">
+                <h2>學習不規則動詞</h2>
+                <p>點擊動詞查看詳細資訊，點擊喇叭圖標收聽發音</p>
+                
+                <div class="filter-options">
+                    <button class="filter-btn active" data-type="all">全部</button>
+                    <button class="filter-btn" data-type="AAA">AAA型</button>
+                    <button class="filter-btn" data-type="ABA">ABA型</button>
+                    <button class="filter-btn" data-type="ABB">ABB型</button>
+                    <button class="filter-btn" data-type="ABC">ABC型</button>
+                </div>
+                
+                <div class="verb-list" id="learn-verb-list">
+                    <!-- 動詞列表將在這裡動態生成 -->
+                </div>
+                
+                <div id="learn-verb-detail">
+                    <!-- 動詞詳細資訊將在這裡動態生成 -->
+                </div>
+            </div>
+            
+            <!-- 複習模式 -->
+            <div class="section" id="review-section">
+                <h2>複習不規則動詞</h2>
+                <p>點擊動詞查看詳細資訊，加強記憶</p>
+                
+                <div class="filter-options">
+                    <button class="filter-btn active" data-type="all">全部</button>
+                    <button class="filter-btn" data-type="AAA">AAA型</button>
+                    <button class="filter-btn" data-type="ABA">ABA型</button>
+                    <button class="filter-btn" data-type="ABB">ABB型</button>
+                    <button class="filter-btn" data-type="ABC">ABC型</button>
+                </div>
+                
+                <div class="verb-list" id="review-verb-list">
+                    <!-- 動詞列表將在這裡動態生成 -->
+                </div>
+                
+                <div id="review-verb-detail">
+                    <!-- 動詞詳細資訊將在這裡動態生成 -->
+                </div>
+            </div>
+            
+            <!-- 測驗模式 -->
+            <div class="section" id="quiz-section">
+                <h2>不規則動詞測驗</h2>
+                
+                <div class="quiz-start" id="quiz-start">
+                    <p>測驗說明：請寫出所給動詞的過去式及過去分詞</p>
+                    <p>系統將隨機挑選10個動詞，每題10分，滿分100分</p>
+                    <button class="quiz-submit" id="start-quiz-btn">開始測驗</button>
+                </div>
+                
+                <div class="quiz-container hidden" id="quiz-container">
+                    <div class="quiz-question" id="quiz-question">
+                        <!-- 測驗問題將在這裡動態生成 -->
+                    </div>
+                    
+                    <form class="quiz-form" id="quiz-form">
+                        <!-- 測驗表單將在這裡動態生成 -->
+                    </form>
+                    
+                    <button class="quiz-submit" id="submit-quiz-btn">提交答案</button>
+                    
+                    <div class="quiz-result hidden" id="quiz-result">
+                        <!-- 測驗結果將在這裡動態生成 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 動詞資料 - 使用您提供的含例句的CSV
+        const verbs = [
+            { type: "AAA", v1: "cut", v1_example: "I cut the paper with scissors.", v2: "cut", v2_example: "She cut her hair yesterday.", v3: "cut", v3_example: "The wire has been cut.", meaning: "切割；剪" },
+            { type: "AAA", v1: "cost", v1_example: "This painting will cost a fortune.", v2: "cost", v2_example: "The meal cost twenty dollars.", v3: "cost", v3_example: "How much has the repair cost?", meaning: "花費" },
+            { type: "AAA", v1: "hit", v1_example: "Don't hit the ball too hard.", v2: "hit", v2_example: "The car hit a tree last night.", v3: "hit", v3_example: "The target was hit successfully.", meaning: "打；擊中" },
+            { type: "AAA", v1: "hurt", v1_example: "Be careful not to hurt yourself.", v2: "hurt", v2_example: "His words really hurt me.", v3: "hurt", v3_example: "She was hurt in the accident.", meaning: "傷害；疼痛" },
+            { type: "AAA", v1: "let", v1_example: "Please let me know your plan.", v2: "let", v2_example: "My parents let me stay out late.", v3: "let", v3_example: "We have been let down by the team.", meaning: "讓" },
+            { type: "AAA", v1: "read", v1_example: "I read a book every night.", v2: "read", v2_example: "He read the newspaper this morning.", v3: "read", v3_example: "I've already read that article.", meaning: "閱讀" },
+            { type: "AAA", v1: "rid", v1_example: "We must rid ourselves of debt.", v2: "rid", v2_example: "They rid the town of the problem.", v3: "rid", v3_example: "She is rid of her old car now.", meaning: "使擺脫；除去" },
+            { type: "AAA", v1: "set", v1_example: "Can you set the table for dinner?", v2: "set", v2_example: "The sun set an hour ago.", v3: "set", v3_example: "The foundation has been set.", meaning: "放置；設定" },
+            { type: "AAA", v1: "shut", v1_example: "Please shut the door quietly.", v2: "shut", v2_example: "The library shut early on Friday.", v3: "shut", v3_example: "The windows are always shut.", meaning: "關閉" },
+            { type: "AAA", v1: "spread", v1_example: "The baker will spread jam on the toast.", v2: "spread", v2_example: "The news spread quickly across the city.", v3: "spread", v3_example: "The butter is spread too thinly.", meaning: "傳播；展開" },
+            { type: "AAA", v1: "fit", v1_example: "This jacket should fit you well.", v2: "fit", v2_example: "The shoes fit perfectly yesterday.", v3: "fit", v3_example: "The pieces were carefully fit together.", meaning: "適合；合身" },
+            { type: "AAA", v1: "broadcast", v1_example: "They will broadcast the concert live.", v2: "broadcast", v2_example: "The interview was broadcast yesterday.", v3: "broadcast", v3_example: "The message has been broadcast worldwide.", meaning: "廣播；播送" },
+            { type: "AAA", v1: "put", v1_example: "Put the book back on the shelf.", v2: "put", v2_example: "I put the keys on the counter.", v3: "put", v3_example: "Everything is put in the correct box.", meaning: "放置" },
+            { type: "AAA", v1: "quit", v1_example: "I plan to quit my job next month.", v2: "quit", v2_example: "He quit smoking five years ago.", v3: "quit", v3_example: "She has quit the tennis team.", meaning: "停止；退出" },
+            { type: "AAA", v1: "upset", v1_example: "Don't upset your little brother.", v2: "upset", v2_example: "The bad news upset everyone.", v3: "upset", v3_example: "I am very upset about the delay.", meaning: "使心煩；使不安" },
+            { type: "ABA", v1: "become", v1_example: "He wants to become a doctor.", v2: "became", v2_example: "She became famous overnight.", v3: "become", v3_example: "They have become very good friends.", meaning: "變成" },
+            { type: "ABA", v1: "come", v1_example: "Come and see me tomorrow.", v2: "came", v2_example: "My dog came running when called.", v3: "come", v3_example: "Has he come home yet?", meaning: "來" },
+            { type: "ABA", v1: "run", v1_example: "I run three miles every morning.", v2: "ran", v2_example: "They ran to catch the bus.", v3: "run", v3_example: "The machine has run for hours.", meaning: "跑" },
+            { type: "ABA", v1: "say", v1_example: "What did you say?", v2: "said", v2_example: "She said goodbye and left.", v3: "said", v3_example: "That has been said many times.", meaning: "說" },
+            { type: "ABA", v1: "pay", v1_example: "You must pay the bill soon.", v2: "paid", v2_example: "We paid the rent last Friday.", v3: "paid", v3_example: "The workers haven't been paid yet.", meaning: "付款" },
+            { type: "ABA", v1: "sell", v1_example: "I want to sell my old bicycle.", v2: "sold", v2_example: "They sold their house last year.", v3: "sold", v3_example: "All the tickets have been sold.", meaning: "賣" },
+            { type: "ABA", v1: "tell", v1_example: "Can you tell me the time?", v2: "told", v2_example: "She told a funny story.", v3: "told", v3_example: "I have been told to wait here.", meaning: "告訴" },
+            { type: "ABB", v1: "catch", v1_example: "Try to catch the falling plate.", v2: "caught", v2_example: "I caught a cold last week.", v3: "caught", v3_example: "The thief was caught in the act.", meaning: "抓住" },
+            { type: "ABB", v1: "teach", v1_example: "I teach English at a school.", v2: "taught", v2_example: "He taught me how to swim.", v3: "taught", v3_example: "We have been well taught.", meaning: "教" },
+            { type: "ABB", v1: "buy", v1_example: "I need to buy some new clothes.", v2: "bought", v2_example: "She bought a new car yesterday.", v3: "bought", v3_example: "The groceries have been bought.", meaning: "買" },
+            { type: "ABB", v1: "seek", v1_example: "They seek refuge from the storm.", v2: "sought", v2_example: "The police sought more information.", v3: "sought", v3_example: "Peace is often sought but rarely found.", meaning: "尋求" },
+            { type: "ABB", v1: "bring", v1_example: "Please bring a bottle of wine.", v2: "brought", v2_example: "He brought flowers to the party.", v3: "brought", v3_example: "The case has been brought to court.", meaning: "帶來" },
+            { type: "ABB", v1: "think", v1_example: "What do you think about this idea?", v2: "thought", v2_example: "I thought you were coming.", v3: "thought", v3_example: "This plan was well thought out.", meaning: "想" },
+            { type: "ABB", v1: "fight", v1_example: "Do not fight with your colleagues.", v2: "fought", v2_example: "The soldiers fought bravely.", v3: "fought", v3_example: "They have fought for their rights.", meaning: "打架；戰鬥" },
+            { type: "ABB", v1: "have", v1_example: "We have a meeting at two.", v2: "had", v2_example: "She had dinner with friends.", v3: "had", v3_example: "I have had enough of this noise.", meaning: "有；吃" },
+            { type: "ABB", v1: "hear", v1_example: "I can barely hear the music.", v2: "heard", v2_example: "I heard a strange noise outside.", v3: "heard", v3_example: "The news has been heard by everyone.", meaning: "聽見" },
+            { type: "ABB", v1: "make", v1_example: "We will make a new plan.", v2: "made", v2_example: "He made a beautiful wooden box.", v3: "made", v3_example: "This watch was made in Switzerland.", meaning: "製造；使" },
+            { type: "ABB", v1: "build", v1_example: "They plan to build a new library.", v2: "built", v2_example: "My grandfather built this house.", v3: "built", v3_example: "The stadium is finally built.", meaning: "建造" },
+            { type: "ABB", v1: "lend", v1_example: "Can you lend me some money?", v2: "lent", v2_example: "She lent him her umbrella.", v3: "lent", v3_example: "The money was lent on condition.", meaning: "借出" },
+            { type: "ABB", v1: "send", v1_example: "I will send you an email soon.", v2: "sent", v2_example: "They sent a package yesterday.", v3: "sent", v3_example: "Has the letter been sent?", meaning: "寄送" },
+            { type: "ABB", v1: "spend", v1_example: "I like to spend time outdoors.", v2: "spent", v2_example: "We spent our vacation in Italy.", v3: "spent", v3_example: "All the money has been spent.", meaning: "花費（時間/金錢）" },
+            { type: "ABB", v1: "lose", v1_example: "Try not to lose your keys again.", v2: "lost", v2_example: "I lost my wallet on the bus.", v3: "lost", v3_example: "The game has been lost.", meaning: "失去" },
+            { type: "ABB", v1: "smell", v1_example: "Does this milk smell fresh?", v2: "smelt", v2_example: "The room smelt of smoke.", v3: "smelt", v3_example: "The air has smelt sweet all day.", meaning: "聞；嗅" },
+            { type: "ABB", v1: "get", v1_example: "Can you get me a glass of water?", v2: "got", v2_example: "I got a present for my birthday.", v3: "got", v3_example: "He has got the message.", meaning: "得到" },
+            { type: "ABB", v1: "sit", v1_example: "Please sit down and relax.", v2: "sat", v2_example: "We sat in the park for an hour.", v3: "sat", v3_example: "She has sat in the front row before.", meaning: "坐" },
+            { type: "ABB", v1: "win", v1_example: "We hope to win the championship.", v2: "won", v2_example: "Our team won the match easily.", v3: "won", v3_example: "They have won two games in a row.", meaning: "贏" },
+            { type: "ABB", v1: "strike", v1_example: "The clock will strike noon soon.", v2: "struck", v2_example: "Lightning struck the old oak tree.", v3: "struck", v3_example: "The hour has struck.", meaning: "襲擊；打擊" },
+            { type: "ABB", v1: "stick", v1_example: "The label will stick to the box.", v2: "stuck", v2_example: "My car stuck in the mud.", v3: "stuck", v3_example: "The tape is firmly stuck to the wall.", meaning: "黏住；刺" },
+            { type: "ABB", v1: "dig", v1_example: "They need to dig a deeper hole.", v2: "dug", v2_example: "We dug a trench around the house.", v3: "dug", v3_example: "The foundations have been dug.", meaning: "挖掘" },
+            { type: "ABB", v1: "hang", v1_example: "I will hang the painting on the wall.", v2: "hung", v2_example: "She hung her coat in the closet.", v3: "hung", v3_example: "The picture is hung too high.", meaning: "懸掛" },
+            { type: "ABB", v1: "hold", v1_example: "Please hold this bag for me.", v2: "held", v2_example: "He held my hand firmly.", v3: "held", v3_example: "The meeting was held yesterday.", meaning: "握住；舉行" },
+            { type: "ABB", v1: "meet", v1_example: "We always meet at the cafe.", v2: "met", v2_example: "I met him at a conference.", v3: "met", v3_example: "We have never met before.", meaning: "會面" },
+            { type: "ABB", v1: "feed", v1_example: "Remember to feed the cat tonight.", v2: "fed", v2_example: "I fed the birds this morning.", v3: "fed", v3_example: "The children have been fed already.", meaning: "餵食" },
+            { type: "ABB", v1: "lead", v1_example: "Who will lead the discussion?", v2: "led", v2_example: "She led the group through the forest.", v3: "led", v3_example: "He has led the company for years.", meaning: "帶領" },
+            { type: "ABB", v1: "shoot", v1_example: "They plan to shoot a movie here.", v2: "shot", v2_example: "The hunter shot the target precisely.", v3: "shot", v3_example: "The picture was shot at sunset.", meaning: "射擊" },
+            { type: "ABB", v1: "shine", v1_example: "The stars shine brightly tonight.", v2: "shone", v2_example: "The sun shone all day long.", v3: "shone", v3_example: "The silver has shone brightly.", meaning: "發光 (不及物動詞)" },
+            { type: "ABB", v1: "feel", v1_example: "I feel sick today.", v2: "felt", v2_example: "She felt a sharp pain in her back.", v3: "felt", v3_example: "I have felt much better lately.", meaning: "感覺" },
+            { type: "ABB", v1: "keep", v1_example: "Always keep your promises.", v2: "kept", v2_example: "He kept his word to me.", v3: "kept", v3_example: "The secret has been kept safe.", meaning: "維持；保持" },
+            { type: "ABB", v1: "sleep", v1_example: "I usually sleep eight hours.", v2: "slept", v2_example: "The baby slept peacefully through the night.", v3: "slept", v3_example: "I haven't slept well for days.", meaning: "睡覺" },
+            { type: "ABB", v1: "leave", v1_example: "I must leave by noon.", v2: "left", v2_example: "They left the party early.", v3: "left", v3_example: "Has he left a message?", meaning: "離開；留下" },
+            { type: "ABB", v1: "sweep", v1_example: "Please sweep the floor clean.", v2: "swept", v2_example: "She swept the porch after the rain.", v3: "swept", v3_example: "The dust has been swept away.", meaning: "掃" },
+            { type: "ABB", v1: "stand", v1_example: "Please stand still for the photo.", v2: "stood", v2_example: "We stood waiting for the bus.", v3: "stood", v3_example: "The statue has stood here for centuries.", meaning: "站立" },
+            { type: "ABB", v1: "understand", v1_example: "I don't understand the instructions.", v2: "understood", v2_example: "She understood the complexity of the issue.", v3: "understood", v3_example: "The message was perfectly understood.", meaning: "了解" },
+            { type: "ABB", v1: "spell", v1_example: "Can you spell your name for me?", v2: "spelt", v2_example: "He spelt the difficult word correctly.", v3: "spelt", v3_example: "The word has been spelt wrong.", meaning: "拼寫" },
+            { type: "ABB", v1: "learn", v1_example: "We learn something new every day.", v2: "learnt", v2_example: "I learnt to play the piano last year.", v3: "learnt", v3_example: "She has learnt a lot from her travels.", meaning: "學習" },
+            { type: "ABB", v1: "find", v1_example: "Did you find your lost keys?", v2: "found", v2_example: "I found an old map in the attic.", v3: "found", v3_example: "The treasure was found buried deep.", meaning: "找到" },
+            { type: "ABB", v1: "mean", v1_example: "What does this word mean?", v2: "meant", v2_example: "He didn't mean to offend you.", v3: "meant", v3_example: "The gesture was meant as a kindness.", meaning: "意指" },
+            { type: "ABB", v1: "bend", v1_example: "Don't bend the iron rod.", v2: "bent", v2_example: "She bent down to tie her shoe.", v3: "bent", v3_example: "The wire has been slightly bent.", meaning: "彎曲" },
+            { type: "ABB", v1: "burn", v1_example: "Do not burn yourself on the stove.", v2: "burnt", v2_example: "The toast was accidentally burnt.", v3: "burnt", v3_example: "The evidence was burnt to ashes.", meaning: "燃燒" },
+            { type: "ABB", v1: "dream", v1_example: "I often dream about flying.", v2: "dreamt", v2_example: "She dreamt of her childhood home.", v3: "dreamt", v3_example: "I have dreamt the same dream twice.", meaning: "做夢" },
+            { type: "ABB", v1: "lay", v1_example: "Please lay the baby in the crib.", v2: "laid", v2_example: "She laid the foundations of the company.", v3: "laid", v3_example: "The trap was laid last night.", meaning: "放置；產卵" },
+            { type: "ABB", v1: "light", v1_example: "Light the candle for dinner.", v2: "lit", v2_example: "He lit a match to see better.", v3: "lit", v3_example: "The room was lit by a single lamp.", meaning: "點燃" },
+            { type: "ABB", v1: "slide", v1_example: "Be careful not to slide on the ice.", v2: "slid", v2_example: "The coin slid across the floor.", v3: "slid", v3_example: "The door has slid open.", meaning: "滑動" },
+            { type: "ABB", v1: "weep", v1_example: "It is natural to weep when sad.", v2: "wept", v2_example: "The child wept inconsolably.", v3: "wept", v3_example: "She has wept for days.", meaning: "哭泣" },
+            { type: "ABC", v1: "begin", v1_example: "Let the show begin!", v2: "began", v2_example: "The concert began at eight o'clock.", v3: "begun", v3_example: "The project has already begun.", meaning: "開始" },
+            { type: "ABC", v1: "drink", v1_example: "I like to drink cold water.", v2: "drank", v2_example: "We drank all the lemonade.", v3: "drunk", v3_example: "He has drunk too much coffee.", meaning: "喝" },
+            { type: "ABC", v1: "ring", v1_example: "The phone will ring at noon.", v2: "rang", v2_example: "The bell rang loudly at the end of class.", v3: "rung", v3_example: "The alarm has not rung yet.", meaning: "響鈴；打電話" },
+            { type: "ABC", v1: "sing", v1_example: "Can you sing a lullaby?", v2: "sang", v2_example: "She sang beautifully at the wedding.", v3: "sung", v3_example: "This song has been sung by many artists.", meaning: "唱歌" },
+            { type: "ABC", v1: "sink", v1_example: "The boat may sink in the storm.", v2: "sank", v2_example: "The ship sank quickly after the collision.", v3: "sunk", v3_example: "The anchor has sunk to the seabed.", meaning: "下沉" },
+            { type: "ABC", v1: "swim", v1_example: "I like to swim in the ocean.", v2: "swam", v2_example: "We swam across the river yesterday.", v3: "swum", v3_example: "She has swum competitively.", meaning: "游泳" },
+            { type: "ABC", v1: "bear", v1_example: "I cannot bear this heat any longer.", v2: "bore", v2_example: "She bore the pain without complaining.", v3: "born", v3_example: "The child was born in winter.", meaning: "承擔；生育" },
+            { type: "ABC", v1: "tear", v1_example: "Don't tear the delicate fabric.", v2: "tore", v2_example: "He accidentally tore the page.", v3: "torn", v3_example: "The flag was torn by the strong wind.", meaning: "撕裂" },
+            { type: "ABC", v1: "wear", v1_example: "What should I wear tonight?", v2: "wore", v2_example: "He wore a new suit to the interview.", v3: "worn", v3_example: "This coat is old and badly worn.", meaning: "穿戴" },
+            { type: "ABC", v1: "swear", v1_example: "I promise to swear an oath.", v2: "swore", v2_example: "He swore to tell the truth.", v3: "sworn", v3_example: "The witness is under sworn testimony.", meaning: "發誓；咒罵" },
+            { type: "ABC", v1: "blow", v1_example: "The wind will blow hard tonight.", v2: "blew", v2_example: "A gust of wind blew the hat off.", v3: "blown", v3_example: "The leaves have been blown away.", meaning: "吹" },
+            { type: "ABC", v1: "draw", v1_example: "Can you draw a perfect circle?", v2: "drew", v2_example: "She drew a picture of a cat.", v3: "drawn", v3_example: "The curtain has been drawn closed.", meaning: "畫；拉" },
+            { type: "ABC", v1: "fly", v1_example: "Birds fly south for the winter.", v2: "flew", v2_example: "The plane flew over the mountains.", v3: "flown", v3_example: "He has flown around the world.", meaning: "飛" },
+            { type: "ABC", v1: "grow", v1_example: "Children grow very fast.", v2: "grew", v2_example: "The tree grew tall and strong.", v3: "grown", v3_example: "The seeds have grown into saplings.", meaning: "生長；種植" },
+            { type: "ABC", v1: "know", v1_example: "I know the answer to this riddle.", v2: "knew", v2_example: "She knew all the details of the plan.", v3: "known", v3_example: "This fact is widely known.", meaning: "知道" },
+            { type: "ABC", v1: "throw", v1_example: "Please throw the ball to me.", v2: "threw", v2_example: "He threw the trash into the bin.", v3: "thrown", v3_example: "The spear was thrown far.", meaning: "丟；扔" },
+            { type: "ABC", v1: "withdraw", v1_example: "I need to withdraw cash from the ATM.", v2: "withdrew", v2_example: "He withdrew his support for the project.", v3: "withdrawn", v3_example: "The troops have been withdrawn from the area.", meaning: "撤回；取出" },
+            { type: "ABC", v1: "break", v1_example: "Be careful not to break the glass.", v2: "broke", v2_example: "He broke his leg playing football.", v3: "broken", v3_example: "The vase is completely broken.", meaning: "打破" },
+            { type: "ABC", v1: "choose", v1_example: "Which color will you choose?", v2: "chose", v2_example: "They chose the blue one.", v3: "chosen", v3_example: "The winner has been chosen.", meaning: "選擇" },
+            { type: "ABC", v1: "eat", v1_example: "We eat dinner at seven.", v2: "ate", v2_example: "I ate a big sandwich for lunch.", v3: "eaten", v3_example: "Have you eaten all your vegetables?", meaning: "吃" },
+            { type: "ABC", v1: "fall", v1_example: "The leaves fall in autumn.", v2: "fell", v2_example: "She fell off her bike.", v3: "fallen", v3_example: "The temperature has fallen rapidly.", meaning: "跌落" },
+            { type: "ABC", v1: "forget", v1_example: "I sometimes forget people's names.", v2: "forgot", v2_example: "I forgot my keys at home.", v3: "forgotten", v3_example: "The event has been completely forgotten.", meaning: "忘記" },
+            { type: "ABC", v1: "give", v1_example: "Please give me a chance.", v2: "gave", v2_example: "He gave her a bouquet of roses.", v3: "given", v3_example: "The award was given to the best student.", meaning: "給予" },
+            { type: "ABC", v1: "rise", v1_example: "The sun rise in the east.", v2: "rose", v2_example: "Smoke rose from the chimney.", v3: "risen", v3_example: "The sea level has risen.", meaning: "上升" },
+            { type: "ABC", v1: "see", v1_example: "Can you see the stars tonight?", v2: "saw", v2_example: "I saw a shooting star last night.", v3: "seen", v3_example: "I have never seen a whale before.", meaning: "看見" },
+            { type: "ABC", v1: "shake", v1_example: "Shake the bottle well before use.", v2: "shook", v2_example: "The earthquake shook the whole building.", v3: "shaken", v3_example: "The foundations have been shaken.", meaning: "搖動" },
+            { type: "ABC", v1: "speak", v1_example: "Can you speak louder, please?", v2: "spoke", v2_example: "She spoke to the manager about the issue.", v3: "spoken", v3_example: "He has spoken on this topic before.", meaning: "說話" },
+            { type: "ABC", v1: "steal", v1_example: "Thieves often steal at night.", v2: "stole", v2_example: "Someone stole her bicycle.", v3: "stolen", v3_example: "The jewels were stolen from the museum.", meaning: "偷竊" },
+            { type: "ABC", v1: "bite", v1_example: "Be careful, the dog might bite.", v2: "bit", v2_example: "The snake bit the hiker's ankle.", v3: "bitten", v3_example: "I was bitten by mosquitoes.", meaning: "咬" },
+            { type: "ABC", v1: "drive", v1_example: "I drive to work every day.", v2: "drove", v2_example: "He drove for six hours without stopping.", v3: "driven", v3_example: "We have driven this route many times.", meaning: "駕駛" },
+            { type: "ABC", v1: "hide", v1_example: "I will hide the presents in the closet.", v2: "hid", v2_example: "They hid behind the curtain.", v3: "hidden", v3_example: "The money was hidden in a vault.", meaning: "躲藏" },
+            { type: "ABC", v1: "ride", v1_example: "Let's ride our bikes to the park.", v2: "rode", v2_example: "I rode a horse on my vacation.", v3: "ridden", v3_example: "She has ridden that roller coaster before.", meaning: "騎乘" },
+            { type: "ABC", v1: "take", v1_example: "Please take a seat.", v2: "took", v2_example: "He took the first bus this morning.", v3: "taken", v3_example: "The photograph was taken professionally.", meaning: "拿；帶" },
+            { type: "ABC", v1: "wake", v1_example: "I wake up early on weekdays.", v2: "woke", v2_example: "I woke up to the sound of thunder.", v3: "woken", v3_example: "I have been woken by the noise.", meaning: "醒來" },
+            { type: "ABC", v1: "write", v1_example: "Please write a short essay.", v2: "wrote", v2_example: "She wrote a letter to her grandmother.", v3: "written", v3_example: "The book was written ten years ago.", meaning: "寫" },
+            { type: "ABC", v1: "awake", v1_example: "I often awake before dawn.", v2: "awoke", v2_example: "I awoke with a splitting headache.", v3: "awoken", v3_example: "The whole neighborhood was awoken by the sirens.", meaning: "喚醒；醒來" },
+            { type: "ABC", v1: "freeze", v1_example: "The water will freeze overnight.", v2: "froze", v2_example: "The lake froze solid in the winter.", v3: "frozen", v3_example: "The pipes have frozen due to the cold.", meaning: "結冰；冷凍" },
+            { type: "ABC", v1: "be(am/is)", v1_example: "I am ready; He is happy.", v2: "was", v2_example: "I was late; She was sick.", v3: "been", v3_example: "He has been here all day.", meaning: "是；存在" },
+            { type: "ABC", v1: "be (are)", v1_example: "They are friendly; We are tired.", v2: "were", v2_example: "We were at the cinema; They were busy.", v3: "been", v3_example: "They have been working hard.", meaning: "是；存在" },
+            { type: "ABC", v1: "sew", v1_example: "She can sew her own dresses.", v2: "sewed", v2_example: "My mother sewed a button back on my shirt.", v3: "sewn", v3_example: "The hem has been neatly sewn.", meaning: "縫紉" },
+            { type: "ABC", v1: "do", v1_example: "What do you do for a living?", v2: "did", v2_example: "I did my homework last night.", v3: "done", v3_example: "The work is completely done.", meaning: "做" },
+            { type: "ABC", v1: "go", v1_example: "I need to go to the market.", v2: "went", v2_example: "We went on a holiday last summer.", v3: "gone", v3_example: "He has gone home already.", meaning: "去" },
+            { type: "ABC", v1: "show", v1_example: "I will show you my new car.", v2: "showed", v2_example: "She showed us her vacation photos.", v3: "shown", v3_example: "The movie was shown at the festival.", meaning: "展示" },
+            { type: "ABC", v1: "lie", v1_example: "I like to lie on the beach.", v2: "lay", v2_example: "He lay down for a nap.", v3: "lain", v3_example: "The documents have lain on the desk for days.", meaning: "躺" }
+        ];
+
+        // 初始化應用
+        document.addEventListener('DOMContentLoaded', function() {
+            // 模式切換
+            const modeButtons = document.querySelectorAll('.mode-btn');
+            const sections = document.querySelectorAll('.section');
+            
+            modeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const mode = this.getAttribute('data-mode');
+                    
+                    // 更新按鈕狀態
+                    modeButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // 顯示對應的內容區域
+                    sections.forEach(section => section.classList.remove('active'));
+                    document.getElementById(`${mode}-section`).classList.add('active');
+                    
+                    // 初始化對應模式的內容
+                    if (mode === 'learn') {
+                        initLearnMode();
+                    } else if (mode === 'review') {
+                        initReviewMode();
+                    } else if (mode === 'quiz') {
+                        initQuizMode();
+                    }
+                });
+            });
+            
+            // 初始化學習模式
+            initLearnMode();
+            
+            // 初始化測驗模式開始按鈕
+            document.getElementById('start-quiz-btn').addEventListener('click', startQuiz);
+            document.getElementById('submit-quiz-btn').addEventListener('click', submitQuiz);
+        });
+
+        // 學習模式初始化
+        function initLearnMode() {
+            const verbList = document.getElementById('learn-verb-list');
+            verbList.innerHTML = '';
+            
+            // 添加動詞列表
+            verbs.forEach(verb => {
+                const item = document.createElement('div');
+                item.className = 'verb-item';
+                item.setAttribute('data-type', verb.type);
+                item.innerHTML = `
+                    <div>${verb.v1}</div>
+                    <small>${verb.meaning}</small>
+                `;
+                
+                item.addEventListener('click', function() {
+                    showVerbDetail('learn', verb);
+                });
+                
+                verbList.appendChild(item);
+            });
+            
+            // 添加篩選功能
+            const filterButtons = document.querySelectorAll('#learn-section .filter-btn');
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const type = this.getAttribute('data-type');
+                    
+                    // 更新按鈕狀態
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // 篩選動詞
+                    const items = document.querySelectorAll('#learn-verb-list .verb-item');
+                    items.forEach(item => {
+                        if (type === 'all' || item.getAttribute('data-type') === type) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        }
+
+        // 複習模式初始化
+        function initReviewMode() {
+            const verbList = document.getElementById('review-verb-list');
+            verbList.innerHTML = '';
+            
+            // 添加動詞列表
+            verbs.forEach(verb => {
+                const item = document.createElement('div');
+                item.className = 'verb-item';
+                item.setAttribute('data-type', verb.type);
+                item.innerHTML = `
+                    <div>${verb.v1}</div>
+                    <small>${verb.meaning}</small>
+                `;
+                
+                item.addEventListener('click', function() {
+                    showVerbDetail('review', verb);
+                });
+                
+                verbList.appendChild(item);
+            });
+            
+            // 添加篩選功能
+            const filterButtons = document.querySelectorAll('#review-section .filter-btn');
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const type = this.getAttribute('data-type');
+                    
+                    // 更新按鈕狀態
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // 篩選動詞
+                    const items = document.querySelectorAll('#review-verb-list .verb-item');
+                    items.forEach(item => {
+                        if (type === 'all' || item.getAttribute('data-type') === type) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        }
+
+        // 顯示動詞詳細資訊
+        function showVerbDetail(mode, verb) {
+            const detailContainer = document.getElementById(`${mode}-verb-detail`);
+            
+            detailContainer.innerHTML = `
+                <div class="verb-card">
+                    <div class="verb-header">
+                        <h3>${verb.v1} - ${verb.meaning}</h3>
+                        <span class="verb-type type-${verb.type}">${verb.type}</span>
+                    </div>
+                    <div class="verb-forms">
+                        <div class="verb-form">
+                            <h4>原形 (V1)</h4>
+                            <p>${verb.v1} <button class="pronunciation-btn" data-word="${verb.v1}">🔊</button></p>
+                        </div>
+                        <div class="verb-form">
+                            <h4>過去式 (V2)</h4>
+                            <p>${verb.v2} <button class="pronunciation-btn" data-word="${verb.v2}">🔊</button></p>
+                        </div>
+                        <div class="verb-form">
+                            <h4>過去分詞 (V3)</h4>
+                            <p>${verb.v3} <button class="pronunciation-btn" data-word="${verb.v3}">🔊</button></p>
+                        </div>
+                    </div>
+                    <div class="examples">
+                        <button class="example-toggle">顯示例句</button>
+                        <div class="example-content" style="display: none;">
+                            <div class="example">
+                                <strong>原形例句:</strong> ${verb.v1_example}
+                                <button class="pronunciation-btn" data-sentence="${verb.v1_example}">🔊</button>
+                            </div>
+                            <div class="example">
+                                <strong>過去式例句:</strong> ${verb.v2_example}
+                                <button class="pronunciation-btn" data-sentence="${verb.v2_example}">🔊</button>
+                            </div>
+                            <div class="example">
+                                <strong>過去分詞例句:</strong> ${verb.v3_example}
+                                <button class="pronunciation-btn" data-sentence="${verb.v3_example}">🔊</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // 添加發音功能
+            const pronunciationButtons = detailContainer.querySelectorAll('.pronunciation-btn');
+            pronunciationButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const word = this.getAttribute('data-word');
+                    const sentence = this.getAttribute('data-sentence');
+                    playAudio(word || sentence);
+                });
+            });
+            
+            // 添加例句切換功能
+            const exampleToggle = detailContainer.querySelector('.example-toggle');
+            const exampleContent = detailContainer.querySelector('.example-content');
+            
+            exampleToggle.addEventListener('click', function() {
+                if (exampleContent.style.display === 'none') {
+                    exampleContent.style.display = 'block';
+                    exampleToggle.textContent = '隱藏例句';
+                } else {
+                    exampleContent.style.display = 'none';
+                    exampleToggle.textContent = '顯示例句';
+                }
+            });
+        }
+
+        // 測驗模式初始化
+        let quizVerbs = [];
+        let currentQuizIndex = 0;
+        let userAnswers = [];
+        
+        function initQuizMode() {
+            document.getElementById('quiz-start').classList.remove('hidden');
+            document.getElementById('quiz-container').classList.add('hidden');
+            document.getElementById('quiz-result').classList.add('hidden');
+        }
+        
+        function startQuiz() {
+            // 隨機選擇10個動詞
+            quizVerbs = [...verbs].sort(() => 0.5 - Math.random()).slice(0, 10);
+            currentQuizIndex = 0;
+            userAnswers = [];
+            
+            document.getElementById('quiz-start').classList.add('hidden');
+            document.getElementById('quiz-container').classList.remove('hidden');
+            
+            showQuizQuestion();
+        }
+        
+        function showQuizQuestion() {
+            const questionElement = document.getElementById('quiz-question');
+            const formElement = document.getElementById('quiz-form');
+            
+            if (currentQuizIndex >= quizVerbs.length) {
+                return;
+            }
+            
+            const verb = quizVerbs[currentQuizIndex];
+            
+            questionElement.innerHTML = `
+                <p>請寫出動詞「${verb.v1}」的過去式及過去分詞：</p>
+                <p><small>意思: ${verb.meaning}</small></p>
+            `;
+            
+            formElement.innerHTML = `
+                <div class="quiz-input-group">
+                    <label for="v2-answer">過去式 (V2):</label>
+                    <input type="text" id="v2-answer" class="quiz-input" required>
+                </div>
+                <div class="quiz-input-group">
+                    <label for="v3-answer">過去分詞 (V3):</label>
+                    <input type="text" id="v3-answer" class="quiz-input" required>
+                </div>
+            `;
+        }
+        
+        function submitQuiz() {
+            const v2Answer = document.getElementById('v2-answer').value.trim().toLowerCase();
+            const v3Answer = document.getElementById('v3-answer').value.trim().toLowerCase();
+            
+            if (!v2Answer || !v3Answer) {
+                alert('請填寫所有答案');
+                return;
+            }
+            
+            const currentVerb = quizVerbs[currentQuizIndex];
+            const isV2Correct = v2Answer === currentVerb.v2.toLowerCase();
+            const isV3Correct = v3Answer === currentVerb.v3.toLowerCase();
+            
+            userAnswers.push({
+                verb: currentVerb,
+                v2Answer: v2Answer,
+                v3Answer: v3Answer,
+                isV2Correct: isV2Correct,
+                isV3Correct: isV3Correct
+            });
+            
+            currentQuizIndex++;
+            
+            if (currentQuizIndex < quizVerbs.length) {
+                showQuizQuestion();
+            } else {
+                showQuizResult();
+            }
+        }
+        
+        function showQuizResult() {
+            document.getElementById('quiz-container').classList.add('hidden');
+            document.getElementById('quiz-result').classList.remove('hidden');
+            
+            let score = 0;
+            let resultHTML = '';
+            
+            userAnswers.forEach((answer, index) => {
+                const verb = answer.verb;
+                const isCorrect = answer.isV2Correct && answer.isV3Correct;
+                
+                if (isCorrect) {
+                    score += 10;
+                }
+                
+                resultHTML += `
+                    <div class="result-item ${isCorrect ? 'correct' : 'incorrect'}">
+                        <p><strong>${index + 1}. ${verb.v1}</strong> (${verb.meaning})</p>
+                        <p>你的答案: V2=${answer.v2Answer}, V3=${answer.v3Answer}</p>
+                        <p>正確答案: V2=${verb.v2}, V3=${verb.v3}</p>
+                        <p>${isCorrect ? '✓ 正確' : '✗ 錯誤'}</p>
+                    </div>
+                `;
+            });
+            
+            document.getElementById('quiz-result').innerHTML = `
+                <h3>測驗結果</h3>
+                <div class="result-score">${score} / 100</div>
+                <p>${score >= 60 ? '恭喜！表現不錯！' : '需要更多練習，加油！'}</p>
+                <div class="result-details">
+                    ${resultHTML}
+                </div>
+                <button class="quiz-submit" onclick="initQuizMode()">重新測驗</button>
+            `;
+        }
+
+        // 音效功能
+        function playAudio(text) {
+            // 使用Web Speech API進行語音合成
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.8;
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert('您的瀏覽器不支持語音合成功能');
+            }
+        }
+    </script>
+</body>
+</html>
