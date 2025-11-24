@@ -480,8 +480,11 @@
         // 載入CSV資料
         async function loadVerbsData() {
             try {
+                console.log('開始載入CSV資料...');
                 const response = await fetch('https://ducj-creator.github.io/Shirley-Grammar/irregular/verbs.csv');
                 const csvText = await response.text();
+                
+                console.log('CSV原始資料:', csvText.substring(0, 500)); // 顯示前500個字符用於調試
                 
                 // 解析CSV
                 const lines = csvText.split('\n');
@@ -491,29 +494,36 @@
                     const line = lines[i].trim();
                     if (line) {
                         const columns = parseCSVLine(line);
+                        console.log(`第${i}行解析結果:`, columns); // 調試用
+                        
                         if (columns.length >= 8) {
                             const verb = {
-                                type: columns[0],
-                                v1: columns[1],
-                                v1_example: columns[2],
-                                v2: columns[3],
-                                v2_example: columns[4],
-                                v3: columns[5],
-                                v3_example: columns[6],
-                                meaning: columns[7]
+                                type: columns[0].trim(),
+                                v1: columns[1].trim(),
+                                v1_example: columns[2].trim(),
+                                v2: columns[3].trim(),
+                                v2_example: columns[4].trim(),
+                                v3: columns[5].trim(),
+                                v3_example: columns[6].trim(),
+                                meaning: columns[7].trim()
                             };
-                            verbs.push(verb);
+                            // 檢查必要欄位是否都有值
+                            if (verb.v1 && verb.v2 && verb.v3) {
+                                verbs.push(verb);
+                            }
                         }
                     }
                 }
                 
-                console.log(`成功載入 ${verbs.length} 個動詞`);
+                console.log(`成功載入 ${verbs.length} 個動詞`, verbs.slice(0, 5)); // 顯示前5個動詞用於調試
+                
+                // 初始化所有模式
                 initAllModes();
                 
             } catch (error) {
                 console.error('載入CSV資料失敗:', error);
                 document.querySelectorAll('.loading').forEach(el => {
-                    el.innerHTML = '載入資料失敗，請檢查網路連接';
+                    el.innerHTML = '載入資料失敗，請檢查網路連接或CSV檔案路徑';
                 });
             }
         }
@@ -530,19 +540,32 @@
                 if (char === '"') {
                     inQuotes = !inQuotes;
                 } else if (char === ',' && !inQuotes) {
-                    result.push(current.trim());
+                    // 移除前後引號
+                    let value = current.trim();
+                    if (value.startsWith('"') && value.endsWith('"')) {
+                        value = value.substring(1, value.length - 1);
+                    }
+                    result.push(value);
                     current = '';
                 } else {
                     current += char;
                 }
             }
             
-            result.push(current.trim());
+            // 處理最後一個欄位
+            let value = current.trim();
+            if (value.startsWith('"') && value.endsWith('"')) {
+                value = value.substring(1, value.length - 1);
+            }
+            result.push(value);
+            
             return result;
         }
 
         // 初始化所有模式
         function initAllModes() {
+            console.log('初始化所有模式，動詞數量:', verbs.length);
+            
             // 隱藏載入訊息
             document.querySelectorAll('.loading').forEach(el => {
                 el.style.display = 'none';
@@ -551,13 +574,25 @@
             // 初始化學習模式
             initLearnMode();
             
+            // 初始化複習模式
+            initReviewMode();
+            
+            // 初始化測驗模式
+            initQuizMode();
+            
             // 初始化測驗模式開始按鈕
             document.getElementById('start-quiz-btn').addEventListener('click', startQuiz);
             document.getElementById('submit-quiz-btn').addEventListener('click', submitQuiz);
+            
+            // 顯示載入的動詞數量
+            const description = document.querySelector('.description');
+            description.textContent += ` (已載入 ${verbs.length} 個動詞)`;
         }
 
         // 初始化應用
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM載入完成，開始初始化...');
+            
             // 模式切換
             const modeButtons = document.querySelectorAll('.mode-btn');
             const sections = document.querySelectorAll('.section');
@@ -591,10 +626,19 @@
 
         // 學習模式初始化
         function initLearnMode() {
-            if (verbs.length === 0) return;
+            console.log('初始化學習模式，動詞數量:', verbs.length);
             
             const verbList = document.getElementById('learn-verb-list');
+            const loadingElement = document.getElementById('learn-loading');
+            
+            if (verbs.length === 0) {
+                loadingElement.innerHTML = '尚未載入動詞資料';
+                loadingElement.style.display = 'block';
+                return;
+            }
+            
             verbList.innerHTML = '';
+            loadingElement.style.display = 'none';
             
             // 添加動詞列表
             verbs.forEach(verb => {
@@ -638,10 +682,19 @@
 
         // 複習模式初始化
         function initReviewMode() {
-            if (verbs.length === 0) return;
+            console.log('初始化複習模式，動詞數量:', verbs.length);
             
             const verbList = document.getElementById('review-verb-list');
+            const loadingElement = document.getElementById('review-loading');
+            
+            if (verbs.length === 0) {
+                loadingElement.innerHTML = '尚未載入動詞資料';
+                loadingElement.style.display = 'block';
+                return;
+            }
+            
             verbList.innerHTML = '';
+            loadingElement.style.display = 'none';
             
             // 添加動詞列表
             verbs.forEach(verb => {
