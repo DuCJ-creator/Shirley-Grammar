@@ -231,14 +231,12 @@
 
 <script>
   const CSV_URL = "https://ducj-creator.github.io/Shirley-Grammar/irregular/verbs.csv";
-  let verbs = [];          // 從 CSV 載入後填入
-  let quizVerbs = [];      // 本次測驗 10 題
+  let verbs = [];
+  let quizVerbs = [];
 
   document.addEventListener("DOMContentLoaded", async () => {
-    // 1) 先載入 CSV
     await loadVerbsFromCSV();
 
-    // 2) 模式切換
     const modeButtons = document.querySelectorAll(".mode-btn");
     const sections = document.querySelectorAll(".section");
 
@@ -258,10 +256,8 @@
       });
     });
 
-    // 3) 初始化 learn
     initLearnMode();
 
-    // Quiz btn
     document.getElementById("start-quiz-btn").addEventListener("click", startQuiz);
     document.getElementById("quiz-form").addEventListener("submit", submitQuiz);
   });
@@ -274,10 +270,12 @@
       const text = await res.text();
       verbs = parseCSV(text);
 
-      // 若 CSV 沒有 type 欄，嘗試根據 v1/v2/v3 形態判斷
-      verbs.forEach(v => { if (!v.type) v.type = inferType(v.v1, v.v2, v.v3); });
+      // ✅ type 清理：把 "AAA (三態同型)" 變成 "AAA"
+      verbs.forEach(v => {
+        v.type = (v.type || "").match(/AAA|ABA|ABB|ABC/i)?.[0]?.toUpperCase() || "";
+        if (!v.type) v.type = inferType(v.v1, v.v2, v.v3);
+      });
 
-      // 更新列表
       initLearnMode();
       initReviewMode();
     } catch (err) {
@@ -287,71 +285,67 @@
       document.getElementById("review-verb-list").innerHTML = msg;
     }
   }
-function parseCSV(csvText) {
-  const rows = csvText.trim().split(/\r?\n/).filter(Boolean);
-  if (!rows.length) return [];
 
-  const rawHeaders = splitCSVLine(rows[0]);
-  const headers = rawHeaders.map(h => normalizeHeader(h));
+  function parseCSV(csvText) {
+    const rows = csvText.trim().split(/\r?\n/).filter(Boolean);
+    if (!rows.length) return [];
 
-  const data = [];
-  for (let i = 1; i < rows.length; i++) {
-    const cols = splitCSVLine(rows[i]);
-    const obj = {};
-    headers.forEach((h, idx) => {
-      obj[h] = (cols[idx] ?? "").trim();
-    });
+    const rawHeaders = splitCSVLine(rows[0]);
+    const headers = rawHeaders.map(h => normalizeHeader(h));
 
-    data.push({
-      type: obj.type || "",
-      v1: obj.v1 || "",
-      v1_example: obj.v1_example || "",
-      v2: obj.v2 || "",
-      v2_example: obj.v2_example || "",
-      v3: obj.v3 || "",
-      v3_example: obj.v3_example || "",
-      meaning: obj.meaning || ""
-    });
-  }
+    const data = [];
+    for (let i = 1; i < rows.length; i++) {
+      const cols = splitCSVLine(rows[i]);
+      const obj = {};
+      headers.forEach((h, idx) => obj[h] = (cols[idx] ?? "").trim());
 
-  return data.filter(v => v.v1 && v.v2 && v.v3);
-}
-
-function normalizeHeader(h) {
-  const s = h.trim().toLowerCase();
-
-  if (s.includes("type")) return "type";
-  if (s.includes("v1") && s.includes("例句")) return "v1_example";
-  if (s.includes("v2") && s.includes("例句")) return "v2_example";
-  if (s.includes("v3") && s.includes("例句")) return "v3_example";
-
-  if (s.includes("v1")) return "v1";
-  if (s.includes("v2")) return "v2";
-  if (s.includes("v3")) return "v3";
-
-  if (s.includes("中文") || s.includes("meaning")) return "meaning";
-
-  // 其他欄位先原樣（但我們不一定會用到）
-  return s.replace(/\s+/g, "_");
-}
-
-function splitCSVLine(line) {
-  const result = [];
-  let cur = "", inQuotes = false;
-  for (let i = 0; i < line.length; i++) {
-    const ch = line[i];
-    if (ch === '"') {
-      if (inQuotes && line[i + 1] === '"') { cur += '"'; i++; }
-      else inQuotes = !inQuotes;
-    } else if (ch === ',' && !inQuotes) {
-      result.push(cur); cur = "";
-    } else {
-      cur += ch;
+      data.push({
+        type: obj.type || "",
+        v1: obj.v1 || "",
+        v1_example: obj.v1_example || "",
+        v2: obj.v2 || "",
+        v2_example: obj.v2_example || "",
+        v3: obj.v3 || "",
+        v3_example: obj.v3_example || "",
+        meaning: obj.meaning || ""
+      });
     }
+
+    return data.filter(v => v.v1 && v.v2 && v.v3);
   }
-  result.push(cur);
-  return result;
-}
+
+  function normalizeHeader(h) {
+    const s = h.trim().toLowerCase();
+
+    if (s.includes("type")) return "type";
+    if (s.includes("v1") && s.includes("例句")) return "v1_example";
+    if (s.includes("v2") && s.includes("例句")) return "v2_example";
+    if (s.includes("v3") && s.includes("例句")) return "v3_example";
+
+    if (s.includes("v1")) return "v1";
+    if (s.includes("v2")) return "v2";
+    if (s.includes("v3")) return "v3";
+
+    if (s.includes("中文") || s.includes("meaning")) return "meaning";
+
+    return s.replace(/\s+/g, "_");
+  }
+
+  function splitCSVLine(line) {
+    const result = [];
+    let cur = "", inQuotes = false;
+    for (let i=0;i<line.length;i++){
+      const ch = line[i];
+      if (ch === '"') {
+        if (inQuotes && line[i+1] === '"') { cur += '"'; i++; }
+        else inQuotes = !inQuotes;
+      } else if (ch === ',' && !inQuotes) {
+        result.push(cur); cur = "";
+      } else cur += ch;
+    }
+    result.push(cur);
+    return result;
+  }
 
   function inferType(v1, v2, v3) {
     if (v1===v2 && v2===v3) return "AAA";
@@ -402,8 +396,11 @@ function splitCSVLine(line) {
     });
   }
 
+  // ✅ Study vs Review 差異
   function showVerbDetail(mode, verb) {
     const detailContainer = document.getElementById(`${mode}-verb-detail`);
+    const isReview = mode === "review";
+
     detailContainer.innerHTML = `
       <div class="verb-card">
         <div class="verb-header">
@@ -416,15 +413,37 @@ function splitCSVLine(line) {
             <h4>原形 (V1)</h4>
             <p>${verb.v1} <button class="pronunciation-btn" data-word="${verb.v1}">🔊</button></p>
           </div>
-          <div class="verb-form">
-            <h4>過去式 (V2)</h4>
-            <p>${verb.v2} <button class="pronunciation-btn" data-word="${verb.v2}">🔊</button></p>
-          </div>
-          <div class="verb-form">
-            <h4>過去分詞 (V3)</h4>
-            <p>${verb.v3} <button class="pronunciation-btn" data-word="${verb.v3}">🔊</button></p>
-          </div>
+
+          ${
+            isReview
+              ? `
+                <div class="verb-form" id="${mode}-hidden-v2" style="display:none;">
+                  <h4>過去式 (V2)</h4>
+                  <p>${verb.v2} <button class="pronunciation-btn" data-word="${verb.v2}">🔊</button></p>
+                </div>
+                <div class="verb-form" id="${mode}-hidden-v3" style="display:none;">
+                  <h4>過去分詞 (V3)</h4>
+                  <p>${verb.v3} <button class="pronunciation-btn" data-word="${verb.v3}">🔊</button></p>
+                </div>
+              `
+              : `
+                <div class="verb-form">
+                  <h4>過去式 (V2)</h4>
+                  <p>${verb.v2} <button class="pronunciation-btn" data-word="${verb.v2}">🔊</button></p>
+                </div>
+                <div class="verb-form">
+                  <h4>過去分詞 (V3)</h4>
+                  <p>${verb.v3} <button class="pronunciation-btn" data-word="${verb.v3}">🔊</button></p>
+                </div>
+              `
+          }
         </div>
+
+        ${
+          isReview
+            ? `<button class="quiz-submit" id="reveal-btn" style="font-size:.85rem;padding:5px 10px;margin-top:4px;">顯示答案</button>`
+            : ``
+        }
 
         <div class="examples">
           <button class="example-toggle">顯示例句</button>
@@ -437,10 +456,12 @@ function splitCSVLine(line) {
       </div>
     `;
 
+    // 發音
     detailContainer.querySelectorAll(".pronunciation-btn").forEach(btn => {
       btn.onclick = () => playAudio(btn.dataset.word || btn.dataset.sentence);
     });
 
+    // 例句顯示/隱藏
     const toggle = detailContainer.querySelector(".example-toggle");
     const content = detailContainer.querySelector(".example-content");
     toggle.onclick = () => {
@@ -448,6 +469,16 @@ function splitCSVLine(line) {
       content.style.display = show ? "block" : "none";
       toggle.textContent = show ? "隱藏例句" : "顯示例句";
     };
+
+    // Review 模式：翻答案
+    if (isReview) {
+      const revealBtn = detailContainer.querySelector("#reveal-btn");
+      revealBtn.onclick = () => {
+        detailContainer.querySelector(`#${mode}-hidden-v2`).style.display = "block";
+        detailContainer.querySelector(`#${mode}-hidden-v3`).style.display = "block";
+        revealBtn.remove();
+      };
+    }
   }
 
   /* ========== Quiz（一次 10 題、一次提交） ========== */
@@ -530,7 +561,6 @@ function splitCSVLine(line) {
     `;
 
     resultEl.classList.remove("hidden");
-    // 捲到結果區
     resultEl.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
