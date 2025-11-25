@@ -182,12 +182,12 @@
     .bank-word{ font-weight:800; color:#1f2133; }
     .bank-pos{ font-size:.85rem; color:var(--gray); }
 
-    /* ===== Study card ===== */
+    /* ===== Study / Review shared card ===== */
     .study-area, .review-area, .quiz-area{ display:none; }
     .study-area.active, .review-area.active, .quiz-area.active{ display:block; }
 
-    .study-container{
-      display:flex; flex-direction:column; align-items:center; gap:14px;
+    .singlecard-container{
+      display:flex; flex-direction:column; align-items:center; gap:12px;
       padding:8px 0 2px;
     }
     .word-card{
@@ -221,7 +221,7 @@
       display:flex; gap:10px; align-items:center; margin-top:10px; flex-wrap:wrap;
       color:rgba(255,255,255,0.95);
     }
-    .card-back .tts-row{ color:var(--gray); }
+    .card-back .tts-row{ color:var(--gray); justify-content:center; }
 
     .tts-btn{
       background:none; border:none; color:inherit; font-size:1.45rem;
@@ -243,19 +243,28 @@
       background:var(--gray-light); color:var(--gray); cursor:not-allowed; transform:none;
     }
 
-    /* ===== Review cards ===== */
-    .review-grid{
-      display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
-      gap:12px; padding-top:6px;
+    /* ===== Review extras ===== */
+    .review-stats{
+      width:100%; max-width:540px;
+      background:#fff; border-radius:14px; box-shadow:var(--shadow);
+      padding:10px 12px; display:flex; justify-content:space-between; align-items:center; gap:8px;
+      flex-wrap:wrap;
+      font-weight:800; color:#2c2f44;
     }
-    .review-card{
-      height:200px; perspective:1000px; cursor:pointer;
+    .review-rate{
+      color:var(--primary);
     }
-    .review-card .card-inner{ height:100%; }
-    .review-card .card-front{
-      background:linear-gradient(135deg, var(--secondary) 0%, #FF8EA0 100%);
-      color:#fff;
+    .review-actions{
+      display:flex; gap:8px; flex-wrap:wrap; justify-content:center;
     }
+    .know-btn{
+      border:none; background:rgba(40,167,69,.12); color:#1f7a35;
+    }
+    .unsure-btn{
+      border:none; background:rgba(255,193,7,.16); color:#a07400;
+    }
+    .know-btn:hover{ background:rgba(40,167,69,.28); color:#0f5e25; }
+    .unsure-btn:hover{ background:rgba(255,193,7,.35); color:#7e5a00; }
 
     /* ===== Quiz ===== */
     .quiz-settings{
@@ -332,8 +341,8 @@
     @media (max-width: 600px){
       .chapters-grid{ grid-template-columns:1fr; }
       .word-bank-list{ grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); }
-      .review-grid{ grid-template-columns:1fr; }
       .word{ font-size:2.1rem; }
+      .word-card{ height:300px; }
     }
   </style>
 </head>
@@ -392,7 +401,7 @@
 
     <!-- STUDY -->
     <div class="study-area active" id="study-area">
-      <div class="study-container">
+      <div class="singlecard-container">
         <div class="word-card" id="study-card">
           <div class="card-inner">
             <div class="card-front"></div>
@@ -400,16 +409,39 @@
           </div>
         </div>
         <div class="card-controls">
-          <button class="nav-btn" id="prev-btn"><i class="fa-solid fa-chevron-left"></i> Prev</button>
-          <button class="nav-btn" id="flip-btn"><i class="fa-solid fa-right-left"></i> Flip</button>
-          <button class="nav-btn" id="next-btn">Next <i class="fa-solid fa-chevron-right"></i></button>
+          <button class="nav-btn" id="study-prev-btn"><i class="fa-solid fa-chevron-left"></i> Prev</button>
+          <button class="nav-btn" id="study-flip-btn"><i class="fa-solid fa-right-left"></i> Flip</button>
+          <button class="nav-btn" id="study-next-btn">Next <i class="fa-solid fa-chevron-right"></i></button>
         </div>
       </div>
     </div>
 
-    <!-- REVIEW -->
+    <!-- REVIEW (單卡) -->
     <div class="review-area" id="review-area">
-      <div class="review-grid" id="review-grid"></div>
+      <div class="singlecard-container">
+        <div class="review-stats">
+          <div>Known Rate: <span class="review-rate" id="review-rate">0%</span></div>
+          <div id="review-count">0 / 0 marked</div>
+        </div>
+
+        <div class="word-card" id="review-card">
+          <div class="card-inner">
+            <div class="card-front"></div>
+            <div class="card-back"></div>
+          </div>
+        </div>
+
+        <div class="review-actions">
+          <button class="btn know-btn" id="know-btn">✅ 知道</button>
+          <button class="btn unsure-btn" id="unsure-btn">🤔 不確定</button>
+        </div>
+
+        <div class="card-controls">
+          <button class="nav-btn" id="review-prev-btn"><i class="fa-solid fa-chevron-left"></i> Prev</button>
+          <button class="nav-btn" id="review-flip-btn"><i class="fa-solid fa-right-left"></i> Flip</button>
+          <button class="nav-btn" id="review-next-btn">Next <i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+      </div>
     </div>
 
     <!-- QUIZ -->
@@ -421,10 +453,11 @@
             <option value="mix-all">Mix All Chapters</option>
             <option value="mix-chapter">Mix Selected Chapter</option>
             <option value="precise">Precise (Chapter & Subchapter)</option>
+            <option value="unsure">Unsure List (from Review)</option>
           </select>
         </div>
 
-        <div class="setting-group">
+        <div class="setting-group" id="quiz-chapter-setting">
           <label class="setting-label">Chapter</label>
           <select class="setting-select" id="quiz-chapter-select"></select>
         </div>
@@ -509,19 +542,30 @@
   const reviewArea = document.getElementById('review-area');
   const quizArea = document.getElementById('quiz-area');
 
+  // Study elements
   const studyCard = document.getElementById('study-card');
-  const flipBtn = document.getElementById('flip-btn');
-  const prevBtn = document.getElementById('prev-btn');
-  const nextBtn = document.getElementById('next-btn');
+  const studyFlipBtn = document.getElementById('study-flip-btn');
+  const studyPrevBtn = document.getElementById('study-prev-btn');
+  const studyNextBtn = document.getElementById('study-next-btn');
 
-  const reviewGrid = document.getElementById('review-grid');
+  // Review elements
+  const reviewCard = document.getElementById('review-card');
+  const reviewFlipBtn = document.getElementById('review-flip-btn');
+  const reviewPrevBtn = document.getElementById('review-prev-btn');
+  const reviewNextBtn = document.getElementById('review-next-btn');
+  const knowBtn = document.getElementById('know-btn');
+  const unsureBtn = document.getElementById('unsure-btn');
+  const reviewRateEl = document.getElementById('review-rate');
+  const reviewCountEl = document.getElementById('review-count');
 
+  // Quiz elements
   const quizSettings = document.getElementById('quiz-settings');
   const quizWrap = document.getElementById('quiz-wrap');
   const quizModeSelect = document.getElementById('quiz-mode-select');
   const quizChapterSelect = document.getElementById('quiz-chapter-select');
   const quizSubSetting = document.getElementById('quiz-sub-setting');
   const quizSubchapterSelect = document.getElementById('quiz-subchapter-select');
+  const quizChapterSetting = document.getElementById('quiz-chapter-setting');
   const quizCountSelect = document.getElementById('quiz-count-select');
   const startQuizBtn = document.getElementById('start-quiz-btn');
 
@@ -539,6 +583,22 @@
 
   let currentWords = [];
   let currentWordIndex = 0;
+
+  // Review tracking
+  const reviewStatsByChapter = new Map(); 
+  // key: chapterId -> { known:Set, unsure:Set }
+  function getReviewStats(chapterId){
+    if(!reviewStatsByChapter.has(chapterId)){
+      reviewStatsByChapter.set(chapterId,{
+        known:new Set(),
+        unsure:new Set()
+      });
+    }
+    return reviewStatsByChapter.get(chapterId);
+  }
+
+  // global unsure list for quiz (across chapters)
+  const globalUnsureKeys = new Set();
 
   // quiz
   let quizQuestionsData = [];
@@ -651,7 +711,6 @@
       chaptersGrid.appendChild(card);
     });
 
-    // layer control
     homeView.classList.remove('hidden');
     categoryView.classList.remove('active');
     currentChapter = null;
@@ -667,10 +726,11 @@
     renderSubchips();
     loadWordsForCategory();
     renderWordBank();
-    renderStudyCard();
-    renderReviewGrid();
 
-    // show layer2
+    renderStudyCard();
+    renderReviewCard();        // ✅ 單卡 Review
+    updateReviewStatsUI();     // ✅ 統計
+
     homeView.classList.add('hidden');
     categoryView.classList.add('active');
 
@@ -701,8 +761,11 @@
       currentSubchapter = id;
       loadWordsForCategory();
       renderWordBank();
+
+      // reset index to start of filtered list
+      currentWordIndex = 0;
       if(currentMode==='study') renderStudyCard();
-      if(currentMode==='review') renderReviewGrid();
+      if(currentMode==='review') renderReviewCard();
     });
     return chip;
   }
@@ -732,6 +795,9 @@
         if(currentMode==='study'){
           renderStudyCard();
           studyArea.scrollIntoView({behavior:'smooth', block:'center'});
+        } else if(currentMode==='review'){
+          renderReviewCard();
+          reviewArea.scrollIntoView({behavior:'smooth', block:'center'});
         }
       });
       bankListEl.appendChild(item);
@@ -770,10 +836,9 @@
 
     studyCard.classList.remove('flipped');
 
-    prevBtn.disabled = currentWordIndex===0;
-    nextBtn.disabled = currentWordIndex===currentWords.length-1;
+    studyPrevBtn.disabled = currentWordIndex===0;
+    studyNextBtn.disabled = currentWordIndex===currentWords.length-1;
 
-    // bind TTS
     front.querySelector('.tts-btn').addEventListener('click',(e)=>{
       e.stopPropagation(); speak(w.word);
     });
@@ -782,43 +847,112 @@
     });
   }
 
-  function goPrevWord(){
-    if(currentWordIndex>0){ currentWordIndex--; renderStudyCard(); }
-  }
-  function goNextWord(){
-    if(currentWordIndex<currentWords.length-1){ currentWordIndex++; renderStudyCard(); }
+  function studyPrev(){ if(currentWordIndex>0){ currentWordIndex--; renderStudyCard(); } }
+  function studyNext(){ if(currentWordIndex<currentWords.length-1){ currentWordIndex++; renderStudyCard(); } }
+
+  // ================= REVIEW (單卡) =================
+  function currentWordKey(w){
+    return `${w.chapter}|||${w.subchapter||''}|||${w.word}`; // stable unique
   }
 
-  // ================= REVIEW =================
-  function renderReviewGrid(){
-    reviewGrid.innerHTML='';
-    currentWords.forEach(w=>{
-      const card = document.createElement('div');
-      card.className='review-card';
-      card.innerHTML = `
-        <div class="card-inner">
-          <div class="card-front card-front-review">
-            <div class="word" style="font-size:1.9rem">${w.word}</div>
-            <div class="pos">${w.pos||''}</div>
-          </div>
-          <div class="card-back">
-            <div class="meaning" style="font-size:1.2rem; font-weight:800">${w.meaning||''}</div>
-            <div class="example">${w.example||'No example available'}</div>
-            <div class="example-translation">${w.exampleTranslation||'無可用例句'}</div>
-            <div class="tts-row">
-              <button class="tts-btn" title="Pronounce example"><i class="fas fa-volume-up"></i></button>
-              <span>Example TTS</span>
-            </div>
-          </div>
-        </div>
-      `;
-      card.addEventListener('click', ()=> card.classList.toggle('flipped'));
-      // example tts
-      card.querySelector('.card-back .tts-btn').addEventListener('click',(e)=>{
-        e.stopPropagation(); speak(w.example || w.word);
-      });
-      reviewGrid.appendChild(card);
+  function renderReviewCard(){
+    if(!currentWords.length) return;
+    const w = currentWords[currentWordIndex];
+    const front = reviewCard.querySelector('.card-front');
+    const back = reviewCard.querySelector('.card-back');
+
+    front.innerHTML = `
+      <div class="word">${w.word}</div>
+      <div class="pos">${w.pos||''}</div>
+      <div class="tts-row">
+        <button class="tts-btn" title="Pronounce word"><i class="fas fa-volume-up"></i></button>
+        <span>${w.pronunciation||'/.../'}</span>
+      </div>
+      <div style="margin-top:10px; font-size:.9rem; opacity:.9;">Tap card to check meaning</div>
+    `;
+
+    back.innerHTML = `
+      <div class="word">${w.word}</div>
+      <div class="pos">${w.pos||''}</div>
+      <div class="meaning">${w.meaning||''}</div>
+      <div class="example">${w.example||'No example available'}</div>
+      <div class="example-translation">${w.exampleTranslation||'無可用例句'}</div>
+      <div class="tts-row">
+        <button class="tts-btn" title="Pronounce example"><i class="fas fa-volume-up"></i></button>
+        <span>Example TTS</span>
+      </div>
+      <div style="margin-top:8px; font-size:.9rem; color:var(--gray);">Tap card to go back</div>
+    `;
+
+    reviewCard.classList.remove('flipped');
+
+    reviewPrevBtn.disabled = currentWordIndex===0;
+    reviewNextBtn.disabled = currentWordIndex===currentWords.length-1;
+
+    front.querySelector('.tts-btn').addEventListener('click',(e)=>{
+      e.stopPropagation(); speak(w.word);
     });
+    back.querySelector('.tts-btn').addEventListener('click',(e)=>{
+      e.stopPropagation(); speak(w.example || w.word);
+    });
+  }
+
+  function reviewPrev(){ if(currentWordIndex>0){ currentWordIndex--; renderReviewCard(); } }
+  function reviewNext(){ if(currentWordIndex<currentWords.length-1){ currentWordIndex++; renderReviewCard(); } }
+
+  function markKnow(){
+    if(!currentChapter || !currentWords.length) return;
+    const w=currentWords[currentWordIndex];
+    const key=currentWordKey(w);
+    const stats=getReviewStats(currentChapter.id);
+
+    stats.known.add(key);
+    stats.unsure.delete(key);
+    globalUnsureKeys.delete(key);
+
+    flashButton(knowBtn);
+    updateReviewStatsUI();
+    // 自動下一題（Review 更流暢）
+    if(currentWordIndex < currentWords.length-1){
+      currentWordIndex++;
+      renderReviewCard();
+    }
+  }
+
+  function markUnsure(){
+    if(!currentChapter || !currentWords.length) return;
+    const w=currentWords[currentWordIndex];
+    const key=currentWordKey(w);
+    const stats=getReviewStats(currentChapter.id);
+
+    stats.unsure.add(key);
+    stats.known.delete(key);
+    globalUnsureKeys.add(key);
+
+    flashButton(unsureBtn);
+    updateReviewStatsUI();
+    if(currentWordIndex < currentWords.length-1){
+      currentWordIndex++;
+      renderReviewCard();
+    }
+  }
+
+  function updateReviewStatsUI(){
+    if(!currentChapter) return;
+    const stats=getReviewStats(currentChapter.id);
+    const knownCount=stats.known.size;
+    const unsureCount=stats.unsure.size;
+    const marked=knownCount+unsureCount;
+
+    const rate = marked===0 ? 0 : Math.round((knownCount/marked)*100);
+    reviewRateEl.textContent = `${rate}%`;
+    reviewCountEl.textContent = `${marked} / ${currentChapter.words.length} marked`;
+  }
+
+  function flashButton(btn){
+    const old=btn.style.transform;
+    btn.style.transform='scale(1.06)';
+    setTimeout(()=>btn.style.transform=old||'',150);
   }
 
   // ================= QUIZ =================
@@ -838,10 +972,20 @@
   }
 
   function handleQuizModeChange(){
-    if(quizModeSelect.value==='precise'){
+    const mode=quizModeSelect.value;
+
+    if(mode==='precise'){
       quizSubSetting.classList.remove('hidden');
-    } else {
+      quizChapterSetting.classList.remove('hidden');
+    }else if(mode==='mix-chapter'){
       quizSubSetting.classList.add('hidden');
+      quizChapterSetting.classList.remove('hidden');
+    }else if(mode==='unsure'){
+      quizSubSetting.classList.add('hidden');
+      quizChapterSetting.classList.add('hidden');
+    }else{
+      quizSubSetting.classList.add('hidden');
+      quizChapterSetting.classList.remove('hidden');
     }
   }
 
@@ -869,7 +1013,15 @@
     const subId = quizSubchapterSelect.value;
 
     let pool=[];
-    if(mode==='mix-all' || chapterId==='all'){
+
+    if(mode==='unsure'){
+      // ✅ Use global unsure list
+      pool = getUnsureWordsObjects();
+      if(pool.length<4){
+        alert('Unsure list is too small. Please mark more words as unsure in Review (need at least 4).');
+        return;
+      }
+    } else if(mode==='mix-all' || chapterId==='all'){
       vocabularyData.chapters.forEach(ch=>pool.push(...ch.words));
     } else if(mode==='mix-chapter'){
       const ch=vocabularyData.chapters.find(c=>c.id===chapterId);
@@ -908,6 +1060,17 @@
     updateQuizUI();
   }
 
+  function getUnsureWordsObjects(){
+    const list=[];
+    vocabularyData.chapters.forEach(ch=>{
+      ch.words.forEach(w=>{
+        const key=currentWordKey(w);
+        if(globalUnsureKeys.has(key)) list.push(w);
+      });
+    });
+    return list;
+  }
+
   function buildOptions(target, pool){
     const distractors = pool
       .filter(w=>w.word!==target.word && w.meaning)
@@ -941,7 +1104,7 @@
         quizAnswers[quizIndex].selectedIndex=idx;
         updateQuizUI();
 
-        // ✅ 自動進下一題
+        // 回答後自動下一題
         if(quizIndex < quizQuestionsData.length-1){
           quizIndex++;
           renderQuizQuestion();
@@ -956,7 +1119,6 @@
   }
 
   function submitQuiz(){
-    // 必須答完才算提交（你原本要求）
     const total=quizQuestionsData.length;
     const answered=quizAnswers.filter(a=>a.selectedIndex!==null).length;
     if(answered<total){
@@ -1014,32 +1176,36 @@
     `;
 
     document.getElementById('restart-quiz-btn').addEventListener('click', ()=>{
-      // restore wrap
-      quizWrap.innerHTML=`
-        <div class="quiz-progress">
-          <span id="progress-text">1 / 10</span>
-          <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
-          <span id="answered-text">Answered: 0/0</span>
-        </div>
-        <div class="quiz-question">
-          <div class="question-text" id="question-text"></div>
-          <div class="options-container" id="options-container"></div>
-        </div>
-      `;
-      // rebind local refs
-      window.progressText = document.getElementById('progress-text');
-      window.answeredText = document.getElementById('answered-text');
-      window.progressFill = document.getElementById('progress-fill');
-      window.questionText = document.getElementById('question-text');
-      window.optionsContainer = document.getElementById('options-container');
-
+      resetQuizWrapDOM();
       startQuiz();
     });
 
     document.getElementById('back-quiz-settings-btn').addEventListener('click', ()=>{
       quizWrap.classList.remove('active');
       quizSettings.style.display='block';
+      resetQuizWrapDOM();
     });
+  }
+
+  function resetQuizWrapDOM(){
+    quizWrap.innerHTML=`
+      <div class="quiz-progress">
+        <span id="progress-text">1 / 10</span>
+        <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+        <span id="answered-text">Answered: 0/0</span>
+      </div>
+
+      <div class="quiz-question">
+        <div class="question-text" id="question-text"></div>
+        <div class="options-container" id="options-container"></div>
+      </div>
+    `;
+    // rebind refs
+    window.progressText  = document.getElementById('progress-text');
+    window.answeredText  = document.getElementById('answered-text');
+    window.progressFill  = document.getElementById('progress-fill');
+    window.questionText  = document.getElementById('question-text');
+    window.optionsContainer = document.getElementById('options-container');
   }
 
   function updateQuizUI(){
@@ -1066,7 +1232,10 @@
       if(currentChapter) renderStudyCard();
     } else if(mode==='review'){
       reviewArea.classList.add('active');
-      if(currentChapter) renderReviewGrid();
+      if(currentChapter){
+        renderReviewCard();
+        updateReviewStatsUI();
+      }
     } else {
       quizArea.classList.add('active');
       renderQuizChapterOptions();
@@ -1087,9 +1256,17 @@
 
     // study interactions
     studyCard.addEventListener('click', ()=> studyCard.classList.toggle('flipped'));
-    flipBtn.addEventListener('click', (e)=>{ e.stopPropagation(); studyCard.classList.toggle('flipped'); });
-    prevBtn.addEventListener('click', goPrevWord);
-    nextBtn.addEventListener('click', goNextWord);
+    studyFlipBtn.addEventListener('click', (e)=>{ e.stopPropagation(); studyCard.classList.toggle('flipped'); });
+    studyPrevBtn.addEventListener('click', studyPrev);
+    studyNextBtn.addEventListener('click', studyNext);
+
+    // review interactions
+    reviewCard.addEventListener('click', ()=> reviewCard.classList.toggle('flipped'));
+    reviewFlipBtn.addEventListener('click', (e)=>{ e.stopPropagation(); reviewCard.classList.toggle('flipped'); });
+    reviewPrevBtn.addEventListener('click', reviewPrev);
+    reviewNextBtn.addEventListener('click', reviewNext);
+    knowBtn.addEventListener('click', (e)=>{ e.stopPropagation(); markKnow(); });
+    unsureBtn.addEventListener('click', (e)=>{ e.stopPropagation(); markUnsure(); });
 
     // quiz settings
     quizModeSelect.addEventListener('change', handleQuizModeChange);
@@ -1113,7 +1290,6 @@
     return a;
   }
 
-  // 簡單 emoji 規則：可再手動擴充
   function getChapterEmoji(title){
     const t=title.toLowerCase();
     if(t.includes('administration')||t.includes('行政')) return '🗂️';
