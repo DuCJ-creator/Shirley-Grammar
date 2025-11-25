@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Shirley's TOEIC Essential Vocab Learning Platform</title>
+  <title>Shirley's TOEIC Essential Vocab</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -16,190 +16,182 @@
       --secondary: #FF6584;
       --accent: #36D1DC;
       --light: #F8F9FA;
-      --dark: #343A40;
+      --dark: #2f3241;
       --success: #28A745;
       --warning: #FFC107;
       --danger: #DC3545;
       --gray: #6C757D;
-      --gray-light: #E9ECEF;
-      --border-radius: 14px;
-      --shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-      --transition: all 0.28s ease;
+      --gray-light: #EEF0F6;
+      --border-radius: 16px;
+      --shadow: 0 8px 20px rgba(0,0,0,0.08);
+      --transition: all 0.25s ease;
     }
 
-    * { margin:0; padding:0; box-sizing:border-box; }
+    *{ margin:0; padding:0; box-sizing:border-box; }
     body{
-      font-family:'Poppins',sans-serif;
+      font-family:"Poppins", sans-serif;
       background:
-        radial-gradient(1200px 600px at 10% -10%, #ffffff 0%, #f3f6ff 30%, transparent 60%),
+        radial-gradient(1200px 600px at 8% -12%, #ffffff 0%, #f3f6ff 30%, transparent 60%),
         radial-gradient(900px 500px at 110% 10%, #fff0f5 0%, #f5f7fa 35%, transparent 60%),
-        linear-gradient(135deg,#f5f7fa 0%,#c3cfe2 100%);
+        linear-gradient(135deg,#f6f8fb 0%,#c9d7ee 100%);
       color:var(--dark);
       min-height:100vh;
-      padding:20px;
+      padding:16px;
     }
     .container{ max-width:1200px; margin:0 auto; }
 
     header{
-      text-align:center; margin-bottom:26px; padding:22px;
       background:rgba(255,255,255,0.96);
       border-radius:var(--border-radius);
       box-shadow:var(--shadow);
-      position:relative; overflow:hidden;
+      padding:18px 18px;
+      display:flex; justify-content:space-between; align-items:center; gap:12px;
+      position:sticky; top:10px; z-index:10;
+      backdrop-filter: blur(6px);
     }
-    header::after{
-      content:""; position:absolute; inset:-40% -10% auto auto;
-      width:260px; height:260px; border-radius:50%;
-      background:radial-gradient(circle at center, rgba(108,99,255,0.18), transparent 65%);
-      transform:translate(30px, -20px);
+    .title-block h1{
+      color:var(--primary); font-size:1.9rem; font-weight:800; letter-spacing:.3px;
     }
-    h1{ color:var(--primary); font-size:2.45rem; margin-bottom:8px; }
-    .subtitle{ color:var(--gray); font-size:1.08rem; font-weight:400; }
+    .title-block p{ color:var(--gray); font-size:1rem; margin-top:2px; }
+
+    .header-actions{
+      display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+    }
+
+    .btn{
+      padding:9px 14px; background:#fff; border:2px solid var(--primary);
+      color:var(--primary); border-radius:999px; font-weight:700;
+      cursor:pointer; transition:var(--transition); display:flex; align-items:center; gap:6px;
+      box-shadow:0 2px 0 rgba(108,99,255,0.08);
+      font-size:.95rem;
+    }
+    .btn:hover{
+      background:var(--primary-light); color:#fff; transform:translateY(-2px);
+      box-shadow:0 12px 22px rgba(108,99,255,0.25);
+    }
+    .btn.active{ background:var(--primary); color:#fff; }
+    .btn.secondary{
+      border-color:transparent; background:rgba(255,101,132,0.12); color:#c73b57;
+    }
+    .btn.secondary:hover{
+      background:var(--secondary); color:#fff;
+      box-shadow:0 12px 22px rgba(255,101,132,0.25);
+    }
 
     .loading{
-      text-align:center; padding:40px; font-size:1.15rem; color:var(--primary);
+      text-align:center; padding:50px 0; color:var(--primary); font-size:1.1rem;
     }
-    .loading i{ font-size:2rem; display:block; margin-bottom:12px; }
+    .loading i{ font-size:2rem; display:block; margin-bottom:10px; }
 
-    .mode-selector{
-      display:flex; justify-content:center; gap:16px; margin-bottom:20px;
-    }
-    .mode-btn{
-      padding:11px 26px; background:#fff; border:2px solid var(--primary);
-      border-radius:999px; color:var(--primary); font-weight:600; cursor:pointer;
-      transition:var(--transition); display:flex; align-items:center; gap:8px;
-      box-shadow:0 2px 0 rgba(108,99,255,0.08);
-    }
-    .mode-btn:hover{
-      background:var(--primary-light); color:#fff; transform:translateY(-2px);
-      box-shadow:0 10px 20px rgba(108,99,255,0.24);
-    }
-    .mode-btn.active{ background:var(--primary); color:#fff; }
-    .mode-btn:disabled{ opacity:.6; cursor:not-allowed; transform:none; }
-    .mode-btn:disabled:hover{ background:#fff; color:var(--primary); box-shadow:none; }
-
-    .content-area{
-      display:grid; grid-template-columns:300px 1fr; gap:22px;
-    }
-
-    .chapters-panel{
-      background:#fff; border-radius:var(--border-radius); box-shadow:var(--shadow);
-      padding:18px; height:fit-content;
-    }
-    .chapters-title{
-      font-size:1.25rem; color:var(--primary); display:flex; align-items:center; gap:10px;
-      margin-bottom:10px;
-    }
-    .chapters-list{ list-style:none; }
-    .chapter-item{
-      padding:11px 14px; margin-bottom:8px; background:var(--gray-light);
-      border-radius:10px; cursor:pointer; transition:var(--transition);
-      display:flex; justify-content:space-between; align-items:center;
-    }
-    .chapter-item:hover{ background:var(--primary-light); color:#fff; transform:translateX(2px); }
-    .chapter-item.active{ background:var(--primary); color:#fff; }
-    .chapter-count{
-      background:#fff; color:var(--primary); padding:2px 8px; border-radius:999px;
-      font-size:.8rem; font-weight:700;
-    }
-
-    .chapter-content{
-      background:#fff; border-radius:var(--border-radius); box-shadow:var(--shadow);
-      padding:20px; min-height:520px;
-    }
-
-    .chapter-header{
-      display:flex; justify-content:space-between; align-items:center;
-      margin-bottom:12px; padding-bottom:12px; border-bottom:1px solid var(--gray-light);
-      gap:10px; flex-wrap:wrap;
-    }
-    .chapter-title{ font-size:1.5rem; color:var(--primary); font-weight:700; }
-
-    /* ===== Home chapter modules ===== */
+    /* ====== LAYER 1 Home ====== */
+    #home-view{ margin-top:16px; }
     .chapters-grid{
       display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
-      gap:16px; margin-top:8px;
+      gap:14px;
     }
-    .chapter-module{
+    .chapter-card{
       background:linear-gradient(145deg,#ffffff 0%, #f6f7ff 70%, #fff 100%);
       border:1px solid #eef0ff;
-      border-radius:16px; padding:16px 16px 14px;
-      box-shadow:var(--shadow); cursor:pointer; transition:var(--transition);
+      border-radius:18px;
+      padding:16px 16px 14px;
+      box-shadow:var(--shadow);
+      cursor:pointer; transition:var(--transition);
       position:relative; overflow:hidden;
+      min-height:130px;
+      display:flex; flex-direction:column; justify-content:space-between;
     }
-    .chapter-module::after{
+    .chapter-card::after{
       content:""; position:absolute; right:-40px; top:-40px;
       width:120px; height:120px; border-radius:50%;
       background:radial-gradient(circle at center, rgba(54,209,220,0.22), transparent 65%);
     }
-    .chapter-module:hover{
+    .chapter-card:hover{
       transform:translateY(-4px);
-      box-shadow:0 14px 30px rgba(0,0,0,0.12);
+      box-shadow:0 16px 32px rgba(0,0,0,0.12);
       border-color:#dfe2ff;
     }
-    .chapter-module h3{
-      font-size:1.05rem; color:#2d2f44; margin-bottom:8px; line-height:1.35;
+    .chapter-card h3{
+      font-size:1.05rem; line-height:1.4; color:#27293b; font-weight:700;
+    }
+    .chapter-card .emoji{
+      font-size:1.9rem; margin-bottom:6px;
     }
     .chapter-meta{
-      display:flex; justify-content:space-between; align-items:center; color:var(--gray);
-      font-size:.9rem;
+      display:flex; justify-content:space-between; align-items:center; margin-top:8px;
+      color:var(--gray); font-size:.9rem;
     }
     .chip{
-      background:rgba(108,99,255,0.1); color:var(--primary);
-      padding:4px 8px; border-radius:999px; font-weight:600; font-size:.82rem;
+      background:rgba(108,99,255,0.12); color:var(--primary);
+      padding:3px 8px; border-radius:999px; font-weight:700; font-size:.82rem;
+      display:inline-flex; align-items:center; gap:4px;
     }
 
-    /* ===== Chapter view layout ===== */
-    .chapter-view{ display:grid; grid-template-columns:1fr 220px; gap:14px; }
-    .subchapter-panel{
-      background:#fbfbff; border:1px dashed #e3e6ff;
-      border-radius:14px; padding:10px; height:fit-content;
-      position:sticky; top:10px;
-    }
-    .subchapter-panel h4{
-      font-size:1rem; color:var(--primary); margin-bottom:8px; display:flex; gap:6px; align-items:center;
-    }
-    .subchapter-selector{
-      display:flex; flex-direction:column; gap:6px;
-    }
-    .subchapter-btn{
-      padding:8px 10px; background:var(--gray-light); border:none; border-radius:999px;
-      cursor:pointer; transition:var(--transition); font-size:.9rem; text-align:left;
-      display:flex; justify-content:space-between; align-items:center;
-    }
-    .subchapter-btn:hover{ background:var(--primary-light); color:#fff; transform:translateX(2px); }
-    .subchapter-btn.active{ background:var(--primary); color:#fff; }
+    /* ====== LAYER 2 Category view ====== */
+    #category-view{ margin-top:16px; display:none; }
+    #category-view.active{ display:block; }
 
-    /* ===== word overview list ===== */
-    .word-overview{
-      background:#fcfcff; border:1px solid #eee; border-radius:14px;
+    .category-header{
+      display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;
+      margin-bottom:12px;
+    }
+    .category-title{
+      font-size:1.45rem; font-weight:800; color:#24263a;
+      display:flex; gap:8px; align-items:center;
+    }
+
+    .subchips{
+      display:flex; flex-wrap:wrap; gap:8px;
+      background:rgba(255,255,255,0.9); padding:10px; border-radius:14px;
+      box-shadow:var(--shadow);
+    }
+    .subchip{
+      padding:6px 10px; border-radius:999px; background:var(--gray-light);
+      cursor:pointer; transition:var(--transition); font-size:.9rem; font-weight:700;
+      display:flex; align-items:center; gap:6px; border:1px solid transparent;
+    }
+    .subchip:hover{ background:var(--primary-light); color:#fff; transform:translateY(-1px); }
+    .subchip.active{ background:var(--primary); color:#fff; }
+
+    .word-bank{
+      background:#fff; border-radius:16px; box-shadow:var(--shadow);
       padding:12px; margin-bottom:12px;
     }
-    .word-overview-header{
+    .word-bank-header{
       display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;
     }
-    .word-overview-title{
-      font-weight:700; color:#2d2f44; display:flex; gap:8px; align-items:center;
+    .word-bank-title{
+      font-weight:800; color:#2c2f44; display:flex; align-items:center; gap:8px;
     }
-    .overview-count{ color:var(--gray); font-size:.95rem; }
+    .word-bank-count{ color:var(--gray); font-size:.95rem; }
 
-    .word-overview-list{
-      display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
-      gap:8px; max-height:185px; overflow:auto; padding-right:4px;
+    .word-bank-list{
+      display:grid; grid-template-columns:repeat(auto-fill,minmax(170px,1fr));
+      gap:8px; max-height:210px; overflow:auto; padding-right:4px;
     }
-    .overview-item{
-      background:#fff; border:1px solid #f0f1ff; border-radius:10px;
-      padding:8px 10px; font-size:.95rem; display:flex; flex-direction:column; gap:2px;
-      transition:var(--transition);
+    .bank-item{
+      background:#fff; border:1px solid #f0f2ff; border-radius:12px;
+      padding:8px 10px; transition:var(--transition);
+      display:flex; flex-direction:column; gap:2px;
+      cursor:pointer;
     }
-    .overview-item:hover{ transform:translateY(-2px); box-shadow:0 8px 16px rgba(0,0,0,0.06); }
-    .overview-word{ font-weight:700; color:#222; }
-    .overview-pos{ color:var(--gray); font-size:.85rem; }
+    .bank-item:hover{
+      transform:translateY(-2px);
+      box-shadow:0 8px 14px rgba(0,0,0,0.06);
+      border-color:#e0e4ff;
+    }
+    .bank-word{ font-weight:800; color:#1f2133; }
+    .bank-pos{ font-size:.85rem; color:var(--gray); }
 
-    /* ===== Study Mode ===== */
-    .study-container{ display:flex; flex-direction:column; align-items:center; gap:16px; }
+    /* ===== Study card ===== */
+    .study-area, .review-area, .quiz-area{ display:none; }
+    .study-area.active, .review-area.active, .quiz-area.active{ display:block; }
+
+    .study-container{
+      display:flex; flex-direction:column; align-items:center; gap:14px;
+      padding:8px 0 2px;
+    }
     .word-card{
-      width:100%; max-width:520px; height:310px; perspective:1000px; margin-top:2px;
+      width:100%; max-width:540px; height:320px; perspective:1000px;
       cursor:pointer;
     }
     .card-inner{
@@ -210,111 +202,137 @@
     .card-front,.card-back{
       position:absolute; width:100%; height:100%; backface-visibility:hidden;
       display:flex; flex-direction:column; justify-content:center; align-items:center;
-      padding:26px; border-radius:var(--border-radius); box-shadow:var(--shadow);
+      padding:26px; border-radius:16px; box-shadow:var(--shadow);
     }
     .card-front{
       background:linear-gradient(135deg,var(--primary) 0%,var(--primary-light) 100%);
       color:#fff;
     }
-    .card-back{ background:#fff; color:var(--dark); transform:rotateY(180deg); }
-    .word{ font-size:2.5rem; font-weight:800; margin-bottom:6px; letter-spacing:.5px;}
-    .pos{ font-size:1.1rem; font-style:italic; margin-bottom:10px; opacity:.9;}
-    .meaning{ font-size:1.55rem; margin-bottom:14px; font-weight:600;}
-    .example{ font-size:1.1rem; margin-bottom:8px; font-style:italic; color:var(--gray);}
-    .example-translation{ font-size:1rem; color:var(--gray);}
-
-    .pronunciation{ display:flex; align-items:center; gap:8px; margin-top:12px; color:rgba(255,255,255,0.9);}
-    .card-back .pronunciation{ color:var(--gray); }
-    .pronunciation-btn{
-      background:none; border:none; color:inherit; font-size:1.45rem; cursor:pointer; transition:var(--transition);
+    .card-back{
+      background:#fff; color:var(--dark); transform:rotateY(180deg);
     }
-    .pronunciation-btn:hover{ color:var(--accent); transform:scale(1.1); }
+    .word{ font-size:2.5rem; font-weight:900; margin-bottom:6px; }
+    .pos{ font-size:1.1rem; font-style:italic; margin-bottom:10px; opacity:.95; }
+    .meaning{ font-size:1.55rem; font-weight:700; margin-bottom:12px; }
+    .example{ font-size:1.1rem; font-style:italic; color:var(--gray); margin-bottom:6px; }
+    .example-translation{ color:var(--gray); font-size:1rem; }
 
-    .card-controls{ display:flex; gap:12px; margin-top:6px; }
+    .tts-row{
+      display:flex; gap:10px; align-items:center; margin-top:10px; flex-wrap:wrap;
+      color:rgba(255,255,255,0.95);
+    }
+    .card-back .tts-row{ color:var(--gray); }
+
+    .tts-btn{
+      background:none; border:none; color:inherit; font-size:1.45rem;
+      cursor:pointer; transition:var(--transition);
+    }
+    .tts-btn:hover{ color:var(--accent); transform:scale(1.1); }
+
+    .card-controls{
+      display:flex; gap:10px; margin-top:2px; flex-wrap:wrap; justify-content:center;
+    }
     .nav-btn{
-      padding:10px 18px; background:var(--primary); color:#fff; border:none; border-radius:999px;
-      cursor:pointer; transition:var(--transition); display:flex; align-items:center; gap:8px; font-weight:600;
+      padding:9px 16px;
+      background:var(--primary); color:#fff; border:none; border-radius:999px;
+      cursor:pointer; transition:var(--transition);
+      font-weight:800; display:flex; align-items:center; gap:6px;
     }
-    .nav-btn:hover{ background:var(--primary-light); transform:translateY(-2px);}
-    .nav-btn:disabled{ background:var(--gray-light); color:var(--gray); cursor:not-allowed; transform:none;}
+    .nav-btn:hover{ background:var(--primary-light); transform:translateY(-2px); }
+    .nav-btn:disabled{
+      background:var(--gray-light); color:var(--gray); cursor:not-allowed; transform:none;
+    }
 
-    /* ===== Review Mode ===== */
-    .review-container{
-      display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:14px; padding-top:4px;
+    /* ===== Review cards ===== */
+    .review-grid{
+      display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
+      gap:12px; padding-top:6px;
     }
-    .review-card{ height:190px; perspective:1000px; cursor:pointer; }
+    .review-card{
+      height:200px; perspective:1000px; cursor:pointer;
+    }
     .review-card .card-inner{ height:100%; }
     .review-card .card-front{
       background:linear-gradient(135deg, var(--secondary) 0%, #FF8EA0 100%);
       color:#fff;
     }
 
-    /* ===== Quiz Mode ===== */
-    .quiz-container{ max-width:820px; margin:0 auto; }
+    /* ===== Quiz ===== */
     .quiz-settings{
-      background:var(--gray-light); padding:16px; border-radius:var(--border-radius); margin-bottom:18px;
+      background:#fff; border-radius:16px; box-shadow:var(--shadow);
+      padding:14px; margin-bottom:12px;
     }
-    .setting-group{ margin-bottom:12px; }
-    .setting-label{ display:block; margin-bottom:6px; font-weight:600; color:#2d2f44;}
+    .setting-group{ margin-bottom:10px; }
+    .setting-label{
+      font-weight:800; color:#2c2f44; display:block; margin-bottom:6px;
+    }
     .setting-select{
-      width:100%; padding:10px; border:1px solid #ced4da; border-radius:10px; font-family:'Poppins',sans-serif;
+      width:100%; padding:9px; border-radius:10px; border:1px solid #d9dce6;
+      font-family:"Poppins",sans-serif;
     }
+    .start-btn{
+      width:100%; text-align:center; padding:11px; border:none; border-radius:999px;
+      background:var(--success); color:#fff; font-weight:900; cursor:pointer;
+      transition:var(--transition);
+    }
+    .start-btn:hover{ background:#218838; transform:translateY(-2px); }
+
+    .quiz-wrap{
+      background:#fff; border-radius:16px; box-shadow:var(--shadow);
+      padding:14px; display:none;
+    }
+    .quiz-wrap.active{ display:block; }
 
     .quiz-progress{
-      display:flex; justify-content:space-between; align-items:center; gap:10px;
-      margin-bottom:12px;
+      display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:8px;
+      font-size:.95rem; color:#2c2f44; font-weight:700;
     }
     .progress-bar{
-      height:8px; background:var(--gray-light); border-radius:999px; flex-grow:1; margin:0 10px;
-      overflow:hidden;
+      height:8px; background:var(--gray-light); border-radius:999px; flex-grow:1; overflow:hidden;
+      margin:0 8px;
     }
     .progress-fill{
-      height:100%; background:var(--primary); width:0%; transition:width .3s ease;
+      height:100%; width:0%; background:var(--primary); transition:width .25s ease;
     }
 
     .quiz-question{
-      background:#fff; padding:20px; border-radius:var(--border-radius); box-shadow:var(--shadow);
-      margin-bottom:10px;
+      padding:14px; border-radius:14px; background:#fbfbff; border:1px dashed #e6e8ff;
     }
-    .question-text{ font-size:1.25rem; margin-bottom:14px; line-height:1.5; }
+    .question-text{
+      font-size:1.18rem; font-weight:800; margin-bottom:10px;
+    }
     .options-container{
-      display:grid; grid-template-columns:1fr 1fr; gap:12px;
+      display:grid; grid-template-columns:1fr 1fr; gap:10px;
     }
     .option{
-      padding:12px 12px; background:var(--gray-light); border-radius:10px; cursor:pointer;
-      transition:var(--transition); user-select:none; font-weight:500;
+      background:var(--gray-light); border-radius:10px; padding:10px;
+      cursor:pointer; transition:var(--transition); font-weight:700; user-select:none;
     }
     .option:hover{ background:var(--primary-light); color:#fff; transform:translateY(-1px); }
     .option.selected{ background:var(--primary); color:#fff; }
-    .quiz-controls{
-      display:flex; justify-content:space-between; margin-top:16px;
-    }
-    .submit-btn{
-      padding:11px 26px; background:var(--success); color:#fff; border:none; border-radius:999px;
-      cursor:pointer; font-weight:700; transition:var(--transition);
-    }
-    .submit-btn:hover{ background:#218838; transform:translateY(-2px); }
 
     .quiz-result{
-      background:#fff; padding:22px; border-radius:var(--border-radius); box-shadow:var(--shadow);
+      background:#fff; border-radius:16px; box-shadow:var(--shadow);
+      padding:18px;
     }
-    .wrong-list{ margin-top:12px; display:grid; gap:10px; }
+    .wrong-list{ margin-top:10px; display:grid; gap:8px; }
     .wrong-item{
-      background:var(--gray-light); padding:12px 14px; border-radius:12px;
+      background:var(--gray-light); padding:10px 12px; border-radius:12px;
     }
-    .wrong-item .w-word{ font-weight:800; color:var(--primary); margin-bottom:6px; }
+    .wrong-item .w-word{ font-weight:900; color:var(--primary); margin-bottom:4px; }
 
     .hidden{ display:none; }
-    .error-message{ text-align:center; padding:40px; color:var(--danger); }
-    .demo-data-notice{
-      background:var(--warning); color:var(--dark); padding:12px; border-radius:var(--border-radius);
-      margin-bottom:12px; text-align:center;
-    }
 
-    @media (max-width:768px){
-      .content-area{ grid-template-columns:1fr; }
-      .chapter-view{ grid-template-columns:1fr; }
+    /* ===== RWD ===== */
+    @media (max-width: 900px){
+      header{ flex-direction:column; align-items:flex-start; }
+      .header-actions{ width:100%; justify-content:flex-start; }
       .options-container{ grid-template-columns:1fr; }
+    }
+    @media (max-width: 600px){
+      .chapters-grid{ grid-template-columns:1fr; }
+      .word-bank-list{ grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); }
+      .review-grid{ grid-template-columns:1fr; }
       .word{ font-size:2.1rem; }
     }
   </style>
@@ -324,8 +342,26 @@
 <div class="container">
 
   <header>
-    <h1>Shirley's TOEIC Essential Vocab</h1>
-    <p class="subtitle">Master the core vocabulary for TOEIC success</p>
+    <div class="title-block">
+      <h1>Shirley's TOEIC Essential Vocab</h1>
+      <p>Study · Review · Quiz in one place</p>
+    </div>
+
+    <div class="header-actions">
+      <button class="btn secondary" id="back-home-btn">
+        <i class="fa-solid fa-house"></i> Categories
+      </button>
+
+      <button class="btn active" data-mode="study">
+        <i class="fa-solid fa-book-open"></i> Study
+      </button>
+      <button class="btn" data-mode="review">
+        <i class="fa-solid fa-arrows-rotate"></i> Review
+      </button>
+      <button class="btn" data-mode="quiz">
+        <i class="fa-solid fa-list-check"></i> Quiz
+      </button>
+    </div>
   </header>
 
   <div class="loading" id="loading">
@@ -333,144 +369,98 @@
     Loading vocabulary data...
   </div>
 
-  <div class="mode-selector hidden" id="mode-selector">
-    <button class="mode-btn active" data-mode="study">
-      <i class="fas fa-book-open"></i> Study
-    </button>
-    <button class="mode-btn" data-mode="review">
-      <i class="fas fa-sync-alt"></i> Review
-    </button>
-    <button class="mode-btn" data-mode="quiz">
-      <i class="fas fa-tasks"></i> Quiz
-    </button>
-  </div>
+  <!-- ===== LAYER 1: HOME ===== -->
+  <section id="home-view" class="hidden">
+    <div class="chapters-grid" id="chapters-grid"></div>
+  </section>
 
-  <div class="content-area hidden" id="content-area">
-
-    <div class="demo-data-notice hidden" id="demo-notice">
-      <i class="fas fa-info-circle"></i> Using demo data. CSV loading failed, but you can still explore the platform functionality.
+  <!-- ===== LAYER 2: CATEGORY ===== -->
+  <section id="category-view">
+    <div class="category-header">
+      <div class="category-title" id="category-title">Category</div>
+      <div class="subchips" id="subchips"></div>
     </div>
 
-    <div class="chapters-panel">
-      <h2 class="chapters-title"><i class="fas fa-list-ol"></i> Chapters</h2>
-      <ul class="chapters-list" id="chapters-list"></ul>
+    <!-- word bank overview -->
+    <div class="word-bank">
+      <div class="word-bank-header">
+        <div class="word-bank-title"><i class="fa-solid fa-layer-group"></i> Word Overview</div>
+        <div class="word-bank-count" id="bank-count"></div>
+      </div>
+      <div class="word-bank-list" id="bank-list"></div>
     </div>
 
-    <div class="chapter-content">
-      <div class="chapter-header">
-        <h2 class="chapter-title" id="chapter-title">Chapters Overview</h2>
-      </div>
-
-      <!-- Home: chapters modules -->
-      <div id="home-view">
-        <div class="chapters-grid" id="chapters-grid"></div>
-      </div>
-
-      <!-- Chapter view -->
-      <div id="chapter-view" class="hidden chapter-view">
-        <!-- left: overview + modes -->
-        <div>
-          <div class="word-overview">
-            <div class="word-overview-header">
-              <div class="word-overview-title"><i class="fa-solid fa-layer-group"></i> Word Bank</div>
-              <div class="overview-count" id="overview-count"></div>
-            </div>
-            <div class="word-overview-list" id="word-overview-list"></div>
-          </div>
-
-          <!-- Study Mode -->
-          <div class="study-container hidden" id="study-mode">
-            <div class="word-card" id="study-word-card">
-              <div class="card-inner">
-                <div class="card-front"></div>
-                <div class="card-back"></div>
-              </div>
-            </div>
-            <div class="card-controls">
-              <button class="nav-btn" id="prev-btn"><i class="fas fa-arrow-left"></i> Previous</button>
-              <button class="nav-btn" id="flip-btn"><i class="fas fa-redo"></i> Flip Card</button>
-              <button class="nav-btn" id="next-btn">Next <i class="fas fa-arrow-right"></i></button>
-            </div>
-          </div>
-
-          <!-- Review Mode -->
-          <div class="review-container hidden" id="review-mode"></div>
-
-          <!-- Quiz Mode -->
-          <div class="quiz-container hidden" id="quiz-mode">
-            <div class="quiz-settings" id="quiz-settings">
-              <div class="setting-group">
-                <label class="setting-label">Quiz Mode</label>
-                <select class="setting-select" id="quiz-mode-select">
-                  <option value="mix-all">Mix All Chapters</option>
-                  <option value="mix-chapter">Mix Selected Chapter</option>
-                  <option value="precise">Precise (Chapter & Subchapter)</option>
-                </select>
-              </div>
-
-              <div class="setting-group">
-                <label class="setting-label">Chapter</label>
-                <select class="setting-select" id="quiz-chapter-select"></select>
-              </div>
-
-              <div class="setting-group hidden" id="subchapter-setting">
-                <label class="setting-label">Subchapter</label>
-                <select class="setting-select" id="quiz-subchapter-select"></select>
-              </div>
-
-              <div class="setting-group">
-                <label class="setting-label">Number of Questions</label>
-                <select class="setting-select" id="quiz-count-select">
-                  <option value="10">10 Questions</option>
-                  <option value="20">20 Questions</option>
-                  <option value="all">All Questions</option>
-                </select>
-              </div>
-
-              <button class="submit-btn" id="start-quiz-btn">Start Quiz</button>
-            </div>
-
-            <div class="quiz-questions hidden" id="quiz-questions">
-              <div class="quiz-progress">
-                <span id="progress-text">Question 1 of 10</span>
-                <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
-                <span id="score-text">Answered: 0/0</span>
-              </div>
-
-              <div class="quiz-question" id="quiz-question-area">
-                <div class="question-text" id="question-text"></div>
-                <div class="options-container" id="options-container"></div>
-              </div>
-
-              <div class="quiz-controls">
-                <button class="nav-btn" id="prev-question-btn"><i class="fas fa-arrow-left"></i> Previous</button>
-                <button class="submit-btn" id="next-question-btn">Next Question</button>
-              </div>
-
-              <div style="text-align:center; margin-top:10px;">
-                <button class="submit-btn hidden" id="submit-quiz-btn">
-                  Submit Quiz
-                </button>
-              </div>
-            </div>
+    <!-- STUDY -->
+    <div class="study-area active" id="study-area">
+      <div class="study-container">
+        <div class="word-card" id="study-card">
+          <div class="card-inner">
+            <div class="card-front"></div>
+            <div class="card-back"></div>
           </div>
         </div>
-
-        <!-- right: subchapter selector -->
-        <div class="subchapter-panel">
-          <h4><i class="fa-solid fa-filter"></i> Subchapters</h4>
-          <div class="subchapter-selector" id="subchapter-selector"></div>
+        <div class="card-controls">
+          <button class="nav-btn" id="prev-btn"><i class="fa-solid fa-chevron-left"></i> Prev</button>
+          <button class="nav-btn" id="flip-btn"><i class="fa-solid fa-right-left"></i> Flip</button>
+          <button class="nav-btn" id="next-btn">Next <i class="fa-solid fa-chevron-right"></i></button>
         </div>
-
       </div>
     </div>
-  </div>
 
-  <div class="error-message hidden" id="error-message">
-    <i class="fas fa-exclamation-triangle"></i>
-    <h2>Failed to load vocabulary data</h2>
-    <p>Please check your internet connection and try again.</p>
-  </div>
+    <!-- REVIEW -->
+    <div class="review-area" id="review-area">
+      <div class="review-grid" id="review-grid"></div>
+    </div>
+
+    <!-- QUIZ -->
+    <div class="quiz-area" id="quiz-area">
+      <div class="quiz-settings" id="quiz-settings">
+        <div class="setting-group">
+          <label class="setting-label">Quiz Mode</label>
+          <select class="setting-select" id="quiz-mode-select">
+            <option value="mix-all">Mix All Chapters</option>
+            <option value="mix-chapter">Mix Selected Chapter</option>
+            <option value="precise">Precise (Chapter & Subchapter)</option>
+          </select>
+        </div>
+
+        <div class="setting-group">
+          <label class="setting-label">Chapter</label>
+          <select class="setting-select" id="quiz-chapter-select"></select>
+        </div>
+
+        <div class="setting-group hidden" id="quiz-sub-setting">
+          <label class="setting-label">Subchapter</label>
+          <select class="setting-select" id="quiz-subchapter-select"></select>
+        </div>
+
+        <div class="setting-group">
+          <label class="setting-label">Number of Questions</label>
+          <select class="setting-select" id="quiz-count-select">
+            <option value="10">10 Questions</option>
+            <option value="20">20 Questions</option>
+            <option value="all">All Questions</option>
+          </select>
+        </div>
+
+        <button class="start-btn" id="start-quiz-btn">Start Quiz</button>
+      </div>
+
+      <div class="quiz-wrap" id="quiz-wrap">
+        <div class="quiz-progress">
+          <span id="progress-text">1 / 10</span>
+          <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+          <span id="answered-text">Answered: 0/0</span>
+        </div>
+
+        <div class="quiz-question">
+          <div class="question-text" id="question-text"></div>
+          <div class="options-container" id="options-container"></div>
+        </div>
+      </div>
+    </div>
+
+  </section>
 
 </div>
 
@@ -478,24 +468,22 @@
   // ================= CSV URL =================
   const CSV_URL = 'https://raw.githubusercontent.com/ducj-creator/Shirley-Grammar/main/TOEIC%20vocab.csv';
 
-  // ================= DEMO DATA =================
+  // ================= DEMO DATA (備援) =================
   const DEMO_DATA = {
     chapters: [
       {
-        id: "1",
-        title: "Chapter 1: Business Communication",
+        id: "Chapter 1",
+        title: "行政與組織運作 / Administration & Organizational Operations",
         subchapters: [
-          { id: "Meetings", title: "Meetings" },
-          { id: "Presentations", title: "Presentations" }
+          {id:"辦公室與日常行政 / Office & Routine Administration", title:"辦公室與日常行政 / Office & Routine Administration"}
         ],
         words: [
-          { word:"abandon", pos:"v.", meaning:"放棄，拋棄",
-            example:"The captain gave the order to abandon the ship.",
-            exampleTranslation:"船長下令棄船。", pronunciation:"/əˈbændən/", chapter:"Chapter 1", subchapter:"Meetings"
-          },
-          { word:"accelerate", pos:"v.", meaning:"加速，促進",
-            example:"The company plans to accelerate its expansion in Asia.",
-            exampleTranslation:"公司計劃加速在亞洲的擴張。", pronunciation:"/əkˈseləreɪt/", chapter:"Chapter 1", subchapter:"Presentations"
+          {
+            chapter:"行政與組織運作 / Administration & Organizational Operations",
+            subchapter:"辦公室與日常行政 / Office & Routine Administration",
+            word:"appointment", pos:"n.", meaning:"約會;約定",
+            example:"I'd like to make an appointment with the HR manager to discuss my transfer.",
+            exampleTranslation:"我想和人資經理約個時間，討論我的調職事宜。"
           }
         ]
       }
@@ -503,68 +491,56 @@
   };
 
   // ================= DOM =================
-  const loadingElement    = document.getElementById('loading');
-  const modeSelector      = document.getElementById('mode-selector');
-  const contentArea       = document.getElementById('content-area');
-  const errorMessage      = document.getElementById('error-message');
-  const demoNotice        = document.getElementById('demo-notice');
+  const loadingEl = document.getElementById('loading');
+  const homeView = document.getElementById('home-view');
+  const chaptersGrid = document.getElementById('chapters-grid');
 
-  const modeButtons       = document.querySelectorAll('.mode-btn');
-  const chaptersList      = document.getElementById('chapters-list');
-  const chaptersGrid      = document.getElementById('chapters-grid');
+  const categoryView = document.getElementById('category-view');
+  const categoryTitle = document.getElementById('category-title');
+  const subchipsEl = document.getElementById('subchips');
 
-  const titleEl           = document.getElementById('chapter-title');
+  const bankCountEl = document.getElementById('bank-count');
+  const bankListEl = document.getElementById('bank-list');
 
-  const homeView          = document.getElementById('home-view');
-  const chapterView       = document.getElementById('chapter-view');
+  const modeBtns = document.querySelectorAll('.header-actions .btn[data-mode]');
+  const backHomeBtn = document.getElementById('back-home-btn');
 
-  const overviewCountEl   = document.getElementById('overview-count');
-  const overviewListEl    = document.getElementById('word-overview-list');
+  const studyArea = document.getElementById('study-area');
+  const reviewArea = document.getElementById('review-area');
+  const quizArea = document.getElementById('quiz-area');
 
-  const subchapterSelectorEl = document.getElementById('subchapter-selector');
+  const studyCard = document.getElementById('study-card');
+  const flipBtn = document.getElementById('flip-btn');
+  const prevBtn = document.getElementById('prev-btn');
+  const nextBtn = document.getElementById('next-btn');
 
-  const studyMode         = document.getElementById('study-mode');
-  const reviewMode        = document.getElementById('review-mode');
-  const quizMode          = document.getElementById('quiz-mode');
+  const reviewGrid = document.getElementById('review-grid');
 
-  const wordCard          = document.getElementById('study-word-card');
-  const flipBtn           = document.getElementById('flip-btn');
-  const prevBtn           = document.getElementById('prev-btn');
-  const nextBtn           = document.getElementById('next-btn');
-
-  const quizSettings      = document.getElementById('quiz-settings');
-  const quizModeSelect    = document.getElementById('quiz-mode-select');
+  const quizSettings = document.getElementById('quiz-settings');
+  const quizWrap = document.getElementById('quiz-wrap');
+  const quizModeSelect = document.getElementById('quiz-mode-select');
   const quizChapterSelect = document.getElementById('quiz-chapter-select');
+  const quizSubSetting = document.getElementById('quiz-sub-setting');
   const quizSubchapterSelect = document.getElementById('quiz-subchapter-select');
-  const subchapterSetting = document.getElementById('subchapter-setting');
-  const quizCountSelect   = document.getElementById('quiz-count-select');
-  const startQuizBtn      = document.getElementById('start-quiz-btn');
+  const quizCountSelect = document.getElementById('quiz-count-select');
+  const startQuizBtn = document.getElementById('start-quiz-btn');
 
-  const quizQuestionsWrap = document.getElementById('quiz-questions');
-  const progressText      = document.getElementById('progress-text');
-  const scoreText         = document.getElementById('score-text');
-  const progressFill      = document.getElementById('progress-fill');
-  const questionText      = document.getElementById('question-text');
-  const optionsContainer  = document.getElementById('options-container');
-  const quizQuestionArea  = document.getElementById('quiz-question-area');
-
-  const prevQuestionBtn   = document.getElementById('prev-question-btn');
-  const nextQuestionBtn   = document.getElementById('next-question-btn');
-  const submitQuizBtn     = document.getElementById('submit-quiz-btn');
+  const progressText = document.getElementById('progress-text');
+  const answeredText = document.getElementById('answered-text');
+  const progressFill = document.getElementById('progress-fill');
+  const questionText = document.getElementById('question-text');
+  const optionsContainer = document.getElementById('options-container');
 
   // ================= STATE =================
   let vocabularyData = null;
-  let usingDemoData = false;
-
-  let currentMode = 'study';
   let currentChapter = null;
   let currentSubchapter = 'ALL';
+  let currentMode = 'study';
 
   let currentWords = [];
   let currentWordIndex = 0;
 
-  // Quiz state
-  let quizPool = [];
+  // quiz
   let quizQuestionsData = [];
   let quizAnswers = [];
   let quizIndex = 0;
@@ -572,24 +548,19 @@
 
   // ================= INIT =================
   async function init(){
-    try{
+    try {
       vocabularyData = await loadCSVData();
-      usingDemoData = false;
-      demoNotice.classList.add('hidden');
-    }catch(e){
-      console.warn('CSV failed, use demo.', e);
+    } catch (e){
+      console.warn('CSV failed, use demo', e);
       vocabularyData = DEMO_DATA;
-      usingDemoData = true;
-      demoNotice.classList.remove('hidden');
     }
 
-    setupEventListeners();
-    renderHomeChapters();
-    renderLeftChapters();
+    renderHome();
+    renderQuizChapterOptions();
+    setupEvents();
 
-    loadingElement.classList.add('hidden');
-    modeSelector.classList.remove('hidden');
-    contentArea.classList.remove('hidden');
+    loadingEl.classList.add('hidden');
+    homeView.classList.remove('hidden');
   }
 
   async function loadCSVData(){
@@ -597,24 +568,15 @@
       Papa.parse(CSV_URL,{
         download:true, header:true, skipEmptyLines:true,
         complete:(results)=>{
-          if(results.errors?.length){
-            reject(new Error(results.errors[0].message));
-            return;
-          }
-          if(!results.data?.length){
-            reject(new Error('CSV empty'));
-            return;
-          }
+          if(results.errors?.length) return reject(results.errors[0]);
+          if(!results.data?.length) return reject('empty csv');
           const processed = processCSVData(results.data);
-          if(!processed.chapters.length){
-            reject(new Error('No valid rows'));
-            return;
-          }
+          if(!processed.chapters.length) return reject('no valid rows');
           resolve(processed);
         },
         error:reject
-      })
-    })
+      });
+    });
   }
 
   function processCSVData(csvData){
@@ -644,7 +606,7 @@
       const ch = chaptersMap.get(chapterName);
 
       if(subchapterName && !ch.subchapters.has(subchapterName)){
-        ch.subchapters.set(subchapterName,{ id:subchapterName, title:subchapterName });
+        ch.subchapters.set(subchapterName,{id:subchapterName, title:subchapterName});
       }
 
       ch.words.push({
@@ -667,339 +629,254 @@
     return {chapters};
   }
 
-  // ================= RENDER HOME / LEFT =================
-  function renderHomeChapters(){
+  // ================= UI RENDER =================
+  function renderHome(){
     chaptersGrid.innerHTML = '';
-    vocabularyData.chapters.forEach((ch, idx)=>{
+
+    vocabularyData.chapters.forEach(ch=>{
       const card = document.createElement('div');
-      card.className = 'chapter-module';
+      card.className = 'chapter-card';
+      const emoji = getChapterEmoji(ch.title);
       card.innerHTML = `
-        <h3>${ch.title}</h3>
+        <div>
+          <div class="emoji">${emoji}</div>
+          <h3>${ch.title}</h3>
+        </div>
         <div class="chapter-meta">
-          <span class="chip">${ch.words.length} words</span>
-          <span><i class="fa-regular fa-folder-open"></i> ${ch.subchapters.length || 0} sub</span>
+          <span class="chip"><i class="fa-solid fa-book"></i> ${ch.words.length} words</span>
+          <span><i class="fa-regular fa-folder-open"></i> ${ch.subchapters.length} sub</span>
         </div>
       `;
-      card.addEventListener('click', ()=> selectChapter(ch.id));
+      card.addEventListener('click', ()=> enterCategory(ch.id));
       chaptersGrid.appendChild(card);
     });
 
-    titleEl.textContent = 'Chapters Overview';
+    // layer control
     homeView.classList.remove('hidden');
-    chapterView.classList.add('hidden');
+    categoryView.classList.remove('active');
+    currentChapter = null;
   }
 
-  function renderLeftChapters(){
-    chaptersList.innerHTML = '';
-    quizChapterSelect.innerHTML = '';
-
-    vocabularyData.chapters.forEach(ch=>{
-      const li = document.createElement('li');
-      li.className = 'chapter-item';
-      li.dataset.chapterId = ch.id;
-      li.innerHTML = `${ch.title}<span class="chapter-count">${ch.words.length}</span>`;
-      chaptersList.appendChild(li);
-
-      const opt = document.createElement('option');
-      opt.value = ch.id;
-      opt.textContent = ch.title;
-      quizChapterSelect.appendChild(opt);
-    });
-
-    const allOpt = document.createElement('option');
-    allOpt.value='all'; allOpt.textContent='All Chapters';
-    quizChapterSelect.appendChild(allOpt);
-
-    modeButtons.forEach(b=>b.disabled=false);
-  }
-
-  // ================= EVENTS =================
-  function setupEventListeners(){
-    // mode switch
-    modeButtons.forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        if(btn.disabled) return;
-        modeButtons.forEach(b=>b.classList.remove('active'));
-        btn.classList.add('active');
-        switchMode(btn.dataset.mode);
-      });
-    });
-
-    // left chapter click
-    chaptersList.addEventListener('click', (e)=>{
-      const item = e.target.closest('.chapter-item');
-      if(!item) return;
-      selectChapter(item.dataset.chapterId);
-
-      document.querySelectorAll('.chapter-item').forEach(i=>i.classList.remove('active'));
-      item.classList.add('active');
-    });
-
-    // study card flip: click card
-    wordCard.addEventListener('click', ()=>{
-      wordCard.classList.toggle('flipped');
-    });
-    // flip button also works
-    flipBtn.addEventListener('click', (e)=>{
-      e.stopPropagation();
-      wordCard.classList.toggle('flipped');
-    });
-
-    prevBtn.addEventListener('click', goPrevWord);
-    nextBtn.addEventListener('click', goNextWord);
-
-    // quiz
-    quizModeSelect.addEventListener('change', handleQuizModeChange);
-    quizChapterSelect.addEventListener('change', handleQuizChapterChange);
-    startQuizBtn.addEventListener('click', startQuiz);
-
-    prevQuestionBtn.addEventListener('click', ()=> goToQuestion(quizIndex-1));
-    nextQuestionBtn.addEventListener('click', ()=> goToQuestion(quizIndex+1));
-    submitQuizBtn.addEventListener('click', submitQuiz);
-  }
-
-  function switchMode(mode){
-    currentMode = mode;
-
-    studyMode.classList.add('hidden');
-    reviewMode.classList.add('hidden');
-    quizMode.classList.add('hidden');
-
-    if(!currentChapter){
-      // still on home
-      homeView.classList.remove('hidden');
-      chapterView.classList.add('hidden');
-      return;
-    }
-
-    if(mode==='study'){
-      studyMode.classList.remove('hidden');
-      loadChapterWords();
-    }else if(mode==='review'){
-      reviewMode.classList.remove('hidden');
-      renderReviewCards();
-    }else if(mode==='quiz'){
-      quizMode.classList.remove('hidden');
-    }
-  }
-
-  // ================= CHAPTER VIEW =================
-  function selectChapter(chapterId){
+  function enterCategory(chapterId){
     currentChapter = vocabularyData.chapters.find(c=>c.id===chapterId);
     if(!currentChapter) return;
 
     currentSubchapter = 'ALL';
+    categoryTitle.innerHTML = `${getChapterEmoji(currentChapter.title)} ${currentChapter.title}`;
 
-    titleEl.textContent = currentChapter.title;
+    renderSubchips();
+    loadWordsForCategory();
+    renderWordBank();
+    renderStudyCard();
+    renderReviewGrid();
+
+    // show layer2
     homeView.classList.add('hidden');
-    chapterView.classList.remove('hidden');
+    categoryView.classList.add('active');
 
-    renderSubchapters();
-    loadChapterWords();
-    renderOverviewList();
-
-    // keep mode view
     switchMode(currentMode);
   }
 
-  function renderSubchapters(){
-    subchapterSelectorEl.innerHTML = '';
+  function renderSubchips(){
+    subchipsEl.innerHTML = '';
 
-    const allBtn = makeSubBtn('ALL', 'All Subchapters', currentChapter.words.length);
-    allBtn.classList.add('active');
-    subchapterSelectorEl.appendChild(allBtn);
+    const allChip = makeSubchip('ALL','All', currentChapter.words.length, true);
+    subchipsEl.appendChild(allChip);
 
     currentChapter.subchapters.forEach(sub=>{
       const count = currentChapter.words.filter(w=>w.subchapter===sub.id).length;
-      const btn = makeSubBtn(sub.id, sub.title, count);
-      subchapterSelectorEl.appendChild(btn);
+      const chip = makeSubchip(sub.id, sub.title, count);
+      subchipsEl.appendChild(chip);
     });
   }
 
-  function makeSubBtn(id, title, count){
-    const btn = document.createElement('button');
-    btn.className = 'subchapter-btn';
-    btn.dataset.subId = id;
-    btn.innerHTML = `${title}<span class="chip" style="background:rgba(0,0,0,0.06); color:inherit">${count}</span>`;
-    btn.addEventListener('click', ()=>{
-      document.querySelectorAll('.subchapter-btn').forEach(b=>b.classList.remove('active'));
-      btn.classList.add('active');
+  function makeSubchip(id, label, count, active=false){
+    const chip = document.createElement('div');
+    chip.className = `subchip ${active?'active':''}`;
+    chip.dataset.subId = id;
+    chip.innerHTML = `${label} <span class="chip" style="background:rgba(0,0,0,0.06); color:inherit">${count}</span>`;
+    chip.addEventListener('click', ()=>{
+      document.querySelectorAll('.subchip').forEach(c=>c.classList.remove('active'));
+      chip.classList.add('active');
       currentSubchapter = id;
-      loadChapterWords();
-      renderOverviewList();
-      if(currentMode==='review') renderReviewCards();
+      loadWordsForCategory();
+      renderWordBank();
+      if(currentMode==='study') renderStudyCard();
+      if(currentMode==='review') renderReviewGrid();
     });
-    return btn;
+    return chip;
   }
 
-  function filteredWords(){
-    if(!currentChapter) return [];
-    if(currentSubchapter==='ALL') return [...currentChapter.words];
-    return currentChapter.words.filter(w=>w.subchapter===currentSubchapter);
-  }
-
-  function loadChapterWords(){
-    currentWords = filteredWords();
+  function loadWordsForCategory(){
+    if(currentSubchapter==='ALL'){
+      currentWords = [...currentChapter.words];
+    } else {
+      currentWords = currentChapter.words.filter(w=>w.subchapter===currentSubchapter);
+    }
     currentWordIndex = 0;
-    renderWordCard();
   }
 
-  function renderOverviewList(){
-    const words = filteredWords();
-    overviewCountEl.textContent = `${words.length} words`;
-    overviewListEl.innerHTML = '';
+  function renderWordBank(){
+    bankListEl.innerHTML = '';
+    bankCountEl.textContent = `${currentWords.length} words`;
 
-    words.forEach(w=>{
-      const div = document.createElement('div');
-      div.className='overview-item';
-      div.innerHTML = `
-        <div class="overview-word">${w.word}</div>
-        <div class="overview-pos">${w.pos || ''}</div>
+    currentWords.forEach((w, idx)=>{
+      const item = document.createElement('div');
+      item.className = 'bank-item';
+      item.innerHTML = `
+        <div class="bank-word">${w.word}</div>
+        <div class="bank-pos">${w.pos||''}</div>
       `;
-      div.addEventListener('click', ()=>{
-        currentWords = words;
-        currentWordIndex = words.indexOf(w);
+      item.addEventListener('click', ()=>{
+        currentWordIndex = idx;
         if(currentMode==='study'){
-          renderWordCard();
-          studyMode.scrollIntoView({behavior:'smooth', block:'center'});
+          renderStudyCard();
+          studyArea.scrollIntoView({behavior:'smooth', block:'center'});
         }
       });
-      overviewListEl.appendChild(div);
+      bankListEl.appendChild(item);
     });
   }
 
-  // ================= STUDY RENDER =================
-  function renderWordCard(){
+  // ================= STUDY =================
+  function renderStudyCard(){
     if(!currentWords.length) return;
-
     const w = currentWords[currentWordIndex];
-    const front = wordCard.querySelector('.card-front');
-    const back  = wordCard.querySelector('.card-back');
+    const front = studyCard.querySelector('.card-front');
+    const back = studyCard.querySelector('.card-back');
 
     front.innerHTML = `
       <div class="word">${w.word}</div>
-      <div class="pos">${w.pos || ''}</div>
-      <div class="meaning">${w.meaning || ''}</div>
-      <div class="pronunciation">
-        <button class="pronunciation-btn" title="pronounce">
-          <i class="fas fa-volume-up"></i>
-        </button>
-        ${w.pronunciation || '/.../'}
+      <div class="pos">${w.pos||''}</div>
+      <div class="meaning">${w.meaning||''}</div>
+      <div class="tts-row">
+        <button class="tts-btn" title="Pronounce word"><i class="fas fa-volume-up"></i></button>
+        <span>${w.pronunciation||'/.../'}</span>
       </div>
-      <div style="margin-top:10px; font-size:.9rem; opacity:.9;">
-        Tap card to see examples
-      </div>
+      <div style="margin-top:10px; font-size:.9rem; opacity:.9;">Tap card to see examples</div>
     `;
 
     back.innerHTML = `
       <div class="word">${w.word}</div>
-      <div class="pos">${w.pos || ''}</div>
-      <div class="example">${w.example || 'No example available'}</div>
-      <div class="example-translation">${w.exampleTranslation || '無可用例句'}</div>
-      <div class="pronunciation">
-        <button class="pronunciation-btn" title="pronounce">
-          <i class="fas fa-volume-up"></i>
-        </button>
-        ${w.pronunciation || '/.../'}
+      <div class="pos">${w.pos||''}</div>
+      <div class="example">${w.example||'No example available'}</div>
+      <div class="example-translation">${w.exampleTranslation||'無可用例句'}</div>
+      <div class="tts-row">
+        <button class="tts-btn" title="Pronounce example"><i class="fas fa-volume-up"></i></button>
+        <span>Example TTS</span>
       </div>
-      <div style="margin-top:10px; font-size:.9rem; color:var(--gray);">
-        Tap card to go back
-      </div>
+      <div style="margin-top:10px; font-size:.9rem; color:var(--gray);">Tap card to go back</div>
     `;
 
-    wordCard.classList.remove('flipped');
+    studyCard.classList.remove('flipped');
 
     prevBtn.disabled = currentWordIndex===0;
     nextBtn.disabled = currentWordIndex===currentWords.length-1;
 
-    front.querySelector('.pronunciation-btn').addEventListener('click',(e)=>{
+    // bind TTS
+    front.querySelector('.tts-btn').addEventListener('click',(e)=>{
       e.stopPropagation(); speak(w.word);
     });
-    back.querySelector('.pronunciation-btn').addEventListener('click',(e)=>{
-      e.stopPropagation(); speak(w.word);
+    back.querySelector('.tts-btn').addEventListener('click',(e)=>{
+      e.stopPropagation(); speak(w.example || w.word);
     });
   }
 
   function goPrevWord(){
-    if(currentWordIndex>0){ currentWordIndex--; renderWordCard(); }
+    if(currentWordIndex>0){ currentWordIndex--; renderStudyCard(); }
   }
   function goNextWord(){
-    if(currentWordIndex<currentWords.length-1){ currentWordIndex++; renderWordCard(); }
-  }
-
-  function speak(text){
-    if(!('speechSynthesis' in window)) return;
-    const u = new SpeechSynthesisUtterance(text);
-    u.lang='en-US'; u.rate=0.8;
-    speechSynthesis.speak(u);
+    if(currentWordIndex<currentWords.length-1){ currentWordIndex++; renderStudyCard(); }
   }
 
   // ================= REVIEW =================
-  function renderReviewCards(){
-    const words = filteredWords();
-    reviewMode.innerHTML='';
-
-    words.forEach(w=>{
+  function renderReviewGrid(){
+    reviewGrid.innerHTML='';
+    currentWords.forEach(w=>{
       const card = document.createElement('div');
       card.className='review-card';
       card.innerHTML = `
         <div class="card-inner">
-          <div class="card-front">
+          <div class="card-front card-front-review">
             <div class="word" style="font-size:1.9rem">${w.word}</div>
-            <div class="pos">${w.pos || ''}</div>
+            <div class="pos">${w.pos||''}</div>
           </div>
           <div class="card-back">
-            <div class="meaning" style="font-size:1.2rem; font-weight:700">${w.meaning || ''}</div>
-            <div class="example">${w.example || 'No example available'}</div>
-            <div class="example-translation">${w.exampleTranslation || '無可用例句'}</div>
+            <div class="meaning" style="font-size:1.2rem; font-weight:800">${w.meaning||''}</div>
+            <div class="example">${w.example||'No example available'}</div>
+            <div class="example-translation">${w.exampleTranslation||'無可用例句'}</div>
+            <div class="tts-row">
+              <button class="tts-btn" title="Pronounce example"><i class="fas fa-volume-up"></i></button>
+              <span>Example TTS</span>
+            </div>
           </div>
         </div>
       `;
       card.addEventListener('click', ()=> card.classList.toggle('flipped'));
-      reviewMode.appendChild(card);
+      // example tts
+      card.querySelector('.card-back .tts-btn').addEventListener('click',(e)=>{
+        e.stopPropagation(); speak(w.example || w.word);
+      });
+      reviewGrid.appendChild(card);
     });
   }
 
-  // ================= QUIZ SETTINGS =================
+  // ================= QUIZ =================
+  function renderQuizChapterOptions(){
+    quizChapterSelect.innerHTML='';
+    vocabularyData.chapters.forEach(ch=>{
+      const opt = document.createElement('option');
+      opt.value=ch.id; opt.textContent=ch.title;
+      quizChapterSelect.appendChild(opt);
+    });
+    const allOpt = document.createElement('option');
+    allOpt.value='all'; allOpt.textContent='All Chapters';
+    quizChapterSelect.appendChild(allOpt);
+
+    quizChapterSelect.value = currentChapter?.id || 'all';
+    handleQuizChapterChange();
+  }
+
   function handleQuizModeChange(){
-    const mode = quizModeSelect.value;
-    if(mode==='precise') subchapterSetting.classList.remove('hidden');
-    else subchapterSetting.classList.add('hidden');
+    if(quizModeSelect.value==='precise'){
+      quizSubSetting.classList.remove('hidden');
+    } else {
+      quizSubSetting.classList.add('hidden');
+    }
   }
 
   function handleQuizChapterChange(){
-    const chapterId = quizChapterSelect.value;
     quizSubchapterSelect.innerHTML='';
+    const chapterId = quizChapterSelect.value;
     if(chapterId==='all') return;
 
     const ch = vocabularyData.chapters.find(c=>c.id===chapterId);
     if(!ch) return;
 
     ch.subchapters.forEach(sub=>{
-      const opt = document.createElement('option');
+      const opt=document.createElement('option');
       opt.value=sub.id; opt.textContent=sub.title;
       quizSubchapterSelect.appendChild(opt);
     });
   }
 
-  // ================= QUIZ CORE =================
   function startQuiz(){
     quizFinished=false;
     quizIndex=0;
 
     const mode = quizModeSelect.value;
     const chapterId = quizChapterSelect.value;
-    const subchapterId = quizSubchapterSelect.value;
+    const subId = quizSubchapterSelect.value;
 
     let pool=[];
     if(mode==='mix-all' || chapterId==='all'){
-      vocabularyData.chapters.forEach(ch=> pool.push(...ch.words));
-    }else if(mode==='mix-chapter'){
+      vocabularyData.chapters.forEach(ch=>pool.push(...ch.words));
+    } else if(mode==='mix-chapter'){
       const ch=vocabularyData.chapters.find(c=>c.id===chapterId);
       if(ch) pool=[...ch.words];
-    }else if(mode==='precise'){
+    } else if(mode==='precise'){
       const ch=vocabularyData.chapters.find(c=>c.id===chapterId);
-      if(ch) pool=ch.words.filter(w=>w.subchapter===subchapterId);
+      if(ch) pool=ch.words.filter(w=>w.subchapter===subId);
     }
 
     pool = pool.filter(w=>w.word && w.meaning);
@@ -1008,25 +885,24 @@
       return;
     }
 
-    quizPool = shuffle(pool);
+    pool = shuffle(pool);
 
-    let qCount = quizPool.length;
-    const countVal = quizCountSelect.value;
-    if(countVal!=='all') qCount=Math.min(Number(countVal), quizPool.length);
+    let qCount = pool.length;
+    if(quizCountSelect.value!=='all'){
+      qCount = Math.min(Number(quizCountSelect.value), pool.length);
+    }
 
     quizQuestionsData=[];
     for(let i=0;i<qCount;i++){
-      const target=quizPool[i];
+      const target=pool[i];
       const options=buildOptions(target, pool);
       const correctIndex=options.findIndex(o=>o.meaning===target.meaning);
       quizQuestionsData.push({wordObj:target, options, correctIndex});
     }
-
     quizAnswers = quizQuestionsData.map(()=>({selectedIndex:null}));
 
-    quizSettings.classList.add('hidden');
-    quizQuestionsWrap.classList.remove('hidden');
-    submitQuizBtn.classList.add('hidden');
+    quizSettings.style.display='none';
+    quizWrap.classList.add('active');
 
     renderQuizQuestion();
     updateQuizUI();
@@ -1035,7 +911,7 @@
   function buildOptions(target, pool){
     const distractors = pool
       .filter(w=>w.word!==target.word && w.meaning)
-      .map(w=>({word:w.word, meaning:w.meaning}))
+      .map(w=>({meaning:w.meaning}))
       .filter((v,idx,arr)=>arr.findIndex(x=>x.meaning===v.meaning)===idx);
 
     const picked=[];
@@ -1044,68 +920,47 @@
       picked.push(distractors.splice(r,1)[0]);
     }
 
-    return shuffle([{word:target.word, meaning:target.meaning}, ...picked]);
+    return shuffle([{meaning:target.meaning}, ...picked]);
   }
 
   function renderQuizQuestion(){
-    const q = quizQuestionsData[quizIndex];
-    const w = q.wordObj;
+    const q=quizQuestionsData[quizIndex];
+    const w=q.wordObj;
 
-    questionText.innerHTML = `
-      What is the meaning of <strong>${w.word}</strong> ${w.pos ? '('+w.pos+')':''}?
-    `;
+    questionText.innerHTML = `Meaning of <strong>${w.word}</strong> ${w.pos?`(${w.pos})`:''} ?`;
 
     optionsContainer.innerHTML='';
     q.options.forEach((opt, idx)=>{
-      const div = document.createElement('div');
+      const div=document.createElement('div');
       div.className='option';
       div.dataset.index=idx;
       div.textContent=`${String.fromCharCode(65+idx)}. ${opt.meaning}`;
 
-      if(quizAnswers[quizIndex].selectedIndex===idx) div.classList.add('selected');
-
       div.addEventListener('click', ()=>{
         if(quizFinished) return;
         quizAnswers[quizIndex].selectedIndex=idx;
-        document.querySelectorAll('.option').forEach(o=>o.classList.remove('selected'));
-        div.classList.add('selected');
         updateQuizUI();
+
+        // ✅ 自動進下一題
+        if(quizIndex < quizQuestionsData.length-1){
+          quizIndex++;
+          renderQuizQuestion();
+          updateQuizUI();
+        } else {
+          submitQuiz();
+        }
       });
 
       optionsContainer.appendChild(div);
     });
   }
 
-  function goToQuestion(newIndex){
-    if(newIndex<0 || newIndex>=quizQuestionsData.length) return;
-    quizIndex=newIndex;
-    renderQuizQuestion();
-    updateQuizUI();
-  }
-
-  function updateQuizUI(){
-    const total=quizQuestionsData.length;
-    const answered = quizAnswers.filter(a=>a.selectedIndex!==null).length;
-
-    progressText.textContent=`Question ${quizIndex+1} of ${total}`;
-    scoreText.textContent=`Answered: ${answered}/${total}`;
-    progressFill.style.width=`${(answered/total)*100}%`;
-
-    prevQuestionBtn.disabled = quizIndex===0;
-    nextQuestionBtn.disabled = quizIndex===total-1;
-
-    if(quizIndex===total-1){
-      submitQuizBtn.classList.remove('hidden');
-    }else{
-      submitQuizBtn.classList.add('hidden');
-    }
-  }
-
   function submitQuiz(){
+    // 必須答完才算提交（你原本要求）
     const total=quizQuestionsData.length;
-    const answered = quizAnswers.filter(a=>a.selectedIndex!==null).length;
+    const answered=quizAnswers.filter(a=>a.selectedIndex!==null).length;
     if(answered<total){
-      alert('Please answer all questions before submitting.');
+      alert('Please answer all questions.');
       return;
     }
 
@@ -1117,32 +972,29 @@
       const sel=quizAnswers[i].selectedIndex;
       if(sel===q.correctIndex) score++;
       else wrongs.push({
-        idx:i+1,
-        word:q.wordObj.word,
-        pos:q.wordObj.pos,
-        meaning:q.wordObj.meaning,
-        your:q.options[sel]?.meaning
+        idx:i+1, word:q.wordObj.word, pos:q.wordObj.pos,
+        meaning:q.wordObj.meaning, your:q.options[sel].meaning
       });
     });
 
-    showQuizResult(score, total, wrongs);
+    showQuizResult(score,total,wrongs);
   }
 
-  function showQuizResult(score, total, wrongs){
-    quizQuestionArea.innerHTML=`
+  function showQuizResult(score,total,wrongs){
+    quizWrap.innerHTML=`
       <div class="quiz-result">
-        <h2 style="color:var(--primary); margin-bottom:8px;">🎉 Quiz Finished!</h2>
-        <p style="font-size:1.15rem; margin-bottom:6px;">
-          Your Score: <strong>${score} / ${total}</strong>
+        <h2 style="color:var(--primary); margin-bottom:6px;">🎉 Quiz Finished!</h2>
+        <p style="font-size:1.1rem; margin-bottom:6px;">
+          Score: <strong>${score} / ${total}</strong>
         </p>
-        <p style="color:var(--gray); margin-bottom:12px;">
+        <p style="color:var(--gray); margin-bottom:10px;">
           Accuracy: ${(score/total*100).toFixed(1)}%
         </p>
 
         ${wrongs.length===0 ? `
-          <p style="color:var(--success); font-weight:700;">Perfect! No wrong answers 🎯</p>
+          <p style="color:var(--success); font-weight:900;">Perfect! 🎯</p>
         ` : `
-          <h3 style="margin-top:6px;">Wrong Answers Review</h3>
+          <h3>Wrong Answers</h3>
           <div class="wrong-list">
             ${wrongs.map(w=>`
               <div class="wrong-item">
@@ -1154,57 +1006,104 @@
           </div>
         `}
 
-        <div style="display:flex; gap:10px; margin-top:16px; flex-wrap:wrap;">
-          <button class="nav-btn" id="restart-quiz-btn">
-            <i class="fas fa-rotate-right"></i> Restart Quiz
-          </button>
-          <button class="nav-btn" id="back-settings-btn" style="background:var(--secondary);">
-            <i class="fas fa-sliders"></i> Back to Settings
-          </button>
+        <div style="display:flex; gap:8px; margin-top:12px; flex-wrap:wrap;">
+          <button class="btn" id="restart-quiz-btn"><i class="fa-solid fa-rotate-right"></i> Restart</button>
+          <button class="btn secondary" id="back-quiz-settings-btn"><i class="fa-solid fa-sliders"></i> Settings</button>
         </div>
       </div>
     `;
 
-    document.querySelector('.quiz-controls').classList.add('hidden');
-    document.querySelector('.quiz-progress').classList.add('hidden');
-    submitQuizBtn.classList.add('hidden');
-
     document.getElementById('restart-quiz-btn').addEventListener('click', ()=>{
-      restoreQuizView();
+      // restore wrap
+      quizWrap.innerHTML=`
+        <div class="quiz-progress">
+          <span id="progress-text">1 / 10</span>
+          <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+          <span id="answered-text">Answered: 0/0</span>
+        </div>
+        <div class="quiz-question">
+          <div class="question-text" id="question-text"></div>
+          <div class="options-container" id="options-container"></div>
+        </div>
+      `;
+      // rebind local refs
+      window.progressText = document.getElementById('progress-text');
+      window.answeredText = document.getElementById('answered-text');
+      window.progressFill = document.getElementById('progress-fill');
+      window.questionText = document.getElementById('question-text');
+      window.optionsContainer = document.getElementById('options-container');
+
       startQuiz();
     });
-    document.getElementById('back-settings-btn').addEventListener('click', ()=>{
-      restoreQuizView(true);
+
+    document.getElementById('back-quiz-settings-btn').addEventListener('click', ()=>{
+      quizWrap.classList.remove('active');
+      quizSettings.style.display='block';
     });
   }
 
-  function restoreQuizView(backToSettings=false){
-    quizQuestionArea.innerHTML=`
-      <div class="question-text" id="question-text"></div>
-      <div class="options-container" id="options-container"></div>
-    `;
-    // rebind after rewrite
-    window.questionText = document.getElementById('question-text');
-    window.optionsContainer = document.getElementById('options-container');
+  function updateQuizUI(){
+    const total=quizQuestionsData.length;
+    const answered=quizAnswers.filter(a=>a.selectedIndex!==null).length;
 
-    document.querySelector('.quiz-controls').classList.remove('hidden');
-    document.querySelector('.quiz-progress').classList.remove('hidden');
+    progressText.textContent=`${quizIndex+1} / ${total}`;
+    answeredText.textContent=`Answered: ${answered}/${total}`;
+    progressFill.style.width=`${(answered/total)*100}%`;
+  }
 
-    if(backToSettings){
-      quizQuestionsWrap.classList.add('hidden');
-      quizSettings.classList.remove('hidden');
-      quizQuestionArea.innerHTML='';
-    }else{
-      quizQuestionArea.innerHTML=`
-        <div class="question-text" id="question-text"></div>
-        <div class="options-container" id="options-container"></div>
-      `;
-      window.questionText = document.getElementById('question-text');
-      window.optionsContainer = document.getElementById('options-container');
+  // ================= MODE / NAV =================
+  function switchMode(mode){
+    currentMode=mode;
+    modeBtns.forEach(b=>b.classList.remove('active'));
+    document.querySelector(`.btn[data-mode="${mode}"]`)?.classList.add('active');
+
+    studyArea.classList.remove('active');
+    reviewArea.classList.remove('active');
+    quizArea.classList.remove('active');
+
+    if(mode==='study'){
+      studyArea.classList.add('active');
+      if(currentChapter) renderStudyCard();
+    } else if(mode==='review'){
+      reviewArea.classList.add('active');
+      if(currentChapter) renderReviewGrid();
+    } else {
+      quizArea.classList.add('active');
+      renderQuizChapterOptions();
+      quizWrap.classList.remove('active');
+      quizSettings.style.display='block';
+      handleQuizModeChange();
+      handleQuizChapterChange();
     }
   }
 
-  // ================= UTILS =================
+  // ================= EVENTS / UTILS =================
+  function setupEvents(){
+    modeBtns.forEach(btn=>{
+      btn.addEventListener('click', ()=> switchMode(btn.dataset.mode));
+    });
+
+    backHomeBtn.addEventListener('click', renderHome);
+
+    // study interactions
+    studyCard.addEventListener('click', ()=> studyCard.classList.toggle('flipped'));
+    flipBtn.addEventListener('click', (e)=>{ e.stopPropagation(); studyCard.classList.toggle('flipped'); });
+    prevBtn.addEventListener('click', goPrevWord);
+    nextBtn.addEventListener('click', goNextWord);
+
+    // quiz settings
+    quizModeSelect.addEventListener('change', handleQuizModeChange);
+    quizChapterSelect.addEventListener('change', handleQuizChapterChange);
+    startQuizBtn.addEventListener('click', startQuiz);
+  }
+
+  function speak(text){
+    if(!('speechSynthesis' in window)) return;
+    const u=new SpeechSynthesisUtterance(text);
+    u.lang='en-US'; u.rate=0.85;
+    speechSynthesis.speak(u);
+  }
+
   function shuffle(arr){
     const a=[...arr];
     for(let i=a.length-1;i>0;i--){
@@ -1212,6 +1111,18 @@
       [a[i],a[j]]=[a[j],a[i]];
     }
     return a;
+  }
+
+  // 簡單 emoji 規則：可再手動擴充
+  function getChapterEmoji(title){
+    const t=title.toLowerCase();
+    if(t.includes('administration')||t.includes('行政')) return '🗂️';
+    if(t.includes('finance')||t.includes('財務')||t.includes('budget')) return '💰';
+    if(t.includes('marketing')||t.includes('行銷')) return '📣';
+    if(t.includes('meeting')||t.includes('會議')) return '🧑‍💼';
+    if(t.includes('travel')||t.includes('旅行')) return '✈️';
+    if(t.includes('office')||t.includes('辦公室')) return '🏢';
+    return '📘';
   }
 
   init();
