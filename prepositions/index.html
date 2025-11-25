@@ -369,6 +369,73 @@
             color: white;
             margin-top: 20px;
         }
+
+        /* ===== Extra Bonus 互動練習嵌入（最流暢模式） ===== */
+        .bonus-embed {
+            position: relative;
+            width: 100%;
+            /* 用 clamp 讓各尺寸都好看：手機較高，桌機較扁 */
+            padding-top: clamp(56.25%, 70vh, 85%); 
+            border-radius: 12px;
+            overflow: hidden;
+            background: white;
+            box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.08);
+            margin-top: 10px;
+        }
+
+        .bonus-embed iframe {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+            background: white;
+        }
+
+        .bonus-loading {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            background: repeating-linear-gradient(
+                45deg,
+                rgba(246, 241, 235, 0.8),
+                rgba(246, 241, 235, 0.8) 10px,
+                rgba(255, 255, 255, 0.9) 10px,
+                rgba(255, 255, 255, 0.9) 20px
+            );
+            color: var(--dark);
+            font-size: 0.95rem;
+            font-weight: 700;
+            gap: 10px;
+            z-index: 2;
+        }
+
+        .spinner {
+            width: 36px;
+            height: 36px;
+            border: 4px solid rgba(0,0,0,0.1);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .bonus-link {
+            margin-top: 8px;
+            font-size: 0.9rem;
+        }
+        .bonus-link a {
+            color: var(--primary);
+            font-weight: 700;
+            text-decoration: none;
+        }
+        .bonus-link a:hover {
+            text-decoration: underline;
+        }
         
         /* 響應式設計 */
         @media (max-width: 768px) {
@@ -418,6 +485,10 @@
             }
         }
     </style>
+
+    <!-- preconnect 讓 iframe 首次連線更快 -->
+    <link rel="preconnect" href="https://ducj-creator.github.io">
+    <link rel="dns-prefetch" href="https://ducj-creator.github.io">
 </head>
 <body>
     <div class="container">
@@ -561,6 +632,38 @@
                                 <div class="phrase-item phrasal-item"><strong>Take off</strong> - 起飛；脫下</div>
                             </div>
                         </div>
+
+                        <!-- ===== Extra Bonus：互動練習嵌入 ===== -->
+                        <div class="example">
+                            <h3>Extra Bonus：線上片語互動練習</h3>
+                            <p>
+                                下面這個互動練習提供 Study / Review 模式，讓你用翻卡+例句的方式練習常見片語。
+                                點到本分頁後會自動載入。
+                            </p>
+
+                            <div class="bonus-embed">
+                                <div class="bonus-loading" id="phrasesLoading">
+                                    <div class="spinner"></div>
+                                    <div>互動練習載入中...</div>
+                                </div>
+
+                                <iframe
+                                    id="phrasesIframe"
+                                    title="Shirley's Phrases Interactive Practice"
+                                    loading="lazy"
+                                    sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+                                    referrerpolicy="no-referrer">
+                                </iframe>
+                            </div>
+
+                            <p class="bonus-link">
+                                如果這裡無法顯示，請
+                                <a href="https://ducj-creator.github.io/Shirley-Grammar/phrases"
+                                target="_blank" rel="noopener">
+                                點我開新視窗
+                                </a>。
+                            </p>
+                        </div>
                     </div>
                     
                     <div class="tab-content" id="phrases">
@@ -646,7 +749,6 @@
                     gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.2);
                     break;
                 case 'complete':
-                    // 播放一個簡單的音階
                     const frequencies = [523.25, 659.25, 783.99, 1046.50];
                     let time = audioContext.currentTime;
                     
@@ -686,8 +788,34 @@
             this.textContent = currentLang === 'EN/中文' ? '中/English' : 'EN/中文';
             playSound('click');
         });
+
+        // ===== Extra Bonus iframe 最流暢懶載入 =====
+        const phrasesIframe = document.getElementById('phrasesIframe');
+        const phrasesLoading = document.getElementById('phrasesLoading');
+        let phrasesLoaded = false;
+
+        function loadPhrasesIframeSmooth() {
+            if (phrasesLoaded || !phrasesIframe) return;
+            phrasesLoaded = true;
+
+            const doLoad = () => {
+                phrasesIframe.src = "https://ducj-creator.github.io/Shirley-Grammar/phrases";
+            };
+
+            // 在瀏覽器空檔載入 → 更順
+            if ('requestIdleCallback' in window) {
+                requestIdleCallback(doLoad, { timeout: 1500 });
+            } else {
+                setTimeout(doLoad, 300);
+            }
+
+            // 載入完隱藏 loading
+            phrasesIframe.addEventListener('load', () => {
+                if (phrasesLoading) phrasesLoading.style.display = 'none';
+            });
+        }
         
-        // 標籤切換功能
+        // 標籤切換功能（含 phrasal 分頁懶載入）
         const tabs = document.querySelectorAll('.tab');
         const tabContents = document.querySelectorAll('.tab-content');
         
@@ -701,6 +829,10 @@
                 tab.classList.add('active');
                 document.getElementById(tabId).classList.add('active');
                 playSound('click');
+
+                if (tabId === 'phrasal') {
+                    loadPhrasesIframeSmooth();
+                }
             });
         });
         
@@ -714,7 +846,6 @@
         const progressBar = document.getElementById('progressBar');
         const prepositionButtons = document.getElementById('prepositionButtons');
         
-        // 設置Canvas大小
         function resizeCanvas() {
             const container = document.getElementById('animationContainer');
             canvas.width = container.clientWidth;
@@ -724,7 +855,6 @@
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
         
-        // 場景定義
         const scenes = [
             {
                 title: "IN - 在...裡面",
@@ -799,14 +929,12 @@
         let isPlaying = false;
         let progress = 0;
         
-        // 生成介係詞按鈕
         const prepositions = ['IN', 'ON', 'AT', 'UNDER', 'BETWEEN', 'TURN IN', 'GIVE UP'];
         prepositions.forEach(prep => {
             const btn = document.createElement('button');
             btn.className = prep.includes(' ') ? 'preposition-btn phrasal-btn' : 'preposition-btn';
             btn.textContent = prep;
             btn.addEventListener('click', () => {
-                // 找到包含此介係詞的場景
                 const sceneIndex = scenes.findIndex(scene => 
                     scene.text.includes(prep) || scene.title.includes(prep));
                 if (sceneIndex !== -1) {
@@ -818,31 +946,23 @@
             prepositionButtons.appendChild(btn);
         });
         
-        // 繪製場景
         function drawScene() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            // 繪製背景
             ctx.fillStyle = '#f8f4e9';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             
             const scene = scenes[currentScene];
             
-            // 繪製對象
             scene.objects.forEach(obj => {
                 ctx.fillStyle = obj.color;
                 
                 if (obj.type === 'person') {
-                    // 簡單的人物繪製
                     ctx.fillRect(obj.x, obj.y, obj.width, obj.height);
-                    // 頭部
                     ctx.beginPath();
                     ctx.arc(obj.x + obj.width/2, obj.y - 10, 15, 0, Math.PI * 2);
                     ctx.fill();
                 } else if (obj.type === 'house') {
-                    // 房屋繪製
                     ctx.fillRect(obj.x, obj.y + 20, obj.width, obj.height - 20);
-                    // 屋頂
                     ctx.beginPath();
                     ctx.moveTo(obj.x - 10, obj.y + 20);
                     ctx.lineTo(obj.x + obj.width/2, obj.y);
@@ -851,7 +971,6 @@
                     ctx.fill();
                 } else if (obj.type === 'book') {
                     ctx.fillRect(obj.x, obj.y, obj.width, obj.height);
-                    // 書本細節
                     ctx.strokeStyle = '#2a2d34';
                     ctx.lineWidth = 2;
                     ctx.strokeRect(obj.x, obj.y, obj.width, obj.height);
@@ -861,17 +980,13 @@
                     ctx.stroke();
                 } else if (obj.type === 'table') {
                     ctx.fillRect(obj.x, obj.y, obj.width, obj.height);
-                    // 桌腳
                     ctx.fillRect(obj.x + 10, obj.y + obj.height, 10, 30);
                     ctx.fillRect(obj.x + obj.width - 20, obj.y + obj.height, 10, 30);
                 } else if (obj.type === 'busstop') {
                     ctx.fillRect(obj.x, obj.y, obj.width, obj.height);
-                    // 站牌柱
                     ctx.fillRect(obj.x + obj.width/2 - 5, obj.y + obj.height, 10, 40);
                 } else if (obj.type === 'cat') {
-                    // 簡單的貓繪製
                     ctx.fillRect(obj.x, obj.y, obj.width, obj.height);
-                    // 耳朵
                     ctx.beginPath();
                     ctx.moveTo(obj.x, obj.y);
                     ctx.lineTo(obj.x - 10, obj.y - 10);
@@ -898,16 +1013,13 @@
                     ctx.closePath();
                     ctx.fill();
                 } else if (obj.type === 'bed') {
-                    // 床的繪製
                     ctx.fillRect(obj.x, obj.y, obj.width, obj.height);
-                    // 枕頭
                     ctx.fillStyle = '#f8f4e9';
                     ctx.fillRect(obj.x + 10, obj.y + 10, 30, 20);
                     ctx.fillRect(obj.x + obj.width - 40, obj.y + 10, 30, 20);
                     ctx.fillStyle = obj.color;
                 } else if (obj.type === 'paper') {
                     ctx.fillRect(obj.x, obj.y, obj.width, obj.height);
-                    // 紙張細節
                     ctx.strokeStyle = '#2a2d34';
                     ctx.lineWidth = 1;
                     ctx.strokeRect(obj.x, obj.y, obj.width, obj.height);
@@ -918,13 +1030,10 @@
                         ctx.stroke();
                     }
                 } else if (obj.type === 'puzzle') {
-                    // 拼圖繪製
                     ctx.fillRect(obj.x, obj.y, obj.width, obj.height);
-                    // 拼圖細節
                     ctx.strokeStyle = '#2a2d34';
                     ctx.lineWidth = 2;
                     ctx.strokeRect(obj.x, obj.y, obj.width, obj.height);
-                    // 拼圖缺口
                     ctx.beginPath();
                     ctx.arc(obj.x + 20, obj.y + 10, 5, 0, Math.PI * 2);
                     ctx.stroke();
@@ -932,12 +1041,10 @@
                     ctx.arc(obj.x + obj.width - 20, obj.y + obj.height - 10, 5, 0, Math.PI * 2);
                     ctx.stroke();
                 } else if (obj.type === 'hands') {
-                    // 手勢繪製 - 表示放棄
                     ctx.fillRect(obj.x, obj.y, obj.width, obj.height);
                 }
             });
             
-            // 繪製標題和說明文字
             ctx.fillStyle = '#2a2d34';
             ctx.font = 'bold 18px Arial';
             ctx.fillText(scene.title, 20, 30);
@@ -947,11 +1054,9 @@
             ctx.fillText(scene.translation, 20, canvas.height - 20);
         }
         
-        // 動畫函數
         function animate() {
             if (!isPlaying) return;
             
-            // 更新進度
             progress += 0.5;
             if (progress > 100) {
                 progress = 0;
@@ -961,13 +1066,11 @@
             
             progressBar.style.width = `${progress}%`;
             
-            // 輕微動畫效果 - 對象輕微移動
             const scene = scenes[currentScene];
             scene.objects.forEach((obj, index) => {
                 if (obj.type === 'person' || obj.type === 'cat') {
                     obj.y = obj.y + Math.sin(progress / 10 + index) * 2;
                 }
-                // Phrasal verbs 場景的特殊動畫
                 if (scene.title.includes('TURN IN') && obj.type === 'person') {
                     obj.x = 150 + Math.sin(progress / 5) * 10;
                 }
@@ -980,7 +1083,6 @@
             animationId = requestAnimationFrame(animate);
         }
         
-        // 控制按鈕事件
         playBtn.addEventListener('click', () => {
             if (!isPlaying) {
                 isPlaying = true;
@@ -1012,7 +1114,6 @@
             playSound('transition');
         });
         
-        // 初始繪製
         drawScene();
         
         // 測驗功能
