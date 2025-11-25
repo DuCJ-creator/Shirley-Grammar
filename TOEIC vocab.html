@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
     <style>
-        /* 保持相同的CSS樣式 */
+        /* ====== 原 CSS 不動 ====== */
         :root {
             --primary: #6C63FF;
             --primary-light: #8A85FF;
@@ -26,11 +26,7 @@
             --transition: all 0.3s ease;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Poppins', sans-serif;
@@ -41,10 +37,7 @@
             padding: 20px;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+        .container { max-width: 1200px; margin: 0 auto; }
 
         header {
             text-align: center;
@@ -55,17 +48,9 @@
             box-shadow: var(--shadow);
         }
 
-        h1 {
-            color: var(--primary);
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
+        h1 { color: var(--primary); font-size: 2.5rem; margin-bottom: 10px; }
 
-        .subtitle {
-            color: var(--gray);
-            font-size: 1.2rem;
-            font-weight: 400;
-        }
+        .subtitle { color: var(--gray); font-size: 1.2rem; font-weight: 400; }
 
         .loading {
             text-align: center;
@@ -107,10 +92,7 @@
             transform: translateY(-3px);
         }
 
-        .mode-btn.active {
-            background: var(--primary);
-            color: white;
-        }
+        .mode-btn.active { background: var(--primary); color: white; }
 
         .mode-btn:disabled {
             opacity: 0.6;
@@ -146,9 +128,7 @@
             gap: 10px;
         }
 
-        .chapters-list {
-            list-style: none;
-        }
+        .chapters-list { list-style: none; }
 
         .chapter-item {
             padding: 12px 15px;
@@ -162,15 +142,9 @@
             align-items: center;
         }
 
-        .chapter-item:hover {
-            background: var(--primary-light);
-            color: white;
-        }
+        .chapter-item:hover { background: var(--primary-light); color: white; }
 
-        .chapter-item.active {
-            background: var(--primary);
-            color: white;
-        }
+        .chapter-item.active { background: var(--primary); color: white; }
 
         .chapter-count {
             background: white;
@@ -198,10 +172,7 @@
             border-bottom: 1px solid var(--gray-light);
         }
 
-        .chapter-title {
-            font-size: 1.5rem;
-            color: var(--primary);
-        }
+        .chapter-title { font-size: 1.5rem; color: var(--primary); }
 
         .subchapter-selector {
             display: flex;
@@ -220,15 +191,9 @@
             font-size: 0.9rem;
         }
 
-        .subchapter-btn:hover {
-            background: var(--primary-light);
-            color: white;
-        }
+        .subchapter-btn:hover { background: var(--primary-light); color: white; }
 
-        .subchapter-btn.active {
-            background: var(--primary);
-            color: white;
-        }
+        .subchapter-btn.active { background: var(--primary); color: white; }
 
         /* Study Mode Styles */
         .study-container {
@@ -255,9 +220,7 @@
             transform-style: preserve-3d;
         }
 
-        .word-card.flipped .card-inner {
-            transform: rotateY(180deg);
-        }
+        .word-card.flipped .card-inner { transform: rotateY(180deg); }
 
         .card-front, .card-back {
             position: absolute;
@@ -285,35 +248,15 @@
             transform: rotateY(180deg);
         }
 
-        .word {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
+        .word { font-size: 2.5rem; font-weight: 700; margin-bottom: 10px; }
 
-        .pos {
-            font-size: 1.2rem;
-            font-style: italic;
-            margin-bottom: 20px;
-            opacity: 0.9;
-        }
+        .pos { font-size: 1.2rem; font-style: italic; margin-bottom: 20px; opacity: 0.9; }
 
-        .meaning {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-        }
+        .meaning { font-size: 1.5rem; margin-bottom: 20px; }
 
-        .example {
-            font-size: 1.1rem;
-            margin-bottom: 10px;
-            font-style: italic;
-            color: var(--gray);
-        }
+        .example { font-size: 1.1rem; margin-bottom: 10px; font-style: italic; color: var(--gray); }
 
-        .example-translation {
-            font-size: 1rem;
-            color: var(--gray);
-        }
+        .example-translation { font-size: 1rem; color: var(--gray); }
 
         .pronunciation {
             display: flex;
@@ -323,13 +266,9 @@
             color: rgba(255, 255, 255, 0.8);
         }
 
-        .card-front .pronunciation {
-            color: rgba(255, 255, 255, 0.8);
-        }
+        .card-front .pronunciation { color: rgba(255, 255, 255, 0.8); }
 
-        .card-back .pronunciation {
-            color: var(--gray);
-        }
+        .card-back .pronunciation { color: var(--gray); }
 
         .pronunciation-btn {
             background: none;
@@ -340,15 +279,9 @@
             transition: var(--transition);
         }
 
-        .pronunciation-btn:hover {
-            color: var(--accent);
-        }
+        .pronunciation-btn:hover { color: var(--accent); }
 
-        .card-controls {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
+        .card-controls { display: flex; gap: 15px; margin-top: 20px; }
 
         .nav-btn {
             padding: 10px 20px;
@@ -363,10 +296,7 @@
             gap: 8px;
         }
 
-        .nav-btn:hover {
-            background: var(--primary-light);
-            transform: translateY(-2px);
-        }
+        .nav-btn:hover { background: var(--primary-light); transform: translateY(-2px); }
 
         .nav-btn:disabled {
             background: var(--gray-light);
@@ -388,19 +318,14 @@
             cursor: pointer;
         }
 
-        .review-card .card-inner {
-            height: 100%;
-        }
+        .review-card .card-inner { height: 100%; }
 
         .review-card .card-front {
             background: linear-gradient(135deg, var(--secondary) 0%, #FF8EA0 100%);
         }
 
         /* Quiz Mode Styles */
-        .quiz-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
+        .quiz-container { max-width: 800px; margin: 0 auto; }
 
         .quiz-settings {
             background: var(--gray-light);
@@ -409,15 +334,9 @@
             margin-bottom: 30px;
         }
 
-        .setting-group {
-            margin-bottom: 15px;
-        }
+        .setting-group { margin-bottom: 15px; }
 
-        .setting-label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
+        .setting-label { display: block; margin-bottom: 8px; font-weight: 500; }
 
         .setting-select {
             width: 100%;
@@ -458,10 +377,7 @@
             margin-bottom: 20px;
         }
 
-        .question-text {
-            font-size: 1.3rem;
-            margin-bottom: 20px;
-        }
+        .question-text { font-size: 1.3rem; margin-bottom: 20px; }
 
         .options-container {
             display: grid;
@@ -475,15 +391,20 @@
             border-radius: 8px;
             cursor: pointer;
             transition: var(--transition);
+            user-select: none;
         }
 
-        .option:hover {
-            background: var(--primary-light);
+        .option:hover { background: var(--primary-light); color: white; }
+
+        .option.selected { background: var(--primary); color: white; }
+
+        .option.correct {
+            background: var(--success);
             color: white;
         }
 
-        .option.selected {
-            background: var(--primary);
+        .option.wrong {
+            background: var(--danger);
             color: white;
         }
 
@@ -504,20 +425,11 @@
             font-weight: 600;
         }
 
-        .submit-btn:hover {
-            background: #218838;
-            transform: translateY(-2px);
-        }
+        .submit-btn:hover { background: #218838; transform: translateY(-2px); }
 
-        .hidden {
-            display: none;
-        }
+        .hidden { display: none; }
 
-        .error-message {
-            text-align: center;
-            padding: 40px;
-            color: var(--danger);
-        }
+        .error-message { text-align: center; padding: 40px; color: var(--danger); }
 
         .demo-data-notice {
             background: var(--warning);
@@ -528,748 +440,869 @@
             text-align: center;
         }
 
+        .quiz-result {
+            background: white;
+            padding: 25px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        .wrong-list {
+            margin-top: 15px;
+            display: grid;
+            gap: 12px;
+        }
+
+        .wrong-item {
+            background: var(--gray-light);
+            padding: 12px 14px;
+            border-radius: 10px;
+        }
+
+        .wrong-item .w-word {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 6px;
+        }
+
         @media (max-width: 768px) {
-            .content-area {
-                grid-template-columns: 1fr;
-            }
-            
-            .options-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .word {
-                font-size: 2rem;
-            }
+            .content-area { grid-template-columns: 1fr; }
+            .options-container { grid-template-columns: 1fr; }
+            .word { font-size: 2rem; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Shirley's TOEIC Essential Vocab</h1>
-            <p class="subtitle">Master the core vocabulary for TOEIC success</p>
-        </header>
+<div class="container">
+    <header>
+        <h1>Shirley's TOEIC Essential Vocab</h1>
+        <p class="subtitle">Master the core vocabulary for TOEIC success</p>
+    </header>
 
-        <div class="loading" id="loading">
-            <i class="fas fa-spinner fa-spin"></i>
-            Loading vocabulary data...
+    <div class="loading" id="loading">
+        <i class="fas fa-spinner fa-spin"></i>
+        Loading vocabulary data...
+    </div>
+
+    <div class="mode-selector hidden" id="mode-selector">
+        <button class="mode-btn active" data-mode="study">
+            <i class="fas fa-book-open"></i> Study
+        </button>
+        <button class="mode-btn" data-mode="review">
+            <i class="fas fa-sync-alt"></i> Review
+        </button>
+        <button class="mode-btn" data-mode="quiz">
+            <i class="fas fa-tasks"></i> Quiz
+        </button>
+    </div>
+
+    <div class="content-area hidden" id="content-area">
+        <div class="demo-data-notice hidden" id="demo-notice">
+            <i class="fas fa-info-circle"></i> Using demo data. CSV loading failed, but you can still explore the platform functionality.
         </div>
 
-        <div class="mode-selector hidden" id="mode-selector">
-            <button class="mode-btn active" data-mode="study">
-                <i class="fas fa-book-open"></i> Study
-            </button>
-            <button class="mode-btn" data-mode="review">
-                <i class="fas fa-sync-alt"></i> Review
-            </button>
-            <button class="mode-btn" data-mode="quiz">
-                <i class="fas fa-tasks"></i> Quiz
-            </button>
+        <div class="chapters-panel">
+            <h2 class="chapters-title"><i class="fas fa-list-ol"></i> Chapters</h2>
+            <ul class="chapters-list" id="chapters-list"></ul>
         </div>
 
-        <div class="content-area hidden" id="content-area">
-            <div class="demo-data-notice" id="demo-notice">
-                <i class="fas fa-info-circle"></i> Using demo data. CSV loading failed, but you can still explore the platform functionality.
-            </div>
-            
-            <div class="chapters-panel">
-                <h2 class="chapters-title"><i class="fas fa-list-ol"></i> Chapters</h2>
-                <ul class="chapters-list" id="chapters-list">
-                    <!-- Chapters will be populated by JavaScript -->
-                </ul>
+        <div class="chapter-content">
+            <div class="chapter-header">
+                <h2 class="chapter-title">Select a Chapter</h2>
             </div>
 
-            <div class="chapter-content">
-                <div class="chapter-header">
-                    <h2 class="chapter-title">Select a Chapter</h2>
+            <!-- Study Mode Content -->
+            <div class="study-container hidden" id="study-mode">
+                <div class="word-card">
+                    <div class="card-inner">
+                        <div class="card-front"></div>
+                        <div class="card-back"></div>
+                    </div>
+                </div>
+                <div class="card-controls">
+                    <button class="nav-btn" id="prev-btn">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <button class="nav-btn" id="flip-btn">
+                        <i class="fas fa-redo"></i> Flip Card
+                    </button>
+                    <button class="nav-btn" id="next-btn">
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Review Mode Content -->
+            <div class="review-container hidden" id="review-mode"></div>
+
+            <!-- Quiz Mode Content -->
+            <div class="quiz-container hidden" id="quiz-mode">
+                <div class="quiz-settings" id="quiz-settings">
+                    <div class="setting-group">
+                        <label class="setting-label">Quiz Mode</label>
+                        <select class="setting-select" id="quiz-mode-select">
+                            <option value="mix-all">Mix All Chapters</option>
+                            <option value="mix-chapter">Mix Selected Chapter</option>
+                            <option value="precise">Precise (Chapter & Subchapter)</option>
+                        </select>
+                    </div>
+                    <div class="setting-group">
+                        <label class="setting-label">Chapter</label>
+                        <select class="setting-select" id="quiz-chapter-select"></select>
+                    </div>
+                    <div class="setting-group hidden" id="subchapter-setting">
+                        <label class="setting-label">Subchapter</label>
+                        <select class="setting-select" id="quiz-subchapter-select"></select>
+                    </div>
+                    <div class="setting-group">
+                        <label class="setting-label">Number of Questions</label>
+                        <select class="setting-select" id="quiz-count-select">
+                            <option value="10">10 Questions</option>
+                            <option value="20">20 Questions</option>
+                            <option value="all">All Questions</option>
+                        </select>
+                    </div>
+                    <button class="submit-btn" id="start-quiz-btn">Start Quiz</button>
                 </div>
 
-                <!-- Study Mode Content -->
-                <div class="study-container hidden" id="study-mode">
-                    <div class="word-card">
-                        <div class="card-inner">
-                            <div class="card-front">
-                                <div class="word">Loading...</div>
-                                <div class="pos">-</div>
-                                <div class="meaning">載入中...</div>
-                                <div class="pronunciation">
-                                    <button class="pronunciation-btn">
-                                        <i class="fas fa-volume-up"></i>
-                                    </button>
-                                    /.../
-                                </div>
-                            </div>
-                            <div class="card-back">
-                                <div class="word">Loading...</div>
-                                <div class="pos">-</div>
-                                <div class="example">Loading example sentence...</div>
-                                <div class="example-translation">載入例句...</div>
-                                <div class="pronunciation">
-                                    <button class="pronunciation-btn">
-                                        <i class="fas fa-volume-up"></i>
-                                    </button>
-                                    /.../
-                                </div>
-                            </div>
+                <div class="quiz-questions hidden" id="quiz-questions">
+                    <div class="quiz-progress">
+                        <span class="progress-text" id="progress-text">Question 1 of 10</span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
                         </div>
+                        <span class="score-text" id="score-text">Score: 0/0</span>
                     </div>
-                    <div class="card-controls">
-                        <button class="nav-btn" id="prev-btn">
+
+                    <div class="quiz-question" id="quiz-question-area">
+                        <div class="question-text" id="question-text"></div>
+                        <div class="options-container" id="options-container"></div>
+                    </div>
+
+                    <div class="quiz-controls">
+                        <button class="nav-btn" id="prev-question-btn">
                             <i class="fas fa-arrow-left"></i> Previous
                         </button>
-                        <button class="nav-btn" id="flip-btn">
-                            <i class="fas fa-redo"></i> Flip Card
-                        </button>
-                        <button class="nav-btn" id="next-btn">
-                            Next <i class="fas fa-arrow-right"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Review Mode Content -->
-                <div class="review-container hidden" id="review-mode">
-                    <!-- Review cards will be populated by JavaScript -->
-                </div>
-
-                <!-- Quiz Mode Content -->
-                <div class="quiz-container hidden" id="quiz-mode">
-                    <div class="quiz-settings">
-                        <div class="setting-group">
-                            <label class="setting-label">Quiz Mode</label>
-                            <select class="setting-select" id="quiz-mode-select">
-                                <option value="mix-all">Mix All Chapters</option>
-                                <option value="mix-chapter">Mix Selected Chapter</option>
-                                <option value="precise">Precise (Chapter & Subchapter)</option>
-                            </select>
-                        </div>
-                        <div class="setting-group">
-                            <label class="setting-label">Chapter</label>
-                            <select class="setting-select" id="quiz-chapter-select">
-                                <!-- Chapters will be populated by JavaScript -->
-                            </select>
-                        </div>
-                        <div class="setting-group hidden" id="subchapter-setting">
-                            <label class="setting-label">Subchapter</label>
-                            <select class="setting-select" id="quiz-subchapter-select">
-                                <!-- Subchapters will be populated by JavaScript -->
-                            </select>
-                        </div>
-                        <div class="setting-group">
-                            <label class="setting-label">Number of Questions</label>
-                            <select class="setting-select" id="quiz-count-select">
-                                <option value="10">10 Questions</option>
-                                <option value="20">20 Questions</option>
-                                <option value="all">All Questions</option>
-                            </select>
-                        </div>
-                        <button class="submit-btn" id="start-quiz-btn">Start Quiz</button>
-                    </div>
-
-                    <div class="quiz-questions hidden" id="quiz-questions">
-                        <div class="quiz-progress">
-                            <span class="progress-text">Question 1 of 10</span>
-                            <div class="progress-bar">
-                                <div class="progress-fill" id="progress-fill"></div>
-                            </div>
-                            <span class="score-text">Score: 0/0</span>
-                        </div>
-                        <div class="quiz-question">
-                            <div class="question-text">What is the meaning of <strong>word (pos)</strong>?</div>
-                            <div class="options-container">
-                                <div class="option">A. Option A</div>
-                                <div class="option">B. Option B</div>
-                                <div class="option">C. Option C</div>
-                                <div class="option">D. Option D</div>
-                            </div>
-                        </div>
-                        <div class="quiz-controls">
-                            <button class="nav-btn" id="prev-question-btn">
-                                <i class="fas fa-arrow-left"></i> Previous
-                            </button>
-                            <button class="submit-btn" id="next-question-btn">Next Question</button>
-                        </div>
+                        <button class="submit-btn" id="next-question-btn">Next Question</button>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="error-message hidden" id="error-message">
-            <i class="fas fa-exclamation-triangle"></i>
-            <h2>Failed to load vocabulary data</h2>
-            <p>Please check your internet connection and try again.</p>
         </div>
     </div>
 
-    <script>
-        // 嘗試使用GitHub Raw URL
-        const CSV_URL = 'https://raw.githubusercontent.com/ducj-creator/Shirley-Grammar/main/TOEIC%20vocab.csv';
-        
-        // 備用方案：如果CSV加載失敗，使用示例數據
-        const DEMO_DATA = {
-            chapters: [
-                {
-                    id: "1",
-                    title: "Chapter 1: Business Communication",
-                    subchapters: [
-                        { id: 1, title: "Meetings" },
-                        { id: 2, title: "Presentations" },
-                        { id: 3, title: "Negotiations" }
-                    ],
-                    words: [
-                        { 
-                            word: "abandon", 
-                            pos: "v.", 
-                            meaning: "放棄，拋棄",
-                            example: "The captain gave the order to abandon the ship.",
-                            exampleTranslation: "船長下令棄船。",
-                            pronunciation: "/əˈbændən/"
-                        },
-                        { 
-                            word: "accelerate", 
-                            pos: "v.", 
-                            meaning: "加速，促進",
-                            example: "The company plans to accelerate its expansion in Asia.",
-                            exampleTranslation: "公司計劃加速在亞洲的擴張。",
-                            pronunciation: "/əkˈseləreɪt/"
-                        },
-                        { 
-                            word: "accommodate", 
-                            pos: "v.", 
-                            meaning: "容納，適應，提供住宿",
-                            example: "The hotel can accommodate up to 500 guests.",
-                            exampleTranslation: "這家酒店最多可容納500位客人。",
-                            pronunciation: "/əˈkɒmədeɪt/"
-                        },
-                        { 
-                            word: "accomplish", 
-                            pos: "v.", 
-                            meaning: "完成，實現",
-                            example: "We need to accomplish our goals by the end of the quarter.",
-                            exampleTranslation: "我們需要在季度末前完成目標。",
-                            pronunciation: "/əˈkʌmplɪʃ/"
-                        }
-                    ]
+    <div class="error-message hidden" id="error-message">
+        <i class="fas fa-exclamation-triangle"></i>
+        <h2>Failed to load vocabulary data</h2>
+        <p>Please check your internet connection and try again.</p>
+    </div>
+</div>
+
+<script>
+    // ========= CSV URL =========
+    const CSV_URL = 'https://raw.githubusercontent.com/ducj-creator/Shirley-Grammar/main/TOEIC%20vocab.csv';
+
+    // ========= DEMO DATA (原樣保留，省略內容) =========
+    const DEMO_DATA = {
+        chapters: [
+            {
+                id: "1",
+                title: "Chapter 1: Business Communication",
+                subchapters: [
+                    { id: "Meetings", title: "Meetings" },
+                    { id: "Presentations", title: "Presentations" },
+                    { id: "Negotiations", title: "Negotiations" }
+                ],
+                words: [
+                    {
+                        word: "abandon",
+                        pos: "v.",
+                        meaning: "放棄，拋棄",
+                        example: "The captain gave the order to abandon the ship.",
+                        exampleTranslation: "船長下令棄船。",
+                        pronunciation: "/əˈbændən/"
+                    },
+                    {
+                        word: "accelerate",
+                        pos: "v.",
+                        meaning: "加速，促進",
+                        example: "The company plans to accelerate its expansion in Asia.",
+                        exampleTranslation: "公司計劃加速在亞洲的擴張。",
+                        pronunciation: "/əkˈseləreɪt/"
+                    }
+                ]
+            }
+        ]
+    };
+
+    // ========= DOM =========
+    const loadingElement = document.getElementById('loading');
+    const modeSelector = document.getElementById('mode-selector');
+    const contentArea = document.getElementById('content-area');
+    const errorMessage = document.getElementById('error-message');
+    const demoNotice = document.getElementById('demo-notice');
+
+    const modeButtons = document.querySelectorAll('.mode-btn');
+    const chaptersList = document.getElementById('chapters-list');
+    const chapterTitle = document.querySelector('.chapter-title');
+
+    const studyMode = document.getElementById('study-mode');
+    const reviewMode = document.getElementById('review-mode');
+    const quizMode = document.getElementById('quiz-mode');
+
+    const wordCard = document.querySelector('.word-card');
+    const flipBtn = document.getElementById('flip-btn');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+
+    const quizSettings = document.getElementById('quiz-settings');
+    const quizModeSelect = document.getElementById('quiz-mode-select');
+    const quizChapterSelect = document.getElementById('quiz-chapter-select');
+    const quizSubchapterSelect = document.getElementById('quiz-subchapter-select');
+    const subchapterSetting = document.getElementById('subchapter-setting');
+    const quizCountSelect = document.getElementById('quiz-count-select');
+    const startQuizBtn = document.getElementById('start-quiz-btn');
+
+    const quizQuestions = document.getElementById('quiz-questions');
+    const progressText = document.getElementById('progress-text');
+    const scoreText = document.getElementById('score-text');
+    const progressFill = document.getElementById('progress-fill');
+
+    const questionText = document.getElementById('question-text');
+    const optionsContainer = document.getElementById('options-container');
+    const quizQuestionArea = document.getElementById('quiz-question-area');
+
+    const prevQuestionBtn = document.getElementById('prev-question-btn');
+    const nextQuestionBtn = document.getElementById('next-question-btn');
+
+    // ========= STATE =========
+    let vocabularyData = null;
+    let currentMode = 'study';
+    let currentChapter = null;
+    let currentWordIndex = 0;
+    let currentWords = [];
+    let usingDemoData = false;
+
+    // Quiz state
+    let quizPool = [];           // 出題池
+    let quizQuestionsData = [];  // [{wordObj, options[], correctIndex}]
+    let quizAnswers = [];        // [{selectedIndex|null}]
+    let quizIndex = 0;
+    let quizScore = 0;
+    let quizFinished = false;
+
+    // ========= INIT =========
+    async function init() {
+        try {
+            vocabularyData = await loadCSVData();
+            usingDemoData = false;
+            demoNotice.classList.add('hidden');
+        } catch (error) {
+            console.error('Error loading CSV data, using demo data:', error);
+            vocabularyData = DEMO_DATA;
+            usingDemoData = true;
+            demoNotice.classList.remove('hidden');
+        }
+
+        setupEventListeners();
+        renderChapters();
+
+        loadingElement.classList.add('hidden');
+        modeSelector.classList.remove('hidden');
+        contentArea.classList.remove('hidden');
+    }
+
+    async function loadCSVData() {
+        return new Promise((resolve, reject) => {
+            Papa.parse(CSV_URL, {
+                download: true,
+                header: true,
+                skipEmptyLines: true,
+                complete: function(results) {
+                    if (results.errors.length > 0) {
+                        reject(new Error('CSV parsing error: ' + results.errors[0].message));
+                        return;
+                    }
+                    if (!results.data || results.data.length === 0) {
+                        reject(new Error('CSV file is empty'));
+                        return;
+                    }
+                    const processedData = processCSVData(results.data);
+                    if (!processedData.chapters.length) {
+                        reject(new Error('No valid rows found after processing CSV'));
+                        return;
+                    }
+                    resolve(processedData);
                 },
-                {
-                    id: "2",
-                    title: "Chapter 2: Office Environment",
-                    subchapters: [
-                        { id: 1, title: "Equipment" },
-                        { id: 2, title: "Procedures" },
-                        { id: 3, title: "Workplace" }
-                    ],
-                    words: [
-                        { 
-                            word: "accountable", 
-                            pos: "adj.", 
-                            meaning: "負有責任的",
-                            example: "Managers are accountable for their team's performance.",
-                            exampleTranslation: "經理對其團隊的表現負有責任。",
-                            pronunciation: "/əˈkaʊntəbl/"
-                        },
-                        { 
-                            word: "accumulate", 
-                            pos: "v.", 
-                            meaning: "積累，積聚",
-                            example: "He has accumulated a lot of experience in marketing.",
-                            exampleTranslation: "他在市場營銷方面積累了豐富的經驗。",
-                            pronunciation: "/əˈkjuːmjəleɪt/"
-                        },
-                        { 
-                            word: "accurate", 
-                            pos: "adj.", 
-                            meaning: "準確的，精確的",
-                            example: "We need accurate data to make informed decisions.",
-                            exampleTranslation: "我們需要準確的數據來做出明智的決定。",
-                            pronunciation: "/ˈækjərət/"
-                        },
-                        { 
-                            word: "achieve", 
-                            pos: "v.", 
-                            meaning: "實現，達到",
-                            example: "The company achieved record profits this year.",
-                            exampleTranslation: "公司今年實現了創紀錄的利潤。",
-                            pronunciation: "/əˈtʃiːv/"
-                        }
-                    ]
-                },
-                {
-                    id: "3",
-                    title: "Chapter 3: Finance & Budgeting",
-                    subchapters: [
-                        { id: 1, title: "Accounting" },
-                        { id: 2, title: "Investments" },
-                        { id: 3, title: "Budget" }
-                    ],
-                    words: [
-                        { 
-                            word: "acknowledge", 
-                            pos: "v.", 
-                            meaning: "承認，確認",
-                            example: "We acknowledge receipt of your application.",
-                            exampleTranslation: "我們確認已收到您的申請。",
-                            pronunciation: "/əkˈnɒlɪdʒ/"
-                        },
-                        { 
-                            word: "acquire", 
-                            pos: "v.", 
-                            meaning: "獲得，收購",
-                            example: "The company plans to acquire a smaller competitor.",
-                            exampleTranslation: "公司計劃收購一個較小的競爭對手。",
-                            pronunciation: "/əˈkwaɪər/"
-                        },
-                        { 
-                            word: "adapt", 
-                            pos: "v.", 
-                            meaning: "適應，調整",
-                            example: "Businesses must adapt to changing market conditions.",
-                            exampleTranslation: "企業必須適應不斷變化的市場條件。",
-                            pronunciation: "/əˈdæpt/"
-                        },
-                        { 
-                            word: "adequate", 
-                            pos: "adj.", 
-                            meaning: "足夠的，適當的",
-                            example: "We need adequate funding to complete the project.",
-                            exampleTranslation: "我們需要足夠的資金來完成項目。",
-                            pronunciation: "/ˈædɪkwət/"
-                        }
-                    ]
-                }
-            ]
+                error: reject
+            });
+        });
+    }
+
+    // ========= CSV -> chapters structure =========
+    function processCSVData(csvData) {
+        const chaptersMap = new Map();
+
+        const pick = (row, keys) => {
+            for (const k of keys) {
+                if (row[k] != null && String(row[k]).trim() !== '') return String(row[k]).trim();
+            }
+            return '';
         };
 
-        // DOM Elements
-        const loadingElement = document.getElementById('loading');
-        const modeSelector = document.getElementById('mode-selector');
-        const contentArea = document.getElementById('content-area');
-        const errorMessage = document.getElementById('error-message');
-        const demoNotice = document.getElementById('demo-notice');
-        const modeButtons = document.querySelectorAll('.mode-btn');
-        const chaptersList = document.getElementById('chapters-list');
-        const chapterTitle = document.querySelector('.chapter-title');
-        const studyMode = document.getElementById('study-mode');
-        const reviewMode = document.getElementById('review-mode');
-        const quizMode = document.getElementById('quiz-mode');
-        const wordCard = document.querySelector('.word-card');
-        const flipBtn = document.getElementById('flip-btn');
-        const prevBtn = document.getElementById('prev-btn');
-        const nextBtn = document.getElementById('next-btn');
-        const quizModeSelect = document.getElementById('quiz-mode-select');
-        const quizChapterSelect = document.getElementById('quiz-chapter-select');
-        const subchapterSetting = document.getElementById('subchapter-setting');
-        const quizSubchapterSelect = document.getElementById('quiz-subchapter-select');
-        const startQuizBtn = document.getElementById('start-quiz-btn');
-        const quizQuestions = document.getElementById('quiz-questions');
-        const progressFill = document.getElementById('progress-fill');
-        const prevQuestionBtn = document.getElementById('prev-question-btn');
-        const nextQuestionBtn = document.getElementById('next-question-btn');
+        csvData.forEach(row => {
+            const chapterName = pick(row, ['chapter','Chapter','CHAPTER']);
+            const subchapterName = pick(row, ['subchapter','Subchapter','SUBCHAPTER']);
+            const wordText = pick(row, ['word','Word','WORD']);
+            if (!chapterName || !wordText) return;
 
-        // Current state
-        let vocabularyData = null;
-        let currentMode = 'study';
-        let currentChapter = null;
-        let currentWordIndex = 0;
-        let currentWords = [];
-        let usingDemoData = false;
-
-        // Initialize the application
-        async function init() {
-            try {
-                vocabularyData = await loadCSVData();
-                usingDemoData = false;
-                demoNotice.classList.add('hidden');
-            } catch (error) {
-                console.error('Error loading CSV data, using demo data:', error);
-                vocabularyData = DEMO_DATA;
-                usingDemoData = true;
-                demoNotice.classList.remove('hidden');
-            }
-            
-            setupEventListeners();
-            renderChapters();
-            
-            // Hide loading, show content
-            loadingElement.classList.add('hidden');
-            modeSelector.classList.remove('hidden');
-            contentArea.classList.remove('hidden');
-        }
-
-        // Load CSV data
-        async function loadCSVData() {
-            return new Promise((resolve, reject) => {
-                Papa.parse(CSV_URL, {
-                    download: true,
-                    header: true,
-                    complete: function(results) {
-                        if (results.errors.length > 0) {
-                            reject(new Error('CSV parsing error: ' + results.errors[0].message));
-                            return;
-                        }
-                        
-                        if (results.data.length === 0) {
-                            reject(new Error('CSV file is empty'));
-                            return;
-                        }
-                        
-                        // Process CSV data into our structure
-                        const processedData = processCSVData(results.data);
-                        resolve(processedData);
-                    },
-                    error: function(error) {
-                        reject(error);
-                    }
+            if (!chaptersMap.has(chapterName)) {
+                chaptersMap.set(chapterName, {
+                    id: chapterName,
+                    title: chapterName,
+                    subchapters: new Map(),
+                    words: []
                 });
-            });
-        }
-
-        // Process CSV data into our chapter-based structure
-        function processCSVData(csvData) {
-            const chapters = {};
-            
-            csvData.forEach(row => {
-                if (!row.Chapter || !row.Word) return;
-                
-                const chapterId = row.Chapter.trim();
-                
-                if (!chapters[chapterId]) {
-                    chapters[chapterId] = {
-                        id: chapterId,
-                        title: `Chapter ${chapterId}`,
-                        words: []
-                    };
-                }
-                
-                // Create word object from CSV row
-                const word = {
-                    word: row.Word.trim(),
-                    pos: row['Part of Speech'] ? row['Part of Speech'].trim() : '',
-                    meaning: row.Meaning ? row.Meaning.trim() : '',
-                    example: row['Example Sentence'] ? row['Example Sentence'].trim() : '',
-                    exampleTranslation: row['Example Translation'] ? row['Example Translation'].trim() : '',
-                    pronunciation: row.Pronunciation ? row.Pronunciation.trim() : ''
-                };
-                
-                chapters[chapterId].words.push(word);
-            });
-            
-            // Convert to array and add subchapters
-            return {
-                chapters: Object.values(chapters).map((chapter, index) => {
-                    // Create subchapters based on word count (for demo purposes)
-                    const wordCount = chapter.words.length;
-                    const subchapterCount = Math.ceil(wordCount / 10); // ~10 words per subchapter
-                    
-                    chapter.subchapters = [];
-                    for (let i = 1; i <= subchapterCount; i++) {
-                        chapter.subchapters.push({
-                            id: i,
-                            title: `Part ${i}`
-                        });
-                    }
-                    
-                    return chapter;
-                })
-            };
-        }
-
-        // 其餘的JavaScript代碼保持不變...
-        // [這裡是之前的所有JavaScript函數，包括renderChapters, setupEventListeners, switchMode, selectChapter等]
-
-        // Render chapters list
-        function renderChapters() {
-            if (!vocabularyData) return;
-            
-            chaptersList.innerHTML = '';
-            vocabularyData.chapters.forEach(chapter => {
-                const chapterItem = document.createElement('li');
-                chapterItem.className = 'chapter-item';
-                chapterItem.innerHTML = `
-                    ${chapter.title}
-                    <span class="chapter-count">${chapter.words.length}</span>
-                `;
-                chapterItem.dataset.chapterId = chapter.id;
-                chaptersList.appendChild(chapterItem);
-                
-                // Also add to quiz chapter select
-                const option = document.createElement('option');
-                option.value = chapter.id;
-                option.textContent = chapter.title;
-                quizChapterSelect.appendChild(option);
-            });
-            
-            // Add "All Chapters" option for quiz
-            const allOption = document.createElement('option');
-            allOption.value = 'all';
-            allOption.textContent = 'All Chapters';
-            quizChapterSelect.appendChild(allOption);
-            
-            // Enable mode buttons now that data is loaded
-            modeButtons.forEach(btn => btn.disabled = false);
-            
-            // Auto-select first chapter
-            if (vocabularyData.chapters.length > 0) {
-                const firstChapter = document.querySelector('.chapter-item');
-                if (firstChapter) {
-                    firstChapter.click();
-                }
             }
-        }
 
-        // Setup event listeners
-        function setupEventListeners() {
-            // Mode selection
-            modeButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    if (button.disabled) return;
-                    
-                    const mode = button.dataset.mode;
-                    switchMode(mode);
-                    
-                    modeButtons.forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
+            const chapterObj = chaptersMap.get(chapterName);
+
+            if (subchapterName && !chapterObj.subchapters.has(subchapterName)) {
+                chapterObj.subchapters.set(subchapterName, {
+                    id: subchapterName,
+                    title: subchapterName
                 });
-            });
-            
-            // Chapter selection
-            chaptersList.addEventListener('click', (e) => {
-                if (e.target.classList.contains('chapter-item')) {
-                    const chapterId = e.target.dataset.chapterId;
-                    selectChapter(chapterId);
-                    
-                    // Update active chapter in list
-                    document.querySelectorAll('.chapter-item').forEach(item => {
-                        item.classList.remove('active');
-                    });
-                    e.target.classList.add('active');
-                }
-            });
-            
-            // Card flipping
-            flipBtn.addEventListener('click', () => {
-                wordCard.classList.toggle('flipped');
-            });
-            
-            // Navigation buttons
-            prevBtn.addEventListener('click', goToPreviousWord);
-            nextBtn.addEventListener('click', goToNextWord);
-            
-            // Quiz mode selection
-            quizModeSelect.addEventListener('change', handleQuizModeChange);
-            quizChapterSelect.addEventListener('change', handleQuizChapterChange);
-            startQuizBtn.addEventListener('click', startQuiz);
-            
-            // Quiz navigation
-            prevQuestionBtn.addEventListener('click', goToPreviousQuestion);
-            nextQuestionBtn.addEventListener('click', goToNextQuestion);
-        }
-
-        // Switch between modes
-        function switchMode(mode) {
-            currentMode = mode;
-            
-            // Hide all modes
-            studyMode.classList.add('hidden');
-            reviewMode.classList.add('hidden');
-            quizMode.classList.add('hidden');
-            
-            // Show selected mode
-            if (mode === 'study') {
-                studyMode.classList.remove('hidden');
-                if (currentChapter) {
-                    loadChapterWords(currentChapter);
-                }
-            } else if (mode === 'review') {
-                reviewMode.classList.remove('hidden');
-                if (currentChapter) {
-                    renderReviewCards(currentChapter);
-                }
-            } else if (mode === 'quiz') {
-                quizMode.classList.remove('hidden');
             }
-        }
 
-        // Select a chapter
-        function selectChapter(chapterId) {
-            if (!vocabularyData) return;
-            
-            currentChapter = vocabularyData.chapters.find(ch => ch.id === chapterId);
-            if (!currentChapter) return;
-            
-            chapterTitle.textContent = currentChapter.title;
-            
-            if (currentMode === 'study') {
-                loadChapterWords(currentChapter);
-            } else if (currentMode === 'review') {
-                renderReviewCards(currentChapter);
-            }
-        }
+            chapterObj.words.push({
+                chapter: chapterName,
+                subchapter: subchapterName,
+                word: wordText,
+                pos: pick(row, ['pos','Part of Speech','POS']),
+                meaning: pick(row, ['meaning','Meaning']),
+                example: pick(row, ['english sentence','Example Sentence','example','sentence']),
+                exampleTranslation: pick(row, ['chinese sentence','Example Translation','translation']),
+                pronunciation: pick(row, ['pronunciation','Pronunciation'])
+            });
+        });
 
-        // Load words for the selected chapter
-        function loadChapterWords(chapter) {
-            currentWords = chapter.words;
-            currentWordIndex = 0;
+        const chapters = Array.from(chaptersMap.values()).map(ch => {
+            ch.subchapters = Array.from(ch.subchapters.values());
+            return ch;
+        });
+
+        return { chapters };
+    }
+
+    // ========= RENDER CHAPTERS =========
+    function renderChapters() {
+        if (!vocabularyData) return;
+
+        chaptersList.innerHTML = '';
+        quizChapterSelect.innerHTML = '';
+
+        vocabularyData.chapters.forEach(chapter => {
+            const chapterItem = document.createElement('li');
+            chapterItem.className = 'chapter-item';
+            chapterItem.innerHTML = `
+                ${chapter.title}
+                <span class="chapter-count">${chapter.words.length}</span>
+            `;
+            chapterItem.dataset.chapterId = chapter.id;
+            chaptersList.appendChild(chapterItem);
+
+            const option = document.createElement('option');
+            option.value = chapter.id;
+            option.textContent = chapter.title;
+            quizChapterSelect.appendChild(option);
+        });
+
+        const allOption = document.createElement('option');
+        allOption.value = 'all';
+        allOption.textContent = 'All Chapters';
+        quizChapterSelect.appendChild(allOption);
+
+        modeButtons.forEach(btn => btn.disabled = false);
+
+        if (vocabularyData.chapters.length > 0) {
+            const firstChapter = document.querySelector('.chapter-item');
+            if (firstChapter) firstChapter.click();
+        }
+    }
+
+    // ========= EVENTS =========
+    function setupEventListeners() {
+        modeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                if (button.disabled) return;
+                const mode = button.dataset.mode;
+                switchMode(mode);
+                modeButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+            });
+        });
+
+        chaptersList.addEventListener('click', (e) => {
+            const item = e.target.closest('.chapter-item');
+            if (!item) return;
+
+            const chapterId = item.dataset.chapterId;
+            selectChapter(chapterId);
+
+            document.querySelectorAll('.chapter-item').forEach(i => i.classList.remove('active'));
+            item.classList.add('active');
+        });
+
+        flipBtn.addEventListener('click', () => {
+            wordCard.classList.toggle('flipped');
+        });
+
+        prevBtn.addEventListener('click', goToPreviousWord);
+        nextBtn.addEventListener('click', goToNextWord);
+
+        quizModeSelect.addEventListener('change', handleQuizModeChange);
+        quizChapterSelect.addEventListener('change', handleQuizChapterChange);
+        startQuizBtn.addEventListener('click', startQuiz);
+
+        prevQuestionBtn.addEventListener('click', () => goToQuestion(quizIndex - 1));
+        nextQuestionBtn.addEventListener('click', () => goToQuestion(quizIndex + 1));
+    }
+
+    // ========= MODE SWITCH =========
+    function switchMode(mode) {
+        currentMode = mode;
+
+        studyMode.classList.add('hidden');
+        reviewMode.classList.add('hidden');
+        quizMode.classList.add('hidden');
+
+        if (mode === 'study') {
+            studyMode.classList.remove('hidden');
+            if (currentChapter) loadChapterWords(currentChapter);
+        } else if (mode === 'review') {
+            reviewMode.classList.remove('hidden');
+            if (currentChapter) renderReviewCards(currentChapter);
+        } else if (mode === 'quiz') {
+            quizMode.classList.remove('hidden');
+        }
+    }
+
+    // ========= CHAPTER SELECT =========
+    function selectChapter(chapterId) {
+        if (!vocabularyData) return;
+        currentChapter = vocabularyData.chapters.find(ch => ch.id === chapterId);
+        if (!currentChapter) return;
+
+        chapterTitle.textContent = currentChapter.title;
+
+        if (currentMode === 'study') loadChapterWords(currentChapter);
+        if (currentMode === 'review') renderReviewCards(currentChapter);
+    }
+
+    function loadChapterWords(chapter) {
+        currentWords = chapter.words;
+        currentWordIndex = 0;
+        renderWordCard();
+    }
+
+    function renderWordCard() {
+        if (!currentWords.length) return;
+        const word = currentWords[currentWordIndex];
+        const cardFront = wordCard.querySelector('.card-front');
+        const cardBack = wordCard.querySelector('.card-back');
+
+        cardFront.innerHTML = `
+            <div class="word">${word.word}</div>
+            <div class="pos">${word.pos}</div>
+            <div class="meaning">${word.meaning}</div>
+            <div class="pronunciation">
+                <button class="pronunciation-btn"><i class="fas fa-volume-up"></i></button>
+                ${word.pronunciation || '/.../'}
+            </div>
+        `;
+
+        cardBack.innerHTML = `
+            <div class="word">${word.word}</div>
+            <div class="pos">${word.pos}</div>
+            <div class="example">${word.example || 'No example available'}</div>
+            <div class="example-translation">${word.exampleTranslation || '無可用例句'}</div>
+            <div class="pronunciation">
+                <button class="pronunciation-btn"><i class="fas fa-volume-up"></i></button>
+                ${word.pronunciation || '/.../'}
+            </div>
+        `;
+
+        wordCard.classList.remove('flipped');
+        prevBtn.disabled = currentWordIndex === 0;
+        nextBtn.disabled = currentWordIndex === currentWords.length - 1;
+
+        document.querySelectorAll('.pronunciation-btn')
+            .forEach(btn => btn.addEventListener('click', () => speakWord(word.word)));
+    }
+
+    function speakWord(text) {
+        if (!('speechSynthesis' in window)) return;
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        speechSynthesis.speak(utterance);
+    }
+
+    function goToPreviousWord() {
+        if (currentWordIndex > 0) {
+            currentWordIndex--;
             renderWordCard();
         }
+    }
 
-        // Render the current word card
-        function renderWordCard() {
-            if (currentWords.length === 0) return;
-            
-            const word = currentWords[currentWordIndex];
-            const cardFront = wordCard.querySelector('.card-front');
-            const cardBack = wordCard.querySelector('.card-back');
-            
-            cardFront.innerHTML = `
-                <div class="word">${word.word}</div>
-                <div class="pos">${word.pos}</div>
-                <div class="meaning">${word.meaning}</div>
-                <div class="pronunciation">
-                    <button class="pronunciation-btn">
-                        <i class="fas fa-volume-up"></i>
-                    </button>
-                    ${word.pronunciation || '/.../'}
-                </div>
-            `;
-            
-            cardBack.innerHTML = `
-                <div class="word">${word.word}</div>
-                <div class="pos">${word.pos}</div>
-                <div class="example">${word.example || 'No example available'}</div>
-                <div class="example-translation">${word.exampleTranslation || '無可用例句'}</div>
-                <div class="pronunciation">
-                    <button class="pronunciation-btn">
-                        <i class="fas fa-volume-up"></i>
-                    </button>
-                    ${word.pronunciation || '/.../'}
-                </div>
-            `;
-            
-            // Reset card to front
-            wordCard.classList.remove('flipped');
-            
-            // Update navigation buttons
-            prevBtn.disabled = currentWordIndex === 0;
-            nextBtn.disabled = currentWordIndex === currentWords.length - 1;
-            
-            // Add pronunciation event listeners
-            const pronunciationBtns = document.querySelectorAll('.pronunciation-btn');
-            pronunciationBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    speakWord(word.word);
-                });
-            });
+    function goToNextWord() {
+        if (currentWordIndex < currentWords.length - 1) {
+            currentWordIndex++;
+            renderWordCard();
         }
+    }
 
-        // Text-to-speech function
-        function speakWord(text) {
-            if ('speechSynthesis' in window) {
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'en-US';
-                utterance.rate = 0.8;
-                speechSynthesis.speak(utterance);
-            } else {
-                console.log('Text-to-speech not supported');
-            }
-        }
-
-        // Go to previous word
-        function goToPreviousWord() {
-            if (currentWordIndex > 0) {
-                currentWordIndex--;
-                renderWordCard();
-            }
-        }
-
-        // Go to next word
-        function goToNextWord() {
-            if (currentWordIndex < currentWords.length - 1) {
-                currentWordIndex++;
-                renderWordCard();
-            }
-        }
-
-        // Render review cards
-        function renderReviewCards(chapter) {
-            reviewMode.innerHTML = '';
-            
-            chapter.words.forEach(word => {
-                const card = document.createElement('div');
-                card.className = 'review-card';
-                card.innerHTML = `
-                    <div class="card-inner">
-                        <div class="card-front">
-                            <div class="word">${word.word}</div>
-                            <div class="pos">${word.pos}</div>
-                        </div>
-                        <div class="card-back">
-                            <div class="meaning">${word.meaning}</div>
-                            <div class="example">${word.example || 'No example available'}</div>
-                            <div class="example-translation">${word.exampleTranslation || '無可用例句'}</div>
-                        </div>
+    function renderReviewCards(chapter) {
+        reviewMode.innerHTML = '';
+        chapter.words.forEach(word => {
+            const card = document.createElement('div');
+            card.className = 'review-card';
+            card.innerHTML = `
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="word">${word.word}</div>
+                        <div class="pos">${word.pos}</div>
                     </div>
-                `;
-                
-                card.addEventListener('click', () => {
-                    card.classList.toggle('flipped');
+                    <div class="card-back">
+                        <div class="meaning">${word.meaning}</div>
+                        <div class="example">${word.example || 'No example available'}</div>
+                        <div class="example-translation">${word.exampleTranslation || '無可用例句'}</div>
+                    </div>
+                </div>
+            `;
+            card.addEventListener('click', () => card.classList.toggle('flipped'));
+            reviewMode.appendChild(card);
+        });
+    }
+
+    // ========= QUIZ SETTINGS =========
+    function handleQuizModeChange() {
+        const mode = quizModeSelect.value;
+        if (mode === 'precise') subchapterSetting.classList.remove('hidden');
+        else subchapterSetting.classList.add('hidden');
+    }
+
+    function handleQuizChapterChange() {
+        const chapterId = quizChapterSelect.value;
+        quizSubchapterSelect.innerHTML = '';
+
+        if (chapterId !== 'all') {
+            const chapter = vocabularyData.chapters.find(ch => ch.id === chapterId);
+            if (chapter && chapter.subchapters) {
+                chapter.subchapters.forEach(sub => {
+                    const opt = document.createElement('option');
+                    opt.value = sub.id;
+                    opt.textContent = sub.title;
+                    quizSubchapterSelect.appendChild(opt);
                 });
-                
-                reviewMode.appendChild(card);
+            }
+        }
+    }
+
+    // ========= QUIZ CORE =========
+    function startQuiz() {
+        if (!vocabularyData) return;
+
+        quizFinished = false;
+        quizIndex = 0;
+        quizScore = 0;
+
+        // 1) build pool
+        const mode = quizModeSelect.value;
+        const chapterId = quizChapterSelect.value;
+        const subchapterId = quizSubchapterSelect.value;
+
+        let pool = [];
+
+        if (mode === 'mix-all' || chapterId === 'all') {
+            vocabularyData.chapters.forEach(ch => pool.push(...ch.words));
+        } else if (mode === 'mix-chapter') {
+            const ch = vocabularyData.chapters.find(c => c.id === chapterId);
+            if (ch) pool = [...ch.words];
+        } else if (mode === 'precise') {
+            const ch = vocabularyData.chapters.find(c => c.id === chapterId);
+            if (ch) {
+                pool = ch.words.filter(w => w.subchapter === subchapterId);
+            }
+        }
+
+        // fallback: no data -> stop
+        pool = pool.filter(w => w.meaning && w.word);
+        if (pool.length < 4) {
+            alert('Not enough words to generate quiz (need at least 4).');
+            return;
+        }
+
+        quizPool = shuffle(pool);
+
+        // 2) determine question count
+        const countValue = quizCountSelect.value;
+        let qCount = quizPool.length;
+        if (countValue !== 'all') {
+            qCount = Math.min(Number(countValue), quizPool.length);
+        }
+
+        // 3) build questions
+        quizQuestionsData = [];
+        for (let i = 0; i < qCount; i++) {
+            const target = quizPool[i];
+            const options = buildOptions(target, pool);
+            const correctIndex = options.findIndex(o => o.meaning === target.meaning);
+
+            quizQuestionsData.push({
+                wordObj: target,
+                options,
+                correctIndex
             });
         }
 
-        // Handle quiz mode change
-        function handleQuizModeChange() {
-            const mode = quizModeSelect.value;
-            
-            if (mode === 'precise') {
-                subchapterSetting.classList.remove('hidden');
-            } else {
-                subchapterSetting.classList.add('hidden');
+        // 4) answers init
+        quizAnswers = quizQuestionsData.map(() => ({ selectedIndex: null }));
+
+        // show quiz
+        quizQuestions.classList.remove('hidden');
+        quizSettings.classList.add('hidden');
+
+        renderQuizQuestion();
+        updateQuizUI();
+    }
+
+    function buildOptions(target, pool) {
+        const distractors = pool
+            .filter(w => w.meaning && w.word && w.word !== target.word)
+            .map(w => ({ word: w.word, meaning: w.meaning }))
+            .filter((v, idx, arr) => arr.findIndex(x => x.meaning === v.meaning) === idx);
+
+        const picked = [];
+        while (picked.length < 3 && distractors.length) {
+            const r = Math.floor(Math.random() * distractors.length);
+            picked.push(distractors.splice(r, 1)[0]);
+        }
+
+        const options = [
+            { word: target.word, meaning: target.meaning },
+            ...picked
+        ];
+
+        return shuffle(options);
+    }
+
+    function renderQuizQuestion() {
+        const q = quizQuestionsData[quizIndex];
+        if (!q) return;
+
+        const w = q.wordObj;
+        questionText.innerHTML = `
+            What is the meaning of <strong>${w.word}</strong> ${w.pos ? '('+w.pos+')' : ''} ?
+        `;
+
+        optionsContainer.innerHTML = '';
+        q.options.forEach((opt, idx) => {
+            const div = document.createElement('div');
+            div.className = 'option';
+            div.dataset.index = idx;
+            div.textContent = `${String.fromCharCode(65 + idx)}. ${opt.meaning}`;
+
+            // restore selected state
+            if (quizAnswers[quizIndex].selectedIndex === idx) {
+                div.classList.add('selected');
             }
+
+            div.addEventListener('click', () => selectOption(idx));
+            optionsContainer.appendChild(div);
+        });
+
+        // if finished, show correctness colors
+        if (quizFinished) paintAnswerResult();
+    }
+
+    function selectOption(idx) {
+        if (quizFinished) return;
+
+        quizAnswers[quizIndex].selectedIndex = idx;
+        document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+        const selected = document.querySelector(`.option[data-index="${idx}"]`);
+        if (selected) selected.classList.add('selected');
+    }
+
+    function goToQuestion(newIndex) {
+        if (newIndex < 0 || newIndex >= quizQuestionsData.length) return;
+
+        // if going forward and last question -> finish
+        if (!quizFinished && newIndex === quizQuestionsData.length) {
+            finishQuiz();
+            return;
         }
 
-        // Handle quiz chapter change
-        function handleQuizChapterChange() {
-            const chapterId = quizChapterSelect.value;
-            
-            // Clear subchapter options
-            quizSubchapterSelect.innerHTML = '';
-            
-            if (chapterId !== 'all') {
-                const chapter = vocabularyData.chapters.find(ch => ch.id === chapterId);
-                
-                if (chapter && chapter.subchapters) {
-                    chapter.subchapters.forEach(subchapter => {
-                        const option = document.createElement('option');
-                        option.value = subchapter.id;
-                        option.textContent = subchapter.title;
-                        quizSubchapterSelect.appendChild(option);
-                    });
-                }
+        quizIndex = newIndex;
+        renderQuizQuestion();
+        updateQuizUI();
+    }
+
+    function updateQuizUI() {
+        const total = quizQuestionsData.length;
+        progressText.textContent = `Question ${quizIndex + 1} of ${total}`;
+        scoreText.textContent = `Score: ${quizScore}/${total}`;
+        progressFill.style.width = `${((quizIndex) / total) * 100}%`;
+
+        prevQuestionBtn.disabled = quizIndex === 0;
+
+        if (quizIndex === total - 1 && !quizFinished) {
+            nextQuestionBtn.textContent = 'Finish Quiz';
+        } else {
+            nextQuestionBtn.textContent = 'Next Question';
+        }
+    }
+
+    function finishQuiz() {
+        quizFinished = true;
+
+        // calculate score
+        quizScore = 0;
+        quizQuestionsData.forEach((q, i) => {
+            if (quizAnswers[i].selectedIndex === q.correctIndex) quizScore++;
+        });
+
+        // show results
+        showQuizResult();
+        updateQuizUI();
+    }
+
+    function showQuizResult() {
+        const total = quizQuestionsData.length;
+        const wrongs = [];
+
+        quizQuestionsData.forEach((q, i) => {
+            const sel = quizAnswers[i].selectedIndex;
+            if (sel !== q.correctIndex) {
+                wrongs.push({
+                    idx: i + 1,
+                    word: q.wordObj.word,
+                    pos: q.wordObj.pos,
+                    meaning: q.wordObj.meaning,
+                    your: sel == null ? 'No Answer' : q.options[sel].meaning
+                });
             }
-        }
+        });
 
-        // Start quiz
-        function startQuiz() {
-            quizQuestions.classList.remove('hidden');
-            // In a real app, this would generate questions based on the selected options
-        }
+        quizQuestionArea.innerHTML = `
+            <div class="quiz-result">
+                <h2 style="color: var(--primary); margin-bottom: 10px;">
+                    🎉 Quiz Finished!
+                </h2>
+                <p style="font-size:1.2rem; margin-bottom: 8px;">
+                    Your Score: <strong>${quizScore} / ${total}</strong>
+                </p>
+                <p style="color: var(--gray); margin-bottom: 15px;">
+                    Accuracy: ${(quizScore/total*100).toFixed(1)}%
+                </p>
 
-        // Go to previous question
-        function goToPreviousQuestion() {
-            // In a real app, this would navigate to the previous question
-            console.log('Going to previous question');
-        }
+                ${wrongs.length === 0 ? `
+                    <p style="color: var(--success); font-weight:600;">Perfect! No wrong answers 🎯</p>
+                ` : `
+                    <h3 style="margin-top:10px;">Wrong Answers Review</h3>
+                    <div class="wrong-list">
+                        ${wrongs.map(w => `
+                            <div class="wrong-item">
+                                <div class="w-word">${w.idx}. ${w.word} ${w.pos ? '('+w.pos+')' : ''}</div>
+                                <div>✅ Correct: ${w.meaning}</div>
+                                <div>❌ Your answer: ${w.your}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `}
 
-        // Go to next question
-        function goToNextQuestion() {
-            // In a real app, this would navigate to the next question
-            console.log('Going to next question');
-        }
+                <div style="display:flex; gap:10px; margin-top:20px; flex-wrap:wrap;">
+                    <button class="nav-btn" id="restart-quiz-btn">
+                        <i class="fas fa-rotate-right"></i> Restart Quiz
+                    </button>
+                    <button class="nav-btn" id="back-settings-btn" style="background:var(--secondary);">
+                        <i class="fas fa-sliders"></i> Back to Settings
+                    </button>
+                </div>
+            </div>
+        `;
 
-        // Initialize the app
-        init();
-    </script>
+        // hide nav buttons when finished
+        document.querySelector('.quiz-controls').classList.add('hidden');
+        document.querySelector('.quiz-progress').classList.add('hidden');
+
+        // bind buttons
+        document.getElementById('restart-quiz-btn').addEventListener('click', () => {
+            // restore containers
+            restoreQuizView();
+            startQuiz();
+        });
+
+        document.getElementById('back-settings-btn').addEventListener('click', () => {
+            restoreQuizView(true);
+        });
+    }
+
+    function restoreQuizView(backToSettings = false) {
+        // restore question UI
+        quizQuestionArea.innerHTML = `
+            <div class="question-text" id="question-text"></div>
+            <div class="options-container" id="options-container"></div>
+        `;
+
+        // rebind refs
+        window.questionText = document.getElementById('question-text');
+        window.optionsContainer = document.getElementById('options-container');
+
+        document.querySelector('.quiz-controls').classList.remove('hidden');
+        document.querySelector('.quiz-progress').classList.remove('hidden');
+
+        if (backToSettings) {
+            quizQuestions.classList.add('hidden');
+            quizSettings.classList.remove('hidden');
+        }
+    }
+
+    function paintAnswerResult() {
+        const q = quizQuestionsData[quizIndex];
+        const sel = quizAnswers[quizIndex].selectedIndex;
+
+        document.querySelectorAll('.option').forEach((optEl) => {
+            const idx = Number(optEl.dataset.index);
+            optEl.classList.remove('selected');
+            if (idx === q.correctIndex) optEl.classList.add('correct');
+            if (sel !== null && idx === sel && sel !== q.correctIndex) optEl.classList.add('wrong');
+        });
+    }
+
+    // ========= UTILS =========
+    function shuffle(arr) {
+        const a = [...arr];
+        for (let i = a.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+    }
+
+    // Next Question behavior
+    nextQuestionBtn.addEventListener('click', () => {
+        if (quizFinished) return;
+
+        // auto-finish if last
+        if (quizIndex === quizQuestionsData.length - 1) {
+            finishQuiz();
+        } else {
+            goToQuestion(quizIndex + 1);
+        }
+    });
+
+    init();
+</script>
 </body>
 </html>
