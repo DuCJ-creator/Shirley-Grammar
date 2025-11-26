@@ -25,21 +25,21 @@
       font-family: 'Noto Sans TC', sans-serif;
       background-color: var(--ivory);
       color: var(--soft-charcoal);
-      line-height: 1.6;
-      padding: 0 12px;
+      line-height: 1.55;
+      padding: 0 10px;
     }
 
     .container {
       max-width: 960px;
       margin: 0 auto;
-      padding: 24px 16px;
+      padding: 20px 12px;
     }
 
     h1 {
       font-family: 'Playfair Display', serif;
-      font-size: 2.6rem;
+      font-size: 2.4rem;
       text-align: center;
-      margin: 16px 0 28px;
+      margin: 12px 0 22px;
       color: var(--deep-olive);
       position: relative;
     }
@@ -47,141 +47,118 @@
     h1::after {
       content: "";
       position: absolute;
-      bottom: -10px;
+      bottom: -8px;
       left: 50%;
       transform: translateX(-50%);
-      width: 90px;
+      width: 80px;
       height: 3px;
       background: var(--accent-gold);
       border-radius: 2px;
     }
 
-    .controls {
-      text-align: center;
-      margin-bottom: 24px;
-    }
-
-    .controls button {
-      background: var(--elegant-rose);
-      color: white;
-      border: none;
-      padding: 8px 20px;
-      margin: 0 6px;
-      border-radius: 30px;
-      font-weight: 600;
-      font-size: 0.95rem;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-
-    .controls button:hover {
-      background: var(--deep-olive);
-      transform: translateY(-2px);
-    }
-
     .section {
       background: white;
-      border-radius: 16px;
-      padding: 20px;
-      margin: 24px 0;
-      box-shadow: 0 4px 16px rgba(58, 58, 58, 0.06);
+      border-radius: 14px;
+      padding: 18px;
+      margin: 20px 0;
+      box-shadow: 0 3px 12px rgba(58, 58, 58, 0.05);
       border-top: 3px solid var(--accent-gold);
     }
 
     h2 {
       font-family: 'Playfair Display', serif;
-      font-size: 1.75rem;
+      font-size: 1.65rem;
       color: var(--deep-olive);
-      margin-bottom: 16px;
-      padding-bottom: 6px;
+      margin-bottom: 14px;
+      padding-bottom: 5px;
       border-bottom: 1px dashed #e0e0e0;
     }
 
     h3 {
-      margin: 14px 0 10px;
+      margin: 12px 0 8px;
       color: var(--elegant-rose);
-      font-size: 1.25rem;
+      font-size: 1.2rem;
     }
 
     .bilingual {
       display: flex;
       flex-wrap: wrap;
-      gap: 16px;
-      margin: 12px 0;
+      gap: 14px;
+      margin: 10px 0;
     }
 
     .en, .zh {
       flex: 1;
-      min-width: 260px;
-      padding: 14px;
+      min-width: 240px;
+      padding: 12px;
       background: var(--mist-gray);
-      border-radius: 10px;
-      font-size: 1rem;
+      border-radius: 8px;
+      font-size: 0.98rem;
     }
 
     .example-item {
-      padding: 12px;
-      background: #f8f9fa;
-      border-radius: 10px;
+      padding: 10px 12px;
+      background: #f9f9f9;
+      border-radius: 8px;
       border: 1px solid #eee;
       position: relative;
-      margin: 8px 0;
-      font-size: 1.02rem;
+      margin: 6px 0;
+      font-size: 0.99rem;
     }
 
     .play-btn {
       position: absolute;
-      top: 10px;
-      right: 10px;
+      top: 8px;
+      right: 8px;
       background: var(--accent-gold);
       color: white;
-      width: 26px;
-      height: 26px;
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 11px;
+      font-size: 10px;
       cursor: pointer;
       border: none;
     }
 
     .highlight {
       background-color: #fff8e1;
-      padding: 2px 5px;
-      border-radius: 4px;
+      padding: 1px 4px;
+      border-radius: 3px;
       font-weight: 600;
     }
 
     .warning, .tip {
-      padding: 12px;
-      margin: 14px 0;
+      padding: 10px 12px;
+      margin: 12px 0;
       border-radius: 0 8px 8px 0;
-      font-size: 0.98rem;
+      font-size: 0.96rem;
     }
 
     .warning {
       background: #ffebee;
-      border-left: 4px solid #f44336;
+      border-left: 3px solid #f44336;
       color: #c62828;
     }
 
     .tip {
       background: #e8f5e9;
-      border-left: 4px solid #4caf50;
+      border-left: 3px solid #4caf50;
       color: #2e7d32;
     }
 
     .comparison-table {
       width: 100%;
       border-collapse: collapse;
-      margin: 16px 0;
-      font-size: 0.95rem;
+      margin: 14px 0;
+      font-size: 0.92rem;
     }
 
     .comparison-table th,
     .comparison-table td {
-      padding: 10px;
+      padding: 8px;
       text-align: left;
       border-bottom: 1px solid #eee;
     }
@@ -191,17 +168,44 @@
       color: var(--deep-olive);
     }
 
+    /* 新增：兩欄例句 */
+    .dual-col {
+      display: flex;
+      gap: 16px;
+      margin: 10px 0;
+    }
+
+    .dual-col > div {
+      flex: 1;
+    }
+
+    /* 新增：複合形容詞緊湊網格 */
+    .compound-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 8px;
+      margin: 10px 0;
+    }
+
+    .compound-item {
+      padding: 8px 10px;
+      background: #f8f9fa;
+      border-radius: 6px;
+      border: 1px solid #eee;
+      font-size: 0.98rem;
+    }
+
     .redirect-btn {
       display: inline-block;
-      margin-top: 12px;
-      padding: 8px 16px;
+      margin-top: 10px;
+      padding: 6px 14px;
       background: var(--elegant-rose);
       color: white;
       text-decoration: none;
-      border-radius: 30px;
+      border-radius: 28px;
       font-weight: 600;
-      font-size: 0.95rem;
-      transition: all 0.3s;
+      font-size: 0.92rem;
+      transition: all 0.25s;
     }
 
     .redirect-btn:hover {
@@ -210,21 +214,17 @@
     }
 
     @media (max-width: 768px) {
-      .bilingual { flex-direction: column; }
-      .en, .zh { min-width: 100%; }
-      h1 { font-size: 2rem; }
-      .section { padding: 16px; }
+      .bilingual, .dual-col { flex-direction: column; }
+      .en, .zh, .dual-col > div { min-width: 100%; }
+      h1 { font-size: 1.9rem; }
+      .section { padding: 14px; }
+      .compound-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Shirley's Adjectives & Adverbs<br>形容詞與副詞解析</h1>
-
-    <div class="controls">
-      <button id="pauseBtn">⏸️ 暫停朗讀</button>
-      <button id="playBtn">▶️ 繼續</button>
-    </div>
 
     <!-- 定義 -->
     <div class="section">
@@ -246,16 +246,20 @@
     <div class="section">
       <h2>Adjectives 形容詞</h2>
 
-      <h3>1. Attributive (限定用法)</h3>
-      <div class="example-item">
-        My father is a <span class="highlight">successful</span> businessman.<br>
-        （successful 置於名詞前）
-      </div>
-
-      <h3>2. Predicative (敘述用法)</h3>
-      <div class="example-item">
-        The meeting is <span class="highlight">successful</span>.<br>
-        （successful 在 be 動詞後）
+      <h3>1–2. 限定 vs. 敘述用法</h3>
+      <div class="dual-col">
+        <div>
+          <div class="example-item">
+            My father is a <span class="highlight">successful</span> businessman.<br>
+            （successful 置於名詞前 → <strong>Attributive</strong>）
+          </div>
+        </div>
+        <div>
+          <div class="example-item">
+            The meeting is <span class="highlight">successful</span>.<br>
+            （successful 在 be 動詞後 → <strong>Predicative</strong>）
+          </div>
+        </div>
       </div>
 
       <div class="tip">
@@ -268,7 +272,7 @@
       <div class="example-item">Some children are <strong>unwilling</strong> to share.<button class="play-btn" onclick="speak('Some children are unwilling to share.')">🔊</button></div>
       <div class="example-item">I am <strong>alone</strong> but not lonely.<button class="play-btn" onclick="speak('I am alone but not lonely.')">🔊</button></div>
 
-      <h3>3. Object Complement (受詞補語)</h3>
+      <h3>3. 受詞補語</h3>
       <div class="example-item">
         The song made me <span class="highlight">sad</span>.<br>
         Please keep the window <span class="highlight">open</span>.
@@ -282,13 +286,15 @@
 
       <h3>5. 複合形容詞 (Compound Adjectives)</h3>
       <div class="tip">
-        ✔ 用連字號連接兩個或多個詞，整體修飾名詞，通常置於名詞前。
+        ✔ 用連字號連接，整體修飾名詞（通常置於名詞前）
       </div>
-      <div class="example-item">
-        a <span class="highlight">well-known</span> singer<br>
-        a <span class="highlight">three-year-old</span> child<br>
-        an <span class="highlight">all-night</span> party<br>
-        a <span class="highlight">high-quality</span> product
+      <div class="compound-grid">
+        <div class="compound-item">a <span class="highlight">well-known</span> singer</div>
+        <div class="compound-item">a <span class="highlight">three-year-old</span> child</div>
+        <div class="compound-item">an <span class="highlight">all-night</span> party</div>
+        <div class="compound-item">a <span class="highlight">high-quality</span> product</div>
+        <div class="compound-item">a <span class="highlight">last-minute</span> decision</div>
+        <div class="compound-item">a <span class="highlight">full-time</span> job</div>
       </div>
       <div class="warning">
         ❌ She is a well known singer.<br>
@@ -307,24 +313,21 @@
     <div class="section">
       <h2>Adverbs 副詞</h2>
       <p>副詞修飾：<strong>動詞</strong>（how/when/where）、<strong>形容詞</strong>、<strong>其他副詞</strong></p>
-
       <div class="example-item">
         She sings <span class="highlight">beautifully</span>. （修飾動詞）<br>
         He is <span class="highlight">extremely</span> tired. （修飾形容詞）<br>
         She runs <span class="highlight">very</span> quickly. （修飾副詞）
       </div>
-
       <div class="tip">
         ✔ 多數副詞由形容詞 + <strong>-ly</strong> 構成：<br>
         easy → easily, careful → carefully<br>
-        ✔ 但也有不規則：good → well, fast → fast
+        ✔ 不規則：good → well, fast → fast
       </div>
     </div>
 
     <!-- 比較級與最高級 -->
     <div class="section">
       <h2>Comparatives & Superlatives<br>比較級與最高級</h2>
-
       <table class="comparison-table">
         <tr><th>原級</th><th>比較級</th><th>最高級</th></tr>
         <tr><td>tall</td><td>taller</td><td>tallest</td></tr>
@@ -333,136 +336,65 @@
         <tr><td>bad</td><td>worse</td><td>worst</td></tr>
         <tr><td>little</td><td>less</td><td>least</td></tr>
       </table>
-
       <div class="example-item">
         The older we grow, the wiser we become.<br>
         Your room is three times <strong>as large as</strong> mine.<br>
         It is <strong>easier</strong> to make a plan than to carry it out.
       </div>
-
-      <h3>so + adj/adv vs. such + (a/an) + adj + noun</h3>
+      <h3>so... vs. such a...</h3>
       <div class="bilingual">
         <div class="en">
-          <p>The girl is <strong>so beautiful</strong>.<br>
-             She is <strong>such a beautiful girl</strong>.</p>
-          <p>He works <strong>so hard</strong>.<br>
-             It was <strong>such a comfortable hotel</strong>...</p>
+          The girl is <strong>so beautiful</strong>.<br>
+          She is <strong>such a beautiful girl</strong>.
         </div>
         <div class="zh">
-          <p>這個女孩<strong>如此美麗</strong>。<br>
-             她是<strong>如此美麗的一個女孩</strong>。</p>
-          <p>他工作<strong>如此努力</strong>。<br>
-             那是<strong>如此舒適的一家飯店</strong>……</p>
+          這個女孩<strong>如此美麗</strong>。<br>
+          她是<strong>如此美麗的一個女孩</strong>。
         </div>
-      </div>
-
-      <h3>quite / rather + a/an + adj + noun</h3>
-      <div class="example-item">
-        We had <strong>quite a good time</strong> at the party.<br>
-        It is <strong>rather a difficult decision</strong> to make.
       </div>
     </div>
 
     <!-- 易混淆詞 -->
     <div class="section">
       <h2>Common Confusions 易混淆用法</h2>
-
-      <h3>同一詞形，不同詞性</h3>
       <div class="example-item">
-        He is a <strong>hard</strong> worker. （形容詞）<br>
-        He works very <strong>hard</strong>. （副詞）<br>
-        He <strong>hardly</strong> works. （幾乎不 → 副詞）
+        He is a <strong>hard</strong> worker. （adj）<br>
+        He works very <strong>hard</strong>. （adv）<br>
+        He <strong>hardly</strong> works. （adv: 幾乎不）
       </div>
-
       <div class="example-item">
-        It is a <strong>high</strong> building. （形容詞）<br>
-        The bird is flying <strong>high</strong>. （副詞）<br>
-        She is <strong>highly</strong> educated. （非常 → 副詞）
-      </div>
-
-      <div class="example-item">
-        She was <strong>late</strong> again. （形容詞/副詞）<br>
-        How have you been <strong>lately</strong>? （近來 → 副詞）
-      </div>
-
-      <h3>-ly 結尾 ≠ 一定是副詞</h3>
-      <div class="example-item">
-        My roommate is very <strong>friendly</strong>. （形容詞）<br>
-        Our school issues a <strong>biweekly</strong>. （名詞：雙週刊）<br>
-        I play tennis twice <strong>weekly</strong>. （副詞：每週）
-      </div>
-
-      <h3>every day vs. everyday</h3>
-      <div class="example-item">
-        I exercise <strong>every day</strong>. （副詞：每天）<br>
-        This is an <strong>everyday</strong> problem. （形容詞：日常的）
-      </div>
-
-      <h3>sometimes vs. sometime</h3>
-      <div class="example-item">
-        <strong>Sometimes</strong> I feel tired. （有時）<br>
-        Let’s meet <strong>sometime</strong> next week. （某個時候）
+        My roommate is very <strong>friendly</strong>. （adj）<br>
+        I exercise <strong>every day</strong>. （adv）<br>
+        This is an <strong>everyday</strong> problem. （adj）
       </div>
     </div>
 
-    <!-- 形容詞子句 & 副詞子句簡介 -->
+    <!-- 形容詞子句 & 副詞子句 -->
     <div class="section">
-      <h2>Adjective & Adverb Clauses<br>形容詞子句與副詞子句</h2>
-      <p>除了單一形容詞與副詞，它們也能以「子句（clause）」形式出現，提供更完整的修飾邏輯。</p>
-
-      <h3>形容詞子句（Relative Clauses）</h3>
-      <p>由關係代名詞（who, which, that...）或關係副詞（where, when...）引導，用來修飾名詞。</p>
+      <h2>Adjective & Adverb Clauses</h2>
+      <p>形容詞與副詞也能以<strong>子句</strong>形式出現，提供更完整修飾。</p>
       <div class="example-item">
-        The book <span class="highlight">that you lent me</span> is amazing.<br>
-        This is the school <span class="highlight">where I studied</span>.
+        The book <span class="highlight">that you lent me</span> is great. （形容詞子句）<br>
+        I’ll call you <span class="highlight">when I arrive</span>. （副詞子句）
       </div>
-      <a href="https://ducj-creator.github.io/Shirley-Grammar/adjective-clause/" class="redirect-btn" target="_blank">📖 詳見形容詞子句專區</a>
-
-      <h3>副詞子句（Adverb Clauses）</h3>
-      <p>由從屬連接詞（when, because, if...）引導，說明時間、原因、條件等副詞功能。</p>
-      <div class="example-item">
-        I’ll call you <span class="highlight">when I arrive</span>.<br>
-        She stayed home <span class="highlight">because she was sick</span>.
-      </div>
-      <a href="https://ducj-creator.github.io/Shirley-Grammar/adverb-clause/" class="redirect-btn" target="_blank">📘 詳見副詞子句專區</a>
+      <a href="https://ducj-creator.github.io/Shirley-Grammar/adjective-clause/" class="redirect-btn" target="_blank">📖 形容詞子句詳解</a>
+      <a href="https://ducj-creator.github.io/Shirley-Grammar/adverb-clause/" class="redirect-btn" style="margin-left:10px" target="_blank">📘 副詞子句詳解</a>
     </div>
 
-    <!-- 常見錯誤對比 -->
+    <!-- 常見錯誤 -->
     <div class="section">
-      <h2>Avoid These Mistakes! 常見錯誤修正</h2>
-
+      <h2>Avoid These Mistakes!</h2>
       <div class="warning">
         ❌ Tom works harder than <strong>me</strong>.<br>
         ✅ Tom works harder than <strong>I (do)</strong>.<br><br>
-
         ❌ Mary’s skirt is more beautiful than <strong>me</strong>.<br>
-        ✅ Mary’s skirt is more beautiful than <strong>mine</strong>.<br><br>
-
-        ❌ The population of Taipei is larger than <strong>Hsinchu</strong>.<br>
-        ✅ The population of Taipei is larger than <strong>that of Hsinchu</strong>.
-      </div>
-
-      <div class="tip">
-        ✔ 比較時，<strong>比較對象必須同類</strong>：<br>
-        「人 vs. 人」、「物 vs. 物」、「人口 vs. 人口」
+        ✅ Mary’s skirt is more beautiful than <strong>mine</strong>.
       </div>
     </div>
   </div>
 
   <script>
-    let isPaused = false;
-
-    document.getElementById('pauseBtn').addEventListener('click', () => {
-      isPaused = true;
-      if (window.speechSynthesis) speechSynthesis.cancel();
-    });
-
-    document.getElementById('playBtn').addEventListener('click', () => {
-      isPaused = false;
-    });
-
     function speak(text) {
-      if (isPaused) return;
       if ('speechSynthesis' in window) {
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = 'en-US';
