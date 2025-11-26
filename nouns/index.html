@@ -206,21 +206,24 @@
         <tr><th>英文</th><th>中文</th><th>例子</th></tr>
         <tr><td>Common</td><td>普通名詞</td><td>city, teacher</td></tr>
         <tr><td>Proper</td><td>專有名詞</td><td>Taipei, Shirley</td></tr>
+        <tr><td>Concrete</td><td>具體名詞</td><td>star, phone</td></tr>
         <tr><td>Abstract</td><td>抽象名詞</td><td>love, time</td></tr>
         <tr><td>Collective</td><td>集合名詞</td><td>team, family</td></tr>
+        <tr><td>Compound</td><td>複合名詞</td><td>toothpaste, classroom</td></tr>
       </table>
     </div>
 
     <!-- 可數 vs 不可數 -->
     <div class="section">
       <h2>Countable vs Uncountable</h2>
-      
-      <h3>規則複數</h3>
+
+      <h3>規則複數變化</h3>
       <table>
         <tr><th>規則</th><th>例子</th></tr>
-        <tr><td>一般 +s</td><td>book → books</td></tr>
-        <tr><td>sh/ch/x/s/o +es</td><td>box → boxes</td></tr>
-        <tr><td>輔音+y → ies</td><td>city → cities</td></tr>
+        <tr><td>一般 + s</td><td>book → books</td></tr>
+        <tr><td>sh/ch/x/s/o + es</td><td>box → boxes</td></tr>
+        <tr><td>輔音 + y → ies</td><td>city → cities</td></tr>
+        <tr><td>f/fe → ves</td><td>knife → knives</td></tr>
       </table>
 
       <h3>不規則複數</h3>
@@ -231,6 +234,8 @@
         <div class="word-card" onclick="speak('foot feet')">foot → feet</div>
         <div class="word-card" onclick="speak('tooth teeth')">tooth → teeth</div>
         <div class="word-card" onclick="speak('mouse mice')">mouse → mice</div>
+        <div class="word-card" onclick="speak('goose geese')">goose → geese</div>
+        <div class="word-card" onclick="speak('fish fish')">fish → fish</div>
       </div>
 
       <div class="note">
@@ -242,43 +247,75 @@
       <h3>常見不可數名詞</h3>
       <table>
         <tr><th>類別</th><th>例子</th></tr>
-        <tr><td>液體</td><td>water, milk</td></tr>
-        <tr><td>抽象</td><td>information, advice</td></tr>
-        <tr><td>學科</td><td>math, physics</td></tr>
+        <tr><td>液體</td><td>water, milk, coffee</td></tr>
+        <tr><td>材料</td><td>wood, metal</td></tr>
+        <tr><td>食物</td><td>rice, bread, cheese</td></tr>
+        <tr><td>抽象</td><td>time, love, advice</td></tr>
+        <tr><td>學科</td><td>math, physics, history</td></tr>
+        <tr><td>其他</td><td>news, money, furniture</td></tr>
       </table>
-    </div>
 
-    <!-- 所有格與冠詞 -->
-    <div class="section">
-      <h2>Possessive & Articles</h2>
+      <h3>雙重意義名詞</h3>
       <table>
-        <tr><th>規則</th><th>例子</th></tr>
-        <tr><td>單數：+ 's</td><td>John's car</td></tr>
-        <tr><td>複數 s：+ '</td><td>students' books</td></tr>
-        <tr><td>a / an / the</td><td>a book, an apple, the sun</td></tr>
+        <tr><th>不可數</th><th>可數</th></tr>
+        <tr><td>paper（紙）</td><td>a paper（論文）</td></tr>
+        <tr><td>light（光）</td><td>a light（燈）</td></tr>
+        <tr><td>time（時間）</td><td>times（次數）</td></tr>
+        <tr><td>work（工作）</td><td>a work（作品）</td></tr>
+        <tr><td>hair（頭髮）</td><td>a hair（一根髮）</td></tr>
+        <tr><td>experience（經驗）</td><td>experiences（經歷）</td></tr>
       </table>
     </div>
 
-    <!-- 名詞子句簡介 -->
+    <!-- 所有格 -->
+    <div class="section">
+      <h2>Possessive Case 所有格</h2>
+      <table>
+        <tr><th>結構</th><th>例子</th><th>中文</th></tr>
+        <tr><td>單數 + 's</td><td>John's car</td><td>約翰的車</td></tr>
+        <tr><td>複數以 s 結尾 + '</td><td>students' books</td><td>學生們的書</td></tr>
+        <tr><td>不規則複數 + 's</td><td>children's toys</td><td>孩子們的玩具</td></tr>
+        <tr><td><strong>of + 名詞</strong></td><td>the roof of the house</td><td>房子的屋頂</td></tr>
+        <tr><td>時間/機構 + '</td><td>today's news</td><td>今天的新聞</td></tr>
+      </table>
+      <p style="font-size:0.95rem; margin-top:10px;">
+        💡 提示：「's」多用於<strong>人或動物</strong>；「of + 名詞」常用於<strong>無生命事物</strong>。
+      </p>
+    </div>
+
+    <!-- 冠詞 -->
+    <div class="section">
+      <h2>Articles 冠詞</h2>
+      <table>
+        <tr><th>冠詞</th><th>用法</th><th>例子</th></tr>
+        <tr><td>a</td><td>子音開頭</td><td>a book, a university</td></tr>
+        <tr><td>an</td><td>母音開頭</td><td>an apple, an hour</td></tr>
+        <tr><td>the</td><td>特指</td><td>the sun, the Pacific Ocean</td></tr>
+        <tr><td>無冠詞</td><td>專有名詞、抽象名詞等</td><td>Taiwan, English, love</td></tr>
+      </table>
+    </div>
+
+    <!-- 名詞子句 -->
     <div class="section">
       <h2>Noun Clauses 名詞子句</h2>
       <p>名詞子句是<strong>具有名詞功能的子句</strong>，可作主詞、受詞或補語。</p>
       <div class="note" style="font-size:0.95rem;">
-        <strong>例子：</strong>
-        <br>• <em><strong>What he said</strong> surprised me.</em> （主詞）
-        <br>• I know <em><strong>where she lives</strong></em>. （受詞）
+        <strong>例子：</strong><br>
+        • <em><strong>What he said</strong> surprised me.</em>（主詞）<br>
+        • I know <em><strong>where she lives</strong></em>.（受詞）
       </div>
       <a href="https://ducj-creator.github.io/Shirley-Grammar/noun-clause/" target="_blank" class="platform-button">📘 深入學習名詞子句</a>
     </div>
 
     <!-- 常見錯誤 -->
     <div class="section">
-      <h2>Common Mistakes</h2>
+      <h2>Common Mistakes 常見錯誤</h2>
       <table>
-        <tr><th>錯誤</th><th>正確</th></tr>
-        <tr><td>many informations</td><td>much information</td></tr>
-        <tr><td>a advice</td><td>some advice</td></tr>
-        <tr><td>the news are</td><td>the news is</td></tr>
+        <tr><th>錯誤</th><th>正確</th><th>說明</th></tr>
+        <tr><td>I like dog.</td><td>I like dogs.</td><td>可數名詞需加複數</td></tr>
+        <tr><td>many informations</td><td>much information</td><td>information 不可數</td></tr>
+        <tr><td>the news are</td><td>the news is</td><td>news 為單數</td></tr>
+        <tr><td>a advice</td><td>some advice</td><td>advice 不可數</td></tr>
       </table>
     </div>
   </div>
