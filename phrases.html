@@ -2,283 +2,462 @@
 <html lang="zh-TW">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Shirley's Phrases Study Platform</title>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Shirley's Phrases | Premium Study Platform</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body{
-      font-family:'Noto Sans TC',sans-serif;
-      background: radial-gradient(1200px circle at 10% -10%, #e8f0ff 0, transparent 60%),
-                  radial-gradient(1200px circle at 100% 0%, #f7efe9 0, transparent 55%),
-                  linear-gradient(180deg, #f6f8fb 0%, #eef2f7 100%);
-      color:#243447;
-      min-height:100vh;
-      padding:14px;
-    }
-    .container{ max-width:1100px; margin:0 auto; }
-
-    header{
-      background:rgba(255,255,255,0.98);
-      border-radius:14px;
-      padding:16px 18px;
-      box-shadow:0 6px 18px rgba(24,39,75,0.08);
-      text-align:center;
-      margin-bottom:12px;
-    }
-    h1{
-      font-size:1.6rem;
-      letter-spacing:.5px;
-      color:#1f2d3d;
-      margin-bottom:6px;
-    }
-    .description{ font-size:.95rem; color:#5b6b7a; }
-
-    .content-area{
-      background:#fff;
-      border-radius:14px;
-      padding:14px;
-      box-shadow:0 8px 22px rgba(24,39,75,0.08);
-      min-height:360px;
+    :root {
+      --primary: #4361ee;
+      --primary-gradient: linear-gradient(135deg, #4361ee, #3a0ca3);
+      --accent: #f72585;
+      --text-main: #2b2d42;
+      --text-sub: #8d99ae;
+      --bg-color: #f8f9fa;
+      --glass-bg: rgba(255, 255, 255, 0.75);
+      --glass-border: rgba(255, 255, 255, 0.6);
+      --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+      --shadow-md: 0 10px 25px -5px rgba(67, 97, 238, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+      --radius: 16px;
     }
 
-    /* mode selector */
-    .mode-bar{
-      display:flex; gap:8px; flex-wrap:wrap;
-      justify-content:center; margin-bottom:10px;
-    }
-    .mode-btn{
-      border:none; cursor:pointer;
-      padding:8px 14px;
-      border-radius:999px;
-      font-weight:700; font-size:.95rem;
-      background:#f3f6fb; color:#1f2d3d;
-      border:1px solid #e0e6ef;
-      transition:.15s ease;
-    }
-    .mode-btn.active{
-      background:linear-gradient(135deg,#4f8cff,#5bc0be);
-      color:#fff; border-color:transparent;
-      box-shadow:0 6px 14px rgba(79,140,255,0.35);
+    * { box-sizing: border-box; margin: 0; padding: 0; outline: none; -webkit-tap-highlight-color: transparent; }
+
+    body {
+      font-family: 'Inter', 'Noto Sans TC', sans-serif;
+      background-color: #f0f2f5;
+      /* 更加柔和高級的動態背景 */
+      background-image: 
+        radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+        radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
+        radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
+      background-size: 100% 100vh;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      color: var(--text-main);
+      min-height: 100vh;
+      padding: 20px 10px;
     }
 
-    /* Search */
-    .search-wrap{
-      display:flex; gap:8px; align-items:center;
-      border:1px solid #e6ebf2;
-      background:#fbfcfe;
-      border-radius:12px;
-      padding:8px 10px;
-      margin-bottom:10px;
-    }
-    .search-wrap input{
-      width:100%;
-      border:none; outline:none; background:transparent;
-      font-size:1rem; color:#233445;
-    }
-    .search-wrap .hint{
-      white-space:nowrap; font-size:.9rem; color:#7a8896;
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
     }
 
-    /* Tabs (A-Z + Favorites) */
-    .alpha-bar{
-      display:flex; flex-wrap:wrap; gap:6px;
-      margin-bottom:10px; user-select:none;
+    /* === Header === */
+    header {
+      text-align: center;
+      margin-bottom: 24px;
+      color: white;
+      padding: 20px 0;
+      animation: fadeInDown 0.8s ease;
     }
-    .alpha-btn{
-      width:40px; height:40px;
-      border-radius:999px;
-      border:1px solid #d7e0ea;
-      background:#f7f9fc;
-      color:#2c3e50;
-      font-weight:700;
-      cursor:pointer;
-      display:flex; align-items:center; justify-content:center;
-      transition:.15s ease;
-      box-shadow: inset 0 -1px 0 rgba(0,0,0,0.03);
+    
+    h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.2);
     }
-    .alpha-btn:hover{ transform:translateY(-1px); background:#eef4ff; }
-    .alpha-btn.active{
-      background:linear-gradient(135deg,#4f8cff,#5bc0be);
-      color:white; border:none;
-      box-shadow:0 6px 14px rgba(79,140,255,0.35);
-    }
-    .alpha-btn.fav{
-      width:auto; padding:0 12px; gap:6px; font-weight:700;
+    
+    .description {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.6;
+      font-weight: 500;
     }
 
-    /* Study list */
-    .phrase-list{
-      display:grid;
-      grid-template-columns:repeat(auto-fill, minmax(220px,1fr));
-      gap:8px;
-    }
-    .phrase-item{
-      background:#f8fafc;
-      border:1px solid #eef2f7;
-      border-radius:10px;
-      padding:10px 10px 8px;
-      cursor:pointer;
-      transition:.15s ease;
-      position:relative;
-    }
-    .phrase-item:hover{
-      transform:translateY(-1px);
-      background:#f1f6ff;
-      border-color:#e1e8f1;
-    }
-    .phrase-title{
-      font-size:1.02rem; font-weight:800;
-      color:#1f2d3d; padding-right:34px; line-height:1.25;
-    }
-    .phrase-meaning{
-      font-size:.9rem; color:#546575; margin-top:2px;
+    /* === Main Glass Panel === */
+    .content-area {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow-md);
+      min-height: 60vh;
+      transition: transform 0.3s ease;
     }
 
-    /* Star */
-    .star{
-      position:absolute; top:8px; right:8px;
-      font-size:1.2rem; line-height:1;
-      cursor:pointer; padding:4px; border-radius:6px;
-      color:#9aa8b6; background:transparent;
-      transition:.12s ease;
-    }
-    .star:hover{ background:#eaf1ff; color:#4f8cff; }
-    .star.active{ color:#f3b21a; }
-
-    /* detail (Study expand) */
-    .detail{
-      margin-top:6px;
-      background:#fff;
-      border-radius:8px;
-      border:1px dashed #e3e8ef;
-      padding:8px;
-      font-size:.95rem;
-      line-height:1.55;
-      color:#22313f;
-    }
-    .detail .en{ font-weight:700; margin-bottom:4px; }
-    .detail .zh{ color:#4b5b69; }
-    .detail .label{
-      display:inline-block;
-      font-size:.8rem; font-weight:700;
-      color:#4f8cff; margin-right:6px;
+    /* === Controls (Mode + Search) === */
+    .controls-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 20px;
     }
 
-    .empty{
-      padding:14px; color:#7a8a99; font-size:1rem;
+    /* Mode Switcher */
+    .mode-bar {
+      display: flex;
+      background: #eef1f6;
+      padding: 4px;
+      border-radius: 12px;
+      width: fit-content;
+      margin: 0 auto;
+    }
+    
+    .mode-btn {
+      border: none;
+      background: transparent;
+      padding: 8px 24px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-sub);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .mode-btn.active {
+      background: white;
+      color: var(--primary);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
 
-    .footer-note{
-      margin-top:10px; font-size:.85rem; color:#7a8a99; text-align:right;
+    /* Search Bar */
+    .search-wrap {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .search-wrap input {
+      width: 100%;
+      padding: 14px 14px 14px 48px;
+      border-radius: 14px;
+      border: 2px solid transparent;
+      background: white;
+      font-size: 1rem;
+      color: var(--text-main);
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+    }
+    
+    .search-wrap input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(67, 97, 238, 0.15);
+    }
+    
+    .search-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.1rem;
+      pointer-events: none;
+      opacity: 0.5;
+    }
+    
+    .hint {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.8rem;
+      color: var(--text-sub);
+      background: #f0f2f5;
+      padding: 2px 8px;
+      border-radius: 6px;
+      pointer-events: none;
     }
 
-    /* Review flip cards */
-    .card-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fill, minmax(240px,1fr));
-      gap:10px;
+    /* === A-Z Navigation === */
+    .alpha-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 24px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
     }
-    .flip-card{
-      perspective: 1000px;
-      height: 180px;
-      cursor:pointer;
+    
+    .alpha-btn {
+      width: 36px;
+      height: 36px;
+      border: 1px solid transparent;
+      border-radius: 10px;
+      background: white;
+      color: var(--text-main);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.03);
     }
-    .flip-inner{
-      width:100%; height:100%;
+    
+    .alpha-btn:hover {
+      transform: translateY(-2px);
+      color: var(--primary);
+    }
+    
+    .alpha-btn.active {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 4px 12px rgba(67, 97, 238, 0.4);
+    }
+    
+    .alpha-btn.fav {
+      width: auto;
+      padding: 0 16px;
+      background: #fff0f3;
+      color: #d00000;
+    }
+    
+    .alpha-btn.fav.active {
+      background: var(--accent);
+      color: white;
+      box-shadow: 0 4px 12px rgba(247, 37, 133, 0.4);
+    }
+
+    /* === Content Lists === */
+    .phrase-list, .card-grid {
+      display: grid;
+      gap: 16px;
+    }
+    
+    .phrase-list {
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+
+    /* === Phrase Item (Study) === */
+    .phrase-item {
+      background: white;
+      border-radius: 14px;
+      padding: 16px;
+      cursor: pointer;
+      position: relative;
+      border: 1px solid #eef1f6;
+      transition: all 0.25s ease;
+      animation: fadeInUp 0.5s ease backwards;
+    }
+    
+    .phrase-item:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(67, 97, 238, 0.3);
+    }
+    
+    .phrase-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 4px;
+    }
+
+    .phrase-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.3;
+      padding-right: 30px;
+    }
+    
+    .phrase-meaning {
+      font-size: 0.95rem;
+      color: var(--text-sub);
+    }
+
+    /* Star Icon */
+    .star {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      font-size: 1.2rem;
+      color: #e0e0e0;
+      transition: 0.2s;
+      z-index: 2;
+    }
+    .star:hover { transform: scale(1.2); }
+    .star.active { color: #ffbe0b; filter: drop-shadow(0 0 5px rgba(255, 190, 11, 0.5)); }
+
+    /* Expanded Detail */
+    .detail {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px dashed #eef1f6;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      animation: slideDown 0.3s ease;
+    }
+    
+    .detail-row { margin-bottom: 8px; }
+    .detail-row:last-child { margin-bottom: 0; }
+    
+    .badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+    .badge.en { background: #eef4ff; color: var(--primary); }
+    .badge.zh { background: #fff0f3; color: var(--accent); }
+    
+    .text-content { color: var(--text-main); }
+
+    /* === Review Flip Cards === */
+    .card-grid {
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    }
+
+    .flip-card {
+      perspective: 1200px;
+      height: 220px;
+      cursor: pointer;
+      animation: fadeInUp 0.5s ease backwards;
+    }
+    
+    .flip-inner {
+      width: 100%;
+      height: 100%;
       position: relative;
       transform-style: preserve-3d;
-      transition: transform .5s ease;
-      border-radius:12px;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 16px;
+      box-shadow: var(--shadow-sm);
     }
-    .flip-card.flipped .flip-inner{
+    
+    .flip-card.flipped .flip-inner {
       transform: rotateY(180deg);
+      box-shadow: var(--shadow-md);
     }
-    .flip-face{
-      position:absolute; inset:0;
+    
+    .flip-face {
+      position: absolute;
+      inset: 0;
       backface-visibility: hidden;
-      border-radius:12px;
-      padding:12px;
-      border:1px solid #e6ebf2;
-      box-shadow:0 6px 14px rgba(24,39,75,0.06);
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      gap:8px;
-      background:#fff;
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      border: 1px solid rgba(0,0,0,0.03);
     }
-    .flip-front{
-      border-left:6px solid #4f8cff;
-      background:linear-gradient(180deg,#ffffff 0%, #f7faff 100%);
+    
+    .flip-front {
+      background: white;
     }
-    .flip-back{
+    .flip-front::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; bottom: 0; width: 6px;
+      background: var(--primary);
+      border-radius: 16px 0 0 16px;
+    }
+    
+    .flip-back {
+      background: #fffcf2;
       transform: rotateY(180deg);
-      border-left:6px solid #f3b21a;
-      background:linear-gradient(180deg,#fffdf6 0%, #fff6de 100%);
+      border: 1px solid #ffe6a7;
     }
-    .card-phrase{
-      font-weight:800; font-size:1.15rem; color:#1f2d3d;
-    }
-    .card-en{
-      font-size:.95rem; color:#2b3a48; line-height:1.5;
-    }
-    .card-meaning{
-      font-weight:800; font-size:1.05rem; color:#3a2a00;
-    }
-    .card-zh{
-      font-size:.95rem; color:#4b3d1c; line-height:1.5;
-    }
-    .card-tip{
-      position:absolute; bottom:8px; right:10px;
-      font-size:.78rem; color:#7a8896;
+    .flip-back::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 0; bottom: 0; width: 6px;
+      background: #ffbe0b;
+      border-radius: 0 16px 16px 0;
     }
 
-    @media (max-width:768px){
-      .phrase-list{ grid-template-columns:1fr 1fr; }
-      .card-grid{ grid-template-columns:1fr 1fr; }
+    .card-main-text {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 10px;
     }
-    @media (max-width:480px){
-      .phrase-list{ grid-template-columns:1fr; }
-      .card-grid{ grid-template-columns:1fr; }
+    .card-sub-text {
+      font-size: 0.95rem;
+      color: var(--text-sub);
+      line-height: 1.4;
+    }
+    .card-hint {
+      position: absolute;
+      bottom: 12px;
+      font-size: 0.75rem;
+      color: #bdc3c7;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* === Utilities === */
+    .empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 40px;
+      color: var(--text-sub);
+      font-size: 1.1rem;
+      background: rgba(255,255,255,0.5);
+      border-radius: 14px;
+    }
+    
+    .footer-note {
+      margin-top: 20px;
+      font-size: 0.8rem;
+      color: rgba(141, 153, 174, 0.7);
+      text-align: center;
+    }
+
+    /* === Animations === */
+    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes slideDown { from { opacity: 0; height: 0; transform: translateY(-10px); } to { opacity: 1; height: auto; transform: translateY(0); } }
+
+    /* === Responsive === */
+    @media (max-width: 768px) {
+      .container { width: 100%; padding: 0; }
+      .content-area { border-radius: 20px 20px 0 0; min-height: 80vh; padding: 20px; }
+      h1 { font-size: 1.5rem; }
+      .mode-bar { width: 100%; display: grid; grid-template-columns: 1fr 1fr; }
+      .mode-btn { text-align: center; }
+      .flip-card { height: 260px; }
     }
   </style>
 </head>
 <body>
+
   <div class="container">
     <header>
-      <h1>Shirley's Phrases Study Platform</h1>
+      <h1>Shirley's Phrases</h1>
       <div class="description">
-        Study：字母索引先看片語＋中文釋義，點擊展開例句<br/>
-        Review：字母索引翻卡複習（正面英／背面中）
+        Premium Learning Experience<br/>
+        <span style="opacity:0.7; font-size:0.85rem">Study Mode for deep learning · Review Mode for quick recall</span>
       </div>
     </header>
 
     <div class="content-area">
-      <!-- mode selector -->
-      <div class="mode-bar">
-        <button class="mode-btn active" data-mode="study">Study Mode 學習模式</button>
-        <button class="mode-btn" data-mode="review">Review Mode 複習模式（Flip Card）</button>
-      </div>
+      
+      <div class="controls-wrapper">
+        <div class="mode-bar">
+          <button class="mode-btn active" data-mode="study">📚 Study Mode</button>
+          <button class="mode-btn" data-mode="review">🧠 Review Cards</button>
+        </div>
 
-      <!-- Search -->
-      <div class="search-wrap">
-        <div style="font-size:1.05rem;">🔎</div>
-        <input id="search-input" type="text" placeholder="可輸入片語或中文意思搜尋（在目前字母/收藏範圍內）" />
-        <div class="hint" id="search-hint"></div>
-      </div>
-
-      <!-- A-Z + Favorites -->
-      <div class="alpha-bar" id="alpha-bar"></div>
-
-      <!-- Study list -->
-      <div id="study-section">
-        <div class="phrase-list" id="phrase-list">
-          <div class="empty">載入中...</div>
+        <div class="search-wrap">
+          <div class="search-icon">🔍</div>
+          <input id="search-input" type="text" placeholder="Type to search phrases or meanings..." />
+          <div class="hint" id="search-hint">Range: A</div>
         </div>
       </div>
 
-      <!-- Review cards -->
+      <div class="alpha-bar" id="alpha-bar"></div>
+
+      <div id="study-section">
+        <div class="phrase-list" id="phrase-list">
+          <div class="empty">Initializing Data...</div>
+        </div>
+      </div>
+
       <div id="review-section" style="display:none;">
         <div class="card-grid" id="card-grid"></div>
       </div>
@@ -288,7 +467,8 @@
   </div>
 
 <script>
-  // 多候選網址 + HTML 偵測（避免 404/redirect 回 HTML）
+  /* * 邏輯保持不變，僅配合新的 class 名稱與 UI 結構
+   */
   const CSV_CANDIDATES = [
     "https://ducj-creator.github.io/Shirley-Grammar/phrases.csv",
     "https://ducj-creator.github.io/Shirley-Grammar/prepositions/phrases.csv",
@@ -296,77 +476,69 @@
     "https://raw.githubusercontent.com/DuCJ-creator/Shirley-Grammar/main/prepositions/phrases.csv"
   ];
 
-  const STORAGE_KEY = "shirley_phrases_favorites_v1";
+  const STORAGE_KEY = "shirley_phrases_favorites_v2"; // Key updated for new style
 
   let phrases = [];
   let currentLetter = "A";
-  let currentMode = "alpha"; // alpha | fav
-  let viewMode = "study";    // study | review
+  let currentMode = "alpha"; 
+  let viewMode = "study";   
   let favorites = new Set(JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"));
 
   document.addEventListener("DOMContentLoaded", async () => {
     renderAlphaBar();
     bindSearch();
     bindModeButtons();
-
     await loadPhrasesWithFallback();
-
     renderAll();
   });
 
-  /* ========== Mode buttons ========== */
   function bindModeButtons(){
     document.querySelectorAll(".mode-btn").forEach(btn=>{
       btn.onclick=()=>{
         document.querySelectorAll(".mode-btn").forEach(b=>b.classList.remove("active"));
         btn.classList.add("active");
         viewMode = btn.dataset.mode;
-        document.getElementById("study-section").style.display = viewMode==="study" ? "block" : "none";
-        document.getElementById("review-section").style.display = viewMode==="review" ? "block" : "none";
-        renderAll();
+        
+        // Simple fade effect
+        const content = document.querySelector('.content-area');
+        content.style.opacity = '0.5';
+        setTimeout(() => {
+            document.getElementById("study-section").style.display = viewMode==="study" ? "block" : "none";
+            document.getElementById("review-section").style.display = viewMode==="review" ? "block" : "none";
+            renderAll();
+            content.style.opacity = '1';
+        }, 150);
       };
     });
   }
 
-  /* ========== Load CSV (fallback + detect HTML) ========== */
   async function loadPhrasesWithFallback(){
     const listEl = document.getElementById("phrase-list");
-
     for (const url of CSV_CANDIDATES){
       try{
         const res = await fetch(url, { cache:"no-store" });
         if(!res.ok) throw new Error("HTTP " + res.status);
-
         const text = await res.text();
-
-        // ✅ 如果回來是 HTML，就視為失敗（換下一個）
         const lower = text.slice(0, 500).toLowerCase();
         if (lower.includes("<html") || lower.includes("<!doctype")) {
           throw new Error("Not CSV (HTML returned)");
         }
-
         const data = parseCSV(text);
         if(data.length){
           phrases = data;
-          document.getElementById("footer-note").textContent =
-            `資料來源：${url}（已載入 ${phrases.length} 筆）`;
+          document.getElementById("footer-note").textContent = `Source Connected • ${phrases.length} phrases loaded`;
           return;
         }
       }catch(err){
         console.warn("CSV failed:", url, err);
       }
     }
-
-    listEl.innerHTML = `<div class="empty">
-      CSV 載入失敗：目前所有候選網址回來都不是 CSV 或無資料。<br/>
-      你只要提供正確 phrases.csv 連結，我馬上幫你把候選改成唯一網址。
-    </div>`;
+    listEl.innerHTML = `<div class="empty">❌ Failed to load data. Please check connection.</div>`;
   }
 
   function parseCSV(csvText){
     const rows = csvText.trim().split(/\r?\n/).filter(Boolean);
     if(!rows.length) return [];
-
     const headers = splitCSVLine(rows[0]).map(h => h.trim().toLowerCase());
     const idx = {
       phrase: headers.findIndex(h => h.includes("phrase")),
@@ -374,14 +546,11 @@
       en: headers.findIndex(h => h.includes("english")),
       zh: headers.findIndex(h => h.includes("chinese"))
     };
-
     const out = [];
     for(let i=1;i<rows.length;i++){
       const cols = splitCSVLine(rows[i]);
-
       const phrase = (cols[idx.phrase] || "").trim();
       if(!phrase) continue;
-
       out.push({
         phrase,
         meaning: (cols[idx.meaning] || "").trim(),
@@ -408,15 +577,13 @@
     return result;
   }
 
-  /* ========== Alpha bar ========== */
   function renderAlphaBar(){
     const bar = document.getElementById("alpha-bar");
     bar.innerHTML = "";
-
-    // 🌟 favorites tab
+    
     const favBtn = document.createElement("button");
     favBtn.className = "alpha-btn fav" + (currentMode==="fav" ? " active" : "");
-    favBtn.textContent = "🌟 收藏";
+    favBtn.innerHTML = "★ Favorites";
     favBtn.onclick = () => {
       currentMode = "fav";
       setActiveButtons();
@@ -424,7 +591,6 @@
     };
     bar.appendChild(favBtn);
 
-    // A-Z
     for(let c=65;c<=90;c++){
       const letter = String.fromCharCode(c);
       const btn = document.createElement("button");
@@ -438,7 +604,6 @@
       };
       bar.appendChild(btn);
     }
-
     setHint();
   }
 
@@ -455,25 +620,21 @@
 
   function setHint(){
     const hint = document.getElementById("search-hint");
-    hint.textContent = currentMode==="fav" ? "範圍：收藏" : `範圍：${currentLetter}`;
+    hint.textContent = currentMode==="fav" ? "Scope: Favorites" : `Scope: ${currentLetter}`;
   }
 
-  /* ========== Search ========== */
   function bindSearch(){
     document.getElementById("search-input").addEventListener("input", renderAll);
   }
 
-  /* ========== Render pipeline ========== */
   function getCurrentPool(){
     const q = document.getElementById("search-input").value.trim().toLowerCase();
-
     let pool = [];
     if(currentMode==="fav"){
       pool = phrases.filter(p => favorites.has(p.phrase));
     }else{
       pool = phrases.filter(p => (p.phrase[0]||"").toUpperCase() === currentLetter);
     }
-
     if(q){
       pool = pool.filter(p =>
         p.phrase.toLowerCase().includes(q) ||
@@ -484,28 +645,26 @@
   }
 
   function renderAll(){
-    if(!phrases.length){
-      // loader already handled empty text
-      return;
-    }
+    if(!phrases.length) return;
     const pool = getCurrentPool();
     if(viewMode==="study") renderStudy(pool);
     if(viewMode==="review") renderReview(pool);
   }
 
-  /* ========== Study list ========== */
+  /* Study Renderer */
   function renderStudy(pool){
     const listEl = document.getElementById("phrase-list");
     listEl.innerHTML = "";
-
     if(!pool.length){
-      listEl.innerHTML = `<div class="empty">${
-        currentMode==="fav" ? "目前沒有收藏片語。" : "此字母目前沒有片語。"
-      }</div>`;
+      listEl.innerHTML = `<div class="empty">${currentMode==="fav" ? "No favorites yet. Go add some stars! ⭐" : "No phrases found in this section."}</div>`;
       return;
     }
-
-    pool.forEach(p => listEl.appendChild(buildPhraseItem(p)));
+    // Stagger animation delay
+    pool.forEach((p, index) => {
+        const item = buildPhraseItem(p);
+        item.style.animationDelay = `${Math.min(index * 0.05, 0.5)}s`;
+        listEl.appendChild(item);
+    });
   }
 
   function buildPhraseItem(p){
@@ -515,31 +674,32 @@
 
     const star = document.createElement("div");
     star.className = "star" + (favorites.has(p.phrase) ? " active" : "");
-    star.textContent = favorites.has(p.phrase) ? "🌟" : "☆";
-    star.title = favorites.has(p.phrase) ? "取消收藏" : "加入收藏";
+    star.textContent = "★";
     star.onclick = (e) => {
       e.stopPropagation();
       toggleFavorite(p.phrase);
       star.classList.toggle("active");
-      star.textContent = favorites.has(p.phrase) ? "🌟" : "☆";
-      star.title = favorites.has(p.phrase) ? "取消收藏" : "加入收藏";
       if(currentMode==="fav") renderAll();
     };
+
+    const header = document.createElement("div");
+    header.className = "phrase-header";
 
     const title = document.createElement("div");
     title.className = "phrase-title";
     title.textContent = p.phrase;
+
+    header.appendChild(title);
 
     const meaning = document.createElement("div");
     meaning.className = "phrase-meaning";
     meaning.textContent = p.meaning || "";
 
     item.appendChild(star);
-    item.appendChild(title);
+    item.appendChild(header);
     item.appendChild(meaning);
 
     item.onclick = () => toggleDetail(item, p);
-
     return item;
   }
 
@@ -554,40 +714,37 @@
     const detail = document.createElement("div");
     detail.className = "detail";
     detail.innerHTML = `
-      ${p.english ? `<div class="en"><span class="label">EN</span>${escapeHTML(p.english)}</div>` : ""}
-      ${p.chinese ? `<div class="zh"><span class="label">ZH</span>${escapeHTML(p.chinese)}</div>` : ""}
-      ${(!p.english && !p.chinese) ? `<div class="zh">（此片語尚無例句）</div>` : ""}
+      ${p.english ? `<div class="detail-row"><span class="badge en">EN</span><span class="text-content">${escapeHTML(p.english)}</span></div>` : ""}
+      ${p.chinese ? `<div class="detail-row"><span class="badge zh">ZH</span><span class="text-content">${escapeHTML(p.chinese)}</span></div>` : ""}
+      ${(!p.english && !p.chinese) ? `<div class="detail-row" style="color:#ccc;font-style:italic">No examples available.</div>` : ""}
     `;
     item.appendChild(detail);
     item.dataset.open = "1";
   }
 
-  /* ========== Review flip cards ========== */
+  /* Review Renderer */
   function renderReview(pool){
     const grid = document.getElementById("card-grid");
     grid.innerHTML = "";
-
     if(!pool.length){
-      grid.innerHTML = `<div class="empty">${
-        currentMode==="fav" ? "目前沒有收藏片語。" : "此字母目前沒有片語。"
-      }</div>`;
+      grid.innerHTML = `<div class="empty">${currentMode==="fav" ? "No favorites to review." : "No phrases here."}</div>`;
       return;
     }
-
-    pool.forEach(p=>{
+    pool.forEach((p, index)=>{
       const card = document.createElement("div");
       card.className = "flip-card";
+      card.style.animationDelay = `${Math.min(index * 0.05, 0.5)}s`;
       card.innerHTML = `
         <div class="flip-inner">
           <div class="flip-face flip-front">
-            <div class="card-phrase">${escapeHTML(p.phrase)}</div>
-            <div class="card-en">${escapeHTML(p.english || "（無英文例句）")}</div>
-            <div class="card-tip">點一下翻面</div>
+            <div class="card-main-text">${escapeHTML(p.phrase)}</div>
+            <div class="card-sub-text">${escapeHTML(p.english || "")}</div>
+            <div class="card-hint">Tap to Flip</div>
           </div>
           <div class="flip-face flip-back">
-            <div class="card-meaning">${escapeHTML(p.meaning || "（無中文釋義）")}</div>
-            <div class="card-zh">${escapeHTML(p.chinese || "（無中文例句）")}</div>
-            <div class="card-tip">點一下翻回</div>
+            <div class="card-main-text" style="color:#e07a5f">${escapeHTML(p.meaning || "")}</div>
+            <div class="card-sub-text">${escapeHTML(p.chinese || "")}</div>
+            <div class="card-hint" style="color:#d4a373">Tap to Back</div>
           </div>
         </div>
       `;
@@ -596,7 +753,6 @@
     });
   }
 
-  /* ========== Favorites ========== */
   function toggleFavorite(phrase){
     if(favorites.has(phrase)) favorites.delete(phrase);
     else favorites.add(phrase);
@@ -604,11 +760,9 @@
   }
 
   function escapeHTML(str){
-    return (str||"")
-      .replaceAll("&","&amp;")
-      .replaceAll("<","&lt;")
-      .replaceAll(">","&gt;")
-      .replaceAll("\"","&quot;");
+    return (str||"").replace(/[&<>"']/g, function(m) {
+      return {'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'}[m];
+    });
   }
 </script>
 </body>
