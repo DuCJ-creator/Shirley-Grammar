@@ -3,824 +3,555 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shirley's Verb Master Class | 動詞大師班</title>
+    <title>Shirley's Verb Master Class | 動詞全攻略</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* 高級感深藍配色 */
-            --primary: #2C5282;       /* 深海藍 */
-            --primary-light: #4299E1; /* 天空藍 */
-            --primary-dark: #1A365D;  /* 午夜藍 */
-            --accent: #F6AD55;        /* 暖陽橘 */
-            --accent-glow: #FBD38D;   
-            --success: #68D391;
-            --error: #FC8181;
-            
-            --bg-gradient-start: #EBF8FF;
-            --bg-gradient-end: #E6FFFA;
-            
-            --glass-bg: rgba(255, 255, 255, 0.85);
-            --glass-border: rgba(255, 255, 255, 0.6);
-            --shadow-lg: 0 20px 50px rgba(26, 54, 93, 0.15);
-            --shadow-md: 0 8px 20px rgba(0,0,0,0.06);
+            /* 專業深藍與流金配色 */
+            --primary: #1A365D;       /* 深邃藍 */
+            --primary-light: #4299E1; /* 科技藍 */
+            --accent: #D69E2E;        /* 金色強調 */
+            --surface: #FFFFFF;
+            --bg-gradient: linear-gradient(180deg, #F7FAFC 0%, #E2E8F0 100%);
             
             --text-main: #2D3748;
-            --text-light: #718096;
+            --text-secondary: #718096;
             
-            --radius-xl: 24px;
-            --radius-lg: 16px;
+            --success: #38A169;
+            --error: #E53E3E;
+            
+            --shadow-card: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 15px rgba(0, 0, 0, 0.1);
+            --radius: 16px;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Nunito', 'Noto Sans TC', sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Nunito', 'Noto Sans TC', sans-serif; }
 
         body {
-            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            background: var(--bg-gradient);
             color: var(--text-main);
             min-height: 100vh;
-            padding: 20px;
             line-height: 1.6;
-            overflow-x: hidden;
+            padding-bottom: 50px;
         }
 
-        /* 背景動態裝飾 */
-        .bg-orb {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(80px);
-            z-index: -1;
-            animation: float 20s infinite ease-in-out;
-        }
-        .orb-1 { width: 300px; height: 300px; background: rgba(66, 153, 225, 0.3); top: -50px; left: -50px; }
-        .orb-2 { width: 400px; height: 400px; background: rgba(246, 173, 85, 0.2); bottom: -100px; right: -100px; animation-delay: -5s; }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background-color: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: var(--radius-xl);
-            box-shadow: var(--shadow-lg);
-            border: 1px solid var(--glass-border);
-            overflow: hidden;
-        }
-
-        /* ===== Header ===== */
+        /* Header */
         header {
-            background: linear-gradient(120deg, var(--primary-dark) 0%, var(--primary) 100%);
+            background: var(--primary);
             color: white;
             padding: 40px 20px;
             text-align: center;
-            position: relative;
-            box-shadow: 0 4px 20px rgba(26, 54, 93, 0.3);
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 8px;
-            font-weight: 800;
-            letter-spacing: 1px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-
-        .subtitle {
-            font-size: 1.1rem;
-            color: var(--primary-light);
-            font-weight: 500;
-        }
-
-        .header-controls {
-            position: absolute;
-            top: 20px;
-            width: 100%;
-            padding: 0 30px;
-            display: flex;
-            justify-content: space-between;
-            pointer-events: none; /* 讓中間不擋住點擊 */
-        }
-
-        .icon-btn {
-            pointer-events: auto;
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            backdrop-filter: blur(4px);
-        }
-
-        .icon-btn:hover {
-            background: white;
-            color: var(--primary);
-            transform: rotate(15deg);
-        }
-
-        /* ===== Canvas Section ===== */
-        .visualizer-section {
-            background: white;
-            padding: 30px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .canvas-container {
-            width: 100%;
-            height: 280px;
-            background: radial-gradient(circle at center, #f8fafc 0%, #edf2f7 100%);
-            border-radius: var(--radius-lg);
+            box-shadow: 0 4px 20px rgba(26, 54, 93, 0.4);
             position: relative;
             overflow: hidden;
-            box-shadow: inset 0 0 30px rgba(0,0,0,0.05);
-            border: 2px solid #e2e8f0;
-            margin-bottom: 20px;
+        }
+        
+        header::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            animation: rotate 60s linear infinite;
+        }
+
+        h1 { font-size: 2.2rem; font-weight: 800; margin-bottom: 10px; position: relative; }
+        .subtitle { color: var(--primary-light); font-size: 1.1rem; position: relative; }
+
+        .container {
+            max-width: 1100px;
+            margin: -30px auto 0;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Canvas Visualization */
+        .viz-container {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-card);
+            padding: 20px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .canvas-wrapper {
+            width: 100%;
+            height: 250px;
+            background: #F0F4F8;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            position: relative;
+            overflow: hidden;
         }
 
         canvas { width: 100%; height: 100%; }
 
-        .viz-controls {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            flex-wrap: wrap;
+        .controls { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+        
+        .btn-control {
+            background: white; border: 1px solid #CBD5E0; color: var(--text-main);
+            padding: 8px 16px; border-radius: 50px; cursor: pointer; transition: all 0.2s;
+            font-weight: 600; font-size: 0.9rem;
         }
-
-        .viz-btn {
-            padding: 8px 20px;
-            border-radius: 50px;
-            border: 2px solid var(--primary);
-            background: transparent;
-            color: var(--primary);
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .viz-btn:hover, .viz-btn.active {
-            background: var(--primary);
-            color: white;
+        .btn-control:hover, .btn-control.active {
+            background: var(--primary); color: white; border-color: var(--primary);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(44, 82, 130, 0.3);
         }
 
-        /* ===== Main Content ===== */
-        .content-wrapper {
-            padding: 30px;
+        /* Content Navigation */
+        .nav-tabs {
+            display: flex; gap: 15px; margin-bottom: 25px; overflow-x: auto; padding-bottom: 5px;
+            scrollbar-width: none;
         }
-
-        /* Tabs */
-        .tabs-nav {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-        }
+        .nav-tabs::-webkit-scrollbar { display: none; }
 
         .tab-btn {
-            padding: 12px 24px;
-            background: rgba(255,255,255,0.5);
-            border: none;
-            border-radius: 12px;
-            color: var(--text-light);
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            background: rgba(255,255,255,0.6);
+            border: none; padding: 12px 24px; border-radius: 12px;
+            color: var(--text-secondary); font-weight: 700; cursor: pointer;
+            white-space: nowrap; transition: all 0.3s;
         }
-
-        .tab-btn:hover {
-            background: white;
-            color: var(--primary);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
         .tab-btn.active {
-            background: var(--primary);
-            color: white;
-            box-shadow: 0 10px 20px rgba(44, 82, 130, 0.25);
+            background: var(--primary); color: white; box-shadow: 0 5px 15px rgba(26, 54, 93, 0.3);
         }
 
-        .tab-panel {
-            display: none;
-            animation: fadeIn 0.5s ease-out;
-        }
-        .tab-panel.active { display: block; }
+        /* Sections */
+        .section-panel { display: none; animation: fadeIn 0.4s ease-out; }
+        .section-panel.active { display: block; }
 
-        /* Cards */
-        .card-grid {
+        /* Card Styles */
+        .card {
+            background: white; border-radius: var(--radius); padding: 25px;
+            margin-bottom: 20px; box-shadow: var(--shadow-card);
+            border-left: 5px solid var(--primary);
+        }
+
+        .card h3 { color: var(--primary); margin-bottom: 15px; font-size: 1.3rem; display: flex; align-items: center; gap: 10px; }
+        
+        .tag {
+            font-size: 0.75rem; padding: 3px 8px; border-radius: 4px; 
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .tag.blue { background: #EBF8FF; color: #2B6CB0; }
+        .tag.green { background: #F0FFF4; color: #2F855A; }
+        .tag.yellow { background: #FFFFF0; color: #B7791F; }
+
+        /* Complex Tense Grid Layout */
+        .tense-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-        }
-
-        .info-card {
-            background: white;
-            border-radius: var(--radius-lg);
-            padding: 25px;
-            box-shadow: var(--shadow-md);
-            border: 1px solid rgba(255,255,255,0.8);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .info-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 4px; height: 100%;
-            background: var(--primary-light);
-            transition: width 0.3s;
-        }
-
-        .info-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
+            gap: 20px;
         }
         
-        .info-card:hover::before { width: 6px; }
-
-        .info-card h3 {
-            color: var(--primary-dark);
-            margin-bottom: 15px;
-            font-size: 1.25rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .tense-item {
+            background: #FAFAFA; border: 1px solid #EEE; padding: 15px; border-radius: 10px;
         }
+        .tense-item strong { color: var(--primary); display: block; margin-bottom: 5px; font-size: 1.1rem; }
+        .tense-formula { color: var(--error); font-family: monospace; font-size: 0.9rem; background: #FFF5F5; padding: 2px 6px; border-radius: 4px; }
+        .tense-example { font-style: italic; color: #555; margin-top: 8px; border-left: 2px solid #CBD5E0; padding-left: 8px; }
 
-        .concept-badge {
-            background: #EBF8FF;
-            color: var(--primary);
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
+        /* Special Link Button */
+        .link-portal {
+            display: flex; align-items: center; justify-content: space-between;
+            background: linear-gradient(135deg, #2C5282 0%, #2A4365 100%);
+            color: white; padding: 20px 30px; border-radius: var(--radius);
+            margin-bottom: 30px; text-decoration: none;
+            box-shadow: 0 10px 20px rgba(44, 82, 130, 0.3);
+            transition: transform 0.3s;
         }
+        .link-portal:hover { transform: translateY(-3px); }
+        .link-text h3 { margin: 0; font-size: 1.3rem; color: #F6AD55; }
+        .link-text p { margin: 5px 0 0 0; font-size: 0.9rem; opacity: 0.9; }
+        .link-icon { font-size: 2rem; }
 
-        .example-box {
-            background: #F7FAFC;
-            border-radius: 10px;
-            padding: 15px;
-            margin-top: 15px;
-            border-left: 4px solid var(--accent);
-            font-family: 'Nunito', sans-serif;
-            color: #4A5568;
-        }
+        /* Voice Table */
+        .voice-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.95rem; }
+        .voice-table th { background: #EDF2F7; padding: 12px; text-align: left; color: var(--primary); }
+        .voice-table td { border-bottom: 1px solid #EEE; padding: 12px; }
+        .voice-table tr:last-child td { border-bottom: none; }
+        .highlight { font-weight: bold; color: var(--primary-light); }
 
-        .highlight {
-            color: var(--primary);
-            font-weight: 800;
-            background: rgba(66, 153, 225, 0.1);
-            padding: 0 4px;
-            border-radius: 4px;
-        }
-
-        /* Tables Modernized */
-        .table-container {
-            overflow-x: auto;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-            min-width: 500px;
-        }
-
-        th {
-            background: var(--primary);
-            color: white;
-            padding: 15px;
-            text-align: left;
-            font-weight: 600;
-        }
-
-        td {
-            padding: 12px 15px;
-            border-bottom: 1px solid #edf2f7;
-            color: var(--text-main);
-        }
-
-        tr:last-child td { border-bottom: none; }
-        tr:nth-child(even) { background-color: #f8fafc; }
-
-        /* Platform Link Section */
-        .platform-promo {
-            background: linear-gradient(135deg, #FFF5F5 0%, #FFF0E6 100%);
-            border: 2px dashed var(--accent);
-            border-radius: var(--radius-lg);
-            padding: 30px;
-            text-align: center;
-            margin: 30px 0;
-            position: relative;
-        }
-
-        .btn-cta {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: var(--accent);
-            color: white;
-            padding: 12px 30px;
-            border-radius: 50px;
-            font-weight: 700;
-            text-decoration: none;
-            margin-top: 20px;
-            box-shadow: 0 10px 20px rgba(246, 173, 85, 0.4);
-            transition: all 0.3s;
-        }
-
-        .btn-cta:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 15px 25px rgba(246, 173, 85, 0.5);
-        }
-
-        /* Quiz Section */
-        .quiz-section {
-            background: white;
-            padding: 40px;
-            border-top: 1px solid #eee;
-            text-align: center;
-        }
-
-        .quiz-container { max-width: 600px; margin: 0 auto; display: none; }
-        .quiz-container.active { display: block; animation: popIn 0.4s; }
-
-        .option-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-top: 25px;
-        }
-
-        .quiz-option {
-            padding: 15px;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            cursor: pointer;
+        /* Quiz */
+        .quiz-box { text-align: center; padding: 40px; }
+        .option-btn {
+            display: block; width: 100%; max-width: 500px; margin: 10px auto;
+            padding: 15px; background: white; border: 2px solid #E2E8F0;
+            border-radius: 50px; cursor: pointer; font-size: 1rem;
             transition: all 0.2s;
-            font-weight: 600;
-            background: white;
         }
+        .option-btn:hover { border-color: var(--primary); background: #EBF8FF; }
+        .option-btn.correct { background: var(--success); color: white; border-color: var(--success); }
+        .option-btn.wrong { background: var(--error); color: white; border-color: var(--error); }
 
-        .quiz-option:hover { border-color: var(--primary); background: #ebf8ff; }
-        .quiz-option.correct { background: var(--success); color: white; border-color: var(--success); }
-        .quiz-option.incorrect { background: var(--error); color: white; border-color: var(--error); }
-
-        footer {
-            background: var(--primary-dark);
-            color: white;
-            text-align: center;
-            padding: 20px;
-            font-size: 0.9rem;
-            opacity: 0.9;
-        }
-
-        /* Animations */
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
-        @keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
         @media (max-width: 768px) {
-            h1 { font-size: 1.8rem; }
-            .option-grid { grid-template-columns: 1fr; }
-            .viz-controls { overflow-x: auto; padding-bottom: 10px; justify-content: flex-start; }
-            .viz-btn { white-space: nowrap; }
+            .tense-grid { grid-template-columns: 1fr; }
+            .link-portal { flex-direction: column; text-align: center; gap: 15px; }
         }
     </style>
 </head>
 <body>
-    <div class="bg-orb orb-1"></div>
-    <div class="bg-orb orb-2"></div>
+
+    <header>
+        <h1>Verb Master Class</h1>
+        <div class="subtitle">英語動詞全方位解析平台</div>
+    </header>
 
     <div class="container">
-        <header>
-            <div class="header-controls">
-                <button class="icon-btn" id="soundToggle">🔊</button>
-                <button class="icon-btn" onclick="window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'})">⬇</button>
-            </div>
-            <h1>Shirley's Verb Master Class</h1>
-            <p class="subtitle">探索英語動詞的奧秘 | 種類 • 時態 • 語態</p>
-        </header>
-
-        <section class="visualizer-section">
-            <h2 style="text-align: center; margin-bottom: 20px; color: var(--primary);">🎥 動態演示實驗室</h2>
-            <div class="canvas-container" id="canvasContainer">
+        
+        <div class="viz-container">
+            <h3 style="margin-bottom: 15px; color:var(--text-main);">⚡ 動態實驗室</h3>
+            <div class="canvas-wrapper" id="canvasContainer">
                 <canvas id="verbCanvas"></canvas>
             </div>
-            <div class="viz-controls">
-                <button class="viz-btn active" data-scene="intransitive">🏃 不及物動詞</button>
-                <button class="viz-btn" data-scene="transitive">🍳 及物動詞</button>
-                <button class="viz-btn" data-scene="tenses">⏳ 時態時間軸</button>
-                <button class="viz-btn" data-scene="passive">🔄 主動 vs 被動</button>
+            <div class="controls">
+                <button class="btn-control active" onclick="setAnim('action')">動作 vs 狀態</button>
+                <button class="btn-control" onclick="setAnim('timeline')">時態時間流</button>
+                <button class="btn-control" onclick="setAnim('passive')">主動被動轉換</button>
             </div>
-        </section>
+        </div>
 
-        <div class="content-wrapper">
-            <div class="tabs-nav">
-                <button class="tab-btn active" data-target="types">🧩 動詞種類 Types</button>
-                <button class="tab-btn" data-target="tenses">🕒 時態 Tenses</button>
-                <button class="tab-btn" data-target="voices">📣 語態 Voices</button>
-                <button class="tab-btn" data-target="keypoints">💡 重點 Key Points</button>
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="switchTab('types')">動詞種類 Types</button>
+            <button class="tab-btn" onclick="switchTab('tenses')">12大時態 Tenses</button>
+            <button class="tab-btn" onclick="switchTab('voices')">被動語態 Voices</button>
+            <button class="tab-btn" onclick="switchTab('quiz')">自我測驗 Quiz</button>
+        </div>
+
+        <div id="types" class="section-panel active">
+            <div class="card">
+                <h3><span class="tag blue">Action</span> 動作動詞 (Action Verbs)</h3>
+                <p>描述具體的動作，分為及物與不及物。</p>
+                <ul style="margin: 10px 0 10px 20px; color: #555;">
+                    <li><strong>不及物 (Vi.)</strong>：動作自己完成，無受詞。<br><em>Ex: The bird <span class="highlight">flies</span>. (鳥飛)</em></li>
+                    <li><strong>及物 (Vt.)</strong>：動作需要接受者 (Object)。<br><em>Ex: She <span class="highlight">eats</span> an apple. (她吃蘋果)</em></li>
+                </ul>
             </div>
 
-            <div id="types" class="tab-panel active">
-                <div class="card-grid">
-                    <div class="info-card">
-                        <h3><span class="concept-badge">連綴</span> Linking Verbs</h3>
-                        <p>不表示動作，而是像「等號 (=)」一樣連接主詞與描述詞。</p>
-                        <div class="example-box">
-                            <p>She <span class="highlight">is</span> a teacher.</p>
-                            <p>He <span class="highlight">feels</span> happy.</p>
-                        </div>
+            <div class="card">
+                <h3><span class="tag green">State</span> 連綴動詞 (Linking Verbs)</h3>
+                <p>不表示動作，而是連接主詞與形容詞/名詞，表示「狀態」。</p>
+                <div style="background:#F7FAFC; padding:15px; margin-top:10px; border-radius:8px;">
+                    <p><strong>Be Verbs:</strong> am, is, are, was, were</p>
+                    <p><strong>Sensory (感官):</strong> look, sound, smell, taste, feel</p>
+                    <p><strong>Change (改變):</strong> become, get, turn, grow</p>
+                    <p style="margin-top:5px; font-style:italic;">Ex: The food <span class="highlight">smells</span> good. (不是食物在聞，是它聞起來...)</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3><span class="tag yellow">Help</span> 助動詞 (Auxiliary Verbs)</h3>
+                <p>協助主要動詞構成時態、語氣或疑問句。</p>
+                <p style="margin-top:10px;"><strong>Do / Does / Did:</strong> 形成疑問或否定。</p>
+                <p><strong>Have / Has / Had:</strong> 形成完成式。</p>
+                <p><strong>Modals (情態):</strong> Can, Could, Will, Should, Must (後面接原形)。</p>
+            </div>
+        </div>
+
+        <div id="tenses" class="section-panel">
+            
+            <a href="https://ducj-creator.github.io/Shirley-Grammar/irregular/verbs/" target="_blank" class="link-portal">
+                <div class="link-text">
+                    <h3>🚀 前往互動式時態時間軸</h3>
+                    <p>點擊這裡，進入 Shirley's Timeline 進行更深入的視覺化操作與不規則動詞練習。</p>
+                </div>
+                <div class="link-icon">🔗</div>
+            </a>
+
+            <h2 style="margin-bottom: 20px; color: var(--primary);">12 Tenses Overview</h2>
+            
+            <div class="card">
+                <h3>現在式 (Present)</h3>
+                <div class="tense-grid">
+                    <div class="tense-item">
+                        <strong>Simple Present</strong>
+                        <span class="tense-formula">V / Vs</span>
+                        <div class="tense-example">He walks to school. (習慣/事實)</div>
                     </div>
-                    <div class="info-card">
-                        <h3><span class="concept-badge">動作</span> Transitive / Intransitive</h3>
-                        <p><strong>及物 (Vt.)</strong>：動作需要接受者 (Object)。<br><strong>不及物 (Vi.)</strong>：動作自己完成，無受詞。</p>
-                        <div class="example-box">
-                            <p>Vt: She <span class="highlight">reads</span> a book.</p>
-                            <p>Vi: He <span class="highlight">sleeps</span>.</p>
-                        </div>
+                    <div class="tense-item">
+                        <strong>Present Continuous</strong>
+                        <span class="tense-formula">am/is/are + V-ing</span>
+                        <div class="tense-example">He is walking now. (正在發生)</div>
                     </div>
-                    <div class="info-card" style="grid-column: 1 / -1;">
-                        <h3>🛠 情態助動詞 Modal Verbs</h3>
-                        <p>表達語氣、能力、義務，後面永遠接<strong>原形動詞</strong>。</p>
-                        <div class="table-container">
-                            <table>
-                                <tr><th>Word</th><th>Meaning</th><th>Example</th></tr>
-                                <tr><td><strong>can / could</strong></td><td>能力、允許</td><td>I can speak English.</td></tr>
-                                <tr><td><strong>must / have to</strong></td><td>義務、必須</td><td>You must stop.</td></tr>
-                                <tr><td><strong>should / ought to</strong></td><td>建議、應該</td><td>You should sleep early.</td></tr>
-                                <tr><td><strong>will / would</strong></td><td>意願、未來</td><td>I will help you.</td></tr>
-                            </table>
-                        </div>
+                    <div class="tense-item">
+                        <strong>Present Perfect</strong>
+                        <span class="tense-formula">have/has + p.p.</span>
+                        <div class="tense-example">He has walked 5km. (已完成/經驗)</div>
+                    </div>
+                    <div class="tense-item">
+                        <strong>Present Perfect Cont.</strong>
+                        <span class="tense-formula">have/has been + V-ing</span>
+                        <div class="tense-example">He has been walking for 2 hours. (持續到現在)</div>
                     </div>
                 </div>
             </div>
 
-            <div id="tenses" class="tab-panel">
-                <div class="platform-promo">
-                    <h3>🚀 想要更深入了解不規則動詞？</h3>
-                    <p>動詞變化的規則千變萬化，我們準備了專屬的練習平台！</p>
-                    <a href="https://ducj-creator.github.io/Shirley-Grammar/irregular/verbs/" target="_blank" class="btn-cta">
-                        🎮 前往不規則動詞挑戰
-                    </a>
-                </div>
-
-                <div class="card-grid">
-                    <div class="info-card">
-                        <h3>Simple Tenses (簡單式)</h3>
-                        <p>表達事實、習慣或單一事件。</p>
-                        <div class="example-box">
-                            <p>Present: She <span class="highlight">works</span>.</p>
-                            <p>Past: She <span class="highlight">worked</span>.</p>
-                            <p>Future: She <span class="highlight">will work</span>.</p>
-                        </div>
+            <div class="card">
+                <h3>過去式 (Past)</h3>
+                <div class="tense-grid">
+                    <div class="tense-item">
+                        <strong>Simple Past</strong>
+                        <span class="tense-formula">V-ed / Irregular</span>
+                        <div class="tense-example">He walked yesterday. (過去事實)</div>
                     </div>
-                    <div class="info-card">
-                        <h3>Continuous (進行式)</h3>
-                        <p>be + V-ing，強調「當下正在發生」。</p>
-                        <div class="example-box">
-                            <p>Now: I <span class="highlight">am studying</span>.</p>
-                            <p>Then: I <span class="highlight">was studying</span>.</p>
-                        </div>
+                    <div class="tense-item">
+                        <strong>Past Continuous</strong>
+                        <span class="tense-formula">was/were + V-ing</span>
+                        <div class="tense-example">He was walking when I called. (過去正在)</div>
                     </div>
-                    <div class="info-card">
-                        <h3>Perfect (完成式)</h3>
-                        <p>have/has/had + p.p.，強調「經驗」或「已完成」。</p>
-                        <div class="example-box">
-                            <p>I <span class="highlight">have finished</span> my homework.</p>
-                            <p>She <span class="highlight">had left</span> before I arrived.</p>
-                        </div>
+                    <div class="tense-item">
+                        <strong>Past Perfect</strong>
+                        <span class="tense-formula">had + p.p.</span>
+                        <div class="tense-example">He had walked before rain started. (過去的過去)</div>
                     </div>
                 </div>
             </div>
 
-            <div id="voices" class="tab-panel">
-                <div class="info-card" style="margin-bottom: 20px;">
-                    <h3>⚡ 主動 (Active) vs 被動 (Passive)</h3>
-                    <p>被動語態公式：<strong>Be + 過去分詞 (p.p.)</strong></p>
-                    <p style="margin-top: 10px; color: #666;">當「動作的接受者」比「執行者」更重要，或不知道誰執行時使用。</p>
-                </div>
-                
-                <div class="table-container">
-                    <table>
-                        <tr><th>時態 Tense</th><th>主動 Active</th><th>被動 Passive (Be + p.p.)</th></tr>
-                        <tr><td>現在簡單</td><td>Chef cooks meal.</td><td>The meal <strong>is cooked</strong> by chef.</td></tr>
-                        <tr><td>過去簡單</td><td>Chef cooked meal.</td><td>The meal <strong>was cooked</strong> by chef.</td></tr>
-                        <tr><td>現在進行</td><td>Chef is cooking meal.</td><td>The meal <strong>is being cooked</strong>.</td></tr>
-                        <tr><td>現在完成</td><td>Chef has cooked meal.</td><td>The meal <strong>has been cooked</strong>.</td></tr>
-                        <tr><td>未來簡單</td><td>Chef will cook meal.</td><td>The meal <strong>will be cooked</strong>.</td></tr>
-                    </table>
-                </div>
-            </div>
-
-            <div id="keypoints" class="tab-panel">
-                <div class="card-grid">
-                    <div class="info-card">
-                        <h3>⚠️ 常見錯誤</h3>
-                        <ul style="padding-left: 20px; color: #555;">
-                            <li><strong>第三人稱單數：</strong> 現在式 He/She/It 後面動詞要加 s (e.g., She run<strong>s</strong>).</li>
-                            <li><strong>助動詞混淆：</strong> Do/Have 既可以是助動詞，也可以是主動詞 (e.g., I have had lunch).</li>
-                            <li><strong>被動誤用：</strong> 形容詞結尾是 ed 不一定是被動 (e.g., I am excited 是形容詞).</li>
-                        </ul>
+            <div class="card">
+                <h3>未來式 (Future)</h3>
+                <div class="tense-grid">
+                    <div class="tense-item">
+                        <strong>Simple Future</strong>
+                        <span class="tense-formula">will + V</span>
+                        <div class="tense-example">He will walk tomorrow.</div>
                     </div>
-                    <div class="info-card">
-                        <h3>🔗 Phrasal Verbs (動詞片語)</h3>
-                        <p>動詞 + 介係詞 = 新意思。這是英語道地的關鍵！</p>
-                        <div class="example-box">
-                            <p><strong>Give up:</strong> 放棄</p>
-                            <p><strong>Look after:</strong> 照顧</p>
-                            <p><strong>Put off:</strong> 延後</p>
-                        </div>
+                    <div class="tense-item">
+                        <strong>Future Continuous</strong>
+                        <span class="tense-formula">will be + V-ing</span>
+                        <div class="tense-example">He will be walking at 9 AM.</div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <section class="quiz-section">
-            <h2 style="margin-bottom: 10px; color: var(--primary);">🧠 動詞大挑戰 (Verb Quiz)</h2>
-            <p style="margin-bottom: 20px; color: #718096;">Ready to test your skills?</p>
-            
-            <button class="btn-cta" id="startQuizBtn" style="border:none; cursor:pointer;">🚀 Start Quiz</button>
-            
-            <div class="quiz-container" id="quizContainer">
-                <h3 id="questionText" style="font-size: 1.4rem; color: var(--primary-dark);">Question goes here...</h3>
-                <div class="option-grid" id="optionsGrid">
-                    </div>
-                <div id="feedback" style="margin-top: 20px; font-weight: bold; min-height: 24px;"></div>
+        <div id="voices" class="section-panel">
+            <div class="card">
+                <h3>主動 vs 被動 (Active vs Passive)</h3>
+                <p>當「動作的接受者」比「執行者」重要時，使用被動語態。</p>
+                <div style="margin: 15px 0; padding: 10px; background: #FFF5F5; border-radius: 8px; color: var(--error); font-weight: bold; text-align: center;">
+                    公式：Be 動詞 + 過去分詞 (p.p.)
+                </div>
+                
+                <table class="voice-table">
+                    <thead>
+                        <tr>
+                            <th>時態</th>
+                            <th>主動 Active</th>
+                            <th>被動 Passive</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>現在簡單</td>
+                            <td>I write a letter.</td>
+                            <td>A letter <strong>is written</strong> (by me).</td>
+                        </tr>
+                        <tr>
+                            <td>過去簡單</td>
+                            <td>I wrote a letter.</td>
+                            <td>A letter <strong>was written</strong>.</td>
+                        </tr>
+                        <tr>
+                            <td>未來簡單</td>
+                            <td>I will write a letter.</td>
+                            <td>A letter <strong>will be written</strong>.</td>
+                        </tr>
+                        <tr>
+                            <td>現在進行</td>
+                            <td>I am writing a letter.</td>
+                            <td>A letter <strong>is being written</strong>.</td>
+                        </tr>
+                        <tr>
+                            <td>現在完成</td>
+                            <td>I have written a letter.</td>
+                            <td>A letter <strong>has been written</strong>.</td>
+                        </tr>
+                        <tr>
+                            <td>助動詞</td>
+                            <td>I must write it.</td>
+                            <td>It <strong>must be written</strong>.</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-        </section>
+        </div>
 
-        <footer>
-            <p>© 2025 Shirley's English Verb Learning Platform | Designed for Learners</p>
-        </footer>
+        <div id="quiz" class="section-panel">
+            <div class="card quiz-box">
+                <h2 id="qText" style="margin-bottom: 20px;">準備好挑戰了嗎？</h2>
+                <div id="optionsArea">
+                    <button class="btn-control" onclick="startQuiz()" style="padding: 15px 40px; font-size: 1.2rem;">🚀 開始測驗</button>
+                </div>
+                <div id="feedback" style="margin-top: 20px; height: 30px; font-weight: bold;"></div>
+            </div>
+        </div>
+
     </div>
 
     <script>
-        // === Audio System ===
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        let soundEnabled = true;
-
-        function playTone(freq, type, duration) {
-            if (!soundEnabled) return;
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.type = type;
-            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-            gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start();
-            osc.stop(audioCtx.currentTime + duration);
-        }
-
-        const sounds = {
-            click: () => playTone(400, 'sine', 0.1),
-            correct: () => { playTone(600, 'sine', 0.1); setTimeout(() => playTone(800, 'sine', 0.2), 100); },
-            wrong: () => playTone(200, 'sawtooth', 0.3),
-            switch: () => playTone(500, 'triangle', 0.15)
-        };
-
-        document.getElementById('soundToggle').onclick = function() {
-            soundEnabled = !soundEnabled;
-            this.textContent = soundEnabled ? '🔊' : '🔇';
-        };
-
-        // === Tabs Logic ===
-        const tabs = document.querySelectorAll('.tab-btn');
-        const panels = document.querySelectorAll('.tab-panel');
-
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                tabs.forEach(t => t.classList.remove('active'));
-                panels.forEach(p => p.classList.remove('active'));
-                
-                tab.classList.add('active');
-                document.getElementById(tab.dataset.target).classList.add('active');
-                sounds.switch();
-                
-                // Update Canvas Scene based on Tab (Optional Auto-switch)
-                if(tab.dataset.target === 'tenses') setScene('tenses');
-                else if(tab.dataset.target === 'voices') setScene('passive');
-                else if(tab.dataset.target === 'types') setScene('intransitive');
-            });
-        });
-
-        // === Canvas Animation System ===
+        // === Canvas Animation Engine ===
         const canvas = document.getElementById('verbCanvas');
         const ctx = canvas.getContext('2d');
-        let animationId;
-        let currentScene = 'intransitive';
+        let animMode = 'action';
         let frame = 0;
 
         function resizeCanvas() {
-            const container = document.getElementById('canvasContainer');
-            canvas.width = container.clientWidth;
-            canvas.height = container.clientHeight;
+            const wrapper = document.getElementById('canvasContainer');
+            canvas.width = wrapper.clientWidth;
+            canvas.height = wrapper.clientHeight;
         }
         window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
 
-        function drawEmoji(emoji, x, y, size) {
+        function drawEmoji(char, x, y, size) {
             ctx.font = `${size}px Arial`;
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
-            ctx.fillText(emoji, x, y);
+            ctx.fillText(char, x, y);
         }
 
-        // Scenes Logic
-        const scenes = {
-            intransitive: (f) => {
-                ctx.clearRect(0,0,canvas.width,canvas.height);
-                ctx.fillStyle = "#2D3748"; ctx.font = "20px Nunito"; ctx.textAlign="center";
-                ctx.fillText("Intransitive (不及物): He runs. (No Object needed)", canvas.width/2, 40);
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            frame++;
+            const cx = canvas.width / 2;
+            const cy = canvas.height / 2;
+
+            if (animMode === 'action') {
+                // Action vs State
+                const runX = (frame * 3) % (canvas.width + 100) - 50;
                 
-                // Animation: Man running back and forth
-                const x = (f * 4) % (canvas.width + 100) - 50;
-                drawEmoji("🏃", x, canvas.height/2 + 20, 80);
-                drawEmoji("💨", x - 60, canvas.height/2 + 20, 40);
-            },
-            transitive: (f) => {
-                ctx.clearRect(0,0,canvas.width,canvas.height);
-                ctx.fillStyle = "#2D3748"; ctx.font = "20px Nunito"; ctx.textAlign="center";
-                ctx.fillText("Transitive (及物): She cooks an egg. (Need Object)", canvas.width/2, 40);
+                // Action: Run
+                ctx.fillStyle = "#2D3748"; ctx.font = "16px Nunito"; ctx.textAlign="left";
+                ctx.fillText("Action Verb: Run (動作)", 20, 30);
+                drawEmoji("🏃", runX, cy - 40, 50);
+
+                // State: Be
+                ctx.fillText("Linking Verb: Be Happy (狀態)", 20, cy + 30);
+                drawEmoji("😊", cx, cy + 60, 50); // Static
                 
-                const centerX = canvas.width/2;
-                const cy = canvas.height/2 + 20;
-                
-                // Chef
-                drawEmoji("👩‍🍳", centerX - 60, cy, 80);
-                // Pan
-                drawEmoji("🍳", centerX + 20, cy + 10, 60);
-                
-                // Smoke animation
-                const smokeY = cy - 40 - (f % 40);
-                const alpha = 1 - (f % 40)/40;
-                ctx.fillStyle = `rgba(100,100,100,${alpha})`;
-                ctx.fillText("♨️", centerX + 20, smokeY);
-            },
-            tenses: (f) => {
-                ctx.clearRect(0,0,canvas.width,canvas.height);
-                const cy = canvas.height/2;
-                
-                // Draw Timeline
+            } else if (animMode === 'timeline') {
+                // Timeline Visualization
                 ctx.beginPath();
                 ctx.moveTo(50, cy); ctx.lineTo(canvas.width - 50, cy);
                 ctx.strokeStyle = "#CBD5E0"; ctx.lineWidth = 4; ctx.stroke();
                 
-                // Markers
-                const points = [
-                    {x: canvas.width * 0.2, label: "PAST", emoji: "⏪"},
-                    {x: canvas.width * 0.5, label: "NOW", emoji: "⬇️"},
-                    {x: canvas.width * 0.8, label: "FUTURE", emoji: "⏩"}
-                ];
-                
-                points.forEach(p => {
-                    ctx.fillStyle = "#2C5282"; ctx.font = "14px Nunito";
-                    ctx.fillText(p.label, p.x, cy + 30);
-                    ctx.beginPath(); ctx.arc(p.x, cy, 6, 0, Math.PI*2); ctx.fill();
+                // Dots
+                [0.2, 0.5, 0.8].forEach((p, i) => {
+                    const x = canvas.width * p;
+                    ctx.beginPath(); ctx.arc(x, cy, 6, 0, Math.PI*2); ctx.fillStyle="#4299E1"; ctx.fill();
+                    const labels = ["Past", "Now", "Future"];
+                    ctx.fillStyle="#2D3748"; ctx.textAlign="center"; ctx.fillText(labels[i], x, cy + 25);
                 });
 
-                // Moving Indicator
-                const pos = (f % 300) / 300; // 0 to 1
-                const x = 50 + pos * (canvas.width - 100);
+                // Moving ball
+                const progress = (frame % 300) / 300;
+                const bx = 50 + progress * (canvas.width - 100);
+                drawEmoji("⏳", bx, cy - 30, 40);
                 
-                let text = "I am walking";
-                let emoji = "🚶";
-                if(pos < 0.33) { text = "I walked (Past)"; }
-                else if(pos > 0.66) { text = "I will walk (Future)"; emoji = "🚀"; }
+                let text = "Present";
+                if(progress < 0.35) text = "Past (did)";
+                else if(progress > 0.65) text = "Future (will do)";
                 
-                drawEmoji(emoji, x, cy - 30, 50);
-                ctx.fillStyle = "#F6AD55"; ctx.font = "bold 18px Nunito";
-                ctx.fillText(text, x, cy - 70);
-            },
-            passive: (f) => {
-                ctx.clearRect(0,0,canvas.width,canvas.height);
-                const cy = canvas.height/2;
-                const cx = canvas.width/2;
-                
-                // Cycle every 200 frames (approx 3s)
-                const cycle = Math.floor(f / 200) % 2; 
+                ctx.fillStyle = "#D69E2E"; ctx.font = "bold 20px Nunito";
+                ctx.fillText(text, cx, cy - 70);
+
+            } else if (animMode === 'passive') {
+                // Active / Passive Swap
+                const cycle = Math.floor(frame / 180) % 2;
                 
                 if (cycle === 0) {
-                    ctx.fillStyle = "#2C5282"; ctx.font = "bold 24px Nunito";
-                    ctx.fillText("Active: The Cat chases the Mouse", cx, 40);
-                    drawEmoji("🐱", cx - 100, cy, 70);
+                    ctx.fillStyle = "#1A365D"; ctx.font = "20px Nunito"; ctx.textAlign="center";
+                    ctx.fillText("ACTIVE: The boy eats the apple.", cx, 40);
+                    drawEmoji("👦", cx - 80, cy, 60);
                     drawEmoji("➡️", cx, cy, 40);
-                    drawEmoji("🐭", cx + 100, cy, 50);
+                    drawEmoji("🍎", cx + 80, cy, 50);
                 } else {
-                    ctx.fillStyle = "#E53E3E"; ctx.font = "bold 24px Nunito";
-                    ctx.fillText("Passive: The Mouse IS CHASED BY the Cat", cx, 40);
-                    // Swap positions visual
-                    drawEmoji("🐭", cx - 100, cy, 50); // Mouse moved to front
-                    drawEmoji("⬅️", cx, cy, 40);      // Arrow reversed logic visual
-                    drawEmoji("🐱", cx + 100, cy, 70); // Cat moved to back
+                    ctx.fillStyle = "#E53E3E"; ctx.font = "20px Nunito"; ctx.textAlign="center";
+                    ctx.fillText("PASSIVE: The apple IS EATEN BY the boy.", cx, 40);
+                    // Swapped positions
+                    drawEmoji("🍎", cx - 80, cy, 50);
+                    drawEmoji("⬅️", cx, cy, 40);
+                    drawEmoji("👦", cx + 80, cy, 60);
                 }
-                
-                ctx.fillStyle = "#718096"; ctx.font = "14px Nunito";
-                ctx.fillText("Waiting for swap...", cx, canvas.height - 20);
             }
-        };
 
-        function loop() {
-            frame++;
-            if(scenes[currentScene]) scenes[currentScene](frame);
-            animationId = requestAnimationFrame(loop);
+            requestAnimationFrame(draw);
         }
-        loop();
 
-        // Scene Buttons
-        document.querySelectorAll('.viz-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.viz-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                currentScene = btn.dataset.scene;
-                frame = 0;
-                sounds.click();
-            });
-        });
+        function setAnim(mode) {
+            animMode = mode;
+            frame = 0;
+            document.querySelectorAll('.btn-control').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+        }
 
-        // === Quiz System ===
-        const quizData = [
-            { q: "Water ______ at 100 degrees Celsius.", opts: ["boil", "boils", "boiling", "is boil"], ans: 1 },
-            { q: "Look! The bus ______.", opts: ["comes", "is coming", "came", "will come"], ans: 1 },
-            { q: "I ______ to Japan twice.", opts: ["go", "went", "have been", "was going"], ans: 2 },
-            { q: "The letter ______ by Tom yesterday.", opts: ["wrote", "was written", "is written", "writes"], ans: 1 },
-            { q: "You ______ finish your homework before playing.", opts: ["can", "may", "must", "might"], ans: 2 }
+        resizeCanvas();
+        requestAnimationFrame(draw);
+
+        // === Tabs Logic ===
+        function switchTab(id) {
+            document.querySelectorAll('.section-panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // === Quiz Logic ===
+        const questions = [
+            { q: "She ______ (go) to Paris last year.", opts: ["goes", "went", "has gone", "going"], ans: 1 },
+            { q: "Listen! The baby ______ (cry).", opts: ["cries", "is crying", "cried", "was crying"], ans: 1 },
+            { q: "I ______ (finish) my homework already.", opts: ["finish", "finished", "have finished", "finishing"], ans: 2 },
+            { q: "The window ______ (break) by the storm.", opts: ["broke", "was broken", "breaks", "is breaking"], ans: 1 },
+            { q: "He ______ (live) here for 10 years.", opts: ["lives", "has lived", "is living", "lived"], ans: 1 } // Present Perfect for duration
         ];
+        let qIdx = 0;
+        let score = 0;
 
-        let quizActive = false;
-        const quizContainer = document.getElementById('quizContainer');
-        const startBtn = document.getElementById('startQuizBtn');
+        function startQuiz() {
+            qIdx = 0; score = 0;
+            loadQuestion();
+        }
 
-        startBtn.onclick = () => {
-            startBtn.style.display = 'none';
-            quizContainer.classList.add('active');
-            loadQuestion(0);
-            sounds.click();
-        };
-
-        function loadQuestion(index) {
-            if (index >= quizData.length) {
-                document.getElementById('questionText').textContent = "🎉 Quiz Completed! Great Job!";
-                document.getElementById('optionsGrid').innerHTML = '<button class="btn-cta" onclick="location.reload()">🔄 Play Again</button>';
+        function loadQuestion() {
+            if (qIdx >= questions.length) {
+                document.getElementById('qText').innerText = `測驗結束！得分：${score} / ${questions.length}`;
+                document.getElementById('optionsArea').innerHTML = '<button class="btn-control" onclick="startQuiz()">再測一次</button>';
                 return;
             }
-
-            const q = quizData[index];
-            document.getElementById('questionText').textContent = `${index + 1}. ${q.q}`;
-            const grid = document.getElementById('optionsGrid');
-            grid.innerHTML = '';
-
-            q.opts.forEach((opt, i) => {
-                const btn = document.createElement('div');
-                btn.className = 'quiz-option';
-                btn.textContent = opt;
-                btn.onclick = () => {
-                    if(btn.style.pointerEvents === 'none') return;
-                    
-                    // Lock all
-                    Array.from(grid.children).forEach(c => c.style.pointerEvents = 'none');
-
-                    if (i === q.ans) {
-                        btn.classList.add('correct');
-                        sounds.correct();
-                        document.getElementById('feedback').textContent = "✨ Correct!";
-                        document.getElementById('feedback').style.color = "var(--success)";
-                    } else {
-                        btn.classList.add('incorrect');
-                        sounds.wrong();
-                        document.getElementById('feedback').textContent = "❌ Try to remember the rule!";
-                        document.getElementById('feedback').style.color = "var(--error)";
-                        // Show correct
-                        grid.children[q.ans].classList.add('correct');
-                    }
-
-                    setTimeout(() => {
-                        document.getElementById('feedback').textContent = "";
-                        loadQuestion(index + 1);
-                    }, 1500);
-                };
-                grid.appendChild(btn);
+            const q = questions[qIdx];
+            document.getElementById('qText').innerText = `${qIdx+1}. ${q.q}`;
+            const area = document.getElementById('optionsArea');
+            area.innerHTML = '';
+            
+            q.opts.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerText = opt;
+                btn.onclick = () => checkAns(btn, idx, q.ans);
+                area.appendChild(btn);
             });
+        }
+
+        function checkAns(btn, idx, ans) {
+            const btns = document.querySelectorAll('.option-btn');
+            btns.forEach(b => b.style.pointerEvents = 'none');
+            
+            if (idx === ans) {
+                btn.classList.add('correct');
+                score++;
+                document.getElementById('feedback').innerText = "✅ Correct!";
+                document.getElementById('feedback').style.color = "var(--success)";
+            } else {
+                btn.classList.add('wrong');
+                btns[ans].classList.add('correct');
+                document.getElementById('feedback').innerText = "❌ Incorrect";
+                document.getElementById('feedback').style.color = "var(--error)";
+            }
+            
+            setTimeout(() => {
+                qIdx++;
+                document.getElementById('feedback').innerText = "";
+                loadQuestion();
+            }, 1500);
         }
     </script>
 </body>
