@@ -3,985 +3,777 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shirley's Preposition Adventure | 介係詞探險</title>
+    <title>Shirley's Advanced Preposition Lab | 進階介係詞實驗室</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* 柔和且現代的配色 */
-            --primary: #8E7CC3;       /* 紫色主調 */
-            --primary-dark: #674EA7;
-            --secondary: #D9D2E9;     /* 淺紫輔助 */
-            --accent: #F4A261;        /* 活力橘 */
-            --bg-gradient-start: #FDFBF7;
-            --bg-gradient-end: #E6E2D3;
-            --text-main: #434343;
-            --text-light: #666666;
-            --success: #93C47D;
-            --error: #E06666;
-            --info: #6FA8DC;
-            --phrasal: #FFE599;       /* 片語動詞專用色 */
+            /* 延續紫色系，但更深邃專業 */
+            --primary: #6C5CE7;
+            --primary-dark: #4834D4;
+            --secondary: #A29BFE;
+            --accent: #FDCB6E;        /* 亮黃色用於強調 */
+            --surface: rgba(255, 255, 255, 0.9);
+            --bg-gradient: linear-gradient(135deg, #F5F6FA 0%, #E3E6F0 100%);
             
-            /* UI 變數 */
-            --radius-lg: 24px;
-            --radius-md: 16px;
-            --radius-sm: 8px;
-            --shadow-card: 0 10px 40px rgba(142, 124, 195, 0.15);
-            --shadow-float: 0 8px 20px rgba(0,0,0,0.1);
+            --text-main: #2D3436;
+            --text-light: #636E72;
+            
+            --success: #00B894;
+            --error: #D63031;
+            
+            --radius: 20px;
+            --shadow: 0 10px 30px rgba(108, 92, 231, 0.15);
         }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Nunito', 'Segoe UI', 'Microsoft JhengHei', sans-serif;
-        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Nunito', 'Noto Sans TC', sans-serif; }
         
         body {
-            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            background: var(--bg-gradient);
             color: var(--text-main);
             min-height: 100vh;
             padding: 20px;
-            line-height: 1.6;
-        }
-        
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            background-color: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px); /* 毛玻璃效果 */
-            -webkit-backdrop-filter: blur(12px);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-card);
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.6);
-        }
-        
-        /* ===== Header ===== */
-        header {
-            background: linear-gradient(120deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            padding: 30px 20px;
-            text-align: center;
-            position: relative;
-            box-shadow: 0 4px 15px rgba(103, 78, 167, 0.2);
-        }
-        
-        h1 {
-            font-size: 2.2rem;
-            margin-bottom: 5px;
-            letter-spacing: 1px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .subtitle {
-            font-size: 1.1rem;
-            opacity: 0.9;
-            font-weight: 300;
-        }
-        
-        .header-btn {
-            position: absolute;
-            top: 25px;
-            background: rgba(255, 255, 255, 0.25);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
-            backdrop-filter: blur(4px);
             display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        
-        .header-btn:hover {
-            background: rgba(255, 255, 255, 0.4);
-            transform: translateY(-2px);
-        }
-        
-        #languageToggle { right: 20px; }
-        #volumeToggle { left: 20px; }
-        
-        /* ===== Main Layout ===== */
-        .main-content {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
-            padding: 30px;
-        }
-        
-        /* ===== Animation Section ===== */
-        .animation-section {
-            flex: 1.2;
-            min-width: 320px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .animation-container {
-            width: 100%;
-            height: 320px;
-            background: white;
-            border-radius: var(--radius-md);
-            margin-bottom: 20px;
-            position: relative;
-            overflow: hidden;
-            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.05);
-            border: 2px solid var(--secondary);
-        }
-        
-        canvas {
-            width: 100%;
-            height: 100%;
-        }
-        
-        .controls {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
             justify-content: center;
-        }
-        
-        /* 通用按鈕樣式 */
-        .btn {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 10px 24px;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            font-weight: 700;
-            box-shadow: 0 4px 6px rgba(142, 124, 195, 0.3);
-            font-size: 0.95rem;
-        }
-        
-        .btn:hover {
-            background-color: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(142, 124, 195, 0.4);
-        }
-        
-        .btn:active {
-            transform: translateY(0);
-        }
-        
-        .btn-outline {
-            background-color: white;
-            color: var(--primary);
-            border: 2px solid var(--primary);
-        }
-        .btn-outline:hover {
-            background-color: var(--secondary);
-            color: var(--primary-dark);
         }
 
-        /* 介係詞選擇按鈕區 */
-        .preposition-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
-            margin-top: 5px;
-        }
-        
-        .prep-tag {
-            background-color: var(--info);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 12px;
-            font-size: 0.95rem;
-            cursor: pointer;
-            border: none;
-            transition: all 0.2s;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        
-        .prep-tag:hover {
-            filter: brightness(1.1);
-            transform: translateY(-2px);
-        }
-        
-        .prep-tag.phrasal {
-            background-color: var(--phrasal);
-            color: #5b4d2e;
-            font-weight: bold;
-        }
-        
-        .progress-bar-container {
+        .app-container {
             width: 100%;
-            height: 8px;
-            background-color: #eee;
-            border-radius: 10px;
-            margin-top: 20px;
+            max-width: 1200px;
+            background: var(--surface);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255,255,255,0.8);
+            display: grid;
+            grid-template-rows: auto 1fr auto;
             overflow: hidden;
         }
-        
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
-            width: 0%;
-            transition: width 0.1s linear;
-        }
-        
-        /* ===== Info Section & Tabs ===== */
-        .info-section {
-            flex: 1;
-            min-width: 320px;
-            background: rgba(255, 255, 255, 0.6);
-            border-radius: var(--radius-md);
-            padding: 20px;
-            border: 1px solid rgba(255,255,255,0.5);
-        }
-        
-        .tabs {
+
+        /* Header */
+        header {
+            padding: 25px 30px;
+            background: white;
+            border-bottom: 1px solid #eee;
             display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            overflow-x: auto;
-            padding-bottom: 5px;
-            /* 隱藏滾動條但保持功能 */
-            scrollbar-width: none; 
-            -ms-overflow-style: none;
+            justify-content: space-between;
+            align-items: center;
         }
-        .tabs::-webkit-scrollbar { display: none; }
-        
-        .tab {
-            padding: 8px 18px;
-            cursor: pointer;
-            background: transparent;
-            border: 2px solid transparent;
-            color: var(--text-light);
-            font-weight: 700;
-            border-radius: 20px;
-            white-space: nowrap;
-            transition: all 0.3s;
-        }
-        
-        .tab:hover {
-            color: var(--primary);
-            background: rgba(142, 124, 195, 0.1);
-        }
-        
-        .tab.active {
-            background-color: var(--primary);
-            color: white;
-            box-shadow: 0 4px 10px rgba(142, 124, 195, 0.3);
-        }
-        
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.4s ease;
-        }
-        
-        .tab-content.active {
-            display: block;
-        }
-        
-        /* 內容卡片樣式 */
-        .example {
-            margin: 15px 0;
-            padding: 18px;
-            background-color: white;
-            border-radius: var(--radius-md);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
-            border-left: 5px solid var(--primary);
-            transition: transform 0.2s;
-        }
-        
-        .example:hover {
-            transform: translateX(5px);
-        }
-        
-        .example h3 {
-            color: var(--primary-dark);
-            margin-bottom: 10px;
+
+        .brand {
             display: flex;
             align-items: center;
-            gap: 8px;
-        }
-        
-        .level {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 800;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
-        .beginner { background-color: var(--success); color: white; }
-        .intermediate { background-color: var(--accent); color: white; }
-        
-        .phrase-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 12px;
-            margin-top: 10px;
-        }
-        
-        .phrase-item {
-            padding: 10px;
-            background-color: #fcfcfc;
-            border: 1px solid #eee;
-            border-radius: 10px;
-            font-size: 0.9rem;
-            text-align: center;
-            transition: all 0.2s;
-        }
-        
-        .phrase-item:hover {
-            border-color: var(--primary);
-            background-color: #fbf9ff;
-        }
-        
-        .phrase-item strong {
-            color: var(--primary-dark);
-            display: block;
-            margin-bottom: 4px;
-        }
-        
-        /* ===== Bonus Card (Special Style) ===== */
-        .bonus-card {
-            border: none;
-            background: linear-gradient(135deg, #FFF7E6 0%, #FFFDF5 100%);
-            border-left: 6px solid var(--accent);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .bonus-card::after {
-            content: '🎁';
-            position: absolute;
-            right: -10px;
-            bottom: -10px;
-            font-size: 5rem;
-            opacity: 0.1;
-            transform: rotate(-20deg);
-        }
-        
-        .bonus-title {
-            color: #D35400;
-            font-weight: 800;
-            font-size: 1.1rem;
-            margin-bottom: 8px;
-        }
-        
-        .bonus-actions {
-            margin-top: 15px;
-            display: flex;
-            gap: 10px;
-        }
-        
-        /* ===== Quiz Section ===== */
-        .quiz-section {
-            width: 100%;
-            padding: 30px;
-            background: white;
-            border-radius: var(--radius-lg);
-            margin-top: 10px;
-            text-align: center;
-            position: relative;
-        }
-        
-        .quiz-container { display: none; max-width: 600px; margin: 0 auto; }
-        .quiz-container.active { display: block; }
-        
-        .question {
-            font-size: 1.4rem;
-            margin: 20px 0 30px;
-            font-weight: 700;
-            color: var(--text-main);
-        }
-        
-        .options {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
             gap: 15px;
         }
+
+        .brand h1 {
+            font-size: 1.8rem;
+            color: var(--primary-dark);
+            font-weight: 800;
+        }
         
-        .option {
-            padding: 15px;
+        .brand span {
+            background: var(--accent);
+            color: var(--text-main);
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        /* Main Content Grid */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 4fr 5fr;
+            gap: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        /* Left: Visualizer */
+        .visualizer-panel {
+            background: #F8F9FA;
+            padding: 30px;
+            border-right: 1px solid #eee;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .canvas-wrapper {
+            flex: 1;
             background: white;
+            border-radius: var(--radius);
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.03);
             border: 2px solid #eee;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--text-light);
+            position: relative;
+            overflow: hidden;
+            min-height: 300px;
         }
-        
-        .option:hover {
-            border-color: var(--primary);
+
+        canvas { width: 100%; height: 100%; }
+
+        .scene-controls {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .scene-btn {
+            padding: 10px 16px;
+            border: 1px solid var(--secondary);
+            background: white;
             color: var(--primary);
-            background: #fbf9ff;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+            font-size: 0.9rem;
         }
-        
-        .option.correct {
-            background-color: var(--success);
-            border-color: var(--success);
-            color: white;
-            animation: pulse 0.5s;
-        }
-        
-        .option.incorrect {
-            background-color: var(--error);
-            border-color: var(--error);
-            color: white;
-            animation: shake 0.4s;
-        }
-        
-        .quiz-result { display: none; }
-        .quiz-result.active { display: block; animation: popIn 0.5s; }
-        
-        .score-circle {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
+
+        .scene-btn:hover, .scene-btn.active {
             background: var(--primary);
             color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(108, 92, 231, 0.3);
+        }
+
+        .viz-caption {
+            margin-top: 15px;
+            padding: 15px;
+            background: #E8EAF6;
+            border-radius: 12px;
+            color: var(--primary-dark);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            border-left: 4px solid var(--primary);
+        }
+
+        /* Right: Theory & Quiz */
+        .content-panel {
+            padding: 30px;
+            overflow-y: auto;
+            max-height: 800px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .tab {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-light);
+            cursor: pointer;
+            padding: 8px 12px;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .tab.active { color: var(--primary); }
+        .tab.active::after {
+            content: ''; position: absolute; bottom: -12px; left: 0; width: 100%; height: 3px;
+            background: var(--primary); border-radius: 3px 3px 0 0;
+        }
+
+        .section-content { display: none; animation: fadeIn 0.4s; }
+        .section-content.active { display: block; }
+
+        /* Pyramid Concept Style */
+        .pyramid-box {
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+
+        .rule-row {
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin: 0 auto 20px;
-            box-shadow: 0 10px 20px rgba(142, 124, 195, 0.4);
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px dashed #eee;
         }
         
-        footer {
-            text-align: center;
-            padding: 30px;
-            color: var(--text-light);
+        .rule-icon {
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            background: var(--secondary);
+            color: white;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        .rule-icon.in { background: #0984e3; } /* Large */
+        .rule-icon.on { background: #00b894; } /* Medium */
+        .rule-icon.at { background: #d63031; } /* Small */
+
+        .rule-text h4 { margin-bottom: 4px; color: var(--text-main); }
+        .rule-text p { font-size: 0.9rem; color: var(--text-light); }
+        .example-tag {
+            display: inline-block;
+            background: #f1f2f6;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-top: 4px;
+            color: #555;
+        }
+
+        /* Quiz Advanced Styles */
+        .quiz-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            text-align: left;
+        }
+
+        .q-context {
             font-size: 0.9rem;
-            opacity: 0.8;
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
+
+        .q-text {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .option-btn {
+            padding: 15px;
+            border: 2px solid #eee;
+            border-radius: 12px;
+            background: white;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            text-align: left;
+        }
+
+        .option-btn:hover { border-color: var(--secondary); background: #fdfdfd; }
         
-        /* Animations */
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
-        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+        .option-btn.correct { 
+            background: #d4edda; border-color: #c3e6cb; color: #155724; 
+            position: relative;
+        }
+        .option-btn.correct::after { content: '✓'; float: right; font-weight: bold; }
+
+        .option-btn.incorrect { 
+            background: #f8d7da; border-color: #f5c6cb; color: #721c24; 
+            opacity: 0.7;
+        }
+
+        .explanation {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e2e3e5;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            display: none;
+            animation: slideDown 0.3s;
+        }
+        .explanation.show { display: block; }
+        
+        .explanation strong { color: var(--primary-dark); }
+
+        footer {
+            grid-column: 1 / -1;
+            padding: 15px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #aaa;
+            background: white;
+            border-top: 1px solid #eee;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* RWD */
-        @media (max-width: 768px) {
-            .main-content { flex-direction: column; padding: 15px; }
-            .options { grid-template-columns: 1fr; }
-            h1 { font-size: 1.8rem; }
-            .header-btn span { display: none; } /* 手機版隱藏按鈕文字只留圖示 */
+        @media (max-width: 900px) {
+            .main-grid { grid-template-columns: 1fr; grid-template-rows: auto auto; overflow-y: auto; }
+            .app-container { max-height: none; overflow: visible; display: block; }
+            .visualizer-panel { border-right: none; border-bottom: 1px solid #eee; }
+            .content-panel { max-height: none; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <button class="header-btn" id="volumeToggle">
-                <span class="icon">🔊</span> <span>音效</span>
-            </button>
-            <h1>Shirley's Preposition Adventure</h1>
-            <div class="subtitle">跟著 Shirley 一起探索介係詞的奧秘</div>
-            <button class="header-btn" id="languageToggle">
-                <span>EN/中文</span> <span class="icon">🌐</span>
-            </button>
-        </header>
-        
-        <div class="main-content">
-            <section class="animation-section">
-                <div class="animation-container" id="animationContainer">
-                    <canvas id="prepositionCanvas"></canvas>
-                </div>
-                
-                <div class="controls">
-                    <button class="btn" id="playBtn">▶ 播放</button>
-                    <button class="btn btn-outline" id="pauseBtn">⏸ 暫停</button>
-                    <button class="btn btn-outline" id="resetBtn">↺ 重置</button>
-                </div>
-                
-                <div class="preposition-buttons" id="prepositionButtons">
-                    </div>
-                
-                <div class="progress-bar-container">
-                    <div class="progress-fill" id="progressBar"></div>
-                </div>
-            </section>
-            
-            <section class="info-section">
-                <div class="tabs">
-                    <div class="tab active" data-tab="intro">介紹</div>
-                    <div class="tab" data-tab="basic">基礎介係詞</div>
-                    <div class="tab" data-tab="phrasal">Phrasal Verbs</div>
-                    <div class="tab" data-tab="bonus">🎁 Bonus</div>
-                </div>
-                
-                <div class="tab-content active" id="intro">
-                    <h2>介係詞是什麼？</h2>
-                    <p style="margin-bottom: 15px; color: #666;">Prepositions show the relationship between words.</p>
-                    <div class="example">
-                        <span class="level beginner">觀念</span>
-                        <p>介係詞通常用來表示：</p>
-                        <ul style="margin-left: 20px; margin-top: 5px; color: #555;">
-                            <li>📍 <strong>位置 (Place)</strong>: in, on, at</li>
-                            <li>⏰ <strong>時間 (Time)</strong>: in, on, at</li>
-                            <li>➡️ <strong>方向 (Direction)</strong>: into, towards</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="tab-content" id="basic">
-                    <h2>空間與位置</h2>
-                    <div class="example">
-                        <h3>IN (在...裡面)</h3>
-                        <p>想像一個<strong>容器</strong>或<strong>封閉空間</strong>。</p>
-                        <p class="phrase-item">📦 The cat is <strong>in</strong> the box.</p>
-                    </div>
-                    <div class="example">
-                        <h3>ON (在...上面)</h3>
-                        <p>接觸到物體的<strong>表面</strong>。</p>
-                        <p class="phrase-item">🍎 The apple is <strong>on</strong> the table.</p>
-                    </div>
-                    <div class="example">
-                        <h3>AT (在...點)</h3>
-                        <p>指一個特定的<strong>地點</strong>或<strong>時刻</strong>。</p>
-                        <p class="phrase-item">🚏 Let's meet <strong>at</strong> the bus stop.</p>
-                    </div>
-                </div>
-                
-                <div class="tab-content" id="phrasal">
-                    <h2>Phrasal Verbs (動詞片語)</h2>
-                    <p>動詞 + 介係詞 = 全新的意思！</p>
-                    
-                    <div class="example">
-                        <h3>Turn (轉變)</h3>
-                        <div class="phrase-list">
-                            <div class="phrase-item"><strong>Turn in</strong><br>🛌 上交；就寢</div>
-                            <div class="phrase-item"><strong>Turn on</strong><br>💡 打開電源</div>
-                            <div class="phrase-item"><strong>Turn off</strong><br>📴 關閉電源</div>
-                            <div class="phrase-item"><strong>Turn up</strong><br>🔊 調大；出現</div>
-                        </div>
-                    </div>
-                    
-                    <div class="example">
-                        <h3>Give (給予)</h3>
-                        <div class="phrase-list">
-                            <div class="phrase-item"><strong>Give up</strong><br>🏳️ 放棄</div>
-                            <div class="phrase-item"><strong>Give in</strong><br>🙇 屈服</div>
-                            <div class="phrase-item"><strong>Give away</strong><br>🎁 贈送</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="tab-content" id="bonus">
-                    <div class="example bonus-card">
-                        <div class="bonus-title">🚀 學習資源大禮包</div>
-                        <p style="margin-bottom: 10px;">覺得意猶未盡嗎？Shirley 老師準備了更多互動式卡片練習，幫助你更快速記憶！</p>
-                        <div class="bonus-actions">
-                            <a class="btn" href="https://ducj-creator.github.io/Shirley-Grammar/phrases" target="_blank">
-                                🎮 開始互動練習
-                            </a>
-                            <a class="btn btn-outline" href="https://ducj-creator.github.io/Shirley-Grammar/phrases" target="_blank">
-                                🔗 分享連結
-                            </a>
-                        </div>
-                    </div>
-                    <div class="example">
-                        <h3>常用搭配詞 (Collocations)</h3>
-                        <div class="phrase-list">
-                            <div class="phrase-item"><strong>Interested in</strong><br>感興趣</div>
-                            <div class="phrase-item"><strong>Good at</strong><br>擅長</div>
-                            <div class="phrase-item"><strong>Afraid of</strong><br>害怕</div>
-                            <div class="phrase-item"><strong>Listen to</strong><br>聆聽</div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+
+<div class="app-container">
+    <header>
+        <div class="brand">
+            <h1>Preposition Lab</h1>
+            <span>Advanced V2.0</span>
         </div>
-        
-        <div class="quiz-section">
-            <h2>🧠 測驗時間 (Quiz Time)</h2>
-            <p style="margin-bottom: 20px; color: #666;">測試你對介係詞的直覺！</p>
-            <button class="btn" id="startQuiz">🚀 開始測驗</button>
-            
-            <div class="quiz-container" id="quizContainer">
-                <div class="question" id="question"></div>
-                <div class="options" id="options"></div>
+        <div style="font-size: 0.9rem; color: #666;">
+            💡 核心概念：情境與相對關係
+        </div>
+    </header>
+
+    <div class="main-grid">
+        <section class="visualizer-panel">
+            <h3 style="margin-bottom: 15px; color: var(--primary);">🎥 動態情境模擬</h3>
+            <div class="canvas-wrapper" id="canvasContainer">
+                <canvas id="prepCanvas"></canvas>
             </div>
             
-            <div class="quiz-result" id="quizResult">
-                <div class="score-circle" id="score"></div>
-                <h3 id="resultMessage" style="font-size: 1.5rem; margin-bottom: 15px;"></h3>
-                <button class="btn" id="restartQuiz">🔄 再試一次</button>
+            <div class="viz-caption" id="vizCaption">
+                選擇下方按鈕來觀察介係詞的物理變化。
             </div>
-        </div>
-        
-        <footer>
-            <p>Made with ❤️ for English Learners</p>
-            <p>© 2025 Shirley's Grammar Adventure</p>
-        </footer>
+
+            <div class="scene-controls">
+                <button class="scene-btn active" onclick="setScenario('pyramid')">📐 倒三角法則</button>
+                <button class="scene-btn" onclick="setScenario('surface_in')">📦 In vs On</button>
+                <button class="scene-btn" onclick="setScenario('motion_through')">🚇 Through vs Across</button>
+                <button class="scene-btn" onclick="setScenario('motion_to')">➡️ To vs Towards</button>
+            </div>
+        </section>
+
+        <section class="content-panel">
+            <div class="tabs">
+                <div class="tab active" onclick="switchTab('time')">⏳ 時間 (Time)</div>
+                <div class="tab" onclick="switchTab('place')">📍 地點 (Place)</div>
+                <div class="tab" onclick="switchTab('motion')">🏃 動態 (Motion)</div>
+                <div class="tab" onclick="switchTab('quiz')">🧠 精準測驗</div>
+            </div>
+
+            <div id="time" class="section-content active">
+                <h2 style="margin-bottom: 15px;">倒三角形法則 (The Pyramid)</h2>
+                <div class="pyramid-box">
+                    <div class="rule-row">
+                        <div class="rule-icon in">IN</div>
+                        <div class="rule-text">
+                            <h4>大範圍 / 長時間</h4>
+                            <p>世紀、年、季節、月份、時段</p>
+                            <span class="example-tag">in 2024</span>
+                            <span class="example-tag">in July</span>
+                            <span class="example-tag">in the morning</span>
+                        </div>
+                    </div>
+                    <div class="rule-row">
+                        <div class="rule-icon on">ON</div>
+                        <div class="rule-text">
+                            <h4>特定日子</h4>
+                            <p>日期、星期幾、特定的某個早晨/夜晚</p>
+                            <span class="example-tag">on Monday</span>
+                            <span class="example-tag">on July 4th</span>
+                            <span class="example-tag">on a cold night</span>
+                        </div>
+                    </div>
+                    <div class="rule-row" style="border: none;">
+                        <div class="rule-icon at">AT</div>
+                        <div class="rule-text">
+                            <h4>精確時間點</h4>
+                            <p>幾點幾分、特定時刻</p>
+                            <span class="example-tag">at 5:00 PM</span>
+                            <span class="example-tag">at noon</span>
+                            <span class="example-tag">at the moment</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="place" class="section-content">
+                <h2>空間概念：封閉 vs 表面 vs 定點</h2>
+                <p style="margin-bottom: 20px; color: #666;">不再只有「在...之上/下」，重點是物理性質。</p>
+
+                <div class="pyramid-box">
+                    <div class="rule-row">
+                        <div class="rule-icon in">IN</div>
+                        <div class="rule-text">
+                            <h4>封閉空間 / 容器 / 區域</h4>
+                            <p>強調「被包圍」或「在界線內」。</p>
+                            <span class="example-tag">in the box</span>
+                            <span class="example-tag">in London (城市邊界內)</span>
+                            <span class="example-tag">in the car</span>
+                        </div>
+                    </div>
+                    <div class="rule-row">
+                        <div class="rule-icon on">ON</div>
+                        <div class="rule-text">
+                            <h4>表面 / 接觸</h4>
+                            <p>強調「接觸面」或「線條上」。</p>
+                            <span class="example-tag">on the table (接觸桌面)</span>
+                            <span class="example-tag">on the wall</span>
+                            <span class="example-tag">on the bus (甲板概念)</span>
+                        </div>
+                    </div>
+                    <div class="rule-row" style="border: none;">
+                        <div class="rule-icon at">AT</div>
+                        <div class="rule-text">
+                            <h4>地圖上的一個「點」</h4>
+                            <p>不強調內部或上面，只強調「位置所在」。</p>
+                            <span class="example-tag">at the bus stop</span>
+                            <span class="example-tag">at the door</span>
+                            <span class="example-tag">at the corner</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="motion" class="section-content">
+                <h2>動態介係詞 (Motion)</h2>
+                <p>這些介係詞涉及「移動的路徑」。</p>
+                
+                <div class="pyramid-box">
+                    <div class="rule-row">
+                        <div class="rule-icon" style="background: #e17055;">ACROSS</div>
+                        <div class="rule-text">
+                            <h4>穿越 (表面)</h4>
+                            <p>從一邊到另一邊 (2D)。</p>
+                            <span class="example-tag">Walk across the street</span>
+                        </div>
+                    </div>
+                    <div class="rule-row">
+                        <div class="rule-icon" style="background: #0984e3;">THROUGH</div>
+                        <div class="rule-text">
+                            <h4>穿過 (內部/立體)</h4>
+                            <p>進入一端並從另一端出來 (3D)。</p>
+                            <span class="example-tag">Drive through the tunnel</span>
+                            <span class="example-tag">Walk through the forest</span>
+                        </div>
+                    </div>
+                    <div class="rule-row" style="border: none;">
+                        <div class="rule-icon" style="background: #6c5ce7;">INTO</div>
+                        <div class="rule-text">
+                            <h4>進入</h4>
+                            <p>由外而內的動作。</p>
+                            <span class="example-tag">Jump into the water</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="quiz" class="section-content">
+                <div class="quiz-card">
+                    <div class="q-context" id="qContext">Question 1/5</div>
+                    <div class="q-text" id="qText">Loading...</div>
+                    <div class="options-grid" id="qOptions"></div>
+                    <div class="explanation" id="qExplanation"></div>
+                    <button id="nextBtn" style="display:none; margin-top:15px; width:100%; padding:10px; background:var(--primary); color:white; border:none; border-radius:8px; cursor:pointer;" onclick="nextQuestion()">Next Question ➡️</button>
+                </div>
+            </div>
+        </section>
     </div>
 
-    <script>
-        // === 音效系統 (Web Audio API) ===
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
-        const audioCtx = new AudioContext();
-        let isSoundEnabled = true;
+    <footer>
+        © 2025 Shirley's Advanced Grammar | Designed for Precision Learning
+    </footer>
+</div>
 
-        function playTone(freq, type, duration) {
-            if (!isSoundEnabled) return;
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.type = type;
-            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-            gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start();
-            osc.stop(audioCtx.currentTime + duration);
+<script>
+    // === Canvas 視覺化引擎 ===
+    const canvas = document.getElementById('prepCanvas');
+    const ctx = canvas.getContext('2d');
+    let animationId;
+    let frame = 0;
+    let currentScenario = 'pyramid';
+
+    function resizeCanvas() {
+        const container = document.getElementById('canvasContainer');
+        canvas.width = container.clientWidth;
+        canvas.height = container.clientHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    
+    // Emoji 繪圖輔助
+    function drawEmoji(emoji, x, y, size) {
+        ctx.font = `${size}px Arial`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(emoji, x, y);
+    }
+
+    // 場景繪製邏輯
+    const scenarios = {
+        pyramid: (f) => {
+            const w = canvas.width;
+            const h = canvas.height;
+            const cx = w / 2;
+            const cy = h / 2 + 50;
+
+            ctx.clearRect(0,0,w,h);
+            
+            // Draw Pyramid
+            ctx.beginPath();
+            ctx.moveTo(cx, cy - 150);
+            ctx.lineTo(cx - 120, cy + 50);
+            ctx.lineTo(cx + 120, cy + 50);
+            ctx.closePath();
+            
+            // Gradients
+            const grad = ctx.createLinearGradient(0, cy-150, 0, cy+50);
+            grad.addColorStop(0, '#fab1a0');
+            grad.addColorStop(0.5, '#00b894');
+            grad.addColorStop(1, '#0984e3');
+            ctx.fillStyle = "rgba(200,200,200,0.2)";
+            ctx.fill();
+            ctx.strokeStyle = "#b2bec3";
+            ctx.stroke();
+
+            // Sections lines
+            ctx.beginPath();
+            ctx.moveTo(cx - 40, cy - 83); ctx.lineTo(cx + 40, cy - 83); // Top line
+            ctx.moveTo(cx - 80, cy - 16); ctx.lineTo(cx + 80, cy - 16); // Mid line
+            ctx.stroke();
+
+            // Labels
+            ctx.fillStyle = "#d63031"; ctx.font = "bold 20px Arial"; ctx.fillText("AT (Point)", cx, cy - 110);
+            ctx.fillStyle = "#00b894"; ctx.fillText("ON (Surface/Day)", cx, cy - 50);
+            ctx.fillStyle = "#0984e3"; ctx.fillText("IN (Volume/Year)", cx, cy + 20);
+
+            // Animated Item
+            const cycle = Math.floor(f / 120) % 3;
+            let itemY = 0;
+            let itemText = "";
+            if (cycle === 0) { itemY = cy + 20; itemText = "Year / City"; }
+            if (cycle === 1) { itemY = cy - 50; itemText = "Day / Street"; }
+            if (cycle === 2) { itemY = cy - 110; itemText = "Hour / Address"; }
+
+            ctx.fillStyle = "#2d3436"; ctx.font = "16px Arial";
+            ctx.fillText(itemText, cx + 150, itemY);
+            drawEmoji("👈", cx + 100 + (Math.sin(f/10)*5), itemY, 30);
+        },
+        surface_in: (f) => {
+            const cx = canvas.width / 2;
+            const cy = canvas.height / 2;
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+
+            // Left: IN (Box)
+            const boxX = cx - 100;
+            ctx.fillStyle = "#ffeaa7";
+            ctx.fillRect(boxX - 50, cy - 50, 100, 100);
+            ctx.strokeStyle = "#fdcb6e"; ctx.lineWidth=3; ctx.strokeRect(boxX - 50, cy - 50, 100, 100);
+            
+            drawEmoji("🐱", boxX, cy + Math.sin(f/10)*5, 50);
+            
+            // Front cover of box for depth
+            ctx.fillStyle = "rgba(255, 234, 167, 0.5)";
+            ctx.fillRect(boxX - 50, cy, 100, 50);
+
+            ctx.fillStyle = "#636e72"; ctx.font="bold 16px Arial";
+            ctx.fillText("IN the box (Inside)", boxX, cy + 80);
+
+            // Right: ON (Table)
+            const tableX = cx + 100;
+            ctx.fillStyle = "#a29bfe";
+            ctx.fillRect(tableX - 60, cy + 20, 120, 10); // top
+            ctx.fillRect(tableX - 50, cy + 30, 10, 40); // leg
+            ctx.fillRect(tableX + 40, cy + 30, 10, 40); // leg
+            
+            drawEmoji("🍎", tableX, cy - 10 + Math.abs(Math.sin(f/15)*10), 40);
+            ctx.fillStyle = "#636e72";
+            ctx.fillText("ON the table (Surface)", tableX, cy + 80);
+        },
+        motion_through: (f) => {
+            const cx = canvas.width / 2;
+            const cy = canvas.height / 2;
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+
+            // Tunnel (Through) - Top
+            const tunY = cy - 60;
+            ctx.fillStyle = "#636e72";
+            ctx.beginPath(); ctx.arc(cx, tunY, 50, Math.PI, 0); ctx.fill();
+            ctx.fillStyle = "#2d3436";
+            ctx.beginPath(); ctx.arc(cx, tunY, 40, Math.PI, 0); ctx.fill();
+            
+            const trainX = (f * 3) % (canvas.width + 100) - 50;
+            if (trainX > cx - 40 && trainX < cx + 40) ctx.globalAlpha = 0.5; // Inside
+            drawEmoji("🚂", trainX, tunY, 40);
+            ctx.globalAlpha = 1.0;
+            
+            ctx.fillStyle = "#2d3436"; ctx.fillText("THROUGH the tunnel (3D)", cx, tunY + 20);
+
+            // Road (Across) - Bottom
+            const roadY = cy + 80;
+            ctx.fillStyle = "#b2bec3";
+            ctx.fillRect(cx - 150, roadY - 20, 300, 40);
+            // Stripes
+            ctx.strokeStyle="white"; ctx.setLineDash([10, 10]); 
+            ctx.beginPath(); ctx.moveTo(cx - 150, roadY); ctx.lineTo(cx + 150, roadY); ctx.stroke();
+            ctx.setLineDash([]);
+
+            const walkY = roadY + (Math.sin(f/5)*5);
+            // Person walking ACROSS (Up/Down visually 2D)
+            const pX = cx; 
+            const pY = roadY - 40 + ((f % 200) / 200) * 80; // Crossing vertically
+            
+            drawEmoji("🚶", pX, pY, 40);
+            ctx.fillStyle = "#2d3436"; ctx.fillText("ACROSS the road (Surface)", cx, roadY + 50);
+        },
+        motion_to: (f) => {
+            const cx = canvas.width / 2;
+            const cy = canvas.height / 2;
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            
+            drawEmoji("🏠", cx + 120, cy, 60);
+            
+            // TO: Arrives
+            const toX = Math.min(cx + 90, (f * 2) % (canvas.width));
+            drawEmoji("👦", toX, cy - 40, 40);
+            ctx.fillStyle = "#0984e3"; ctx.fillText("TO (Destination reached)", cx, cy - 80);
+
+            // TOWARDS: Just direction
+            const towardsX = (f * 2) % (canvas.width);
+            drawEmoji("🏃", towardsX, cy + 40, 40);
+            
+            // Arrow
+            ctx.strokeStyle = "#fdcb6e"; ctx.lineWidth = 3;
+            ctx.beginPath(); ctx.moveTo(towardsX + 20, cy + 40); ctx.lineTo(cx + 80, cy + 40); ctx.stroke();
+            
+            ctx.fillStyle = "#e17055"; ctx.fillText("TOWARDS (Direction only)", cx, cy + 90);
         }
+    };
 
-        function playSound(effect) {
-            if (audioCtx.state === 'suspended') audioCtx.resume();
-            switch(effect) {
-                case 'correct': playTone(880, 'sine', 0.5); playTone(1100, 'sine', 0.5); break;
-                case 'incorrect': playTone(200, 'sawtooth', 0.3); break;
-                case 'click': playTone(400, 'triangle', 0.1); break;
-                case 'transition': playTone(600, 'sine', 0.2); break;
-                case 'win': 
-                    [523, 659, 783, 1046].forEach((f, i) => setTimeout(() => playTone(f, 'sine', 0.3), i*100));
-                    break;
-            }
-        }
+    function loop() {
+        frame++;
+        if (scenarios[currentScenario]) scenarios[currentScenario](frame);
+        animationId = requestAnimationFrame(loop);
+    }
 
-        // === UI 控制 ===
-        document.getElementById('volumeToggle').addEventListener('click', function() {
-            isSoundEnabled = !isSoundEnabled;
-            this.innerHTML = isSoundEnabled ? '<span class="icon">🔊</span> <span>音效</span>' : '<span class="icon">🔇</span> <span>靜音</span>';
-        });
-
-        document.getElementById('languageToggle').addEventListener('click', function() {
-            const span = this.querySelector('span:first-child');
-            span.textContent = span.textContent === 'EN/中文' ? '中/English' : 'EN/中文';
-            playSound('click');
-        });
-
-        // Tabs 切換
-        const tabs = document.querySelectorAll('.tab');
-        const contents = document.querySelectorAll('.tab-content');
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                tabs.forEach(t => t.classList.remove('active'));
-                contents.forEach(c => c.classList.remove('active'));
-                tab.classList.add('active');
-                document.getElementById(tab.dataset.tab).classList.add('active');
-                playSound('click');
-            });
-        });
-
-        // === Canvas 動畫系統 (Emoji Enhanced) ===
-        const canvas = document.getElementById('prepositionCanvas');
-        const ctx = canvas.getContext('2d');
-        const animationContainer = document.getElementById('animationContainer');
+    function setScenario(id) {
+        currentScenario = id;
+        document.querySelectorAll('.scene-btn').forEach(b => b.classList.remove('active'));
+        event.target.classList.add('active');
+        frame = 0;
         
-        let canvasWidth, canvasHeight;
-        function resizeCanvas() {
-            canvasWidth = animationContainer.clientWidth;
-            canvasHeight = animationContainer.clientHeight;
-            canvas.width = canvasWidth;
-            canvas.height = canvasHeight;
-            drawScene(); // 重繪當前場景
-        }
-        window.addEventListener('resize', resizeCanvas);
+        const captions = {
+            pyramid: "倒三角法則：時間和空間都適用。\n上方(IN)範圍最大，中間(ON)特定，下方(AT)最精確。",
+            surface_in: "區分物理性質：\nIN = 在容器/邊界內； ON = 在表面接觸。",
+            motion_through: "動態路徑：\nThrough 是穿過立體空間(如隧道)； Across 是橫越平面(如馬路)。",
+            motion_to: "To vs Towards：\nTo 強調到達「目的地」； Towards 只強調「朝向那個方向」，不一定到達。"
+        };
+        document.getElementById('vizCaption').innerText = captions[id];
+    }
+
+    // 啟動動畫
+    resizeCanvas();
+    loop();
+
+    // === 頁面邏輯 ===
+    function switchTab(id) {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.section-content').forEach(c => c.classList.remove('active'));
         
-        // 繪圖輔助函數
-        function drawEmoji(emoji, x, y, size) {
-            ctx.font = `${size}px Arial`;
-            ctx.textAlign = "center";
-            ctx.textBaseline = "middle";
-            ctx.fillText(emoji, x, y);
+        event.target.classList.add('active');
+        document.getElementById(id).classList.add('active');
+    }
+
+    // === 精準測驗系統 (Context-Based Quiz) ===
+    const quizData = [
+        {
+            context: "時間精確度情境",
+            q: "We usually have a team meeting ___ Monday mornings.",
+            options: ["in", "on", "at", "to"],
+            ans: 1,
+            exp: "💡 關鍵詞是 <strong>Monday</strong>。<br>雖然 morning 通常用 in，但這裡指的是「星期一的早上」，屬於「特定的一天 (Specific Day)」，根據倒三角法則，特定日子必須用 <strong>ON</strong>。"
+        },
+        {
+            context: "地點辨析情境",
+            q: "Look at the photo! There is a spider ___ the ceiling!",
+            options: ["in", "on", "at", "above"],
+            ans: 1,
+            exp: "💡 這是陷阱題！<br>雖然天花板在頭頂，但蜘蛛是「接觸」在天花板的表面上。只要是<strong>接觸表面 (Surface Contact)</strong>，無論是牆壁、地板還是天花板，都必須用 <strong>ON</strong>。"
+        },
+        {
+            context: "交通工具情境",
+            q: "I am sitting ___ the taxi right now. I'll be there soon.",
+            options: ["on", "in", "at", "by"],
+            ans: 1,
+            exp: "💡 交通工具規則：<br>可以站立行走的(公車、火車、飛機)用 ON。<br>必須彎腰坐進去、狹小的(計程車、轎車)視為封閉容器，用 <strong>IN</strong>。"
+        },
+        {
+            context: "動態路徑情境",
+            q: "The train went ___ the tunnel and came out the other side.",
+            options: ["across", "through", "over", "along"],
+            ans: 1,
+            exp: "💡 關鍵動作是「穿入並穿出」。<br>隧道 (Tunnel) 是一個立體空間 (3D)，穿過立體空間內部要用 <strong>THROUGH</strong>。Across 通常用於平面表面 (如馬路)。"
+        },
+        {
+            context: "位置精確度情境",
+            q: "I'll meet you ___ the entrance of the cinema.",
+            options: ["in", "on", "at", "inside"],
+            ans: 2,
+            exp: "💡 這裡將「入口」視為一個會合的<strong>「點」(Specific Point)</strong>。<br>我們不強調在入口的裡面或上面，只是把它當作地圖上的一個標記點，所以用最精確的 <strong>AT</strong>。"
+        }
+    ];
+
+    let currentQIndex = 0;
+
+    function loadQuiz() {
+        if (currentQIndex >= quizData.length) {
+            document.getElementById('quiz').innerHTML = `
+                <div class="quiz-card" style="text-align:center;">
+                    <h2>🎉 測驗完成！</h2>
+                    <p>你已經掌握了這些細微的差別。</p>
+                    <button class="scene-btn" onclick="location.reload()">🔄 再玩一次</button>
+                </div>`;
+            return;
         }
 
-        function drawText(text, subtext) {
-            ctx.fillStyle = "#434343";
-            ctx.font = "bold 24px Nunito";
-            ctx.textAlign = "left";
-            ctx.fillText(text, 20, 40);
-            
-            ctx.fillStyle = "#666";
-            ctx.font = "18px Microsoft JhengHei";
-            ctx.fillText(subtext, 20, canvasHeight - 20);
-        }
+        const data = quizData[currentQIndex];
+        document.getElementById('qContext').innerText = `情境：${data.context}`;
+        document.getElementById('qText').innerText = `${currentQIndex + 1}. ${data.q}`;
+        document.getElementById('qExplanation').style.display = 'none';
+        document.getElementById('qExplanation').innerHTML = data.exp;
+        document.getElementById('nextBtn').style.display = 'none';
 
-        // 場景定義
-        const scenes = [
-            {
-                id: 'in', title: "IN", text: "The cat is IN the box.", trans: "貓在箱子裡面 📦",
-                draw: (prog) => {
-                    const boxX = canvasWidth/2, boxY = canvasHeight/2 + 30;
-                    // Draw Box Back
-                    ctx.fillStyle = "#D7B377";
-                    ctx.fillRect(boxX - 60, boxY - 50, 120, 100);
-                    // Draw Cat (moves up and down)
-                    const catY = boxY + Math.sin(prog/10) * 5;
-                    drawEmoji("🐱", boxX, catY, 60);
-                    // Draw Box Front (creates depth)
-                    ctx.fillStyle = "rgba(215, 179, 119, 0.9)";
-                    ctx.fillRect(boxX - 60, boxY, 120, 50);
-                }
-            },
-            {
-                id: 'on', title: "ON", text: "The apple is ON the table.", trans: "蘋果在桌子上面 🍎",
-                draw: (prog) => {
-                    const tX = canvasWidth/2, tY = canvasHeight/2 + 50;
-                    // Table
-                    ctx.fillStyle = "#8D6E63";
-                    ctx.fillRect(tX - 80, tY, 160, 15); // top
-                    ctx.fillRect(tX - 70, tY + 15, 15, 60); // leg L
-                    ctx.fillRect(tX + 55, tY + 15, 15, 60); // leg R
-                    // Apple (bounce)
-                    const bounce = Math.abs(Math.sin(prog/8)) * 20;
-                    drawEmoji("🍎", tX, tY - 25 - bounce, 50);
-                }
-            },
-            {
-                id: 'at', title: "AT", text: "He is waiting AT the bus stop.", trans: "他在公車站等候 🚏",
-                draw: (prog) => {
-                    const cX = canvasWidth/2;
-                    drawEmoji("🚏", cX - 40, canvasHeight/2, 80);
-                    const walk = Math.sin(prog/5) * 5;
-                    drawEmoji("🧍", cX + 40 + walk, canvasHeight/2 + 20, 70);
-                }
-            },
-            {
-                id: 'under', title: "UNDER", text: "The dog is UNDER the desk.", trans: "狗在書桌下面 🐕",
-                draw: (prog) => {
-                    const tX = canvasWidth/2, tY = canvasHeight/2;
-                    drawEmoji("🐕", tX, tY + 60, 50); // Dog first (behind legs)
-                    // Desk
-                    ctx.fillStyle = "#5D4037";
-                    ctx.fillRect(tX - 90, tY, 180, 15);
-                    ctx.fillRect(tX - 80, tY + 15, 15, 80);
-                    ctx.fillRect(tX + 65, tY + 15, 15, 80);
-                }
-            },
-            {
-                id: 'turn_in', title: "TURN IN", text: "Time to TURN IN. (Go to bed)", trans: "該上床睡覺了 🛌",
-                draw: (prog) => {
-                    const cX = canvasWidth/2;
-                    // Bed
-                    drawEmoji("🛏️", cX, canvasHeight/2 + 20, 100);
-                    // ZZZ animation
-                    const zOffset = (prog % 50) * 1.5;
-                    const zOp = 1 - (prog % 50)/50;
-                    ctx.fillStyle = `rgba(0,0,200,${zOp})`;
-                    ctx.font = "20px Arial";
-                    ctx.fillText("Zzz...", cX + 30 + zOffset/2, canvasHeight/2 - 20 - zOffset);
-                }
-            },
-            {
-                id: 'give_up', title: "GIVE UP", text: "Don't GIVE UP!", trans: "不要放棄！加油！💪",
-                draw: (prog) => {
-                    const cX = canvasWidth/2;
-                    // Person changing expression
-                    const face = Math.floor(prog / 20) % 2 === 0 ? "😫" : "😤"; 
-                    drawEmoji(face, cX, canvasHeight/2, 80);
-                    
-                    // Sweat drops
-                    if (Math.floor(prog / 10) % 2 === 0) {
-                        drawEmoji("💦", cX + 50, canvasHeight/2 - 20, 30);
-                    }
-                }
-            }
-        ];
-
-        // 初始化
-        let currentSceneIdx = 0;
-        let isPlaying = false;
-        let progress = 0;
-        let animId;
-
-        // 生成按鈕
-        const btnContainer = document.getElementById('prepositionButtons');
-        scenes.forEach((s, idx) => {
-            const b = document.createElement('button');
-            b.className = `prep-tag ${s.title.includes(' ') ? 'phrasal' : ''}`;
-            b.textContent = s.title;
-            b.onclick = () => {
-                currentSceneIdx = idx;
-                progress = 0;
-                drawScene();
-                playSound('transition');
-            };
-            btnContainer.appendChild(b);
+        const grid = document.getElementById('qOptions');
+        grid.innerHTML = '';
+        
+        data.options.forEach((opt, idx) => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.innerText = opt;
+            btn.onclick = () => checkAnswer(btn, idx, data.ans);
+            grid.appendChild(btn);
         });
+    }
 
-        function drawScene() {
-            ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-            
-            // 背景淡色裝飾
-            ctx.fillStyle = "#FDFBF7";
-            ctx.fillRect(0, 0, canvasWidth, canvasHeight);
-            
-            const scene = scenes[currentSceneIdx];
-            
-            // 呼叫特定繪圖函數
-            ctx.save();
-            scene.draw(progress);
-            ctx.restore();
-            
-            // 文字覆蓋
-            drawText(scene.text, scene.trans);
+    function checkAnswer(btn, selectedIdx, correctIdx) {
+        const btns = document.querySelectorAll('.option-btn');
+        btns.forEach(b => b.style.pointerEvents = 'none'); // Lock buttons
+
+        if (selectedIdx === correctIdx) {
+            btn.classList.add('correct');
+        } else {
+            btn.classList.add('incorrect');
+            btns[correctIdx].classList.add('correct'); // Show answer
         }
 
-        function loop() {
-            if (!isPlaying) return;
-            progress += 1;
-            document.getElementById('progressBar').style.width = `${(progress % 100)}%`;
-            
-            drawScene();
-            
-            // 每 200 frame 自動換場景 (約 3.3秒)
-            if (progress > 200) {
-                progress = 0;
-                // 不自動換場景，讓用戶自己點選，體驗較好。只重置動畫循環。
-                // 若需自動播放可解開下行：
-                // currentSceneIdx = (currentSceneIdx + 1) % scenes.length;
-            }
-            
-            animId = requestAnimationFrame(loop);
-        }
+        document.getElementById('qExplanation').className = 'explanation show';
+        document.getElementById('nextBtn').style.display = 'block';
+    }
 
-        // 控制器
-        document.getElementById('playBtn').onclick = () => {
-            if (!isPlaying) { isPlaying = true; loop(); playSound('click'); }
-        };
-        document.getElementById('pauseBtn').onclick = () => {
-            isPlaying = false; cancelAnimationFrame(animId); playSound('click');
-        };
-        document.getElementById('resetBtn').onclick = () => {
-            isPlaying = false; cancelAnimationFrame(animId); progress = 0; drawScene(); playSound('click');
-        };
+    function nextQuestion() {
+        currentQIndex++;
+        loadQuiz();
+    }
 
-        // 啟動第一次繪製
-        resizeCanvas();
+    // 初始化測驗
+    loadQuiz();
 
-
-        // === 測驗系統 ===
-        const quizData = [
-            { q: "The book is ___ the table.", options: ["in", "on", "at", "under"], ans: 1 },
-            { q: "I will meet you ___ 5:00 PM.", options: ["on", "in", "at", "to"], ans: 2 },
-            { q: "She is interested ___ music.", options: ["on", "in", "of", "with"], ans: 1 },
-            { q: "Please turn ___ the light. It's dark.", options: ["in", "on", "off", "up"], ans: 1 },
-            { q: "Never give ___ on your dreams.", options: ["up", "in", "out", "away"], ans: 0 },
-            { q: "The fish is swimming ___ the river.", options: ["on", "at", "in", "over"], ans: 2 }
-        ];
-
-        let quizState = { current: 0, score: 0 };
-
-        const els = {
-            start: document.getElementById('startQuiz'),
-            container: document.getElementById('quizContainer'),
-            qText: document.getElementById('question'),
-            opts: document.getElementById('options'),
-            res: document.getElementById('quizResult'),
-            score: document.getElementById('score'),
-            msg: document.getElementById('resultMessage'),
-            restart: document.getElementById('restartQuiz')
-        };
-
-        els.start.onclick = initQuiz;
-        els.restart.onclick = initQuiz;
-
-        function initQuiz() {
-            quizState = { current: 0, score: 0 };
-            els.start.style.display = 'none';
-            els.res.classList.remove('active');
-            els.container.classList.add('active');
-            loadQuestion();
-            playSound('click');
-        }
-
-        function loadQuestion() {
-            if (quizState.current >= quizData.length) return showResults();
-            
-            const q = quizData[quizState.current];
-            els.qText.textContent = `${quizState.current + 1}. ${q.q}`;
-            els.opts.innerHTML = '';
-            
-            q.options.forEach((opt, idx) => {
-                const btn = document.createElement('div');
-                btn.className = 'option';
-                btn.textContent = opt;
-                btn.onclick = () => checkAnswer(idx, q.ans, btn);
-                els.opts.appendChild(btn);
-            });
-        }
-
-        function checkAnswer(selected, correct, btnInfo) {
-            // 防止重複點擊
-            const allOpts = document.querySelectorAll('.option');
-            allOpts.forEach(o => o.style.pointerEvents = 'none');
-
-            if (selected === correct) {
-                btnInfo.classList.add('correct');
-                quizState.score++;
-                playSound('correct');
-            } else {
-                btnInfo.classList.add('incorrect');
-                allOpts[correct].classList.add('correct'); // 顯示正解
-                playSound('incorrect');
-            }
-
-            setTimeout(() => {
-                quizState.current++;
-                loadQuestion();
-            }, 1000);
-        }
-
-        function showResults() {
-            els.container.classList.remove('active');
-            els.res.classList.add('active');
-            els.score.textContent = `${quizState.score}/${quizData.length}`;
-            
-            const percentage = (quizState.score / quizData.length);
-            if (percentage === 1) {
-                els.msg.textContent = "🏆 Perfect! 太厲害了！";
-                playSound('win');
-                fireConfetti();
-            } else if (percentage >= 0.6) {
-                els.msg.textContent = "🎉 Great Job! 做得很好！";
-                playSound('transition');
-            } else {
-                els.msg.textContent = "💪 Keep Trying! 再接再厲！";
-            }
-        }
-
-        // 簡易 Confetti 效果
-        function fireConfetti() {
-            const colors = ['#f4a261', '#2a9d8f', '#e9c46a', '#e76f51', '#8E7CC3'];
-            for(let i=0; i<50; i++) {
-                const conf = document.createElement('div');
-                conf.style.position = 'fixed';
-                conf.style.left = Math.random() * 100 + 'vw';
-                conf.style.top = '-10px';
-                conf.style.width = '10px';
-                conf.style.height = '10px';
-                conf.style.backgroundColor = colors[Math.floor(Math.random()*colors.length)];
-                conf.style.transition = 'all 2s ease-out';
-                conf.style.zIndex = '9999';
-                document.body.appendChild(conf);
-                
-                setTimeout(() => {
-                    conf.style.transform = `translate(${Math.random()*100 - 50}px, 100vh) rotate(${Math.random()*720}deg)`;
-                    conf.style.opacity = 0;
-                }, 50);
-                
-                setTimeout(() => conf.remove(), 2000);
-            }
-        }
-    </script>
+</script>
 </body>
 </html>
