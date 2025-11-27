@@ -1,294 +1,311 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="htmlRoot">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shirley's E-Charger - Enhanced</title>
+    <title>Shirley's Grammar E-Charger</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-dark: #0a0a0a;
+            --surface-glass: rgba(30, 30, 30, 0.7);
+            --gold: #FFD700;
+            --copper: #B87333;
+            --electric-blue: #4169E1;
+            --glow-gold: 0 0 10px rgba(255, 215, 0, 0.6);
+            --glow-blue: 0 0 10px rgba(65, 105, 225, 0.8);
+        }
+
         body {
-            font-family: 'Courier New', monospace;
-            background: linear-gradient(to bottom, #1a1a1a, #2d2d2d, #404040);
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            color: #f0f0f0;
+            overflow-x: hidden;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-            box-sizing: border-box;
-            color: #fff;
-            position: relative;
-            overflow-x: hidden;
-            cursor: auto;
         }
-        
+
+        /* ✨ 粒子特效 Canvas */
+        #particle-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* 導航欄 */
+        header {
+            width: 100%;
+            padding: 1.5rem 2.5rem;
+            max-width: 1200px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            color: #fff;
+            font-size: 0.95rem;
+            font-weight: 500;
+            padding: 0.6rem 1.2rem;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 99px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .back-btn:hover {
+            background: var(--gold);
+            color: #000;
+            border-color: var(--gold);
+            box-shadow: var(--glow-gold);
+        }
+
         #station-container {
             text-align: center;
             z-index: 1;
             width: 100%;
-            max-width: 800px;
-            margin-bottom: 150px;
+            max-width: 900px;
+            margin-bottom: 220px; /* 為機器人留空間 */
+            padding-top: 20px;
         }
-        
+
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--gold);
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+            font-size: 3em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        p {
+            color: #ccc;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        /* SVG 樣式優化 */
         #station-svg {
-            border: 2px solid #808080;
-            background: linear-gradient(to bottom, #333333, #555555);
-            border-radius: 0;
-            box-shadow: 0 0 20px rgba(139, 69, 19, 0.5);
+            /* 移除原本的方框背景，改用透明或玻璃感 */
+            background: transparent;
             width: 100%;
             height: auto;
+            filter: drop-shadow(0 0 20px rgba(0,0,0,0.5));
+            overflow: visible;
         }
-        
-        .branch-label {
-            font-weight: bold;
-            fill: #FFFFFF;
-            text-anchor: middle;
-            font-size: 14px;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
-        }
-        
-        .port {
-            cursor: pointer;
-            stroke: #C0C0C0;
-            stroke-width: 2;
-            transition: all 0.3s ease;
-            fill: #808080;
-        }
-        
-        .port:hover {
-            transform: scale(1.2);
-            stroke: #FFD700;
-            stroke-width: 3;
-            fill: #FFD700;
-        }
-        
-        .port-label {
-            font-size: 12px;
-            fill: #FFFFFF;
-            text-anchor: middle;
-            pointer-events: none;
-            text-shadow: 1px 1px 1px rgba(0,0,0,0.9);
-            font-weight: bold;
-        }
-        
-        .pillar-label {
-            font-weight: bold;
-            fill: #FFFFFF;
-            text-anchor: middle;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .pillar-label:hover {
-            fill: #FFD700;
-            font-size: 16px;
-        }
-        
-        .electricity-box {
-            fill: #404040;
-            stroke: #B87333;
-            stroke-width: 3;
-            rx: 5;
-        }
-        
-        .box-number {
-            font-weight: bold;
-            fill: #FFD700;
-            text-anchor: middle;
-            font-size: 20px;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
-        }
-        
-        .charging-wire {
-            stroke: #B87333;
-            stroke-width: 3;
-            fill: none;
-        }
-        
-        #modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.8);
-            justify-content: center;
-            align-items: center;
-        }
-        
-        #modal-content {
-            background: linear-gradient(to bottom, #2d2d2d, #404040);
-            margin: auto;
-            padding: 20px;
-            border: 2px solid #B87333;
-            width: 80%;
-            max-width: 600px;
-            border-radius: 5px;
-            max-height: 80vh;
-            overflow-y: auto;
-            box-shadow: 0 0 30px rgba(184, 115, 51, 0.7);
-            color: #fff;
-        }
-        
-        #close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        
-        #close:hover {
-            color: #FFD700;
-        }
-        
-        .explanation-title {
-            color: #FFFFFF;
-            border-bottom: 2px solid #B87333;
-            padding-bottom: 10px;
-            font-size: 24px;
-        }
-        
-        .explanation-text {
-            line-height: 1.6;
-            color: #CCCCCC;
-            font-size: 16px;
-        }
-        
-        @keyframes extend {
-            from {
-                stroke-dashoffset: 1000;
-            }
-            to {
-                stroke-dashoffset: 0;
-            }
-        }
-        
+
+        /* 電纜發光特效 */
         .animated-cable {
             stroke-dasharray: 1000;
             stroke-dashoffset: 1000;
             animation: extend 2s ease-in-out forwards;
-            stroke: #4682B4;
+            stroke: var(--electric-blue);
             stroke-width: 6;
             fill: none;
+            filter: drop-shadow(0 0 5px var(--electric-blue)); /* 發光 */
         }
-        
+
         .charging-wire {
+            stroke: var(--copper);
+            stroke-width: 3;
+            fill: none;
+            stroke-dasharray: 10 5;
+            animation: flowWire 1s linear infinite;
+            filter: drop-shadow(0 0 3px var(--copper));
+        }
+
+        .pillar-wire {
+            stroke: var(--gold);
+            stroke-width: 4;
+            fill: none;
             stroke-dasharray: 10 5;
             animation: flowWire 0.5s linear infinite;
+            filter: drop-shadow(0 0 5px var(--gold));
         }
-        
+
         @keyframes flowWire {
-            from {
-                stroke-dashoffset: 0;
-            }
-            to {
-                stroke-dashoffset: -15;
-            }
+            from { stroke-dashoffset: 0; }
+            to { stroke-dashoffset: -30; }
         }
-        
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-                r: 12;
-            }
-            50% {
-                transform: scale(1.1);
-                r: 14;
-            }
+
+        @keyframes extend {
+            from { stroke-dashoffset: 1000; }
+            to { stroke-dashoffset: 0; }
         }
-        
-        .port.animate {
-            animation: pulse 1s ease-in-out;
+
+        /* 端口與按鈕互動 */
+        .port {
+            cursor: pointer;
+            stroke: #808080;
+            stroke-width: 2;
+            transition: all 0.3s ease;
+            fill: #333;
         }
-        
-        h1 {
-            color: #B87333;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
-            font-size: 2.5em;
-            font-weight: bold;
-            margin-bottom: 10px;
+        .port:hover {
+            transform: scale(1.3);
+            stroke: var(--gold);
+            fill: var(--gold);
+            filter: drop-shadow(0 0 8px var(--gold));
         }
-        
-        p {
-            color: #CCCCCC;
-            font-style: normal;
-            font-size: 16px;
-            margin-bottom: 20px;
+
+        .port-label {
+            font-size: 13px;
+            fill: #fff;
+            text-anchor: middle;
+            pointer-events: none;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.9);
+            font-weight: 500;
+            font-family: 'Inter', sans-serif;
         }
-        
-        .red-button {
-            fill: #FF4444;
-            stroke: #CC0000;
+
+        .pillar-block {
+            fill: #444;
+            stroke: var(--copper);
             stroke-width: 2;
             rx: 8;
             cursor: pointer;
             transition: all 0.3s ease;
         }
-        
+        .pillar-block:hover {
+            stroke: var(--gold);
+            fill: #555;
+            filter: drop-shadow(0 0 10px var(--gold));
+        }
+
+        .pillar-label {
+            font-weight: 600;
+            fill: #fff;
+            text-anchor: middle;
+            text-shadow: 0 2px 4px rgba(0,0,0,1);
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+        .pillar-label:hover {
+            fill: var(--gold);
+            font-size: 17px;
+        }
+
+        .red-button {
+            fill: #d32f2f;
+            stroke: #b71c1c;
+            stroke-width: 2;
+            rx: 8;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 0 5px rgba(211, 47, 47, 0.5));
+        }
         .red-button:hover {
-            fill: #FF6666;
-            stroke: #FFD700;
-            stroke-width: 3;
+            fill: #f44336;
+            stroke: var(--gold);
+            filter: drop-shadow(0 0 10px #f44336);
         }
         
         .red-button-text {
             fill: white;
-            font-weight: bold;
+            font-weight: 600;
             text-anchor: middle;
-            font-size: 12px;
+            font-size: 13px;
             pointer-events: none;
-        }
-        
-        .pillar-block {
-            fill: #606060;
-            stroke: #B87333;
-            stroke-width: 2;
-            rx: 5;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .pillar-block:hover {
-            stroke: #FFD700;
-            stroke-width: 3;
-            fill: #707070;
-        }
-        
-        .pillar-wire {
-            stroke: #FFD700;
-            stroke-width: 4;
-            fill: none;
-            stroke-dasharray: 10 5;
-            animation: flowWire 0.3s linear infinite;
-        }
-        
-        .status-message {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            background: rgba(0,0,0,0.8);
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
-            z-index: 1000;
-            font-size: 12px;
+            font-family: 'Inter', sans-serif;
         }
 
-        /* 機器人容器樣式 */
+        .electricity-box {
+            fill: #222;
+            stroke: var(--copper);
+            stroke-width: 3;
+            rx: 8;
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5));
+        }
+
+        /* Modal (Glassmorphism) */
+        #modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+        }
+        
+        #modal-content {
+            background: rgba(20, 20, 20, 0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            margin: auto;
+            padding: 40px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            width: 85%;
+            max-width: 650px;
+            border-radius: 20px;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 20px rgba(255, 215, 0, 0.1);
+            color: #fff;
+            position: relative;
+        }
+        
+        #close {
+            color: #aaa;
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 32px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        #close:hover {
+            color: var(--gold);
+        }
+        
+        .explanation-title {
+            color: var(--gold);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 15px;
+            font-size: 28px;
+            font-family: 'Cormorant Garamond', serif;
+            margin-top: 0;
+        }
+        
+        .explanation-text {
+            line-height: 1.8;
+            color: #ddd;
+            font-size: 1.05rem;
+            margin-top: 20px;
+        }
+
+        /* Robots Container */
         .robots-container {
             position: fixed;
-            bottom: 20px;
-            left: 0;
-            right: 0;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 1000px;
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
-            padding: 0 50px;
+            padding: 0 40px 20px;
             z-index: 10;
             pointer-events: none;
         }
@@ -298,170 +315,109 @@
             flex-direction: column;
             align-items: center;
             pointer-events: auto;
+            transition: transform 0.3s;
+        }
+        .robot-with-card:hover {
+            transform: translateY(-5px);
         }
 
-        .left-robot {
-            align-items: flex-start;
-        }
-
-        .right-robot {
-            align-items: flex-end;
-        }
-
-        /* 機器人樣式 */
-        .robot {
-            width: 120px;
-            height: 180px;
-            margin-bottom: 10px;
-        }
-
-        .robot-body {
-            fill: #87CEEB;
-            stroke: #4169E1;
-            stroke-width: 2;
-        }
-
-        .robot-head {
-            fill: #FFB6C1;
-            stroke: #FF69B4;
-            stroke-width: 2;
-        }
-
-        .robot-leg {
-            fill: #98FB98;
-            stroke: #32CD32;
-            stroke-width: 1;
-            animation: legSwing 1s ease-in-out infinite alternate;
-        }
-
-        .robot-leg.left {
-            animation-delay: -0.5s;
-        }
-
-        .robot-antenna {
-            stroke: #FFD700;
-            stroke-width: 3;
-            stroke-linecap: round;
-            fill: none;
-        }
-
-        .robot-eye {
-            fill: #000;
-        }
-
-        .robot-mouth {
-            fill: none;
-            stroke: #FF69B4;
-            stroke-width: 2;
-        }
-
-        @keyframes legSwing {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translateY(0);
-            }
-            40% {
-                transform: translateY(-5px);
-            }
-            60% {
-                transform: translateY(-3px);
-            }
-        }
-
-        /* 卡片樣式 */
         .grammar-card {
-            width: 100px;
-            height: 125px;
+            width: 110px;
+            height: 140px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            border: 3px solid #B87333;
-            border-radius: 10px;
-            background: white;
+            transition: all 0.4s ease;
+            border: 2px solid var(--copper);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.9);
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
             overflow: hidden;
+            margin-bottom: 10px;
         }
-
         .grammar-card:hover {
-            transform: scale(1.3);
-            z-index: 20;
-            border-color: #FFD700;
+            transform: scale(1.1) rotate(2deg);
+            border-color: var(--gold);
+            box-shadow: 0 0 20px var(--glow-gold);
         }
 
         .card-image {
             width: 100%;
             height: 100%;
             object-fit: contain;
-            border-radius: 7px;
         }
 
-        /* 響應式設計 */
+        /* 機器人 SVG 樣式 */
+        .robot {
+            width: 100px;
+            height: 140px;
+            filter: drop-shadow(0 5px 5px rgba(0,0,0,0.5));
+        }
+        .robot-body { fill: #2a2a2a; stroke: #4169E1; stroke-width: 2; }
+        .robot-head { fill: #333; stroke: #FF69B4; stroke-width: 2; }
+        .robot-leg { fill: #444; stroke: #32CD32; stroke-width: 1; animation: legSwing 2s ease-in-out infinite alternate; }
+        .robot-leg.left { animation-delay: -1s; }
+        .robot-antenna { stroke: var(--gold); stroke-width: 3; stroke-linecap: round; }
+        .robot-eye { fill: var(--electric-blue); filter: drop-shadow(0 0 2px var(--electric-blue)); }
+        .robot-mouth { fill: none; stroke: #FF69B4; stroke-width: 2; }
+
+        @keyframes legSwing {
+            0% { transform: rotate(5deg); }
+            100% { transform: rotate(-5deg); }
+        }
+
+        .status-message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(65, 105, 225, 0.9);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            z-index: 3000;
+            font-size: 14px;
+            font-weight: 500;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.3);
+            backdrop-filter: blur(4px);
+        }
+
         @media (max-width: 768px) {
-            h1 {
-                font-size: 1.8em;
-            }
-            
-            p {
-                font-size: 14px;
-            }
-            
-            body {
-                padding: 10px;
-            }
-
-            .robots-container {
-                padding: 0 20px;
-            }
-
-            .robot {
-                width: 80px;
-                height: 120px;
-            }
-
-            .grammar-card {
-                width: 70px;
-                height: 90px;
-            }
-
-            .grammar-card:hover {
-                transform: scale(1.2);
-            }
-        }
-
-        @media (max-width: 480px) {
-            .robots-container {
-                padding: 0 10px;
-            }
-
-            .robot {
-                width: 60px;
-                height: 90px;
-            }
-
-            .grammar-card {
-                width: 50px;
-                height: 65px;
-            }
-
-            .grammar-card:hover {
-                transform: scale(1.1);
-            }
+            h1 { font-size: 2em; }
+            #station-container { margin-bottom: 180px; }
+            .robots-container { padding: 0 10px 10px; }
+            .robot { width: 70px; height: 100px; }
+            .grammar-card { width: 80px; height: 100px; }
         }
     </style>
 </head>
 <body>
+
+    <canvas id="particle-canvas"></canvas>
+
+    <header>
+        <a href="https://ducj-creator.github.io/Teacher-Shirley/study-tools/index.html" class="back-btn">
+            <span>←</span> Back to Study Tools
+        </a>
+    </header>
+
     <div id="station-container">
         <h1>Shirley's Grammar E-Charger</h1>
         <p>Click on the pillar levels or charging ports to power up your grammar knowledge!</p>
+        
         <svg id="station-svg" width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
-            <!-- 地面 -->
-            <rect x="0" y="550" width="800" height="50" fill="#8B4513" />
+            <defs>
+                <linearGradient id="groundGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#B87333;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#5c3a1a;stop-opacity:1" />
+                </linearGradient>
+            </defs>
+            <rect x="50" y="550" width="700" height="20" fill="url(#groundGrad)" rx="10" filter="drop-shadow(0 0 10px #B87333)" />
             
-            <!-- 主支柱 -->
-            <rect x="390" y="100" width="20" height="400" fill="#696969" stroke="#808080" stroke-width="3" class="animated-cable" />
+            <rect x="390" y="100" width="20" height="450" fill="#333" stroke="#555" stroke-width="2" />
+            <path d="M 395 100 L 395 550" class="animated-cable" style="stroke-width: 4; stroke: #4169E1; opacity: 0.8;" />
             
-            <!-- 支柱區塊 -->
             <g id="pillar-blocks">
                 <rect x="370" y="120" width="60" height="60" class="pillar-block" onclick="handlePillarClick('simple')" />
                 <line x1="400" y1="180" x2="400" y2="200" class="pillar-wire" />
@@ -475,187 +431,153 @@
                 <rect x="370" y="360" width="60" height="60" class="pillar-block" onclick="handlePillarClick('compound-complex')" />
             </g>
             
-            <!-- 支柱標籤 -->
-            <text x="400" y="150" class="pillar-label" onclick="handlePillarClick('simple')">1. Simple</text>
-            <text x="400" y="230" class="pillar-label" onclick="handlePillarClick('compound')">2. Compound</text>
-            <text x="400" y="310" class="pillar-label" onclick="handlePillarClick('complex')">3. Complex</text>
-            <text x="400" y="390" class="pillar-label" onclick="handlePillarClick('compound-complex')">4. Compound-Complex</text>
+            <text x="400" y="155" class="pillar-label" onclick="handlePillarClick('simple')">1. Simple</text>
+            <text x="400" y="235" class="pillar-label" onclick="handlePillarClick('compound')">2. Compound</text>
+            <text x="400" y="315" class="pillar-label" onclick="handlePillarClick('complex')">3. Complex</text>
+            <text x="400" y="395" class="pillar-label" onclick="handlePillarClick('compound-complex')">4. Compound-Complex</text>
             
-            <!-- 頂部標誌 -->
-            <rect x="320" y="60" width="160" height="40" fill="#B87333" rx="5" stroke="#CD853F" stroke-width="2" />
-            <text x="400" y="90" fill="#FFFFFF" text-anchor="middle" font-weight="bold" font-size="18">Sentence Structures</text>
+            <rect x="300" y="50" width="200" height="50" fill="#222" rx="8" stroke="#FFD700" stroke-width="2" filter="drop-shadow(0 0 8px #FFD700)" />
+            <text x="400" y="82" fill="#FFD700" text-anchor="middle" font-weight="bold" font-size="18" font-family="Cormorant Garamond">Sentence Structures</text>
             
-            <!-- 第一部分：詞性 -->
             <path d="M 400 130 Q 300 100 200 130" class="animated-cable" />
             <rect x="160" y="80" width="80" height="100" class="electricity-box" />
             
-            <!-- 紅色按鈕 -->
             <rect x="160" y="130" width="80" height="40" class="red-button" onclick="handleSectionClick('parts-of-speech')" />
-            <text x="200" y="145" class="red-button-text">I. Parts of</text>
-            <text x="200" y="160" class="red-button-text">Speech</text>
+            <text x="200" y="148" class="red-button-text">I. Parts of</text>
+            <text x="200" y="163" class="red-button-text">Speech</text>
             
-            <!-- 端口 -->
             <g id="section1-ports">
-                <circle cx="80" cy="60" r="12" class="port" onclick="handlePortClick('nouns')" />
-                <text x="80" y="65" class="port-label">Nouns</text>
                 <line x1="80" y1="60" x2="200" y2="130" class="charging-wire" />
+                <circle cx="80" cy="60" r="14" class="port" onclick="handlePortClick('nouns')" />
+                <text x="80" y="65" class="port-label" pointer-events="none">Nouns</text>
                 
-                <circle cx="120" cy="200" r="12" class="port" onclick="handlePortClick('pronouns')" />
-                <text x="120" y="205" class="port-label">Pronouns</text>
                 <line x1="120" y1="200" x2="200" y2="130" class="charging-wire" />
+                <circle cx="120" cy="200" r="14" class="port" onclick="handlePortClick('pronouns')" />
+                <text x="120" y="205" class="port-label" pointer-events="none">Pronouns</text>
                 
-                <circle cx="40" cy="120" r="12" class="port" onclick="handlePortClick('adjectives-adverbs')" />
-                <text x="40" y="125" class="port-label">Adjectives &amp; Adverbs</text>
                 <line x1="40" y1="120" x2="200" y2="130" class="charging-wire" />
+                <circle cx="40" cy="120" r="14" class="port" onclick="handlePortClick('adjectives-adverbs')" />
+                <text x="40" y="100" class="port-label" pointer-events="none">Adj &amp; Adv</text>
                 
-                <circle cx="140" cy="30" r="12" class="port" onclick="handlePortClick('verbs')" />
-                <text x="140" y="35" class="port-label">Verbs</text>
                 <line x1="140" y1="30" x2="200" y2="130" class="charging-wire" />
+                <circle cx="140" cy="30" r="14" class="port" onclick="handlePortClick('verbs')" />
+                <text x="140" y="35" class="port-label" pointer-events="none">Verbs</text>
                 
-                <circle cx="100" cy="220" r="12" class="port" onclick="handlePortClick('prepositions')" />
-                <text x="100" y="225" class="port-label">Prepositions</text>
                 <line x1="100" y1="220" x2="200" y2="130" class="charging-wire" />
+                <circle cx="100" cy="220" r="14" class="port" onclick="handlePortClick('prepositions')" />
+                <text x="100" y="245" class="port-label" pointer-events="none">Prepositions</text>
             </g>
             
-            <!-- 第二部分：非限定動詞 -->
             <path d="M 400 350 Q 300 380 200 350" class="animated-cable" />
             <rect x="160" y="300" width="80" height="100" class="electricity-box" />
             
             <rect x="160" y="350" width="80" height="40" class="red-button" onclick="handleSectionClick('nonfinite-verbs')" />
-            <text x="200" y="365" class="red-button-text">II. Non-finite</text>
-            <text x="200" y="380" class="red-button-text">Verbs</text>
+            <text x="200" y="368" class="red-button-text">II. Non-finite</text>
+            <text x="200" y="383" class="red-button-text">Verbs</text>
             
             <g id="section2-ports">
-                <circle cx="80" cy="280" r="12" class="port" onclick="handlePortClick('infinitive')" />
-                <text x="80" y="285" class="port-label">Infinitive Verbs</text>
                 <line x1="80" y1="280" x2="200" y2="350" class="charging-wire" />
+                <circle cx="80" cy="280" r="14" class="port" onclick="handlePortClick('infinitive')" />
+                <text x="80" y="260" class="port-label" pointer-events="none">Infinitive</text>
                 
-                <circle cx="120" cy="420" r="12" class="port" onclick="handlePortClick('gerund')" />
-                <text x="120" y="425" class="port-label">Gerund</text>
                 <line x1="120" y1="420" x2="200" y2="350" class="charging-wire" />
+                <circle cx="120" cy="420" r="14" class="port" onclick="handlePortClick('gerund')" />
+                <text x="120" y="445" class="port-label" pointer-events="none">Gerund</text>
                 
-                <circle cx="40" cy="340" r="12" class="port" onclick="handlePortClick('present-participle')" />
-                <text x="40" y="345" class="port-label">Present Participle</text>
                 <line x1="40" y1="340" x2="200" y2="350" class="charging-wire" />
+                <circle cx="40" cy="340" r="14" class="port" onclick="handlePortClick('present-participle')" />
+                <text x="40" y="365" class="port-label" pointer-events="none">Present Part.</text>
                 
-                <circle cx="140" cy="270" r="12" class="port" onclick="handlePortClick('past-participle')" />
-                <text x="140" y="275" class="port-label">Past Participle</text>
                 <line x1="140" y1="270" x2="200" y2="350" class="charging-wire" />
+                <circle cx="140" cy="270" r="14" class="port" onclick="handlePortClick('past-participle')" />
+                <text x="140" y="250" class="port-label" pointer-events="none">Past Part.</text>
             </g>
             
-            <!-- 第三部分：子句 -->
             <path d="M 400 130 Q 500 100 600 130" class="animated-cable" />
             <rect x="560" y="80" width="80" height="100" class="electricity-box" />
             
             <rect x="560" y="130" width="80" height="40" class="red-button" onclick="handleSectionClick('clauses')" />
-            <text x="600" y="145" class="red-button-text">III. Clauses</text>
+            <text x="600" y="155" class="red-button-text">III. Clauses</text>
             
             <g id="section3-ports">
-                <circle cx="680" cy="60" r="12" class="port" onclick="handlePortClick('noun-clause')" />
-                <text x="680" y="65" class="port-label">Noun Clause</text>
                 <line x1="680" y1="60" x2="600" y2="130" class="charging-wire" />
+                <circle cx="680" cy="60" r="14" class="port" onclick="handlePortClick('noun-clause')" />
+                <text x="680" y="85" class="port-label" pointer-events="none">Noun Clause</text>
                 
-                <circle cx="640" cy="200" r="12" class="port" onclick="handlePortClick('adjective-clause')" />
-                <text x="640" y="205" class="port-label">Adjective Clause</text>
                 <line x1="640" y1="200" x2="600" y2="130" class="charging-wire" />
+                <circle cx="640" cy="200" r="14" class="port" onclick="handlePortClick('adjective-clause')" />
+                <text x="640" y="225" class="port-label" pointer-events="none">Adj. Clause</text>
                 
-                <circle cx="720" cy="120" r="12" class="port" onclick="handlePortClick('adverb-clause')" />
-                <text x="720" y="125" class="port-label">Adverb Clause</text>
                 <line x1="720" y1="120" x2="600" y2="130" class="charging-wire" />
+                <circle cx="720" cy="120" r="14" class="port" onclick="handlePortClick('adverb-clause')" />
+                <text x="720" y="145" class="port-label" pointer-events="none">Adv. Clause</text>
             </g>
             
-            <!-- 第四部分：特殊句型 -->
             <path d="M 400 350 Q 500 380 600 350" class="animated-cable" />
             <rect x="560" y="300" width="80" height="100" class="electricity-box" />
             
             <rect x="560" y="350" width="80" height="40" class="red-button" onclick="handleSectionClick('special-sentences')" />
-            <text x="600" y="365" class="red-button-text">IV. Special</text>
-            <text x="600" y="380" class="red-button-text">Sentences</text>
+            <text x="600" y="368" class="red-button-text">IV. Special</text>
+            <text x="600" y="383" class="red-button-text">Sentences</text>
             
             <g id="section4-ports">
-                <circle cx="680" cy="280" r="12" class="port" onclick="handlePortClick('questions')" />
-                <text x="680" y="285" class="port-label">Questions</text>
                 <line x1="680" y1="280" x2="600" y2="350" class="charging-wire" />
+                <circle cx="680" cy="280" r="14" class="port" onclick="handlePortClick('questions')" />
+                <text x="680" y="305" class="port-label" pointer-events="none">Questions</text>
                 
-                <circle cx="640" cy="420" r="12" class="port" onclick="handlePortClick('exclamations')" />
-                <text x="640" y="425" class="port-label">Exclamations</text>
                 <line x1="640" y1="420" x2="600" y2="350" class="charging-wire" />
+                <circle cx="640" cy="420" r="14" class="port" onclick="handlePortClick('exclamations')" />
+                <text x="640" y="445" class="port-label" pointer-events="none">Exclamations</text>
                 
-                <circle cx="720" cy="340" r="12" class="port" onclick="handlePortClick('inverted')" />
-                <text x="720" y="345" class="port-label">Inverted</text>
                 <line x1="720" y1="340" x2="600" y2="350" class="charging-wire" />
+                <circle cx="720" cy="340" r="14" class="port" onclick="handlePortClick('inverted')" />
+                <text x="720" y="365" class="port-label" pointer-events="none">Inverted</text>
                 
-                <circle cx="600" cy="270" r="12" class="port" onclick="handlePortClick('subjunctive')" />
-                <text x="600" y="275" class="port-label">Subjunctive Mood</text>
                 <line x1="600" y1="270" x2="600" y2="350" class="charging-wire" />
+                <circle cx="600" cy="270" r="14" class="port" onclick="handlePortClick('subjunctive')" />
+                <text x="600" y="250" class="port-label" pointer-events="none">Subjunctive</text>
             </g>
         </svg>
     </div>
 
-    <!-- 兩個機器人手持卡片 -->
     <div class="robots-container">
-        <!-- 左邊機器人 - 顯示第一張圖 -->
         <div class="robot-with-card left-robot">
             <div class="grammar-card" onclick="showCardInfo('sentence-structure')">
                 <img src="https://ducj-creator.github.io/Shirley-Grammar/assets/sentence%20structure.png" 
                      alt="Sentence Structure" class="card-image">
             </div>
             <svg class="robot" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
-                <!-- 機器人身體 -->
                 <rect x="50" y="90" width="100" height="80" rx="15" class="robot-body" />
-                
-                <!-- 機器人頭部 -->
                 <circle cx="100" cy="60" r="25" class="robot-head" />
-                
-                <!-- 天線 -->
                 <line x1="100" y1="35" x2="100" y2="15" class="robot-antenna" />
                 <circle cx="100" cy="15" r="4" fill="#FFD700" />
-                
-                <!-- 眼睛 -->
-                <circle cx="92" cy="55" r="3" class="robot-eye" />
-                <circle cx="108" cy="55" r="3" class="robot-eye" />
-                
-                <!-- 微笑 -->
+                <circle cx="92" cy="55" r="4" class="robot-eye" />
+                <circle cx="108" cy="55" r="4" class="robot-eye" />
                 <path d="M 90 70 Q 100 80 110 70" class="robot-mouth" />
-                
-                <!-- 腿部 -->
                 <rect x="70" y="175" width="12" height="25" rx="4" class="robot-leg left" />
                 <rect x="118" y="175" width="12" height="25" rx="4" class="robot-leg" />
             </svg>
         </div>
 
-        <!-- 右邊機器人 - 顯示第二張圖 -->
         <div class="robot-with-card right-robot">
             <div class="grammar-card" onclick="showCardInfo('grammar-concepts')">
                 <img src="https://ducj-creator.github.io/Shirley-Grammar/assets/key%20grammar%20concepts.png" 
                      alt="Key Grammar Concepts" class="card-image">
             </div>
             <svg class="robot" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
-                <!-- 機器人身體 -->
                 <rect x="50" y="90" width="100" height="80" rx="15" class="robot-body" />
-                
-                <!-- 機器人頭部 -->
                 <circle cx="100" cy="60" r="25" class="robot-head" />
-                
-                <!-- 天線 -->
                 <line x1="100" y1="35" x2="100" y2="15" class="robot-antenna" />
                 <circle cx="100" cy="15" r="4" fill="#FFD700" />
-                
-                <!-- 眼睛 -->
-                <circle cx="92" cy="55" r="3" class="robot-eye" />
-                <circle cx="108" cy="55" r="3" class="robot-eye" />
-                
-                <!-- 微笑 -->
+                <circle cx="92" cy="55" r="4" class="robot-eye" />
+                <circle cx="108" cy="55" r="4" class="robot-eye" />
                 <path d="M 90 70 Q 100 80 110 70" class="robot-mouth" />
-                
-                <!-- 腿部 -->
                 <rect x="70" y="175" width="12" height="25" rx="4" class="robot-leg left" />
                 <rect x="118" y="175" width="12" height="25" rx="4" class="robot-leg" />
             </svg>
         </div>
     </div>
 
-    <!-- Modal for Section Explanations -->
     <div id="modal">
         <div id="modal-content">
             <span id="close">&times;</span>
@@ -664,11 +586,105 @@
         </div>
     </div>
 
-    <!-- Status Message -->
     <div id="status-message" class="status-message" style="display: none;"></div>
 
     <script>
-        // CSV 數據
+        // ----------------------------------------
+        // ✨ 能量粒子特效 (Energy Particles)
+        // ----------------------------------------
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let particlesArray;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            initParticles();
+        });
+
+        const mouse = { x: null, y: null, radius: 150 };
+        window.addEventListener('mousemove', (event) => {
+            mouse.x = event.x;
+            mouse.y = event.y;
+        });
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = (Math.random() * 1 - 0.5);
+                this.speedY = (Math.random() * 1 - 0.5);
+                // 粒子顏色：金色與電光藍
+                this.color = Math.random() > 0.6 ? 'rgba(255, 215, 0, 0.6)' : 'rgba(65, 105, 225, 0.6)';
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x > canvas.width || this.x < 0) this.speedX = -this.speedX;
+                if (this.y > canvas.height || this.y < 0) this.speedY = -this.speedY;
+
+                let dx = mouse.x - this.x;
+                let dy = mouse.y - this.y;
+                let distance = Math.sqrt(dx*dx + dy*dy);
+                if (distance < mouse.radius) {
+                    if(mouse.x < this.x && this.x < canvas.width - 10) this.x += 1;
+                    if(mouse.x > this.x && this.x > 10) this.x -= 1;
+                    if(mouse.y < this.y && this.y < canvas.height - 10) this.y += 1;
+                    if(mouse.y > this.y && this.y > 10) this.y -= 1;
+                }
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particlesArray = [];
+            let numberOfParticles = (canvas.width * canvas.height) / 10000;
+            for (let i = 0; i < numberOfParticles; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            requestAnimationFrame(animateParticles);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+                
+                // 粒子連線 (微弱的電流感)
+                for (let j = i; j < particlesArray.length; j++) {
+                    let dx = particlesArray[i].x - particlesArray[j].x;
+                    let dy = particlesArray[i].y - particlesArray[j].y;
+                    let distance = Math.sqrt(dx*dx + dy*dy);
+                    if (distance < 100) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = 'rgba(255, 215, 0, 0.1)';
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
+                        ctx.lineTo(particlesArray[j].x, particlesArray[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+        initParticles();
+        animateParticles();
+
+
+        // ----------------------------------------
+        // 原始業務邏輯 (CSV, Modal, Clicks)
+        // ----------------------------------------
         const grammarCSV = `no.,key point,url
 S-1,simple,https://ducj-creator.github.io/Shirley-Grammar/simple/
 S-2,compound,https://ducj-creator.github.io/Shirley-Grammar/compound/
@@ -691,11 +707,9 @@ SS-2,exclamations,https://ducj-creator.github.io/Shirley-Grammar/exclamations/
 SS-3,inverted,https://ducj-creator.github.io/Shirley-Grammar/inverted/
 SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
 
-        // 解析CSV數據
         function parseCSV(csvText) {
             const lines = csvText.split('\n');
             const result = {};
-            
             for (let i = 1; i < lines.length; i++) {
                 const line = lines[i].trim();
                 if (line) {
@@ -712,21 +726,13 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
             return result;
         }
 
-        // 加載語法點連結
         let grammarLinks = {};
-        
-        function loadGrammarLinks() {
-            try {
-                grammarLinks = parseCSV(grammarCSV);
-                console.log('Grammar links loaded:', grammarLinks);
-                showStatus(`Loaded ${Object.keys(grammarLinks).length} grammar links`, 3000);
-            } catch (error) {
-                console.error('Error loading grammar links:', error);
-                showStatus('Error loading grammar links', 3000);
-            }
+        try {
+            grammarLinks = parseCSV(grammarCSV);
+        } catch (error) {
+            console.error('Error loading grammar links:', error);
         }
 
-        // 顯示狀態訊息
         function showStatus(message, duration = 2000) {
             const statusEl = document.getElementById('status-message');
             statusEl.textContent = message;
@@ -736,52 +742,28 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
             }, duration);
         }
 
-        // 點擊鎖定機制
         let isProcessingClick = false;
-        
-        // 安全的打開連結函數
         function safeOpenLink(url, key) {
-            if (isProcessingClick) {
-                console.log('Click already in progress, ignoring duplicate click');
-                return;
-            }
-            
+            if (isProcessingClick) return;
             isProcessingClick = true;
-            console.log('Opening link for:', key, 'URL:', url);
-            showStatus(`Redirecting to ${key}...`);
-            
+            showStatus(`Connecting to ${key}...`);
             setTimeout(() => {
-                try {
-                    window.open(url, '_blank');
-                } catch (error) {
-                    console.error('Error opening link:', error);
-                    showStatus(`Error opening ${key}`);
-                }
-                
-                setTimeout(() => {
-                    isProcessingClick = false;
-                }, 1000);
+                window.open(url, '_blank');
+                isProcessingClick = false;
             }, 500);
         }
 
-        // 處理柱子點擊
         function handlePillarClick(key) {
             const lowerKey = key.toLowerCase();
-            console.log('Pillar clicked:', key, 'Looking for:', lowerKey);
-            
             if (grammarLinks[lowerKey]) {
                 safeOpenLink(grammarLinks[lowerKey], key);
             } else {
-                console.log('Available keys:', Object.keys(grammarLinks));
                 showStatus(`No link found for ${key}`);
             }
         }
 
-        // 處理端口點擊
         function handlePortClick(key) {
             const lowerKey = key.toLowerCase();
-            console.log('Port clicked:', key, 'Looking for:', lowerKey);
-            
             if (grammarLinks[lowerKey]) {
                 safeOpenLink(grammarLinks[lowerKey], key);
             } else {
@@ -789,7 +771,6 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
             }
         }
 
-        // 章節解釋數據
         const sectionExplanations = {
             'parts-of-speech': {
                 title: "I. Parts of Speech 詞性",
@@ -809,22 +790,19 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
             }
         };
 
-        // 處理章節點擊
         function handleSectionClick(key) {
-            console.log('Section clicked:', key);
             showExplanation(key);
         }
 
-        // 顯示卡片信息
         function showCardInfo(cardType) {
             if (cardType === 'sentence-structure') {
-                showStatus('Sentence Structure Diagram');
+                showStatus('Viewing: Sentence Structure Diagram');
             } else if (cardType === 'grammar-concepts') {
-                showStatus('Key Grammar Concepts');
+                showStatus('Viewing: Key Grammar Concepts');
             }
         }
 
-        // Modal functionality
+        // Modal
         const modal = document.getElementById('modal');
         const modalTitle = document.getElementById('modal-title');
         const modalText = document.getElementById('modal-text');
@@ -834,37 +812,19 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
             const exp = sectionExplanations[key];
             if (exp) {
                 modalTitle.textContent = exp.title;
-                modalText.innerHTML = exp.text; // 使用innerHTML以支持換行
+                modalText.innerHTML = exp.text;
                 modal.style.display = 'flex';
-            } else {
-                showStatus(`No explanation found for ${key}`);
             }
         }
 
         close.onclick = function() {
             modal.style.display = 'none';
         }
-
         window.onclick = function(event) {
             if (event.target == modal) {
                 modal.style.display = 'none';
             }
         }
-
-        // 頁面加載時初始化
-        window.onload = function() {
-            // 加載語法點連結
-            loadGrammarLinks();
-            
-            // 觸發初始動畫
-            const ports = document.querySelectorAll('.port');
-            ports.forEach((port, index) => {
-                setTimeout(() => port.classList.add('animate'), index * 200);
-            });
-            
-            console.log('Available grammar keys:', Object.keys(grammarLinks));
-            console.log('SVG loaded successfully');
-        };
     </script>
 </body>
 </html>
