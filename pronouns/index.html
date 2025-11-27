@@ -1,442 +1,437 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Pronouns 代名詞全解析｜Teacher Shirley</title>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Shirley's Grammar | Pronouns Masterclass</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Inter:wght@400;500;600&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  
   <style>
     :root {
-      --elegant-rose: #d4a5a5;
-      --soft-charcoal: #3a3a3a;
-      --mist-gray: #f0f2f5;
-      --ivory: #fdfdfd;
-      --deep-olive: #5a6b5a;
-      --accent-gold: #c9a972;
+      /* --- 古典學術配色 --- */
+      --primary-tone: #3a5a40;       /* 森林深綠 */
+      --secondary-tone: #c9a972;     /* 復古金 */
+      --text-main: #333333;          /* 柔和黑 */
+      --text-light: #666666;         /* 深灰 */
+      --bg-cream: #faf8f2;           /* 溫潤米色背景 */
+      --card-bg: #ffffff;
+      --border-soft: #e8e4d9;
+      --highlight-bg: #f0eadd;       /* 米金螢光筆 */
+      
+      --soft-shadow: 0 6px 20px rgba(58, 90, 64, 0.08);
+      --hover-shadow: 0 10px 30px rgba(58, 90, 64, 0.15);
+      --radius: 12px;
+      
+      /* 提示框顏色 */
+      --tip-bg: #f1f8f1;
+      --tip-border: #3a5a40;
+      --warn-bg: #fff5f5;
+      --warn-border: #a83232;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; outline: none; -webkit-tap-highlight-color: transparent; }
 
     body {
-      font-family: 'Noto Sans TC', sans-serif;
-      background-color: var(--ivory);
-      color: var(--soft-charcoal);
-      line-height: 1.7;
-      padding: 0 16px;
+      font-family: 'Inter', 'Noto Sans TC', sans-serif;
+      background-color: var(--bg-cream);
+      background-image: linear-gradient(to bottom, #faf8f2 0%, #f5f2e9 100%);
+      color: var(--text-main);
+      line-height: 1.75;
+      padding: 40px 20px;
+      min-height: 100vh;
     }
 
-    .container {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 30px 20px;
-    }
+    .container { max-width: 960px; margin: 0 auto; }
+
+    /* === Header === */
+    header { text-align: center; margin-bottom: 50px; }
 
     h1 {
       font-family: 'Playfair Display', serif;
-      font-size: 2.8rem;
-      text-align: center;
-      margin: 20px 0 40px;
-      color: var(--deep-olive);
+      font-size: 3.2rem;
+      color: var(--primary-tone);
+      margin-bottom: 15px;
+      font-weight: 700;
       position: relative;
+      display: inline-block;
     }
-
+    
     h1::after {
-      content: "";
-      position: absolute;
-      bottom: -12px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100px;
-      height: 3px;
-      background: var(--accent-gold);
-      border-radius: 2px;
+      content: ''; display: block; width: 60%; height: 3px;
+      background: var(--secondary-tone); margin: 10px auto 0;
+      border-radius: 2px; opacity: 0.8;
+    }
+    
+    .subtitle {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--text-light);
+      font-style: italic;
     }
 
+    /* === Controls === */
     .controls {
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 40px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
     }
-
-    .controls button {
-      background: var(--elegant-rose);
-      color: white;
-      border: none;
-      padding: 10px 24px;
-      margin: 0 8px;
-      border-radius: 30px;
+    .ctrl-btn {
+      background: white;
+      border: 1px solid var(--primary-tone);
+      color: var(--primary-tone);
+      padding: 8px 20px;
+      border-radius: 50px;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.3s;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+    }
+    .ctrl-btn:hover {
+      background: var(--primary-tone);
+      color: white;
+      box-shadow: 0 4px 12px rgba(58, 90, 64, 0.2);
     }
 
-    .controls button:hover {
-      background: var(--deep-olive);
-      transform: translateY(-2px);
+    /* === Cards === */
+    .section-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 35px;
+      margin-bottom: 35px;
+      box-shadow: var(--soft-shadow);
+      border: 1px solid var(--border-soft);
+      border-top: 4px solid var(--primary-tone);
+      transition: transform 0.3s ease;
     }
-
-    .section {
-      background: white;
-      border-radius: 18px;
-      padding: 24px;
-      margin: 30px 0;
-      box-shadow: 0 6px 20px rgba(58, 58, 58, 0.07);
-      border-top: 4px solid var(--accent-gold);
-    }
+    .section-card:hover { transform: translateY(-3px); box-shadow: var(--hover-shadow); }
 
     h2 {
       font-family: 'Playfair Display', serif;
       font-size: 1.9rem;
-      color: var(--deep-olive);
-      margin-bottom: 20px;
-      padding-bottom: 8px;
-      border-bottom: 1px dashed #e0e0e0;
+      color: var(--primary-tone);
+      margin-bottom: 25px;
+      display: flex; align-items: center; font-weight: 700;
+    }
+    h2::after {
+      content: ''; flex: 1; height: 1px;
+      background: var(--secondary-tone); margin-left: 20px; opacity: 0.4;
     }
 
     h3 {
-      margin: 18px 0 12px;
-      color: var(--elegant-rose);
-    }
-
-    .bilingual {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      margin: 15px 0;
-    }
-
-    .en, .zh {
-      flex: 1;
-      min-width: 280px;
-      padding: 16px;
-      background: var(--mist-gray);
-      border-radius: 12px;
-      font-size: 1.02rem;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 20px 0;
-    }
-
-    th, td {
-      padding: 12px;
-      text-align: left;
-      border-bottom: 1px solid #eee;
-    }
-
-    th {
-      background-color: var(--mist-gray);
-      color: var(--deep-olive);
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      color: var(--primary-tone);
+      margin: 30px 0 15px;
       font-weight: 600;
+      border-left: 3px solid var(--secondary-tone);
+      padding-left: 12px;
     }
 
-    tr:hover td {
-      background-color: #fafafa;
-    }
-
-    .example-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 16px;
-      margin: 20px 0;
-    }
-
-    .example-item {
-      padding: 14px;
-      background: #f8f9fa;
-      border-radius: 10px;
-      border: 1px solid #eee;
+    /* === Bilingual Box === */
+    .bilingual-box {
+      display: flex; gap: 25px;
+      background: #fbfbf9;
+      padding: 28px;
+      border-radius: 8px;
+      border: 1px solid var(--border-soft);
       position: relative;
     }
-
-    .play-btn {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: var(--accent-gold);
-      color: white;
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      cursor: pointer;
-      border: none;
+    .bi-col { flex: 1; }
+    .bi-label { 
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem; font-weight: 700; 
+      color: var(--secondary-tone); 
+      letter-spacing: 1.5px; margin-bottom: 10px; 
+      display: block; text-transform: uppercase;
     }
-
     .highlight {
-      background-color: #fff8e1;
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-weight: 600;
+      background: var(--highlight-bg);
+      padding: 2px 6px; border-radius: 4px;
+      font-weight: 600; color: var(--primary-tone);
     }
+    
+    /* Play button inside bilingual box */
+    .bi-play {
+      position: absolute; top: 20px; right: 20px;
+      background: var(--secondary-tone); color: white;
+      width: 32px; height: 32px; border-radius: 50%;
+      border: none; cursor: pointer; display: flex;
+      align-items: center; justify-content: center;
+      transition: 0.2s;
+    }
+    .bi-play:hover { transform: scale(1.1); background: var(--primary-tone); }
 
-    .warning {
-      background: #ffebee;
-      border-left: 4px solid #f44336;
-      padding: 14px;
-      margin: 16px 0;
+    /* === Table === */
+    .table-responsive {
+      overflow-x: auto;
+      border-radius: 8px;
+      margin: 20px 0;
+      border: 1px solid var(--border-soft);
+    }
+    table { width: 100%; border-collapse: collapse; min-width: 700px; }
+    th {
+      background: #f4f1ea; color: var(--primary-tone);
+      font-family: 'Playfair Display', serif;
+      font-weight: 700; font-size: 0.9rem;
+      padding: 16px; text-align: left;
+      border-bottom: 2px solid var(--border-soft);
+    }
+    td {
+      padding: 14px 16px; border-bottom: 1px solid var(--border-soft);
+      color: var(--text-main); font-size: 0.95rem;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #fafaf8; }
+
+    /* === Audio List (Example Items) === */
+    .audio-list {
+      display: grid; gap: 12px;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+    .audio-card {
+      background: #fff; border: 1px solid var(--border-soft);
+      padding: 15px 18px; border-radius: 8px;
+      cursor: pointer; display: flex;
+      align-items: center; justify-content: space-between;
+      transition: all 0.2s ease;
+    }
+    .audio-card:hover {
+      border-color: var(--secondary-tone);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(201, 169, 114, 0.15);
+    }
+    .audio-text { font-weight: 500; color: var(--text-main); }
+    .audio-icon { color: var(--secondary-tone); font-size: 1.1rem; }
+
+    /* === Tips & Warnings === */
+    .note-box {
+      padding: 20px; margin: 20px 0;
       border-radius: 0 8px 8px 0;
-      color: #c62828;
+      font-size: 0.95rem; line-height: 1.6;
     }
-
-    .tip {
-      background: #e8f5e9;
-      border-left: 4px solid #4caf50;
-      padding: 14px;
-      margin: 16px 0;
-      border-radius: 0 8px 8px 0;
-      color: #2e7d32;
+    .note-tip {
+      background: var(--tip-bg);
+      border-left: 4px solid var(--tip-border);
+      color: #2d4632;
     }
+    .note-warn {
+      background: var(--warn-bg);
+      border-left: 4px solid var(--warn-border);
+      color: #7a2b2b;
+    }
+    .note-box strong { font-weight: 700; }
 
+    /* === Responsive === */
     @media (max-width: 768px) {
-      .bilingual { flex-direction: column; }
-      .en, .zh { min-width: 100%; }
-      h1 { font-size: 2.2rem; }
-      .example-list { grid-template-columns: 1fr; }
+      body { padding: 20px 10px; }
+      h1 { font-size: 2.4rem; }
+      .section-card { padding: 25px 20px; }
+      .bilingual-box { flex-direction: column; gap: 15px; }
+      .bi-play { position: static; margin-top: 10px; }
+      .audio-list { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
+  
   <div class="container">
-    <h1>Shirley's Pronouns 代名詞解析</h1>
+    <header>
+      <h1>Shirley's Pronouns</h1>
+      <div class="subtitle">Teacher Shirley 代名詞全解析</div>
+    </header>
 
     <div class="controls">
-      <button id="pauseBtn">⏸️ 暫停朗讀</button>
-      <button id="playBtn">▶️ 繼續</button>
+      <button class="ctrl-btn" id="pauseBtn">⏸️ Pause Audio</button>
+      <button class="ctrl-btn" id="playBtn">▶️ Resume</button>
     </div>
 
-    <!-- 定義 -->
-    <div class="section">
-      <h2>What is a Pronoun? 什麼是代名詞？</h2>
-      <div class="bilingual">
-        <div class="en">
+    <div class="section-card">
+      <h2>What is a Pronoun?</h2>
+      <div class="bilingual-box">
+        <button class="bi-play" onclick="speak('A pronoun replaces a noun mentioned earlier to avoid repetition.')">🔊</button>
+        <div class="bi-col">
+          <span class="bi-label">English</span>
           A <span class="highlight">pronoun</span> replaces a noun (or noun phrase) mentioned earlier to avoid repetition.
         </div>
-        <div class="zh">
-          <span class="highlight">代名詞</span>用來代替前文提過的名詞（或名詞片語），避免重複。
+        <div class="bi-col">
+          <span class="bi-label">Chinese</span>
+          <span class="highlight">代名詞</span>用來代替前文提過的名詞，避免重複。
         </div>
       </div>
-      <button class="play-btn" onclick="speak('A pronoun replaces a noun mentioned earlier to avoid repetition.')">🔊</button>
     </div>
 
-    <!-- 人稱代名詞表格 -->
-    <div class="section">
+    <div class="section-card">
       <h2>Personal Pronouns 人稱代名詞</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>人稱<br>Person</th>
-            <th>數<br>Number</th>
-            <th>性<br>Gender</th>
-            <th>主格<br>(Subject)</th>
-            <th>受格<br>(Object)</th>
-            <th>所有格<br>(Possessive)</th>
-            <th>所有格代名詞<br>(Independent)</th>
-            <th>反身代名詞<br>(Reflexive)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1st<br>第一人稱</td>
-            <td>單數</td>
-            <td>—</td>
-            <td>I</td>
-            <td>me</td>
-            <td>my</td>
-            <td>mine</td>
-            <td>myself</td>
-          </tr>
-          <tr>
-            <td>1st</td>
-            <td>複數</td>
-            <td>—</td>
-            <td>we</td>
-            <td>us</td>
-            <td>our</td>
-            <td>ours</td>
-            <td>ourselves</td>
-          </tr>
-          <tr>
-            <td>2nd<br>第二人稱</td>
-            <td>單數/複數</td>
-            <td>—</td>
-            <td>you</td>
-            <td>you</td>
-            <td>your</td>
-            <td>yours</td>
-            <td>yourself / yourselves</td>
-          </tr>
-          <tr>
-            <td>3rd<br>第三人稱</td>
-            <td>單數</td>
-            <td>陽性</td>
-            <td>he</td>
-            <td>him</td>
-            <td>his</td>
-            <td>his</td>
-            <td>himself</td>
-          </tr>
-          <tr>
-            <td>3rd</td>
-            <td>單數</td>
-            <td>陰性</td>
-            <td>she</td>
-            <td>her</td>
-            <td>her</td>
-            <td>hers</td>
-            <td>herself</td>
-          </tr>
-          <tr>
-            <td>3rd</td>
-            <td>單數</td>
-            <td>中性</td>
-            <td>it</td>
-            <td>it</td>
-            <td>its</td>
-            <td>its</td>
-            <td>itself</td>
-          </tr>
-          <tr>
-            <td>3rd</td>
-            <td>複數</td>
-            <td>—</td>
-            <td>they</td>
-            <td>them</td>
-            <td>their</td>
-            <td>theirs</td>
-            <td>themselves</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- it 的用法 -->
-    <div class="section">
-      <h2>Special Uses of "It" 代名詞 it 的特殊用法</h2>
-      <div class="example-list">
-        <div class="example-item">What time is it? <button class="play-btn" onclick="speak('What time is it?')">🔊</button></div>
-        <div class="example-item">It’s a rainy day. <button class="play-btn" onclick="speak('It’s a rainy day.')">🔊</button></div>
-        <div class="example-item">It took me two hours... <button class="play-btn" onclick="speak('It took me two hours to finish the project.')">🔊</button></div>
-        <div class="example-item">It is true that... <button class="play-btn" onclick="speak('It is true that the earth is round.')">🔊</button></div>
-        <div class="example-item">We consider it our duty... <button class="play-btn" onclick="speak('We consider it our duty to obey the law.')">🔊</button></div>
-      </div>
-
-      <div class="warning">
-        ❗ <strong>its</strong>（所有格）≠ <strong>it’s</strong>（= it is / it has）<br>
-        ❗ <strong>their</strong>（所有格）≠ <strong>there</strong>（那裡）≠ <strong>they’re</strong>（= they are）
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Person</th>
+              <th>Number</th>
+              <th>Subject<br>(主格)</th>
+              <th>Object<br>(受格)</th>
+              <th>Possessive<br>(所有格)</th>
+              <th>Independent<br>(所有格代名詞)</th>
+              <th>Reflexive<br>(反身)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1st</td><td>單</td>
+              <td><strong>I</strong></td><td>me</td><td>my</td><td>mine</td><td>myself</td>
+            </tr>
+            <tr>
+              <td>1st</td><td>複</td>
+              <td><strong>we</strong></td><td>us</td><td>our</td><td>ours</td><td>ourselves</td>
+            </tr>
+            <tr>
+              <td>2nd</td><td>單/複</td>
+              <td><strong>you</strong></td><td>you</td><td>your</td><td>yours</td><td>yourself / -ves</td>
+            </tr>
+            <tr>
+              <td>3rd</td><td>單 (男)</td>
+              <td><strong>he</strong></td><td>him</td><td>his</td><td>his</td><td>himself</td>
+            </tr>
+            <tr>
+              <td>3rd</td><td>單 (女)</td>
+              <td><strong>she</strong></td><td>her</td><td>her</td><td>hers</td><td>herself</td>
+            </tr>
+            <tr>
+              <td>3rd</td><td>單 (物)</td>
+              <td><strong>it</strong></td><td>it</td><td>its</td><td>its</td><td>itself</td>
+            </tr>
+            <tr>
+              <td>3rd</td><td>複</td>
+              <td><strong>they</strong></td><td>them</td><td>their</td><td>theirs</td><td>themselves</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
 
-    <!-- 其他代名詞類型 -->
-    <div class="section">
-      <h2>Other Types of Pronouns 其他代名詞</h2>
+    <div class="section-card">
+      <h2>Special Uses of "It"</h2>
+      <p style="margin-bottom:15px; color:var(--text-light); font-style:italic;">點擊例句聆聽發音 🔊</p>
+      <div class="audio-list">
+        <div class="audio-card" onclick="speak('What time is it?')">
+          <span class="audio-text">What time is it?</span><span class="audio-icon">🔈</span>
+        </div>
+        <div class="audio-card" onclick="speak('It’s a rainy day.')">
+          <span class="audio-text">It’s a rainy day.</span><span class="audio-icon">🔈</span>
+        </div>
+        <div class="audio-card" onclick="speak('It took me two hours to finish the project.')">
+          <span class="audio-text">It took me two hours...</span><span class="audio-icon">🔈</span>
+        </div>
+        <div class="audio-card" onclick="speak('It is true that the earth is round.')">
+          <span class="audio-text">It is true that... (虛主詞)</span><span class="audio-icon">🔈</span>
+        </div>
+      </div>
 
-      <h3>指示代名詞 Demonstrative Pronouns</h3>
-      <p class="example-item">this, that, these, those</p>
+      <div class="note-box note-warn">
+        <strong>⚠️ Don't Confuse:</strong><br>
+        • <strong>its</strong> (所有格) ≠ <strong>it’s</strong> (it is / it has)<br>
+        • <strong>their</strong> (所有格) ≠ <strong>there</strong> (那裡) ≠ <strong>they’re</strong> (they are)
+      </div>
+    </div>
 
-      <h3>疑問 & 關係代名詞 Interrogative / Relative Pronouns</h3>
-      <p class="example-item">who, whom, whose, which, what</p>
+    <div class="section-card">
+      <h2>Other Types of Pronouns</h2>
 
-      <h3>相互代名詞 Reciprocal Pronouns</h3>
-      <div class="bilingual">
-        <div class="en">
+      <h3>1. Demonstrative 指示代名詞</h3>
+      
+
+[Image of demonstrative pronouns distance chart]
+
+      <div class="audio-list">
+        <div class="audio-card" style="cursor:default">
+          <span class="audio-text">this / that (單數)</span>
+        </div>
+        <div class="audio-card" style="cursor:default">
+          <span class="audio-text">these / those (複數)</span>
+        </div>
+      </div>
+
+      <h3>2. Reciprocal 相互代名詞</h3>
+      <div class="bilingual-box">
+        <button class="bi-play" onclick="speak('Alex and I helped each other.')">🔊</button>
+        <div class="bi-col">
+          <span class="bi-label">Example</span>
           <p>Alex and I helped <strong>each other</strong>.</p>
-          <p>Ms. Du teaches her students to respect <strong>one another</strong>.</p>
+          <p style="margin-top:8px;">Students respect <strong>one another</strong>.</p>
         </div>
-        <div class="zh">
+        <div class="bi-col">
+          <span class="bi-label">Meaning</span>
           <p>Alex 和我互相幫助。</p>
-          <p>杜老師教導學生要彼此尊重、互相鼓勵。</p>
+          <p style="margin-top:8px;">學生們要彼此尊重。</p>
         </div>
       </div>
     </div>
 
-    <!-- 不定代名詞 -->
-    <div class="section">
+    <div class="section-card">
       <h2>Indefinite Pronouns 不定代名詞</h2>
-      <p>代替不特定的人、事、物。</p>
-
-      <h3>常見不定代名詞</h3>
-      <div class="example-item">
-        <strong>some-</strong>: someone, somebody, something<br>
-        <strong>any-</strong>: anyone, anybody, anything<br>
-        <strong>every-</strong>: everyone, everybody, everything<br>
-        <strong>no-</strong>: no one, nobody, nothing<br>
-        others: all, both, one, other, another, each, either, neither, many
+      <div class="table-responsive">
+        <table style="min-width:400px">
+          <tr><th>Group</th><th>Examples</th></tr>
+          <tr><td><strong>some-</strong></td><td>someone, somebody, something</td></tr>
+          <tr><td><strong>any-</strong></td><td>anyone, anybody, anything</td></tr>
+          <tr><td><strong>no-</strong></td><td>no one, nobody, nothing</td></tr>
+        </table>
       </div>
 
-      <div class="tip">
-        ✔ 複合不定代名詞（some-, any-, every-, no-）一律視為<strong>單數</strong>：<br>
-        → <em>Everyone has finished his or her homework.</em>
+      <div class="note-box note-tip">
+        <strong>💡 Grammar Rule:</strong><br>
+        複合不定代名詞 (everyone, someone...) 一律視為<strong>單數</strong>。<br>
+        <em>e.g., Everyone has finished <strong>his or her</strong> homework.</em>
       </div>
 
-      <div class="warning">
-        ❗ <strong>both, few, many, others, several</strong> → 複數<br>
-        → <em>Both my brothers are teachers.</em>
-      </div>
-
-      <div class="tip">
-        ✔ <strong>all, any, more, most, some</strong> 可單可複，依後面名詞而定：<br>
-        → <em>All the cake is gone.</em>（cake 不可數 → 單數）<br>
-        → <em>All the boys are playing.</em>（boys 可數複數 → 複數）
-      </div>
-
-      <h3>other, others, another, the other</h3>
-      <div class="example-list">
-        <div class="example-item">There is other information.<br>（other + 不可數）</div>
-        <div class="example-item">There are other ways.<br>（other + 可數複數）</div>
-        <div class="example-item">I’d like another cup.<br>（another = one more）</div>
-        <div class="example-item">One is a Chinchilla, the other is a Ragdoll.<br>（兩者中的另一個）</div>
-        <div class="example-item">You can’t expect others to help you.<br>（others = other people）</div>
-      </div>
-
-      <div class="tip">
-        ✔ 形容詞修飾不定代名詞時，放在後面：<br>
-        → <em>something important</em>（正確）<br>
-        → ❌ something importantly
+      <h3>Important Distinction</h3>
+      <div class="audio-list">
+        <div class="audio-card" onclick="speak('I would like another cup.')">
+          <span class="audio-text"><strong>another</strong> = one more (再來一個)</span><span class="audio-icon">🔈</span>
+        </div>
+        <div class="audio-card" onclick="speak('One is a cat, the other is a dog.')">
+          <span class="audio-text"><strong>the other</strong> = 兩者中的另一個</span><span class="audio-icon">🔈</span>
+        </div>
+        <div class="audio-card" onclick="speak('You can not expect others to help you.')">
+          <span class="audio-text"><strong>others</strong> = other people (其他人)</span><span class="audio-icon">🔈</span>
+        </div>
       </div>
     </div>
 
-    <!-- 一致性與常見錯誤 -->
-    <div class="section">
-      <h2>Agreement & Common Errors 一致性與常見錯誤</h2>
-      <div class="bilingual">
-        <div class="en">
-          <p>✓ Pronouns must agree in number and gender:<br>
-          <em>The girl lent the book to <strong>her</strong> best friend.</em></p>
-          <p>✓ Possessive pronouns stand alone:<br>
-          <em>His car is red, and <strong>mine</strong> is white.</em></p>
+    <div class="section-card">
+      <h2>Agreement & Common Errors</h2>
+      <div class="bilingual-box">
+        <div class="bi-col">
+          <span class="bi-label">Correct Usage</span>
+          <p>✓ The girl lent the book to <strong>her</strong> friend.</p>
+          <p>✓ His car is red, <strong>mine</strong> is white.</p>
         </div>
-        <div class="zh">
-          <p>✓ 代名詞須與先行詞在「數」與「性」上一致：<br>
-          那個女孩把書借給<strong>她</strong>最好的朋友。</p>
-          <p>✓ 所有格代名詞（mine, yours...）可單獨使用：<br>
-          <strong>他的</strong>車是紅色的，<strong>我的</strong>是白色的。</p>
+        <div class="bi-col">
+          <span class="bi-label">說明</span>
+          <p>代名詞需與先行詞 (girl) 的性別單複數一致。</p>
+          <p>mine = my car (獨立使用，不接名詞)。</p>
         </div>
       </div>
 
-      <div class="warning">
-        ❌ I gave it to <strong>she</strong>. → ✅ I gave it to <strong>her</strong>.<br>
-        ❌ This book is <strong>me</strong>. → ✅ This book is <strong>mine</strong>.
+      <div class="note-box note-warn">
+        <strong>❌ Common Mistakes:</strong><br>
+        • I gave it to <s>she</s>. → <strong>her</strong> (受格)<br>
+        • This book is <s>me</s>. → <strong>mine</strong> (所有格代名詞)
       </div>
     </div>
+
   </div>
 
   <script>
     let isPaused = false;
-
+    
     document.getElementById('pauseBtn').addEventListener('click', () => {
       isPaused = true;
-      if (window.speechSynthesis) speechSynthesis.cancel();
+      speechSynthesis.cancel();
     });
-
+    
     document.getElementById('playBtn').addEventListener('click', () => {
       isPaused = false;
     });
@@ -444,14 +439,19 @@
     function speak(text) {
       if (isPaused) return;
       if ('speechSynthesis' in window) {
+        speechSynthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = 'en-US';
-        utterance.rate = 0.95;
-        utterance.pitch = 1.1;
-        speechSynthesis.cancel();
+        utterance.rate = 0.9;
+        
+        // 嘗試使用更好的英文語音
+        const voices = speechSynthesis.getVoices();
+        const enVoice = voices.find(v => v.lang.includes('en-US') || v.lang.includes('en-GB'));
+        if(enVoice) utterance.voice = enVoice;
+
         speechSynthesis.speak(utterance);
       } else {
-        alert('此瀏覽器不支援語音朗讀。建議使用 Chrome 或 Edge。');
+        alert('Your browser does not support text-to-speech.');
       }
     }
   </script>
