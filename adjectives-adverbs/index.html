@@ -1,409 +1,410 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Adjectives & Adverbs 形容詞與副詞｜Teacher Shirley</title>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Shirley's Grammar | Adjectives & Adverbs</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Inter:wght@400;500;600&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  
   <style>
     :root {
-      --elegant-rose: #d4a5a5;
-      --soft-charcoal: #3a3a3a;
-      --mist-gray: #f0f2f5;
-      --ivory: #fdfdfd;
-      --deep-olive: #5a6b5a;
-      --accent-gold: #c9a972;
+      /* --- 古典學術配色 --- */
+      --primary-tone: #3a5a40;       /* 森林深綠 */
+      --secondary-tone: #c9a972;     /* 復古金 */
+      --text-main: #333333;          /* 柔和黑 */
+      --text-light: #666666;         /* 深灰 */
+      --bg-cream: #faf8f2;           /* 溫潤米色背景 */
+      --card-bg: #ffffff;
+      --border-soft: #e8e4d9;
+      --highlight-bg: #f0eadd;       /* 米金螢光筆 */
+      
+      --soft-shadow: 0 6px 20px rgba(58, 90, 64, 0.08);
+      --hover-shadow: 0 10px 30px rgba(58, 90, 64, 0.15);
+      --radius: 12px;
+      
+      /* 功能色 */
+      --tip-bg: #f1f8f1;
+      --tip-border: #3a5a40;
+      --warn-bg: #fff5f5;
+      --warn-border: #a83232;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; outline: none; -webkit-tap-highlight-color: transparent; }
 
     body {
-      font-family: 'Noto Sans TC', sans-serif;
-      background-color: var(--ivory);
-      color: var(--soft-charcoal);
-      line-height: 1.55;
-      padding: 0 10px;
+      font-family: 'Inter', 'Noto Sans TC', sans-serif;
+      background-color: var(--bg-cream);
+      background-image: linear-gradient(to bottom, #faf8f2 0%, #f5f2e9 100%);
+      color: var(--text-main);
+      line-height: 1.75;
+      padding: 40px 20px;
+      min-height: 100vh;
     }
 
-    .container {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 20px 12px;
-    }
+    .container { max-width: 960px; margin: 0 auto; }
+
+    /* === Header === */
+    header { text-align: center; margin-bottom: 50px; }
 
     h1 {
       font-family: 'Playfair Display', serif;
-      font-size: 2.4rem;
-      text-align: center;
-      margin: 12px 0 22px;
-      color: var(--deep-olive);
+      font-size: 3rem;
+      color: var(--primary-tone);
+      margin-bottom: 15px;
+      font-weight: 700;
       position: relative;
+      display: inline-block;
     }
-
+    
     h1::after {
-      content: "";
-      position: absolute;
-      bottom: -8px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80px;
-      height: 3px;
-      background: var(--accent-gold);
-      border-radius: 2px;
+      content: ''; display: block; width: 60%; height: 3px;
+      background: var(--secondary-tone); margin: 10px auto 0;
+      border-radius: 2px; opacity: 0.8;
+    }
+    
+    .subtitle {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--text-light);
+      font-style: italic;
     }
 
-    .section {
-      background: white;
-      border-radius: 14px;
-      padding: 18px;
-      margin: 20px 0;
-      box-shadow: 0 3px 12px rgba(58, 58, 58, 0.05);
-      border-top: 3px solid var(--accent-gold);
+    /* === Cards === */
+    .section-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 35px;
+      margin-bottom: 35px;
+      box-shadow: var(--soft-shadow);
+      border: 1px solid var(--border-soft);
+      border-top: 4px solid var(--primary-tone);
+      transition: transform 0.3s ease;
     }
+    .section-card:hover { transform: translateY(-3px); box-shadow: var(--hover-shadow); }
 
     h2 {
       font-family: 'Playfair Display', serif;
-      font-size: 1.65rem;
-      color: var(--deep-olive);
-      margin-bottom: 14px;
-      padding-bottom: 5px;
-      border-bottom: 1px dashed #e0e0e0;
+      font-size: 1.9rem;
+      color: var(--primary-tone);
+      margin-bottom: 25px;
+      display: flex; align-items: center; font-weight: 700;
+    }
+    h2::after {
+      content: ''; flex: 1; height: 1px;
+      background: var(--secondary-tone); margin-left: 20px; opacity: 0.4;
     }
 
     h3 {
-      margin: 12px 0 8px;
-      color: var(--elegant-rose);
-      font-size: 1.2rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      color: var(--primary-tone);
+      margin: 30px 0 15px;
+      font-weight: 600;
+      border-left: 3px solid var(--secondary-tone);
+      padding-left: 12px;
     }
 
-    .bilingual {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin: 10px 0;
-    }
-
-    .en, .zh {
-      flex: 1;
-      min-width: 240px;
-      padding: 12px;
-      background: var(--mist-gray);
+    /* === Bilingual Box === */
+    .bilingual-box {
+      display: flex; gap: 25px;
+      background: #fbfbf9;
+      padding: 28px;
       border-radius: 8px;
-      font-size: 0.98rem;
-    }
-
-    .example-item {
-      padding: 10px 12px;
-      background: #f9f9f9;
-      border-radius: 8px;
-      border: 1px solid #eee;
+      border: 1px solid var(--border-soft);
       position: relative;
-      margin: 6px 0;
-      font-size: 0.99rem;
     }
-
-    .play-btn {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      background: var(--accent-gold);
-      color: white;
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 10px;
-      cursor: pointer;
-      border: none;
+    .bi-col { flex: 1; }
+    .bi-label { 
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem; font-weight: 700; 
+      color: var(--secondary-tone); 
+      letter-spacing: 1.5px; margin-bottom: 10px; 
+      display: block; text-transform: uppercase;
     }
-
     .highlight {
-      background-color: #fff8e1;
-      padding: 1px 4px;
-      border-radius: 3px;
-      font-weight: 600;
+      background: var(--highlight-bg);
+      padding: 2px 6px; border-radius: 4px;
+      font-weight: 600; color: var(--primary-tone);
     }
-
-    .warning, .tip {
-      padding: 10px 12px;
-      margin: 12px 0;
-      border-radius: 0 8px 8px 0;
-      font-size: 0.96rem;
+    .bi-play {
+      position: absolute; top: 20px; right: 20px;
+      background: var(--secondary-tone); color: white;
+      width: 32px; height: 32px; border-radius: 50%;
+      border: none; cursor: pointer; display: flex;
+      align-items: center; justify-content: center;
+      transition: 0.2s;
     }
+    .bi-play:hover { transform: scale(1.1); background: var(--primary-tone); }
 
-    .warning {
-      background: #ffebee;
-      border-left: 3px solid #f44336;
-      color: #c62828;
+    /* === Audio List (Example Items) === */
+    .audio-list {
+      display: grid; gap: 12px;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     }
-
-    .tip {
-      background: #e8f5e9;
-      border-left: 3px solid #4caf50;
-      color: #2e7d32;
+    .audio-card {
+      background: #fff; border: 1px solid var(--border-soft);
+      padding: 15px 18px; border-radius: 8px;
+      cursor: pointer; display: flex;
+      align-items: center; justify-content: space-between;
+      transition: all 0.2s ease;
     }
-
-    .comparison-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 14px 0;
-      font-size: 0.92rem;
+    .audio-card:hover {
+      border-color: var(--secondary-tone);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(201, 169, 114, 0.15);
+      background: #fefcf8;
     }
+    .audio-text { font-weight: 500; color: var(--text-main); font-size: 0.95rem; }
+    .audio-icon { color: var(--secondary-tone); font-size: 1.1rem; }
 
-    .comparison-table th,
-    .comparison-table td {
-      padding: 8px;
-      text-align: left;
-      border-bottom: 1px solid #eee;
-    }
-
-    .comparison-table th {
-      background: var(--mist-gray);
-      color: var(--deep-olive);
-    }
-
-    /* 新增：兩欄例句 */
-    .dual-col {
-      display: flex;
-      gap: 16px;
-      margin: 10px 0;
-    }
-
-    .dual-col > div {
-      flex: 1;
-    }
-
-    /* 新增：複合形容詞緊湊網格 */
+    /* === Compound Adjectives Grid === */
     .compound-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 8px;
-      margin: 10px 0;
+      display: flex; flex-wrap: wrap; gap: 10px;
+      margin: 15px 0;
     }
-
-    .compound-item {
-      padding: 8px 10px;
-      background: #f8f9fa;
-      border-radius: 6px;
-      border: 1px solid #eee;
-      font-size: 0.98rem;
-    }
-
-    .redirect-btn {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 6px 14px;
-      background: var(--elegant-rose);
-      color: white;
-      text-decoration: none;
-      border-radius: 28px;
+    .compound-tag {
+      background: white;
+      border: 1px solid var(--secondary-tone);
+      color: var(--primary-tone);
+      padding: 8px 16px;
+      border-radius: 50px;
       font-weight: 600;
-      font-size: 0.92rem;
-      transition: all 0.25s;
+      font-size: 0.9rem;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
     }
 
-    .redirect-btn:hover {
-      background: var(--deep-olive);
-      transform: translateY(-1px);
+    /* === Table === */
+    .table-responsive {
+      overflow-x: auto;
+      border-radius: 8px;
+      margin: 20px 0;
+      border: 1px solid var(--border-soft);
     }
+    table { width: 100%; border-collapse: collapse; min-width: 600px; }
+    th {
+      background: #f4f1ea; color: var(--primary-tone);
+      font-family: 'Playfair Display', serif;
+      font-weight: 700; padding: 16px; text-align: left;
+      border-bottom: 2px solid var(--border-soft);
+    }
+    td {
+      padding: 14px 16px; border-bottom: 1px solid var(--border-soft);
+      color: var(--text-main);
+    }
+    tr:last-child td { border-bottom: none; }
+
+    /* === Note Box === */
+    .note-box {
+      padding: 20px; margin: 20px 0;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.95rem; line-height: 1.6;
+    }
+    .note-tip { background: var(--tip-bg); border-left: 4px solid var(--tip-border); color: #2d4632; }
+    .note-warn { background: var(--warn-bg); border-left: 4px solid var(--warn-border); color: #7a2b2b; }
+
+    /* === CTA Buttons === */
+    .btn-group { display: flex; gap: 15px; margin-top: 20px; flex-wrap: wrap; }
+    .btn-cta {
+      background: var(--primary-tone); color: white;
+      text-decoration: none; padding: 12px 24px;
+      border-radius: 50px; font-weight: 600;
+      transition: 0.3s; flex: 1; text-align: center;
+      min-width: 200px;
+    }
+    .btn-cta:hover { background: #2d4632; transform: translateY(-2px); }
+
+    /* === Mistakes Section (Specific) === */
+    .section-card.mistakes { border-top-color: #a83232; }
+    .mistakes th.wrong { color: #a83232; }
+    .mistakes th.right { color: #2e7d32; }
 
     @media (max-width: 768px) {
-      .bilingual, .dual-col { flex-direction: column; }
-      .en, .zh, .dual-col > div { min-width: 100%; }
-      h1 { font-size: 1.9rem; }
-      .section { padding: 14px; }
-      .compound-grid { grid-template-columns: 1fr; }
+      .bilingual-box { flex-direction: column; }
+      .bi-play { position: static; margin-bottom: 10px; }
     }
   </style>
 </head>
 <body>
+
   <div class="container">
-    <h1>Shirley's Adjectives & Adverbs<br>形容詞與副詞解析</h1>
+    <header>
+      <h1>Adjectives & Adverbs</h1>
+      <div class="subtitle">形容詞與副詞修飾學</div>
+    </header>
 
-    <!-- 定義 -->
-    <div class="section">
-      <h2>What are Adjectives & Adverbs?</h2>
-      <div class="bilingual">
-        <div class="en">
-          <strong>Adjectives</strong> describe <em>nouns</em>.<br>
-          <strong>Adverbs</strong> modify <em>verbs, adjectives, or other adverbs</em>.
+    <div class="section-card">
+      <h2>Definition 定義</h2>
+      <div class="bilingual-box">
+        <button class="bi-play" onclick="speak('Adjectives describe nouns. Adverbs modify verbs, adjectives, or other adverbs.')">🔊</button>
+        <div class="bi-col">
+          <span class="bi-label">Adjectives</span>
+          Describe <strong>nouns</strong> (名詞).<br>
+          <em style="color:var(--text-light)">e.g., a <strong>smart</strong> student.</em>
         </div>
-        <div class="zh">
-          <strong>形容詞</strong>修飾<strong>名詞</strong>。<br>
-          <strong>副詞</strong>修飾<strong>動詞、形容詞或其他副詞</strong>。
+        <div class="bi-col">
+          <span class="bi-label">Adverbs</span>
+          Modify <strong>verbs, adjectives, or adverbs</strong>.<br>
+          <em style="color:var(--text-light)">e.g., run <strong>fast</strong>, <strong>very</strong> good.</em>
         </div>
       </div>
-      <button class="play-btn" onclick="speak('Adjectives describe nouns. Adverbs modify verbs, adjectives, or other adverbs.')">🔊</button>
     </div>
 
-    <!-- 形容詞用法 -->
-    <div class="section">
-      <h2>Adjectives 形容詞</h2>
-
-      <h3>1–2. 限定 vs. 敘述用法</h3>
-      <div class="dual-col">
-        <div>
-          <div class="example-item">
-            My father is a <span class="highlight">successful</span> businessman.<br>
-            （successful 置於名詞前 → <strong>Attributive</strong>）
-          </div>
+    <div class="section-card">
+      <h2>Adjectives 形容詞用法</h2>
+      
+      <h3>1. Position 位置</h3>
+      <div class="audio-list">
+        <div class="audio-card" onclick="speak('My father is a successful businessman.')">
+          <span class="audio-text"><strong>Attributive (限定)</strong>: 前位修飾<br><small>a <span class="highlight">successful</span> businessman</small></span>
+          <span class="audio-icon">🔈</span>
         </div>
-        <div>
-          <div class="example-item">
-            The meeting is <span class="highlight">successful</span>.<br>
-            （successful 在 be 動詞後 → <strong>Predicative</strong>）
-          </div>
+        <div class="audio-card" onclick="speak('The meeting is successful.')">
+          <span class="audio-text"><strong>Predicative (敘述)</strong>: 補語位置<br><small>The meeting is <span class="highlight">successful</span></small></span>
+          <span class="audio-icon">🔈</span>
         </div>
       </div>
 
-      <div class="tip">
-        ✔ 有些形容詞<strong>只能作敘述用法</strong>：<br>
-        <strong>ill, well, unwilling</strong>，以及 <strong>a-</strong> 開頭的詞：<br>
-        <em>alike, asleep, awake, afraid, alone, ashamed</em>
+      <div class="note-box note-tip">
+        <strong>💡 Special Case:</strong><br>
+        以 <strong>a-</strong> 開頭的形容詞通常只作敘述用法 (be動詞後)。<br>
+        <em>e.g., alike, asleep, awake, afraid, alone, ashamed.</em>
       </div>
 
-      <div class="example-item">Many students fall <strong>asleep</strong> in class.<button class="play-btn" onclick="speak('Many students fall asleep in class.')">🔊</button></div>
-      <div class="example-item">Some children are <strong>unwilling</strong> to share.<button class="play-btn" onclick="speak('Some children are unwilling to share.')">🔊</button></div>
-      <div class="example-item">I am <strong>alone</strong> but not lonely.<button class="play-btn" onclick="speak('I am alone but not lonely.')">🔊</button></div>
-
-      <h3>3. 受詞補語</h3>
-      <div class="example-item">
-        The song made me <span class="highlight">sad</span>.<br>
-        Please keep the window <span class="highlight">open</span>.
-      </div>
-
-      <h3>4. The + Adjective</h3>
-      <div class="example-item">
-        <em>The rich</em> are not always happy.<br>
-        <em>The good</em> in school uniforms outweighs <em>the bad</em>.
-      </div>
-
-      <h3>5. 複合形容詞 (Compound Adjectives)</h3>
-      <div class="tip">
-        ✔ 用連字號連接，整體修飾名詞（通常置於名詞前）
-      </div>
+      <h3>2. Compound Adjectives 複合形容詞</h3>
+      <p style="margin-bottom:10px;color:var(--text-light)">使用連字號，整體視為一個形容詞，置於名詞前。</p>
       <div class="compound-grid">
-        <div class="compound-item">a <span class="highlight">well-known</span> singer</div>
-        <div class="compound-item">a <span class="highlight">three-year-old</span> child</div>
-        <div class="compound-item">an <span class="highlight">all-night</span> party</div>
-        <div class="compound-item">a <span class="highlight">high-quality</span> product</div>
-        <div class="compound-item">a <span class="highlight">last-minute</span> decision</div>
-        <div class="compound-item">a <span class="highlight">full-time</span> job</div>
-      </div>
-      <div class="warning">
-        ❌ She is a well known singer.<br>
-        ✅ She is a <strong>well-known</strong> singer.
+        <span class="compound-tag">well-known</span>
+        <span class="compound-tag">three-year-old</span>
+        <span class="compound-tag">all-night</span>
+        <span class="compound-tag">high-quality</span>
+        <span class="compound-tag">full-time</span>
+        <span class="compound-tag">good-looking</span>
       </div>
 
-      <h3>6. 形容詞 + 介系詞</h3>
-      <div class="example-item">
-        She is angry <strong>at</strong> me.<br>
-        I am interested <strong>in</strong> English.<br>
-        He is good <strong>at</strong> math.
-      </div>
-    </div>
-
-    <!-- 副詞 -->
-    <div class="section">
-      <h2>Adverbs 副詞</h2>
-      <p>副詞修飾：<strong>動詞</strong>（how/when/where）、<strong>形容詞</strong>、<strong>其他副詞</strong></p>
-      <div class="example-item">
-        She sings <span class="highlight">beautifully</span>. （修飾動詞）<br>
-        He is <span class="highlight">extremely</span> tired. （修飾形容詞）<br>
-        She runs <span class="highlight">very</span> quickly. （修飾副詞）
-      </div>
-      <div class="tip">
-        ✔ 多數副詞由形容詞 + <strong>-ly</strong> 構成：<br>
-        easy → easily, careful → carefully<br>
-        ✔ 不規則：good → well, fast → fast
-      </div>
-    </div>
-
-    <!-- 比較級與最高級 -->
-    <div class="section">
-      <h2>Comparatives & Superlatives<br>比較級與最高級</h2>
-      <table class="comparison-table">
-        <tr><th>原級</th><th>比較級</th><th>最高級</th></tr>
-        <tr><td>tall</td><td>taller</td><td>tallest</td></tr>
-        <tr><td>interesting</td><td>more interesting</td><td>most interesting</td></tr>
-        <tr><td>good</td><td>better</td><td>best</td></tr>
-        <tr><td>bad</td><td>worse</td><td>worst</td></tr>
-        <tr><td>little</td><td>less</td><td>least</td></tr>
-      </table>
-      <div class="example-item">
-        The older we grow, the wiser we become.<br>
-        Your room is three times <strong>as large as</strong> mine.<br>
-        It is <strong>easier</strong> to make a plan than to carry it out.
-      </div>
-      <h3>so... vs. such a...</h3>
-      <div class="bilingual">
-        <div class="en">
-          The girl is <strong>so beautiful</strong>.<br>
-          She is <strong>such a beautiful girl</strong>.
+      <h3>3. The + Adjective</h3>
+      <div class="audio-list">
+        <div class="audio-card" onclick="speak('The rich are not always happy.')">
+          <span class="audio-text"><strong>The rich</strong> = Rich people</span>
+          <span class="audio-icon">🔈</span>
         </div>
-        <div class="zh">
-          這個女孩<strong>如此美麗</strong>。<br>
-          她是<strong>如此美麗的一個女孩</strong>。
+        <div class="audio-card" onclick="speak('The unknown is scary.')">
+          <span class="audio-text"><strong>The unknown</strong> = Unknown things</span>
+          <span class="audio-icon">🔈</span>
         </div>
       </div>
     </div>
 
-    <!-- 易混淆詞 -->
-    <div class="section">
-      <h2>Common Confusions 易混淆用法</h2>
-      <div class="example-item">
-        He is a <strong>hard</strong> worker. （adj）<br>
-        He works very <strong>hard</strong>. （adv）<br>
-        He <strong>hardly</strong> works. （adv: 幾乎不）
-      </div>
-      <div class="example-item">
-        My roommate is very <strong>friendly</strong>. （adj）<br>
-        I exercise <strong>every day</strong>. （adv）<br>
-        This is an <strong>everyday</strong> problem. （adj）
+    <div class="section-card">
+      <h2>Adverbs 副詞用法</h2>
+      <p>副詞主要由形容詞 + <strong>ly</strong> 構成，但有例外。</p>
+      
+      <div class="table-responsive">
+        <table style="min-width:400px">
+          <tr><th>Rule</th><th>Examples</th></tr>
+          <tr><td>Adj + ly</td><td>quick → <strong>quickly</strong>, careful → <strong>carefully</strong></td></tr>
+          <tr><td>y → ily</td><td>happy → <strong>happily</strong>, easy → <strong>easily</strong></td></tr>
+          <tr><td>Irregular</td><td>good → <strong>well</strong>, fast → <strong>fast</strong>, hard → <strong>hard</strong></td></tr>
+        </table>
       </div>
     </div>
 
-    <!-- 形容詞子句 & 副詞子句 -->
-    <div class="section">
-      <h2>Adjective & Adverb Clauses</h2>
-      <p>形容詞與副詞也能以<strong>子句</strong>形式出現，提供更完整修飾。</p>
-      <div class="example-item">
-        The book <span class="highlight">that you lent me</span> is great. （形容詞子句）<br>
-        I’ll call you <span class="highlight">when I arrive</span>. （副詞子句）
+    <div class="section-card">
+      <h2>Comparatives & Superlatives</h2>
+      
+      
+
+      <div class="table-responsive">
+        <table>
+          <tr><th>Original</th><th>Comparative</th><th>Superlative</th></tr>
+          <tr><td>tall</td><td>taller</td><td>the tallest</td></tr>
+          <tr><td>beautiful</td><td>more beautiful</td><td>the most beautiful</td></tr>
+          <tr><td>good</td><td>better</td><td>the best</td></tr>
+          <tr><td>bad</td><td>worse</td><td>the worst</td></tr>
+        </table>
       </div>
-      <a href="https://ducj-creator.github.io/Shirley-Grammar/adjective-clause/" class="redirect-btn" target="_blank">📖 形容詞子句詳解</a>
-      <a href="https://ducj-creator.github.io/Shirley-Grammar/adverb-clause/" class="redirect-btn" style="margin-left:10px" target="_blank">📘 副詞子句詳解</a>
+
+      <h3>So vs. Such</h3>
+      <div class="audio-list">
+        <div class="audio-card" onclick="speak('The girl is so beautiful.')">
+          <span class="audio-text"><strong>so</strong> + Adj<br><small>The girl is so beautiful.</small></span>
+          <span class="audio-icon">🔈</span>
+        </div>
+        <div class="audio-card" onclick="speak('She is such a beautiful girl.')">
+          <span class="audio-text"><strong>such</strong> + a + Adj + Noun<br><small>She is such a beautiful girl.</small></span>
+          <span class="audio-icon">🔈</span>
+        </div>
+      </div>
     </div>
 
-    <!-- 常見錯誤 -->
-    <div class="section">
-      <h2>Avoid These Mistakes!</h2>
-      <div class="warning">
-        ❌ Tom works harder than <strong>me</strong>.<br>
-        ✅ Tom works harder than <strong>I (do)</strong>.<br><br>
-        ❌ Mary’s skirt is more beautiful than <strong>me</strong>.<br>
-        ✅ Mary’s skirt is more beautiful than <strong>mine</strong>.
+    <div class="section-card">
+      <h2>Common Confusions 易混淆詞</h2>
+      <div class="audio-list">
+        <div class="audio-card" onclick="speak('He works hard.')">
+          <span class="audio-text"><strong>hard</strong> (努力地)<br><small>He works hard.</small></span>
+          <span class="audio-icon">🔈</span>
+        </div>
+        <div class="audio-card" onclick="speak('He hardly works.')">
+          <span class="audio-text"><strong>hardly</strong> (幾乎不)<br><small>He hardly works. (由頻率副詞)</small></span>
+          <span class="audio-icon">🔈</span>
+        </div>
+        <div class="audio-card" onclick="speak('late vs lately')">
+          <span class="audio-text"><strong>late</strong> (晚) vs <strong>lately</strong> (最近)</span>
+          <span class="audio-icon">🔈</span>
+        </div>
       </div>
     </div>
+
+    <div class="section-card">
+      <h2>Clauses 子句進階學習</h2>
+      <p>當一個形容詞或副詞不足以表達時，我們會使用「子句」。</p>
+      <div class="btn-group">
+        <a href="https://ducj-creator.github.io/Shirley-Grammar/adjective-clause/" target="_blank" class="btn-cta">
+          📖 形容詞子句 (Adj. Clause)
+        </a>
+        <a href="https://ducj-creator.github.io/Shirley-Grammar/adverb-clause/" target="_blank" class="btn-cta">
+          📘 副詞子句 (Adv. Clause)
+        </a>
+      </div>
+    </div>
+
+    <div class="section-card mistakes">
+      <h2>🚫 Common Mistakes</h2>
+      <div class="table-responsive">
+        <table>
+          <tr><th class="wrong">Wrong (X)</th><th class="right">Right (O)</th></tr>
+          <tr>
+            <td>She is a well known singer.</td>
+            <td>She is a <strong>well-known</strong> singer.</td>
+          </tr>
+          <tr>
+            <td>Tom works harder than me.</td>
+            <td>Tom works harder than <strong>I (do)</strong>.</td>
+          </tr>
+          <tr>
+            <td>Her dress is prettier than me.</td>
+            <td>Her dress is prettier than <strong>mine</strong>.</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
   </div>
 
   <script>
     function speak(text) {
       if ('speechSynthesis' in window) {
+        speechSynthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = 'en-US';
-        utterance.rate = 0.95;
-        utterance.pitch = 1.1;
-        speechSynthesis.cancel();
+        utterance.rate = 0.9;
+        
+        const voices = speechSynthesis.getVoices();
+        const enVoice = voices.find(v => v.lang.includes('en-US') || v.lang.includes('en-GB'));
+        if(enVoice) utterance.voice = enVoice;
+
         speechSynthesis.speak(utterance);
       } else {
-        alert('此瀏覽器不支援語音朗讀。建議使用 Chrome 或 Edge。');
+        alert("Sorry, your browser doesn't support text-to-speech.");
       }
     }
   </script>
