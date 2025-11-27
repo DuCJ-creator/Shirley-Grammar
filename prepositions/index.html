@@ -3,23 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shirley's Advanced Preposition Lab | 進階介係詞實驗室</title>
+    <title>Shirley's Advanced Preposition Lab | 介係詞完全體</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* 延續紫色系，但更深邃專業 */
+            /* 延續高質感的深紫色系 */
             --primary: #6C5CE7;
             --primary-dark: #4834D4;
             --secondary: #A29BFE;
-            --accent: #FDCB6E;        /* 亮黃色用於強調 */
-            --surface: rgba(255, 255, 255, 0.9);
-            --bg-gradient: linear-gradient(135deg, #F5F6FA 0%, #E3E6F0 100%);
+            --accent: #FDCB6E;        
+            --phrasal-color: #00B894; /* 片語專用色 (青綠色) */
+            
+            --surface: rgba(255, 255, 255, 0.95);
+            --bg-gradient: linear-gradient(135deg, #F5F6FA 0%, #DFE6E9 100%);
             
             --text-main: #2D3436;
             --text-light: #636E72;
-            
-            --success: #00B894;
-            --error: #D63031;
             
             --radius: 20px;
             --shadow: 0 10px 30px rgba(108, 92, 231, 0.15);
@@ -41,51 +40,31 @@
             max-width: 1200px;
             background: var(--surface);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             border-radius: var(--radius);
             box-shadow: var(--shadow);
             border: 1px solid rgba(255,255,255,0.8);
             display: grid;
             grid-template-rows: auto 1fr auto;
             overflow: hidden;
+            min-height: 800px;
         }
 
         /* Header */
         header {
-            padding: 25px 30px;
+            padding: 20px 30px;
             background: white;
             border-bottom: 1px solid #eee;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
+        .brand h1 { font-size: 1.6rem; color: var(--primary-dark); font-weight: 800; }
+        .brand span { background: var(--accent); padding: 4px 10px; border-radius: 8px; font-size: 0.8rem; font-weight: 700; margin-left: 10px;}
 
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .brand h1 {
-            font-size: 1.8rem;
-            color: var(--primary-dark);
-            font-weight: 800;
-        }
-        
-        .brand span {
-            background: var(--accent);
-            color: var(--text-main);
-            padding: 4px 10px;
-            border-radius: 8px;
-            font-size: 0.8rem;
-            font-weight: 700;
-        }
-
-        /* Main Content Grid */
+        /* Grid Layout */
         .main-grid {
             display: grid;
             grid-template-columns: 4fr 5fr;
-            gap: 0;
             height: 100%;
             overflow: hidden;
         }
@@ -93,7 +72,7 @@
         /* Left: Visualizer */
         .visualizer-panel {
             background: #F8F9FA;
-            padding: 30px;
+            padding: 25px;
             border-right: 1px solid #eee;
             display: flex;
             flex-direction: column;
@@ -103,218 +82,129 @@
             flex: 1;
             background: white;
             border-radius: var(--radius);
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.03);
             border: 2px solid #eee;
             position: relative;
             overflow: hidden;
             min-height: 300px;
+            margin-bottom: 15px;
         }
-
         canvas { width: 100%; height: 100%; }
 
         .scene-controls {
-            margin-top: 20px;
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
         }
 
         .scene-btn {
-            padding: 10px 16px;
+            padding: 10px;
             border: 1px solid var(--secondary);
             background: white;
             color: var(--primary);
-            border-radius: 50px;
+            border-radius: 10px;
             cursor: pointer;
             font-weight: 600;
             transition: all 0.2s;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
-
         .scene-btn:hover, .scene-btn.active {
-            background: var(--primary);
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(108, 92, 231, 0.3);
+            background: var(--primary); color: white; transform: translateY(-2px);
         }
 
-        .viz-caption {
-            margin-top: 15px;
-            padding: 15px;
-            background: #E8EAF6;
-            border-radius: 12px;
-            color: var(--primary-dark);
-            font-size: 0.95rem;
-            line-height: 1.5;
-            border-left: 4px solid var(--primary);
-        }
-
-        /* Right: Theory & Quiz */
+        /* Right: Content */
         .content-panel {
-            padding: 30px;
-            overflow-y: auto;
-            max-height: 800px;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            background: white;
         }
 
         .tabs {
             display: flex;
-            gap: 15px;
-            margin-bottom: 25px;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 10px;
+            padding: 0 20px;
+            border-bottom: 1px solid #eee;
+            background: #FAFAFA;
         }
 
         .tab {
-            font-size: 1.1rem;
+            padding: 15px 20px;
+            cursor: pointer;
             font-weight: 700;
             color: var(--text-light);
-            cursor: pointer;
-            padding: 8px 12px;
-            position: relative;
-            transition: color 0.3s;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        .tab:hover { color: var(--primary); background: rgba(108, 92, 231, 0.05); }
+        .tab.active { color: var(--primary); border-bottom-color: var(--primary); background: white; }
+
+        .content-scroll {
+            padding: 25px;
+            overflow-y: auto;
+            flex: 1;
         }
 
-        .tab.active { color: var(--primary); }
-        .tab.active::after {
-            content: ''; position: absolute; bottom: -12px; left: 0; width: 100%; height: 3px;
-            background: var(--primary); border-radius: 3px 3px 0 0;
-        }
-
-        .section-content { display: none; animation: fadeIn 0.4s; }
+        .section-content { display: none; animation: fadeIn 0.3s; }
         .section-content.active { display: block; }
 
-        /* Pyramid Concept Style */
-        .pyramid-box {
+        /* Card Styles */
+        .concept-card {
             background: white;
+            border: 1px solid #eee;
+            border-radius: 12px;
             padding: 20px;
-            border-radius: 16px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--primary);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
         }
+        .concept-card.phrasal { border-left-color: var(--phrasal-color); }
 
-        .rule-row {
+        .tag-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+        .ex-tag {
+            background: #F1F2F6; padding: 4px 10px; border-radius: 6px; font-size: 0.9rem; color: #555;
+            border: 1px solid #e1e1e1;
+        }
+        .ex-tag strong { color: var(--primary-dark); }
+
+        /* Portal Link Button (High-End) */
+        .portal-link {
             display: flex;
             align-items: center;
-            margin-bottom: 12px;
-            padding-bottom: 12px;
-            border-bottom: 1px dashed #eee;
-        }
-        
-        .rule-icon {
-            width: 40px; height: 40px;
-            border-radius: 50%;
-            background: var(--secondary);
+            justify-content: space-between;
+            background: linear-gradient(135deg, #00B894 0%, #00CEC9 100%);
             color: white;
-            display: flex; align-items: center; justify-content: center;
-            font-weight: bold;
-            margin-right: 15px;
-            flex-shrink: 0;
-        }
-        .rule-icon.in { background: #0984e3; } /* Large */
-        .rule-icon.on { background: #00b894; } /* Medium */
-        .rule-icon.at { background: #d63031; } /* Small */
-
-        .rule-text h4 { margin-bottom: 4px; color: var(--text-main); }
-        .rule-text p { font-size: 0.9rem; color: var(--text-light); }
-        .example-tag {
-            display: inline-block;
-            background: #f1f2f6;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            margin-top: 4px;
-            color: #555;
-        }
-
-        /* Quiz Advanced Styles */
-        .quiz-card {
-            background: white;
+            padding: 20px;
             border-radius: 16px;
-            padding: 25px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-            text-align: left;
+            text-decoration: none;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 20px rgba(0, 184, 148, 0.3);
+            transition: transform 0.2s;
         }
+        .portal-link:hover { transform: translateY(-3px); }
+        .portal-icon { font-size: 2rem; margin-right: 15px; }
 
-        .q-context {
-            font-size: 0.9rem;
-            color: var(--primary);
-            font-weight: 700;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .q-text {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            line-height: 1.5;
-        }
-
-        .options-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-
+        /* Quiz Styles */
+        .quiz-container { text-align: center; padding: 20px; }
         .option-btn {
-            padding: 15px;
-            border: 2px solid #eee;
-            border-radius: 12px;
-            background: white;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: all 0.2s;
-            text-align: left;
+            display: block; width: 100%; padding: 15px; margin-bottom: 10px;
+            border: 2px solid #eee; border-radius: 12px; background: white;
+            cursor: pointer; font-size: 1rem; text-align: left; transition: all 0.2s;
+        }
+        .option-btn:hover { border-color: var(--primary); background: #f8f9ff; }
+        .option-btn.correct { background: #d4edda; border-color: #c3e6cb; color: #155724; }
+        .option-btn.wrong { background: #f8d7da; border-color: #f5c6cb; color: #721c24; }
+
+        .feedback-box {
+            background: #F0F3F4; padding: 15px; border-radius: 10px; margin-top: 15px;
+            text-align: left; display: none; border-left: 4px solid #666;
         }
 
-        .option-btn:hover { border-color: var(--secondary); background: #fdfdfd; }
-        
-        .option-btn.correct { 
-            background: #d4edda; border-color: #c3e6cb; color: #155724; 
-            position: relative;
-        }
-        .option-btn.correct::after { content: '✓'; float: right; font-weight: bold; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
-        .option-btn.incorrect { 
-            background: #f8d7da; border-color: #f5c6cb; color: #721c24; 
-            opacity: 0.7;
-        }
-
-        .explanation {
-            margin-top: 20px;
-            padding: 15px;
-            background: #e2e3e5;
-            border-radius: 10px;
-            font-size: 0.95rem;
-            display: none;
-            animation: slideDown 0.3s;
-        }
-        .explanation.show { display: block; }
-        
-        .explanation strong { color: var(--primary-dark); }
-
-        footer {
-            grid-column: 1 / -1;
-            padding: 15px;
-            text-align: center;
-            font-size: 0.8rem;
-            color: #aaa;
-            background: white;
-            border-top: 1px solid #eee;
-        }
-
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* RWD */
+        /* Mobile */
         @media (max-width: 900px) {
-            .main-grid { grid-template-columns: 1fr; grid-template-rows: auto auto; overflow-y: auto; }
-            .app-container { max-height: none; overflow: visible; display: block; }
-            .visualizer-panel { border-right: none; border-bottom: 1px solid #eee; }
-            .content-panel { max-height: none; }
+            .main-grid { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
+            .visualizer-panel { height: 400px; border-right: none; border-bottom: 1px solid #eee; }
+            .app-container { height: auto; display: block; }
         }
     </style>
 </head>
@@ -324,455 +214,324 @@
     <header>
         <div class="brand">
             <h1>Preposition Lab</h1>
-            <span>Advanced V2.0</span>
+            <span>V3.0 Complete</span>
         </div>
-        <div style="font-size: 0.9rem; color: #666;">
-            💡 核心概念：情境與相對關係
-        </div>
+        <div style="font-size: 0.9rem; color: #666;">介係詞 & 動詞片語完全攻略</div>
     </header>
 
     <div class="main-grid">
         <section class="visualizer-panel">
-            <h3 style="margin-bottom: 15px; color: var(--primary);">🎥 動態情境模擬</h3>
+            <h3 style="margin-bottom: 10px; color: var(--primary);">🎥 動態實驗室</h3>
             <div class="canvas-wrapper" id="canvasContainer">
                 <canvas id="prepCanvas"></canvas>
             </div>
             
-            <div class="viz-caption" id="vizCaption">
-                選擇下方按鈕來觀察介係詞的物理變化。
-            </div>
-
             <div class="scene-controls">
                 <button class="scene-btn active" onclick="setScenario('pyramid')">📐 倒三角法則</button>
+                <button class="scene-btn" onclick="setScenario('motion_through')">🚇 Through/Across</button>
                 <button class="scene-btn" onclick="setScenario('surface_in')">📦 In vs On</button>
-                <button class="scene-btn" onclick="setScenario('motion_through')">🚇 Through vs Across</button>
-                <button class="scene-btn" onclick="setScenario('motion_to')">➡️ To vs Towards</button>
+                <button class="scene-btn" onclick="setScenario('transport')" style="border-color: var(--phrasal-color); color: var(--phrasal-color);">🚌 Get On vs In</button>
             </div>
+            <p id="caption" style="margin-top:15px; font-size:0.9rem; color:#666; background:#fff; padding:10px; border-radius:8px;">
+                選擇上方按鈕觀察變化。
+            </p>
         </section>
 
         <section class="content-panel">
             <div class="tabs">
-                <div class="tab active" onclick="switchTab('time')">⏳ 時間 (Time)</div>
-                <div class="tab" onclick="switchTab('place')">📍 地點 (Place)</div>
-                <div class="tab" onclick="switchTab('motion')">🏃 動態 (Motion)</div>
-                <div class="tab" onclick="switchTab('quiz')">🧠 精準測驗</div>
+                <div class="tab active" onclick="switchTab('time_place')">⏳ 時間與地點</div>
+                <div class="tab" onclick="switchTab('motion')">🏃 動態路徑</div>
+                <div class="tab" onclick="switchTab('phrasal')">🧩 動詞片語</div>
+                <div class="tab" onclick="switchTab('quiz')">🧠 綜合測驗</div>
             </div>
 
-            <div id="time" class="section-content active">
-                <h2 style="margin-bottom: 15px;">倒三角形法則 (The Pyramid)</h2>
-                <div class="pyramid-box">
-                    <div class="rule-row">
-                        <div class="rule-icon in">IN</div>
-                        <div class="rule-text">
-                            <h4>大範圍 / 長時間</h4>
-                            <p>世紀、年、季節、月份、時段</p>
-                            <span class="example-tag">in 2024</span>
-                            <span class="example-tag">in July</span>
-                            <span class="example-tag">in the morning</span>
-                        </div>
-                    </div>
-                    <div class="rule-row">
-                        <div class="rule-icon on">ON</div>
-                        <div class="rule-text">
-                            <h4>特定日子</h4>
-                            <p>日期、星期幾、特定的某個早晨/夜晚</p>
-                            <span class="example-tag">on Monday</span>
-                            <span class="example-tag">on July 4th</span>
-                            <span class="example-tag">on a cold night</span>
-                        </div>
-                    </div>
-                    <div class="rule-row" style="border: none;">
-                        <div class="rule-icon at">AT</div>
-                        <div class="rule-text">
-                            <h4>精確時間點</h4>
-                            <p>幾點幾分、特定時刻</p>
-                            <span class="example-tag">at 5:00 PM</span>
-                            <span class="example-tag">at noon</span>
-                            <span class="example-tag">at the moment</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="place" class="section-content">
-                <h2>空間概念：封閉 vs 表面 vs 定點</h2>
-                <p style="margin-bottom: 20px; color: #666;">不再只有「在...之上/下」，重點是物理性質。</p>
-
-                <div class="pyramid-box">
-                    <div class="rule-row">
-                        <div class="rule-icon in">IN</div>
-                        <div class="rule-text">
-                            <h4>封閉空間 / 容器 / 區域</h4>
-                            <p>強調「被包圍」或「在界線內」。</p>
-                            <span class="example-tag">in the box</span>
-                            <span class="example-tag">in London (城市邊界內)</span>
-                            <span class="example-tag">in the car</span>
-                        </div>
-                    </div>
-                    <div class="rule-row">
-                        <div class="rule-icon on">ON</div>
-                        <div class="rule-text">
-                            <h4>表面 / 接觸</h4>
-                            <p>強調「接觸面」或「線條上」。</p>
-                            <span class="example-tag">on the table (接觸桌面)</span>
-                            <span class="example-tag">on the wall</span>
-                            <span class="example-tag">on the bus (甲板概念)</span>
-                        </div>
-                    </div>
-                    <div class="rule-row" style="border: none;">
-                        <div class="rule-icon at">AT</div>
-                        <div class="rule-text">
-                            <h4>地圖上的一個「點」</h4>
-                            <p>不強調內部或上面，只強調「位置所在」。</p>
-                            <span class="example-tag">at the bus stop</span>
-                            <span class="example-tag">at the door</span>
-                            <span class="example-tag">at the corner</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="motion" class="section-content">
-                <h2>動態介係詞 (Motion)</h2>
-                <p>這些介係詞涉及「移動的路徑」。</p>
+            <div class="content-scroll">
                 
-                <div class="pyramid-box">
-                    <div class="rule-row">
-                        <div class="rule-icon" style="background: #e17055;">ACROSS</div>
-                        <div class="rule-text">
-                            <h4>穿越 (表面)</h4>
-                            <p>從一邊到另一邊 (2D)。</p>
-                            <span class="example-tag">Walk across the street</span>
-                        </div>
+                <div id="time_place" class="section-content active">
+                    <h2 style="margin-bottom: 15px;">The Pyramid Rule (倒三角法則)</h2>
+                    
+                    <div class="concept-card">
+                        <h3 style="color: #0984e3;">IN (大範圍 / 容器)</h3>
+                        <p>時間：世紀, 年, 季節, 月份, 時段 (in the morning)</p>
+                        <p>地點：國家, 城市, 封閉空間 (in the box, in the car)</p>
                     </div>
-                    <div class="rule-row">
-                        <div class="rule-icon" style="background: #0984e3;">THROUGH</div>
-                        <div class="rule-text">
-                            <h4>穿過 (內部/立體)</h4>
-                            <p>進入一端並從另一端出來 (3D)。</p>
-                            <span class="example-tag">Drive through the tunnel</span>
-                            <span class="example-tag">Walk through the forest</span>
-                        </div>
-                    </div>
-                    <div class="rule-row" style="border: none;">
-                        <div class="rule-icon" style="background: #6c5ce7;">INTO</div>
-                        <div class="rule-text">
-                            <h4>進入</h4>
-                            <p>由外而內的動作。</p>
-                            <span class="example-tag">Jump into the water</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <div id="quiz" class="section-content">
-                <div class="quiz-card">
-                    <div class="q-context" id="qContext">Question 1/5</div>
-                    <div class="q-text" id="qText">Loading...</div>
-                    <div class="options-grid" id="qOptions"></div>
-                    <div class="explanation" id="qExplanation"></div>
-                    <button id="nextBtn" style="display:none; margin-top:15px; width:100%; padding:10px; background:var(--primary); color:white; border:none; border-radius:8px; cursor:pointer;" onclick="nextQuestion()">Next Question ➡️</button>
+                    <div class="concept-card">
+                        <h3 style="color: #00b894;">ON (特定面 / 日子)</h3>
+                        <p>時間：日期, 星期幾, 特定的節日 (on Christmas Day)</p>
+                        <p>地點：接觸表面, 街道, <strong>大眾運輸 (on the bus)</strong></p>
+                    </div>
+
+                    <div class="concept-card">
+                        <h3 style="color: #d63031;">AT (精確點)</h3>
+                        <p>時間：幾點幾分 (at 5 PM), 此刻 (at the moment)</p>
+                        <p>地點：地圖上的點 (at the station), 門口 (at the door)</p>
+                    </div>
                 </div>
+
+                <div id="motion" class="section-content">
+                    <h2>Motion Prepositions</h2>
+                    <div class="concept-card">
+                        <h3>Through vs Across</h3>
+                        <p><strong>Through:</strong> 穿過立體空間內部 (tunnel, forest)。</p>
+                        <p><strong>Across:</strong> 橫越平面表面 (road, river)。</p>
+                    </div>
+                    <div class="concept-card">
+                        <h3>To vs Towards</h3>
+                        <p><strong>To:</strong> 目的地 (會到達)。</p>
+                        <p><strong>Towards:</strong> 朝向...方向 (不一定到達)。</p>
+                    </div>
+                </div>
+
+                <div id="phrasal" class="section-content">
+                    <a href="https://ducj-creator.github.io/Shirley-Grammar/phrases" target="_blank" class="portal-link">
+                        <div style="display:flex; align-items:center;">
+                            <div class="portal-icon">🎮</div>
+                            <div>
+                                <h3 style="margin:0;">互動式片語練習區</h3>
+                                <p style="margin:0; font-size:0.9rem; opacity:0.9;">點擊前往 Shirley's Phrases 做更深入的卡片練習</p>
+                            </div>
+                        </div>
+                        <div>➔</div>
+                    </a>
+
+                    <h2>Phrasal Verbs (動詞片語)</h2>
+                    <p style="margin-bottom: 20px; color: #666;">動詞 + 介係詞 = 全新的意思！這是英語道地的關鍵。</p>
+
+                    <div class="concept-card phrasal">
+                        <h3>👀 Look (看)</h3>
+                        <div class="tag-row">
+                            <div class="ex-tag"><strong>Look at</strong> 注視</div>
+                            <div class="ex-tag"><strong>Look for</strong> 尋找</div>
+                            <div class="ex-tag"><strong>Look after</strong> 照顧</div>
+                            <div class="ex-tag"><strong>Look up</strong> 查閱(字典)</div>
+                        </div>
+                    </div>
+
+                    <div class="concept-card phrasal">
+                        <h3>🎁 Give (給)</h3>
+                        <div class="tag-row">
+                            <div class="ex-tag"><strong>Give up</strong> 放棄</div>
+                            <div class="ex-tag"><strong>Give in</strong> 屈服</div>
+                            <div class="ex-tag"><strong>Give away</strong> 贈送/洩露</div>
+                            <div class="ex-tag"><strong>Give off</strong> 散發(氣味/光)</div>
+                        </div>
+                    </div>
+
+                    <div class="concept-card phrasal">
+                        <h3>🔌 Turn (轉)</h3>
+                        <div class="tag-row">
+                            <div class="ex-tag"><strong>Turn on</strong> 打開(電源)</div>
+                            <div class="ex-tag"><strong>Turn off</strong> 關掉</div>
+                            <div class="ex-tag"><strong>Turn up</strong> 調大聲/出現</div>
+                            <div class="ex-tag"><strong>Turn down</strong> 拒絕/調小聲</div>
+                        </div>
+                    </div>
+
+                    <div class="concept-card phrasal">
+                        <h3>🚌 Transport (交通)</h3>
+                        <p>這與介係詞邏輯有關：</p>
+                        <div class="tag-row">
+                            <div class="ex-tag"><strong>Get on / off</strong> Bus, Train, Plane (可站立/甲板)</div>
+                            <div class="ex-tag"><strong>Get in / out of</strong> Car, Taxi (需彎腰/容器)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="quiz" class="section-content">
+                    <div class="quiz-container">
+                        <h3 id="qText" style="margin-bottom: 20px; color: var(--primary-dark);">Question Loading...</h3>
+                        <div id="qOptions"></div>
+                        <div class="feedback-box" id="qFeedback"></div>
+                        <button id="nextBtn" onclick="nextQ()" style="display:none; margin-top:15px; padding:10px 20px; background:var(--primary); color:white; border:none; border-radius:50px; cursor:pointer;">Next Question ➡️</button>
+                    </div>
+                </div>
+
             </div>
         </section>
     </div>
-
-    <footer>
-        © 2025 Shirley's Advanced Grammar | Designed for Precision Learning
-    </footer>
 </div>
 
 <script>
-    // === Canvas 視覺化引擎 ===
+    // === Canvas Visualizer ===
     const canvas = document.getElementById('prepCanvas');
     const ctx = canvas.getContext('2d');
-    let animationId;
     let frame = 0;
-    let currentScenario = 'pyramid';
-
-    function resizeCanvas() {
-        const container = document.getElementById('canvasContainer');
-        canvas.width = container.clientWidth;
-        canvas.height = container.clientHeight;
-    }
-    window.addEventListener('resize', resizeCanvas);
+    let scenario = 'pyramid';
     
-    // Emoji 繪圖輔助
-    function drawEmoji(emoji, x, y, size) {
-        ctx.font = `${size}px Arial`;
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(emoji, x, y);
+    function resize() {
+        const p = document.getElementById('canvasContainer');
+        canvas.width = p.clientWidth;
+        canvas.height = p.clientHeight;
     }
+    window.addEventListener('resize', resize);
 
-    // 場景繪製邏輯
-    const scenarios = {
-        pyramid: (f) => {
-            const w = canvas.width;
-            const h = canvas.height;
-            const cx = w / 2;
-            const cy = h / 2 + 50;
-
-            ctx.clearRect(0,0,w,h);
-            
-            // Draw Pyramid
-            ctx.beginPath();
-            ctx.moveTo(cx, cy - 150);
-            ctx.lineTo(cx - 120, cy + 50);
-            ctx.lineTo(cx + 120, cy + 50);
-            ctx.closePath();
-            
-            // Gradients
-            const grad = ctx.createLinearGradient(0, cy-150, 0, cy+50);
-            grad.addColorStop(0, '#fab1a0');
-            grad.addColorStop(0.5, '#00b894');
-            grad.addColorStop(1, '#0984e3');
-            ctx.fillStyle = "rgba(200,200,200,0.2)";
-            ctx.fill();
-            ctx.strokeStyle = "#b2bec3";
-            ctx.stroke();
-
-            // Sections lines
-            ctx.beginPath();
-            ctx.moveTo(cx - 40, cy - 83); ctx.lineTo(cx + 40, cy - 83); // Top line
-            ctx.moveTo(cx - 80, cy - 16); ctx.lineTo(cx + 80, cy - 16); // Mid line
-            ctx.stroke();
-
-            // Labels
-            ctx.fillStyle = "#d63031"; ctx.font = "bold 20px Arial"; ctx.fillText("AT (Point)", cx, cy - 110);
-            ctx.fillStyle = "#00b894"; ctx.fillText("ON (Surface/Day)", cx, cy - 50);
-            ctx.fillStyle = "#0984e3"; ctx.fillText("IN (Volume/Year)", cx, cy + 20);
-
-            // Animated Item
-            const cycle = Math.floor(f / 120) % 3;
-            let itemY = 0;
-            let itemText = "";
-            if (cycle === 0) { itemY = cy + 20; itemText = "Year / City"; }
-            if (cycle === 1) { itemY = cy - 50; itemText = "Day / Street"; }
-            if (cycle === 2) { itemY = cy - 110; itemText = "Hour / Address"; }
-
-            ctx.fillStyle = "#2d3436"; ctx.font = "16px Arial";
-            ctx.fillText(itemText, cx + 150, itemY);
-            drawEmoji("👈", cx + 100 + (Math.sin(f/10)*5), itemY, 30);
-        },
-        surface_in: (f) => {
-            const cx = canvas.width / 2;
-            const cy = canvas.height / 2;
-            ctx.clearRect(0,0,canvas.width,canvas.height);
-
-            // Left: IN (Box)
-            const boxX = cx - 100;
-            ctx.fillStyle = "#ffeaa7";
-            ctx.fillRect(boxX - 50, cy - 50, 100, 100);
-            ctx.strokeStyle = "#fdcb6e"; ctx.lineWidth=3; ctx.strokeRect(boxX - 50, cy - 50, 100, 100);
-            
-            drawEmoji("🐱", boxX, cy + Math.sin(f/10)*5, 50);
-            
-            // Front cover of box for depth
-            ctx.fillStyle = "rgba(255, 234, 167, 0.5)";
-            ctx.fillRect(boxX - 50, cy, 100, 50);
-
-            ctx.fillStyle = "#636e72"; ctx.font="bold 16px Arial";
-            ctx.fillText("IN the box (Inside)", boxX, cy + 80);
-
-            // Right: ON (Table)
-            const tableX = cx + 100;
-            ctx.fillStyle = "#a29bfe";
-            ctx.fillRect(tableX - 60, cy + 20, 120, 10); // top
-            ctx.fillRect(tableX - 50, cy + 30, 10, 40); // leg
-            ctx.fillRect(tableX + 40, cy + 30, 10, 40); // leg
-            
-            drawEmoji("🍎", tableX, cy - 10 + Math.abs(Math.sin(f/15)*10), 40);
-            ctx.fillStyle = "#636e72";
-            ctx.fillText("ON the table (Surface)", tableX, cy + 80);
-        },
-        motion_through: (f) => {
-            const cx = canvas.width / 2;
-            const cy = canvas.height / 2;
-            ctx.clearRect(0,0,canvas.width,canvas.height);
-
-            // Tunnel (Through) - Top
-            const tunY = cy - 60;
-            ctx.fillStyle = "#636e72";
-            ctx.beginPath(); ctx.arc(cx, tunY, 50, Math.PI, 0); ctx.fill();
-            ctx.fillStyle = "#2d3436";
-            ctx.beginPath(); ctx.arc(cx, tunY, 40, Math.PI, 0); ctx.fill();
-            
-            const trainX = (f * 3) % (canvas.width + 100) - 50;
-            if (trainX > cx - 40 && trainX < cx + 40) ctx.globalAlpha = 0.5; // Inside
-            drawEmoji("🚂", trainX, tunY, 40);
-            ctx.globalAlpha = 1.0;
-            
-            ctx.fillStyle = "#2d3436"; ctx.fillText("THROUGH the tunnel (3D)", cx, tunY + 20);
-
-            // Road (Across) - Bottom
-            const roadY = cy + 80;
-            ctx.fillStyle = "#b2bec3";
-            ctx.fillRect(cx - 150, roadY - 20, 300, 40);
-            // Stripes
-            ctx.strokeStyle="white"; ctx.setLineDash([10, 10]); 
-            ctx.beginPath(); ctx.moveTo(cx - 150, roadY); ctx.lineTo(cx + 150, roadY); ctx.stroke();
-            ctx.setLineDash([]);
-
-            const walkY = roadY + (Math.sin(f/5)*5);
-            // Person walking ACROSS (Up/Down visually 2D)
-            const pX = cx; 
-            const pY = roadY - 40 + ((f % 200) / 200) * 80; // Crossing vertically
-            
-            drawEmoji("🚶", pX, pY, 40);
-            ctx.fillStyle = "#2d3436"; ctx.fillText("ACROSS the road (Surface)", cx, roadY + 50);
-        },
-        motion_to: (f) => {
-            const cx = canvas.width / 2;
-            const cy = canvas.height / 2;
-            ctx.clearRect(0,0,canvas.width,canvas.height);
-            
-            drawEmoji("🏠", cx + 120, cy, 60);
-            
-            // TO: Arrives
-            const toX = Math.min(cx + 90, (f * 2) % (canvas.width));
-            drawEmoji("👦", toX, cy - 40, 40);
-            ctx.fillStyle = "#0984e3"; ctx.fillText("TO (Destination reached)", cx, cy - 80);
-
-            // TOWARDS: Just direction
-            const towardsX = (f * 2) % (canvas.width);
-            drawEmoji("🏃", towardsX, cy + 40, 40);
-            
-            // Arrow
-            ctx.strokeStyle = "#fdcb6e"; ctx.lineWidth = 3;
-            ctx.beginPath(); ctx.moveTo(towardsX + 20, cy + 40); ctx.lineTo(cx + 80, cy + 40); ctx.stroke();
-            
-            ctx.fillStyle = "#e17055"; ctx.fillText("TOWARDS (Direction only)", cx, cy + 90);
-        }
-    };
+    function drawEmoji(e, x, y, s) {
+        ctx.font = `${s}px Arial`; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(e, x, y);
+    }
 
     function loop() {
+        ctx.clearRect(0,0,canvas.width,canvas.height);
         frame++;
-        if (scenarios[currentScenario]) scenarios[currentScenario](frame);
-        animationId = requestAnimationFrame(loop);
+        const cx = canvas.width/2;
+        const cy = canvas.height/2;
+
+        if(scenario === 'pyramid') {
+            // Pyramid Draw
+            ctx.beginPath(); ctx.moveTo(cx, cy-120); ctx.lineTo(cx-100, cy+80); ctx.lineTo(cx+100, cy+80); ctx.closePath();
+            const g = ctx.createLinearGradient(0, cy-120, 0, cy+80);
+            g.addColorStop(0, '#fab1a0'); g.addColorStop(0.5, '#55efc4'); g.addColorStop(1, '#74b9ff');
+            ctx.fillStyle=g; ctx.fill();
+            
+            ctx.fillStyle="#000"; ctx.font="bold 14px Arial";
+            ctx.fillText("AT (Point)", cx, cy-80);
+            ctx.fillText("ON (Surface)", cx, cy);
+            ctx.fillText("IN (Volume)", cx, cy+60);
+
+            // Floating items
+            const y = cy - 80 + Math.sin(frame/20)*60;
+            drawEmoji("📅", cx+120, y, 30);
+            ctx.fillStyle="#555"; ctx.fillText("Time/Place", cx+120, y+30);
+
+        } else if (scenario === 'transport') {
+            // Get On (Bus) vs Get In (Car)
+            // Car
+            const carX = cx - 100;
+            ctx.fillStyle = "#ff7675"; ctx.fillRect(carX-40, cy, 80, 40); // Body
+            ctx.fillStyle = "#dfe6e9"; ctx.fillRect(carX-30, cy-25, 60, 25); // Top
+            drawEmoji("🚗", carX, cy+20, 20); // Wheels visual filler
+            ctx.fillStyle="#2d3436"; ctx.fillText("IN the car", carX, cy+60);
+            
+            // Bus
+            const busX = cx + 100;
+            ctx.fillStyle = "#0984e3"; ctx.fillRect(busX-50, cy-40, 100, 80);
+            ctx.fillStyle="#fff"; ctx.fillRect(busX-45, cy-30, 90, 30); // Windows
+            ctx.fillStyle="#2d3436"; ctx.fillText("ON the bus", busX, cy+60);
+
+            // Animated Person
+            const pX = (frame % 200) < 100 ? carX : busX;
+            const action = (frame % 200) < 100 ? "Get IN" : "Get ON";
+            // Make person crouch for car, stand for bus
+            const emoji = (frame % 200) < 100 ? "🧎" : "🚶";
+            
+            drawEmoji(emoji, pX, cy + 10, 40);
+            ctx.fillStyle = "#00b894"; ctx.font="bold 20px Arial";
+            ctx.fillText(action, cx, cy-100);
+
+        } else if (scenario === 'surface_in') {
+             // In Box vs On Table
+             drawEmoji("📦", cx-80, cy, 80);
+             drawEmoji("🐱", cx-80, cy, 40); // Cat IN box
+             ctx.fillStyle="#333"; ctx.fillText("IN the box", cx-80, cy+60);
+
+             // Table
+             ctx.fillStyle="#a29bfe"; ctx.fillRect(cx+40, cy+20, 80, 10);
+             ctx.fillRect(cx+50, cy+30, 10, 30); ctx.fillRect(cx+100, cy+30, 10, 30);
+             drawEmoji("🍎", cx+80, cy, 40); // Apple ON table
+             ctx.fillStyle="#333"; ctx.fillText("ON the table", cx+80, cy+80);
+
+        } else if (scenario === 'motion_through') {
+            // Tunnel vs Road
+            ctx.fillStyle="#636e72"; ctx.beginPath(); ctx.arc(cx, cy-50, 40, Math.PI, 0); ctx.fill();
+            const tx = (frame*2)%300 + (cx-150);
+            if(tx > cx-40 && tx < cx+40) ctx.globalAlpha=0.3;
+            drawEmoji("🚂", tx, cy-50, 40);
+            ctx.globalAlpha=1;
+            ctx.fillStyle="#333"; ctx.fillText("THROUGH (Tunnel)", cx, cy-10);
+
+            // Road
+            ctx.fillStyle="#b2bec3"; ctx.fillRect(cx-100, cy+50, 200, 40);
+            const wx = cx; const wy = cy+30 + (frame%100)/100 * 80;
+            drawEmoji("🚶", wx, wy, 30);
+            ctx.fillStyle="#333"; ctx.fillText("ACROSS (Road)", cx, cy+110);
+        }
+
+        requestAnimationFrame(loop);
     }
 
-    function setScenario(id) {
-        currentScenario = id;
+    function setScenario(s) {
+        scenario = s;
+        frame = 0;
         document.querySelectorAll('.scene-btn').forEach(b => b.classList.remove('active'));
         event.target.classList.add('active');
-        frame = 0;
         
-        const captions = {
-            pyramid: "倒三角法則：時間和空間都適用。\n上方(IN)範圍最大，中間(ON)特定，下方(AT)最精確。",
-            surface_in: "區分物理性質：\nIN = 在容器/邊界內； ON = 在表面接觸。",
-            motion_through: "動態路徑：\nThrough 是穿過立體空間(如隧道)； Across 是橫越平面(如馬路)。",
-            motion_to: "To vs Towards：\nTo 強調到達「目的地」； Towards 只強調「朝向那個方向」，不一定到達。"
+        const texts = {
+            pyramid: "倒三角法則：上方範圍最大用 IN，中間特定用 ON，下方精確點用 AT。",
+            transport: "交通工具判斷：要彎腰進去像容器的用 IN (Car)；可以站立走動像甲板的用 ON (Bus)。",
+            surface_in: "空間判斷：IN 強調在內部，ON 強調在表面接觸。",
+            motion_through: "動態判斷：Through 是穿過立體內部，Across 是橫越平面表面。"
         };
-        document.getElementById('vizCaption').innerText = captions[id];
+        document.getElementById('caption').innerText = texts[s];
     }
-
-    // 啟動動畫
-    resizeCanvas();
+    
+    resize();
     loop();
 
-    // === 頁面邏輯 ===
+    // === Tabs ===
     function switchTab(id) {
         document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.section-content').forEach(c => c.classList.remove('active'));
-        
+        document.querySelectorAll('.section-content').forEach(s => s.classList.remove('active'));
         event.target.classList.add('active');
         document.getElementById(id).classList.add('active');
     }
 
-    // === 精準測驗系統 (Context-Based Quiz) ===
+    // === Quiz System (Include Phrasal Verbs) ===
     const quizData = [
-        {
-            context: "時間精確度情境",
-            q: "We usually have a team meeting ___ Monday mornings.",
-            options: ["in", "on", "at", "to"],
-            ans: 1,
-            exp: "💡 關鍵詞是 <strong>Monday</strong>。<br>雖然 morning 通常用 in，但這裡指的是「星期一的早上」，屬於「特定的一天 (Specific Day)」，根據倒三角法則，特定日子必須用 <strong>ON</strong>。"
-        },
-        {
-            context: "地點辨析情境",
-            q: "Look at the photo! There is a spider ___ the ceiling!",
-            options: ["in", "on", "at", "above"],
-            ans: 1,
-            exp: "💡 這是陷阱題！<br>雖然天花板在頭頂，但蜘蛛是「接觸」在天花板的表面上。只要是<strong>接觸表面 (Surface Contact)</strong>，無論是牆壁、地板還是天花板，都必須用 <strong>ON</strong>。"
-        },
-        {
-            context: "交通工具情境",
-            q: "I am sitting ___ the taxi right now. I'll be there soon.",
-            options: ["on", "in", "at", "by"],
-            ans: 1,
-            exp: "💡 交通工具規則：<br>可以站立行走的(公車、火車、飛機)用 ON。<br>必須彎腰坐進去、狹小的(計程車、轎車)視為封閉容器，用 <strong>IN</strong>。"
-        },
-        {
-            context: "動態路徑情境",
-            q: "The train went ___ the tunnel and came out the other side.",
-            options: ["across", "through", "over", "along"],
-            ans: 1,
-            exp: "💡 關鍵動作是「穿入並穿出」。<br>隧道 (Tunnel) 是一個立體空間 (3D)，穿過立體空間內部要用 <strong>THROUGH</strong>。Across 通常用於平面表面 (如馬路)。"
-        },
-        {
-            context: "位置精確度情境",
-            q: "I'll meet you ___ the entrance of the cinema.",
-            options: ["in", "on", "at", "inside"],
-            ans: 2,
-            exp: "💡 這裡將「入口」視為一個會合的<strong>「點」(Specific Point)</strong>。<br>我們不強調在入口的裡面或上面，只是把它當作地圖上的一個標記點，所以用最精確的 <strong>AT</strong>。"
-        }
+        { q: "Please turn ___ the lights. It's too dark.", opts: ["in", "on", "up", "over"], ans: 1, why: "Turn on (打開電源)。" },
+        { q: "Don't give ___ ! You can do it!", opts: ["in", "up", "off", "out"], ans: 1, why: "Give up (放棄)。" },
+        { q: "I was born ___ 1995.", opts: ["at", "on", "in", "to"], ans: 2, why: "年份是大範圍時間，使用 IN。" },
+        { q: "He is sitting ___ the bus.", opts: ["in", "at", "on", "by"], ans: 2, why: "公車是大眾運輸工具，可站立，使用 ON。" },
+        { q: "Who is looking ___ the baby?", opts: ["at", "for", "after", "up"], ans: 2, why: "Look after (照顧)。Look at 是注視，Look for 是尋找。" }
     ];
+    let qIdx = 0;
 
-    let currentQIndex = 0;
-
-    function loadQuiz() {
-        if (currentQIndex >= quizData.length) {
-            document.getElementById('quiz').innerHTML = `
-                <div class="quiz-card" style="text-align:center;">
-                    <h2>🎉 測驗完成！</h2>
-                    <p>你已經掌握了這些細微的差別。</p>
-                    <button class="scene-btn" onclick="location.reload()">🔄 再玩一次</button>
-                </div>`;
+    function loadQ() {
+        if(qIdx >= quizData.length) {
+            document.getElementById('quiz-container').innerHTML = "<h3>測驗結束！🎉</h3>";
             return;
         }
-
-        const data = quizData[currentQIndex];
-        document.getElementById('qContext').innerText = `情境：${data.context}`;
-        document.getElementById('qText').innerText = `${currentQIndex + 1}. ${data.q}`;
-        document.getElementById('qExplanation').style.display = 'none';
-        document.getElementById('qExplanation').innerHTML = data.exp;
+        const d = quizData[qIdx];
+        document.getElementById('qText').innerText = `${qIdx+1}. ${d.q}`;
+        const area = document.getElementById('qOptions');
+        area.innerHTML = '';
+        document.getElementById('qFeedback').style.display = 'none';
         document.getElementById('nextBtn').style.display = 'none';
 
-        const grid = document.getElementById('qOptions');
-        grid.innerHTML = '';
-        
-        data.options.forEach((opt, idx) => {
-            const btn = document.createElement('button');
-            btn.className = 'option-btn';
-            btn.innerText = opt;
-            btn.onclick = () => checkAnswer(btn, idx, data.ans);
-            grid.appendChild(btn);
+        d.opts.forEach((o, i) => {
+            const b = document.createElement('button');
+            b.className = 'option-btn';
+            b.innerText = o;
+            b.onclick = () => check(b, i, d.ans, d.why);
+            area.appendChild(b);
         });
     }
 
-    function checkAnswer(btn, selectedIdx, correctIdx) {
+    function check(btn, i, ans, why) {
         const btns = document.querySelectorAll('.option-btn');
-        btns.forEach(b => b.style.pointerEvents = 'none'); // Lock buttons
-
-        if (selectedIdx === correctIdx) {
+        btns.forEach(b => b.style.pointerEvents = 'none');
+        
+        const fb = document.getElementById('qFeedback');
+        fb.style.display = 'block';
+        
+        if(i === ans) {
             btn.classList.add('correct');
+            fb.innerHTML = `✅ 正確！<br>${why}`;
+            fb.style.borderLeftColor = "var(--primary)";
         } else {
-            btn.classList.add('incorrect');
-            btns[correctIdx].classList.add('correct'); // Show answer
+            btn.classList.add('wrong');
+            btns[ans].classList.add('correct');
+            fb.innerHTML = `❌ 錯誤。<br>${why}`;
+            fb.style.borderLeftColor = "#e74c3c";
         }
-
-        document.getElementById('qExplanation').className = 'explanation show';
-        document.getElementById('nextBtn').style.display = 'block';
+        document.getElementById('nextBtn').style.display = 'inline-block';
     }
 
-    function nextQuestion() {
-        currentQIndex++;
-        loadQuiz();
+    function nextQ() {
+        qIdx++;
+        loadQ();
     }
-
-    // 初始化測驗
-    loadQuiz();
+    
+    loadQ();
 
 </script>
 </body>
