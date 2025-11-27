@@ -73,12 +73,23 @@
             box-shadow: var(--glow-gold);
         }
 
+        /* 主容器：包裹 SVG 和 機器人，確保垂直排列 */
+        .main-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 900px;
+            position: relative;
+            padding-bottom: 50px; /* 底部留白 */
+        }
+
         #station-container {
             text-align: center;
             z-index: 1;
             width: 100%;
-            max-width: 900px;
-            margin-bottom: 220px; /* 為機器人留空間 */
+            /* 移除原本巨大的 margin-bottom，因為機器人不再是 fixed */
+            margin-bottom: -40px; 
             padding-top: 20px;
         }
 
@@ -86,10 +97,11 @@
             font-family: 'Cormorant Garamond', serif;
             color: var(--gold);
             text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
-            font-size: 3em;
+            font-size: clamp(2em, 5vw, 3em);
             font-weight: 700;
             margin-bottom: 10px;
             letter-spacing: 1px;
+            padding: 0 10px;
         }
 
         p {
@@ -97,16 +109,44 @@
             font-size: 1.1rem;
             margin-bottom: 30px;
             font-weight: 300;
+            padding: 0 20px;
         }
 
         /* SVG 樣式優化 */
         #station-svg {
-            /* 移除原本的方框背景，改用透明或玻璃感 */
             background: transparent;
             width: 100%;
             height: auto;
             filter: drop-shadow(0 0 20px rgba(0,0,0,0.5));
             overflow: visible;
+            /* 確保 SVG 內容不會被裁切 */
+            max-height: 80vh; 
+        }
+
+        /* Robots Container - 修正重疊問題的關鍵 */
+        .robots-container {
+            /* 從 fixed 改為 relative，讓它跟隨文檔流動 */
+            position: relative; 
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding: 0 40px;
+            z-index: 10;
+            pointer-events: none;
+            /* 負邊距讓機器人稍微蓋在 SVG 地板上，看起來像站著，但不會擋住按鈕 */
+            margin-top: -60px; 
+        }
+
+        .robot-with-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            pointer-events: auto;
+            transition: transform 0.3s;
+        }
+        .robot-with-card:hover {
+            transform: translateY(-5px);
         }
 
         /* 電纜發光特效 */
@@ -117,7 +157,7 @@
             stroke: var(--electric-blue);
             stroke-width: 6;
             fill: none;
-            filter: drop-shadow(0 0 5px var(--electric-blue)); /* 發光 */
+            filter: drop-shadow(0 0 5px var(--electric-blue));
         }
 
         .charging-wire {
@@ -248,7 +288,7 @@
         }
         
         #modal-content {
-            background: rgba(20, 20, 20, 0.85);
+            background: rgba(20, 20, 20, 0.9);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             margin: auto;
@@ -292,33 +332,6 @@
             color: #ddd;
             font-size: 1.05rem;
             margin-top: 20px;
-        }
-
-        /* Robots Container */
-        .robots-container {
-            position: fixed;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            max-width: 1000px;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            padding: 0 40px 20px;
-            z-index: 10;
-            pointer-events: none;
-        }
-
-        .robot-with-card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            pointer-events: auto;
-            transition: transform 0.3s;
-        }
-        .robot-with-card:hover {
-            transform: translateY(-5px);
         }
 
         .grammar-card {
@@ -384,11 +397,15 @@
         }
 
         @media (max-width: 768px) {
-            h1 { font-size: 2em; }
-            #station-container { margin-bottom: 180px; }
-            .robots-container { padding: 0 10px 10px; }
+            .robots-container { 
+                padding: 0 10px; 
+                margin-top: -40px; /* 手機版調整間距 */
+            }
             .robot { width: 70px; height: 100px; }
             .grammar-card { width: 80px; height: 100px; }
+            #station-container {
+                margin-bottom: -30px;
+            }
         }
     </style>
 </head>
@@ -402,179 +419,181 @@
         </a>
     </header>
 
-    <div id="station-container">
-        <h1>Shirley's Grammar E-Charger</h1>
-        <p>Click on the pillar levels or charging ports to power up your grammar knowledge!</p>
-        
-        <svg id="station-svg" width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-                <linearGradient id="groundGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" style="stop-color:#B87333;stop-opacity:1" />
-                    <stop offset="100%" style="stop-color:#5c3a1a;stop-opacity:1" />
-                </linearGradient>
-            </defs>
-            <rect x="50" y="550" width="700" height="20" fill="url(#groundGrad)" rx="10" filter="drop-shadow(0 0 10px #B87333)" />
+    <div class="main-wrapper">
+        <div id="station-container">
+            <h1>Shirley's Grammar E-Charger</h1>
+            <p>Click on the pillar levels or charging ports to power up your grammar knowledge!</p>
             
-            <rect x="390" y="100" width="20" height="450" fill="#333" stroke="#555" stroke-width="2" />
-            <path d="M 395 100 L 395 550" class="animated-cable" style="stroke-width: 4; stroke: #4169E1; opacity: 0.8;" />
-            
-            <g id="pillar-blocks">
-                <rect x="370" y="120" width="60" height="60" class="pillar-block" onclick="handlePillarClick('simple')" />
-                <line x1="400" y1="180" x2="400" y2="200" class="pillar-wire" />
+            <svg id="station-svg" width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="groundGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#B87333;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#5c3a1a;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                <rect x="50" y="550" width="700" height="20" fill="url(#groundGrad)" rx="10" filter="drop-shadow(0 0 10px #B87333)" />
                 
-                <rect x="370" y="200" width="60" height="60" class="pillar-block" onclick="handlePillarClick('compound')" />
-                <line x1="400" y1="260" x2="400" y2="280" class="pillar-wire" />
+                <rect x="390" y="100" width="20" height="450" fill="#333" stroke="#555" stroke-width="2" />
+                <path d="M 395 100 L 395 550" class="animated-cable" style="stroke-width: 4; stroke: #4169E1; opacity: 0.8;" />
                 
-                <rect x="370" y="280" width="60" height="60" class="pillar-block" onclick="handlePillarClick('complex')" />
-                <line x1="400" y1="340" x2="400" y2="360" class="pillar-wire" />
+                <g id="pillar-blocks">
+                    <rect x="370" y="120" width="60" height="60" class="pillar-block" onclick="handlePillarClick('simple')" />
+                    <line x1="400" y1="180" x2="400" y2="200" class="pillar-wire" />
+                    
+                    <rect x="370" y="200" width="60" height="60" class="pillar-block" onclick="handlePillarClick('compound')" />
+                    <line x1="400" y1="260" x2="400" y2="280" class="pillar-wire" />
+                    
+                    <rect x="370" y="280" width="60" height="60" class="pillar-block" onclick="handlePillarClick('complex')" />
+                    <line x1="400" y1="340" x2="400" y2="360" class="pillar-wire" />
+                    
+                    <rect x="370" y="360" width="60" height="60" class="pillar-block" onclick="handlePillarClick('compound-complex')" />
+                </g>
                 
-                <rect x="370" y="360" width="60" height="60" class="pillar-block" onclick="handlePillarClick('compound-complex')" />
-            </g>
-            
-            <text x="400" y="155" class="pillar-label" onclick="handlePillarClick('simple')">1. Simple</text>
-            <text x="400" y="235" class="pillar-label" onclick="handlePillarClick('compound')">2. Compound</text>
-            <text x="400" y="315" class="pillar-label" onclick="handlePillarClick('complex')">3. Complex</text>
-            <text x="400" y="395" class="pillar-label" onclick="handlePillarClick('compound-complex')">4. Compound-Complex</text>
-            
-            <rect x="300" y="50" width="200" height="50" fill="#222" rx="8" stroke="#FFD700" stroke-width="2" filter="drop-shadow(0 0 8px #FFD700)" />
-            <text x="400" y="82" fill="#FFD700" text-anchor="middle" font-weight="bold" font-size="18" font-family="Cormorant Garamond">Sentence Structures</text>
-            
-            <path d="M 400 130 Q 300 100 200 130" class="animated-cable" />
-            <rect x="160" y="80" width="80" height="100" class="electricity-box" />
-            
-            <rect x="160" y="130" width="80" height="40" class="red-button" onclick="handleSectionClick('parts-of-speech')" />
-            <text x="200" y="148" class="red-button-text">I. Parts of</text>
-            <text x="200" y="163" class="red-button-text">Speech</text>
-            
-            <g id="section1-ports">
-                <line x1="80" y1="60" x2="200" y2="130" class="charging-wire" />
-                <circle cx="80" cy="60" r="14" class="port" onclick="handlePortClick('nouns')" />
-                <text x="80" y="65" class="port-label" pointer-events="none">Nouns</text>
+                <text x="400" y="155" class="pillar-label" onclick="handlePillarClick('simple')">1. Simple</text>
+                <text x="400" y="235" class="pillar-label" onclick="handlePillarClick('compound')">2. Compound</text>
+                <text x="400" y="315" class="pillar-label" onclick="handlePillarClick('complex')">3. Complex</text>
+                <text x="400" y="395" class="pillar-label" onclick="handlePillarClick('compound-complex')">4. Compound-Complex</text>
                 
-                <line x1="120" y1="200" x2="200" y2="130" class="charging-wire" />
-                <circle cx="120" cy="200" r="14" class="port" onclick="handlePortClick('pronouns')" />
-                <text x="120" y="205" class="port-label" pointer-events="none">Pronouns</text>
+                <rect x="300" y="50" width="200" height="50" fill="#222" rx="8" stroke="#FFD700" stroke-width="2" filter="drop-shadow(0 0 8px #FFD700)" />
+                <text x="400" y="82" fill="#FFD700" text-anchor="middle" font-weight="bold" font-size="18" font-family="Cormorant Garamond">Sentence Structures</text>
                 
-                <line x1="40" y1="120" x2="200" y2="130" class="charging-wire" />
-                <circle cx="40" cy="120" r="14" class="port" onclick="handlePortClick('adjectives-adverbs')" />
-                <text x="40" y="100" class="port-label" pointer-events="none">Adj &amp; Adv</text>
+                <path d="M 400 130 Q 300 100 200 130" class="animated-cable" />
+                <rect x="160" y="80" width="80" height="100" class="electricity-box" />
                 
-                <line x1="140" y1="30" x2="200" y2="130" class="charging-wire" />
-                <circle cx="140" cy="30" r="14" class="port" onclick="handlePortClick('verbs')" />
-                <text x="140" y="35" class="port-label" pointer-events="none">Verbs</text>
+                <rect x="160" y="130" width="80" height="40" class="red-button" onclick="handleSectionClick('parts-of-speech')" />
+                <text x="200" y="148" class="red-button-text">I. Parts of</text>
+                <text x="200" y="163" class="red-button-text">Speech</text>
                 
-                <line x1="100" y1="220" x2="200" y2="130" class="charging-wire" />
-                <circle cx="100" cy="220" r="14" class="port" onclick="handlePortClick('prepositions')" />
-                <text x="100" y="245" class="port-label" pointer-events="none">Prepositions</text>
-            </g>
-            
-            <path d="M 400 350 Q 300 380 200 350" class="animated-cable" />
-            <rect x="160" y="300" width="80" height="100" class="electricity-box" />
-            
-            <rect x="160" y="350" width="80" height="40" class="red-button" onclick="handleSectionClick('nonfinite-verbs')" />
-            <text x="200" y="368" class="red-button-text">II. Non-finite</text>
-            <text x="200" y="383" class="red-button-text">Verbs</text>
-            
-            <g id="section2-ports">
-                <line x1="80" y1="280" x2="200" y2="350" class="charging-wire" />
-                <circle cx="80" cy="280" r="14" class="port" onclick="handlePortClick('infinitive')" />
-                <text x="80" y="260" class="port-label" pointer-events="none">Infinitive</text>
+                <g id="section1-ports">
+                    <line x1="80" y1="60" x2="200" y2="130" class="charging-wire" />
+                    <circle cx="80" cy="60" r="14" class="port" onclick="handlePortClick('nouns')" />
+                    <text x="80" y="65" class="port-label" pointer-events="none">Nouns</text>
+                    
+                    <line x1="120" y1="200" x2="200" y2="130" class="charging-wire" />
+                    <circle cx="120" cy="200" r="14" class="port" onclick="handlePortClick('pronouns')" />
+                    <text x="120" y="205" class="port-label" pointer-events="none">Pronouns</text>
+                    
+                    <line x1="40" y1="120" x2="200" y2="130" class="charging-wire" />
+                    <circle cx="40" cy="120" r="14" class="port" onclick="handlePortClick('adjectives-adverbs')" />
+                    <text x="40" y="100" class="port-label" pointer-events="none">Adj &amp; Adv</text>
+                    
+                    <line x1="140" y1="30" x2="200" y2="130" class="charging-wire" />
+                    <circle cx="140" cy="30" r="14" class="port" onclick="handlePortClick('verbs')" />
+                    <text x="140" y="35" class="port-label" pointer-events="none">Verbs</text>
+                    
+                    <line x1="100" y1="220" x2="200" y2="130" class="charging-wire" />
+                    <circle cx="100" cy="220" r="14" class="port" onclick="handlePortClick('prepositions')" />
+                    <text x="100" y="245" class="port-label" pointer-events="none">Prepositions</text>
+                </g>
                 
-                <line x1="120" y1="420" x2="200" y2="350" class="charging-wire" />
-                <circle cx="120" cy="420" r="14" class="port" onclick="handlePortClick('gerund')" />
-                <text x="120" y="445" class="port-label" pointer-events="none">Gerund</text>
+                <path d="M 400 350 Q 300 380 200 350" class="animated-cable" />
+                <rect x="160" y="300" width="80" height="100" class="electricity-box" />
                 
-                <line x1="40" y1="340" x2="200" y2="350" class="charging-wire" />
-                <circle cx="40" cy="340" r="14" class="port" onclick="handlePortClick('present-participle')" />
-                <text x="40" y="365" class="port-label" pointer-events="none">Present Part.</text>
+                <rect x="160" y="350" width="80" height="40" class="red-button" onclick="handleSectionClick('nonfinite-verbs')" />
+                <text x="200" y="368" class="red-button-text">II. Non-finite</text>
+                <text x="200" y="383" class="red-button-text">Verbs</text>
                 
-                <line x1="140" y1="270" x2="200" y2="350" class="charging-wire" />
-                <circle cx="140" cy="270" r="14" class="port" onclick="handlePortClick('past-participle')" />
-                <text x="140" y="250" class="port-label" pointer-events="none">Past Part.</text>
-            </g>
-            
-            <path d="M 400 130 Q 500 100 600 130" class="animated-cable" />
-            <rect x="560" y="80" width="80" height="100" class="electricity-box" />
-            
-            <rect x="560" y="130" width="80" height="40" class="red-button" onclick="handleSectionClick('clauses')" />
-            <text x="600" y="155" class="red-button-text">III. Clauses</text>
-            
-            <g id="section3-ports">
-                <line x1="680" y1="60" x2="600" y2="130" class="charging-wire" />
-                <circle cx="680" cy="60" r="14" class="port" onclick="handlePortClick('noun-clause')" />
-                <text x="680" y="85" class="port-label" pointer-events="none">Noun Clause</text>
+                <g id="section2-ports">
+                    <line x1="80" y1="280" x2="200" y2="350" class="charging-wire" />
+                    <circle cx="80" cy="280" r="14" class="port" onclick="handlePortClick('infinitive')" />
+                    <text x="80" y="260" class="port-label" pointer-events="none">Infinitive</text>
+                    
+                    <line x1="120" y1="420" x2="200" y2="350" class="charging-wire" />
+                    <circle cx="120" cy="420" r="14" class="port" onclick="handlePortClick('gerund')" />
+                    <text x="120" y="445" class="port-label" pointer-events="none">Gerund</text>
+                    
+                    <line x1="40" y1="340" x2="200" y2="350" class="charging-wire" />
+                    <circle cx="40" cy="340" r="14" class="port" onclick="handlePortClick('present-participle')" />
+                    <text x="40" y="365" class="port-label" pointer-events="none">Present Part.</text>
+                    
+                    <line x1="140" y1="270" x2="200" y2="350" class="charging-wire" />
+                    <circle cx="140" cy="270" r="14" class="port" onclick="handlePortClick('past-participle')" />
+                    <text x="140" y="250" class="port-label" pointer-events="none">Past Part.</text>
+                </g>
                 
-                <line x1="640" y1="200" x2="600" y2="130" class="charging-wire" />
-                <circle cx="640" cy="200" r="14" class="port" onclick="handlePortClick('adjective-clause')" />
-                <text x="640" y="225" class="port-label" pointer-events="none">Adj. Clause</text>
+                <path d="M 400 130 Q 500 100 600 130" class="animated-cable" />
+                <rect x="560" y="80" width="80" height="100" class="electricity-box" />
                 
-                <line x1="720" y1="120" x2="600" y2="130" class="charging-wire" />
-                <circle cx="720" cy="120" r="14" class="port" onclick="handlePortClick('adverb-clause')" />
-                <text x="720" y="145" class="port-label" pointer-events="none">Adv. Clause</text>
-            </g>
-            
-            <path d="M 400 350 Q 500 380 600 350" class="animated-cable" />
-            <rect x="560" y="300" width="80" height="100" class="electricity-box" />
-            
-            <rect x="560" y="350" width="80" height="40" class="red-button" onclick="handleSectionClick('special-sentences')" />
-            <text x="600" y="368" class="red-button-text">IV. Special</text>
-            <text x="600" y="383" class="red-button-text">Sentences</text>
-            
-            <g id="section4-ports">
-                <line x1="680" y1="280" x2="600" y2="350" class="charging-wire" />
-                <circle cx="680" cy="280" r="14" class="port" onclick="handlePortClick('questions')" />
-                <text x="680" y="305" class="port-label" pointer-events="none">Questions</text>
+                <rect x="560" y="130" width="80" height="40" class="red-button" onclick="handleSectionClick('clauses')" />
+                <text x="600" y="155" class="red-button-text">III. Clauses</text>
                 
-                <line x1="640" y1="420" x2="600" y2="350" class="charging-wire" />
-                <circle cx="640" cy="420" r="14" class="port" onclick="handlePortClick('exclamations')" />
-                <text x="640" y="445" class="port-label" pointer-events="none">Exclamations</text>
+                <g id="section3-ports">
+                    <line x1="680" y1="60" x2="600" y2="130" class="charging-wire" />
+                    <circle cx="680" cy="60" r="14" class="port" onclick="handlePortClick('noun-clause')" />
+                    <text x="680" y="85" class="port-label" pointer-events="none">Noun Clause</text>
+                    
+                    <line x1="640" y1="200" x2="600" y2="130" class="charging-wire" />
+                    <circle cx="640" cy="200" r="14" class="port" onclick="handlePortClick('adjective-clause')" />
+                    <text x="640" y="225" class="port-label" pointer-events="none">Adj. Clause</text>
+                    
+                    <line x1="720" y1="120" x2="600" y2="130" class="charging-wire" />
+                    <circle cx="720" cy="120" r="14" class="port" onclick="handlePortClick('adverb-clause')" />
+                    <text x="720" y="145" class="port-label" pointer-events="none">Adv. Clause</text>
+                </g>
                 
-                <line x1="720" y1="340" x2="600" y2="350" class="charging-wire" />
-                <circle cx="720" cy="340" r="14" class="port" onclick="handlePortClick('inverted')" />
-                <text x="720" y="365" class="port-label" pointer-events="none">Inverted</text>
+                <path d="M 400 350 Q 500 380 600 350" class="animated-cable" />
+                <rect x="560" y="300" width="80" height="100" class="electricity-box" />
                 
-                <line x1="600" y1="270" x2="600" y2="350" class="charging-wire" />
-                <circle cx="600" cy="270" r="14" class="port" onclick="handlePortClick('subjunctive')" />
-                <text x="600" y="250" class="port-label" pointer-events="none">Subjunctive</text>
-            </g>
-        </svg>
-    </div>
-
-    <div class="robots-container">
-        <div class="robot-with-card left-robot">
-            <div class="grammar-card" onclick="showCardInfo('sentence-structure')">
-                <img src="https://ducj-creator.github.io/Shirley-Grammar/assets/sentence%20structure.png" 
-                     alt="Sentence Structure" class="card-image">
-            </div>
-            <svg class="robot" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
-                <rect x="50" y="90" width="100" height="80" rx="15" class="robot-body" />
-                <circle cx="100" cy="60" r="25" class="robot-head" />
-                <line x1="100" y1="35" x2="100" y2="15" class="robot-antenna" />
-                <circle cx="100" cy="15" r="4" fill="#FFD700" />
-                <circle cx="92" cy="55" r="4" class="robot-eye" />
-                <circle cx="108" cy="55" r="4" class="robot-eye" />
-                <path d="M 90 70 Q 100 80 110 70" class="robot-mouth" />
-                <rect x="70" y="175" width="12" height="25" rx="4" class="robot-leg left" />
-                <rect x="118" y="175" width="12" height="25" rx="4" class="robot-leg" />
+                <rect x="560" y="350" width="80" height="40" class="red-button" onclick="handleSectionClick('special-sentences')" />
+                <text x="600" y="368" class="red-button-text">IV. Special</text>
+                <text x="600" y="383" class="red-button-text">Sentences</text>
+                
+                <g id="section4-ports">
+                    <line x1="680" y1="280" x2="600" y2="350" class="charging-wire" />
+                    <circle cx="680" cy="280" r="14" class="port" onclick="handlePortClick('questions')" />
+                    <text x="680" y="305" class="port-label" pointer-events="none">Questions</text>
+                    
+                    <line x1="640" y1="420" x2="600" y2="350" class="charging-wire" />
+                    <circle cx="640" cy="420" r="14" class="port" onclick="handlePortClick('exclamations')" />
+                    <text x="640" y="445" class="port-label" pointer-events="none">Exclamations</text>
+                    
+                    <line x1="720" y1="340" x2="600" y2="350" class="charging-wire" />
+                    <circle cx="720" cy="340" r="14" class="port" onclick="handlePortClick('inverted')" />
+                    <text x="720" y="365" class="port-label" pointer-events="none">Inverted</text>
+                    
+                    <line x1="600" y1="270" x2="600" y2="350" class="charging-wire" />
+                    <circle cx="600" cy="270" r="14" class="port" onclick="handlePortClick('subjunctive')" />
+                    <text x="600" y="250" class="port-label" pointer-events="none">Subjunctive</text>
+                </g>
             </svg>
         </div>
 
-        <div class="robot-with-card right-robot">
-            <div class="grammar-card" onclick="showCardInfo('grammar-concepts')">
-                <img src="https://ducj-creator.github.io/Shirley-Grammar/assets/key%20grammar%20concepts.png" 
-                     alt="Key Grammar Concepts" class="card-image">
+        <div class="robots-container">
+            <div class="robot-with-card left-robot">
+                <div class="grammar-card" onclick="showCardInfo('sentence-structure')">
+                    <img src="https://ducj-creator.github.io/Shirley-Grammar/assets/sentence%20structure.png" 
+                        alt="Sentence Structure" class="card-image">
+                </div>
+                <svg class="robot" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="50" y="90" width="100" height="80" rx="15" class="robot-body" />
+                    <circle cx="100" cy="60" r="25" class="robot-head" />
+                    <line x1="100" y1="35" x2="100" y2="15" class="robot-antenna" />
+                    <circle cx="100" cy="15" r="4" fill="#FFD700" />
+                    <circle cx="92" cy="55" r="4" class="robot-eye" />
+                    <circle cx="108" cy="55" r="4" class="robot-eye" />
+                    <path d="M 90 70 Q 100 80 110 70" class="robot-mouth" />
+                    <rect x="70" y="175" width="12" height="25" rx="4" class="robot-leg left" />
+                    <rect x="118" y="175" width="12" height="25" rx="4" class="robot-leg" />
+                </svg>
             </div>
-            <svg class="robot" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
-                <rect x="50" y="90" width="100" height="80" rx="15" class="robot-body" />
-                <circle cx="100" cy="60" r="25" class="robot-head" />
-                <line x1="100" y1="35" x2="100" y2="15" class="robot-antenna" />
-                <circle cx="100" cy="15" r="4" fill="#FFD700" />
-                <circle cx="92" cy="55" r="4" class="robot-eye" />
-                <circle cx="108" cy="55" r="4" class="robot-eye" />
-                <path d="M 90 70 Q 100 80 110 70" class="robot-mouth" />
-                <rect x="70" y="175" width="12" height="25" rx="4" class="robot-leg left" />
-                <rect x="118" y="175" width="12" height="25" rx="4" class="robot-leg" />
-            </svg>
+
+            <div class="robot-with-card right-robot">
+                <div class="grammar-card" onclick="showCardInfo('grammar-concepts')">
+                    <img src="https://ducj-creator.github.io/Shirley-Grammar/assets/key%20grammar%20concepts.png" 
+                        alt="Key Grammar Concepts" class="card-image">
+                </div>
+                <svg class="robot" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="50" y="90" width="100" height="80" rx="15" class="robot-body" />
+                    <circle cx="100" cy="60" r="25" class="robot-head" />
+                    <line x1="100" y1="35" x2="100" y2="15" class="robot-antenna" />
+                    <circle cx="100" cy="15" r="4" fill="#FFD700" />
+                    <circle cx="92" cy="55" r="4" class="robot-eye" />
+                    <circle cx="108" cy="55" r="4" class="robot-eye" />
+                    <path d="M 90 70 Q 100 80 110 70" class="robot-mouth" />
+                    <rect x="70" y="175" width="12" height="25" rx="4" class="robot-leg left" />
+                    <rect x="118" y="175" width="12" height="25" rx="4" class="robot-leg" />
+                </svg>
+            </div>
         </div>
     </div>
 
