@@ -1,333 +1,469 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Nouns 名詞全解析｜Teacher Shirley</title>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Shirley's Grammar | Nouns Masterclass</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  
   <style>
     :root {
-      --elegant-rose: #d4a5a5;
-      --soft-charcoal: #3a3a3a;
-      --mist-gray: #f0f2f5;
-      --ivory: #fdfdfd;
-      --deep-olive: #5a6b5a;
-      --accent-gold: #c9a972;
+      --primary: #4361ee;
+      --primary-dark: #3a0ca3;
+      --secondary: #4cc9f0;
+      --accent: #f72585;
+      --text-main: #2b2d42;
+      --text-light: #6c757d;
+      --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      --glass-bg: rgba(255, 255, 255, 0.85);
+      --glass-border: rgba(255, 255, 255, 0.5);
+      --card-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+      --hover-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.15);
+      --radius: 20px;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; outline: none; -webkit-tap-highlight-color: transparent; }
 
     body {
-      font-family: 'Noto Sans TC', sans-serif;
-      background-color: var(--ivory);
-      color: var(--soft-charcoal);
-      line-height: 1.55;
-      padding: 0 12px;
+      font-family: 'Inter', 'Noto Sans TC', sans-serif;
+      background: #f0f2f5;
+      background-image: 
+        radial-gradient(at 40% 20%, hsla(28,100%,74%,1) 0px, transparent 50%),
+        radial-gradient(at 80% 0%, hsla(189,100%,56%,1) 0px, transparent 50%),
+        radial-gradient(at 0% 50%, hsla(340,100%,76%,1) 0px, transparent 50%);
+      background-attachment: fixed;
+      background-size: cover;
+      color: var(--text-main);
+      line-height: 1.7;
+      padding: 40px 20px;
+      min-height: 100vh;
     }
 
     .container {
-      max-width: 960px;
+      max-width: 900px;
       margin: 0 auto;
-      padding: 20px 14px;
+    }
+
+    /* === Header === */
+    header {
+      text-align: center;
+      margin-bottom: 50px;
+      position: relative;
     }
 
     h1 {
       font-family: 'Playfair Display', serif;
-      font-size: 2.4rem;
-      text-align: center;
-      margin: 14px 0 22px;
-      color: var(--deep-olive);
+      font-size: 3rem;
+      color: #1a1a2e;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 0px rgba(255,255,255,0.5);
+    }
+    
+    .subtitle {
+      font-size: 1.1rem;
+      color: #4a4e69;
+      font-weight: 500;
+      background: rgba(255,255,255,0.6);
+      display: inline-block;
+      padding: 6px 20px;
+      border-radius: 50px;
+      backdrop-filter: blur(5px);
+    }
+
+    /* === Cards & Sections === */
+    .section-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius);
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: var(--card-shadow);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
       position: relative;
+      overflow: hidden;
     }
 
-    h1::after {
-      content: "";
+    .section-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--hover-shadow);
+    }
+
+    /* Decorative bar on top of cards */
+    .section-card::before {
+      content: '';
       position: absolute;
-      bottom: -8px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 85px;
-      height: 3px;
-      background: var(--accent-gold);
-      border-radius: 2px;
-    }
-
-    .section {
-      background: white;
-      border-radius: 14px;
-      padding: 18px;
-      margin: 20px 0;
-      box-shadow: 0 3px 12px rgba(58, 58, 58, 0.05);
-      border-top: 3px solid var(--accent-gold);
+      top: 0; left: 0; right: 0; height: 6px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
     }
 
     h2 {
       font-family: 'Playfair Display', serif;
-      font-size: 1.65rem;
-      color: var(--deep-olive);
-      margin-bottom: 14px;
-      padding-bottom: 5px;
-      border-bottom: 1px dashed #e0e0e0;
+      font-size: 1.8rem;
+      color: var(--primary-dark);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    h2::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(0,0,0,0.1);
+      margin-left: 15px;
     }
 
     h3 {
-      color: var(--elegant-rose);
-      margin: 12px 0 10px;
-      font-size: 1.2rem;
+      font-size: 1.25rem;
+      color: var(--accent);
+      margin: 25px 0 15px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
     }
 
-    .bilingual {
+    /* === Bilingual Box === */
+    .bilingual-box {
       display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      margin: 12px 0;
+      gap: 20px;
+      background: #fff;
+      padding: 24px;
+      border-radius: 16px;
+      border-left: 5px solid var(--primary);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    }
+    .bi-col { flex: 1; }
+    .bi-label { 
+      font-size: 0.75rem; 
+      font-weight: 800; 
+      color: #adb5bd; 
+      letter-spacing: 1px; 
+      margin-bottom: 6px; 
+      display: block;
+    }
+    .highlight {
+      background: linear-gradient(120deg, #a2d2ff 0%, #bde0fe 100%);
+      padding: 0 6px;
+      border-radius: 4px;
+      font-weight: 600;
+      color: #0d1b2a;
     }
 
-    .en, .zh {
-      flex: 1;
-      min-width: 250px;
-      padding: 12px;
-      background: var(--mist-gray);
-      border-radius: 8px;
-      font-size: 0.98rem;
+    /* === Tables === */
+    .table-responsive {
+      overflow-x: auto;
+      border-radius: 12px;
+      margin: 15px 0;
     }
-
     table {
       width: 100%;
       border-collapse: collapse;
-      margin: 12px 0;
-      font-size: 0.92rem;
+      background: white;
+      min-width: 500px; /* Prevent squishing on mobile */
     }
-
-    th, td {
-      padding: 8px 10px;
-      text-align: left;
-      border-bottom: 1px solid #eee;
-    }
-
     th {
-      background-color: var(--mist-gray);
-      color: var(--deep-olive);
-      font-weight: 600;
-    }
-
-    .word-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-      gap: 10px;
-      margin: 12px 0;
-    }
-
-    .word-card {
-      padding: 10px;
       background: #f8f9fa;
-      border-radius: 6px;
-      border: 1px solid #eee;
-      text-align: center;
+      color: var(--primary-dark);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      letter-spacing: 0.5px;
+      padding: 16px;
+      text-align: left;
+    }
+    td {
+      padding: 14px 16px;
+      border-bottom: 1px solid #e9ecef;
+      color: #495057;
       font-size: 0.95rem;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #fdfdfd; color: var(--primary); }
+
+    /* === Interactive Audio Grid === */
+    .audio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 12px;
+      margin: 15px 0;
+    }
+    .audio-card {
+      background: white;
+      border: 1px solid #e9ecef;
+      padding: 12px 16px;
+      border-radius: 12px;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
     }
-
-    .word-card:hover {
-      background: #e9ecef;
+    .audio-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(67, 97, 238, 0.15);
     }
-
-    .highlight {
-      background-color: #fff8e1;
-      padding: 1px 4px;
-      border-radius: 3px;
-      font-weight: 600;
+    .audio-card:active { transform: scale(0.98); }
+    .audio-icon { font-size: 1.1rem; opacity: 0.7; }
+    .audio-text { font-weight: 600; color: #343a40; font-size: 0.95rem; }
+    
+    /* === Note & CTA === */
+    .note-box {
+      background: linear-gradient(to right, #fff0f3, #fff);
+      border-left: 4px solid var(--accent);
+      padding: 20px;
+      border-radius: 0 12px 12px 0;
+      margin: 20px 0;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
     }
-
-    .note {
-      background: #f9f7f0;
-      border-left: 3px solid var(--elegant-rose);
-      padding: 12px;
-      margin: 14px 0;
-      border-radius: 0 6px 6px 0;
-      font-size: 0.95rem;
-    }
-
-    .platform-button {
-      display: inline-block;
-      background: var(--elegant-rose);
+    .note-content { flex: 1; min-width: 200px; color: #590d22; font-size: 0.95rem; }
+    
+    .btn-cta {
+      background: var(--accent);
       color: white;
       text-decoration: none;
-      padding: 8px 20px;
-      border-radius: 28px;
+      padding: 10px 24px;
+      border-radius: 50px;
       font-weight: 600;
-      font-size: 0.95rem;
-      margin-top: 10px;
-      transition: all 0.25s;
+      font-size: 0.9rem;
+      box-shadow: 0 4px 10px rgba(247, 37, 133, 0.3);
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
     }
-
-    .platform-button:hover {
-      background: var(--deep-olive);
-      transform: translateY(-1px);
+    .btn-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(247, 37, 133, 0.4);
+      background: #d00000;
     }
+    .btn-blue {
+      background: var(--primary);
+      box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
+    }
+    .btn-blue:hover { background: var(--primary-dark); }
 
+    /* === Responsive === */
     @media (max-width: 768px) {
-      .bilingual, .word-grid {
-        grid-template-columns: 1fr;
-      }
-      .en, .zh, .word-card {
-        min-width: 100%;
-      }
-      h1 { font-size: 1.9rem; }
-      h2 { font-size: 1.45rem; }
+      body { padding: 20px 10px; }
+      h1 { font-size: 2.2rem; }
+      h2 { font-size: 1.5rem; }
+      .section-card { padding: 20px; }
+      .bilingual-box { flex-direction: column; gap: 12px; }
+      .audio-grid { grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
 <body>
+  
   <div class="container">
-    <h1>Shirley's Nouns 名詞解析</h1>
+    <header>
+      <h1>Shirley's Nouns</h1>
+      <div class="subtitle">Teacher Shirley 名詞全解析</div>
+    </header>
 
-    <!-- 定義 -->
-    <div class="section">
-      <h2>What is a Noun? 什麼是名詞？</h2>
-      <div class="bilingual">
-        <div class="en">
+    <div class="section-card">
+      <h2>What is a Noun?</h2>
+      <div class="bilingual-box">
+        <div class="bi-col">
+          <span class="bi-label">ENGLISH</span>
           A <span class="highlight">noun</span> names a <strong>person, place, thing, or idea</strong>.
         </div>
-        <div class="zh">
+        <div class="bi-col">
+          <span class="bi-label">CHINESE</span>
           <span class="highlight">名詞</span>用來命名<strong>人、地方、事物或概念</strong>。
         </div>
       </div>
     </div>
 
-    <!-- 分類 -->
-    <div class="section">
+    <div class="section-card">
       <h2>Types of Nouns 名詞分類</h2>
-      <table>
-        <tr><th>英文</th><th>中文</th><th>例子</th></tr>
-        <tr><td>Common</td><td>普通名詞</td><td>city, teacher</td></tr>
-        <tr><td>Proper</td><td>專有名詞</td><td>Taipei, Shirley</td></tr>
-        <tr><td>Concrete</td><td>具體名詞</td><td>star, phone</td></tr>
-        <tr><td>Abstract</td><td>抽象名詞</td><td>love, time</td></tr>
-        <tr><td>Collective</td><td>集合名詞</td><td>team, family</td></tr>
-        <tr><td>Compound</td><td>複合名詞</td><td>toothpaste, classroom</td></tr>
-      </table>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr><th width="20%">Type</th><th width="25%">中文</th><th>Examples</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Common</td><td>普通名詞</td><td>city, teacher, cat</td></tr>
+            <tr><td>Proper</td><td>專有名詞</td><td>Taipei, Shirley, Google</td></tr>
+            <tr><td>Concrete</td><td>具體名詞</td><td>star, phone, water</td></tr>
+            <tr><td>Abstract</td><td>抽象名詞</td><td>love, time, freedom</td></tr>
+            <tr><td>Collective</td><td>集合名詞</td><td>team, family, audience</td></tr>
+            <tr><td>Compound</td><td>複合名詞</td><td>toothpaste, swimming pool</td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
-    <!-- 可數 vs 不可數 -->
-    <div class="section">
-      <h2>Countable vs Uncountable</h2>
-
-      <h3>規則複數變化</h3>
-      <table>
-        <tr><th>規則</th><th>例子</th></tr>
-        <tr><td>一般 + s</td><td>book → books</td></tr>
-        <tr><td>sh/ch/x/s/o + es</td><td>box → boxes</td></tr>
-        <tr><td>輔音 + y → ies</td><td>city → cities</td></tr>
-        <tr><td>f/fe → ves</td><td>knife → knives</td></tr>
-      </table>
-
-      <h3>不規則複數</h3>
-      <div class="word-grid">
-        <div class="word-card" onclick="speak('man men')">man → men</div>
-        <div class="word-card" onclick="speak('woman women')">woman → women</div>
-        <div class="word-card" onclick="speak('child children')">child → children</div>
-        <div class="word-card" onclick="speak('foot feet')">foot → feet</div>
-        <div class="word-card" onclick="speak('tooth teeth')">tooth → teeth</div>
-        <div class="word-card" onclick="speak('mouse mice')">mouse → mice</div>
-        <div class="word-card" onclick="speak('goose geese')">goose → geese</div>
-        <div class="word-card" onclick="speak('fish fish')">fish → fish</div>
+    <div class="section-card">
+      <h2>Countable & Uncountable</h2>
+      
+      <h3>1. Regular Plurals 規則複數</h3>
+      <div class="table-responsive">
+        <table>
+          <tr><th>Rule</th><th>Example</th></tr>
+          <tr><td>一般 + s</td><td>book → <strong>books</strong></td></tr>
+          <tr><td>sh/ch/x/s/o + es</td><td>box → <strong>boxes</strong>, bus → <strong>buses</strong></td></tr>
+          <tr><td>子音 + y → ies</td><td>city → <strong>cities</strong></td></tr>
+          <tr><td>f/fe → ves</td><td>knife → <strong>knives</strong></td></tr>
+        </table>
       </div>
 
-      <div class="note">
-        <strong>💡 更多練習？</strong> 點擊下方按鈕進入「不規則複數互動練習平台」！
-        <br>
-        <a href="https://ducj-creator.github.io/Shirley-Grammar/irregular/nouns/" target="_blank" class="platform-button">前往練習 →</a>
+      <h3>2. Irregular Plurals 不規則複數</h3>
+      <p style="font-size:0.9rem; margin-bottom:10px; color:var(--text-light)">點擊下方卡片聆聽發音 🔊</p>
+      <div class="audio-grid">
+        <div class="audio-card" onclick="speak('man men')">
+          <span class="audio-text">man → men</span>
+          <span class="audio-icon">🔈</span>
+        </div>
+        <div class="audio-card" onclick="speak('woman women')">
+          <span class="audio-text">woman → women</span>
+          <span class="audio-icon">🔈</span>
+        </div>
+        <div class="audio-card" onclick="speak('child children')">
+          <span class="audio-text">child → children</span>
+          <span class="audio-icon">🔈</span>
+        </div>
+        <div class="audio-card" onclick="speak('foot feet')">
+          <span class="audio-text">foot → feet</span>
+          <span class="audio-icon">🔈</span>
+        </div>
+        <div class="audio-card" onclick="speak('tooth teeth')">
+          <span class="audio-text">tooth → teeth</span>
+          <span class="audio-icon">🔈</span>
+        </div>
+        <div class="audio-card" onclick="speak('mouse mice')">
+          <span class="audio-text">mouse → mice</span>
+          <span class="audio-icon">🔈</span>
+        </div>
+        <div class="audio-card" onclick="speak('goose geese')">
+          <span class="audio-text">goose → geese</span>
+          <span class="audio-icon">🔈</span>
+        </div>
+        <div class="audio-card" onclick="speak('fish fish')">
+          <span class="audio-text">fish → fish</span>
+          <span class="audio-icon">🔈</span>
+        </div>
       </div>
 
-      <h3>常見不可數名詞</h3>
-      <table>
-        <tr><th>類別</th><th>例子</th></tr>
-        <tr><td>液體</td><td>water, milk, coffee</td></tr>
-        <tr><td>材料</td><td>wood, metal</td></tr>
-        <tr><td>食物</td><td>rice, bread, cheese</td></tr>
-        <tr><td>抽象</td><td>time, love, advice</td></tr>
-        <tr><td>學科</td><td>math, physics, history</td></tr>
-        <tr><td>其他</td><td>news, money, furniture</td></tr>
-      </table>
+      <div class="note-box">
+        <div class="note-content">
+          <strong>💡 想挑戰自己？</strong><br>前往互動平台練習更多不規則變化！
+        </div>
+        <a href="https://ducj-creator.github.io/Shirley-Grammar/irregular/nouns/" target="_blank" class="btn-cta">
+          Go to Practice →
+        </a>
+      </div>
 
-      <h3>雙重意義名詞</h3>
-      <table>
-        <tr><th>不可數</th><th>可數</th></tr>
-        <tr><td>paper（紙）</td><td>a paper（論文）</td></tr>
-        <tr><td>light（光）</td><td>a light（燈）</td></tr>
-        <tr><td>time（時間）</td><td>times（次數）</td></tr>
-        <tr><td>work（工作）</td><td>a work（作品）</td></tr>
-        <tr><td>hair（頭髮）</td><td>a hair（一根髮）</td></tr>
-        <tr><td>experience（經驗）</td><td>experiences（經歷）</td></tr>
-      </table>
+      <h3>3. Common Uncountable 常見不可數</h3>
+      <div class="table-responsive">
+        <table>
+          <tr><th>Category</th><th>Examples</th></tr>
+          <tr><td>Liquid 液體</td><td>water, milk, coffee, oil</td></tr>
+          <tr><td>Material 材料</td><td>wood, metal, gold, sand</td></tr>
+          <tr><td>Food 食物</td><td>rice, bread, cheese, meat</td></tr>
+          <tr><td>Abstract 抽象</td><td>time, love, advice, knowledge</td></tr>
+          <tr><td>Subject 學科</td><td>math, physics, history</td></tr>
+        </table>
+      </div>
+      
+      <h3>4. Tricky Nouns 雙重意義名詞</h3>
+      <div class="table-responsive">
+        <table>
+          <thead><tr><th>Uncountable (不可數)</th><th>Countable (可數)</th></tr></thead>
+          <tbody>
+            <tr><td><strong>paper</strong> 紙張</td><td><strong>a paper</strong> 論文/報紙</td></tr>
+            <tr><td><strong>light</strong> 光線</td><td><strong>a light</strong> 電燈</td></tr>
+            <tr><td><strong>time</strong> 時間</td><td><strong>times</strong> 次數</td></tr>
+            <tr><td><strong>work</strong> 工作</td><td><strong>a work</strong> 作品</td></tr>
+            <tr><td><strong>hair</strong> 頭髮(整體)</td><td><strong>a hair</strong> 一根頭髮</td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
-    <!-- 所有格 -->
-    <div class="section">
+    <div class="section-card">
       <h2>Possessive Case 所有格</h2>
-      <table>
-        <tr><th>結構</th><th>例子</th><th>中文</th></tr>
-        <tr><td>單數 + 's</td><td>John's car</td><td>約翰的車</td></tr>
-        <tr><td>複數以 s 結尾 + '</td><td>students' books</td><td>學生們的書</td></tr>
-        <tr><td>不規則複數 + 's</td><td>children's toys</td><td>孩子們的玩具</td></tr>
-        <tr><td><strong>of + 名詞</strong></td><td>the roof of the house</td><td>房子的屋頂</td></tr>
-        <tr><td>時間/機構 + '</td><td>today's news</td><td>今天的新聞</td></tr>
-      </table>
-      <p style="font-size:0.95rem; margin-top:10px;">
-        💡 提示：「's」多用於<strong>人或動物</strong>；「of + 名詞」常用於<strong>無生命事物</strong>。
-      </p>
-    </div>
-
-    <!-- 冠詞 -->
-    <div class="section">
-      <h2>Articles 冠詞</h2>
-      <table>
-        <tr><th>冠詞</th><th>用法</th><th>例子</th></tr>
-        <tr><td>a</td><td>子音開頭</td><td>a book, a university</td></tr>
-        <tr><td>an</td><td>母音開頭</td><td>an apple, an hour</td></tr>
-        <tr><td>the</td><td>特指</td><td>the sun, the Pacific Ocean</td></tr>
-        <tr><td>無冠詞</td><td>專有名詞、抽象名詞等</td><td>Taiwan, English, love</td></tr>
-      </table>
-    </div>
-
-    <!-- 名詞子句 -->
-    <div class="section">
-      <h2>Noun Clauses 名詞子句</h2>
-      <p>名詞子句是<strong>具有名詞功能的子句</strong>，可作主詞、受詞或補語。</p>
-      <div class="note" style="font-size:0.95rem;">
-        <strong>例子：</strong><br>
-        • <em><strong>What he said</strong> surprised me.</em>（主詞）<br>
-        • I know <em><strong>where she lives</strong></em>.（受詞）
+      <div class="table-responsive">
+        <table>
+          <tr><th>Structure</th><th>Example</th><th>Note</th></tr>
+          <tr><td>單數 + 's</td><td>John's car</td><td>人名/生物</td></tr>
+          <tr><td>複數(s結尾) + '</td><td>students' books</td><td>不用再加s</td></tr>
+          <tr><td>不規則複數 + 's</td><td>children's toys</td><td>視為單數處理</td></tr>
+          <tr><td><strong>of + Noun</strong></td><td>the roof of the house</td><td>無生命物體常用</td></tr>
+          <tr><td>時間/店名 + 's</td><td>today's news / McDonald's</td><td>慣用法</td></tr>
+        </table>
       </div>
-      <a href="https://ducj-creator.github.io/Shirley-Grammar/noun-clause/" target="_blank" class="platform-button">📘 深入學習名詞子句</a>
     </div>
 
-    <!-- 常見錯誤 -->
-    <div class="section">
-      <h2>Common Mistakes 常見錯誤</h2>
-      <table>
-        <tr><th>錯誤</th><th>正確</th><th>說明</th></tr>
-        <tr><td>I like dog.</td><td>I like dogs.</td><td>可數名詞需加複數</td></tr>
-        <tr><td>many informations</td><td>much information</td><td>information 不可數</td></tr>
-        <tr><td>the news are</td><td>the news is</td><td>news 為單數</td></tr>
-        <tr><td>a advice</td><td>some advice</td><td>advice 不可數</td></tr>
-      </table>
+    <div class="section-card">
+      <h2>Articles 冠詞速查</h2>
+      <div class="table-responsive">
+        <table>
+          <tr><th>Art.</th><th>Usage</th><th>Examples</th></tr>
+          <tr><td><strong>a</strong></td><td>+ 單數可數 (子音開頭)</td><td>a book, a university</td></tr>
+          <tr><td><strong>an</strong></td><td>+ 單數可數 (母音開頭)</td><td>an apple, an hour</td></tr>
+          <tr><td><strong>the</strong></td><td>特指 / 獨一無二</td><td>the sun, the book on the table</td></tr>
+          <tr><td><strong>X</strong></td><td>泛指複數 / 專有名詞</td><td>I like dogs. / He is in Taipei.</td></tr>
+        </table>
+      </div>
     </div>
+
+    <div class="section-card">
+      <h2>Noun Clauses 名詞子句</h2>
+      <p style="margin-bottom:15px; color:#555;">名詞子句就是一個<strong>「長得像句子的名詞」</strong>，可以在句中當主詞、受詞或補語。</p>
+      
+      <div style="background:#f1f3f5; padding:15px; border-radius:10px; margin-bottom:20px;">
+        <div style="margin-bottom:8px;">🔹 <strong>What he said</strong> surprised me. <small>(當主詞)</small></div>
+        <div>🔹 I know <strong>where she lives</strong>. <small>(當受詞)</small></div>
+      </div>
+
+      <a href="https://ducj-creator.github.io/Shirley-Grammar/noun-clause/" target="_blank" class="btn-cta btn-blue" style="width:100%; justify-content:center;">
+        📘 深入學習名詞子句專題
+      </a>
+    </div>
+
+    <div class="section-card" style="border-top:5px solid #ef476f;">
+      <h2>🚫 Common Mistakes 常見錯誤</h2>
+      <div class="table-responsive">
+        <table>
+          <tr><th style="color:#ef476f">Wrong (X)</th><th style="color:#06d6a0">Right (O)</th><th>Why?</th></tr>
+          <tr><td>I like dog.</td><td>I like dogs.</td><td>可數名詞泛指時用複數</td></tr>
+          <tr><td>many informations</td><td>much information</td><td>information 永遠不可數</td></tr>
+          <tr><td>the news are...</td><td>the news is...</td><td>news 形式像複數但為單數</td></tr>
+          <tr><td>a advice</td><td>some advice</td><td>advice 不可數，不能加 a</td></tr>
+        </table>
+      </div>
+    </div>
+
   </div>
 
   <script>
     function speak(text) {
       if ('speechSynthesis' in window) {
+        // Cancel any ongoing speech
+        speechSynthesis.cancel();
+        
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = 'en-US';
-        utterance.rate = 0.95;
-        speechSynthesis.cancel();
+        utterance.rate = 0.9; // Slightly slower for clarity
+        
+        // Find English voice if available for better quality
+        const voices = speechSynthesis.getVoices();
+        const enVoice = voices.find(v => v.lang.includes('en-US') || v.lang.includes('en-GB'));
+        if(enVoice) utterance.voice = enVoice;
+
         speechSynthesis.speak(utterance);
+      } else {
+        alert("Sorry, your browser doesn't support text-to-speech.");
       }
     }
   </script>
