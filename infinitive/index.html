@@ -7,50 +7,39 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Nunito:wght@400;600;700;800&display=swap');
-
         :root {
             /* 高雅配色系統：深海藍、墨綠搭配流金點綴 */
             --primary-dark: #0F2027;  /* 深邃背景 */
             --primary-mid: #203A43;   /* 中間調 */
             --primary-accent: #2C5364; /* 亮部 */
-            
             --gold-accent: #FFD700;   /* 高雅金 */
             --gold-dark: #B8860B;     /* 深金 */
-            
             /* 為了兼容原本 JS 中的 var(--accent) 調用，將其映射為金色 */
             --accent: #FFD700; 
-            
             --dynamic-gradient: linear-gradient(135deg, #2C5364 0%, #203A43 50%, #0F2027 100%);
             --gold-gradient: linear-gradient(45deg, #B8860B, #FFD700, #B8860B);
-
             --bg-body: #f4f7f9;       
             --bg-card: rgba(255, 255, 255, 0.95);
-            
             --text-main: #1a1a1a;
             --text-light: #5a6a7a;
             --text-on-dark: #ffffff;
-            
             --shadow-soft: 0 10px 30px -10px rgba(0,0,0,0.1);
             --shadow-glow: 0 5px 15px rgba(255, 215, 0, 0.3);
-            
             --radius-lg: 24px;
             --radius-md: 16px;
         }
-        
         /* 動態背景動畫 */
         @keyframes gradientBG {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Nunito', 'Noto Sans TC', '微軟正黑體', sans-serif;
         }
-        
         body {
             background: linear-gradient(-45deg, #f4f7f9, #eef2f5, #e0eaf0, #f4f7f9);
             background-size: 400% 400%;
@@ -58,7 +47,6 @@
             color: var(--text-main);
             line-height: 1.75;
         }
-        
         /* Header: 深邃質感 */
         header {
             background: var(--dynamic-gradient);
@@ -69,7 +57,6 @@
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(15, 32, 39, 0.3);
         }
-        
         header::before {
             content: '';
             position: absolute;
@@ -77,12 +64,10 @@
             background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
             opacity: 0.5;
         }
-
         .header-content {
             position: relative;
             z-index: 1;
         }
-
         h1 {
             font-size: 2.8rem;
             margin-bottom: 1rem;
@@ -93,7 +78,6 @@
             -webkit-text-fill-color: transparent;
             text-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
-        
         .subtitle {
             font-size: 1.2rem;
             opacity: 0.9;
@@ -108,7 +92,6 @@
             backdrop-filter: blur(5px);
             border: 1px solid rgba(255, 215, 0, 0.2);
         }
-        
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -116,7 +99,6 @@
             position: relative;
             z-index: 10;
         }
-        
         /* Tabs: 玻璃擬態 */
         .tabs {
             display: flex;
@@ -132,7 +114,6 @@
             border: 1px solid rgba(255,255,255,0.4);
             max-width: fit-content;
         }
-        
         .tab {
             padding: 0.9rem 1.8rem;
             cursor: pointer;
@@ -146,7 +127,6 @@
             font-size: 1rem;
             flex: 0 1 auto; /* 防止過度伸展 */
         }
-        
         .tab::before {
             content: '';
             position: absolute;
@@ -159,37 +139,30 @@
             transition: transform 0.4s ease;
             border-radius: 10px;
         }
-
         .tab:hover {
             color: var(--primary-dark);
             background: rgba(255,255,255,0.8);
         }
-        
         .tab.active {
             color: var(--primary-dark);
             background: white;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
-
         .tab.active::before {
             transform: scaleX(1);
             box-shadow: 0 0 10px var(--gold-accent);
         }
-        
         .tab-content {
             display: none;
             animation: slideUpFade 0.7s cubic-bezier(0.25, 1, 0.5, 1);
         }
-        
         @keyframes slideUpFade {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        
         .tab-content.active {
             display: block;
         }
-        
         h2 {
             color: var(--primary-dark);
             margin-bottom: 2.5rem;
@@ -200,7 +173,6 @@
             padding-bottom: 1rem;
             border-bottom: none; /* 移除舊樣式 */
         }
-        
         h2::after {
             content: '';
             position: absolute;
@@ -212,7 +184,6 @@
             background: var(--gold-gradient);
             border-radius: 2px;
         }
-        
         h3 {
             color: var(--primary-mid);
             margin: 0 0 1.2rem;
@@ -221,7 +192,6 @@
             display: flex;
             align-items: center;
         }
-        
         h3::before {
             content: '';
             display: inline-block;
@@ -231,7 +201,6 @@
             margin-right: 12px;
             border-radius: 4px;
         }
-        
         /* Card Styles */
         .card {
             background: var(--bg-card);
@@ -242,13 +211,11 @@
             border: 1px solid rgba(255,255,255,0.8);
             transition: all 0.3s ease;
         }
-        
         .card:hover {
             transform: translateY(-7px);
             box-shadow: 0 15px 40px -10px rgba(0,0,0,0.15);
             border-color: rgba(255, 215, 0, 0.3);
         }
-        
         /* Table Styles */
         table {
             width: 100%;
@@ -261,13 +228,11 @@
             overflow: hidden;
             box-shadow: var(--shadow-soft);
         }
-        
         th, td {
             padding: 18px 24px;
             text-align: left;
             border-bottom: 1px solid #eef2f5;
         }
-        
         th {
             background: var(--primary-mid);
             color: white;
@@ -277,20 +242,16 @@
             letter-spacing: 1px;
             border-bottom: 3px solid var(--gold-accent);
         }
-        
         tr:nth-child(even) {
             background-color: #fcfdfd; /* 覆蓋舊樣式 */
         }
-        
         tr:hover td {
             background-color: #f0f4f8;
         }
-
         /* 比較表格特殊處理 */
         .comparison-table th {
             background-color: var(--primary-dark); /* 更深的顏色以示區別 */
         }
-        
         /* Example Box */
         .example {
             background: linear-gradient(to right, #fffcf0, #fff);
@@ -301,7 +262,6 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.03);
             color: var(--text-main);
         }
-        
         .highlight {
             color: var(--primary-dark);
             background: transparent;
@@ -313,7 +273,6 @@
             background-position: bottom;
             border-radius: 0;
         }
-
         /* Infinitive List Styles (Chips) */
         .infinitive-list {
             display: grid;
@@ -321,7 +280,6 @@
             gap: 15px;
             margin: 2rem 0;
         }
-        
         .infinitive-item {
             background: var(--primary-mid);
             color: white;
@@ -333,14 +291,12 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             border: 1px solid transparent;
         }
-        
         .infinitive-item:hover {
             transform: translateY(-5px);
             background: var(--primary-dark);
             border-color: var(--gold-accent);
             box-shadow: 0 8px 20px rgba(255, 215, 0, 0.2);
         }
-        
         /* Interactive Element */
         .interactive-element {
             background: white;
@@ -353,20 +309,17 @@
             position: relative;
             overflow: hidden;
         }
-        
         .interactive-element::before {
             content: '';
             position: absolute;
-            top: -50%; left: -50%; width: 200%; height: 200%;
+            top: -50%; left: -50%; width: 200%; height
+: 200%;
             background: radial-gradient(circle, rgba(255, 215, 0, 0.05) 0%, transparent 70%);
             animation: rotate 30s linear infinite;
             z-index: 0;
         }
-        
         @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
         .interactive-element > * { position: relative; z-index: 1; }
-        
         /* Buttons */
         .btn {
             background: var(--dynamic-gradient);
@@ -385,7 +338,6 @@
             position: relative;
             overflow: hidden;
         }
-        
         .btn::before {
             content: '';
             position: absolute;
@@ -393,15 +345,12 @@
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
             transition: left 0.5s;
         }
-
         .btn:hover {
             transform: translateY(-3px) scale(1.02);
             box-shadow: 0 8px 25px rgba(32, 58, 67, 0.4), var(--shadow-glow);
             background: var(--dynamic-gradient); /* 覆蓋舊 hover */
         }
-        
         .btn:hover::before { left: 100%; }
-        
         /* Animation Box */
         .infinitive-animation {
             height: 220px;
@@ -421,7 +370,6 @@
             letter-spacing: 1px;
             text-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
-        
         /* Warning Box */
         .warning {
             background: rgba(255, 215, 0, 0.05);
@@ -431,14 +379,12 @@
             border-radius: var(--radius-md);
             color: var(--text-main);
         }
-        
         .warning strong {
             color: var(--gold-dark);
             font-size: 1.1rem;
             display: block;
             margin-bottom: 0.5rem;
         }
-
         footer {
             text-align: center;
             padding: 4rem 2rem;
@@ -448,14 +394,12 @@
             border-radius: 0; /* 覆蓋舊樣式 */
             position: relative;
         }
-        
         footer::before {
              content: '';
              position: absolute;
              top: 0; left: 0; width: 100%; height: 4px;
              background: var(--gold-gradient);
         }
-
         @media (max-width: 768px) {
             header { padding: 3rem 1rem 4rem; }
             h1 { font-size: 2rem; }
@@ -474,7 +418,6 @@
             <p class="subtitle">不定詞學習平台</p>
         </div>
     </header>
-    
     <div class="container">
         <div class="tabs">
             <div class="tab active" data-tab="intro">不定詞介紹 | Infinitive Introduction</div>
@@ -484,21 +427,17 @@
             <div class="tab" data-tab="complement">作補語 | As Complement</div>
             <div class="tab" data-tab="modifier">作限定詞 | As Modifier</div>
         </div>
-        
         <div class="tab-content active" id="intro">
             <h2>不定詞介紹 | Infinitive Introduction</h2>
-            
             <div class="card">
                 <h3>什麼是不定詞？ | What is an Infinitive?</h3>
                 <p>不定詞是動詞的一種形式，通常由 "to" 加上動詞原形構成，在句子中可以充當名詞、形容詞或副詞。</p>
                 <p>An infinitive is a form of verb, usually consisting of "to" plus the base form of the verb, which can function as a noun, adjective, or adverb in a sentence.</p>
-                
                 <div class="example">
                     <p><strong>例子 Example:</strong> I want <span class="highlight">to learn</span> English. | 我想學習英語。</p>
                     <p><strong>例子 Example:</strong> She needs a book <span class="highlight">to read</span>. | 她需要一本書來讀。</p>
                 </div>
             </div>
-            
             <div class="card">
                 <h3>不定詞的形式 | Infinitive Forms</h3>
                 <table>
@@ -533,12 +472,10 @@
                     </tbody>
                 </table>
             </div>
-            
             <div class="card">
                 <h3>不定詞的用法 | Uses of Infinitives</h3>
                 <p>不定詞在句子中可以擔任多種角色：</p>
                 <p>Infinitives can serve various roles in a sentence:</p>
-                
                 <div class="infinitive-list">
                     <div class="infinitive-item">作主詞<br>As Subject</div>
                     <div class="infinitive-item">作受詞<br>As Object</div>
@@ -547,7 +484,6 @@
                     <div class="infinitive-item">作受詞補語<br>As Object Complement</div>
                 </div>
             </div>
-            
             <div class="interactive-element">
                 <h3>不定詞練習 | Infinitive Practice</h3>
                 <p>將動詞轉換為不定詞形式</p>
@@ -565,37 +501,30 @@
                 </div>
             </div>
         </div>
-        
         <div class="tab-content" id="subject">
             <h2>作主詞 | As Subject</h2>
-            
             <div class="card">
                 <h3>不定詞作主詞 | Infinitives as Subjects</h3>
                 <p>不定詞可以在句子中擔任主詞的角色。</p>
                 <p>Infinitives can function as the subject of a sentence.</p>
-                
                 <div class="example">
                     <p><strong>例子 Example:</strong> <span class="highlight">To work from home</span> is one of her dreams.</p>
                     <p>在家工作是他的夢想之一。</p>
                 </div>
-                
                 <div class="example">
                     <p><strong>例子 Example:</strong> <span class="highlight">To see</span> is <span class="highlight">to believe</span>.</p>
                     <p>眼見為實。</p>
                 </div>
             </div>
-            
             <div class="card">
                 <h3>特殊句型：It 為虛構主詞 | Special Pattern: It as Dummy Subject</h3>
                 <p>當不定詞作主詞時，可以使用 It 作為形式主詞，將真正的不定詞主詞放在句末。</p>
                 <p>When an infinitive is the subject, we can use "It" as a dummy subject and place the actual infinitive subject at the end of the sentence.</p>
-                
                 <div class="example">
                     <p><strong>例子 Example:</strong> <span class="highlight">It is significant to create a secure home environment</span> for our children.</p>
                     <p>為我們的孩子創造一個安全的家庭環境是很重要的。</p>
                 </div>
             </div>
-            
             <div class="interactive-element">
                 <h3>主詞練習 | Subject Practice</h3>
                 <p>選擇正確的不定詞形式完成句子</p>
@@ -613,15 +542,12 @@
                 </div>
             </div>
         </div>
-        
         <div class="tab-content" id="object">
             <h2>作受詞 | As Object</h2>
-            
             <div class="card">
                 <h3>不定詞作動詞的受詞 | Infinitives as Objects of Verbs</h3>
                 <p>某些動詞後面必須接不定詞作受詞，需要在平時記憶和積累。</p>
                 <p>Some verbs must be followed by an infinitive as the object, which needs to be memorized and accumulated over time.</p>
-                
                 <div class="infinitive-list">
                     <div class="infinitive-item">ask</div>
                     <div class="infinitive-item">afford</div>
@@ -645,28 +571,23 @@
                     <div class="infinitive-item">want</div>
                     <div class="infinitive-item">volunteer</div>
                 </div>
-                
                 <div class="example">
                     <p><strong>例子 Example:</strong> Modern people <span class="highlight">tend to take in</span> a large amount of fat, protein and alcohol.</p>
                     <p>現代人傾向攝入大量的脂肪、蛋白質和酒精。</p>
                 </div>
-                
                 <div class="example">
                     <p><strong>例子 Example:</strong> Many multinational companies <span class="highlight">prefer to hire</span> people with an overseas educational background.</p>
                     <p>許多跨國公司更喜歡僱用有海外教育背景的人。</p>
                 </div>
-                
                 <div class="example">
                     <p><strong>例子 Example:</strong> <span class="highlight">Don't hesitate to contact</span> me.</p>
                     <p>請隨時與我聯繫。</p>
                 </div>
-                
                 <div class="example">
                     <p><strong>例子 Example:</strong> This paper <span class="highlight">attempts to examine</span> the underlying factors of Internet addiction.</p>
                     <p>本文試圖檢驗網絡成癮的潛在因素。</p>
                 </div>
             </div>
-            
             <div class="interactive-element">
                 <h3>受詞練習 | Object Practice</h3>
                 <p>選擇正確的動詞形式完成句子</p>
@@ -684,15 +605,12 @@
                 </div>
             </div>
         </div>
-        
         <div class="tab-content" id="comparison">
             <h2>與動名詞區別 | Gerund vs Infinitive</h2>
-            
             <div class="card">
                 <h3>動名詞與不定詞的區別 | Differences between Gerunds and Infinitives</h3>
                 <p>有些動詞同時可以接動名詞和不定詞，但所表達的意思不一樣。</p>
                 <p>Some verbs can be followed by both gerunds and infinitives, but they express different meanings.</p>
-                
                 <table class="comparison-table">
                     <thead>
                         <tr>
@@ -729,25 +647,21 @@
                         </tr>
                     </tbody>
                 </table>
-                
                 <div class="example">
                     <p><strong>例子 Example:</strong> We <span class="highlight">regret to inform</span> you that your visa application has been declined.</p>
                     <p>我們遺憾地通知您，您的簽證申請已被拒絕。</p>
                     <p><em>(對要做的事情感到遺憾)</em></p>
                 </div>
-                
                 <div class="example">
                     <p><strong>例子 Example:</strong> I <span class="highlight">regret sending</span> the email to him.</p>
                     <p>我後悔發了那封郵件給他。</p>
                     <p><em>(對做了的事情感到後悔)</em></p>
                 </div>
-                
                 <div class="warning">
                     <p><strong>🎯Main Difference： Gerund (動名詞): Focuses on the act itself (the experience, the fact).著重於行為本身（經驗、事實）。</p>
                     <p><strong> Infinitive (不定詞): Focuses on the intention or potential (the purpose, the future). 著重於意圖或潛力（目的、將來）。</p>
                 </div>
             </div>
-            
             <div class="interactive-element">
                 <h3>區別練習 | Comparison Practice</h3>
                 <p>選擇正確的動詞形式完成句子</p>
@@ -765,52 +679,84 @@
                 </div>
             </div>
         </div>
-        
         <div class="tab-content" id="complement">
             <h2>作補語 | As Complement</h2>
-            
+
+            <!-- 主詞補語 -->
             <div class="card">
-                <h3>不定詞作連綴動詞後的補語 | Infinitives as Complements after Linking Verbs</h3>
-                <p>不定詞可以在連綴動詞（如be動詞）後作主詞補語。</p>
-                <p>Infinitives can function as subject complements after linking verbs (such as be verbs).</p>
-                
+                <h3>主詞補語（連綴動詞後）| Subject Complements after Linking Verbs</h3>
+                <p>不定詞可在 be 動詞等連綴動詞後作主詞補語，說明主詞的身分、目的或狀態。</p>
+                <p>Infinitives can follow linking verbs (like "be") to describe the subject's identity, purpose, or state.</p>
                 <div class="example">
                     <p><strong>例子 Example:</strong> The governments' obligation is <span class="highlight">to remove poverty, illiteracy and diseases</span>.</p>
                     <p>政府的義務是消除貧困、文盲和疾病。</p>
                 </div>
-                
                 <div class="example">
                     <p><strong>例子 Example:</strong> The most effective solution is <span class="highlight">to enhance the public's awareness</span> of the rubbish problem.</p>
                     <p>最有效的解決方案是提高公眾對垃圾問題的認識。</p>
                 </div>
             </div>
-            
+
+            <!-- 受詞補語（一般動詞） -->
             <div class="card">
-                <h3>省略to的情況 | Omission of "To"</h3>
-                <p>在某些結構中，不定詞的"to"可以省略。</p>
-                <p>In some structures, the "to" of the infinitive can be omitted.</p>
-                
+                <h3>受詞補語（一般動詞後）| Object Complements after Verbs</h3>
+                <p>某些動詞（如 allow, encourage, force, help）後可接「受詞 + 不定詞」，該不定詞用來補充說明受詞的動作。</p>
+                <p>After certain verbs (e.g., allow, encourage, force, help), we use "object + infinitive" where the infinitive complements the object.</p>
                 <div class="example">
-                    <p><strong>例子 Example:</strong> All you have to do is <span class="highlight">change</span> your attitude.</p>
-                    <p>你所要做的就是改變你的態度。</p>
+                    <p><strong>例子 Example:</strong> The payment allowed him <span class="highlight">to buy a new phone</span>.</p>
+                    <p>這筆付款讓他能夠買一部新手機。</p>
                 </div>
-                
                 <div class="example">
-                    <p><strong>例子 Example:</strong> The only thing to do is <span class="highlight">make</span> a lot of money.</p>
-                    <p>唯一要做的事就是賺很多錢。</p>
+                    <p><strong>例子 Example:</strong> The teacher encourages the students <span class="highlight">to work harder</span>.</p>
+                    <p>老師鼓勵學生更加努力學習。</p>
                 </div>
-                
                 <div class="example">
-                    <p><strong>例子 Example:</strong> What the elders should do is <span class="highlight">enjoy</span> their late years.</p>
-                    <p>老年人應該做的是享受他們的晚年。</p>
+                    <p><strong>例子 Example:</strong> Jack's mother forced him <span class="highlight">to have his hair cut</span>.</p>
+                    <p>傑克的母親強迫他理髮。</p>
                 </div>
-                
                 <div class="example">
-                    <p><strong>例子 Example:</strong> The best thing you can do now is <span class="highlight">write</span> her an apology.</p>
-                    <p>你現在能做的最好的事情就是給她寫一封道歉信。</p>
+                    <p><strong>例子 Example:</strong> The teacher helps us <span class="highlight">(to) practice writing</span>.</p>
+                    <p>老師幫助我們練習寫作。（help 後 to 可省略）</p>
                 </div>
             </div>
-            
+
+            <!-- 受詞補語（使役動詞） -->
+            <div class="card">
+                <h3>受詞補語（使役動詞後）| Object Complements after Causative Verbs</h3>
+                <p>使役動詞 <strong>let, make, have</strong> 後接不定詞作受詞補語時，<strong>必須省略 "to"</strong>。</p>
+                <p>After causative verbs <strong>let, make, have</strong>, the infinitive used as object complement <strong>omits "to"</strong>.</p>
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">Let's play</span> basketball.</p>
+                    <p>我們打籃球吧。<em>（不是 to play）</em></p>
+                </div>
+                <div class="example">
+                    <p><strong>例子 Example:</strong> The new policy <span class="highlight">made him attend</span> the training course.</p>
+                    <p>新政策迫使他參加培訓課程。</p>
+                </div>
+                <div class="example">
+                    <p><strong>例子 Example:</strong> I regularly <span class="highlight">have the dentist check</span> my teeth.</p>
+                    <p>我定期讓牙醫檢查我的牙齒。</p>
+                </div>
+                <div class="warning">
+                    <p><strong>📌 注意：</strong>使役動詞 have 表「僱用、安排」時也用此結構，如：<em>She had her car repaired.</em>（她讓人修了她的車。）</p>
+                </div>
+            </div>
+
+            <!-- 否定式 -->
+            <div class="card">
+                <h3>不定詞的否定式 | Negative Infinitives</h3>
+                <p>不定詞的否定形式是在 <strong>to 前加 not</strong>，適用於主詞/受詞補語等各種語境。</p>
+                <p>The negative infinitive is formed by adding <strong>"not" before "to"</strong>, used in subject/object complements and other contexts.</p>
+                <div class="example">
+                    <p><strong>例子 Example:</strong> I decided <span class="highlight">not to buy</span> the new phone.</p>
+                    <p>我決定不買新手機。</p>
+                </div>
+                <div class="example">
+                    <p><strong>例子 Example:</strong> Her goal is <span class="highlight">not to win</span>, but to participate.</p>
+                    <p>她的目標不是獲勝，而是參與。</p>
+                </div>
+            </div>
+
             <div class="interactive-element">
                 <h3>補語練習 | Complement Practice</h3>
                 <p>選擇正確的不定詞形式完成句子</p>
@@ -828,90 +774,25 @@
                 </div>
             </div>
         </div>
-        
         <div class="tab-content" id="modifier">
             <h2>作限定詞 | As Modifier</h2>
-            
             <div class="card">
                 <h3>不定詞作名詞的限定詞 | Infinitives as Modifiers of Nouns</h3>
                 <p>不定詞可以放在名詞後，作為限定詞使用。</p>
                 <p>Infinitives can be placed after nouns, functioning as modifiers.</p>
-                
                 <div class="example">
                     <p><strong>例子 Example:</strong> We have the ability <span class="highlight">to fight against the virus</span>.</p>
                     <p>我們有能力對抗病毒。</p>
                 </div>
-                
                 <div class="example">
                     <p><strong>例子 Example:</strong> He got the idea <span class="highlight">to ask help from the teacher</span>.</p>
                     <p>他想到向老師求助的主意。</p>
                 </div>
-                
                 <div class="example">
                     <p><strong>例子 Example:</strong> The office is not a place <span class="highlight">to talk loudly</span>.</p>
                     <p>辦公室不是大聲說話的地方。</p>
                 </div>
             </div>
-            
-            <div class="card">
-                <h3>不定詞作受詞補語 | Infinitives as Object Complements</h3>
-                <p>不定詞可以在某些動詞後作受詞補語。</p>
-                <p>Infinitives can function as object complements after certain verbs.</p>
-                
-                <div class="example">
-                    <p><strong>例子 Example:</strong> The payment allowed him <span class="highlight">to buy a new phone</span>.</p>
-                    <p>這筆付款讓他能夠買一部新手機。</p>
-                </div>
-                
-                <div class="example">
-                    <p><strong>例子 Example:</strong> The teacher encourages the students <span class="highlight">to work harder</span>.</p>
-                    <p>老師鼓勵學生更加努力學習。</p>
-                </div>
-                
-                <div class="example">
-                    <p><strong>例子 Example:</strong> Jack's mother forced him <span class="highlight">to have his hair cut</span>.</p>
-                    <p>傑克的母親強迫他理髮。</p>
-                </div>
-                
-                <div class="example">
-                    <p><strong>例子 Example:</strong> The teacher helps us <span class="highlight">(to) practice writing</span>.</p>
-                    <p>老師幫助我們練習寫作。</p>
-                </div>
-            </div>
-            
-            <div class="card">
-                <h3>使役動詞後的不定詞補語 | Infinitives after Causative Verbs</h3>
-                <p>使役動詞(let, make, have)後的不定詞補語省略to。</p>
-                <p>The "to" is omitted in infinitive complements after causative verbs (let, make, have).</p>
-                
-                <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="highlight">Let's play</span> basketball.</p>
-                    <p>我們打籃球吧。</p>
-                    <p><em>(不是 to play)</em></p>
-                </div>
-                
-                <div class="example">
-                    <p><strong>例子 Example:</strong> The new policy <span class="highlight">made him attend</span> the training course.</p>
-                    <p>新政策迫使他參加培訓課程。</p>
-                </div>
-                
-                <div class="example">
-                    <p><strong>例子 Example:</strong> I regularly <span class="highlight">have the dentist check</span> my teeth.</p>
-                    <p>我定期讓牙醫檢查我的牙齒。</p>
-                </div>
-            </div>
-            
-            <div class="card">
-                <h3>不定詞的否定式 | Negative Form of Infinitives</h3>
-                <p>不定詞的否定式是在to前加not。</p>
-                <p>The negative form of infinitives is formed by adding "not" before "to".</p>
-                
-                <div class="example">
-                    <p><strong>例子 Example:</strong> I decided <span class="highlight">not to buy</span> the new phone.</p>
-                    <p>我決定不買新手機。</p>
-                </div>
-            </div>
-            
             <div class="interactive-element">
                 <h3>限定詞練習 | Modifier Practice</h3>
                 <p>選擇正確的不定詞形式完成句子</p>
@@ -930,12 +811,10 @@
             </div>
         </div>
     </div>
-    
     <footer>
         <p>Shirley's Infinitive Learning Platform | 不定詞學習平台</p>
         <p>© 2025 Shirley's Grammar E-Charger</p>
     </footer>
-
     <script>
         // 選項卡功能
         document.querySelectorAll('.tab').forEach(tab => {
@@ -943,27 +822,21 @@
                 // 移除所有活動標籤和內容
                 document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
                 document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-                
                 // 添加活動類到當前標籤
                 tab.classList.add('active');
-                
                 // 顯示對應的內容
                 const tabId = tab.getAttribute('data-tab');
                 document.getElementById(tabId).classList.add('active');
-                
                 // 播放切換音效
                 playSound('click');
             });
         });
-        
         // 動畫控制
         let animationInterval;
-        
         // 不定詞介紹動畫
         document.getElementById('playAnimation').addEventListener('click', () => {
             const animation = document.getElementById('infinitiveAnimation');
             animation.innerHTML = 'Verb: work → Infinitive: ______';
-            
             let count = 0;
             const verbs = [
                 {verb: 'work', infinitive: 'to work'},
@@ -972,28 +845,23 @@
                 {verb: 'learn', infinitive: 'to learn'},
                 {verb: 'write', infinitive: 'to write'}
             ];
-            
             clearInterval(animationInterval);
             animationInterval = setInterval(() => {
                 animation.innerHTML = `Verb: ${verbs[count].verb} → Infinitive: <span style="color: var(--accent); text-decoration: underline;">${verbs[count].infinitive}</span>`;
                 count = (count + 1) % verbs.length;
             }, 1500);
-            
             // 播放音效
             playSound('success');
         });
-        
         document.getElementById('pauseAnimation').addEventListener('click', () => {
             clearInterval(animationInterval);
             // 播放音效
             playSound('click');
         });
-        
         // 主詞動畫
         document.getElementById('playSubjectAnimation').addEventListener('click', () => {
             const animation = document.getElementById('subjectAnimation');
             animation.innerHTML = '______ (learn) a new language is challenging but rewarding.';
-            
             let count = 0;
             const sentences = [
                 {verb: 'learn', infinitive: 'To learn'},
@@ -1002,28 +870,23 @@
                 {verb: 'understand', infinitive: 'To understand'},
                 {verb: 'teach', infinitive: 'To teach'}
             ];
-            
             clearInterval(animationInterval);
             animationInterval = setInterval(() => {
                 animation.innerHTML = `<span style="color: var(--accent); text-decoration: underline;">${sentences[count].infinitive}</span> a new language is challenging but rewarding.`;
                 count = (count + 1) % sentences.length;
             }, 1500);
-            
             // 播放音效
             playSound('success');
         });
-        
         document.getElementById('pauseSubjectAnimation').addEventListener('click', () => {
             clearInterval(animationInterval);
             // 播放音效
             playSound('click');
         });
-        
         // 受詞動畫
         document.getElementById('playObjectAnimation').addEventListener('click', () => {
             const animation = document.getElementById('objectAnimation');
             animation.innerHTML = 'She decided ______ (study) abroad next year.';
-            
             let count = 0;
             const sentences = [
                 {verb: 'study', infinitive: 'to study'},
@@ -1032,28 +895,23 @@
                 {verb: 'live', infinitive: 'to live'},
                 {verb: 'volunteer', infinitive: 'to volunteer'}
             ];
-            
             clearInterval(animationInterval);
             animationInterval = setInterval(() => {
                 animation.innerHTML = `She decided <span style="color: var(--accent); text-decoration: underline;">${sentences[count].infinitive}</span> abroad next year.`;
                 count = (count + 1) % sentences.length;
             }, 1500);
-            
             // 播放音效
             playSound('success');
         });
-        
         document.getElementById('pauseObjectAnimation').addEventListener('click', () => {
             clearInterval(animationInterval);
             // 播放音效
             playSound('click');
         });
-        
         // 比較動畫
         document.getElementById('playComparisonAnimation').addEventListener('click', () => {
             const animation = document.getElementById('comparisonAnimation');
             animation.innerHTML = 'I remember ______ (visit) Paris when I was a child.';
-            
             let count = 0;
             const sentences = [
                 {verb: 'visit', form: 'visiting'},
@@ -1062,28 +920,23 @@
                 {verb: 'enjoy', form: 'enjoying'},
                 {verb: 'love', form: 'loving'}
             ];
-            
             clearInterval(animationInterval);
             animationInterval = setInterval(() => {
                 animation.innerHTML = `I remember <span style="color: var(--accent); text-decoration: underline;">${sentences[count].form}</span> Paris when I was a child.`;
                 count = (count + 1) % sentences.length;
             }, 1500);
-            
             // 播放音效
             playSound('success');
         });
-        
         document.getElementById('pauseComparisonAnimation').addEventListener('click', () => {
             clearInterval(animationInterval);
             // 播放音效
             playSound('click');
         });
-        
         // 補語動畫
         document.getElementById('playComplementAnimation').addEventListener('click', () => {
             const animation = document.getElementById('complementAnimation');
             animation.innerHTML = 'Her dream is ______ (become) a doctor.';
-            
             let count = 0;
             const sentences = [
                 {verb: 'become', infinitive: 'to become'},
@@ -1092,28 +945,23 @@
                 {verb: 'save', infinitive: 'to save'},
                 {verb: 'care', infinitive: 'to care'}
             ];
-            
             clearInterval(animationInterval);
             animationInterval = setInterval(() => {
                 animation.innerHTML = `Her dream is <span style="color: var(--accent); text-decoration: underline;">${sentences[count].infinitive}</span> a doctor.`;
                 count = (count + 1) % sentences.length;
             }, 1500);
-            
             // 播放音效
             playSound('success');
         });
-        
         document.getElementById('pauseComplementAnimation').addEventListener('click', () => {
             clearInterval(animationInterval);
             // 播放音效
             playSound('click');
         });
-        
         // 限定詞動畫
         document.getElementById('playModifierAnimation').addEventListener('click', () => {
             const animation = document.getElementById('modifierAnimation');
             animation.innerHTML = 'She has a lot of homework ______ (do) tonight.';
-            
             let count = 0;
             const sentences = [
                 {verb: 'do', infinitive: 'to do'},
@@ -1122,30 +970,25 @@
                 {verb: 'check', infinitive: 'to check'},
                 {verb: 'review', infinitive: 'to review'}
             ];
-            
             clearInterval(animationInterval);
             animationInterval = setInterval(() => {
                 animation.innerHTML = `She has a lot of homework <span style="color: var(--accent); text-decoration: underline;">${sentences[count].infinitive}</span> tonight.`;
                 count = (count + 1) % sentences.length;
             }, 1500);
-            
             // 播放音效
             playSound('success');
         });
-        
         document.getElementById('pauseModifierAnimation').addEventListener('click', () => {
             clearInterval(animationInterval);
             // 播放音效
             playSound('click');
         });
-        
         // 音效函數
         function playSound(type) {
             // 在實際應用中，這裡會播放相應的音效
             // 由於這是一個示例，我們只模擬音效播放
             console.log(`Playing ${type} sound`);
         }
-        
         // 初始加載時播放歡迎音效
         window.addEventListener('load', () => {
             playSound('welcome');
