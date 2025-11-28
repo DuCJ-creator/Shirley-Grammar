@@ -272,35 +272,12 @@
             background-position: bottom;
             border-radius: 0;
         }
-        /* Flip Card Styles */
+        /* Infinitive List Styles (Chips) */
         .infinitive-list {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
             gap: 15px;
             margin: 2rem 0;
-        }
-        .flip-card {
-            perspective: 1000px;
-            height: 100%;
-            cursor: pointer;
-        }
-        .flip-card-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            transition: transform 0.6s;
-            transform-style: preserve-3d;
-        }
-        .flip-card.flipped .flip-card-inner {
-            transform: rotateY(180deg);
-        }
-        .flip-card-front, .flip-card-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            border-radius: 50px;
         }
         .infinitive-item {
             background: var(--primary-mid);
@@ -312,44 +289,12 @@
             transition: all 0.3s ease;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             border: 1px solid transparent;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 80px;
         }
         .infinitive-item:hover {
             transform: translateY(-5px);
             background: var(--primary-dark);
             border-color: var(--gold-accent);
             box-shadow: 0 8px 20px rgba(255, 215, 0, 0.2);
-        }
-        .flip-card-back {
-            background: white;
-            transform: rotateY(180deg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            border: 1px solid rgba(255,215,0,0.3);
-        }
-        .flip-card-back .example {
-            background: none;
-            border-left: none;
-            padding: 0;
-            margin: 0;
-            text-align: center;
-            color: var(--text-main);
-            font-size: 0.95rem;
-        }
-        .flip-card-back .example strong {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--primary-mid);
-        }
-        .flip-card-back .example p {
-            margin: 0.3rem 0;
         }
         /* Interactive Element */
         .interactive-element {
@@ -600,291 +545,36 @@
             </div>
         </div>
 
-        <!-- Object Tab: Enhanced with Flip Cards -->
+        <!-- Object Tab -->
         <div class="tab-content" id="object">
             <h2>作受詞 | As Object</h2>
             <div class="card">
                 <h3>不定詞作動詞的受詞 | Infinitives as Objects of Verbs</h3>
                 <p>某些動詞後面必須接不定詞作受詞，需要在平時記憶和積累。</p>
                 <p>Some verbs must be followed by an infinitive as the object, which needs to be memorized and accumulated over time.</p>
-                
                 <div class="infinitive-list">
-                    <div class="flip-card" data-verb="ask">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <div class="infinitive-item">ask<br>詢問、要求</div>
-                            </div>
-                            <div class="flip-card-back">
-                                <div class="example">
-                                    <p><strong>Example:</strong> She asked me <span class="highlight">to help her</span>.</p>
-                                    <p>她要求我幫她。</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flip-card" data-verb="afford">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <div class="infinitive-item">afford<br>負擔得起</div>
-                            </div>
-                            <div class="flip-card-back">
-                                <div class="example">
-                                    <p><strong>Example:</strong> I can't afford <span class="highlight">to buy a new car</span>.</p>
-                                    <p>我負擔不起買新車。</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flip-card" data-verb="agree">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <div class="infinitive-item">agree<br>同意</div>
-                            </div>
-                            <div class="flip-card-back">
-                                <div class="example">
-                                    <p><strong>Example:</strong> He agreed <span class="highlight">to sign the contract</span>.</p>
-                                    <p>他同意簽署合約。</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flip-card" data-verb="attempt">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <div class="infinitive-item">attempt<br>嘗試</div>
-                            </div>
-                            <div class="flip-card-back">
-                                <div class="example">
-                                    <p><strong>Example:</strong> They attempted <span class="highlight">to climb the mountain</span>.</p>
-                                    <p>他們嘗試攀登那座山。</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flip-card" data-verb="choose">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <div class="infinitive-item">choose<br>選擇</div>
-                            </div>
-                            <div class="flip-card-back">
-                                <div class="example">
-                                    <p><strong>Example:</strong> She chose <span class="highlight">to study abroad</span>.</p>
-                                    <p>她選擇出國留學。</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flip-card" data-verb="consent">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <div class="infinitive-item">consent<br>同意、允許</div>
-                            </div>
-                            <div class="flip-card-back">
-                                <div class="example">
-                                    <p><strong>Example:</strong> He finally consented <span class="highlight">to join the meeting</span>.</p>
-                                    <p>他終於同意參加會議。</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flip-card" data-verb="decide">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <div class="infinitive-item">decide<br>決定</div>
-                            </div>
-                            <div class="flip-card-back">
-                                <div class="example">
-                                    <p><strong>Example:</strong> We decided <span class="highlight">to take a vacation</span>.</p>
-                                    <p>我們決定去度假。</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flip-card" data-verb="claim">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <div class="infinitive-item">claim<br>聲稱</div>
-                            </div>
-                            <div class="flip-card-back">
-                                <div class="example">
-                                    <p><strong>Example:</strong> He claimed <span class="highlight">to have seen a UFO</span>.</p>
-                                    <p>他聲稱自己看到了飛碟。</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flip-card" data-verb="expect">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <div class="infinitive-item">expect<br>預期、期待</div>
-                            </div>
-                            <div class="flip-card-back">
-                                <div class="example">
-                                    <p><strong>Example:</strong> I expect you <span class="highlight">to be on time</span>.</p>
-                                    <p>我期待你準時到。</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flip-card" data-verb="fail">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <div class="infinitive-item">fail<br>未能、失敗</div>
-                            </div>
-                            <div class="flip-card-back">
-                                <div class="example">
-                                    <p><strong>Example:</strong> He failed <span class="highlight">to complete the task</span>.</p>
-                                    <p>他沒能完成這項任務。</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flip-card" data-verb="hesitate">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <div class="infinitive-item">hesitate<br>猶豫</div>
-                            </div>
-                            <div class="flip-card-back">
-                                <div class="example">
-                                    <p><strong>Example:</strong> Don’t hesitate <span class="highlight">to ask questions</span>.</p>
-                                    <p>別猶豫，有問題就問。</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flip-card" data-verb="hinder">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <div class="infinitive-item">hinder<br>阻礙</div>
-                            </div>
-                            <div class="flip-card-back">
-                                <div class="example">
-                                    <p><strong>Example:</strong> The noise hindered him <span class="highlight">to concentrate</span>.</p>
-                                    <p>噪音妨礙他專心。（註：此用法較正式）</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flip-card" data-verb="intend">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <div class="infinitive-item">intend<br>打算</div>
-                            </div>
-                            <div class="flip-card-back">
-                                <div class="example">
-                                    <p><strong>Example:</strong> I intend <span class="highlight">to apply for the job</span>.</p>
-                                    <p>我打算申請這份工作。</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flip-card" data-verb="learn">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <div class="infinitive-item">learn<br>學習</div>
-                            </div>
-                            <div class="flip-card-back">
-                                <div class="example">
-                                    <p><strong>Example:</strong> She wants to learn <span class="highlight">to play the piano</span>.</p>
-                                    <p>她想學彈鋼琴。</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flip-card" data-verb="offer">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <div class="infinitive-item">offer<br>提供</div>
-                            </div>
-                            <div class="flip-card-back">
-                                <div class="example">
-                                    <p><strong>Example:</strong> He offered <span class="highlight">to drive us home</span>.</p>
-                                    <p>他主動提出要載我們回家。</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flip-card" data-verb="plan">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <div class="infinitive-item">plan<br>計畫</div>
-                            </div>
-                            <div class="flip-card-back">
-                                <div class="example">
-                                    <p><strong>Example:</strong> They plan <span class="highlight">to get married next year</span>.</p>
-                                    <p>他們計畫明年結婚。</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flip-card" data-verb="prepare">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <div class="infinitive-item">prepare<br>準備</div>
-                            </div>
-                            <div class="flip-card-back">
-                                <div class="example">
-                                    <p><strong>Example:</strong> We are preparing <span class="highlight">to move to a new city</span>.</p>
-                                    <p>我們正在準備搬到一座新城市。</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flip-card" data-verb="pretend">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <div class="infinitive-item">pretend<br>假裝</div>
-                            </div>
-                            <div class="flip-card-back">
-                                <div class="example">
-                                    <p><strong>Example:</strong> He pretended <span class="highlight">to be asleep</span>.</p>
-                                    <p>他假裝睡著了。</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flip-card" data-verb="resolve">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <div class="infinitive-item">resolve<br>決心</div>
-                            </div>
-                            <div class="flip-card-back">
-                                <div class="example">
-                                    <p><strong>Example:</strong> She resolved <span class="highlight">to quit smoking</span>.</p>
-                                    <p>她下定決心戒菸。</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flip-card" data-verb="want">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <div class="infinitive-item">want<br>想要</div>
-                            </div>
-                            <div class="flip-card-back">
-                                <div class="example">
-                                    <p><strong>Example:</strong> I really want <span class="highlight">to visit Japan</span>.</p>
-                                    <p>我真的很想去日本玩。</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flip-card" data-verb="volunteer">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <div class="infinitive-item">volunteer<br>自願</div>
-                            </div>
-                            <div class="flip-card-back">
-                                <div class="example">
-                                    <p><strong>Example:</strong> He volunteered <span class="highlight">to help the community</span>.</p>
-                                    <p>他自願幫忙社區。</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="infinitive-item">ask</div>
+                    <div class="infinitive-item">afford</div>
+                    <div class="infinitive-item">agree</div>
+                    <div class="infinitive-item">attempt</div>
+                    <div class="infinitive-item">choose</div>
+                    <div class="infinitive-item">consent</div>
+                    <div class="infinitive-item">decide</div>
+                    <div class="infinitive-item">claim</div>
+                    <div class="infinitive-item">expect</div>
+                    <div class="infinitive-item">fail</div>
+                    <div class="infinitive-item">hesitate</div>
+                    <div class="infinitive-item">hinder</div>
+                    <div class="infinitive-item">intend</div>
+                    <div class="infinitive-item">learn</div>
+                    <div class="infinitive-item">offer</div>
+                    <div class="infinitive-item">plan</div>
+                    <div class="infinitive-item">prepare</div>
+                    <div class="infinitive-item">pretend</div>
+                    <div class="infinitive-item">resolve</div>
+                    <div class="infinitive-item">want</div>
+                    <div class="infinitive-item">volunteer</div>
                 </div>
-
-                <!-- Original non-interactive examples -->
                 <div class="example">
                     <p><strong>例子 Example:</strong> Modern people <span class="highlight">tend to take in</span> a large amount of fat, protein and alcohol.</p>
                     <p>現代人傾向攝入大量的脂肪、蛋白質和酒精。</p>
@@ -996,7 +686,7 @@
             </div>
         </div>
 
-        <!-- Complement Tab: Restructured -->
+        <!-- Complement Tab: Fully Restructured -->
         <div class="tab-content" id="complement">
             <h2>作補語 | As Complement</h2>
 
@@ -1006,12 +696,31 @@
                 <p>不定詞可在 be 動詞等連綴動詞後作主詞補語，說明主詞的身分、目的或狀態。</p>
                 <p>Infinitives can follow linking verbs (like "be") to describe the subject's identity, purpose, or state.</p>
                 <div class="example">
-                    <p><strong>例子 Example:</strong> The governments' obligation is <span class="highlight">to remove poverty, illiteracy and diseases</span>.</p>
-                    <p>政府的義務是消除貧困、文盲和疾病。</p>
+                    <p><strong>例子 Example:</strong> The government's obligation is <span class="highlight">to remove poverty</span>.</p>
+                    <p>政府的義務是消除貧困。</p>
                 </div>
                 <div class="example">
-                    <p><strong>例子 Example:</strong> The most effective solution is <span class="highlight">to enhance the public's awareness</span> of the rubbish problem.</p>
-                    <p>最有效的解決方案是提高公眾對垃圾問題的認識。</p>
+                    <p><strong>例子 Example:</strong> The best solution is <span class="highlight">to enhance awareness</span>.</p>
+                    <p>最佳解決方案是提升意識。</p>
+                </div>
+            </div>
+
+            <!-- 主詞補語中的省略 to 特例 -->
+            <div class="card">
+                <h3>主詞補語中的省略 "to" | Omission of "to" in Subject Complement</h3>
+                <p>在 "All/What/Thing... is..." 句型中，後面的不定詞常省略 "to"。</p>
+                <p>In structures like "All you have to do is...", the "to" is often omitted.</p>
+                <div class="example">
+                    <p><strong>例子 Example:</strong> All you have to do is <span class="highlight">change</span> your attitude.</p>
+                    <p>你所要做的就是改變態度。</p>
+                </div>
+                <div class="example">
+                    <p><strong>例子 Example:</strong> The only thing to do is <span class="highlight">make</span> a lot of money.</p>
+                    <p>唯一要做的事就是賺很多錢。</p>
+                </div>
+                <div class="example">
+                    <p><strong>例子 Example:</strong> What the elders should do is <span class="highlight">enjoy</span> their late years.</p>
+                    <p>老年人應該做的是享受晚年。</p>
                 </div>
             </div>
 
@@ -1019,7 +728,7 @@
             <div class="card">
                 <h3>受詞補語（一般動詞後）| Object Complements after Verbs</h3>
                 <p>某些動詞（如 allow, encourage, force, help）後可接「受詞 + 不定詞」，該不定詞用來補充說明受詞的動作。</p>
-                <p>After certain verbs (e.g., allow, encourage, force, help), we use "object + infinitive" where the infinitive complements the object.</p>
+                <p>After verbs like allow, encourage, force, or help, we use "object + infinitive" where the infinitive complements the object.</p>
                 <div class="example">
                     <p><strong>例子 Example:</strong> The payment allowed him <span class="highlight">to buy a new phone</span>.</p>
                     <p>這筆付款讓他能夠買一部新手機。</p>
@@ -1056,15 +765,15 @@
                     <p>我定期讓牙醫檢查我的牙齒。</p>
                 </div>
                 <div class="warning">
-                    <p><strong>📌 注意：</strong>使役動詞 have 表「僱用、安排」時也用此結構，如：<em>She had her car repaired.</em>（她讓人修了她的車。）</p>
+                    <p><strong>📌 注意：</strong>使役動詞 have 表「僱用、安排」時也用此結構，如：<em>She had her car repaired.</em></p>
                 </div>
             </div>
 
             <!-- 否定式 -->
             <div class="card">
                 <h3>不定詞的否定式 | Negative Infinitives</h3>
-                <p>不定詞的否定形式是在 <strong>to 前加 not</strong>，適用於主詞/受詞補語等各種語境。</p>
-                <p>The negative infinitive is formed by adding <strong>"not" before "to"</strong>, used in subject/object complements and other contexts.</p>
+                <p>不定詞的否定形式是在 <strong>to 前加 not</strong>，可用於主詞或受詞補語。</p>
+                <p>The negative infinitive is formed by adding <strong>"not" before "to"</strong>.</p>
                 <div class="example">
                     <p><strong>例子 Example:</strong> I decided <span class="highlight">not to buy</span> the new phone.</p>
                     <p>我決定不買新手機。</p>
@@ -1093,13 +802,13 @@
             </div>
         </div>
 
-        <!-- Modifier Tab -->
+        <!-- Modifier Tab: Only noun-modifying use -->
         <div class="tab-content" id="modifier">
             <h2>作限定詞 | As Modifier</h2>
             <div class="card">
                 <h3>不定詞作名詞的限定詞 | Infinitives as Modifiers of Nouns</h3>
-                <p>不定詞可以放在名詞後，作為限定詞使用。</p>
-                <p>Infinitives can be placed after nouns, functioning as modifiers.</p>
+                <p>不定詞可以放在名詞後，作為限定詞（形容詞功能）使用，說明該名詞的用途或目的。</p>
+                <p>Infinitives can follow nouns to describe their purpose or function (adjectival use).</p>
                 <div class="example">
                     <p><strong>例子 Example:</strong> We have the ability <span class="highlight">to fight against the virus</span>.</p>
                     <p>我們有能力對抗病毒。</p>
@@ -1111,6 +820,10 @@
                 <div class="example">
                     <p><strong>例子 Example:</strong> The office is not a place <span class="highlight">to talk loudly</span>.</p>
                     <p>辦公室不是大聲說話的地方。</p>
+                </div>
+                <div class="example">
+                    <p><strong>例子 Example:</strong> I need a book <span class="highlight">to read on the train</span>.</p>
+                    <p>我需要一本在火車上讀的書。</p>
                 </div>
             </div>
             <div class="interactive-element">
@@ -1147,48 +860,22 @@
                 playSound('click');
             });
         });
-
-        // 動詞卡片翻轉
-        document.querySelectorAll('.flip-card').forEach(card => {
-            card.addEventListener('click', () => {
-                card.classList.toggle('flipped');
-                playSound('click');
-            });
-        });
-
         // 動畫控制
         let animationInterval;
-
-        function setupAnimation(playBtnId, pauseBtnId, animId, sentences, isInfinitive = true) {
-            document.getElementById(playBtnId).addEventListener('click', () => {
-                const anim = document.getElementById(animId);
-                clearInterval(animationInterval);
-                let count = 0;
-                animationInterval = setInterval(() => {
-                    if (isInfinitive) {
-                        anim.innerHTML = sentences[count].replace(/<span.*<\/span>/, `<span style="color: var(--accent); text-decoration: underline;">${sentences[count].match(/<span.*?>(.*?)<\/span>/)[1]}</span>`);
-                    } else {
-                        anim.innerHTML = sentences[count];
-                    }
-                    count = (count + 1) % sentences.length;
-                }, 1500);
-                playSound('success');
-            });
-            document.getElementById(pauseBtnId).addEventListener('click', () => {
-                clearInterval(animationInterval);
-                playSound('click');
-            });
-        }
-
-        // 動畫資料（簡化寫法）
         document.getElementById('playAnimation').addEventListener('click', () => {
-            const anim = document.getElementById('infinitiveAnimation');
-            anim.innerHTML = 'Verb: work → Infinitive: ______';
+            const animation = document.getElementById('infinitiveAnimation');
+            animation.innerHTML = 'Verb: work → Infinitive: ______';
             let count = 0;
-            const verbs = ['to work', 'to study', 'to travel', 'to learn', 'to write'];
+            const verbs = [
+                {verb: 'work', infinitive: 'to work'},
+                {verb: 'study', infinitive: 'to study'},
+                {verb: 'travel', infinitive: 'to travel'},
+                {verb: 'learn', infinitive: 'to learn'},
+                {verb: 'write', infinitive: 'to write'}
+            ];
             clearInterval(animationInterval);
             animationInterval = setInterval(() => {
-                anim.innerHTML = `Verb: ${['work','study','travel','learn','write'][count]} → Infinitive: <span style="color: var(--accent); text-decoration: underline;">${verbs[count]}</span>`;
+                animation.innerHTML = `Verb: ${verbs[count].verb} → Infinitive: <span style="color: var(--accent); text-decoration: underline;">${verbs[count].infinitive}</span>`;
                 count = (count + 1) % verbs.length;
             }, 1500);
             playSound('success');
@@ -1197,14 +884,20 @@
             clearInterval(animationInterval);
             playSound('click');
         });
-
         document.getElementById('playSubjectAnimation').addEventListener('click', () => {
-            const anim = document.getElementById('subjectAnimation');
+            const animation = document.getElementById('subjectAnimation');
+            animation.innerHTML = '______ (learn) a new language is challenging but rewarding.';
             let count = 0;
-            const sentences = ['To learn', 'To master', 'To speak', 'To understand', 'To teach'];
+            const sentences = [
+                {verb: 'learn', infinitive: 'To learn'},
+                {verb: 'master', infinitive: 'To master'},
+                {verb: 'speak', infinitive: 'To speak'},
+                {verb: 'understand', infinitive: 'To understand'},
+                {verb: 'teach', infinitive: 'To teach'}
+            ];
             clearInterval(animationInterval);
             animationInterval = setInterval(() => {
-                anim.innerHTML = `<span style="color: var(--accent); text-decoration: underline;">${sentences[count]}</span> a new language is challenging but rewarding.`;
+                animation.innerHTML = `<span style="color: var(--accent); text-decoration: underline;">${sentences[count].infinitive}</span> a new language is challenging but rewarding.`;
                 count = (count + 1) % sentences.length;
             }, 1500);
             playSound('success');
@@ -1213,14 +906,20 @@
             clearInterval(animationInterval);
             playSound('click');
         });
-
         document.getElementById('playObjectAnimation').addEventListener('click', () => {
-            const anim = document.getElementById('objectAnimation');
+            const animation = document.getElementById('objectAnimation');
+            animation.innerHTML = 'She decided ______ (study) abroad next year.';
             let count = 0;
-            const sentences = ['to study', 'to work', 'to travel', 'to live', 'to volunteer'];
+            const sentences = [
+                {verb: 'study', infinitive: 'to study'},
+                {verb: 'work', infinitive: 'to work'},
+                {verb: 'travel', infinitive: 'to travel'},
+                {verb: 'live', infinitive: 'to live'},
+                {verb: 'volunteer', infinitive: 'to volunteer'}
+            ];
             clearInterval(animationInterval);
             animationInterval = setInterval(() => {
-                anim.innerHTML = `She decided <span style="color: var(--accent); text-decoration: underline;">${sentences[count]}</span> abroad next year.`;
+                animation.innerHTML = `She decided <span style="color: var(--accent); text-decoration: underline;">${sentences[count].infinitive}</span> abroad next year.`;
                 count = (count + 1) % sentences.length;
             }, 1500);
             playSound('success');
@@ -1229,15 +928,21 @@
             clearInterval(animationInterval);
             playSound('click');
         });
-
         document.getElementById('playComparisonAnimation').addEventListener('click', () => {
-            const anim = document.getElementById('comparisonAnimation');
+            const animation = document.getElementById('comparisonAnimation');
+            animation.innerHTML = 'I remember ______ (visit) Paris when I was a child.';
             let count = 0;
-            const forms = ['visiting', 'seeing', 'exploring', 'enjoying', 'loving'];
+            const sentences = [
+                {verb: 'visit', form: 'visiting'},
+                {verb: 'see', form: 'seeing'},
+                {verb: 'explore', form: 'exploring'},
+                {verb: 'enjoy', form: 'enjoying'},
+                {verb: 'love', form: 'loving'}
+            ];
             clearInterval(animationInterval);
             animationInterval = setInterval(() => {
-                anim.innerHTML = `I remember <span style="color: var(--accent); text-decoration: underline;">${forms[count]}</span> Paris when I was a child.`;
-                count = (count + 1) % forms.length;
+                animation.innerHTML = `I remember <span style="color: var(--accent); text-decoration: underline;">${sentences[count].form}</span> Paris when I was a child.`;
+                count = (count + 1) % sentences.length;
             }, 1500);
             playSound('success');
         });
@@ -1245,15 +950,21 @@
             clearInterval(animationInterval);
             playSound('click');
         });
-
         document.getElementById('playComplementAnimation').addEventListener('click', () => {
-            const anim = document.getElementById('complementAnimation');
+            const animation = document.getElementById('complementAnimation');
+            animation.innerHTML = 'Her dream is ______ (become) a doctor.';
             let count = 0;
-            const infinitives = ['to become', 'to be', 'to help', 'to save', 'to care'];
+            const sentences = [
+                {verb: 'become', infinitive: 'to become'},
+                {verb: 'be', infinitive: 'to be'},
+                {verb: 'help', infinitive: 'to help'},
+                {verb: 'save', infinitive: 'to save'},
+                {verb: 'care', infinitive: 'to care'}
+            ];
             clearInterval(animationInterval);
             animationInterval = setInterval(() => {
-                anim.innerHTML = `Her dream is <span style="color: var(--accent); text-decoration: underline;">${infinitives[count]}</span> a doctor.`;
-                count = (count + 1) % infinitives.length;
+                animation.innerHTML = `Her dream is <span style="color: var(--accent); text-decoration: underline;">${sentences[count].infinitive}</span> a doctor.`;
+                count = (count + 1) % sentences.length;
             }, 1500);
             playSound('success');
         });
@@ -1261,15 +972,21 @@
             clearInterval(animationInterval);
             playSound('click');
         });
-
         document.getElementById('playModifierAnimation').addEventListener('click', () => {
-            const anim = document.getElementById('modifierAnimation');
+            const animation = document.getElementById('modifierAnimation');
+            animation.innerHTML = 'She has a lot of homework ______ (do) tonight.';
             let count = 0;
-            const infinitives = ['to do', 'to finish', 'to complete', 'to check', 'to review'];
+            const sentences = [
+                {verb: 'do', infinitive: 'to do'},
+                {verb: 'finish', infinitive: 'to finish'},
+                {verb: 'complete', infinitive: 'to complete'},
+                {verb: 'check', infinitive: 'to check'},
+                {verb: 'review', infinitive: 'to review'}
+            ];
             clearInterval(animationInterval);
             animationInterval = setInterval(() => {
-                anim.innerHTML = `She has a lot of homework <span style="color: var(--accent); text-decoration: underline;">${infinitives[count]}</span> tonight.`;
-                count = (count + 1) % infinitives.length;
+                animation.innerHTML = `She has a lot of homework <span style="color: var(--accent); text-decoration: underline;">${sentences[count].infinitive}</span> tonight.`;
+                count = (count + 1) % sentences.length;
             }, 1500);
             playSound('success');
         });
@@ -1277,11 +994,9 @@
             clearInterval(animationInterval);
             playSound('click');
         });
-
         function playSound(type) {
             console.log(`Playing ${type} sound`);
         }
-
         window.addEventListener('load', () => {
             playSound('welcome');
         });
