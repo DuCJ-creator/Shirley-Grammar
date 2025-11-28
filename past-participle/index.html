@@ -6,101 +6,196 @@
     <title>Shirley's Past Participle Learning Platform | 過去分詞學習平台</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Nunito:wght@400;600;700;800&display=swap');
+
         :root {
-            --primary: #8b4513;
-            --secondary: #a0522d;
-            --accent: #daa520;
-            --light: #f8f9fa;
-            --dark: #343a40;
-            --success: #28a745;
+            /* 高雅配色系統：深海藍、墨綠搭配流金點綴 */
+            --primary-dark: #0F2027;  /* 深邃背景 */
+            --primary-mid: #203A43;   /* 中間調 */
+            --primary-accent: #2C5364; /* 亮部 */
+            
+            --gold-accent: #FFD700;   /* 高雅金 */
+            --gold-dark: #B8860B;     /* 深金 */
+            
+            /* 兼容舊 JS 邏輯 */
+            --accent: #FFD700; 
+            
+            --dynamic-gradient: linear-gradient(135deg, #2C5364 0%, #203A43 50%, #0F2027 100%);
+            --gold-gradient: linear-gradient(45deg, #B8860B, #FFD700, #B8860B);
+
+            --bg-body: #f4f7f9;       
+            --bg-card: rgba(255, 255, 255, 0.95);
+            
+            --text-main: #1a1a1a;
+            --text-light: #5a6a7a;
+            --text-on-dark: #ffffff;
+            
+            --shadow-soft: 0 10px 30px -10px rgba(0,0,0,0.1);
+            --shadow-glow: 0 5px 15px rgba(255, 215, 0, 0.3);
+            
+            --radius-lg: 24px;
+            --radius-md: 16px;
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', 'Microsoft JhengHei', '微軟正黑體', Arial, sans-serif;
+            font-family: 'Nunito', 'Noto Sans TC', '微軟正黑體', sans-serif;
         }
         
         body {
-            background-color: var(--light);
-            color: var(--dark);
-            line-height: 1.6;
+            background: #f4f7f9; 
+            color: var(--text-main);
+            line-height: 1.75;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* 粒子背景 Canvas */
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(-45deg, #f4f7f9, #eef2f5, #e0eaf0, #f4f7f9);
+            background-size: 400% 400%;
+            animation: gradientBG 20s ease infinite;
         }
         
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Header: 深邃質感 */
         header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 1.5rem;
+            background: var(--dynamic-gradient);
+            color: var(--text-on-dark);
+            padding: 4rem 1.5rem 5rem;
             text-align: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             position: relative;
             overflow: hidden;
+            box-shadow: 0 10px 30px rgba(15, 32, 39, 0.3);
+            z-index: 10;
         }
         
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+
         .header-content {
             position: relative;
             z-index: 1;
         }
-        
+
         h1 {
-            font-size: 2.2rem;
-            margin-bottom: 0.5rem;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            background: linear-gradient(to right, #ffffff, #cce0ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
         
         .subtitle {
             font-size: 1.2rem;
             opacity: 0.9;
+            font-weight: 600;
+            color: var(--gold-accent);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 215, 0, 0.2);
         }
         
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 1.5rem;
+            padding: 0 2rem 4rem;
+            position: relative;
+            z-index: 10;
         }
         
+        /* Tabs: 玻璃擬態 */
         .tabs {
             display: flex;
             flex-wrap: wrap;
-            margin-bottom: 1.5rem;
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            justify-content: center;
+            gap: 12px;
+            margin: -3.5rem auto 3rem;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(15px);
+            border-radius: 60px;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid rgba(255,255,255,0.4);
+            max-width: fit-content;
         }
         
         .tab {
-            padding: 1rem 1.5rem;
+            padding: 0.9rem 1.8rem;
             cursor: pointer;
-            flex: 1;
             text-align: center;
-            transition: all 0.3s ease;
-            font-weight: bold;
+            transition: all 0.4s ease;
+            font-weight: 700;
+            color: var(--text-light);
+            border-radius: 50px;
             position: relative;
             overflow: hidden;
+            font-size: 1rem;
+            flex: 0 1 auto;
         }
         
+        .tab::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 15%;
+            width: 70%;
+            height: 3px;
+            background: var(--gold-accent);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+            border-radius: 10px;
+        }
+
         .tab:hover {
-            background-color: rgba(139, 69, 19, 0.1);
+            color: var(--primary-dark);
+            background: rgba(255,255,255,0.8);
         }
         
         .tab.active {
-            background-color: var(--primary);
-            color: white;
+            color: var(--primary-dark);
+            background: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .tab.active::before {
+            transform: scaleX(1);
+            box-shadow: 0 0 10px var(--gold-accent);
         }
         
         .tab-content {
             display: none;
-            background: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            margin-bottom: 2rem;
-            animation: fadeIn 0.5s ease;
+            animation: slideUpFade 0.7s cubic-bezier(0.25, 1, 0.5, 1);
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+        @keyframes slideUpFade {
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
@@ -109,164 +204,256 @@
         }
         
         h2 {
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--accent);
+            color: var(--primary-dark);
+            margin-bottom: 2.5rem;
+            font-size: 2rem;
+            font-weight: 800;
+            text-align: center;
+            position: relative;
+            padding-bottom: 1rem;
+            border-bottom: none;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 4px;
+            width: 60px;
+            background: var(--gold-gradient);
+            border-radius: 2px;
         }
         
         h3 {
-            color: var(--secondary);
-            margin: 1.5rem 0 1rem;
+            color: var(--primary-mid);
+            margin: 0 0 1.2rem;
+            font-size: 1.4rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
         }
         
+        h3::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 24px;
+            background: var(--gold-accent);
+            margin-right: 12px;
+            border-radius: 4px;
+        }
+        
+        /* Card Styles */
         .card {
-            background: white;
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s, box-shadow 0.3s;
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid rgba(255,255,255,0.8);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
         }
         
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-7px);
+            box-shadow: 0 15px 40px -10px rgba(0,0,0,0.15);
+            border-color: rgba(255, 215, 0, 0.3);
         }
         
+        /* Table Styles */
         table {
             width: 100%;
-            border-collapse: collapse;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: white;
+            min-width: 600px;
             margin: 1.5rem 0;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
         }
         
         th, td {
-            padding: 12px 15px;
+            padding: 18px 24px;
             text-align: left;
-            border-bottom: 1px solid #e0e0e0;
+            border-bottom: 1px solid #eef2f5;
         }
         
         th {
-            background-color: var(--primary);
+            background: var(--primary-mid);
             color: white;
+            font-weight: 700;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 3px solid var(--gold-accent);
         }
         
         tr:nth-child(even) {
-            background-color: #f8f9fa;
+            background-color: #fcfdfd;
         }
         
+        tr:hover td {
+            background-color: #f0f4f8;
+        }
+
+        /* 比較表格特殊樣式 */
+        .comparison-table th {
+            background-color: var(--primary-dark);
+        }
+        
+        /* Example Box */
         .example {
-            background-color: #f0f7ff;
-            border-left: 4px solid var(--accent);
-            padding: 1rem;
-            margin: 1rem 0;
-            border-radius: 0 8px 8px 0;
+            background: linear-gradient(to right, #fffcf0, #fff);
+            border-left: 5px solid var(--gold-accent);
+            padding: 1.5rem 2rem;
+            margin: 1.5rem 0;
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+            color: var(--text-main);
         }
         
-        .interactive-element {
-            background-color: var(--light);
-            border: 2px dashed var(--secondary);
+        .highlight {
+            color: var(--primary-dark);
+            background: transparent;
+            padding: 2px 6px;
+            font-weight: 700;
+            background: linear-gradient(120deg, transparent 0%, transparent 6px, var(--gold-accent) 6px, var(--gold-accent) 100%);
+            background-size: 100% 10px;
+            background-repeat: no-repeat;
+            background-position: bottom;
+            border-radius: 0;
+        }
+
+        /* Note Box */
+        .note-box {
+            background: rgba(255, 215, 0, 0.1) !important;
+            border-left: 4px solid var(--gold-accent) !important;
+            color: var(--gold-dark) !important;
             padding: 1.5rem;
-            border-radius: 8px;
             margin: 1.5rem 0;
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+        }
+        .note-box strong {
+             color: var(--text-main);
+        }
+
+        /* Participle List Styles (Chips) */
+        .participle-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 15px;
+            margin: 2rem 0;
+        }
+        
+        .participle-item {
+            background: var(--primary-mid);
+            color: white;
+            padding: 15px;
+            border-radius: 50px;
             text-align: center;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border: 1px solid transparent;
         }
         
-        .btn {
-            background-color: var(--accent);
-            color: white;
+        .participle-item:hover {
+            transform: translateY(-5px);
+            background: var(--primary-dark);
+            border-color: var(--gold-accent);
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.2);
+        }
+        
+        /* Interactive Element */
+        .interactive-element {
+            background: white;
             border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 30px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        
-        .btn:hover {
-            background-color: #d4941a;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(218, 165, 32, 0.3);
-        }
-        
-        .animation-controls {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 1rem;
-        }
-        
-        .participle-animation {
-            height: 200px;
-            background: linear-gradient(135deg, #a0522d, #8b4513);
-            border-radius: 10px;
-            margin: 1.5rem 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-            font-weight: bold;
+            padding: 3rem;
+            border-radius: var(--radius-lg);
+            margin: 4rem 0;
+            text-align: center;
+            box-shadow: var(--shadow-soft);
             position: relative;
             overflow: hidden;
         }
         
-        footer {
-            text-align: center;
-            padding: 2rem;
-            margin-top: 2rem;
-            background-color: var(--dark);
+        .interactive-element::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.05) 0%, transparent 70%);
+            animation: rotate 30s linear infinite;
+            z-index: 0;
+        }
+        
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        .interactive-element > * { position: relative; z-index: 1; }
+        
+        /* Buttons */
+        .btn {
+            background: var(--dynamic-gradient);
             color: white;
-            border-radius: 10px 10px 0 0;
-        }
-        
-        .highlight {
-            background-color: #fff9e6;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-weight: bold;
-            color: var(--primary);
-        }
-        
-        .participle-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            border: none;
+            padding: 12px 32px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             gap: 10px;
-            margin: 1rem 0;
+            box-shadow: 0 4px 15px rgba(32, 58, 67, 0.3);
+            position: relative;
+            overflow: hidden;
+            z-index: 2;
         }
         
-        .participle-item {
-            background: #f0f7ff;
-            padding: 10px;
-            border-radius: 5px;
-            text-align: center;
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(32, 58, 67, 0.4), var(--shadow-glow);
+            background: var(--dynamic-gradient);
+        }
+        
+        .btn:hover::before { left: 100%; }
+        
+        /* Animation Box */
+        .participle-animation {
+            height: 220px;
+            background: var(--primary-dark);
+            border-radius: var(--radius-md);
+            margin: 2.5rem auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
             font-weight: bold;
+            box-shadow: inset 0 0 40px rgba(0,0,0,0.8);
+            border: 6px solid #2c3e50;
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
         
-        .comparison-table {
-            width: 100%;
-            margin: 1.5rem 0;
-        }
-        
-        .comparison-table th {
-            background-color: var(--secondary);
-        }
-        
-        .note-box {
-            background-color: #fff3cd;
-            border-left: 4px solid #ffc107;
-            padding: 1rem;
-            margin: 1rem 0;
-            border-radius: 0 8px 8px 0;
-        }
-        
+        /* Usage Diagram Styling - Tech Dashboard Style */
         .usage-diagram {
             text-align: center;
-            margin: 2rem 0;
+            margin: 3rem 0;
         }
         
         .diagram-container {
@@ -278,132 +465,197 @@
         .diagram {
             width: 100%;
             max-width: 600px;
-            height: 300px;
-            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-            border-radius: 10px;
+            height: 350px;
+            background: var(--primary-mid);
+            border-radius: var(--radius-md);
             position: relative;
             overflow: hidden;
+            border: 2px solid var(--primary-accent);
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.3);
+        }
+        
+        .diagram::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.5;
         }
         
         .diagram-item {
             position: absolute;
-            padding: 10px;
-            background: white;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 12px;
+            background: rgba(255,255,255,0.95);
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             text-align: center;
-            width: 120px;
+            width: 160px;
+            font-weight: 700;
+            color: var(--primary-dark);
+            border-top: 4px solid var(--gold-accent);
+            transition: transform 0.3s;
+            font-size: 0.95rem;
+        }
+        
+        .diagram-item:hover {
+            transform: scale(1.1);
+            z-index: 10;
         }
 
-        /* 新增的不規則動詞練習平台樣式 */
+        /* 不規則動詞練習平台 - 尊爵暗黑版 */
         .practice-platform {
-            background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
-            border-radius: 12px;
-            padding: 25px;
-            margin: 25px 0;
-            border: 2px solid var(--accent);
+            background: var(--primary-dark);
+            color: var(--text-on-dark);
+            border-radius: var(--radius-lg);
+            padding: 4rem 3rem;
+            margin: 4rem 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
             text-align: center;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+        }
+
+        .practice-platform::after {
+            content: '';
+            position: absolute;
+            top: -2px; left: -2px; right: -2px; bottom: -2px;
+            background: linear-gradient(45deg, var(--gold-dark), var(--gold-accent), var(--gold-dark));
+            z-index: -1;
+            border-radius: calc(var(--radius-lg) + 2px);
+            opacity: 0.3;
+            filter: blur(5px);
         }
 
         .platform-title {
-            font-size: 1.4rem;
-            color: var(--dark);
-            margin-bottom: 15px;
+            font-size: 2rem;
+            color: var(--gold-accent);
+            margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 15px;
+            font-weight: 800;
+            text-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
         }
 
         .platform-title::before {
-            content: "🎯";
-            font-size: 1.3rem;
+            content: none;
         }
 
         .platform-description {
-            color: var(--dark);
-            margin-bottom: 20px;
-            font-size: 1rem;
-            line-height: 1.6;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 2.5rem;
+            font-size: 1.15rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
         }
 
         .platform-button {
-            display: inline-block;
-            background: var(--accent);
-            color: white;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--gold-gradient);
+            color: var(--primary-dark);
             text-decoration: none;
-            padding: 12px 30px;
-            border-radius: 30px;
-            font-weight: 600;
-            transition: all 0.3s;
+            padding: 18px 45px;
+            border-radius: 50px;
+            font-weight: 800;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-size: 1.2rem;
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.4);
+            margin-bottom: 3rem;
             border: none;
-            cursor: pointer;
-            font-size: 1rem;
-            margin: 10px 5px;
         }
 
         .platform-button:hover {
-            background: #d4941a;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(218, 165, 32, 0.3);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(255, 215, 0, 0.6);
+            background: linear-gradient(45deg, #FFD700, #fffadd, #FFD700);
         }
 
         .platform-features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
+            gap: 25px;
+            margin-top: 2rem;
             text-align: left;
         }
 
         .feature-item {
-            background: rgba(255, 255, 255, 0.8);
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 4px solid var(--primary);
+            background: rgba(255,255,255,0.08);
+            padding: 1.8rem;
+            border-radius: var(--radius-md);
+            border-top: 3px solid var(--gold-accent);
+            border-left: none;
+            transition: transform 0.3s, background 0.3s;
+            backdrop-filter: blur(10px);
+            color: rgba(255,255,255,0.7);
+        }
+        
+        .feature-item:hover {
+            transform: translateY(-10px);
+            background: rgba(255,255,255,0.12);
         }
 
         .feature-item i {
-            color: var(--primary);
-            margin-right: 8px;
+            color: var(--gold-accent);
+            margin-right: 12px;
+            font-size: 1.4rem;
         }
         
+        .feature-item strong {
+            color: white;
+            font-size: 1.1rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 4rem 2rem;
+            margin-top: 5rem;
+            background: var(--primary-dark);
+            color: rgba(255,255,255,0.6);
+            border-radius: 0;
+            position: relative;
+            z-index: 10;
+        }
+        
+        footer::before {
+             content: '';
+             position: absolute;
+             top: 0; left: 0; width: 100%; height: 4px;
+             background: var(--gold-gradient);
+        }
+
         @media (max-width: 768px) {
-            .tabs {
-                flex-direction: column;
-            }
+            header { padding: 3rem 1rem 4rem; }
+            h1 { font-size: 2rem; }
+            .tabs { margin-top: -2rem; width: 95%; flex-direction: row; overflow-x: auto; justify-content: flex-start; }
+            .tab { flex: 0 0 auto; padding: 0.7rem 1.2rem; min-width: auto; }
+            .participle-list { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+            .animation-controls { flex-wrap: wrap; }
+            table { display: block; overflow-x: auto; }
             
-            .tab {
-                flex: none;
-            }
+            .diagram { height: auto; padding-bottom: 2rem; display: flex; flex-direction: column; align-items: center; background: transparent; border: none; box-shadow: none; }
+            .diagram::before { display: none; }
+            .diagram-item { position: relative; top: auto !important; left: auto !important; right: auto !important; bottom: auto !important; margin: 10px 0; width: 80%; }
             
-            .container {
-                padding: 1rem;
-            }
-            
-            h1 {
-                font-size: 1.8rem;
-            }
-            
-            .participle-list {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            }
-
-            .platform-features {
-                grid-template-columns: 1fr;
-            }
-
-            .practice-platform {
-                padding: 20px;
-            }
-
-            .platform-title {
-                font-size: 1.2rem;
-            }
+            .practice-platform { padding: 2rem 1.5rem; }
+            .platform-title { font-size: 1.5rem; flex-direction: column; }
+            .platform-button { width: 100%; justify-content: center; }
         }
     </style>
 </head>
 <body>
+    <canvas id="particles-canvas"></canvas>
+
     <header>
         <div class="header-content">
             <h1>Shirley's Past Participle Learning Platform</h1>
@@ -421,7 +673,6 @@
             <div class="tab" data-tab="comparison">與現在分詞區別 | Present vs Past Participle</div>
         </div>
         
-        <!-- 過去分詞介紹 -->
         <div class="tab-content active" id="intro">
             <h2>過去分詞介紹 | Past Participle Introduction</h2>
             
@@ -483,7 +734,7 @@
                             <div class="diagram-item" style="top: 20px; right: 50px;">修飾語<br>Modifier</div>
                             <div class="diagram-item" style="top: 120px; left: 150px;">受詞補語<br>Object Complement</div>
                             <div class="diagram-item" style="top: 120px; right: 150px;">分詞片語<br>Participle Phrase</div>
-                            <div class="diagram-item" style="bottom: 20px; left: 250px;">完成式<br>Perfect Tense</div>
+                            <div class="diagram-item" style="bottom: 20px; left: 50%; transform: translateX(-50%); width: 200px;">完成式<br>Perfect Tense</div>
                         </div>
                     </div>
                 </div>
@@ -505,9 +756,8 @@
                 </div>
             </div>
 
-            <!-- 新增的不規則動詞練習平台 -->
             <div class="practice-platform">
-                <div class="platform-title">🎯 不規則動詞練習平台</div>
+                <div class="platform-title">🎯 Shirley's 不規則動詞練習平台</div>
                 <div class="platform-description">
                     想要掌握不規則動詞的過去分詞變化嗎？點擊下方按鈕進入互動式練習平台，透過多種練習模式強化不規則動詞的記憶！
                 </div>
@@ -538,7 +788,7 @@
                         激勵學習動力
                     </div>
                 </div>
-                <div class="note-box" style="margin-top: 15px;">
+                <div class="note-box" style="margin-top: 25px; text-align: left; padding: 20px; border-radius: 12px; background: rgba(255, 215, 0, 0.1) !important; color: var(--gold-dark) !important;">
                     <strong>💡 學習提示：</strong> 過去分詞的學習需要掌握不規則動詞變化，建議每天練習10-15分鐘，持續一週即可看到明顯進步！
                 </div>
             </div>
@@ -561,7 +811,6 @@
             </div>
         </div>
         
-        <!-- 作補語 -->
         <div class="tab-content" id="complement">
             <h2>作補語 | As Complement</h2>
             
@@ -609,7 +858,6 @@
             </div>
         </div>
         
-        <!-- 作修飾語 -->
         <div class="tab-content" id="modifier">
             <h2>作修飾語 | As Modifier</h2>
             
@@ -671,7 +919,6 @@
             </div>
         </div>
         
-        <!-- 作受詞補語 -->
         <div class="tab-content" id="object-complement">
             <h2>作受詞補語 | As Object Complement</h2>
             
@@ -733,7 +980,6 @@
             </div>
         </div>
         
-        <!-- 過去分詞片語 -->
         <div class="tab-content" id="phrase">
             <h2>過去分詞片語 | Participle Phrases</h2>
             
@@ -814,7 +1060,6 @@
             </div>
         </div>
         
-        <!-- 與現在分詞區別 -->
         <div class="tab-content" id="comparison">
             <h2>與現在分詞區別 | Present vs Past Participle</h2>
             
@@ -914,6 +1159,87 @@
     </footer>
 
     <script>
+        // --- 粒子效果腳本 ---
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.5; // 緩慢移動速度
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.size = Math.random() * 2 + 1;
+                // 使用金色和深藍色的粒子
+                this.color = Math.random() > 0.5 ? 'rgba(255, 215, 0, 0.4)' : 'rgba(44, 83, 100, 0.3)';
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // 邊界檢查
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            // 根據螢幕大小決定粒子數量
+            const particleCount = Math.floor(window.innerWidth / 15); 
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            particles.forEach((p, index) => {
+                p.update();
+                p.draw();
+                
+                // 繪製連結線
+                for (let j = index + 1; j < particles.length; j++) {
+                    const p2 = particles[j];
+                    const dx = p.x - p2.x;
+                    const dy = p.y - p2.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < 100) {
+                        ctx.strokeStyle = `rgba(184, 134, 11, ${0.15 - distance/1000})`; // 金色連結線
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.stroke();
+                    }
+                }
+            });
+            requestAnimationFrame(animateParticles);
+        }
+
+        initParticles();
+        animateParticles();
+
+        // --- 原有互動邏輯 ---
+
         // 選項卡功能
         document.querySelectorAll('.tab').forEach(tab => {
             tab.addEventListener('click', () => {
