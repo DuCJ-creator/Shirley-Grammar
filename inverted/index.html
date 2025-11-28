@@ -3,20 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shirley's Inverted Sentences | 倒裝句學習</title>
+    <title>Shirley's Grammar E-Charger | 高級語法學習平台</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            /* --- Inverted Sentences 專屬配色 (深海藍 + 香檳金) --- */
-            --inv-primary: #0c2d48;   /* 深海藍 (主色) */
-            --inv-secondary: #205072; /* 藍綠色 (漸層用) */
-            --inv-accent: #d4af37;    /* 香檳金 (點綴) */
-            --inv-light: #e8f1f5;     /* 極淡藍 (背景微調) */
-            --white: #ffffff;
+            /* --- Inverted 專屬配色 (深海藍 + 香檳金) --- */
+            --inv-primary: #0c2d48;   /* 深海藍 */
+            --inv-secondary: #205072; /* 藍綠色 */
+            --inv-accent: #d4af37;    /* 香檳金 */
+            --inv-bg: #f0f4f8;        /* 淺藍灰背景 */
             --text-dark: #2c3e50;
-            --text-grey: #666666;
+            --white: #ffffff;
         }
         
         * {
@@ -27,16 +26,16 @@
         }
         
         body {
-            background-color: #f9f7f2; /* 溫暖的米白背景 */
+            background-color: #f9f7f2;
             color: var(--text-dark);
             line-height: 1.7;
         }
         
-        /* --- Header 設計 --- */
+        /* Header */
         header {
             background: linear-gradient(135deg, #051929, #0c2d48);
             color: white;
-            padding: 3rem 1.5rem;
+            padding: 2.5rem 1.5rem;
             text-align: center;
             position: relative;
             box-shadow: 0 4px 20px rgba(12, 45, 72, 0.3);
@@ -56,7 +55,6 @@
             font-family: 'Playfair Display', serif;
             font-size: 2.5rem;
             margin-bottom: 0.5rem;
-            letter-spacing: 1px;
         }
         
         .subtitle {
@@ -64,250 +62,232 @@
             font-style: italic;
             font-size: 1.2rem;
             color: var(--inv-accent);
-            opacity: 0.9;
         }
         
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 3rem 1.5rem;
+            padding: 2rem;
         }
 
-        /* --- 高級模組樣式 (Elegant Module) --- */
-        .elegant-wrapper {
-            background-color: var(--white);
-            padding: 4rem 2rem;
-            border-radius: 8px;
-            position: relative;
-            margin-bottom: 3rem;
-            box-shadow: 0 10px 40px rgba(12, 45, 72, 0.08);
-            text-align: center;
-            border-top: 5px solid var(--inv-primary); /* 頂部深藍色線條 */
-        }
-
-        .elegant-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 3rem;
-            color: var(--inv-primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .elegant-subtitle {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            color: #888;
-            margin-bottom: 3.5rem;
-            font-size: 1.3rem;
-            display: block;
-        }
-
-        /* 卡片網格 */
-        .elegant-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-
-        /* 卡片設計 */
-        .elegant-card {
-            background: #ffffff;
-            border: 1px solid rgba(12, 45, 72, 0.1);
-            padding: 2.5rem 2rem;
-            text-align: center;
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-            position: relative;
-            border-radius: 6px;
-        }
-
-        .elegant-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(12, 45, 72, 0.15);
-            border-color: var(--inv-primary);
-        }
-
-        /* 圖標盒子 */
-        .elegant-icon-box {
-            font-size: 1.8rem;
-            color: var(--white);
-            background-color: var(--inv-primary);
-            width: 70px;
-            height: 70px;
-            line-height: 70px;
-            border-radius: 50%;
-            margin: 0 auto 1.5rem;
-            box-shadow: 0 5px 15px rgba(12, 45, 72, 0.3);
-            transition: all 0.4s ease;
-        }
-
-        .elegant-card:hover .elegant-icon-box {
-            background-color: var(--inv-accent); /* 懸停變金 */
-            color: white;
-            transform: rotateY(180deg);
-        }
-
-        .card-heading {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            color: var(--text-dark);
-            margin-bottom: 1rem;
-            font-weight: 700;
-        }
-
-        .card-text {
-            font-size: 0.95rem;
-            color: var(--text-grey);
-            margin-bottom: 1.5rem;
-            line-height: 1.8;
-        }
-
-        /* 分隔線 */
-        .divider-line {
-            width: 30px;
-            height: 1px;
-            background-color: #ddd;
-            margin: 1.5rem auto;
-            transition: width 0.3s ease;
-        }
-
-        .elegant-card:hover .divider-line {
-            width: 60px;
-            background-color: var(--inv-primary);
-        }
-
-        /* 列表樣式 */
-        .detail-list {
-            padding: 0;
-            margin: 0;
-        }
-
-        .detail-list li {
-            list-style: none;
-            text-align: left;
-            margin-bottom: 15px;
-            font-size: 0.95rem;
-            color: #555;
+        /* ------------------------------------------- */
+        /* --- 導航 Tabs (模擬原來的板塊安排) --- */
+        /* ------------------------------------------- */
+        .tabs {
             display: flex;
-            align-items: flex-start;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 3rem;
         }
         
-        .detail-list li i {
+        .tab {
+            padding: 1rem 2rem;
+            cursor: pointer;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            background: white;
+            border: 1px solid #ddd;
+            color: #666;
+        }
+        
+        .tab.active {
+            background: var(--inv-primary);
             color: var(--inv-accent);
-            margin-right: 12px;
-            margin-top: 6px;
-            font-size: 0.6rem;
+            border-color: var(--inv-primary);
+            box-shadow: 0 5px 15px rgba(12, 45, 72, 0.3);
         }
 
-        .detail-example {
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.6s ease;
+        }
+        
+        .tab-content.active {
             display: block;
-            font-style: italic;
-            color: #888;
-            font-size: 0.9rem;
-            margin-top: 4px;
-            border-left: 2px solid var(--inv-accent);
-            padding-left: 8px;
-            margin-left: 0;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- 動畫互動區 --- */
-        .interactive-section {
-            margin-top: 5rem;
-            padding-top: 3rem;
-            border-top: 1px solid #eee;
+        /* ------------------------------------------- */
+        /* --- 高級內容卡片 (Detailed Elegant Cards) --- */
+        /* ------------------------------------------- */
+        
+        .elegant-section {
+            background: white;
+            border-radius: 8px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(12, 45, 72, 0.08);
+            border-top: 4px solid var(--inv-primary);
+        }
+
+        .section-header {
             text-align: center;
+            margin-bottom: 2.5rem;
         }
 
         .section-title {
             font-family: 'Playfair Display', serif;
+            font-size: 2rem;
             color: var(--inv-primary);
-            margin-bottom: 2rem;
-            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
         }
 
-        .anim-box {
-            background: linear-gradient(135deg, var(--inv-primary), var(--inv-secondary));
-            color: white;
-            border-radius: 8px;
-            padding: 3rem;
-            margin: 0 auto;
-            max-width: 800px;
-            min-height: 200px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+        .section-subtitle {
             font-family: 'Playfair Display', serif;
-            font-size: 1.6rem;
-            box-shadow: 0 15px 35px rgba(12, 45, 72, 0.25);
+            font-style: italic;
+            color: #888;
+        }
+
+        /* 規則與例句區塊 */
+        .rule-block {
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .rule-block:last-child {
+            border-bottom: none;
+        }
+
+        .rule-title {
+            font-size: 1.2rem;
+            color: var(--inv-primary);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .rule-title i {
+            color: var(--inv-accent);
+            margin-right: 10px;
+            font-size: 1rem;
+        }
+
+        .grammar-formula {
+            background: var(--inv-bg);
+            padding: 1rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #444;
+            margin-bottom: 1rem;
+            border-left: 3px solid var(--inv-accent);
+        }
+
+        /* 例句列表 */
+        .example-list {
+            list-style: none;
+        }
+
+        .example-item {
+            margin-bottom: 1rem;
+            padding-left: 1rem;
             position: relative;
-            overflow: hidden;
+        }
+
+        .example-item::before {
+            content: '•';
+            color: var(--inv-accent);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .en-sentence {
+            font-size: 1.05rem;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        .highlight {
+            color: #c0392b; /* 用於強調倒裝部分的紅色，或可改為金色 */
+            font-weight: bold;
         }
         
-        .anim-label {
-            font-family: 'Lato', sans-serif;
-            font-size: 0.85rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 15px;
-            opacity: 0.7;
+        .highlight-gold {
+            color: var(--inv-primary);
+            font-weight: bold;
+            background-color: rgba(212, 175, 55, 0.15);
+            padding: 0 4px;
+            border-radius: 2px;
         }
 
-        .anim-controls {
+        .cn-trans {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-top: 2px;
+        }
+
+        /* 關鍵詞標籤 */
+        .keyword-tag {
+            display: inline-block;
+            background: var(--inv-primary);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+
+        /* --- 動畫演示區 --- */
+        .anim-container {
+            background: linear-gradient(135deg, var(--inv-primary), var(--inv-secondary));
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            color: white;
+            margin-top: 3rem;
+            box-shadow: 0 10px 25px rgba(12, 45, 72, 0.3);
+        }
+
+        .anim-display {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            min-height: 100px;
             display: flex;
+            align-items: center;
             justify-content: center;
-            gap: 15px;
-            margin-top: 2rem;
+            margin-bottom: 1.5rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            padding: 1rem;
         }
 
         .btn {
+            background: var(--inv-accent);
+            color: var(--inv-primary);
             border: none;
-            padding: 0.9rem 2.5rem;
+            padding: 0.8rem 2rem;
             border-radius: 50px;
-            cursor: pointer;
             font-weight: bold;
-            letter-spacing: 1px;
+            cursor: pointer;
             transition: all 0.3s;
-            color: white;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .btn-play {
-            background: var(--inv-primary);
         }
 
-        .btn-play:hover {
-            background: var(--inv-secondary);
+        .btn:hover {
+            background: white;
             transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(12, 45, 72, 0.2);
-        }
-        
-        .btn-pause {
-            background: #95a5a6;
-        }
-        
-        .btn-pause:hover {
-            background: #7f8c8d;
         }
 
         /* 手機適配 */
         @media (max-width: 768px) {
-            .elegant-title { font-size: 2.2rem; }
-            .container { padding: 1.5rem; }
-            .elegant-wrapper { padding: 2rem 1rem; }
-            .anim-box { padding: 2rem 1rem; font-size: 1.3rem; }
+            .section-title { font-size: 1.6rem; }
+            .example-item { margin-bottom: 1.5rem; }
         }
         
         footer {
             text-align: center;
             padding: 2rem;
             color: #888;
-            font-size: 0.9rem;
-            border-top: 1px solid #eee;
+            border-top: 1px solid #ddd;
             margin-top: 3rem;
         }
     </style>
@@ -316,183 +296,293 @@
 
     <header>
         <h1>Shirley's Grammar E-Charger</h1>
-        <p class="subtitle">The Art of Language · 高級語法學習平台</p>
+        <p class="subtitle">The Art of Inversion · 倒裝句學習平台</p>
     </header>
     
     <div class="container">
-        <div class="elegant-wrapper">
-            <h2 class="elegant-title">The Logic of Order</h2>
-            <span class="elegant-subtitle">Part III: Inverted Sentences · 結構的變奏</span>
+        <div class="tabs">
+            <div class="tab active">Part III: Inverted Sentences</div>
+        </div>
 
-            <div class="elegant-grid">
-                
-                <div class="elegant-card">
-                    <div class="elegant-icon-box">
-                        <i class="fas fa-ban"></i>
+        <div id="inverted" class="tab-content active">
+            
+            <div class="elegant-section">
+                <div class="section-header">
+                    <h2 class="section-title">Introduction</h2>
+                    <span class="section-subtitle">什麼是倒裝句？</span>
+                </div>
+                <div class="rule-block">
+                    <p>倒裝句 (Inversion) 是指將句子中的<strong>動詞 (Verb)</strong> 或 <strong>助動詞 (Auxiliary)</strong> 移到 <strong>主詞 (Subject)</strong> 之前的句型。</p>
+                    <p>目的：為了<strong>強調 (Emphasis)</strong> 語氣，或為了修辭的生動性。</p>
+                    <div class="grammar-formula">
+                        正常語序：Subject + Verb ...<br>
+                        倒裝語序：Auxiliary / Verb + Subject ...
                     </div>
-                    <h3 class="card-heading">Strict Inversion</h3>
-                    <p class="card-text">
-                        當<strong>否定詞 (Negative)</strong> 或 <strong>Only</strong> 位於句首時，句子必須倒裝，語氣強烈且正式。
-                    </p>
-                    <div class="divider-line"></div>
-                    <ul class="detail-list">
-                        <li>
-                            <i class="fas fa-circle"></i> 
-                            <div>
-                                <strong>Negative:</strong> Never have I...
-                                <span class="detail-example">"Hardly did we arrive when it rained."</span>
-                            </div>
+                </div>
+            </div>
+
+            <div class="elegant-section">
+                <div class="section-header">
+                    <h2 class="section-title">1. Negative Adverbs</h2>
+                    <span class="section-subtitle">否定副詞放句首</span>
+                </div>
+
+                <div class="rule-block">
+                    <div class="rule-title"><i class="fas fa-ban"></i> 常用否定詞群</div>
+                    <p style="margin-bottom:1rem;">當以下否定副詞位於句首時，句子必須使用<strong>部分倒裝 (Partial Inversion)</strong>，即將助動詞移至主詞前。</p>
+                    <div>
+                        <span class="keyword-tag">Never</span>
+                        <span class="keyword-tag">Seldom</span>
+                        <span class="keyword-tag">Rarely</span>
+                        <span class="keyword-tag">Hardly</span>
+                        <span class="keyword-tag">Scarcely</span>
+                        <span class="keyword-tag">Barely</span>
+                        <span class="keyword-tag">Little</span>
+                        <span class="keyword-tag">Few</span>
+                        <span class="keyword-tag">Nowhere</span>
+                    </div>
+                </div>
+
+                <div class="rule-block">
+                    <div class="rule-title"><i class="fas fa-pen"></i> Examples 例句</div>
+                    <ul class="example-list">
+                        <li class="example-item">
+                            <div class="en-sentence"><span class="highlight-gold">Never have I</span> seen such a beautiful sight.</div>
+                            <div class="cn-trans">我從未見過如此美景。 (原句: I have never seen...)</div>
                         </li>
-                        <li>
-                            <i class="fas fa-circle"></i> 
-                            <div>
-                                <strong>Only:</strong> Only then did I...
-                                <span class="detail-example">"Only by practice can you succeed."</span>
-                            </div>
+                        <li class="example-item">
+                            <div class="en-sentence"><span class="highlight-gold">Seldom does she</span> get angry.</div>
+                            <div class="cn-trans">她很少生氣。 (原句: She seldom gets angry.)</div>
+                        </li>
+                        <li class="example-item">
+                            <div class="en-sentence"><span class="highlight-gold">Little did he</span> know that the police were watching him.</div>
+                            <div class="cn-trans">他一點也不知道警察正在監視他。</div>
+                        </li>
+                        <li class="example-item">
+                            <div class="en-sentence"><span class="highlight-gold">Nowhere can I</span> find my wallet.</div>
+                            <div class="cn-trans">我在任何地方都找不到我的錢包。</div>
                         </li>
                     </ul>
                 </div>
 
-                <div class="elegant-card">
-                    <div class="elegant-icon-box">
-                        <i class="fas fa-code-branch"></i>
-                    </div>
-                    <h3 class="card-heading">Conditional Shift</h3>
-                    <p class="card-text">
-                        在虛擬條件句中，若省略 <strong>If</strong>，需將助動詞 (Had / Were / Should) 移至句首。
-                    </p>
-                    <div class="divider-line"></div>
-                    <ul class="detail-list">
-                        <li>
-                            <i class="fas fa-circle"></i> 
-                            <div>
-                                <strong>Had:</strong> Had I known...
-                                <span class="detail-example">(= If I had known...)</span>
-                            </div>
-                        </li>
-                        <li>
-                            <i class="fas fa-circle"></i> 
-                            <div>
-                                <strong>Were:</strong> Were she here...
-                                <span class="detail-example">(= If she were here...)</span>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="elegant-card">
-                    <div class="elegant-icon-box">
-                        <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    <h3 class="card-heading">Rhetorical Effect</h3>
-                    <p class="card-text">
-                        為了畫面感或強調程度，將<strong>地點副詞</strong>或 <strong>So/Such</strong> 置於句首引發倒裝。
-                    </p>
-                    <div class="divider-line"></div>
-                    <ul class="detail-list">
-                        <li>
-                            <i class="fas fa-circle"></i> 
-                            <div>
-                                <strong>Place:</strong> Here comes the bus.
-                                <span class="detail-example">"Out rushed a big dog."</span>
-                            </div>
-                        </li>
-                        <li>
-                            <i class="fas fa-circle"></i> 
-                            <div>
-                                <strong>Degree:</strong> So fast did he run...
-                                <span class="detail-example">"So moving was the speech that..."</span>
-                            </div>
+                <div class="rule-block">
+                    <div class="rule-title"><i class="fas fa-exclamation-circle"></i> 特殊句型：Hardly...when...</div>
+                    <div class="grammar-formula">Hardly + had + S + Vpp... when + S + Vpt...</div>
+                    <ul class="example-list">
+                        <li class="example-item">
+                            <div class="en-sentence"><span class="highlight-gold">Hardly had we arrived</span> home when it began to rain.</div>
+                            <div class="cn-trans">我們一回到家，天就開始下雨了。</div>
                         </li>
                     </ul>
                 </div>
             </div>
 
-            <div class="interactive-section">
-                <h3 class="section-title">Live Transformation</h3>
-                
-                <div class="anim-box" id="anim-box">
-                    <span class="anim-label" id="anim-label">Normal Order</span>
-                    <div id="anim-text">I have never seen such beauty.</div>
+            <div class="elegant-section">
+                <div class="section-header">
+                    <h2 class="section-title">2. Only + Adverbial</h2>
+                    <span class="section-subtitle">Only 強調狀語放句首</span>
                 </div>
-                
-                <div class="anim-controls">
-                    <button class="btn btn-play" id="playBtn" onclick="playInvertedAnim()">
-                        <i class="fas fa-play"></i> Start Demo
-                    </button>
-                    <button class="btn btn-pause" id="pauseBtn" onclick="pauseAnim()">
-                        <i class="fas fa-pause"></i> Pause
-                    </button>
+
+                <div class="rule-block">
+                    <p>當 <strong>Only</strong> 加上「時間副詞」、「介系詞片語」或「狀語子句」放句首時，主要子句需倒裝。</p>
+                    <div class="grammar-formula">Only + (Time/Prep/Clause) + Aux + S + V...</div>
+                </div>
+
+                <div class="rule-block">
+                    <div class="rule-title"><i class="fas fa-pen"></i> Examples 例句</div>
+                    <ul class="example-list">
+                        <li class="example-item">
+                            <div class="en-sentence"><strong>Only recently</strong> <span class="highlight-gold">did I realize</span> my mistake.</div>
+                            <div class="cn-trans">直到最近我才意識到我的錯誤。</div>
+                        </li>
+                        <li class="example-item">
+                            <div class="en-sentence"><strong>Only by working hard</strong> <span class="highlight-gold">can you</span> succeed.</div>
+                            <div class="cn-trans">只有努力工作，你才能成功。</div>
+                        </li>
+                        <li class="example-item">
+                            <div class="en-sentence"><strong>Only when</strong> you grow up <span class="highlight-gold">will you</span> understand.</div>
+                            <div class="cn-trans">只有當你長大後，你才會明白。(注意：倒裝發生在主要子句)</div>
+                        </li>
+                    </ul>
                 </div>
             </div>
+
+            <div class="elegant-section">
+                <div class="section-header">
+                    <h2 class="section-title">3. Place & Direction</h2>
+                    <span class="section-subtitle">地方與方向副詞 (完全倒裝)</span>
+                </div>
+
+                <div class="rule-block">
+                    <p>為了生動描述場景，將<strong>地點副詞</strong>或<strong>地方介系詞片語</strong>移至句首。此時多用<strong>完全倒裝 (Full Inversion)</strong>，即整個動詞移至主詞前。</p>
+                    <div class="grammar-formula">Place/Direction + Verb + Subject</div>
+                </div>
+
+                <div class="rule-block">
+                    <div class="rule-title"><i class="fas fa-map-marker-alt"></i> Here / There / Out / In / Down</div>
+                    <ul class="example-list">
+                        <li class="example-item">
+                            <div class="en-sentence"><strong>Here</strong> <span class="highlight-gold">comes the bus</span>.</div>
+                            <div class="cn-trans">公車來了。</div>
+                        </li>
+                        <li class="example-item">
+                            <div class="en-sentence"><strong>Out</strong> <span class="highlight-gold">rushed the students</span> when the bell rang.</div>
+                            <div class="cn-trans">鈴聲一響，學生們衝了出去。</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="rule-block" style="background:#fff3cd; padding:1rem; border-radius:4px;">
+                    <strong style="color:#856404;"><i class="fas fa-info-circle"></i> 注意：代名詞例外</strong>
+                    <p style="font-size:0.9rem; margin-top:5px;">如果主詞是<strong>代名詞 (Pronoun: he, she, it, they...)</strong>，則<strong>不倒裝</strong>。</p>
+                    <ul class="example-list" style="margin-top:10px;">
+                        <li class="example-item">Here <span style="text-decoration:underline;">it comes</span>. (O)</li>
+                        <li class="example-item" style="opacity:0.6;">Here comes it. (X)</li>
+                    </ul>
+                </div>
+
+                <div class="rule-block">
+                    <div class="rule-title"><i class="fas fa-tree"></i> Prepositional Phrases (介系詞片語)</div>
+                    <ul class="example-list">
+                        <li class="example-item">
+                            <div class="en-sentence"><strong>Under the tree</strong> <span class="highlight-gold">sat a boy</span>.</div>
+                            <div class="cn-trans">樹下坐著一個男孩。</div>
+                        </li>
+                        <li class="example-item">
+                            <div class="en-sentence"><strong>On the hill</strong> <span class="highlight-gold">stands a castle</span>.</div>
+                            <div class="cn-trans">山丘上矗立著一座城堡。</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="elegant-section">
+                <div class="section-header">
+                    <h2 class="section-title">4. Conditional Sentences</h2>
+                    <span class="section-subtitle">省略 If 的假設語氣</span>
+                </div>
+
+                <div class="rule-block">
+                    <p>在假設語氣中，可以省略連詞 <strong>If</strong>，並將助動詞 <strong>Were, Had, Should</strong> 移至句首。</p>
+                </div>
+
+                <div class="rule-block">
+                    <div class="rule-title"><i class="fas fa-code-branch"></i> 三種情況</div>
+                    <ul class="example-list">
+                        <li class="example-item">
+                            <div class="grammar-formula" style="margin-bottom:5px; font-size:0.9rem;">Type 1: Were (與現在事實相反)</div>
+                            <div class="en-sentence"><span class="highlight-gold">Were I</span> you, I would accept the offer.</div>
+                            <div class="cn-trans">= If I were you...</div>
+                        </li>
+                        <li class="example-item">
+                            <div class="grammar-formula" style="margin-bottom:5px; font-size:0.9rem;">Type 2: Had (與過去事實相反)</div>
+                            <div class="en-sentence"><span class="highlight-gold">Had I known</span> the truth, I would have told you.</div>
+                            <div class="cn-trans">= If I had known the truth...</div>
+                        </li>
+                        <li class="example-item">
+                            <div class="grammar-formula" style="margin-bottom:5px; font-size:0.9rem;">Type 3: Should (萬一)</div>
+                            <div class="en-sentence"><span class="highlight-gold">Should it rain</span> tomorrow, the picnic will be cancelled.</div>
+                            <div class="cn-trans">= If it should rain tomorrow...</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="elegant-section">
+                <div class="section-header">
+                    <h2 class="section-title">5. So / Such ... that</h2>
+                    <span class="section-subtitle">程度副詞強調</span>
+                </div>
+
+                <div class="rule-block">
+                    <p>為了強調形容詞或名詞的程度，將 <strong>So + adj/adv</strong> 或 <strong>Such + noun</strong> 移至句首，句子需倒裝。</p>
+                </div>
+
+                <div class="rule-block">
+                    <ul class="example-list">
+                        <li class="example-item">
+                            <div class="en-sentence"><strong>So moving</strong> <span class="highlight-gold">was his speech</span> that everyone cried.</div>
+                            <div class="cn-trans">他的演講是如此感人，以至於大家都哭了。</div>
+                        </li>
+                        <li class="example-item">
+                            <div class="en-sentence"><strong>So fast</strong> <span class="highlight-gold">did he run</span> that no one could catch him.</div>
+                            <div class="cn-trans">他跑得那麼快，沒人能抓到他。</div>
+                        </li>
+                        <li class="example-item">
+                            <div class="en-sentence"><strong>Such</strong> <span class="highlight-gold">was his anger</span> that he lost control.</div>
+                            <div class="cn-trans">他憤怒到失去了控制。</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="anim-container">
+                <h3 style="margin-bottom:1rem; font-family:'Playfair Display',serif;">Structure Transformation</h3>
+                <div class="anim-display" id="animDisplay">
+                    點擊按鈕開始演示
+                </div>
+                <button class="btn" id="animBtn" onclick="toggleAnimation()">
+                    <i class="fas fa-play"></i> Start Demo
+                </button>
+            </div>
+
         </div>
     </div>
-    
+
     <footer>
-        <p>© 2025 Shirley's Grammar E-Charger · Designed with Elegance</p>
+        <p>© 2025 Shirley's Grammar E-Charger · Premium Edition</p>
     </footer>
 
     <script>
-        let animInterval;
-        const animBox = document.getElementById('anim-box');
-        const animText = document.getElementById('anim-text');
-        const animLabel = document.getElementById('anim-label');
+        let intervalId;
+        let isPlaying = false;
+        const display = document.getElementById('animDisplay');
+        const btn = document.getElementById('animBtn');
         
-        // 倒裝句演示數據 [正常語序, 倒裝語序]
-        const pairs = [
-            ['I have never seen such beauty.', 'Never have I seen such beauty.'],
-            ['The technology has improved only recently.', 'Only recently has the technology improved.'],
-            ['If I had known the truth, I would have acted differently.', 'Had I known the truth, I would have acted differently.'],
-            ['The bus comes here.', 'Here comes the bus.'],
-            ['His speech was so moving that everyone cried.', 'So moving was his speech that everyone cried.']
+        const examples = [
+            { normal: "I have never seen such beauty.", inverted: "<span style='color:#d4af37'>Never have I</span> seen such beauty." },
+            { normal: "We realized it only then.", inverted: "<span style='color:#d4af37'>Only then did we</span> realize it." },
+            { normal: "The bus comes here.", inverted: "<span style='color:#d4af37'>Here comes</span> the bus." },
+            { normal: "If I were you...", inverted: "<span style='color:#d4af37'>Were I</span> you..." },
+            { normal: "He ran so fast that...", inverted: "<span style='color:#d4af37'>So fast did he</span> run that..." }
         ];
 
-        function playInvertedAnim() {
-            // 清除之前的動畫以防重疊
-            pauseAnim();
-            
-            let idx = 0;
-            
-            // 立即執行第一次顯示
-            showSequence(idx);
+        let currentIndex = 0;
 
-            animInterval = setInterval(() => {
-                idx = (idx + 1) % pairs.length;
-                showSequence(idx);
-            }, 4000); // 每 4 秒切換一個句型
+        function toggleAnimation() {
+            if (isPlaying) {
+                clearInterval(intervalId);
+                btn.innerHTML = '<i class="fas fa-play"></i> Resume';
+                isPlaying = false;
+            } else {
+                playSequence();
+                intervalId = setInterval(playSequence, 4000);
+                btn.innerHTML = '<i class="fas fa-pause"></i> Pause';
+                isPlaying = true;
+            }
         }
 
-        function showSequence(index) {
-            const currentPair = pairs[index];
+        function playSequence() {
+            const item = examples[currentIndex];
             
-            // 1. 顯示正常語序 (Normal)
-            animLabel.innerText = "NORMAL ORDER";
-            animLabel.style.color = "rgba(255,255,255,0.7)";
-            animText.innerText = currentPair[0];
-            animBox.style.background = "linear-gradient(135deg, #576574, #8395a7)"; // 灰色調表示普通
-
-            // 2. 2秒後顯示倒裝語序 (Inverted)
+            // Step 1: Show Normal
+            display.style.opacity = 0;
             setTimeout(() => {
-                // 檢查是否還在播放中 (避免暫停後還觸發)
-                if (animInterval || index === 0) { 
-                    animLabel.innerText = "INVERTED ORDER";
-                    animLabel.style.color = "#d4af37"; // 金色文字
-                    animText.innerText = currentPair[1];
-                    // 切換回深海藍漸層
-                    animBox.style.background = "linear-gradient(135deg, #0c2d48, #205072)";
-                }
-            }, 2000);
-        }
+                display.innerHTML = `<span style="font-size:0.8rem; display:block; color:#ccc; margin-bottom:5px;">NORMAL</span>${item.normal}`;
+                display.style.opacity = 1;
+            }, 300);
 
-        function pauseAnim() {
-            clearInterval(animInterval);
-            animInterval = null;
+            // Step 2: Show Inverted after 2 seconds
+            setTimeout(() => {
+                display.style.opacity = 0;
+                setTimeout(() => {
+                    display.innerHTML = `<span style="font-size:0.8rem; display:block; color:#d4af37; margin-bottom:5px;">INVERTED</span>${item.inverted}`;
+                    display.style.opacity = 1;
+                }, 300);
+            }, 2000);
+
+            currentIndex = (currentIndex + 1) % examples.length;
         }
-        
-        // 頁面加載時播放歡迎音效 (模擬)
-        window.addEventListener('load', () => {
-            console.log("Welcome to Inverted Sentences Module");
-        });
     </script>
 </body>
 </html>
