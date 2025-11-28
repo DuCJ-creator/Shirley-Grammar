@@ -325,6 +325,241 @@
             background: #e8f5e9;
             border-radius: 5px;
         }
+
+        /* ---------------------------------------------------- */
+        /* --- SPECIAL SENTENCES SECTION STYLING (Premium) --- */
+        /* ---------------------------------------------------- */
+        
+        .special-section-container {
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); /* 深邃星空漸層 */
+            color: #fff;
+            padding: 2rem;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+            min-height: 650px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        /* 背景動態光暈 */
+        .special-section-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,215,0,0.1) 0%, transparent 60%);
+            animation: rotateBg 20s linear infinite;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        @keyframes rotateBg {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* 內部導航 (Sub-navigation) */
+        .special-nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 2;
+            flex-wrap: wrap;
+        }
+
+        .special-nav-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            padding: 10px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(5px);
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        .special-nav-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+        }
+
+        .special-nav-btn.active {
+            background: linear-gradient(45deg, #ffd700, #fdb931); /* 金色漸層 */
+            color: #1a1a1a;
+            border-color: transparent;
+            box-shadow: 0 0 20px rgba(253, 185, 49, 0.4);
+            transform: scale(1.05);
+        }
+
+        /* 內容區域動畫 */
+        .special-content-wrapper {
+            position: relative;
+            z-index: 2;
+            display: none; /* 默認隱藏，透過 JS 切換 */
+            animation: slideUpFade 0.6s ease forwards;
+        }
+
+        .special-content-wrapper.active {
+            display: block;
+        }
+
+        @keyframes slideUpFade {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .special-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #fff, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            border-bottom: none; /* 覆蓋原有 h2 樣式 */
+        }
+
+        .special-subtitle {
+            text-align: center;
+            color: #ccc;
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+            font-style: italic;
+        }
+
+        /* 3D 卡片網格 (Questions 專用) */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            perspective: 1000px; /* 3D 透視 */
+        }
+
+        .flip-card {
+            background-color: transparent;
+            height: 400px;
+            cursor: pointer;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* 卡片正面：玻璃質感 */
+        .flip-card-front {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+        }
+
+        /* 卡片背面：漸層實色 */
+        .flip-card-back {
+            background: linear-gradient(135deg, #434343 0%, #000000 100%);
+            color: white;
+            transform: rotateY(180deg);
+            border: 1px solid #ffd700;
+        }
+
+        .card-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            color: #ffd700;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            animation: floatIcon 3s ease-in-out infinite;
+        }
+
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .card-desc {
+            color: #ddd;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .back-content h4 {
+            color: #ffd700;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,215,0,0.3);
+            padding-bottom: 0.5rem;
+            width: 100%;
+        }
+
+        .back-list {
+            text-align: left;
+            width: 100%;
+            list-style: none;
+        }
+
+        .back-list li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+            font-size: 0.9rem;
+            color: #eee;
+        }
+
+        .back-list li::before {
+            content: '✦';
+            position: absolute;
+            left: 0;
+            color: #ffd700;
+        }
+
+        .example-box {
+            background: rgba(255,215,0,0.1);
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 15px;
+            width: 100%;
+            font-style: italic;
+            border-left: 3px solid #ffd700;
+            color: #ddd;
+            font-size: 0.85rem;
+        }
         
         @media (max-width: 768px) {
             .tabs {
@@ -355,6 +590,10 @@
                 margin-right: 0;
                 margin-bottom: 10px;
             }
+
+            .special-title {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
@@ -372,9 +611,9 @@
             <div class="tab" data-tab="yesno">Yes/No 疑問句 | Yes/No Questions</div>
             <div class="tab" data-tab="wh">WH 疑問句 | WH Questions</div>
             <div class="tab" data-tab="tag">附加問句 | Tag Questions</div>
+            <div class="tab" data-tab="special-sentences">特殊句型 | Special Sentences</div>
         </div>
         
-        <!-- 疑問句介紹 -->
         <div class="tab-content active" id="intro">
             <h2>疑問句介紹 | Questions Introduction</h2>
             
@@ -456,7 +695,6 @@
             </div>
         </div>
         
-        <!-- Yes/No 疑問句 -->
         <div class="tab-content" id="yesno">
             <h2>Yes/No 疑問句 | Yes/No Questions</h2>
             
@@ -583,7 +821,6 @@
             </div>
         </div>
         
-        <!-- WH 疑問句 -->
         <div class="tab-content" id="wh">
             <h2>WH 疑問句 | WH Questions</h2>
             
@@ -706,7 +943,6 @@
             </div>
         </div>
         
-        <!-- 附加問句 -->
         <div class="tab-content" id="tag">
             <h2>附加問句 | Tag Questions</h2>
             
@@ -862,6 +1098,112 @@
                 </div>
             </div>
         </div>
+
+        <div class="tab-content" id="special-sentences">
+            <div class="special-section-container">
+                <div class="special-nav">
+                    <button class="special-nav-btn active" onclick="switchSpecial('part1')">Part 1: Questions</button>
+                    <button class="special-nav-btn" onclick="switchSpecial('part2')">Part 2: Exclamation</button>
+                    <button class="special-nav-btn" onclick="switchSpecial('part3')">Part 3: Inverted</button>
+                    <button class="special-nav-btn" onclick="switchSpecial('part4')">Part 4: Subjunctive</button>
+                </div>
+
+                <div id="part1" class="special-content-wrapper active">
+                    <h2 class="special-title">The Art of Inquiry</h2>
+                    <p class="special-subtitle">掌握提問的藝術，開啟溝通的大門 | Master the art of asking.</p>
+
+                    <div class="cards-grid">
+                        <div class="flip-card">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front">
+                                    <i class="fas fa-question-circle card-icon"></i>
+                                    <h3 class="card-title">General Inquiry</h3>
+                                    <p class="card-desc">基礎疑問句是溝通的核心。</p>
+                                    <p class="card-desc">Basic questions are the core of communication.</p>
+                                    <div style="margin-top:20px; color:#ffd700; font-size:0.8rem;">HOVER TO REVEAL <i class="fas fa-arrow-right"></i></div>
+                                </div>
+                                <div class="flip-card-back">
+                                    <div class="back-content">
+                                        <h4>Key Structures</h4>
+                                        <ul class="back-list">
+                                            <li><strong>Yes/No:</strong> Can you help me?</li>
+                                            <li><strong>WH-:</strong> Why is the sky blue?</li>
+                                            <li><strong>Alternative:</strong> Is it tea or coffee?</li>
+                                        </ul>
+                                        <div class="example-box">
+                                            "Asking the right question is half the answer."
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flip-card">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front">
+                                    <i class="fas fa-exclamation-circle card-icon"></i>
+                                    <h3 class="card-title">Negative Questions</h3>
+                                    <p class="card-desc">用於表達驚訝或尋求確認。</p>
+                                    <p class="card-desc">Used to express surprise or seek confirmation.</p>
+                                    <div style="margin-top:20px; color:#ffd700; font-size:0.8rem;">HOVER TO REVEAL <i class="fas fa-arrow-right"></i></div>
+                                </div>
+                                <div class="flip-card-back">
+                                    <div class="back-content">
+                                        <h4>Nuance & Usage</h4>
+                                        <ul class="back-list">
+                                            <li><strong>Surprise:</strong> Don't you like it? (你難道不喜歡嗎？)</li>
+                                            <li><strong>Expectation:</strong> Didn't you go to the party? (我以為你去了)</li>
+                                        </ul>
+                                        <div class="example-box">
+                                            A: "Can't you drive?"<br>
+                                            B: "No, I can't." (注意回答邏輯)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flip-card">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front">
+                                    <i class="fas fa-magic card-icon"></i>
+                                    <h3 class="card-title">Rhetorical Questions</h3>
+                                    <p class="card-desc">無需回答的問題，用於強調。</p>
+                                    <p class="card-desc">Questions that need no answer, used for emphasis.</p>
+                                    <div style="margin-top:20px; color:#ffd700; font-size:0.8rem;">HOVER TO REVEAL <i class="fas fa-arrow-right"></i></div>
+                                </div>
+                                <div class="flip-card-back">
+                                    <div class="back-content">
+                                        <h4>Dramatic Effect</h4>
+                                        <ul class="back-list">
+                                            <li><strong>Emphasis:</strong> Who cares? (沒人在乎)</li>
+                                            <li><strong>Persuasion:</strong> Isn't it beautiful? (它很美，不是嗎？)</li>
+                                        </ul>
+                                        <div class="example-box">
+                                            "What's in a name? That which we call a rose by any other name would smell as sweet."
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="part2" class="special-content-wrapper">
+                    <h2 class="special-title">Exclamation Sentences</h2>
+                    <p class="special-subtitle" style="margin-top: 50px;">Coming Soon: The Power of Emotion...</p>
+                </div>
+                <div id="part3" class="special-content-wrapper">
+                    <h2 class="special-title">Inverted Sentences</h2>
+                    <p class="special-subtitle" style="margin-top: 50px;">Coming Soon: Changing the Order...</p>
+                </div>
+                <div id="part4" class="special-content-wrapper">
+                    <h2 class="special-title">Subjunctive Mood</h2>
+                    <p class="special-subtitle" style="margin-top: 50px;">Coming Soon: Wishes and Hypotheses...</p>
+                </div>
+            </div>
+        </div>
+
     </div>
     
     <footer>
@@ -888,6 +1230,39 @@
                 playSound('click');
             });
         });
+
+        // 特殊句型板塊內部的切換邏輯
+        function switchSpecial(partId) {
+            // 1. 移除所有按鈕的 active 狀態
+            document.querySelectorAll('.special-nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // 2. 隱藏所有內容區域
+            document.querySelectorAll('.special-content-wrapper').forEach(content => {
+                content.classList.remove('active');
+                content.style.display = 'none'; // 確保動畫重置
+            });
+            
+            // 3. 激活點擊的按鈕
+            const targetContent = document.getElementById(partId);
+            
+            // 簡單的延遲讓 display:none 生效後再添加 active 類以觸發 CSS 動畫
+            targetContent.style.display = 'block';
+            setTimeout(() => {
+                targetContent.classList.add('active');
+            }, 10);
+            
+            // 更新按鈕狀態
+            const buttons = document.querySelectorAll('.special-nav-btn');
+            if(partId === 'part1') buttons[0].classList.add('active');
+            if(partId === 'part2') buttons[1].classList.add('active');
+            if(partId === 'part3') buttons[2].classList.add('active');
+            if(partId === 'part4') buttons[3].classList.add('active');
+            
+            // 播放音效
+            playSound('click');
+        }
         
         // 動畫控制
         let animationInterval;
