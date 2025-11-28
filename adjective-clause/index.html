@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shirley's Advanced Grammar | Noun Clauses Masterclass</title>
+    <title>Shirley's Advanced Grammar | Adjective Clauses Masterclass</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
@@ -11,22 +11,22 @@
     
     <style>
         :root {
-            /* 名詞子句專屬配色：Emerald Wisdom (調整為更具質感的深色系背景配亮色點綴) */
-            --primary-dark: #022c22;   /* 極深森林綠 (背景用) */
-            --primary-medium: #065f46; /* 中等綠 (標題用) */
-            --primary: #059669;        /* 活力綠 (強調色) */
-            --primary-light: #ecfdf5;  /* 淺薄荷 (表格/高亮底色) */
-            --accent: #f59e0b;         /* 星光金 (點綴用) */
+            /* 形容詞子句專屬配色：Royal Amethyst (皇家紫水晶) */
+            --primary-dark: #2e1065;   /* 深邃靛紫 (背景基底) */
+            --primary-medium: #7e22ce; /* 皇家紫 (標題/強調) */
+            --primary: #a855f7;        /* 明亮紫水晶 (按鈕/邊框) */
+            --primary-light: #f3e8ff;  /* 淺薰衣草 (表格/背景塊) */
+            --accent: #fbbf24;         /* 流光金 (點綴/高亮) */
             
-            /* 視覺系統 */
-            --glass-bg: rgba(255, 255, 255, 0.95); /* 提高不透明度以增加文字清晰度 */
+            /* 視覺系統 (與名詞子句保持一致) */
+            --glass-bg: rgba(255, 255, 255, 0.95);
             --glass-border: rgba(255, 255, 255, 0.8);
-            --text-main: #111827;      /* 近乎純黑，對比度最高 */
-            --text-secondary: #374151; /* 深灰，用於次要文字 */
+            --text-main: #111827;      /* 純黑，確保清晰 */
+            --text-secondary: #374151; /* 深灰 */
             
             /* 陰影系統 */
             --shadow-card: 0 10px 30px -5px rgba(0, 0, 0, 0.3);
-            --shadow-glow: 0 0 20px rgba(16, 185, 129, 0.4);
+            --shadow-glow: 0 0 20px rgba(168, 85, 247, 0.4); /* 紫色光暈 */
         }
         
         * {
@@ -36,18 +36,18 @@
         }
         
         body {
-            /* 背景改為深邃星空基底 */
-            background: linear-gradient(to bottom, #0f172a 0%, #064e3b 100%);
+            /* 背景：深邃靛藍星空 */
+            background: linear-gradient(to bottom, #0f172a 0%, #3b0764 100%);
             color: var(--text-main);
-            line-height: 1.8; /* 增加行距，讓閱讀更舒適 */
+            line-height: 1.8;
             font-family: 'Inter', '微軟正黑體', sans-serif;
-            font-weight: 400; /* 基礎字重加強 */
+            font-weight: 400;
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
         }
 
-        /* --- 星空特效 CSS Start --- */
+        /* --- 星空特效 --- */
         .stars-container {
             position: fixed;
             top: 0;
@@ -72,9 +72,8 @@
             50% { opacity: var(--opacity); transform: scale(1); box-shadow: 0 0 4px rgba(255, 255, 255, 0.8); }
             100% { opacity: 0; transform: scale(0.5); }
         }
-        /* --- 星空特效 CSS End --- */
         
-        /* Typography 優化 */
+        /* Typography */
         h1, h2, h3 {
             font-family: 'Playfair Display', serif;
             color: var(--primary-medium);
@@ -85,7 +84,7 @@
             font-weight: 700;
             letter-spacing: -0.5px;
             margin-bottom: 0.5rem;
-            color: #ffffff; /* 標題在深色背景上改為白色 */
+            color: #ffffff;
             text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
         
@@ -95,7 +94,7 @@
             position: relative;
             padding-bottom: 0.8rem;
             color: var(--primary-medium);
-            font-weight: 700; /* 加粗 */
+            font-weight: 700;
         }
         
         h2::after {
@@ -104,14 +103,14 @@
             bottom: 0;
             left: 0;
             width: 60px;
-            height: 4px; /* 加粗裝飾線 */
+            height: 4px;
             background: linear-gradient(to right, var(--primary), var(--accent));
             border-radius: 3px;
         }
         
         h3 {
             font-size: 1.4rem;
-            color: #000; /* 純黑標題 */
+            color: #000;
             margin: 1.8rem 0 1rem;
             display: flex;
             align-items: center;
@@ -119,7 +118,7 @@
         }
         
         p {
-            font-size: 1.05rem; /* 字體加大 */
+            font-size: 1.05rem;
             color: var(--text-secondary);
             margin-bottom: 1rem;
         }
@@ -131,7 +130,6 @@
 
         /* Layout */
         header {
-            /* header 改為透明，讓星空透出來，但加一點漸層遮罩 */
             background: linear-gradient(to bottom, rgba(0,0,0,0.4), transparent);
             padding: 4rem 1.5rem 2rem;
             text-align: center;
@@ -141,7 +139,7 @@
         
         .subtitle {
             font-family: 'Inter', sans-serif;
-            font-weight: 500; /* 加粗 */
+            font-weight: 500;
             color: rgba(255, 255, 255, 0.9);
             letter-spacing: 3px;
             text-transform: uppercase;
@@ -155,7 +153,7 @@
             margin: 0 auto;
             padding: 1.5rem;
             position: relative;
-            z-index: 2; /* 確保內容浮在星星之上 */
+            z-index: 2;
         }
         
         /* Modern Tabs - Pill Style */
@@ -174,7 +172,7 @@
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             font-weight: 600;
             border-radius: 50px;
-            background: rgba(255, 255, 255, 0.1); /* 半透明按鈕 */
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(5px);
             color: rgba(255, 255, 255, 0.8);
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -185,20 +183,20 @@
             background: rgba(255, 255, 255, 0.2);
             color: #fff;
             transform: translateY(-2px);
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3); /* 發光效果 */
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
         }
         
         .tab.active {
-            background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+            background: linear-gradient(135deg, #7e22ce 0%, #581c87 100%); /* 紫色漸層 */
             color: white;
             border-color: transparent;
-            box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+            box-shadow: 0 0 20px rgba(126, 34, 206, 0.5);
         }
         
-        /* Glassmorphism Content Area - 清晰度優化版 */
+        /* Content Area */
         .tab-content {
             display: none;
-            background: var(--glass-bg); /* 高不透明度白色背景 */
+            background: var(--glass-bg);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             padding: 3.5rem;
@@ -220,7 +218,7 @@
         
         /* Cards */
         .card {
-            background: #ffffff; /* 純白背景確保文字最清晰 */
+            background: #ffffff;
             border-radius: 16px;
             padding: 2.2rem;
             margin-bottom: 2rem;
@@ -259,28 +257,28 @@
         th {
             background-color: var(--primary-light);
             color: var(--primary-medium);
-            font-weight: 800; /* 加粗 */
+            font-weight: 800;
             text-transform: uppercase;
             font-size: 0.9rem;
             letter-spacing: 1px;
             padding: 16px;
-            border-bottom: 2px solid #a7f3d0;
+            border-bottom: 2px solid #d8b4fe;
         }
         
         td {
             padding: 16px;
             border-bottom: 1px solid #e5e7eb;
-            color: #111; /* 純黑字 */
+            color: #111;
             font-weight: 500;
         }
         
         tr:hover td {
-            background-color: #f0fdf4;
+            background-color: #f3e8ff;
         }
         
         /* Example Box */
         .example {
-            background: linear-gradient(to right, #f0fdf4, #fff);
+            background: linear-gradient(to right, #f3e8ff, #fff);
             border-left: 4px solid var(--primary);
             padding: 1.5rem;
             margin: 1.5rem 0;
@@ -290,18 +288,18 @@
         }
         
         .highlight {
-            background-color: rgba(251, 191, 36, 0.2);
-            color: #92400e;
+            background-color: rgba(251, 191, 36, 0.2); /* 金色高亮 */
+            color: #78350f; /* 深琥珀色 */
             padding: 2px 6px;
             border-radius: 4px;
             font-weight: 700;
-            border-bottom: 2px solid rgba(245, 158, 11, 0.3);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.4);
         }
         
         /* Interactive Console */
         .interactive-element {
             background: #fff;
-            border: 2px solid #e5e7eb; /* 加粗邊框 */
+            border: 2px solid #e5e7eb;
             padding: 2.5rem;
             border-radius: 20px;
             margin: 2.5rem 0;
@@ -310,8 +308,8 @@
         
         .clause-animation {
             height: 180px;
-            background: #111827;
-            color: #34d399; /* 螢光綠文字 */
+            background: #0f172a; /* 深藍色控制台背景 */
+            color: #a78bfa; /* 淺紫色文字 */
             border-radius: 16px;
             margin: 2rem auto;
             display: flex;
@@ -321,14 +319,15 @@
             font-family: 'Courier New', monospace;
             font-size: 1.3rem;
             font-weight: bold;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5); /* 強烈陰影 */
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
             max-width: 650px;
-            border: 1px solid #374151;
+            border: 1px solid #334155;
+            padding: 20px;
         }
         
         /* Buttons */
         .btn {
-            background: linear-gradient(135deg, var(--accent) 0%, #ea580c 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, #7e22ce 100%);
             color: white;
             border: none;
             padding: 1rem 2.5rem;
@@ -337,7 +336,7 @@
             font-weight: 700;
             font-size: 1rem;
             transition: all 0.3s;
-            box-shadow: 0 4px 12px rgba(234, 88, 12, 0.4);
+            box-shadow: 0 4px 12px rgba(126, 34, 206, 0.3);
             display: inline-flex;
             align-items: center;
             gap: 10px;
@@ -345,7 +344,7 @@
         
         .btn:hover {
             transform: translateY(-2px) scale(1.05);
-            box-shadow: 0 8px 20px rgba(234, 88, 12, 0.5);
+            box-shadow: 0 8px 20px rgba(126, 34, 206, 0.4);
         }
 
         /* Note Box */
@@ -356,7 +355,7 @@
             padding: 1.5rem;
             margin: 1.5rem 0;
             border-radius: 8px;
-            color: #78350f; /* 深褐色文字 */
+            color: #78350f;
             font-weight: 500;
         }
         
@@ -370,12 +369,12 @@
             width: 100%;
             max-width: 600px;
             height: 320px;
-            background: radial-gradient(circle at center, #ffffff 0%, #d1fae5 100%);
+            background: radial-gradient(circle at center, #ffffff 0%, #f3e8ff 100%);
             border-radius: 24px;
             position: relative;
             margin: 0 auto;
-            border: 2px solid #6ee7b7;
-            box-shadow: inset 0 0 20px rgba(16, 185, 129, 0.1);
+            border: 2px solid #d8b4fe;
+            box-shadow: inset 0 0 20px rgba(126, 34, 206, 0.05);
         }
         
         .diagram-item {
@@ -405,26 +404,11 @@
             text-align: center;
             padding: 4rem 2rem;
             margin-top: 4rem;
-            background-color: rgba(0,0,0,0.5); /* 半透明黑 */
+            background-color: rgba(0,0,0,0.5);
             color: rgba(255,255,255,0.6);
             font-size: 0.9rem;
             position: relative;
             z-index: 2;
-        }
-        
-        .clause-item {
-            background: #f3f4f6;
-            color: #1f2937;
-            border: 1px solid #d1d5db;
-            padding: 10px 20px;
-            border-radius: 30px;
-            font-weight: 600;
-            transition: 0.2s;
-        }
-        .clause-item:hover {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
         }
 
         @media (max-width: 768px) {
@@ -439,35 +423,36 @@
 
     <header>
         <div class="header-content">
-            <h1>Noun Clauses Masterclass</h1>
-            <p class="subtitle">Shirley's Premium Learning Platform | 名詞子句專研</p>
+            <h1>Relative Clauses Masterclass</h1>
+            <p class="subtitle">Shirley's Premium Learning Platform | 形容詞子句專研</p>
         </div>
     </header>
     
     <div class="container">
         <div class="tabs">
             <div class="tab active" data-tab="intro">Introduction | 介紹</div>
-            <div class="tab" data-tab="subject">Subject | 作主詞</div>
-            <div class="tab" data-tab="object">Object | 作受詞</div>
-            <div class="tab" data-tab="complement">Complement | 作補語</div>
-            <div class="tab" data-tab="connectors">Connectors | 連接詞</div>
-            <div class="tab" data-tab="special">Patterns | 特殊句型</div>
+            <div class="tab" data-tab="pronouns">Relative Pronouns | 關係代名詞</div>
+            <div class="tab" data-tab="adverbs">Relative Adverbs | 關係副詞</div>
+            <div class="tab" data-tab="restrictive">Types | 限定與非限定</div>
+            <div class="tab" data-tab="special">Special | 特殊用法</div>
+            <div class="tab" data-tab="reduction">Reduction | 簡化子句</div>
         </div>
         
         <div class="tab-content active" id="intro">
-            <h2><i class="fas fa-book-open"></i> 名詞子句介紹 | Introduction</h2>
+            <h2><i class="fas fa-book-open"></i> 形容詞子句介紹 | Introduction</h2>
             
             <div class="card">
-                <h3>什麼是名詞子句？ | What is a Noun Clause?</h3>
-                <p>名詞子句是一個具有<strong>名詞功能</strong>的子句，它在句子中的地位等同於一個單一名詞，可以擔任主詞、受詞或補語的角色。</p>
-                <br>
-                <div class="example">
-                    <p><i class="fas fa-lightbulb" style="color:var(--accent)"></i> <strong>核心概念：</strong> 把它想像成一個「句子被打包成一個箱子」，這個箱子就變成了一個名詞。</p>
-                </div>
+                <h3>什麼是形容詞子句？ | What is an Adjective Clause?</h3>
+                <p>形容詞子句又稱關係子句，由關係代名詞(who, whom, whose, which, that)或關係副詞(when, where, why)所引導，用於修飾一個先前出現的名詞，又稱<strong>先行詞 (Antecedent)</strong>。</p>
+                <p>它就像一個「超長形容詞」，放在名詞後面，用來把那個名詞描述得更清楚。</p>
                 
                 <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="highlight">What he said</span> surprised everyone. | 他說的話讓每個人都感到驚訝。</p>
-                    <p><strong>例子 Example:</strong> I know <span class="highlight">where she lives</span>. | 我知道她住在哪裡。</p>
+                    <p><strong>例子 Example:</strong> The man <span class="highlight">who is standing there</span> is my teacher.</p>
+                    <p>站在那裡的那個男人是我的老師。</p>
+                </div>
+                 <div class="example">
+                    <p><strong>例子 Example:</strong> This is the book <span class="highlight">that I bought yesterday</span>.</p>
+                    <p>這是我昨天買的書。</p>
                 </div>
             </div>
             
@@ -476,31 +461,41 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>連接詞 Connector</th>
-                            <th>結構 Structure</th>
+                            <th>先行詞 Antecedent</th>
+                            <th>關係詞 Relative Word</th>
                             <th>例子 Example</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>that</td>
-                            <td>that + 完整句子</td>
-                            <td>I believe that he is honest.</td>
+                            <td>人 (Person)</td>
+                            <td>who, whom, that</td>
+                            <td>The woman <span class="highlight">who lives next door</span> is a doctor.</td>
                         </tr>
                         <tr>
-                            <td>if / whether</td>
-                            <td>if/whether + 完整句子</td>
-                            <td>I wonder if she will come.</td>
+                            <td>物 (Thing)</td>
+                            <td>which, that</td>
+                            <td>The book <span class="highlight">which is on the table</span> is mine.</td>
                         </tr>
                         <tr>
-                            <td>Wh- 疑問詞</td>
-                            <td>what/where/why + 完整句子</td>
-                            <td>I know what you mean.</td>
+                            <td>所有格 (Possessive)</td>
+                            <td>whose</td>
+                            <td>The student <span class="highlight">whose father is a teacher</span> studies hard.</td>
                         </tr>
                         <tr>
-                            <td>Wh-ever</td>
-                            <td>whatever/whoever + 完整句子</td>
-                            <td>Whatever you decide is fine.</td>
+                            <td>地點 (Place)</td>
+                            <td>where</td>
+                            <td>This is the house <span class="highlight">where I was born</span>.</td>
+                        </tr>
+                        <tr>
+                            <td>時間 (Time)</td>
+                            <td>when</td>
+                            <td>I remember the day <span class="highlight">when we first met</span>.</td>
+                        </tr>
+                         <tr>
+                            <td>原因 (Reason)</td>
+                            <td>why</td>
+                            <td>That is the reason <span class="highlight">why I'm late</span>.</td>
                         </tr>
                     </tbody>
                 </table>
@@ -508,29 +503,26 @@
             
             <div class="card">
                 <h3>角色定位 | Usage Diagram</h3>
-                <p>名詞子句在句子中可以擔任多種角色，如同棋盤上的不同棋子：</p>
-                
+                <p>形容詞子句的功能就是「修飾」，它永遠緊緊跟隨在先行詞之後。</p>
                 <div class="usage-diagram">
                     <div class="diagram">
-                        <div class="diagram-item" style="top: 30px; left: 50%; transform: translateX(-50%); background: #ecfdf5; border-color: var(--primary);">句子核心</div>
-                        <div class="diagram-item" style="top: 100px; left: 15%;">主詞<br><small>Subject</small></div>
-                        <div class="diagram-item" style="top: 100px; right: 15%;">受詞<br><small>Object</small></div>
-                        <div class="diagram-item" style="top: 200px; left: 25%;">介系詞受詞<br><small>Obj. of Prep</small></div>
-                        <div class="diagram-item" style="top: 200px; right: 25%;">主詞補語<br><small>Complement</small></div>
-                        <div class="diagram-item" style="bottom: 20px; left: 50%; transform: translateX(-50%);">同位語<br><small>Appositive</small></div>
-                    </div>
+                         <div class="diagram-item" style="top: 30px; left: 50%; transform: translateX(-50%); background: #f3e8ff; border-color: var(--primary);">句子結構</div>
+                        <div class="diagram-item" style="top: 100px; left: 15%;">先行詞<br><small>Antecedent</small></div>
+                        <div class="diagram-item" style="top: 100px; right: 15%;">關係詞<br><small>Relative Word</small></div>
+                        <div class="diagram-item" style="bottom: 50px; left: 50%; transform: translateX(-50%); width: 250px;">形容詞子句<br><small>Adjective Clause</small></div>
+                        </div>
                 </div>
             </div>
             
             <div class="interactive-element">
                 <h3><i class="fas fa-eye"></i> 互動識別 | Identify the Clause</h3>
-                <p>觀察下方動畫，找出句子中的名詞子句部分</p>
+                <p>識別句子中的形容詞子句部分</p>
                 <div class="clause-animation" id="clauseAnimation">
-                    I know that you are right.
+                    The book that I'm reading is very interesting.
                 </div>
                 <div class="animation-controls" style="margin-top: 1.5rem; display: flex; justify-content: center; gap: 15px;">
                     <button class="btn" id="playAnimation">
-                        <i class="fas fa-play"></i> 播放演示
+                        <i class="fas fa-play"></i> 播放動畫
                     </button>
                     <button class="btn" id="pauseAnimation" style="background: #4b5563;">
                         <i class="fas fa-pause"></i> 暫停
@@ -539,267 +531,169 @@
             </div>
         </div>
         
-        <div class="tab-content" id="subject">
-            <h2><i class="fas fa-chess-king"></i> 作主詞 | As Subject</h2>
+        <div class="tab-content" id="pronouns">
+            <h2><i class="fas fa-user-tag"></i> 關係代名詞 | Relative Pronouns</h2>
             
             <div class="card">
-                <h3>名詞子句作主詞 | Noun Clauses as Subjects</h3>
-                <p>當名詞子句放句首時，它掌控了整個句子的動作。</p>
+                <h3>who, whom, that (先行詞為人)</h3>
                 
                 <div class="example">
-                    <p><strong><i class="fas fa-quote-left" style="color:var(--primary)"></i> 例子 Example:</strong> <span class="highlight">What he said</span> made me angry.</p>
-                    <p>他說的話讓我很生氣。</p>
+                    <p><strong>例子 Example:</strong> She is a teacher <span class="highlight">who teaches English writing</span>.</p>
+                    <p>她是一位教英語寫作的老師。</p>
+                    <p class="note-box" style="margin-top:10px; font-size:0.9rem;">Who 作主詞，不可省略，可用 that 代替。</p>
                 </div>
                 
                 <div class="example">
-                    <p><strong><i class="fas fa-quote-left" style="color:var(--primary)"></i> 例子 Example:</strong> <span class="highlight">Whether she comes or not</span> doesn't matter.</p>
-                    <p>她來不來都沒關係。</p>
-                </div>
-                
-                <div class="example">
-                    <p><strong><i class="fas fa-quote-left" style="color:var(--primary)"></i> 例子 Example:</strong> <span class="highlight">That he passed the exam</span> surprised everyone.</p>
-                    <p>他通過了考試讓每個人都感到驚訝。</p>
+                    <p><strong>例子 Example:</strong> She is a teacher <span class="highlight">whom many of her students respect</span>.</p>
+                    <p>她是一位許多學生尊敬的老師。</p>
+                    <p class="note-box" style="margin-top:10px; font-size:0.9rem;">Whom 作受詞，可省略，可用 that 代替。</p>
                 </div>
             </div>
             
             <div class="card">
-                <h3>It 作形式主詞 | It as Formal Subject</h3>
-                <p>為了避免「頭重腳輕」（主詞太長），英文習慣用 <strong>It</strong> 佔位，把真正的名詞子句移到後面。</p>
+                <h3>whose (所有格：... 的)</h3>
+                <p>用來表示「先行詞的...」。</p>
                 
-                <div class="note-box">
-                    <i class="fas fa-info-circle"></i> <strong>高分技巧：</strong> 這種句型在學術寫作中非常常見，能讓語氣更客觀。
-                </div>
-
                 <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="highlight">It is obvious that he is lying</span>.</p>
-                    <p>很明顯他在說謊。</p>
+                    <p><strong>例子 Example:</strong> The students <span class="highlight">whose English grammar is weak</span> will find writing difficult.</p>
+                    <p>英語語法薄弱的學生會發現寫作很困難。</p>
                 </div>
                 
                 <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="highlight">It doesn't matter what you think</span>.</p>
-                    <p>你怎麼想並不重要。</p>
+                    <p><strong>例子 Example:</strong> The house <span class="highlight">whose roof is old</span> belongs to the government.</p>
+                    <p>屋頂老舊的房子屬於政府。</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>which, that (先行詞為物)</h3>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> I like the dress <span class="highlight">that/which my brother brought me</span>.</p>
+                    <p>我喜歡我哥哥給我帶來的連衣裙。</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> We live in Taiwan, <span class="highlight">which has a variety of delicious foods</span>.</p>
+                    <p>我們住在台灣，那裡有各種各樣的美食。</p>
                 </div>
             </div>
             
             <div class="interactive-element">
-                <h3><i class="fas fa-pen-fancy"></i> 句型演練 | Subject Practice</h3>
-                <div class="clause-animation" id="subjectAnimation">
-                    ______ is still a mystery.
+                <h3><i class="fas fa-pen-fancy"></i> 填空練習 | Pronoun Practice</h3>
+                <div class="clause-animation" id="pronounAnimation">
+                    The woman ______ lives next door is a doctor.
                 </div>
                 <div class="animation-controls" style="margin-top: 1.5rem; display: flex; justify-content: center; gap: 15px;">
-                    <button class="btn" id="playSubjectAnimation">
+                    <button class="btn" id="playPronounAnimation">
                         <i class="fas fa-play"></i> 播放動畫
                     </button>
-                    <button class="btn" id="pauseSubjectAnimation" style="background: #4b5563;">
+                    <button class="btn" id="pausePronounAnimation" style="background: #4b5563;">
                         <i class="fas fa-pause"></i> 暫停
                     </button>
                 </div>
             </div>
         </div>
         
-        <div class="tab-content" id="object">
-            <h2><i class="fas fa-hand-holding"></i> 作受詞 | As Object</h2>
+        <div class="tab-content" id="adverbs">
+            <h2><i class="fas fa-map-marker-alt"></i> 關係副詞 | Relative Adverbs</h2>
             
             <div class="card">
-                <h3>作動詞的受詞 | Object of Verbs</h3>
-                <p>放在及物動詞之後，說明動作的內容。</p>
+                <h3>Where, When, Why</h3>
+                <p>分別修飾地點、時間與原因。它們其實等於「介系詞 + which」。</p>
                 
-                <div class="example">
-                    <p><strong>例子 Example:</strong> I know <span class="highlight">that you are busy</span>.</p>
-                </div>
-                
-                <div class="example">
-                    <p><strong>例子 Example:</strong> She asked <span class="highlight">if I could help her</span>.</p>
-                </div>
-                
-                <div class="example">
-                    <p><strong>例子 Example:</strong> He explained <span class="highlight">why he was late</span>.</p>
-                </div>
-            </div>
-            
-            <div class="card">
-                <h3>作介系詞的受詞 | Object of Prepositions</h3>
-                <p>放在介系詞之後。注意：<strong>that 子句通常不能直接放在介系詞後</strong> (除了 in that, except that 等少數例外)。</p>
-                
-                <div class="example">
-                    <p><strong>例子 Example:</strong> She is thinking about <span class="highlight">what she should do</span>.</p>
-                    <p>她正在考慮她應該做什麼。</p>
-                </div>
-                
-                <div class="example">
-                    <p><strong>例子 Example:</strong> It depends on <span class="highlight">whether it rains or not</span>.</p>
-                    <p>這取決於是否下雨。</p>
-                </div>
-            </div>
-            
-            <div class="card">
-                <h3>常接名詞子句的動詞 | Common Verbs</h3>
-                <div class="clause-list" style="display: flex; flex-wrap: wrap; gap: 10px;">
-                    <div class="clause-item">believe 相信</div>
-                    <div class="clause-item">think 認為</div>
-                    <div class="clause-item">know 知道</div>
-                    <div class="clause-item">say 說</div>
-                    <div class="clause-item">tell 告訴</div>
-                    <div class="clause-item">ask 詢問</div>
-                    <div class="clause-item">wonder 想知道</div>
-                    <div class="clause-item">understand 理解</div>
-                    <div class="clause-item">doubt 懷疑</div>
-                </div>
-            </div>
-            
-            <div class="interactive-element">
-                <h3><i class="fas fa-pen-fancy"></i> 句型演練 | Object Practice</h3>
-                <div class="clause-animation" id="objectAnimation">
-                    I don't know ______.
-                </div>
-                <div class="animation-controls" style="margin-top: 1.5rem; display: flex; justify-content: center; gap: 15px;">
-                    <button class="btn" id="playObjectAnimation">
-                        <i class="fas fa-play"></i> 播放動畫
-                    </button>
-                    <button class="btn" id="pauseObjectAnimation" style="background: #4b5563;">
-                        <i class="fas fa-pause"></i> 暫停
-                    </button>
-                </div>
-            </div>
-        </div>
-        
-        <div class="tab-content" id="complement">
-            <h2><i class="fas fa-puzzle-piece"></i> 作補語 | As Complement</h2>
-            
-            <div class="card">
-                <h3>主詞補語 | Subject Complements</h3>
-                <p>放在 Be 動詞或連綴動詞後，用來解釋主詞是什麼。</p>
-                
-                <div class="example">
-                    <p><strong>例子 Example:</strong> The problem is <span class="highlight">that we don't have enough time</span>.</p>
-                    <p>問題是我們沒有足夠的時間。</p>
-                </div>
-                
-                <div class="example">
-                    <p><strong>例子 Example:</strong> The truth is <span class="highlight">that I don't know the answer</span>.</p>
-                    <p>事實是我不知道答案。</p>
-                </div>
-                
-                 <div class="example">
-                    <p><strong>例子 Example:</strong> This is <span class="highlight">what I want</span>.</p>
-                    <p>這就是我想要的。</p>
-                </div>
-            </div>
-            
-            <div class="card">
-                <h3>形容詞補語 | Adjective Complements</h3>
-                <p>放在表示情緒或確定性的形容詞後，補充說明原因或內容。</p>
-                
-                <div class="example">
-                    <p><strong>例子 Example:</strong> I am sure <span class="highlight">that he will come</span>.</p>
-                    <p>我確信他會來。</p>
-                </div>
-                
-                <div class="example">
-                    <p><strong>例子 Example:</strong> She is happy <span class="highlight">that you passed the exam</span>.</p>
-                </div>
-            </div>
-            
-            <div class="interactive-element">
-                <h3><i class="fas fa-pen-fancy"></i> 句型演練 | Complement Practice</h3>
-                <div class="clause-animation" id="complementAnimation">
-                    The fact is ______.
-                </div>
-                <div class="animation-controls" style="margin-top: 1.5rem; display: flex; justify-content: center; gap: 15px;">
-                    <button class="btn" id="playComplementAnimation">
-                        <i class="fas fa-play"></i> 播放動畫
-                    </button>
-                    <button class="btn" id="pauseComplementAnimation" style="background: #4b5563;">
-                        <i class="fas fa-pause"></i> 暫停
-                    </button>
-                </div>
-            </div>
-        </div>
-        
-        <div class="tab-content" id="connectors">
-            <h2><i class="fas fa-link"></i> 連接詞 | Connectors</h2>
-            
-            <div class="card">
-                <h3>連接詞功能表 | Function Table</h3>
                 <table>
                     <thead>
                         <tr>
-                            <th>連接詞</th>
-                            <th>功能 Function</th>
+                            <th>關係副詞</th>
+                            <th>等於 (= Prep + which)</th>
                             <th>例子 Example</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>that</td>
-                            <td>陳述事實 (無詞義)</td>
-                            <td>I know that he is honest.</td>
-                        </tr>
-                        <tr>
-                            <td>if/whether</td>
-                            <td>表示疑問 (是否)</td>
-                            <td>I wonder if she will come.</td>
-                        </tr>
-                        <tr>
-                            <td>what</td>
-                            <td>事物 (…的東西)</td>
-                            <td>I understand what you mean.</td>
-                        </tr>
-                        <tr>
-                            <td>who</td>
-                            <td>人 (誰)</td>
-                            <td>I know who did it.</td>
-                        </tr>
-                        <tr>
                             <td>where</td>
-                            <td>地點 (哪裡)</td>
-                            <td>I know where he lives.</td>
+                            <td>in/at/on which</td>
+                            <td>The house <span class="highlight">where I live</span>.</td>
+                        </tr>
+                        <tr>
+                            <td>when</td>
+                            <td>on/in/at which</td>
+                            <td>The day <span class="highlight">when we met</span>.</td>
                         </tr>
                         <tr>
                             <td>why</td>
-                            <td>原因 (為什麼)</td>
-                            <td>I understand why you're angry.</td>
-                        </tr>
-                        <tr>
-                            <td>how</td>
-                            <td>方式 (如何)</td>
-                            <td>I know how to do it.</td>
+                            <td>for which</td>
+                            <td>The reason <span class="highlight">why I came</span>.</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             
             <div class="card">
-                <h3><i class="fas fa-star" style="color:var(--accent)"></i> 進階用法 Note</h3>
-                
+                <h3>實例演示 | Examples</h3>
                 <div class="example">
-                    <p><strong>1. That 的省略：</strong></p>
-                    <p>在口語中，當 that 引導的名詞子句作<strong>動詞受詞</strong>時，that 常被省略。</p>
-                    <p>I think <span style="text-decoration: line-through; opacity: 0.5;">(that)</span> he is right.</p>
+                    <p><strong>Where:</strong> I come from New Zealand, a country <span class="highlight">where there are more sheep than people</span>.</p>
                 </div>
-                
                 <div class="example">
-                    <p><strong>2. If vs Whether：</strong></p>
-                    <p>雖然都表示「是否」，但在以下情況<strong>只能用 Whether</strong>：</p>
-                    <ul style="margin-left: 20px; margin-top: 10px;">
-                        <li>放在介系詞後：It depends <strong>on whether</strong>...</li>
-                        <li>放在不定詞前：I don't know <strong>whether to</strong> go.</li>
-                        <li>與 or not 直接連用：I don't care <strong>whether or not</strong> he comes.</li>
-                        <li>放句首作主詞：<strong>Whether</strong> he comes is uncertain.</li>
-                    </ul>
+                    <p><strong>When:</strong> I will never forget the day <span class="highlight">when I first arrived in Taipei</span>.</p>
+                </div>
+                <div class="example">
+                    <p><strong>Why:</strong> That is the main reason <span class="highlight">why she is on a diet</span>.</p>
                 </div>
             </div>
             
             <div class="interactive-element">
-                <h3><i class="fas fa-random"></i> 連接詞選擇 | Connector Practice</h3>
-                <div class="clause-animation" id="connectorAnimation">
-                    I don't know ______ he will come.
+                <h3><i class="fas fa-clock"></i> 關係副詞練習 | Adverb Practice</h3>
+                <div class="clause-animation" id="adverbAnimation">
+                    I remember the day ______ we first met.
                 </div>
                 <div class="animation-controls" style="margin-top: 1.5rem; display: flex; justify-content: center; gap: 15px;">
-                    <button class="btn" id="playConnectorAnimation">
+                    <button class="btn" id="playAdverbAnimation">
                         <i class="fas fa-play"></i> 播放動畫
                     </button>
-                    <button class="btn" id="pauseConnectorAnimation" style="background: #4b5563;">
+                    <button class="btn" id="pauseAdverbAnimation" style="background: #4b5563;">
+                        <i class="fas fa-pause"></i> 暫停
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tab-content" id="restrictive">
+            <h2><i class="fas fa-balance-scale"></i> 限定與非限定 | Restrictive vs Non-Restrictive</h2>
+            
+            <div class="card">
+                <h3>限定關係子句 | Restrictive</h3>
+                <p>沒有逗號。用來明確指出是「哪一個」，拿掉句子意思不清楚。</p>
+                <div class="example">
+                    <p>The student <span class="highlight">who sits in the back</span> asks a lot of questions.</p>
+                    <p>(特指坐在後面的那位學生，不是別人)</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>非限定關係子句 | Non-Restrictive</h3>
+                <p>有逗號。用來補充說明，拿掉句子意思仍然完整。<strong>注意：不能用 that。</strong></p>
+                <div class="example">
+                    <p>My English teacher, <span class="highlight">who just came back from the US</span>, is sharing his trip.</p>
+                    <p>(補充說明老師的背景，拿掉也不影響他是老師的事實)</p>
+                </div>
+                <div class="example">
+                    <p>Taipei, <span class="highlight">which is the capital</span>, is a busy city.</p>
+                    <p>(台北只有一個，所以不需要限定，只能補充說明)</p>
+                </div>
+            </div>
+            
+            <div class="interactive-element">
+                <h3><i class="fas fa-random"></i> 辨識練習 | Distinction Practice</h3>
+                <div class="clause-animation" id="restrictiveAnimation">
+                    My brother, who lives in London, is a doctor.
+                </div>
+                <div class="animation-controls" style="margin-top: 1.5rem; display: flex; justify-content: center; gap: 15px;">
+                    <button class="btn" id="playRestrictiveAnimation">
+                        <i class="fas fa-play"></i> 播放動畫
+                    </button>
+                    <button class="btn" id="pauseRestrictiveAnimation" style="background: #4b5563;">
                         <i class="fas fa-pause"></i> 暫停
                     </button>
                 </div>
@@ -807,53 +701,38 @@
         </div>
         
         <div class="tab-content" id="special">
-            <h2><i class="fas fa-magic"></i> 特殊句型 | Special Patterns</h2>
+            <h2><i class="fas fa-magic"></i> 特殊用法 | Special Usage</h2>
             
             <div class="card">
-                <h3>間接問句 | Indirect Questions</h3>
-                <p>當問句變成名詞子句時，語序必須改回<strong>直述句語序 (主詞 + 動詞)</strong>。</p>
-                
-                <div class="example" style="background: linear-gradient(to right, #ecfdf5, #fff);">
-                    <p><strong>原問句：</strong> Where <span style="color:#ef4444; font-weight:bold;">does</span> she live? (助動詞 + S + V)</p>
-                    <p><i class="fas fa-arrow-down" style="color:var(--primary)"></i></p>
-                    <p><strong>名詞子句：</strong> I wonder <span class="highlight">where she lives</span>. (S + V)</p>
-                    <p class="note-box" style="margin-top:10px; font-size:0.95rem;">注意：does/do/did 助動詞消失，動詞需隨主詞變化。</p>
-                </div>
-            </div>
-            
-            <div class="card">
-                <h3>Wh-ever 複合關係代名詞</h3>
-                <p>表示「無論...」，語氣比單純的 wh- 字更強烈。</p>
+                <h3>As vs Which 引導非限定子句</h3>
+                <p>兩者都可以代表「整句話」，但用法稍有不同。</p>
                 
                 <div class="example">
-                    <p><span class="highlight">Whatever you decide</span> is fine with me.</p>
-                    <p>無論你決定什麼，我都沒問題。</p>
+                    <p><strong>Which (只能放句尾):</strong> He was late again, <span class="highlight">which made the teacher angry</span>.</p>
+                    <p>(他遲到這件事，讓老師很生氣)</p>
                 </div>
-                 <div class="example">
-                    <p><span class="highlight">Whoever wins the game</span> will get a prize.</p>
-                    <p>無論誰贏得比賽，都會得到獎品。</p>
+                
+                <div class="example">
+                    <p><strong>As (可放句首或句尾，常含「正如」之意):</strong> <span class="highlight">As is known to all</span>, the US is a big country.</p>
+                    <p>(正如眾所周知...)</p>
                 </div>
             </div>
             
             <div class="card">
-                <h3><i class="fas fa-exclamation-triangle" style="color:#ef4444"></i> 常見錯誤 | Common Mistakes</h3>
-                
-                <div class="example" style="border-left-color: #ef4444;">
-                    <p><strong><i class="fas fa-times" style="color:#ef4444"></i> 錯誤：</strong> I don't know <span style="text-decoration: underline wavy #ef4444;">where is the station</span>.</p>
-                    <p><strong><i class="fas fa-check" style="color:var(--primary)"></i> 正確：</strong> I don't know <span class="highlight">where the station is</span>.</p>
-                </div>
-                
-                <div class="example" style="border-left-color: #ef4444;">
-                    <p><strong><i class="fas fa-times" style="color:#ef4444"></i> 錯誤：</strong> She asked me <span style="text-decoration: underline wavy #ef4444;">that could I help her</span>.</p>
-                    <p><strong><i class="fas fa-check" style="color:var(--primary)"></i> 正確：</strong> She asked me <span class="highlight">if I could help her</span>.</p>
-                    <small style="color:#6b7280; display:block; margin-top:5px;">(問句改寫不能用 that，要用 if/whether)</small>
-                </div>
+                <h3>只能用 That 的情況</h3>
+                <p>當先行詞被「強烈修飾」時，習慣用 that。</p>
+                <ul style="list-style: none; padding-left: 10px;">
+                    <li style="margin-bottom: 10px;"><i class="fas fa-check" style="color:var(--primary)"></i> <strong>最高級：</strong> The most interesting book <span class="highlight">that</span> I have read.</li>
+                    <li style="margin-bottom: 10px;"><i class="fas fa-check" style="color:var(--primary)"></i> <strong>序數 (First, Last)：</strong> The first city <span class="highlight">that</span> I visited.</li>
+                    <li style="margin-bottom: 10px;"><i class="fas fa-check" style="color:var(--primary)"></i> <strong>全稱/不定代名詞 (All, Everything)：</strong> Is there anything <span class="highlight">that</span> you need?</li>
+                    <li style="margin-bottom: 10px;"><i class="fas fa-check" style="color:var(--primary)"></i> <strong>人+物：</strong> The man and his dog <span class="highlight">that</span> are running.</li>
+                </ul>
             </div>
             
             <div class="interactive-element">
-                <h3><i class="fas fa-check-double"></i> 糾錯練習 | Error Correction</h3>
+                <h3><i class="fas fa-check-double"></i> 選擇練習 | Selection Practice</h3>
                 <div class="clause-animation" id="specialAnimation">
-                    I don't know where is the library.
+                    This is the best movie ______ I have ever seen.
                 </div>
                 <div class="animation-controls" style="margin-top: 1.5rem; display: flex; justify-content: center; gap: 15px;">
                     <button class="btn" id="playSpecialAnimation">
@@ -865,33 +744,69 @@
                 </div>
             </div>
         </div>
+        
+        <div class="tab-content" id="reduction">
+            <h2><i class="fas fa-compress-arrows-alt"></i> 簡化形容詞子句 | Reduction</h2>
+            
+            <div class="card">
+                <h3>簡化心法 | The Rule</h3>
+                <p>將「落落長」的子句簡化為分詞片語，讓句子更精煉。</p>
+                <div class="note-box">
+                    <strong>口訣：</strong> 去掉關代，去掉 Be 動詞。主動變 V-ing，被動變 P.P.。
+                </div>
+                
+                <div class="example">
+                    <p><strong>主動 (Active):</strong> The boy <span style="text-decoration: line-through; opacity: 0.5;">who is</span> sitting at the back...</p>
+                    <p><i class="fas fa-arrow-right" style="color:var(--primary)"></i> The boy <span class="highlight">sitting at the back</span> is my brother.</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>被動 (Passive):</strong> The book <span style="text-decoration: line-through; opacity: 0.5;">which was</span> written by him...</p>
+                    <p><i class="fas fa-arrow-right" style="color:var(--primary)"></i> The book <span class="highlight">written by him</span> is popular.</p>
+                </div>
+                
+                <div class="example">
+                    <p><strong>普通動詞 (Verbs):</strong> I am a teacher <span style="text-decoration: line-through; opacity: 0.5;">who teaches</span> English...</p>
+                    <p><i class="fas fa-arrow-right" style="color:var(--primary)"></i> I am a teacher <span class="highlight">teaching English</span>.</p>
+                </div>
+            </div>
+            
+            <div class="interactive-element">
+                <h3><i class="fas fa-magic"></i> 變身練習 | Reduction Magic</h3>
+                <div class="clause-animation" id="reductionAnimation">
+                    The woman who is wearing a red dress is my sister.
+                </div>
+                <div class="animation-controls" style="margin-top: 1.5rem; display: flex; justify-content: center; gap: 15px;">
+                    <button class="btn" id="playReductionAnimation">
+                        <i class="fas fa-play"></i> 播放動畫
+                    </button>
+                    <button class="btn" id="pauseReductionAnimation" style="background: #4b5563;">
+                        <i class="fas fa-pause"></i> 暫停
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
     
     <footer>
-        <p>Shirley's Noun Clauses Masterclass</p>
-        <p>© 2025 Shirley's Grammar E-Charger | Designed with <i class="fas fa-heart" style="color:var(--accent)"></i></p>
+        <p>Shirley's Relative Clauses Masterclass</p>
+        <p>© 2025 Shirley's Grammar E-Charger | Designed with <i class="fas fa-heart" style="color:var(--primary)"></i></p>
     </footer>
 
     <script>
         // 生成星空
         function createStars() {
             const container = document.getElementById('starsContainer');
-            const starCount = 60; // 星星數量
+            const starCount = 60;
             
             for (let i = 0; i < starCount; i++) {
                 const star = document.createElement('div');
                 star.className = 'star';
-                
-                // 隨機位置
                 const x = Math.random() * 100;
                 const y = Math.random() * 100;
-                
-                // 隨機大小
-                const size = Math.random() * 3 + 1; // 1px - 4px
-                
-                // 隨機動畫參數
-                const duration = Math.random() * 3 + 2; // 2s - 5s
-                const opacity = Math.random() * 0.7 + 0.3; // 0.3 - 1.0
+                const size = Math.random() * 3 + 1;
+                const duration = Math.random() * 3 + 2;
+                const opacity = Math.random() * 0.7 + 0.3;
                 const delay = Math.random() * 5;
                 
                 star.style.left = `${x}%`;
@@ -906,7 +821,6 @@
             }
         }
 
-        // 初始化星空
         createStars();
 
         // 選項卡功能
@@ -923,20 +837,20 @@
         
         let animationInterval;
         
-        // 名詞子句介紹動畫
+        // 1. Intro Animation
         document.getElementById('playAnimation').addEventListener('click', () => {
             const animation = document.getElementById('clauseAnimation');
             let count = 0;
             const sentences = [
-                {sentence: 'I know <span class="highlight" style="color:#000">that you are right</span>.', explanation: '名詞子句: that you are right'},
-                {sentence: '<span class="highlight" style="color:#000">What he said</span> surprised me.', explanation: '名詞子句: What he said'},
-                {sentence: 'She asked <span class="highlight" style="color:#000">if I could help</span>.', explanation: '名詞子句: if I could help'},
-                {sentence: 'I wonder <span class="highlight" style="color:#000">where he went</span>.', explanation: '名詞子句: where he went'},
-                {sentence: 'The problem is <span class="highlight" style="color:#000">that we have no money</span>.', explanation: '名詞子句: that we have no money'}
+                {sentence: 'The book <span class="highlight" style="color:#000">that I\'m reading</span> is very interesting.', explanation: '形容詞子句: that I\'m reading'},
+                {sentence: 'The woman <span class="highlight" style="color:#000">who lives next door</span> is a doctor.', explanation: '形容詞子句: who lives next door'},
+                {sentence: 'This is the house <span class="highlight" style="color:#000">where I was born</span>.', explanation: '形容詞子句: where I was born'},
+                {sentence: 'I remember the day <span class="highlight" style="color:#000">when we first met</span>.', explanation: '形容詞子句: when we first met'}
             ];
+            
             clearInterval(animationInterval);
             animationInterval = setInterval(() => {
-                animation.innerHTML = `${sentences[count].sentence}<br><small style="color:#9ca3af; font-weight:normal; margin-top:10px; display:block;">${sentences[count].explanation}</small>`;
+                animation.innerHTML = `${sentences[count].sentence}<br><small style="color:#a78bfa; font-weight:normal; margin-top:10px; display:block;">${sentences[count].explanation}</small>`;
                 count = (count + 1) % sentences.length;
             }, 2500);
             playSound('success');
@@ -947,126 +861,123 @@
             playSound('click');
         });
         
-        // 主詞動畫
-        document.getElementById('playSubjectAnimation').addEventListener('click', () => {
-            const animation = document.getElementById('subjectAnimation');
+        // 2. Pronoun Animation
+        document.getElementById('playPronounAnimation').addEventListener('click', () => {
+            const animation = document.getElementById('pronounAnimation');
             let count = 0;
             const sentences = [
-                {clause: '<span class="highlight" style="color:#000">What he did</span>'},
-                {clause: '<span class="highlight" style="color:#000">Whether she agrees</span>'},
-                {clause: '<span class="highlight" style="color:#000">That he succeeded</span>'},
-                {clause: '<span class="highlight" style="color:#000">Who will win</span>'},
-                {clause: '<span class="highlight" style="color:#000">How he escaped</span>'}
+                {pronoun: '<span class="highlight" style="color:#000">who</span>'},
+                {pronoun: '<span class="highlight" style="color:#000">that</span>'},
+                {pronoun: '<span class="highlight" style="color:#000">(omitted)</span>'}
             ];
+            
             clearInterval(animationInterval);
             animationInterval = setInterval(() => {
-                animation.innerHTML = `${sentences[count].clause} is still a mystery.`;
+                animation.innerHTML = `The woman ${sentences[count].pronoun} lives next door is a doctor.`;
                 count = (count + 1) % sentences.length;
             }, 2000);
             playSound('success');
         });
         
-        document.getElementById('pauseSubjectAnimation').addEventListener('click', () => {
+        document.getElementById('pausePronounAnimation').addEventListener('click', () => {
             clearInterval(animationInterval);
             playSound('click');
         });
         
-        // 受詞動畫
-        document.getElementById('playObjectAnimation').addEventListener('click', () => {
-            const animation = document.getElementById('objectAnimation');
+        // 3. Adverb Animation
+        document.getElementById('playAdverbAnimation').addEventListener('click', () => {
+            const animation = document.getElementById('adverbAnimation');
             let count = 0;
             const sentences = [
-                {clause: '<span class="highlight" style="color:#000">what he wants</span>'},
-                {clause: '<span class="highlight" style="color:#000">where she went</span>'},
-                {clause: '<span class="highlight" style="color:#000">why he left</span>'},
-                {clause: '<span class="highlight" style="color:#000">how to do it</span>'},
-                {clause: '<span class="highlight" style="color:#000">when the meeting starts</span>'}
+                {adverb: '<span class="highlight" style="color:#000">when</span>'},
+                {adverb: '<span class="highlight" style="color:#000">on which</span>'},
+                {adverb: '<span class="highlight" style="color:#000">that</span>'}
             ];
+            
             clearInterval(animationInterval);
             animationInterval = setInterval(() => {
-                animation.innerHTML = `I don't know ${sentences[count].clause}.`;
+                animation.innerHTML = `I remember the day ${sentences[count].adverb} we first met.`;
                 count = (count + 1) % sentences.length;
             }, 2000);
             playSound('success');
         });
-        
-        document.getElementById('pauseObjectAnimation').addEventListener('click', () => {
+
+         document.getElementById('pauseAdverbAnimation').addEventListener('click', () => {
             clearInterval(animationInterval);
             playSound('click');
         });
         
-        // 補語動畫
-        document.getElementById('playComplementAnimation').addEventListener('click', () => {
-            const animation = document.getElementById('complementAnimation');
+        // 4. Restrictive Animation
+        document.getElementById('playRestrictiveAnimation').addEventListener('click', () => {
+            const animation = document.getElementById('restrictiveAnimation');
             let count = 0;
             const sentences = [
-                {clause: '<span class="highlight" style="color:#000">that he is innocent</span>'},
-                {clause: '<span class="highlight" style="color:#000">what really happened</span>'},
-                {clause: '<span class="highlight" style="color:#000">why she resigned</span>'},
-                {clause: '<span class="highlight" style="color:#000">how the accident occurred</span>'},
-                {clause: '<span class="highlight" style="color:#000">who broke the window</span>'}
+                {sentence: 'My brother, <span class="highlight" style="color:#000">who lives in London</span>, is a doctor.', type: '非限定 Non-Restrictive'},
+                {sentence: 'The man <span class="highlight" style="color:#000">who lives next door</span> is a doctor.', type: '限定 Restrictive'},
+                {sentence: 'Taipei, <span class="highlight" style="color:#000">which is the capital</span>, is a busy city.', type: '非限定 Non-Restrictive'}
             ];
+            
             clearInterval(animationInterval);
             animationInterval = setInterval(() => {
-                animation.innerHTML = `The fact is ${sentences[count].clause}.`;
+                animation.innerHTML = `${sentences[count].sentence}<br><small style="color:#a78bfa; font-weight:normal; margin-top:10px; display:block;">${sentences[count].type}</small>`;
                 count = (count + 1) % sentences.length;
-            }, 2000);
-            playSound('success');
-        });
-        
-        document.getElementById('pauseComplementAnimation').addEventListener('click', () => {
-            clearInterval(animationInterval);
-            playSound('click');
-        });
-        
-        // 連接詞動畫
-        document.getElementById('playConnectorAnimation').addEventListener('click', () => {
-            const animation = document.getElementById('connectorAnimation');
-            let count = 0;
-            const sentences = [
-                {connector: '<span class="highlight" style="color:#000">if</span>'},
-                {connector: '<span class="highlight" style="color:#000">whether</span>'},
-                {connector: '<span class="highlight" style="color:#000">when</span>'},
-                {connector: '<span class="highlight" style="color:#000">why</span>'},
-                {connector: '<span class="highlight" style="color:#000">how</span>'}
-            ];
-            clearInterval(animationInterval);
-            animationInterval = setInterval(() => {
-                animation.innerHTML = `I don't know ${sentences[count].connector} he will come.`;
-                count = (count + 1) % sentences.length;
-            }, 2000);
-            playSound('success');
-        });
-        
-        document.getElementById('pauseConnectorAnimation').addEventListener('click', () => {
-            clearInterval(animationInterval);
-            playSound('click');
-        });
-        
-        // 特殊句型動畫
-        document.getElementById('playSpecialAnimation').addEventListener('click', () => {
-            const animation = document.getElementById('specialAnimation');
-            let count = 0;
-            const sentences = [
-                {wrong: 'I don\'t know <span style="color:#ef4444">where is the library</span>.', correct: 'I don\'t know <span class="highlight" style="color:#000">where the library is</span>.'},
-                {wrong: 'She asked me <span style="color:#ef4444">that could I help her</span>.', correct: 'She asked me <span class="highlight" style="color:#000">if I could help her</span>.'},
-                {wrong: 'I\'m not sure <span style="color:#ef4444">that he will come or not</span>.', correct: 'I\'m not sure <span class="highlight" style="color:#000">whether he will come or not</span>.'},
-                {wrong: 'Can you tell me <span style="color:#ef4444">what does this word mean</span>?', correct: 'Can you tell me <span class="highlight" style="color:#000">what this word means</span>?'},
-                {wrong: 'I wonder <span style="color:#ef4444">how can I improve</span>.', correct: 'I wonder <span class="highlight" style="color:#000">how I can improve</span>.'}
-            ];
-            clearInterval(animationInterval);
-            animationInterval = setInterval(() => {
-                if (count % 2 === 0) {
-                    animation.innerHTML = `${sentences[Math.floor(count/2)].wrong}<br><small style="color:#ef4444; font-weight:normal; margin-top:10px; display:block;">錯誤 Incorrect</small>`;
-                } else {
-                    animation.innerHTML = `${sentences[Math.floor(count/2)].correct}<br><small style="color:#34d399; font-weight:normal; margin-top:10px; display:block;">正確 Correct</small>`;
-                }
-                count = (count + 1) % (sentences.length * 2);
             }, 2500);
             playSound('success');
         });
         
+        document.getElementById('pauseRestrictiveAnimation').addEventListener('click', () => {
+            clearInterval(animationInterval);
+            playSound('click');
+        });
+        
+        // 5. Special Animation
+        document.getElementById('playSpecialAnimation').addEventListener('click', () => {
+            const animation = document.getElementById('specialAnimation');
+            let count = 0;
+            const sentences = [
+                {word: '<span class="highlight" style="color:#000">that</span>'},
+                {word: '<span style="color:#ef4444; text-decoration:line-through">which</span>'}
+            ];
+            
+            clearInterval(animationInterval);
+            animationInterval = setInterval(() => {
+                 if (count % 2 === 0) {
+                     animation.innerHTML = `This is the best movie ${sentences[0].word} I have ever seen.<br><small style="color:#34d399">正確 Correct</small>`;
+                 } else {
+                     animation.innerHTML = `This is the best movie ${sentences[1].word} I have ever seen.<br><small style="color:#ef4444">錯誤 Incorrect</small>`;
+                 }
+                count = (count + 1) % 2;
+            }, 2000);
+            playSound('success');
+        });
+        
         document.getElementById('pauseSpecialAnimation').addEventListener('click', () => {
+            clearInterval(animationInterval);
+            playSound('click');
+        });
+        
+        // 6. Reduction Animation
+        document.getElementById('playReductionAnimation').addEventListener('click', () => {
+            const animation = document.getElementById('reductionAnimation');
+            let count = 0;
+            const sentences = [
+                {full: 'The woman <span class="highlight" style="color:#000">who is wearing a red dress</span> is my sister.', reduced: 'The woman <span class="highlight" style="color:#000">wearing a red dress</span> is my sister.'},
+                {full: 'The book <span class="highlight" style="color:#000">that was written by him</span> is popular.', reduced: 'The book <span class="highlight" style="color:#000">written by him</span> is popular.'}
+            ];
+            
+            clearInterval(animationInterval);
+            animationInterval = setInterval(() => {
+                if (count % 2 === 0) {
+                    animation.innerHTML = `${sentences[Math.floor(count/2)].full}<br><small style="color:#94a3b8">完整句子 Full</small>`;
+                } else {
+                    animation.innerHTML = `${sentences[Math.floor(count/2)].reduced}<br><small style="color:#34d399">簡化後 Reduced</small>`;
+                }
+                count = (count + 1) % (sentences.length * 2);
+            }, 2000);
+            playSound('success');
+        });
+        
+        document.getElementById('pauseReductionAnimation').addEventListener('click', () => {
             clearInterval(animationInterval);
             playSound('click');
         });
