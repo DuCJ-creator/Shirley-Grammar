@@ -832,7 +832,7 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
         let selectedOptionIndex = -1;
         let currentQuizId = '';
 
-        // --- ROBUST PARSING LOGIC (THE NUCLEAR CLEANER) ---
+        // --- THE SURGICAL PARSER (NO REGEX FOR CLEANING) ---
         function parseQuestions(text) {
             // Normalize content
             text = text.replace(/^\uFEFF/, '').replace(/\r\n/g, '\n');
@@ -857,7 +857,7 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
                 const options = [];
                 let correctIdx = -1;
 
-                // 2. Identify Options and CLEAN THEM
+                // 2. Identify Options and CLEAN THEM BY INDEXING
                 for (let i = 1; i < lines.length; i++) {
                     let line = lines[i];
                     
@@ -866,18 +866,28 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
                     const isCorrect = line.includes('●') || line.includes('⚫') || line.includes('[✓]') || line.includes('[✔]') || line.includes('[v]') || line.toLowerCase().includes('(answer)');
                     
                     // B. CLEANING STEP 1: Remove bracketed comments like [x], [✓], (answer)
-                    line = line.replace(/\[.*?\]/g, '').replace(/\(.*?\)/g, '');
+                    let temp = line.replace(/\[.*?\]/g, '').replace(/\(.*?\)/g, '');
                     
-                    // C. CLEANING STEP 2: Remove bullets/circles explicitly
-                    // This kills the specific circle characters causing the issue
-                    line = line.replace(/^[●○•⚫⚪✔✘√\s\.]+/g, ""); 
+                    // C. SURGICAL CLEANING: Find the first Alphanumeric character or Quote
+                    // Everything before it is considered garbage (circles, bullets, whitespace)
+                    let firstValidIndex = -1;
+                    for (let k = 0; k < temp.length; k++) {
+                        // Check if character is a letter (a-z, A-Z), number (0-9), or quote (", ')
+                        if (/[a-zA-Z0-9"']/.test(temp[k])) {
+                            firstValidIndex = k;
+                            break;
+                        }
+                    }
 
-                    // D. CLEANING STEP 3: Remove numbering like "A.", "a)", "1." at the start
-                    // This regex removes leading alphanumeric + dot/paren + space
-                    line = line.replace(/^[A-Za-z0-9]+\s*[\.\)]\s*/, "");
+                    if (firstValidIndex !== -1) {
+                        temp = temp.substring(firstValidIndex);
+                    } else {
+                        // If no letters found (empty line?), skip
+                        continue;
+                    }
                     
-                    // E. Final Trim
-                    let cleanLine = line.trim();
+                    // D. Final Trim
+                    let cleanLine = temp.trim();
 
                     if (cleanLine) {
                         options.push(cleanLine);
