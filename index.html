@@ -1,708 +1,594 @@
 <!DOCTYPE html>
-<html lang="en" id="htmlRoot">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shirley's Grammar E-Charger</title>
+    <title>Shirley's Cyber-Grammar Nexus</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-dark: #0a0a0a;
-            --surface-glass: rgba(30, 30, 30, 0.7);
-            --gold: #FFD700;
-            --copper: #B87333;
-            --electric-blue: #4169E1;
-            --glow-gold: 0 0 10px rgba(255, 215, 0, 0.6);
-            --glow-blue: 0 0 10px rgba(65, 105, 225, 0.8);
+            --bg-deep: #050505;
+            --bg-grid: #0f0f0f;
+            --neon-blue: #00f3ff;
+            --neon-purple: #bc13fe;
+            --neon-gold: #ffd700;
+            --neon-green: #0aff0a;
+            --glass-panel: rgba(20, 20, 25, 0.7);
+            --border-glow: rgba(0, 243, 255, 0.3);
+            --text-main: #e0e0e0;
+            --text-muted: #888;
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-dark);
+            background-color: var(--bg-deep);
+            background-image: 
+                linear-gradient(rgba(0, 243, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 243, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
             margin: 0;
             padding: 0;
             min-height: 100vh;
-            color: #f0f0f0;
+            color: var(--text-main);
             overflow-x: hidden;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        /* ✨ 粒子特效 Canvas */
-        #particle-canvas {
+        /* 背景光暈 */
+        .ambient-glow {
             position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
+            top: 50%; left: 50%;
+            width: 100vw; height: 100vh;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle at center, rgba(0, 243, 255, 0.05) 0%, transparent 70%);
             z-index: -1;
             pointer-events: none;
         }
 
-        /* 導航欄 */
+        /* 頂部導航 */
         header {
             width: 100%;
-            padding: 1.5rem 2.5rem;
-            max-width: 1200px;
+            padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            z-index: 10;
+            box-sizing: border-box;
+            background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, transparent 100%);
+            z-index: 100;
+            border-bottom: 1px solid rgba(0, 243, 255, 0.1);
         }
 
         .back-btn {
+            font-family: 'JetBrains Mono', monospace;
             text-decoration: none;
-            color: #fff;
-            font-size: 0.95rem;
-            font-weight: 500;
-            padding: 0.6rem 1.2rem;
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 99px;
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(5px);
+            color: var(--neon-blue);
+            font-size: 0.9rem;
+            padding: 0.5rem 1.2rem;
+            border: 1px solid var(--neon-blue);
+            background: rgba(0, 243, 255, 0.05);
             transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
         }
         .back-btn:hover {
-            background: var(--gold);
+            background: var(--neon-blue);
             color: #000;
-            border-color: var(--gold);
-            box-shadow: var(--glow-gold);
+            box-shadow: 0 0 15px var(--neon-blue);
         }
 
-        /* 主容器：包裹 SVG 和 機器人，確保垂直排列 */
-        .main-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            max-width: 900px;
-            position: relative;
-            padding-bottom: 50px; /* 底部留白 */
-        }
-
-        #station-container {
+        /* 主標題區 */
+        .hero-section {
             text-align: center;
-            z-index: 1;
-            width: 100%;
-            /* 移除原本巨大的 margin-bottom，因為機器人不再是 fixed */
-            margin-bottom: -40px; 
-            padding-top: 20px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            z-index: 2;
         }
 
         h1 {
-            font-family: 'Cormorant Garamond', serif;
-            color: var(--gold);
-            text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
-            font-size: clamp(2em, 5vw, 3em);
-            font-weight: 700;
-            margin-bottom: 10px;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            margin: 0;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #fff, var(--neon-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
+            letter-spacing: 2px;
+        }
+
+        p.subtitle {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--neon-gold);
+            font-size: 1rem;
+            margin-top: 10px;
+            opacity: 0.8;
             letter-spacing: 1px;
-            padding: 0 10px;
         }
 
-        p {
-            color: #ccc;
-            font-size: 1.1rem;
-            margin-bottom: 30px;
-            font-weight: 300;
-            padding: 0 20px;
+        /* SVG 容器 */
+        .svg-container {
+            width: 100%;
+            max-width: 1200px;
+            height: auto;
+            position: relative;
+            z-index: 10;
+            /* 讓 SVG 充滿容器 */
+            display: flex;
+            justify-content: center;
+            padding-bottom: 50px;
         }
 
-        /* SVG 樣式優化 */
-        #station-svg {
-            background: transparent;
+        svg {
             width: 100%;
             height: auto;
-            filter: drop-shadow(0 0 20px rgba(0,0,0,0.5));
-            overflow: visible;
-            /* 確保 SVG 內容不會被裁切 */
-            max-height: 80vh; 
+            max-height: 85vh;
+            filter: drop-shadow(0 0 10px rgba(0,0,0,0.5));
+            overflow: visible; /* 允許發光特效溢出 */
         }
 
-        /* Robots Container - 修正重疊問題的關鍵 */
-        .robots-container {
-            /* 從 fixed 改為 relative，讓它跟隨文檔流動 */
-            position: relative; 
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            padding: 0 40px;
-            z-index: 10;
-            pointer-events: none;
-            /* 負邊距讓機器人稍微蓋在 SVG 地板上，看起來像站著，但不會擋住按鈕 */
-            margin-top: -60px; 
-        }
+        /* --- SVG 內部樣式 --- */
 
-        .robot-with-card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            pointer-events: auto;
-            transition: transform 0.3s;
-        }
-        .robot-with-card:hover {
-            transform: translateY(-5px);
-        }
-
-        /* 電纜發光特效 */
-        .animated-cable {
-            stroke-dasharray: 1000;
-            stroke-dashoffset: 1000;
-            animation: extend 2s ease-in-out forwards;
-            stroke: var(--electric-blue);
-            stroke-width: 6;
+        /* 連接線纜 */
+        .cable {
             fill: none;
-            filter: drop-shadow(0 0 5px var(--electric-blue));
+            stroke-width: 2;
+            opacity: 0.4;
+            transition: all 0.5s ease;
         }
-
-        .charging-wire {
-            stroke: var(--copper);
+        .cable-glow {
+            fill: none;
             stroke-width: 3;
-            fill: none;
-            stroke-dasharray: 10 5;
-            animation: flowWire 1s linear infinite;
-            filter: drop-shadow(0 0 3px var(--copper));
+            stroke-dasharray: 2000;
+            stroke-dashoffset: 2000;
+            animation: circuitFlow 3s linear infinite;
+            filter: drop-shadow(0 0 5px currentColor);
+            opacity: 0; /* 默認隱藏，hover 時顯示 */
+            transition: opacity 0.3s;
         }
 
-        .pillar-wire {
-            stroke: var(--gold);
-            stroke-width: 4;
-            fill: none;
-            stroke-dasharray: 10 5;
-            animation: flowWire 0.5s linear infinite;
-            filter: drop-shadow(0 0 5px var(--gold));
+        .cable-group:hover .cable-glow {
+            opacity: 1;
+        }
+        .cable-group:hover .cable {
+            opacity: 0.8;
+            stroke-width: 3;
         }
 
-        @keyframes flowWire {
-            from { stroke-dashoffset: 0; }
-            to { stroke-dashoffset: -30; }
-        }
-
-        @keyframes extend {
-            from { stroke-dashoffset: 1000; }
+        @keyframes circuitFlow {
             to { stroke-dashoffset: 0; }
         }
 
-        /* 端口與按鈕互動 */
-        .port {
-            cursor: pointer;
-            stroke: #808080;
+        /* 核心能量柱 (Central Pillar) */
+        .core-rect {
+            fill: rgba(10, 10, 15, 0.9);
+            stroke: var(--neon-gold);
             stroke-width: 2;
-            transition: all 0.3s ease;
-            fill: #333;
+            transition: all 0.3s;
         }
-        .port:hover {
-            transform: scale(1.3);
-            stroke: var(--gold);
-            fill: var(--gold);
-            filter: drop-shadow(0 0 8px var(--gold));
+        .core-group:hover .core-rect {
+            fill: rgba(255, 215, 0, 0.1);
+            filter: drop-shadow(0 0 15px var(--neon-gold));
         }
-
-        .port-label {
-            font-size: 13px;
+        .core-text {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 18px;
             fill: #fff;
             text-anchor: middle;
             pointer-events: none;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.9);
-            font-weight: 500;
-            font-family: 'Inter', sans-serif;
+            text-shadow: 0 0 5px rgba(0,0,0,1);
         }
 
-        .pillar-block {
-            fill: #444;
-            stroke: var(--copper);
+        /* 紅色按鈕區 (Section Headers) */
+        .section-header-rect {
+            fill: rgba(50, 0, 20, 0.9);
+            stroke: #ff0055;
             stroke-width: 2;
-            rx: 8;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
         }
-        .pillar-block:hover {
-            stroke: var(--gold);
-            fill: #555;
-            filter: drop-shadow(0 0 10px var(--gold));
+        .section-header-group:hover .section-header-rect {
+            fill: #ff0055;
+            stroke: #fff;
+            filter: drop-shadow(0 0 20px #ff0055);
         }
-
-        .pillar-label {
-            font-weight: 600;
+        .section-header-text {
             fill: #fff;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 16px;
             text-anchor: middle;
-            text-shadow: 0 2px 4px rgba(0,0,0,1);
-            font-size: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Inter', sans-serif;
-        }
-        .pillar-label:hover {
-            fill: var(--gold);
-            font-size: 17px;
+            pointer-events: none;
         }
 
-        .red-button {
-            fill: #d32f2f;
-            stroke: #b71c1c;
-            stroke-width: 2;
-            rx: 8;
+        /* 端口 (Ports) - 關鍵優化 */
+        .port-group {
             cursor: pointer;
             transition: all 0.3s ease;
-            filter: drop-shadow(0 0 5px rgba(211, 47, 47, 0.5));
-        }
-        .red-button:hover {
-            fill: #f44336;
-            stroke: var(--gold);
-            filter: drop-shadow(0 0 10px #f44336);
         }
         
-        .red-button-text {
-            fill: white;
-            font-weight: 600;
-            text-anchor: middle;
-            font-size: 13px;
-            pointer-events: none;
+        /* 隱形點擊區，擴大點擊範圍 */
+        .hit-area {
+            fill: transparent; 
+            stroke: none;
+        }
+
+        .port-circle-outer {
+            fill: rgba(0,0,0,0.8);
+            stroke: #555;
+            stroke-width: 2;
+            transition: all 0.3s;
+        }
+        .port-circle-inner {
+            fill: #333;
+            transition: all 0.3s;
+        }
+        .port-label {
+            fill: #aaa;
             font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+            text-shadow: 0 1px 3px #000;
         }
 
-        .electricity-box {
-            fill: #222;
-            stroke: var(--copper);
-            stroke-width: 3;
-            rx: 8;
-            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5));
+        /* Port Hover Effects */
+        .port-group:hover .port-circle-outer {
+            stroke: var(--target-color);
+            filter: drop-shadow(0 0 8px var(--target-color));
+        }
+        .port-group:hover .port-circle-inner {
+            fill: var(--target-color);
+            filter: drop-shadow(0 0 5px var(--target-color));
+        }
+        .port-group:hover .port-label {
+            fill: #fff;
+            font-weight: 700;
+            transform: translateX(5px); /* 文字稍微移動產生動態感 */
         }
 
-        /* Modal (Glassmorphism) */
+        /* Modal (Glassmorphism + Cyberpunk) */
         #modal {
             display: none;
             position: fixed;
             z-index: 2000;
             left: 0; top: 0;
             width: 100%; height: 100%;
-            background-color: rgba(0,0,0,0.6);
-            backdrop-filter: blur(5px);
+            background-color: rgba(0,0,0,0.8);
+            backdrop-filter: blur(8px);
             justify-content: center;
             align-items: center;
         }
         
         #modal-content {
-            background: rgba(20, 20, 20, 0.9);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            margin: auto;
+            background: linear-gradient(135deg, rgba(20,20,25,0.95), rgba(10,10,15,0.98));
+            border: 1px solid var(--neon-blue);
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.2);
             padding: 40px;
-            border: 1px solid rgba(255, 215, 0, 0.3);
             width: 85%;
-            max-width: 650px;
-            border-radius: 20px;
-            max-height: 85vh;
-            overflow-y: auto;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 20px rgba(255, 215, 0, 0.1);
-            color: #fff;
+            max-width: 700px;
+            border-radius: 4px; /* 硬邊角 */
             position: relative;
+            clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
         }
         
         #close {
-            color: #aaa;
+            color: var(--neon-blue);
             position: absolute;
             top: 20px;
             right: 25px;
             font-size: 32px;
-            font-weight: bold;
             cursor: pointer;
-            transition: color 0.3s;
+            line-height: 0.8;
         }
-        #close:hover {
-            color: var(--gold);
-        }
+        #close:hover { text-shadow: 0 0 10px var(--neon-blue); }
         
         .explanation-title {
-            color: var(--gold);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--neon-gold);
+            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
             padding-bottom: 15px;
-            font-size: 28px;
-            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            font-family: 'Rajdhani', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
             margin-top: 0;
         }
         
         .explanation-text {
             line-height: 1.8;
-            color: #ddd;
-            font-size: 1.05rem;
+            color: #d0d0d0;
+            font-size: 1rem;
             margin-top: 20px;
-        }
-
-        .grammar-card {
-            width: 110px;
-            height: 140px;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            border: 2px solid var(--copper);
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.9);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
-            overflow: hidden;
-            margin-bottom: 10px;
-        }
-        .grammar-card:hover {
-            transform: scale(1.1) rotate(2deg);
-            border-color: var(--gold);
-            box-shadow: 0 0 20px var(--glow-gold);
-        }
-
-        .card-image {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        /* 機器人 SVG 樣式 */
-        .robot {
-            width: 100px;
-            height: 140px;
-            filter: drop-shadow(0 5px 5px rgba(0,0,0,0.5));
-        }
-        .robot-body { fill: #2a2a2a; stroke: #4169E1; stroke-width: 2; }
-        .robot-head { fill: #333; stroke: #FF69B4; stroke-width: 2; }
-        .robot-leg { fill: #444; stroke: #32CD32; stroke-width: 1; animation: legSwing 2s ease-in-out infinite alternate; }
-        .robot-leg.left { animation-delay: -1s; }
-        .robot-antenna { stroke: var(--gold); stroke-width: 3; stroke-linecap: round; }
-        .robot-eye { fill: var(--electric-blue); filter: drop-shadow(0 0 2px var(--electric-blue)); }
-        .robot-mouth { fill: none; stroke: #FF69B4; stroke-width: 2; }
-
-        @keyframes legSwing {
-            0% { transform: rotate(5deg); }
-            100% { transform: rotate(-5deg); }
+            font-weight: 300;
         }
 
         .status-message {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            background: rgba(65, 105, 225, 0.9);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 8px;
+            bottom: 30px;
+            right: 30px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid var(--neon-green);
+            color: var(--neon-green);
+            padding: 15px 30px;
+            font-family: 'JetBrains Mono', monospace;
             z-index: 3000;
             font-size: 14px;
-            font-weight: 500;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.3);
-            backdrop-filter: blur(4px);
+            box-shadow: 0 0 20px rgba(10, 255, 10, 0.2);
+            display: none;
+            text-transform: uppercase;
         }
 
+        /* 手機版適配 */
         @media (max-width: 768px) {
-            .robots-container { 
-                padding: 0 10px; 
-                margin-top: -40px; /* 手機版調整間距 */
-            }
-            .robot { width: 70px; height: 100px; }
-            .grammar-card { width: 80px; height: 100px; }
-            #station-container {
-                margin-bottom: -30px;
-            }
+            h1 { font-size: 2rem; }
+            .svg-container { margin-top: 0; }
+            /* SVG 在手機上會自動縮放，因為我們沒有設固定寬度 */
         }
     </style>
 </head>
 <body>
 
-    <canvas id="particle-canvas"></canvas>
+    <div class="ambient-glow"></div>
 
     <header>
+        <div style="font-family: 'Rajdhani'; font-weight:700; color:#fff; font-size:1.2rem;">GRAMMAR<span style="color:var(--neon-blue)">.SYS</span></div>
         <a href="https://ducj-creator.github.io/Teacher-Shirley/study-tools/index.html" class="back-btn">
-            <span>←</span> Back to Study Tools
+            &lt; Return to Base
         </a>
     </header>
 
-    <div class="main-wrapper">
-        <div id="station-container">
-            <h1>Shirley's Grammar E-Charger</h1>
-            <p>Click on the pillar levels or charging ports to power up your grammar knowledge!</p>
-            
-            <svg id="station-svg" width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <linearGradient id="groundGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" style="stop-color:#B87333;stop-opacity:1" />
-                        <stop offset="100%" style="stop-color:#5c3a1a;stop-opacity:1" />
-                    </linearGradient>
-                </defs>
-                <rect x="50" y="550" width="700" height="20" fill="url(#groundGrad)" rx="10" filter="drop-shadow(0 0 10px #B87333)" />
-                
-                <rect x="390" y="100" width="20" height="450" fill="#333" stroke="#555" stroke-width="2" />
-                <path d="M 395 100 L 395 550" class="animated-cable" style="stroke-width: 4; stroke: #4169E1; opacity: 0.8;" />
-                
-                <g id="pillar-blocks">
-                    <rect x="370" y="120" width="60" height="60" class="pillar-block" onclick="handlePillarClick('simple')" />
-                    <line x1="400" y1="180" x2="400" y2="200" class="pillar-wire" />
-                    
-                    <rect x="370" y="200" width="60" height="60" class="pillar-block" onclick="handlePillarClick('compound')" />
-                    <line x1="400" y1="260" x2="400" y2="280" class="pillar-wire" />
-                    
-                    <rect x="370" y="280" width="60" height="60" class="pillar-block" onclick="handlePillarClick('complex')" />
-                    <line x1="400" y1="340" x2="400" y2="360" class="pillar-wire" />
-                    
-                    <rect x="370" y="360" width="60" height="60" class="pillar-block" onclick="handlePillarClick('compound-complex')" />
-                </g>
-                
-                <text x="400" y="155" class="pillar-label" onclick="handlePillarClick('simple')">1. Simple</text>
-                <text x="400" y="235" class="pillar-label" onclick="handlePillarClick('compound')">2. Compound</text>
-                <text x="400" y="315" class="pillar-label" onclick="handlePillarClick('complex')">3. Complex</text>
-                <text x="400" y="395" class="pillar-label" onclick="handlePillarClick('compound-complex')">4. Compound-Complex</text>
-                
-                <rect x="300" y="50" width="200" height="50" fill="#222" rx="8" stroke="#FFD700" stroke-width="2" filter="drop-shadow(0 0 8px #FFD700)" />
-                <text x="400" y="82" fill="#FFD700" text-anchor="middle" font-weight="bold" font-size="18" font-family="Cormorant Garamond">Sentence Structures</text>
-                
-                <path d="M 400 130 Q 300 100 200 130" class="animated-cable" />
-                <rect x="160" y="80" width="80" height="100" class="electricity-box" />
-                
-                <rect x="160" y="130" width="80" height="40" class="red-button" onclick="handleSectionClick('parts-of-speech')" />
-                <text x="200" y="148" class="red-button-text">I. Parts of</text>
-                <text x="200" y="163" class="red-button-text">Speech</text>
-                
-                <g id="section1-ports">
-                    <line x1="80" y1="60" x2="200" y2="130" class="charging-wire" />
-                    <circle cx="80" cy="60" r="14" class="port" onclick="handlePortClick('nouns')" />
-                    <text x="80" y="65" class="port-label" pointer-events="none">Nouns</text>
-                    
-                    <line x1="120" y1="200" x2="200" y2="130" class="charging-wire" />
-                    <circle cx="120" cy="200" r="14" class="port" onclick="handlePortClick('pronouns')" />
-                    <text x="120" y="205" class="port-label" pointer-events="none">Pronouns</text>
-                    
-                    <line x1="40" y1="120" x2="200" y2="130" class="charging-wire" />
-                    <circle cx="40" cy="120" r="14" class="port" onclick="handlePortClick('adjectives-adverbs')" />
-                    <text x="40" y="100" class="port-label" pointer-events="none">Adj &amp; Adv</text>
-                    
-                    <line x1="140" y1="30" x2="200" y2="130" class="charging-wire" />
-                    <circle cx="140" cy="30" r="14" class="port" onclick="handlePortClick('verbs')" />
-                    <text x="140" y="35" class="port-label" pointer-events="none">Verbs</text>
-                    
-                    <line x1="100" y1="220" x2="200" y2="130" class="charging-wire" />
-                    <circle cx="100" cy="220" r="14" class="port" onclick="handlePortClick('prepositions')" />
-                    <text x="100" y="245" class="port-label" pointer-events="none">Prepositions</text>
-                </g>
-                
-                <path d="M 400 350 Q 300 380 200 350" class="animated-cable" />
-                <rect x="160" y="300" width="80" height="100" class="electricity-box" />
-                
-                <rect x="160" y="350" width="80" height="40" class="red-button" onclick="handleSectionClick('nonfinite-verbs')" />
-                <text x="200" y="368" class="red-button-text">II. Non-finite</text>
-                <text x="200" y="383" class="red-button-text">Verbs</text>
-                
-                <g id="section2-ports">
-                    <line x1="80" y1="280" x2="200" y2="350" class="charging-wire" />
-                    <circle cx="80" cy="280" r="14" class="port" onclick="handlePortClick('infinitive')" />
-                    <text x="80" y="260" class="port-label" pointer-events="none">Infinitive</text>
-                    
-                    <line x1="120" y1="420" x2="200" y2="350" class="charging-wire" />
-                    <circle cx="120" cy="420" r="14" class="port" onclick="handlePortClick('gerund')" />
-                    <text x="120" y="445" class="port-label" pointer-events="none">Gerund</text>
-                    
-                    <line x1="40" y1="340" x2="200" y2="350" class="charging-wire" />
-                    <circle cx="40" cy="340" r="14" class="port" onclick="handlePortClick('present-participle')" />
-                    <text x="40" y="365" class="port-label" pointer-events="none">Present Part.</text>
-                    
-                    <line x1="140" y1="270" x2="200" y2="350" class="charging-wire" />
-                    <circle cx="140" cy="270" r="14" class="port" onclick="handlePortClick('past-participle')" />
-                    <text x="140" y="250" class="port-label" pointer-events="none">Past Part.</text>
-                </g>
-                
-                <path d="M 400 130 Q 500 100 600 130" class="animated-cable" />
-                <rect x="560" y="80" width="80" height="100" class="electricity-box" />
-                
-                <rect x="560" y="130" width="80" height="40" class="red-button" onclick="handleSectionClick('clauses')" />
-                <text x="600" y="155" class="red-button-text">III. Clauses</text>
-                
-                <g id="section3-ports">
-                    <line x1="680" y1="60" x2="600" y2="130" class="charging-wire" />
-                    <circle cx="680" cy="60" r="14" class="port" onclick="handlePortClick('noun-clause')" />
-                    <text x="680" y="85" class="port-label" pointer-events="none">Noun Clause</text>
-                    
-                    <line x1="640" y1="200" x2="600" y2="130" class="charging-wire" />
-                    <circle cx="640" cy="200" r="14" class="port" onclick="handlePortClick('adjective-clause')" />
-                    <text x="640" y="225" class="port-label" pointer-events="none">Adj. Clause</text>
-                    
-                    <line x1="720" y1="120" x2="600" y2="130" class="charging-wire" />
-                    <circle cx="720" cy="120" r="14" class="port" onclick="handlePortClick('adverb-clause')" />
-                    <text x="720" y="145" class="port-label" pointer-events="none">Adv. Clause</text>
-                </g>
-                
-                <path d="M 400 350 Q 500 380 600 350" class="animated-cable" />
-                <rect x="560" y="300" width="80" height="100" class="electricity-box" />
-                
-                <rect x="560" y="350" width="80" height="40" class="red-button" onclick="handleSectionClick('special-sentences')" />
-                <text x="600" y="368" class="red-button-text">IV. Special</text>
-                <text x="600" y="383" class="red-button-text">Sentences</text>
-                
-                <g id="section4-ports">
-                    <line x1="680" y1="280" x2="600" y2="350" class="charging-wire" />
-                    <circle cx="680" cy="280" r="14" class="port" onclick="handlePortClick('questions')" />
-                    <text x="680" y="305" class="port-label" pointer-events="none">Questions</text>
-                    
-                    <line x1="640" y1="420" x2="600" y2="350" class="charging-wire" />
-                    <circle cx="640" cy="420" r="14" class="port" onclick="handlePortClick('exclamations')" />
-                    <text x="640" y="445" class="port-label" pointer-events="none">Exclamations</text>
-                    
-                    <line x1="720" y1="340" x2="600" y2="350" class="charging-wire" />
-                    <circle cx="720" cy="340" r="14" class="port" onclick="handlePortClick('inverted')" />
-                    <text x="720" y="365" class="port-label" pointer-events="none">Inverted</text>
-                    
-                    <line x1="600" y1="270" x2="600" y2="350" class="charging-wire" />
-                    <circle cx="600" cy="270" r="14" class="port" onclick="handlePortClick('subjunctive')" />
-                    <text x="600" y="250" class="port-label" pointer-events="none">Subjunctive</text>
-                </g>
-            </svg>
-        </div>
+    <div class="hero-section">
+        <h1>Grammar E-Charger</h1>
+        <p class="subtitle">/// SYSTEM READY /// SELECT MODULE TO CHARGE ///</p>
+    </div>
 
-        <div class="robots-container">
-            <div class="robot-with-card left-robot">
-                <div class="grammar-card" onclick="showCardInfo('sentence-structure')">
-                    <img src="https://ducj-creator.github.io/Shirley-Grammar/assets/sentence%20structure.png" 
-                        alt="Sentence Structure" class="card-image">
-                </div>
-                <svg class="robot" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="50" y="90" width="100" height="80" rx="15" class="robot-body" />
-                    <circle cx="100" cy="60" r="25" class="robot-head" />
-                    <line x1="100" y1="35" x2="100" y2="15" class="robot-antenna" />
-                    <circle cx="100" cy="15" r="4" fill="#FFD700" />
-                    <circle cx="92" cy="55" r="4" class="robot-eye" />
-                    <circle cx="108" cy="55" r="4" class="robot-eye" />
-                    <path d="M 90 70 Q 100 80 110 70" class="robot-mouth" />
-                    <rect x="70" y="175" width="12" height="25" rx="4" class="robot-leg left" />
-                    <rect x="118" y="175" width="12" height="25" rx="4" class="robot-leg" />
-                </svg>
-            </div>
+    <div class="svg-container">
+        <svg viewBox="0 0 1200 750" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#B8860B;stop-opacity:1" />
+                </linearGradient>
+                <filter id="glow">
+                    <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+                    <feMerge>
+                        <feMergeNode in="coloredBlur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
+            </defs>
 
-            <div class="robot-with-card right-robot">
-                <div class="grammar-card" onclick="showCardInfo('grammar-concepts')">
-                    <img src="https://ducj-creator.github.io/Shirley-Grammar/assets/key%20grammar%20concepts.png" 
-                        alt="Key Grammar Concepts" class="card-image">
-                </div>
-                <svg class="robot" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="50" y="90" width="100" height="80" rx="15" class="robot-body" />
-                    <circle cx="100" cy="60" r="25" class="robot-head" />
-                    <line x1="100" y1="35" x2="100" y2="15" class="robot-antenna" />
-                    <circle cx="100" cy="15" r="4" fill="#FFD700" />
-                    <circle cx="92" cy="55" r="4" class="robot-eye" />
-                    <circle cx="108" cy="55" r="4" class="robot-eye" />
-                    <path d="M 90 70 Q 100 80 110 70" class="robot-mouth" />
-                    <rect x="70" y="175" width="12" height="25" rx="4" class="robot-leg left" />
-                    <rect x="118" y="175" width="12" height="25" rx="4" class="robot-leg" />
-                </svg>
-            </div>
-        </div>
+            <path d="M 600 0 L 600 750" stroke="#222" stroke-width="10" />
+            <path d="M 600 0 L 600 750" stroke="var(--neon-gold)" stroke-width="2" stroke-dasharray="10 20" opacity="0.5">
+                <animate attributeName="stroke-dashoffset" from="0" to="300" dur="5s" repeatCount="indefinite" />
+            </path>
+
+            <g transform="translate(600, 100)">
+                <rect x="-120" y="-40" width="240" height="60" fill="#111" stroke="var(--neon-gold)" stroke-width="2" rx="4" />
+                <text x="0" y="0" fill="var(--neon-gold)" text-anchor="middle" font-family="Rajdhani" font-weight="700" font-size="24" dominant-baseline="middle" style="text-shadow: 0 0 10px var(--neon-gold);">SENTENCE STRUCTURES</text>
+                
+                <g class="core-group" onclick="handleLink('simple')">
+                    <rect x="-100" y="50" width="200" height="50" class="core-rect" rx="4"/>
+                    <text x="0" y="82" class="core-text">1. SIMPLE</text>
+                </g>
+                <line x1="0" y1="100" x2="0" y2="130" stroke="#444" stroke-width="2" />
+
+                <g class="core-group" onclick="handleLink('compound')">
+                    <rect x="-100" y="130" width="200" height="50" class="core-rect" rx="4"/>
+                    <text x="0" y="162" class="core-text">2. COMPOUND</text>
+                </g>
+                <line x1="0" y1="180" x2="0" y2="210" stroke="#444" stroke-width="2" />
+
+                <g class="core-group" onclick="handleLink('complex')">
+                    <rect x="-100" y="210" width="200" height="50" class="core-rect" rx="4"/>
+                    <text x="0" y="242" class="core-text">3. COMPLEX</text>
+                </g>
+                <line x1="0" y1="260" x2="0" y2="290" stroke="#444" stroke-width="2" />
+
+                <g class="core-group" onclick="handleLink('compound-complex')">
+                    <rect x="-100" y="290" width="200" height="50" class="core-rect" rx="4"/>
+                    <text x="0" y="322" class="core-text">4. COMP-COMPLEX</text>
+                </g>
+            </g>
+
+            <g class="cable-group">
+                <path d="M 600 130 C 400 130, 400 150, 250 150" class="cable" stroke="var(--neon-blue)" />
+                <path d="M 600 130 C 400 130, 400 150, 250 150" class="cable-glow" stroke="var(--neon-blue)" />
+            </g>
+            <g class="cable-group">
+                <path d="M 600 370 C 400 370, 400 450, 250 450" class="cable" stroke="var(--neon-blue)" />
+                <path d="M 600 370 C 400 370, 400 450, 250 450" class="cable-glow" stroke="var(--neon-blue)" />
+            </g>
+
+            <g transform="translate(250, 150)">
+                <g class="section-header-group" onclick="showExplanation('parts-of-speech')">
+                    <rect x="-80" y="-25" width="160" height="50" class="section-header-rect" rx="4"/>
+                    <text x="0" y="0" class="section-header-text" dominant-baseline="middle">I. PARTS OF SPEECH</text>
+                    <text x="0" y="15" fill="#aaa" font-size="10" text-anchor="middle">[ INFO ]</text>
+                </g>
+
+                <g class="port-group" onclick="handleLink('nouns')" style="--target-color: var(--neon-blue)">
+                    <line x1="0" y1="25" x2="-120" y2="80" stroke="#333" stroke-width="2"/>
+                    <circle cx="-120" cy="80" r="40" class="hit-area" /> <circle cx="-120" cy="80" r="10" class="port-circle-outer" />
+                    <circle cx="-120" cy="80" r="5" class="port-circle-inner" />
+                    <text x="-100" y="85" class="port-label">NOUNS</text>
+                </g>
+
+                <g class="port-group" onclick="handleLink('pronouns')" style="--target-color: var(--neon-blue)">
+                    <line x1="0" y1="25" x2="-120" y2="130" stroke="#333" stroke-width="2"/>
+                    <circle cx="-120" cy="130" r="40" class="hit-area" />
+                    <circle cx="-120" cy="130" r="10" class="port-circle-outer" />
+                    <circle cx="-120" cy="130" r="5" class="port-circle-inner" />
+                    <text x="-100" y="135" class="port-label">PRONOUNS</text>
+                </g>
+
+                <g class="port-group" onclick="handleLink('verbs')" style="--target-color: var(--neon-blue)">
+                    <line x1="0" y1="25" x2="0" y2="100" stroke="#333" stroke-width="2"/>
+                    <circle cx="0" cy="100" r="40" class="hit-area" />
+                    <circle cx="0" cy="100" r="10" class="port-circle-outer" />
+                    <circle cx="0" cy="100" r="5" class="port-circle-inner" />
+                    <text x="20" y="105" class="port-label">VERBS</text>
+                </g>
+
+                <g class="port-group" onclick="handleLink('adjectives-adverbs')" style="--target-color: var(--neon-blue)">
+                    <line x1="0" y1="25" x2="120" y2="80" stroke="#333" stroke-width="2"/>
+                    <circle cx="120" cy="80" r="40" class="hit-area" />
+                    <circle cx="120" cy="80" r="10" class="port-circle-outer" />
+                    <circle cx="120" cy="80" r="5" class="port-circle-inner" />
+                    <text x="140" y="85" class="port-label">ADJ & ADV</text>
+                </g>
+
+                <g class="port-group" onclick="handleLink('prepositions')" style="--target-color: var(--neon-blue)">
+                    <line x1="0" y1="25" x2="120" y2="130" stroke="#333" stroke-width="2"/>
+                    <circle cx="120" cy="130" r="40" class="hit-area" />
+                    <circle cx="120" cy="130" r="10" class="port-circle-outer" />
+                    <circle cx="120" cy="130" r="5" class="port-circle-inner" />
+                    <text x="140" y="135" class="port-label">PREPOSITIONS</text>
+                </g>
+            </g>
+
+            <g transform="translate(250, 450)">
+                <g class="section-header-group" onclick="showExplanation('nonfinite-verbs')">
+                    <rect x="-80" y="-25" width="160" height="50" class="section-header-rect" rx="4"/>
+                    <text x="0" y="0" class="section-header-text" dominant-baseline="middle">II. NON-FINITE</text>
+                    <text x="0" y="15" fill="#aaa" font-size="10" text-anchor="middle">[ INFO ]</text>
+                </g>
+
+                <g class="port-group" onclick="handleLink('infinitive')" style="--target-color: var(--neon-purple)">
+                    <line x1="0" y1="25" x2="-120" y2="80" stroke="#333" stroke-width="2"/>
+                    <circle cx="-120" cy="80" r="40" class="hit-area" />
+                    <circle cx="-120" cy="80" r="10" class="port-circle-outer" />
+                    <circle cx="-120" cy="80" r="5" class="port-circle-inner" />
+                    <text x="-100" y="85" class="port-label">INFINITIVE</text>
+                </g>
+
+                <g class="port-group" onclick="handleLink('gerund')" style="--target-color: var(--neon-purple)">
+                    <line x1="0" y1="25" x2="-60" y2="130" stroke="#333" stroke-width="2"/>
+                    <circle cx="-60" cy="130" r="40" class="hit-area" />
+                    <circle cx="-60" cy="130" r="10" class="port-circle-outer" />
+                    <circle cx="-60" cy="130" r="5" class="port-circle-inner" />
+                    <text x="-40" y="135" class="port-label">GERUND</text>
+                </g>
+
+                <g class="port-group" onclick="handleLink('past-participle')" style="--target-color: var(--neon-purple)">
+                    <line x1="0" y1="25" x2="60" y2="130" stroke="#333" stroke-width="2"/>
+                    <circle cx="60" cy="130" r="40" class="hit-area" />
+                    <circle cx="60" cy="130" r="10" class="port-circle-outer" />
+                    <circle cx="60" cy="130" r="5" class="port-circle-inner" />
+                    <text x="80" y="135" class="port-label">PAST PART.</text>
+                </g>
+
+                <g class="port-group" onclick="handleLink('present-participle')" style="--target-color: var(--neon-purple)">
+                    <line x1="0" y1="25" x2="120" y2="80" stroke="#333" stroke-width="2"/>
+                    <circle cx="120" cy="80" r="40" class="hit-area" />
+                    <circle cx="120" cy="80" r="10" class="port-circle-outer" />
+                    <circle cx="120" cy="80" r="5" class="port-circle-inner" />
+                    <text x="140" y="85" class="port-label">PRES PART.</text>
+                </g>
+            </g>
+
+            <g class="cable-group">
+                <path d="M 600 130 C 800 130, 800 150, 950 150" class="cable" stroke="var(--neon-blue)" />
+                <path d="M 600 130 C 800 130, 800 150, 950 150" class="cable-glow" stroke="var(--neon-blue)" />
+            </g>
+            <g class="cable-group">
+                <path d="M 600 370 C 800 370, 800 450, 950 450" class="cable" stroke="var(--neon-blue)" />
+                <path d="M 600 370 C 800 370, 800 450, 950 450" class="cable-glow" stroke="var(--neon-blue)" />
+            </g>
+
+            <g transform="translate(950, 150)">
+                <g class="section-header-group" onclick="showExplanation('clauses')">
+                    <rect x="-80" y="-25" width="160" height="50" class="section-header-rect" rx="4"/>
+                    <text x="0" y="0" class="section-header-text" dominant-baseline="middle">III. CLAUSES</text>
+                    <text x="0" y="15" fill="#aaa" font-size="10" text-anchor="middle">[ INFO ]</text>
+                </g>
+
+                <g class="port-group" onclick="handleLink('noun-clause')" style="--target-color: var(--neon-green)">
+                    <line x1="0" y1="25" x2="-80" y2="80" stroke="#333" stroke-width="2"/>
+                    <circle cx="-80" cy="80" r="40" class="hit-area" />
+                    <circle cx="-80" cy="80" r="10" class="port-circle-outer" />
+                    <circle cx="-80" cy="80" r="5" class="port-circle-inner" />
+                    <text x="-180" y="85" class="port-label" text-anchor="end">NOUN CL.</text>
+                </g>
+
+                <g class="port-group" onclick="handleLink('adjective-clause')" style="--target-color: var(--neon-green)">
+                    <line x1="0" y1="25" x2="0" y2="120" stroke="#333" stroke-width="2"/>
+                    <circle cx="0" cy="120" r="40" class="hit-area" />
+                    <circle cx="0" cy="120" r="10" class="port-circle-outer" />
+                    <circle cx="0" cy="120" r="5" class="port-circle-inner" />
+                    <text x="0" y="145" class="port-label" text-anchor="middle">ADJ CL.</text>
+                </g>
+
+                <g class="port-group" onclick="handleLink('adverb-clause')" style="--target-color: var(--neon-green)">
+                    <line x1="0" y1="25" x2="80" y2="80" stroke="#333" stroke-width="2"/>
+                    <circle cx="80" cy="80" r="40" class="hit-area" />
+                    <circle cx="80" cy="80" r="10" class="port-circle-outer" />
+                    <circle cx="80" cy="80" r="5" class="port-circle-inner" />
+                    <text x="100" y="85" class="port-label" text-anchor="start">ADV CL.</text>
+                </g>
+            </g>
+
+            <g transform="translate(950, 450)">
+                <g class="section-header-group" onclick="showExplanation('special-sentences')">
+                    <rect x="-80" y="-25" width="160" height="50" class="section-header-rect" rx="4"/>
+                    <text x="0" y="0" class="section-header-text" dominant-baseline="middle">IV. SPECIAL</text>
+                    <text x="0" y="15" fill="#aaa" font-size="10" text-anchor="middle">[ INFO ]</text>
+                </g>
+
+                <g class="port-group" onclick="handleLink('questions')" style="--target-color: #ff00ff">
+                    <line x1="0" y1="25" x2="-100" y2="80" stroke="#333" stroke-width="2"/>
+                    <circle cx="-100" cy="80" r="40" class="hit-area" />
+                    <circle cx="-100" cy="80" r="10" class="port-circle-outer" />
+                    <circle cx="-100" cy="80" r="5" class="port-circle-inner" />
+                    <text x="-90" y="85" class="port-label" text-anchor="end" style="transform: translateX(-20px)">QUESTIONS</text>
+                </g>
+
+                <g class="port-group" onclick="handleLink('exclamations')" style="--target-color: #ff00ff">
+                    <line x1="0" y1="25" x2="-40" y2="130" stroke="#333" stroke-width="2"/>
+                    <circle cx="-40" cy="130" r="40" class="hit-area" />
+                    <circle cx="-40" cy="130" r="10" class="port-circle-outer" />
+                    <circle cx="-40" cy="130" r="5" class="port-circle-inner" />
+                    <text x="-40" y="155" class="port-label" text-anchor="middle">EXCLAMATIONS</text>
+                </g>
+
+                <g class="port-group" onclick="handleLink('inverted')" style="--target-color: #ff00ff">
+                    <line x1="0" y1="25" x2="40" y2="130" stroke="#333" stroke-width="2"/>
+                    <circle cx="40" cy="130" r="40" class="hit-area" />
+                    <circle cx="40" cy="130" r="10" class="port-circle-outer" />
+                    <circle cx="40" cy="130" r="5" class="port-circle-inner" />
+                    <text x="40" y="155" class="port-label" text-anchor="middle">INVERTED</text>
+                </g>
+
+                <g class="port-group" onclick="handleLink('subjunctive')" style="--target-color: #ff00ff">
+                    <line x1="0" y1="25" x2="100" y2="80" stroke="#333" stroke-width="2"/>
+                    <circle cx="100" cy="80" r="40" class="hit-area" />
+                    <circle cx="100" cy="80" r="10" class="port-circle-outer" />
+                    <circle cx="100" cy="80" r="5" class="port-circle-inner" />
+                    <text x="120" y="85" class="port-label" text-anchor="start">SUBJUNCTIVE</text>
+                </g>
+            </g>
+        </svg>
     </div>
 
     <div id="modal">
         <div id="modal-content">
             <span id="close">&times;</span>
             <h2 id="modal-title" class="explanation-title"></h2>
-            <p id="modal-text" class="explanation-text"></p>
+            <div id="modal-text" class="explanation-text"></div>
+            <div style="margin-top:20px; font-size:0.8rem; color:#666; font-family:'JetBrains Mono'">[END OF TRANSMISSION]</div>
         </div>
     </div>
 
-    <div id="status-message" class="status-message" style="display: none;"></div>
+    <div id="status-message" class="status-message"></div>
 
     <script>
         // ----------------------------------------
-        // ✨ 能量粒子特效 (Energy Particles)
-        // ----------------------------------------
-        const canvas = document.getElementById('particle-canvas');
-        const ctx = canvas.getContext('2d');
-        let particlesArray;
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        resizeCanvas();
-        window.addEventListener('resize', () => {
-            resizeCanvas();
-            initParticles();
-        });
-
-        const mouse = { x: null, y: null, radius: 150 };
-        window.addEventListener('mousemove', (event) => {
-            mouse.x = event.x;
-            mouse.y = event.y;
-        });
-
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2 + 0.5;
-                this.speedX = (Math.random() * 1 - 0.5);
-                this.speedY = (Math.random() * 1 - 0.5);
-                // 粒子顏色：金色與電光藍
-                this.color = Math.random() > 0.6 ? 'rgba(255, 215, 0, 0.6)' : 'rgba(65, 105, 225, 0.6)';
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if (this.x > canvas.width || this.x < 0) this.speedX = -this.speedX;
-                if (this.y > canvas.height || this.y < 0) this.speedY = -this.speedY;
-
-                let dx = mouse.x - this.x;
-                let dy = mouse.y - this.y;
-                let distance = Math.sqrt(dx*dx + dy*dy);
-                if (distance < mouse.radius) {
-                    if(mouse.x < this.x && this.x < canvas.width - 10) this.x += 1;
-                    if(mouse.x > this.x && this.x > 10) this.x -= 1;
-                    if(mouse.y < this.y && this.y < canvas.height - 10) this.y += 1;
-                    if(mouse.y > this.y && this.y > 10) this.y -= 1;
-                }
-            }
-            draw() {
-                ctx.fillStyle = this.color;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        function initParticles() {
-            particlesArray = [];
-            let numberOfParticles = (canvas.width * canvas.height) / 10000;
-            for (let i = 0; i < numberOfParticles; i++) {
-                particlesArray.push(new Particle());
-            }
-        }
-
-        function animateParticles() {
-            requestAnimationFrame(animateParticles);
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            for (let i = 0; i < particlesArray.length; i++) {
-                particlesArray[i].update();
-                particlesArray[i].draw();
-                
-                // 粒子連線 (微弱的電流感)
-                for (let j = i; j < particlesArray.length; j++) {
-                    let dx = particlesArray[i].x - particlesArray[j].x;
-                    let dy = particlesArray[i].y - particlesArray[j].y;
-                    let distance = Math.sqrt(dx*dx + dy*dy);
-                    if (distance < 100) {
-                        ctx.beginPath();
-                        ctx.strokeStyle = 'rgba(255, 215, 0, 0.1)';
-                        ctx.lineWidth = 0.5;
-                        ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
-                        ctx.lineTo(particlesArray[j].x, particlesArray[j].y);
-                        ctx.stroke();
-                    }
-                }
-            }
-        }
-        initParticles();
-        animateParticles();
-
-
-        // ----------------------------------------
-        // 原始業務邏輯 (CSV, Modal, Clicks)
+        // 配置與資料
         // ----------------------------------------
         const grammarCSV = `no.,key point,url
 S-1,simple,https://ducj-creator.github.io/Shirley-Grammar/simple/
@@ -726,6 +612,28 @@ SS-2,exclamations,https://ducj-creator.github.io/Shirley-Grammar/exclamations/
 SS-3,inverted,https://ducj-creator.github.io/Shirley-Grammar/inverted/
 SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
 
+        const sectionExplanations = {
+            'parts-of-speech': {
+                title: "I. Parts of Speech 詞性",
+                text: "The eight parts of speech are the basic categories of words in English grammar. We focus on the core six here:<br><br><strong>• Nouns, Pronouns, Verbs, Adjectives, Adverbs, Prepositions</strong><br><br>Note: Conjunctions are covered in Compound Sentences.<br>英語的八大詞類是詞彙在文法上的基本類別。在此主要著重於前六類。"
+            },
+            'nonfinite-verbs': {
+                title: "II. Non-finite Verbs 非限定動詞",
+                text: "Non-finite verbs do not show tense, person, or number. They function as other parts of speech (nouns, adjectives, or adverbs).<br><br><strong>• Infinitive (不定詞)<br>• Gerund (動名詞)<br>• Participles (分詞)</strong>"
+            },
+            'clauses': {
+                title: "III. Clauses 子句",
+                text: "A clause contains a subject and a verb. Dependent clauses are classified by function:<br><br><strong>• Noun Clause (名詞子句)<br>• Adjective/Relative Clause (形容詞子句)<br>• Adverb Clause (副詞子句)</strong>"
+            },
+            'special-sentences': {
+                title: "IV. Special Sentences 特殊句型",
+                text: "Categories based on function or specific word arrangement:<br><br><strong>• Questions (疑問句)<br>• Exclamations (感嘆句)<br>• Inverted Sentences (倒裝句)<br>• Subjunctive Mood (虛擬語氣)</strong>"
+            }
+        };
+
+        // ----------------------------------------
+        // 邏輯處理
+        // ----------------------------------------
         function parseCSV(csvText) {
             const lines = csvText.split('\n');
             const result = {};
@@ -734,116 +642,65 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
                 if (line) {
                     const columns = line.split(',');
                     if (columns.length >= 3) {
-                        const key = columns[1].trim();
-                        const url = columns[2].trim();
-                        if (key && url) {
-                            result[key] = url;
-                        }
+                        result[columns[1].trim()] = columns[2].trim();
                     }
                 }
             }
             return result;
         }
 
-        let grammarLinks = {};
-        try {
-            grammarLinks = parseCSV(grammarCSV);
-        } catch (error) {
-            console.error('Error loading grammar links:', error);
-        }
-
-        function showStatus(message, duration = 2000) {
-            const statusEl = document.getElementById('status-message');
-            statusEl.textContent = message;
-            statusEl.style.display = 'block';
-            setTimeout(() => {
-                statusEl.style.display = 'none';
-            }, duration);
-        }
-
-        let isProcessingClick = false;
-        function safeOpenLink(url, key) {
-            if (isProcessingClick) return;
-            isProcessingClick = true;
-            showStatus(`Connecting to ${key}...`);
-            setTimeout(() => {
-                window.open(url, '_blank');
-                isProcessingClick = false;
-            }, 500);
-        }
-
-        function handlePillarClick(key) {
-            const lowerKey = key.toLowerCase();
-            if (grammarLinks[lowerKey]) {
-                safeOpenLink(grammarLinks[lowerKey], key);
-            } else {
-                showStatus(`No link found for ${key}`);
-            }
-        }
-
-        function handlePortClick(key) {
-            const lowerKey = key.toLowerCase();
-            if (grammarLinks[lowerKey]) {
-                safeOpenLink(grammarLinks[lowerKey], key);
-            } else {
-                showStatus(`No link found for ${key}`);
-            }
-        }
-
-        const sectionExplanations = {
-            'parts-of-speech': {
-                title: "I. Parts of Speech 詞性",
-                text: "The eight parts of speech are the basic categories of words in English grammar: nouns, pronouns, verbs, adjectives, adverbs, prepositions, conjunctions, and interjections. Here, we will mainly focus on the first six. (The FANBOYS conjunctions are explained in 'Compound Sentences,' and interjections like 'Wow,' 'Oh,' 'Hey,' 'Oops,' and 'Ouch' are limited in number.)<br><br>英語的八大詞類是詞彙在文法上的基本類別：名詞、代名詞、動詞、形容詞、副詞、介系詞、連接詞和感嘆詞。在此，我們將主要著重於前六類。（FANBOYS 連接詞已在「複合句」中說明；感嘆詞的數量有限，如「Wow、Oh、Hey、Oops 和 Ouch」。）"
-            },
-            'nonfinite-verbs': {
-                title: "II. Non-finite Verbs 非限定動詞",
-                text: "Non-finite verbs are verb forms that do not show tense, person, or number. They function as other parts of speech (nouns, adjectives, or adverbs) within a sentence. They include the infinitive, the gerund, and the participles (present and past).<br><br>非限定動詞 (Non-finite Verbs) 是指不顯示時態、人稱或數量的動詞形式。它們在句中充當其他詞類（如名詞、形容詞或副詞）。它們包括不定詞 (Infinitive)、動名詞 (Gerund)，以及分詞 (Participles)（現在分詞與過去分詞）。"
-            },
-            'clauses': {
-                title: "III. Clauses 子句",
-                text: "A clause is a group of words that contains a subject and a verb. Clauses are fundamentally classified into two types based on their function: independent clauses (which can stand alone as a complete sentence) and dependent clauses (which cannot stand alone).<br>Another key method for classifying dependent clauses focuses on their grammatical role within a sentence. These functional classifications are: Nominal Clauses (or Noun Clauses)；Relative Clauses (or Adjective Clauses)；Adverbial Clauses (or Adverb Clauses)<br><br>子句的分類（Clause Classification）<br>子句 (Clause) 是一組包含一個主詞 (subject) 和一個動詞 (verb) 的詞群。子句的分類方式主要有兩種：<br>1. 依獨立性分類<br>這是最基礎的分類，將子句分為兩大類：<br>獨立子句 (Independent Clause)：能獨立存在，構成一個完整的句子。<br>從屬子句 (Dependent Clause)：不能獨立存在，必須依附於獨立子句，在句中充當某個成分。<br>2. 依功能分類<br>這種分類方式主要針對從屬子句在句中所扮演的語法角色，將其分為三類：<br>名詞子句 (Nominal Clause / Noun Clause)：在句子中起名詞的作用，可作主詞、受詞、主詞補語等。<br>形容詞子句 (Adjective Clause / Relative Clause)：又稱關係子句，在句子中起形容詞的作用，用來修飾名詞或代名詞。<br>副詞子句 (Adverbial Clause / Adverb Clause)：在句子中起副詞的作用，用來修飾動詞、形容詞或副詞，表示時間、原因、條件、讓步等。"
-            },
-            'special-sentences': {
-                title: "IV. Special Sentences 特殊句型",
-                text: "Special Sentence Structures (or Sentence Types) are categories of sentences based on their function or specific arrangement of words. They include the following forms:<br>Questions (Interrogative Sentences)<br>Exclamations (Exclamatory Sentences)<br>Inverted Sentences (Sentences with Inversion)<br>Sentences using the Subjunctive Mood<br><br>特殊句型 (Special Sentence Structures)（或稱句子類型）是根據句子功能或特定詞序排列而劃分的類別。它們包括以下形式：<br>疑問句 (Questions / Interrogative Sentences)<br>感嘆句 (Exclamations / Exclamatory Sentences)<br>倒裝句 (Inverted Sentences)<br>使用虛擬語氣的句子 (Sentences using the Subjunctive Mood)"
-            }
-        };
-
-        function handleSectionClick(key) {
-            showExplanation(key);
-        }
-
-        function showCardInfo(cardType) {
-            if (cardType === 'sentence-structure') {
-                showStatus('Viewing: Sentence Structure Diagram');
-            } else if (cardType === 'grammar-concepts') {
-                showStatus('Viewing: Key Grammar Concepts');
-            }
-        }
-
-        // Modal
+        const grammarLinks = parseCSV(grammarCSV);
+        const statusEl = document.getElementById('status-message');
         const modal = document.getElementById('modal');
         const modalTitle = document.getElementById('modal-title');
         const modalText = document.getElementById('modal-text');
-        const close = document.getElementById('close');
+        const closeBtn = document.getElementById('close');
+
+        function showStatus(msg) {
+            statusEl.textContent = `> ${msg}`;
+            statusEl.style.display = 'block';
+            // 簡單的打字機效果
+            statusEl.style.animation = 'none';
+            statusEl.offsetHeight; /* trigger reflow */
+            statusEl.style.animation = 'fadeIn 0.2s';
+            
+            setTimeout(() => {
+                statusEl.style.display = 'none';
+            }, 2500);
+        }
+
+        function handleLink(key) {
+            const lowerKey = key.toLowerCase();
+            if (grammarLinks[lowerKey]) {
+                showStatus(`CONNECTING TO DATALINK: [${key.toUpperCase()}]...`);
+                setTimeout(() => {
+                    window.open(grammarLinks[lowerKey], '_blank');
+                }, 400);
+            } else {
+                showStatus(`ERROR: LINK NOT FOUND FOR [${key}]`);
+            }
+        }
 
         function showExplanation(key) {
             const exp = sectionExplanations[key];
             if (exp) {
-                modalTitle.textContent = exp.title;
+                modalTitle.innerHTML = exp.title;
                 modalText.innerHTML = exp.text;
                 modal.style.display = 'flex';
+                showStatus(`ACCESSING DATABASE: ${key.toUpperCase()}`);
             }
         }
 
-        close.onclick = function() {
-            modal.style.display = 'none';
+        closeBtn.onclick = () => modal.style.display = 'none';
+        window.onclick = (e) => {
+            if (e.target == modal) modal.style.display = 'none';
         }
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = 'none';
-            }
-        }
+
+        // 初始化特效
+        window.onload = () => {
+            showStatus("SYSTEM ONLINE. WAITING FOR INPUT...");
+        };
+
     </script>
 </body>
 </html>
