@@ -16,7 +16,6 @@
             --neon-red: #ff0055;
             --neon-orange: #ff8c00;
             --glass-bg: rgba(15, 20, 30, 0.95);
-            --text-glow: 0 0 10px rgba(255, 255, 255, 0.8);
         }
 
         body {
@@ -143,7 +142,6 @@
             z-index: 10;
             display: flex;
             justify-content: center;
-            /* padding-bottom: 50px; Removed bottom padding to fit racetrack */
         }
 
         svg {
@@ -797,60 +795,63 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
         let selectedOptionIndex = -1;
         let currentQuizId = '';
 
-        // --- PARSING LOGIC ---
+        // --- ROBUST PARSING LOGIC (SMART PARSER) ---
         function parseQuestions(text) {
-            // Remove BOM if present and standardize newlines
+            // Normalize content
             text = text.replace(/^\uFEFF/, '').replace(/\r\n/g, '\n');
-            
-            // Split by questions (assuming they start with "1. ", "2. ", etc.)
-            // Regex looks for a newline followed by a number and a dot.
-            const rawBlocks = text.split(/\n(?=\d+\.)/);
-            
             const questions = [];
+            
+            // Split by double newlines (assuming blocks are separated by at least one empty line)
+            // If the file is tight (no empty lines), we fallback to regex split
+            let blocks = text.split(/\n\s*\n/);
+            
+            // Fallback: if blocks are too few, maybe try splitting by "digit dot"
+            if (blocks.length < 2) {
+                const reSplit = text.split(/\n(?=\d+[\.\、])/);
+                if (reSplit.length > blocks.length) blocks = reSplit;
+            }
 
-            rawBlocks.forEach(block => {
+            blocks.forEach(block => {
                 const lines = block.split('\n').map(l => l.trim()).filter(l => l !== '');
-                if (lines.length < 2) return;
+                if (lines.length < 2) return; // Need at least question + 1 option
 
-                // First line is the question (remove leading number)
-                const questionText = lines[0].replace(/^\d+\.\s*/, '');
+                // 1. Identify Question (First non-empty line)
+                // Remove numbering like "1.", "1、", "Q1.", etc.
+                const qText = lines[0].replace(/^(?:\d+[\.\、\)]|Q\d+[\.\:\s])\s*/i, '');
                 
                 const options = [];
-                let correctIndex = -1;
+                let correctIdx = -1;
 
-                // Remaining lines are options
+                // 2. Identify Options
                 for (let i = 1; i < lines.length; i++) {
-                    let line = lines[i];
-                    let isCorrect = false;
+                    const line = lines[i];
+                    
+                    // Detect markers
+                    const isCorrect = line.includes('●') || line.includes('[✓]') || line.includes('[✔]') || line.includes('[v]') || line.toLowerCase().includes('(answer)');
+                    const isWrong = line.includes('[x]') || line.includes('[✘]');
 
-                    // Check markers: ● at start, or [✓] at end
-                    // Also robustly checking for [✓] or similar characters
-                    if (line.includes('[✓]') || line.includes('[✔]') || line.startsWith('●')) {
-                        isCorrect = true;
-                    }
-
-                    // Clean string: remove markers like [x], [✓], ●, o, etc.
-                    let cleanText = line
-                        .replace(/\[x\]/gi, '')
-                        .replace(/\[✘\]/gi, '')
-                        .replace(/\[✓\]/gi, '')
-                        .replace(/\[✔\]/gi, '') 
-                        .replace(/^●\s*/, '')
-                        .replace(/^o\s*/, '')
-                        .replace(/^○\s*/, '')
+                    // Clean option text (remove markers and prefixes like "a)", "A.")
+                    let optText = line
+                        .replace(/\[.*?\]/g, '') // remove [x], [✓]
+                        .replace(/[●○]/g, '')    // remove dots
+                        .replace(/^[\w\d]+\)[\s\.]*/, '') // remove "a)", "A."
                         .trim();
 
-                    if (cleanText) {
-                        options.push(cleanText);
-                        if (isCorrect) correctIndex = options.length - 1;
+                    if (optText) {
+                        options.push(optText);
+                        if (isCorrect) correctIdx = options.length - 1;
                     }
                 }
 
-                if (options.length > 0 && correctIndex !== -1) {
+                // Only add if we have options and a valid question
+                if (options.length >= 2) {
+                    // If no correct answer marked, default to first (failsafe) or skip? 
+                    // Let's assume user might miss marker, set -1 to prevent crash but logic needs it.
+                    // We will just keep it as -1 and handle it in UI (maybe no score).
                     questions.push({
-                        q: questionText,
+                        q: qText,
                         options: options,
-                        correct: correctIndex
+                        correct: correctIdx
                     });
                 }
             });
@@ -878,28 +879,49 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
             document.getElementById('hud-title').innerText = "TRACK: " + id.toUpperCase();
             document.getElementById('quiz-body').innerHTML = '';
             document.getElementById('loading-spinner').style.display = 'block';
-            document.getElementById('submit-btn').style.display = 'none'; // Hide until loaded
+            document.getElementById('submit-btn').style.display = 'none'; 
 
-            fetch(quizUrls[id])
-                .then(response => response.text())
+            const url = quizUrls[id];
+            console.log("Fetching:", url);
+
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`FILE NOT FOUND (HTTP ${response.status}). Check URL.`);
+                    }
+                    return response.text();
+                })
                 .then(text => {
+                    // Safety check: Is this HTML masquerading as text?
+                    if (text.trim().startsWith('<!DOCTYPE') || text.trim().startsWith('<html')) {
+                        throw new Error("Invalid Format: Received HTML page instead of TXT file.");
+                    }
+
                     const allQuestions = parseQuestions(text);
+                    
+                    if (allQuestions.length === 0) {
+                        console.warn("Parsed text preview:", text.substring(0, 200));
+                        throw new Error("Parse Error: No questions found in file.");
+                    }
+
                     // Randomize and pick 10
                     currentQuestions = allQuestions.sort(() => 0.5 - Math.random()).slice(0, 10);
                     currentQuestionIndex = 0;
                     userScore = 0;
                     
                     document.getElementById('loading-spinner').style.display = 'none';
-                    if (currentQuestions.length > 0) {
-                        renderQuestion();
-                    } else {
-                        document.getElementById('quiz-body').innerHTML = '<p>Error loading pit crew (no questions found).</p>';
-                    }
+                    renderQuestion();
                 })
                 .catch(err => {
                     console.error(err);
                     document.getElementById('loading-spinner').style.display = 'none';
-                    document.getElementById('quiz-body').innerHTML = '<p>Connection lost to race control.</p>';
+                    document.getElementById('quiz-body').innerHTML = `
+                        <div style="color: #ff5555; text-align: center; border: 1px solid #ff5555; padding: 20px;">
+                            <h3>⚠️ PIT CREW FAILURE</h3>
+                            <p>${err.message}</p>
+                            <p style="font-size: 0.9em; color: #aaa;">Target: ${url}</p>
+                        </div>
+                    `;
                 });
         }
 
@@ -926,21 +948,18 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
             btn.disabled = true;
             btn.style.opacity = '0.5';
             btn.style.cursor = 'not-allowed';
+            btn.dataset.answered = "false"; // Reset answer state
         }
 
         function selectOption(idx) {
-            // If already answered (visual feedback shown), ignore clicks
             const submitBtn = document.getElementById('submit-btn');
             if (submitBtn.dataset.answered === "true") return;
 
-            // Clear previous selection
             document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
             
-            // Set new selection
             selectedOptionIndex = idx;
             document.getElementById(`opt-${idx}`).classList.add('selected');
             
-            // Enable submit
             submitBtn.disabled = false;
             submitBtn.style.opacity = '1';
             submitBtn.style.cursor = 'pointer';
@@ -955,7 +974,9 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
                 const correctIdx = q.correct;
                 
                 // Show Correct/Wrong styles
-                document.getElementById(`opt-${correctIdx}`).classList.add('correct');
+                if (correctIdx !== -1) {
+                    document.getElementById(`opt-${correctIdx}`).classList.add('correct');
+                }
                 
                 if (selectedOptionIndex === correctIdx) {
                     userScore += 10;
@@ -974,10 +995,10 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
             }
 
             // Phase 2: Move to Next
-            btn.dataset.answered = "false"; // Reset flag
+            btn.dataset.answered = "false";
             currentQuestionIndex++;
             
-            if (currentQuestionIndex < 10) {
+            if (currentQuestionIndex < 10 && currentQuestionIndex < currentQuestions.length) {
                 renderQuestion();
             } else {
                 showResults();
@@ -989,13 +1010,19 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
             document.getElementById('result-content').style.display = 'block';
             
             const scoreDisplay = document.getElementById('final-score');
-            // Animate score
             let tempScore = 0;
-            const interval = setInterval(() => {
-                tempScore += 1;
-                scoreDisplay.innerText = `${tempScore}/100`;
-                if (tempScore >= userScore) clearInterval(interval);
-            }, 20);
+            // Simple animation
+            const targetScore = userScore;
+            if (targetScore === 0) {
+                 scoreDisplay.innerText = "0/100";
+            } else {
+                const interval = setInterval(() => {
+                    tempScore += 5; // increment by 5
+                    if (tempScore > targetScore) tempScore = targetScore;
+                    scoreDisplay.innerText = `${tempScore}/100`;
+                    if (tempScore >= targetScore) clearInterval(interval);
+                }, 40);
+            }
         }
 
         function restartRace() {
