@@ -236,6 +236,16 @@
             font-weight: bold;
             letter-spacing: 0.5px;
         }
+        
+        /* 比較表格 (用於 Fact vs Unreal) */
+        .comparison-note {
+            background-color: #f9f9f9;
+            border: 1px dashed #ccc;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
 
         /* --- 動畫演示區 --- */
         .anim-container {
@@ -344,11 +354,34 @@
             <div class="elegant-section">
                 <div class="section-header">
                     <h2 class="section-title">1. If Conditions</h2>
-                    <span class="section-subtitle">與事實相反的假設</span>
+                    <span class="section-subtitle">條件句與假設語氣</span>
                 </div>
 
                 <div class="rule-block">
-                    <div class="rule-title"><i class="fas fa-clock"></i> Present Unreal (與現在事實相反)</div>
+                    <div class="rule-title"><i class="fas fa-check-circle"></i> Zero Conditional (事實與真理)</div>
+                    <div class="comparison-note">
+                        <strong>注意：</strong>這是「直陳語氣」(Real Condition)，表示<strong>科學事實</strong>或<strong>必然結果</strong>。
+                    </div>
+                    <div class="grammar-formula">
+                        If + S + <span class="highlight-purple">V (present)</span> ..., S + <span class="highlight-purple">V (present)</span> ...
+                    </div>
+                    <ul class="example-list">
+                        <li class="example-item">
+                            <div class="en-sentence">If you <span class="highlight-purple">heat</span> ice, it <span class="highlight-purple">melts</span>.</div>
+                            <div class="cn-trans">如果你加熱冰，它就會融化。(科學事實)</div>
+                        </li>
+                        <li class="example-item">
+                            <div class="en-sentence">If I <span class="highlight-purple">am</span> late, my boss <span class="highlight-purple">gets</span> angry.</div>
+                            <div class="cn-trans">如果我遲到，我的老闆就會生氣。(習慣/必然)</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="rule-block">
+                    <div class="rule-title"><i class="fas fa-cloud-moon"></i> Present Unreal (與現在事實相反)</div>
+                    <div class="comparison-note">
+                        表示現在不可能發生的事情，或純粹的想像。be 動詞一律用 <strong>were</strong>。
+                    </div>
                     <div class="grammar-formula">
                         If + S + <span class="highlight-purple">V-ed / were</span> ..., S + <span class="highlight-purple">would/could/might</span> + V ...
                     </div>
@@ -512,11 +545,11 @@
         const btn = document.getElementById('animBtn');
         
         const examples = [
+            { fact: "If you heat ice, it melts.", subjunctive: "(Zero Conditional: Fact)" },
             { fact: "I am not a bird.", subjunctive: "If I <span style='color:#d4af37'>were</span> a bird, I could fly." },
             { fact: "I didn't study yesterday.", subjunctive: "I wish I <span style='color:#d4af37'>had studied</span> yesterday." },
             { fact: "He is late. (My suggestion)", subjunctive: "I suggest that he <span style='color:#d4af37'>be</span> on time." },
-            { fact: "She doesn't know the answer.", subjunctive: "She acts as if she <span style='color:#d4af37'>knew</span> the answer." },
-            { fact: "We are still here. (Should have left)", subjunctive: "It is time we <span style='color:#d4af37'>went</span> home." }
+            { fact: "She doesn't know the answer.", subjunctive: "She acts as if she <span style='color:#d4af37'>knew</span> the answer." }
         ];
 
         let currentIndex = 0;
@@ -537,29 +570,40 @@
         function playSequence() {
             const item = examples[currentIndex];
             
-            // Step 1: Show Fact (Reality)
-            display.style.opacity = 0;
-            display.style.transform = 'scale(0.95)';
-            display.style.transition = 'all 0.5s ease';
-            
-            setTimeout(() => {
-                display.innerHTML = `<span style="font-size:0.8rem; display:block; color:#ccc; margin-bottom:10px; letter-spacing:2px;">REALITY (FACT)</span>${item.fact}`;
-                display.style.opacity = 1;
-                display.style.transform = 'scale(1)';
-                display.style.background = 'rgba(255,255,255,0.1)';
-            }, 500);
-
-            // Step 2: Show Subjunctive (Imagination) after 2 seconds
-            setTimeout(() => {
+            // 如果是 Zero Conditional，顯示特別的邏輯
+            if (currentIndex === 0) {
+                 display.style.opacity = 0;
+                 setTimeout(() => {
+                    display.innerHTML = `<span style="font-size:0.8rem; display:block; color:#ccc; margin-bottom:10px; letter-spacing:2px;">ZERO CONDITIONAL (FACT)</span>${item.fact}`;
+                    display.style.opacity = 1;
+                    display.style.background = 'rgba(255,255,255,0.1)';
+                 }, 500);
+            } else {
+                // 一般 Subjunctive 邏輯
+                // Step 1: Show Fact
                 display.style.opacity = 0;
                 display.style.transform = 'scale(0.95)';
+                display.style.transition = 'all 0.5s ease';
+                
                 setTimeout(() => {
-                    display.innerHTML = `<span style="font-size:0.8rem; display:block; color:#d4af37; margin-bottom:10px; letter-spacing:2px;">SUBJUNCTIVE MOOD</span>${item.subjunctive}`;
+                    display.innerHTML = `<span style="font-size:0.8rem; display:block; color:#ccc; margin-bottom:10px; letter-spacing:2px;">REALITY (FACT)</span>${item.fact}`;
                     display.style.opacity = 1;
                     display.style.transform = 'scale(1)';
-                    display.style.background = 'rgba(46, 16, 101, 0.4)'; // 加深背景色
+                    display.style.background = 'rgba(255,255,255,0.1)';
                 }, 500);
-            }, 2500);
+
+                // Step 2: Show Subjunctive
+                setTimeout(() => {
+                    display.style.opacity = 0;
+                    display.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        display.innerHTML = `<span style="font-size:0.8rem; display:block; color:#d4af37; margin-bottom:10px; letter-spacing:2px;">SUBJUNCTIVE MOOD</span>${item.subjunctive}`;
+                        display.style.opacity = 1;
+                        display.style.transform = 'scale(1)';
+                        display.style.background = 'rgba(46, 16, 101, 0.4)'; 
+                    }, 500);
+                }, 2500);
+            }
 
             currentIndex = (currentIndex + 1) % examples.length;
         }
