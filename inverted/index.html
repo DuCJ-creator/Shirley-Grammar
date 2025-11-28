@@ -3,845 +3,425 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shirley's Inversion Structure Learning Platform | 倒裝句學習平台</title>
+    <title>Shirley's Inverted Sentences | 倒裝句學習</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --primary: #9c27b0;
-            --secondary: #ba68c8;
-            --accent: #ff9800;
-            --light: #f8f9fa;
-            --dark: #343a40;
-            --success: #28a745;
+            /* --- Inverted Sentences 專屬配色 (深海藍 + 香檳金) --- */
+            --inv-primary: #0c2d48;   /* 深海藍 (主色) */
+            --inv-secondary: #205072; /* 藍綠色 (漸層用) */
+            --inv-accent: #d4af37;    /* 香檳金 (點綴) */
+            --inv-light: #e8f1f5;     /* 極淡藍 (背景微調) */
+            --white: #ffffff;
+            --text-dark: #2c3e50;
+            --text-grey: #666666;
         }
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', 'Microsoft JhengHei', '微軟正黑體', Arial, sans-serif;
+            font-family: 'Lato', 'Microsoft JhengHei', '微軟正黑體', sans-serif;
         }
         
         body {
-            background-color: var(--light);
-            color: var(--dark);
-            line-height: 1.6;
+            background-color: #f9f7f2; /* 溫暖的米白背景 */
+            color: var(--text-dark);
+            line-height: 1.7;
         }
         
+        /* --- Header 設計 --- */
         header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, #051929, #0c2d48);
             color: white;
-            padding: 1.5rem;
+            padding: 3rem 1.5rem;
             text-align: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             position: relative;
-            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(12, 45, 72, 0.3);
         }
         
-        .header-content {
-            position: relative;
-            z-index: 1;
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--inv-accent), transparent);
         }
         
         h1 {
-            font-size: 2.2rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
             margin-bottom: 0.5rem;
+            letter-spacing: 1px;
         }
         
         .subtitle {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
             font-size: 1.2rem;
+            color: var(--inv-accent);
             opacity: 0.9;
         }
         
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 1.5rem;
+            padding: 3rem 1.5rem;
         }
-        
-        .tabs {
-            display: flex;
-            flex-wrap: wrap;
-            margin-bottom: 1.5rem;
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-        
-        .tab {
-            padding: 1rem 1.5rem;
-            cursor: pointer;
-            flex: 1;
+
+        /* --- 高級模組樣式 (Elegant Module) --- */
+        .elegant-wrapper {
+            background-color: var(--white);
+            padding: 4rem 2rem;
+            border-radius: 8px;
+            position: relative;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 40px rgba(12, 45, 72, 0.08);
             text-align: center;
-            transition: all 0.3s ease;
-            font-weight: bold;
+            border-top: 5px solid var(--inv-primary); /* 頂部深藍色線條 */
+        }
+
+        .elegant-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--inv-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .elegant-subtitle {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: #888;
+            margin-bottom: 3.5rem;
+            font-size: 1.3rem;
+            display: block;
+        }
+
+        /* 卡片網格 */
+        .elegant-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* 卡片設計 */
+        .elegant-card {
+            background: #ffffff;
+            border: 1px solid rgba(12, 45, 72, 0.1);
+            padding: 2.5rem 2rem;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            border-radius: 6px;
+        }
+
+        .elegant-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(12, 45, 72, 0.15);
+            border-color: var(--inv-primary);
+        }
+
+        /* 圖標盒子 */
+        .elegant-icon-box {
+            font-size: 1.8rem;
+            color: var(--white);
+            background-color: var(--inv-primary);
+            width: 70px;
+            height: 70px;
+            line-height: 70px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 5px 15px rgba(12, 45, 72, 0.3);
+            transition: all 0.4s ease;
+        }
+
+        .elegant-card:hover .elegant-icon-box {
+            background-color: var(--inv-accent); /* 懸停變金 */
+            color: white;
+            transform: rotateY(180deg);
+        }
+
+        .card-heading {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .card-text {
+            font-size: 0.95rem;
+            color: var(--text-grey);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        /* 分隔線 */
+        .divider-line {
+            width: 30px;
+            height: 1px;
+            background-color: #ddd;
+            margin: 1.5rem auto;
+            transition: width 0.3s ease;
+        }
+
+        .elegant-card:hover .divider-line {
+            width: 60px;
+            background-color: var(--inv-primary);
+        }
+
+        /* 列表樣式 */
+        .detail-list {
+            padding: 0;
+            margin: 0;
+        }
+
+        .detail-list li {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+            color: #555;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .detail-list li i {
+            color: var(--inv-accent);
+            margin-right: 12px;
+            margin-top: 6px;
+            font-size: 0.6rem;
+        }
+
+        .detail-example {
+            display: block;
+            font-style: italic;
+            color: #888;
+            font-size: 0.9rem;
+            margin-top: 4px;
+            border-left: 2px solid var(--inv-accent);
+            padding-left: 8px;
+            margin-left: 0;
+        }
+
+        /* --- 動畫互動區 --- */
+        .interactive-section {
+            margin-top: 5rem;
+            padding-top: 3rem;
+            border-top: 1px solid #eee;
+            text-align: center;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--inv-primary);
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+        }
+
+        .anim-box {
+            background: linear-gradient(135deg, var(--inv-primary), var(--inv-secondary));
+            color: white;
+            border-radius: 8px;
+            padding: 3rem;
+            margin: 0 auto;
+            max-width: 800px;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            box-shadow: 0 15px 35px rgba(12, 45, 72, 0.25);
             position: relative;
             overflow: hidden;
         }
         
-        .tab:hover {
-            background-color: rgba(156, 39, 176, 0.1);
+        .anim-label {
+            font-family: 'Lato', sans-serif;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            opacity: 0.7;
         }
-        
-        .tab.active {
-            background-color: var(--primary);
-            color: white;
+
+        .anim-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 2rem;
         }
-        
-        .tab-content {
-            display: none;
-            background: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            margin-bottom: 2rem;
-            animation: fadeIn 0.5s ease;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .tab-content.active {
-            display: block;
-        }
-        
-        h2 {
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--accent);
-        }
-        
-        h3 {
-            color: var(--secondary);
-            margin: 1.5rem 0 1rem;
-        }
-        
-        .card {
-            background: white;
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1.5rem 0;
-        }
-        
-        th, td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        th {
-            background-color: var(--primary);
-            color: white;
-        }
-        
-        tr:nth-child(even) {
-            background-color: #f8f9fa;
-        }
-        
-        .example {
-            background-color: #f0f7ff;
-            border-left: 4px solid var(--accent);
-            padding: 1rem;
-            margin: 1rem 0;
-            border-radius: 0 8px 8px 0;
-        }
-        
-        .interactive-element {
-            background-color: var(--light);
-            border: 2px dashed var(--secondary);
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin: 1.5rem 0;
-            text-align: center;
-        }
-        
+
         .btn {
-            background-color: var(--accent);
-            color: white;
             border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 30px;
+            padding: 0.9rem 2.5rem;
+            border-radius: 50px;
             cursor: pointer;
             font-weight: bold;
+            letter-spacing: 1px;
             transition: all 0.3s;
-            display: inline-flex;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            font-size: 1rem;
+            display: flex;
             align-items: center;
-            justify-content: center;
             gap: 8px;
         }
         
-        .btn:hover {
-            background-color: #e68900;
+        .btn-play {
+            background: var(--inv-primary);
+        }
+
+        .btn-play:hover {
+            background: var(--inv-secondary);
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(255, 152, 0, 0.3);
+            box-shadow: 0 6px 15px rgba(12, 45, 72, 0.2);
         }
         
-        .animation-controls {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 1rem;
+        .btn-pause {
+            background: #95a5a6;
         }
         
-        .inversion-animation {
-            height: 200px;
-            background: linear-gradient(135deg, #ba68c8, #9c27b0);
-            border-radius: 10px;
-            margin: 1.5rem 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-            font-weight: bold;
-            position: relative;
-            overflow: hidden;
+        .btn-pause:hover {
+            background: #7f8c8d;
+        }
+
+        /* 手機適配 */
+        @media (max-width: 768px) {
+            .elegant-title { font-size: 2.2rem; }
+            .container { padding: 1.5rem; }
+            .elegant-wrapper { padding: 2rem 1rem; }
+            .anim-box { padding: 2rem 1rem; font-size: 1.3rem; }
         }
         
         footer {
             text-align: center;
             padding: 2rem;
-            margin-top: 2rem;
-            background-color: var(--dark);
-            color: white;
-            border-radius: 10px 10px 0 0;
-        }
-        
-        .highlight {
-            background-color: #fff9e6;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-weight: bold;
-            color: var(--primary);
-        }
-        
-        .inversion-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 10px;
-            margin: 1rem 0;
-        }
-        
-        .inversion-item {
-            background: #f0f7ff;
-            padding: 10px;
-            border-radius: 5px;
-            text-align: center;
-            font-weight: bold;
-        }
-        
-        .comparison-table {
-            width: 100%;
-            margin: 1.5rem 0;
-        }
-        
-        .comparison-table th {
-            background-color: var(--secondary);
-        }
-        
-        .note-box {
-            background-color: #fff3cd;
-            border-left: 4px solid #ffc107;
-            padding: 1rem;
-            margin: 1rem 0;
-            border-radius: 0 8px 8px 0;
-        }
-        
-        .usage-diagram {
-            text-align: center;
-            margin: 2rem 0;
-        }
-        
-        .diagram-container {
-            display: flex;
-            justify-content: center;
-            margin: 1.5rem 0;
-        }
-        
-        .diagram {
-            width: 100%;
-            max-width: 600px;
-            height: 300px;
-            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-            border-radius: 10px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .diagram-item {
-            position: absolute;
-            padding: 10px;
-            background: white;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            text-align: center;
-            width: 120px;
-        }
-        
-        .connector-word {
-            color: var(--accent);
-            font-weight: bold;
-        }
-        
-        .antecedent {
-            color: var(--primary);
-            font-weight: bold;
-        }
-        
-        .qa-pair {
-            display: flex;
-            justify-content: space-between;
-            margin: 10px 0;
-        }
-        
-        .question {
-            flex: 1;
-            padding: 10px;
-            background: #f0f7ff;
-            border-radius: 5px;
-            margin-right: 10px;
-        }
-        
-        .answer {
-            flex: 1;
-            padding: 10px;
-            background: #e8f5e9;
-            border-radius: 5px;
-        }
-        
-        .structure-box {
-            background: #f8f9fa;
-            border: 2px solid var(--accent);
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-        }
-        
-        .structure-title {
-            color: var(--primary);
-            font-weight: bold;
-            margin-bottom: 1rem;
-            text-align: center;
-        }
-        
-        .structure-content {
-            font-family: monospace;
-            font-size: 1.2rem;
-            text-align: center;
-            line-height: 1.8;
-        }
-        
-        .normal-sentence {
-            color: var(--dark);
-            font-style: italic;
-        }
-        
-        .inversion-sentence {
-            color: var(--primary);
-            font-weight: bold;
-        }
-        
-        @media (max-width: 768px) {
-            .tabs {
-                flex-direction: column;
-            }
-            
-            .tab {
-                flex: none;
-            }
-            
-            .container {
-                padding: 1rem;
-            }
-            
-            h1 {
-                font-size: 1.8rem;
-            }
-            
-            .inversion-list {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            }
-            
-            .qa-pair {
-                flex-direction: column;
-            }
-            
-            .question, .answer {
-                margin-right: 0;
-                margin-bottom: 10px;
-            }
+            color: #888;
+            font-size: 0.9rem;
+            border-top: 1px solid #eee;
+            margin-top: 3rem;
         }
     </style>
 </head>
 <body>
+
     <header>
-        <div class="header-content">
-            <h1>Shirley's Inversion Structure Learning Platform</h1>
-            <p class="subtitle">倒裝句學習平台</p>
-        </div>
+        <h1>Shirley's Grammar E-Charger</h1>
+        <p class="subtitle">The Art of Language · 高級語法學習平台</p>
     </header>
     
     <div class="container">
-        <div class="tabs">
-            <div class="tab active" data-tab="intro">倒裝句介紹 | Inversion Introduction</div>
-            <div class="tab" data-tab="only">Only 開頭 | Beginning with Only</div>
-            <div class="tab" data-tab="negative">否定詞開頭 | Beginning with Negative Words</div>
-            <div class="tab" data-tab="so">So 開頭 | Beginning with So</div>
-            <div class="tab" data-tab="emphasis">強調倒裝 | Emphasis Inversion</div>
-            <div class="tab" data-tab="conditional">條件句倒裝 | Conditional Inversion</div>
-        </div>
-        
-        <!-- 倒裝句介紹 -->
-        <div class="tab-content active" id="intro">
-            <h2>倒裝句介紹 | Inversion Introduction</h2>
-            
-            <div class="card">
-                <h3>什麼是倒裝句？ | What is Inversion?</h3>
-                <p>英文句型的語序通常為S+V，但在一些情況下，會出現動詞放在主詞前的情況，就稱為「倒裝」。倒裝的最常見用法是疑問句 (如Are you busy?) ，這裏不做探討。</p>
-                <p>The usual word order in English sentences is S+V, but in some cases, the verb appears before the subject, which is called "inversion". The most common use of inversion is in questions (such as "Are you busy?"), which will not be discussed here.</p>
+        <div class="elegant-wrapper">
+            <h2 class="elegant-title">The Logic of Order</h2>
+            <span class="elegant-subtitle">Part III: Inverted Sentences · 結構的變奏</span>
+
+            <div class="elegant-grid">
                 
-                <div class="example">
-                    <p><strong>正常語序 Normal Order:</strong> <span class="normal-sentence">The technology has improved only in the past few years.</span></p>
-                    <p><strong>倒裝語序 Inverted Order:</strong> <span class="inversion-sentence">Only in the past few years has the technology improved.</span></p>
-                </div>
-            </div>
-            
-            <div class="card">
-                <h3>倒裝句的基本結構 | Basic Structure of Inversion</h3>
-                
-                <div class="structure-box">
-                    <div class="structure-title">倒裝句的基本結構 | Basic Structure of Inversion</div>
-                    <div class="structure-content">
-                        <p>特定詞語 + 助動詞/be動詞 + 主詞 + 主要動詞</p>
-                        <p>Specific Word + Auxiliary/Be Verb + Subject + Main Verb</p>
+                <div class="elegant-card">
+                    <div class="elegant-icon-box">
+                        <i class="fas fa-ban"></i>
                     </div>
+                    <h3 class="card-heading">Strict Inversion</h3>
+                    <p class="card-text">
+                        當<strong>否定詞 (Negative)</strong> 或 <strong>Only</strong> 位於句首時，句子必須倒裝，語氣強烈且正式。
+                    </p>
+                    <div class="divider-line"></div>
+                    <ul class="detail-list">
+                        <li>
+                            <i class="fas fa-circle"></i> 
+                            <div>
+                                <strong>Negative:</strong> Never have I...
+                                <span class="detail-example">"Hardly did we arrive when it rained."</span>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-circle"></i> 
+                            <div>
+                                <strong>Only:</strong> Only then did I...
+                                <span class="detail-example">"Only by practice can you succeed."</span>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
-                
-                <table>
-                    <thead>
-                        <tr>
-                            <th>類型 Type</th>
-                            <th>結構 Structure</th>
-                            <th>例子 Example</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Only 開頭</td>
-                            <td>Only + 助動詞 + 主詞 + 主要動詞</td>
-                            <td>Only then did I understand.</td>
-                        </tr>
-                        <tr>
-                            <td>否定詞開頭</td>
-                            <td>否定詞 + 助動詞 + 主詞 + 主要動詞</td>
-                            <td>Never have I seen such beauty.</td>
-                        </tr>
-                        <tr>
-                            <td>So 開頭</td>
-                            <td>So + 形容詞 + 助動詞 + 主詞 + 主要動詞</td>
-                            <td>So beautiful is she that everyone admires her.</td>
-                        </tr>
-                        <tr>
-                            <td>地點副詞開頭</td>
-                            <td>地點副詞 + 動詞 + 主詞</td>
-                            <td>Here comes the bus.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            
-            <div class="card">
-                <h3>倒裝句的用法 | Uses of Inversion</h3>
-                <p>倒裝句在英語中用於強調、修辭效果或遵循特定的語法規則。</p>
-                <p>Inversion is used in English for emphasis, rhetorical effect, or to follow specific grammatical rules.</p>
-                
-                <div class="usage-diagram">
-                    <div class="diagram-container">
-                        <div class="diagram">
-                            <div class="diagram-item" style="top: 20px; left: 50px;">強調<br>Emphasis</div>
-                            <div class="diagram-item" style="top: 20px; right: 50px;">修辭效果<br>Rhetorical Effect</div>
-                            <div class="diagram-item" style="top: 120px; left: 150px;">語法規則<br>Grammatical Rules</div>
-                            <div class="diagram-item" style="top: 120px; right: 150px;">正式文體<br>Formal Style</div>
-                            <div class="diagram-item" style="bottom: 20px; left: 250px;">文學表達<br>Literary Expression</div>
-                        </div>
+
+                <div class="elegant-card">
+                    <div class="elegant-icon-box">
+                        <i class="fas fa-code-branch"></i>
                     </div>
+                    <h3 class="card-heading">Conditional Shift</h3>
+                    <p class="card-text">
+                        在虛擬條件句中，若省略 <strong>If</strong>，需將助動詞 (Had / Were / Should) 移至句首。
+                    </p>
+                    <div class="divider-line"></div>
+                    <ul class="detail-list">
+                        <li>
+                            <i class="fas fa-circle"></i> 
+                            <div>
+                                <strong>Had:</strong> Had I known...
+                                <span class="detail-example">(= If I had known...)</span>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-circle"></i> 
+                            <div>
+                                <strong>Were:</strong> Were she here...
+                                <span class="detail-example">(= If she were here...)</span>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
-            </div>
-            
-            <div class="interactive-element">
-                <h3>倒裝句練習 | Inversion Practice</h3>
-                <p>識別不同類型的倒裝句</p>
-                <p>Identify different types of inversion</p>
-                <div class="inversion-animation" id="inversionAnimation">
-                    Only in the past few years has the technology improved.
-                </div>
-                <div class="animation-controls">
-                    <button class="btn" id="playAnimation">
-                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
-                    </button>
-                    <button class="btn" id="pauseAnimation">
-                        <i class="fas fa-pause"></i> 暫停 | Pause
-                    </button>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Only 開頭 -->
-        <div class="tab-content" id="only">
-            <h2>Only 開頭 | Beginning with Only</h2>
-            
-            <div class="card">
-                <h3>Only 開頭的倒裝句 | Inversion Beginning with Only</h3>
-                <p>當句子以"only"開頭，後面接副詞、副詞片語或副詞子句時，需要使用倒裝結構。</p>
-                <p>When a sentence begins with "only" followed by an adverb, adverbial phrase, or adverbial clause, inversion is required.</p>
-                
-                <div class="structure-box">
-                    <div class="structure-title">Only 倒裝結構 | Only Inversion Structure</div>
-                    <div class="structure-content">
-                        <p>Only + 副詞/副詞片語/副詞子句 + 助動詞 + 主詞 + 主要動詞</p>
+
+                <div class="elegant-card">
+                    <div class="elegant-icon-box">
+                        <i class="fas fa-map-marker-alt"></i>
                     </div>
-                </div>
-                
-                <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="inversion-sentence">Only in the past few years has the technology improved</span> enough for the price of computers to drop.</p>
-                    <p>只有在過去幾年中，技術才進步到足以使電腦價格下降。</p>
-                </div>
-                
-                <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="inversion-sentence">Only by practice can you make progress</span>.</p>
-                    <p>只有通過練習，你才能取得進步。</p>
-                </div>
-                
-                <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="inversion-sentence">Only when he arrived did we start the meeting</span>.</p>
-                    <p>只有當他到達時，我們才開始會議。</p>
-                </div>
-                
-                <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="inversion-sentence">Only then did I realize my mistake</span>.</p>
-                    <p>只有那時我才意識到我的錯誤。</p>
-                </div>
-            </div>
-            
-            <div class="card">
-                <h3>Only 倒裝句的轉換 | Conversion of Only Inversion</h3>
-                <p>Only 倒裝句可以從普通的陳述句轉換而來。</p>
-                <p>Only inversion sentences can be converted from ordinary declarative sentences.</p>
-                
-                <div class="qa-pair">
-                    <div class="question">
-                        <p><strong>正常語序 Normal Order:</strong> <span class="normal-sentence">The technology has improved only in the past few years.</span></p>
-                    </div>
-                    <div class="answer">
-                        <p><strong>倒裝語序 Inverted Order:</strong> <span class="inversion-sentence">Only in the past few years has the technology improved.</span></p>
-                    </div>
-                </div>
-                
-                <div class="qa-pair">
-                    <div class="question">
-                        <p><strong>正常語序 Normal Order:</strong> <span class="normal-sentence">You can make progress only by practice.</span></p>
-                    </div>
-                    <div class="answer">
-                        <p><strong>倒裝語序 Inverted Order:</strong> <span class="inversion-sentence">Only by practice can you make progress.</span></p>
-                    </div>
-                </div>
-                
-                <div class="qa-pair">
-                    <div class="question">
-                        <p><strong>正常語序 Normal Order:</strong> <span class="normal-sentence">We started the meeting only when he arrived.</span></p>
-                    </div>
-                    <div class="answer">
-                        <p><strong>倒裝語序 Inverted Order:</strong> <span class="inversion-sentence">Only when he arrived did we start the meeting.</span></p>
-                    </div>
+                    <h3 class="card-heading">Rhetorical Effect</h3>
+                    <p class="card-text">
+                        為了畫面感或強調程度，將<strong>地點副詞</strong>或 <strong>So/Such</strong> 置於句首引發倒裝。
+                    </p>
+                    <div class="divider-line"></div>
+                    <ul class="detail-list">
+                        <li>
+                            <i class="fas fa-circle"></i> 
+                            <div>
+                                <strong>Place:</strong> Here comes the bus.
+                                <span class="detail-example">"Out rushed a big dog."</span>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-circle"></i> 
+                            <div>
+                                <strong>Degree:</strong> So fast did he run...
+                                <span class="detail-example">"So moving was the speech that..."</span>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
-            
-            <div class="interactive-element">
-                <h3>Only 倒裝句練習 | Only Inversion Practice</h3>
-                <p>將陳述句轉換為Only倒裝句</p>
-                <p>Convert declarative sentences to Only inversion</p>
-                <div class="inversion-animation" id="onlyAnimation">
-                    You can learn English well only by practicing every day.
+
+            <div class="interactive-section">
+                <h3 class="section-title">Live Transformation</h3>
+                
+                <div class="anim-box" id="anim-box">
+                    <span class="anim-label" id="anim-label">Normal Order</span>
+                    <div id="anim-text">I have never seen such beauty.</div>
                 </div>
-                <div class="animation-controls">
-                    <button class="btn" id="playOnlyAnimation">
-                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
+                
+                <div class="anim-controls">
+                    <button class="btn btn-play" id="playBtn" onclick="playInvertedAnim()">
+                        <i class="fas fa-play"></i> Start Demo
                     </button>
-                    <button class="btn" id="pauseOnlyAnimation">
-                        <i class="fas fa-pause"></i> 暫停 | Pause
-                    </button>
-                </div>
-            </div>
-        </div>
-        
-        <!-- 否定詞開頭 -->
-        <div class="tab-content" id="negative">
-            <h2>否定詞開頭 | Beginning with Negative Words</h2>
-            
-            <div class="card">
-                <h3>否定詞開頭的倒裝句 | Inversion Beginning with Negative Words</h3>
-                <p>當句子以否定詞或帶有否定意義的詞語開頭時，需要使用倒裝結構。</p>
-                <p>When a sentence begins with negative words or words with negative meaning, inversion is required.</p>
-                
-                <div class="structure-box">
-                    <div class="structure-title">否定詞倒裝結構 | Negative Word Inversion Structure</div>
-                    <div class="structure-content">
-                        <p>否定詞 + 助動詞 + 主詞 + 主要動詞</p>
-                    </div>
-                </div>
-                
-                <h4>常見否定詞 | Common Negative Words</h4>
-                <div class="inversion-list">
-                    <div class="inversion-item">絕不: never</div>
-                    <div class="inversion-item">絕不: by no means</div>
-                    <div class="inversion-item">絕不: under no circumstances</div>
-                    <div class="inversion-item">絕不: on no account</div>
-                    <div class="inversion-item">絕不: in no way</div>
-                    <div class="inversion-item">絕不: at no time</div>
-                    <div class="inversion-item">幾乎不: seldom</div>
-                    <div class="inversion-item">幾乎不: little</div>
-                    <div class="inversion-item">幾乎不: rarely</div>
-                    <div class="inversion-item">幾乎不: hardly</div>
-                    <div class="inversion-item">幾乎不: scarcely</div>
-                    <div class="inversion-item">直到…才…: not until</div>
-                    <div class="inversion-item">再也不: no longer</div>
-                    <div class="inversion-item">一…就…: no sooner …than…</div>
-                </div>
-                
-                <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="inversion-sentence">Hardly did we see each other</span> after we graduated.</p>
-                    <p>畢業後我們幾乎沒有見過面。</p>
-                </div>
-                
-                <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="inversion-sentence">Never should you trust him</span>.</p>
-                    <p>你絕不應該信任他。</p>
-                </div>
-                
-                <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="inversion-sentence">By no means will I give up</span>.</p>
-                    <p>我絕不會放棄。</p>
-                </div>
-                
-                <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="inversion-sentence">Scarcely had I left home when it started to rain</span>.</p>
-                    <p>我剛離開家就開始下雨了。</p>
-                </div>
-                
-                <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="inversion-sentence">Not until 8pm did he come back home</span>.</p>
-                    <p>直到晚上8點他才回家。</p>
-                </div>
-                
-                <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="inversion-sentence">Not only does he work hard himself, but he also helps others</span>.</p>
-                    <p>他不僅自己努力工作，還幫助他人。</p>
-                </div>
-                
-                <div class="example">
-                    <p><strong>對話 Dialogue:</strong></p>
-                    <p>--The girl can't swim.</p>
-                    <p>--<span class="inversion-sentence">Nor/Neither can her sister</span>.</p>
-                    <p>--這個女孩不會游泳。</p>
-                    <p>--她的姐姐也不會。</p>
-                </div>
-            </div>
-            
-            <div class="interactive-element">
-                <h3>否定詞倒裝句練習 | Negative Word Inversion Practice</h3>
-                <p>將陳述句轉換為否定詞倒裝句</p>
-                <p>Convert declarative sentences to negative word inversion</p>
-                <div class="inversion-animation" id="negativeAnimation">
-                    I have never seen such a beautiful sunset.
-                </div>
-                <div class="animation-controls">
-                    <button class="btn" id="playNegativeAnimation">
-                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
-                    </button>
-                    <button class="btn" id="pauseNegativeAnimation">
-                        <i class="fas fa-pause"></i> 暫停 | Pause
-                    </button>
-                </div>
-            </div>
-        </div>
-        
-        <!-- So 開頭 -->
-        <div class="tab-content" id="so">
-            <h2>So 開頭 | Beginning with So</h2>
-            
-            <div class="card">
-                <h3>So 開頭的倒裝句 | Inversion Beginning with So</h3>
-                <p>當句子以"So"開頭，後面接形容詞或副詞時，需要使用倒裝結構，表示"如此...以致於..."。</p>
-                <p>When a sentence begins with "So" followed by an adjective or adverb, inversion is required, meaning "so...that...".</p>
-                
-                <div class="structure-box">
-                    <div class="structure-title">So 倒裝結構 | So Inversion Structure</div>
-                    <div class="structure-content">
-                        <p>So + 形容詞/副詞 + 助動詞 + 主詞 + 主要動詞 + that 子句</p>
-                    </div>
-                </div>
-                
-                <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="inversion-sentence">So impressive was his progress in this test</span> that the teacher awarded him a prize.</p>
-                    <p>他在這次測試中的進步如此令人印象深刻，以致老師獎勵了他。</p>
-                </div>
-                
-                <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="inversion-sentence">So quickly did he run</span> that no one could catch him.</p>
-                    <p>他跑得如此之快，以致沒有人能追上他。</p>
-                </div>
-                
-                <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="inversion-sentence">So beautiful is the scenery</span> that I can't take my eyes off it.</p>
-                    <p>風景如此美麗，以致我無法移開視線。</p>
-                </div>
-                
-                <div class="example">
-                    <p><strong>對話 Dialogue:</strong></p>
-                    <p>-- I have been to the US.</p>
-                    <p>--<span class="inversion-sentence">So have I</span>.</p>
-                    <p>--我去過美國。</p>
-                    <p>--我也去過。</p>
-                </div>
-            </div>
-            
-            <div class="interactive-element">
-                <h3>So 倒裝句練習 | So Inversion Practice</h3>
-                <p>將陳述句轉換為So倒裝句</p>
-                <p>Convert declarative sentences to So inversion</p>
-                <div class="inversion-animation" id="soAnimation">
-                    His speech was so moving that everyone was in tears.
-                </div>
-                <div class="animation-controls">
-                    <button class="btn" id="playSoAnimation">
-                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
-                    </button>
-                    <button class="btn" id="pauseSoAnimation">
-                        <i class="fas fa-pause"></i> 暫停 | Pause
-                    </button>
-                </div>
-            </div>
-        </div>
-        
-        <!-- 強調倒裝 -->
-        <div class="tab-content" id="emphasis">
-            <h2>強調倒裝 | Emphasis Inversion</h2>
-            
-            <div class="card">
-                <h3>強調倒裝句 | Emphasis Inversion</h3>
-                <p>為了強調某個部分，可以將該部分置於句首，並使用倒裝結構。</p>
-                <p>To emphasize a certain part, that part can be placed at the beginning of the sentence, and inversion is used.</p>
-                
-                <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="inversion-sentence">Many a time has he helped me</span> with my English study.</p>
-                    <p>他多次幫助我學習英語。</p>
-                </div>
-                
-                <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="inversion-sentence">There are birds singing</span> in the tree.</p>
-                    <p>樹上有鳥在唱歌。</p>
-                </div>
-                
-                <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="inversion-sentence">Here comes the bus</span>.</p>
-                    <p>公車來了。</p>
-                    <p class="note-box">* <strong>注意:</strong> Here he comes. 主詞為代名詞時，不用倒裝。</p>
-                    <p class="note-box">* <strong>Note:</strong> Here he comes. When the subject is a pronoun, inversion is not used.</p>
-                </div>
-                
-                <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="inversion-sentence">Out rushed a big dog</span>.</p>
-                    <p>一隻大狗衝了出來。</p>
-                </div>
-                
-                <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="inversion-sentence">Scattered on the floor were several books</span>.</p>
-                    <p>幾本書散落在地板上。</p>
-                </div>
-                
-                <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="inversion-sentence">Tired as he was, we decided to give him a hand</span>.</p>
-                    <p>因為他太累了，我們決定幫他一把。</p>
-                </div>
-            </div>
-            
-            <div class="interactive-element">
-                <h3>強調倒裝句練習 | Emphasis Inversion Practice</h3>
-                <p>將陳述句轉換為強調倒裝句</p>
-                <p>Convert declarative sentences to emphasis inversion</p>
-                <div class="inversion-animation" id="emphasisAnimation">
-                    A big dog rushed out.
-                </div>
-                <div class="animation-controls">
-                    <button class="btn" id="playEmphasisAnimation">
-                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
-                    </button>
-                    <button class="btn" id="pauseEmphasisAnimation">
-                        <i class="fas fa-pause"></i> 暫停 | Pause
-                    </button>
-                </div>
-            </div>
-        </div>
-        
-        <!-- 條件句倒裝 -->
-        <div class="tab-content" id="conditional">
-            <h2>條件句倒裝 | Conditional Inversion</h2>
-            
-            <div class="card">
-                <h3>條件句的倒裝 | Conditional Inversion</h3>
-                <p>在條件句中，如果省略"if"，則需要將助動詞提前，形成倒裝結構。</p>
-                <p>In conditional sentences, if "if" is omitted, the auxiliary verb needs to be moved forward, forming an inversion structure.</p>
-                
-                <div class="example">
-                    <p><strong>正常條件句 Normal Conditional:</strong> <span class="normal-sentence">If you need any assistance, please call the reception.</span></p>
-                    <p><strong>倒裝條件句 Inverted Conditional:</strong> <span class="inversion-sentence">Should you need any assistance, please call the reception.</span></p>
-                    <p>如果您需要任何幫助，請致電接待處。</p>
-                </div>
-                
-                <div class="example">
-                    <p><strong>正常條件句 Normal Conditional:</strong> <span class="normal-sentence">If I had known he would be there, I would have not attended the meeting.</span></p>
-                    <p><strong>倒裝條件句 Inverted Conditional:</strong> <span class="inversion-sentence">Had I known he would be there, I would have not attended the meeting.</span></p>
-                    <p>如果我知道他會在那裡，我就不會參加會議了。</p>
-                    <p><em>(省略if, had 提前)</em></p>
-                </div>
-                
-                <div class="example">
-                    <p><strong>正常條件句 Normal Conditional:</strong> <span class="normal-sentence">If she were here, she would help us.</span></p>
-                    <p><strong>倒裝條件句 Inverted Conditional:</strong> <span class="inversion-sentence">Were she here, she would help us.</span></p>
-                    <p>如果她在這裡，她會幫助我們。</p>
-                </div>
-            </div>
-            
-            <div class="interactive-element">
-                <h3>條件句倒裝練習 | Conditional Inversion Practice</h3>
-                <p>將條件句轉換為倒裝結構</p>
-                <p>Convert conditional sentences to inversion structure</p>
-                <div class="inversion-animation" id="conditionalAnimation">
-                    If I had more time, I would travel around the world.
-                </div>
-                <div class="animation-controls">
-                    <button class="btn" id="playConditionalAnimation">
-                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
-                    </button>
-                    <button class="btn" id="pauseConditionalAnimation">
-                        <i class="fas fa-pause"></i> 暫停 | Pause
+                    <button class="btn btn-pause" id="pauseBtn" onclick="pauseAnim()">
+                        <i class="fas fa-pause"></i> Pause
                     </button>
                 </div>
             </div>
@@ -849,290 +429,69 @@
     </div>
     
     <footer>
-        <p>Shirley's Inversion Structure Learning Platform | 倒裝句學習平台</p>
-        <p>© 2025 Shirley's Grammar
-              <script>
-        // 標籤切換功能
-        document.addEventListener('DOMContentLoaded', function() {
-            // 標籤切換
-            const tabs = document.querySelectorAll('.tab');
-            const tabContents = document.querySelectorAll('.tab-content');
+        <p>© 2025 Shirley's Grammar E-Charger · Designed with Elegance</p>
+    </footer>
+
+    <script>
+        let animInterval;
+        const animBox = document.getElementById('anim-box');
+        const animText = document.getElementById('anim-text');
+        const animLabel = document.getElementById('anim-label');
+        
+        // 倒裝句演示數據 [正常語序, 倒裝語序]
+        const pairs = [
+            ['I have never seen such beauty.', 'Never have I seen such beauty.'],
+            ['The technology has improved only recently.', 'Only recently has the technology improved.'],
+            ['If I had known the truth, I would have acted differently.', 'Had I known the truth, I would have acted differently.'],
+            ['The bus comes here.', 'Here comes the bus.'],
+            ['His speech was so moving that everyone cried.', 'So moving was his speech that everyone cried.']
+        ];
+
+        function playInvertedAnim() {
+            // 清除之前的動畫以防重疊
+            pauseAnim();
             
-            tabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    // 移除所有標籤和內容的active類
-                    tabs.forEach(t => t.classList.remove('active'));
-                    tabContents.forEach(content => content.classList.remove('active'));
-                    
-                    // 添加active類到當前標籤和對應內容
-                    tab.classList.add('active');
-                    const tabId = tab.getAttribute('data-tab');
-                    document.getElementById(tabId).classList.add('active');
-                });
-            });
+            let idx = 0;
             
-            // 倒裝句動畫功能
-            const inversionExamples = [
-                "Only in the past few years has the technology improved.",
-                "Never have I seen such a beautiful sunset.",
-                "So impressive was his progress that the teacher awarded him a prize.",
-                "Out rushed a big dog from the house.",
-                "Had I known the truth, I would have acted differently."
-            ];
+            // 立即執行第一次顯示
+            showSequence(idx);
+
+            animInterval = setInterval(() => {
+                idx = (idx + 1) % pairs.length;
+                showSequence(idx);
+            }, 4000); // 每 4 秒切換一個句型
+        }
+
+        function showSequence(index) {
+            const currentPair = pairs[index];
             
-            let currentExampleIndex = 0;
-            let animationInterval;
-            
-            function startInversionAnimation(animationElement) {
-                let index = 0;
-                const text = inversionExamples[currentExampleIndex];
-                animationElement.textContent = '';
-                
-                animationInterval = setInterval(() => {
-                    if (index < text.length) {
-                        animationElement.textContent += text.charAt(index);
-                        index++;
-                    } else {
-                        clearInterval(animationInterval);
-                        // 切換到下一個例子
-                        setTimeout(() => {
-                            currentExampleIndex = (currentExampleIndex + 1) % inversionExamples.length;
-                            startInversionAnimation(animationElement);
-                        }, 2000);
-                    }
-                }, 50);
-            }
-            
-            function pauseInversionAnimation() {
-                clearInterval(animationInterval);
-            }
-            
-            // 為每個標籤的動畫按鈕添加事件監聽器
-            document.getElementById('playAnimation')?.addEventListener('click', () => {
-                startInversionAnimation(document.getElementById('inversionAnimation'));
-            });
-            
-            document.getElementById('pauseAnimation')?.addEventListener('click', () => {
-                pauseInversionAnimation();
-            });
-            
-            // Only 倒裝句動畫
-            const onlyExamples = [
-                "You can learn English well only by practicing every day.",
-                "Only by practicing every day can you learn English well.",
-                "We started the meeting only when he arrived.",
-                "Only when he arrived did we start the meeting."
-            ];
-            
-            let onlyExampleIndex = 0;
-            let onlyAnimationInterval;
-            
-            function startOnlyAnimation() {
-                let index = 0;
-                const text = onlyExamples[onlyExampleIndex];
-                const animationElement = document.getElementById('onlyAnimation');
-                animationElement.textContent = '';
-                
-                onlyAnimationInterval = setInterval(() => {
-                    if (index < text.length) {
-                        animationElement.textContent += text.charAt(index);
-                        index++;
-                    } else {
-                        clearInterval(onlyAnimationInterval);
-                        setTimeout(() => {
-                            onlyExampleIndex = (onlyExampleIndex + 1) % onlyExamples.length;
-                            startOnlyAnimation();
-                        }, 2000);
-                    }
-                }, 50);
-            }
-            
-            function pauseOnlyAnimation() {
-                clearInterval(onlyAnimationInterval);
-            }
-            
-            document.getElementById('playOnlyAnimation')?.addEventListener('click', () => {
-                startOnlyAnimation();
-            });
-            
-            document.getElementById('pauseOnlyAnimation')?.addEventListener('click', () => {
-                pauseOnlyAnimation();
-            });
-            
-            // 否定詞倒裝句動畫
-            const negativeExamples = [
-                "I have never seen such a beautiful sunset.",
-                "Never have I seen such a beautiful sunset.",
-                "He not only works hard himself but also helps others.",
-                "Not only does he work hard himself, but he also helps others."
-            ];
-            
-            let negativeExampleIndex = 0;
-            let negativeAnimationInterval;
-            
-            function startNegativeAnimation() {
-                let index = 0;
-                const text = negativeExamples[negativeExampleIndex];
-                const animationElement = document.getElementById('negativeAnimation');
-                animationElement.textContent = '';
-                
-                negativeAnimationInterval = setInterval(() => {
-                    if (index < text.length) {
-                        animationElement.textContent += text.charAt(index);
-                        index++;
-                    } else {
-                        clearInterval(negativeAnimationInterval);
-                        setTimeout(() => {
-                            negativeExampleIndex = (negativeExampleIndex + 1) % negativeExamples.length;
-                            startNegativeAnimation();
-                        }, 2000);
-                    }
-                }, 50);
-            }
-            
-            function pauseNegativeAnimation() {
-                clearInterval(negativeAnimationInterval);
-            }
-            
-            document.getElementById('playNegativeAnimation')?.addEventListener('click', () => {
-                startNegativeAnimation();
-            });
-            
-            document.getElementById('pauseNegativeAnimation')?.addEventListener('click', () => {
-                pauseNegativeAnimation();
-            });
-            
-            // So 倒裝句動畫
-            const soExamples = [
-                "His speech was so moving that everyone was in tears.",
-                "So moving was his speech that everyone was in tears.",
-                "He ran so quickly that no one could catch him.",
-                "So quickly did he run that no one could catch him."
-            ];
-            
-            let soExampleIndex = 0;
-            let soAnimationInterval;
-            
-            function startSoAnimation() {
-                let index = 0;
-                const text = soExamples[soExampleIndex];
-                const animationElement = document.getElementById('soAnimation');
-                animationElement.textContent = '';
-                
-                soAnimationInterval = setInterval(() => {
-                    if (index < text.length) {
-                        animationElement.textContent += text.charAt(index);
-                        index++;
-                    } else {
-                        clearInterval(soAnimationInterval);
-                        setTimeout(() => {
-                            soExampleIndex = (soExampleIndex + 1) % soExamples.length;
-                            startSoAnimation();
-                        }, 2000);
-                    }
-                }, 50);
-            }
-            
-            function pauseSoAnimation() {
-                clearInterval(soAnimationInterval);
-            }
-            
-            document.getElementById('playSoAnimation')?.addEventListener('click', () => {
-                startSoAnimation();
-            });
-            
-            document.getElementById('pauseSoAnimation')?.addEventListener('click', () => {
-                pauseSoAnimation();
-            });
-            
-            // 強調倒裝句動畫
-            const emphasisExamples = [
-                "A big dog rushed out.",
-                "Out rushed a big dog.",
-                "Several books were scattered on the floor.",
-                "Scattered on the floor were several books."
-            ];
-            
-            let emphasisExampleIndex = 0;
-            let emphasisAnimationInterval;
-            
-            function startEmphasisAnimation() {
-                let index = 0;
-                const text = emphasisExamples[emphasisExampleIndex];
-                const animationElement = document.getElementById('emphasisAnimation');
-                animationElement.textContent = '';
-                
-                emphasisAnimationInterval = setInterval(() => {
-                    if (index < text.length) {
-                        animationElement.textContent += text.charAt(index);
-                        index++;
-                    } else {
-                        clearInterval(emphasisAnimationInterval);
-                        setTimeout(() => {
-                            emphasisExampleIndex = (emphasisExampleIndex + 1) % emphasisExamples.length;
-                            startEmphasisAnimation();
-                        }, 2000);
-                    }
-                }, 50);
-            }
-            
-            function pauseEmphasisAnimation() {
-                clearInterval(emphasisAnimationInterval);
-            }
-            
-            document.getElementById('playEmphasisAnimation')?.addEventListener('click', () => {
-                startEmphasisAnimation();
-            });
-            
-            document.getElementById('pauseEmphasisAnimation')?.addEventListener('click', () => {
-                pauseEmphasisAnimation();
-            });
-            
-            // 條件句倒裝動畫
-            const conditionalExamples = [
-                "If I had more time, I would travel around the world.",
-                "Had I more time, I would travel around the world.",
-                "If she were here, she would help us.",
-                "Were she here, she would help us."
-            ];
-            
-            let conditionalExampleIndex = 0;
-            let conditionalAnimationInterval;
-            
-            function startConditionalAnimation() {
-                let index = 0;
-                const text = conditionalExamples[conditionalExampleIndex];
-                const animationElement = document.getElementById('conditionalAnimation');
-                animationElement.textContent = '';
-                
-                conditionalAnimationInterval = setInterval(() => {
-                    if (index < text.length) {
-                        animationElement.textContent += text.charAt(index);
-                        index++;
-                    } else {
-                        clearInterval(conditionalAnimationInterval);
-                        setTimeout(() => {
-                            conditionalExampleIndex = (conditionalExampleIndex + 1) % conditionalExamples.length;
-                            startConditionalAnimation();
-                        }, 2000);
-                    }
-                }, 50);
-            }
-            
-            function pauseConditionalAnimation() {
-                clearInterval(conditionalAnimationInterval);
-            }
-            
-            document.getElementById('playConditionalAnimation')?.addEventListener('click', () => {
-                startConditionalAnimation();
-            });
-            
-            document.getElementById('pauseConditionalAnimation')?.addEventListener('click', () => {
-                pauseConditionalAnimation();
-            });
-            
-            // 初始化第一個動畫
-            startInversionAnimation(document.getElementById('inversionAnimation'));
+            // 1. 顯示正常語序 (Normal)
+            animLabel.innerText = "NORMAL ORDER";
+            animLabel.style.color = "rgba(255,255,255,0.7)";
+            animText.innerText = currentPair[0];
+            animBox.style.background = "linear-gradient(135deg, #576574, #8395a7)"; // 灰色調表示普通
+
+            // 2. 2秒後顯示倒裝語序 (Inverted)
+            setTimeout(() => {
+                // 檢查是否還在播放中 (避免暫停後還觸發)
+                if (animInterval || index === 0) { 
+                    animLabel.innerText = "INVERTED ORDER";
+                    animLabel.style.color = "#d4af37"; // 金色文字
+                    animText.innerText = currentPair[1];
+                    // 切換回深海藍漸層
+                    animBox.style.background = "linear-gradient(135deg, #0c2d48, #205072)";
+                }
+            }, 2000);
+        }
+
+        function pauseAnim() {
+            clearInterval(animInterval);
+            animInterval = null;
+        }
+        
+        // 頁面加載時播放歡迎音效 (模擬)
+        window.addEventListener('load', () => {
+            console.log("Welcome to Inverted Sentences Module");
         });
     </script>
 </body>
