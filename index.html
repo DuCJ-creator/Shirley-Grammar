@@ -859,25 +859,25 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
 
                 // 2. Identify Options and CLEAN THEM
                 for (let i = 1; i < lines.length; i++) {
-                    const line = lines[i];
+                    let line = lines[i];
                     
-                    // Detect markers (before cleaning)
+                    // A. Detect CORRECT ANSWER markers (before cleaning)
+                    // We look for filled circles OR [correct] marks
                     const isCorrect = line.includes('●') || line.includes('⚫') || line.includes('[✓]') || line.includes('[✔]') || line.includes('[v]') || line.toLowerCase().includes('(answer)');
                     
-                    let cleanLine = line;
+                    // B. CLEANING STEP 1: Remove bracketed comments like [x], [✓], (answer)
+                    line = line.replace(/\[.*?\]/g, '').replace(/\(.*?\)/g, '');
                     
-                    // 1. Remove bracketed comments like [x] or [✓] or (answer)
-                    cleanLine = cleanLine.replace(/\[.*?\]/g, '').replace(/\(.*?\)/g, '');
-                    
-                    // 2. Remove SPECIFIC bullet characters (including the standard white/black circles)
-                    cleanLine = cleanLine.replace(/[●○•⚫⚪✔✘√]/g, '');
+                    // C. CLEANING STEP 2: Remove bullets/circles explicitly
+                    // This kills the specific circle characters causing the issue
+                    line = line.replace(/^[●○•⚫⚪✔✘√\s\.]+/g, ""); 
 
-                    // 3. Remove alphanumeric numbering at the start (e.g., "A.", "1.", "a)")
-                    // This regex looks for: Start of line -> any letters/numbers -> followed by dot or parenthesis -> whitespace
-                    cleanLine = cleanLine.replace(/^[A-Za-z0-9]+\s*[\.\)]\s*/, '');
+                    // D. CLEANING STEP 3: Remove numbering like "A.", "a)", "1." at the start
+                    // This regex removes leading alphanumeric + dot/paren + space
+                    line = line.replace(/^[A-Za-z0-9]+\s*[\.\)]\s*/, "");
                     
-                    // 4. Final Trim
-                    cleanLine = cleanLine.trim();
+                    // E. Final Trim
+                    let cleanLine = line.trim();
 
                     if (cleanLine) {
                         options.push(cleanLine);
