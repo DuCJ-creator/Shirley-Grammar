@@ -7,50 +7,39 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Nunito:wght@400;600;700;800&display=swap');
-
         :root {
             /* 高雅配色系統：深海藍、墨綠搭配流金點綴 */
             --primary-dark: #0F2027;  /* 深邃背景 */
             --primary-mid: #203A43;   /* 中間調 */
             --primary-accent: #2C5364; /* 亮部 */
-            
             --gold-accent: #FFD700;   /* 高雅金 */
             --gold-dark: #B8860B;     /* 深金 */
-            
             /* 兼容舊 JS 邏輯 */
             --accent: #FFD700; 
-            
             --dynamic-gradient: linear-gradient(135deg, #2C5364 0%, #203A43 50%, #0F2027 100%);
             --gold-gradient: linear-gradient(45deg, #B8860B, #FFD700, #B8860B);
-
             --bg-body: #f4f7f9;       
             --bg-card: rgba(255, 255, 255, 0.95);
-            
             --text-main: #1a1a1a;
             --text-light: #5a6a7a;
             --text-on-dark: #ffffff;
-            
             --shadow-soft: 0 10px 30px -10px rgba(0,0,0,0.1);
             --shadow-glow: 0 5px 15px rgba(255, 215, 0, 0.3);
-            
             --radius-lg: 24px;
             --radius-md: 16px;
         }
-        
         /* 動態背景動畫 */
         @keyframes gradientBG {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Nunito', 'Noto Sans TC', '微軟正黑體', sans-serif;
         }
-        
         body {
             background: linear-gradient(-45deg, #f4f7f9, #eef2f5, #e0eaf0, #f4f7f9);
             background-size: 400% 400%;
@@ -58,7 +47,6 @@
             color: var(--text-main);
             line-height: 1.75;
         }
-        
         /* Header: 深邃質感 */
         header {
             background: var(--dynamic-gradient);
@@ -69,7 +57,6 @@
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(15, 32, 39, 0.3);
         }
-        
         header::before {
             content: '';
             position: absolute;
@@ -77,12 +64,10 @@
             background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
             opacity: 0.5;
         }
-
         .header-content {
             position: relative;
             z-index: 1;
         }
-
         h1 {
             font-size: 2.5rem;
             margin-bottom: 1rem;
@@ -93,7 +78,6 @@
             -webkit-text-fill-color: transparent;
             text-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
-        
         .subtitle {
             font-size: 1.2rem;
             opacity: 0.9;
@@ -108,7 +92,6 @@
             backdrop-filter: blur(5px);
             border: 1px solid rgba(255, 215, 0, 0.2);
         }
-        
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -116,7 +99,6 @@
             position: relative;
             z-index: 10;
         }
-        
         /* Tabs: 玻璃擬態 */
         .tabs {
             display: flex;
@@ -132,7 +114,6 @@
             border: 1px solid rgba(255,255,255,0.4);
             max-width: fit-content;
         }
-        
         .tab {
             padding: 0.9rem 1.8rem;
             cursor: pointer;
@@ -146,7 +127,6 @@
             font-size: 1rem;
             flex: 0 1 auto;
         }
-        
         .tab::before {
             content: '';
             position: absolute;
@@ -159,37 +139,30 @@
             transition: transform 0.4s ease;
             border-radius: 10px;
         }
-
         .tab:hover {
             color: var(--primary-dark);
             background: rgba(255,255,255,0.8);
         }
-        
         .tab.active {
             color: var(--primary-dark);
             background: white;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
-
         .tab.active::before {
             transform: scaleX(1);
             box-shadow: 0 0 10px var(--gold-accent);
         }
-        
         .tab-content {
             display: none;
             animation: slideUpFade 0.7s cubic-bezier(0.25, 1, 0.5, 1);
         }
-        
         @keyframes slideUpFade {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        
         .tab-content.active {
             display: block;
         }
-        
         h2 {
             color: var(--primary-dark);
             margin-bottom: 2.5rem;
@@ -200,7 +173,6 @@
             padding-bottom: 1rem;
             border-bottom: none;
         }
-        
         h2::after {
             content: '';
             position: absolute;
@@ -212,7 +184,6 @@
             background: var(--gold-gradient);
             border-radius: 2px;
         }
-        
         h3 {
             color: var(--primary-mid);
             margin: 0 0 1.2rem;
@@ -221,7 +192,6 @@
             display: flex;
             align-items: center;
         }
-        
         h3::before {
             content: '';
             display: inline-block;
@@ -231,7 +201,6 @@
             margin-right: 12px;
             border-radius: 4px;
         }
-        
         /* Card Styles */
         .card {
             background: var(--bg-card);
@@ -241,14 +210,14 @@
             box-shadow: var(--shadow-soft);
             border: 1px solid rgba(255,255,255,0.8);
             transition: all 0.3s ease;
+            position: relative;
+            z-index: 5;
         }
-        
         .card:hover {
             transform: translateY(-7px);
             box-shadow: 0 15px 40px -10px rgba(0,0,0,0.15);
             border-color: rgba(255, 215, 0, 0.3);
         }
-        
         /* Table Styles */
         table {
             width: 100%;
@@ -261,13 +230,11 @@
             overflow: hidden;
             box-shadow: var(--shadow-soft);
         }
-        
         th, td {
             padding: 18px 24px;
             text-align: left;
             border-bottom: 1px solid #eef2f5;
         }
-        
         th {
             background: var(--primary-mid);
             color: white;
@@ -277,15 +244,12 @@
             letter-spacing: 1px;
             border-bottom: 3px solid var(--gold-accent);
         }
-        
         tr:nth-child(even) {
             background-color: #fcfdfd;
         }
-        
         tr:hover td {
             background-color: #f0f4f8;
         }
-        
         /* Example Box */
         .example {
             background: linear-gradient(to right, #fffcf0, #fff);
@@ -295,8 +259,9 @@
             border-radius: 0 var(--radius-md) var(--radius-md) 0;
             box-shadow: 0 5px 15px rgba(0,0,0,0.03);
             color: var(--text-main);
+            position: relative;
+            z-index: 1;
         }
-        
         .highlight {
             color: var(--primary-dark);
             background: transparent;
@@ -308,34 +273,91 @@
             background-position: bottom;
             border-radius: 0;
         }
-
-        /* Gerund List Styles (Chips) */
+        /* Flip Card Styles for Gerunds */
         .gerund-list {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
             gap: 15px;
             margin: 2rem 0;
+            position: relative;
+            z-index: 10;
         }
-        
+        .flip-card {
+            perspective: 1000px;
+            height: 100%;
+            cursor: pointer;
+            position: relative;
+            z-index: 20;
+        }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 50px;
+        }
         .gerund-item {
             background: var(--primary-mid);
             color: white;
             padding: 15px;
-            border-radius: 50px; /* Chip style */
+            border-radius: 50px;
             text-align: center;
             font-weight: 600;
             transition: all 0.3s ease;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             border: 1px solid transparent;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 80px;
         }
-        
         .gerund-item:hover {
             transform: translateY(-5px);
             background: var(--primary-dark);
             border-color: var(--gold-accent);
             box-shadow: 0 8px 20px rgba(255, 215, 0, 0.2);
         }
-        
+        .flip-card-back {
+            background: white;
+            transform: rotateY(180deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,215,0,0.3);
+            position: relative;
+            z-index: 30;
+        }
+        .flip-card-back .example {
+            background: none;
+            border-left: none;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+            color: var(--text-main);
+            font-size: 0.95rem;
+        }
+        .flip-card-back .example strong {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--primary-mid);
+        }
+        .flip-card-back .example p {
+            margin: 0.3rem 0;
+        }
         /* Interactive Element */
         .interactive-element {
             background: white;
@@ -348,7 +370,6 @@
             position: relative;
             overflow: hidden;
         }
-        
         .interactive-element::before {
             content: '';
             position: absolute;
@@ -357,11 +378,8 @@
             animation: rotate 30s linear infinite;
             z-index: 0;
         }
-        
         @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
         .interactive-element > * { position: relative; z-index: 1; }
-        
         /* Buttons */
         .btn {
             background: var(--dynamic-gradient);
@@ -380,7 +398,6 @@
             position: relative;
             overflow: hidden;
         }
-        
         .btn::before {
             content: '';
             position: absolute;
@@ -388,15 +405,12 @@
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
             transition: left 0.5s;
         }
-
         .btn:hover {
             transform: translateY(-3px) scale(1.02);
             box-shadow: 0 8px 25px rgba(32, 58, 67, 0.4), var(--shadow-glow);
             background: var(--dynamic-gradient);
         }
-        
         .btn:hover::before { left: 100%; }
-        
         /* Animation Box */
         .gerund-animation {
             height: 220px;
@@ -416,19 +430,16 @@
             letter-spacing: 1px;
             text-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
-        
         /* Usage Diagram Styling */
         .usage-diagram {
             text-align: center;
             margin: 3rem 0;
         }
-        
         .diagram-container {
             display: flex;
             justify-content: center;
             margin: 1.5rem 0;
         }
-        
         .diagram {
             width: 100%;
             max-width: 600px;
@@ -441,7 +452,6 @@
             border: 2px solid var(--primary-accent);
             box-shadow: inset 0 0 30px rgba(0,0,0,0.3);
         }
-        
         .diagram::before {
             /* 網格背景 */
             content: '';
@@ -453,7 +463,6 @@
             background-size: 20px 20px;
             opacity: 0.5;
         }
-        
         .diagram-item {
             position: absolute;
             padding: 12px;
@@ -467,12 +476,10 @@
             border-top: 4px solid var(--gold-accent);
             transition: transform 0.3s;
         }
-        
         .diagram-item:hover {
             transform: scale(1.1);
             z-index: 10;
         }
-
         footer {
             text-align: center;
             padding: 4rem 2rem;
@@ -482,14 +489,12 @@
             border-radius: 0;
             position: relative;
         }
-        
         footer::before {
              content: '';
              position: absolute;
              top: 0; left: 0; width: 100%; height: 4px;
              background: var(--gold-gradient);
         }
-
         @media (max-width: 768px) {
             header { padding: 3rem 1rem 4rem; }
             h1 { font-size: 2rem; }
@@ -498,7 +503,6 @@
             .gerund-list { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
             .animation-controls { flex-wrap: wrap; }
             table { display: block; overflow-x: auto; }
-            
             /* Diagram Mobile Adjustment */
             .diagram { height: auto; padding-bottom: 2rem; display: flex; flex-direction: column; align-items: center; background: transparent; border: none; box-shadow: none; }
             .diagram::before { display: none; }
@@ -513,7 +517,6 @@
             <p class="subtitle">動名詞學習平台</p>
         </div>
     </header>
-    
     <div class="container">
         <div class="tabs">
             <div class="tab active" data-tab="intro">動名詞介紹 | Gerund Introduction</div>
@@ -523,21 +526,17 @@
             <div class="tab" data-tab="complement">作補語 | As Complement</div>
             <div class="tab" data-tab="modifier">作限定詞 | As Modifier</div>
         </div>
-        
         <div class="tab-content active" id="intro">
             <h2>動名詞介紹 | Gerund Introduction</h2>
-            
             <div class="card">
                 <h3>什麼是動名詞？ | What is a Gerund?</h3>
                 <p>動名詞由動詞加-ing構成，在句子中扮演名詞的角色，具有名詞的功能。</p>
                 <p>A gerund is formed by adding -ing to a verb and functions as a noun in a sentence.</p>
-                
                 <div class="example">
                     <p><strong>例子 Example:</strong> <span class="highlight">Swimming</span> is good exercise. | 游泳是很好的運動。</p>
                     <p><strong>例子 Example:</strong> I enjoy <span class="highlight">reading</span>. | 我喜歡閱讀。</p>
                 </div>
             </div>
-            
             <div class="card">
                 <h3>動名詞的形式 | Gerund Forms</h3>
                 <table>
@@ -572,12 +571,10 @@
                     </tbody>
                 </table>
             </div>
-            
             <div class="card">
                 <h3>動名詞的用法 | Uses of Gerunds</h3>
                 <p>動名詞在句子中可以擔任多種角色：</p>
                 <p>Gerunds can serve various roles in a sentence:</p>
-                
                 <div class="usage-diagram">
                     <div class="diagram-container">
                         <div class="diagram">
@@ -590,7 +587,6 @@
                     </div>
                 </div>
             </div>
-            
             <div class="interactive-element">
                 <h3>動名詞練習 | Gerund Practice</h3>
                 <p>將動詞轉換為動名詞形式</p>
@@ -608,43 +604,35 @@
                 </div>
             </div>
         </div>
-        
         <div class="tab-content" id="subject">
             <h2>作主詞 | As Subject</h2>
-            
             <div class="card">
                 <h3>動名詞作主詞 | Gerunds as Subjects</h3>
                 <p>動名詞可以在句子中擔任主詞的角色。</p>
                 <p>Gerunds can function as the subject of a sentence.</p>
-                
                 <div class="example">
                     <p><strong>例子 Example:</strong> <span class="highlight">Working from home</span> isolates employees from the corporate culture.</p>
                     <p>指「在家上班」這件事情，而非誰正在在家上班。</p>
                     <p>Refers to "working from home" as a concept, not who is currently working from home.</p>
                 </div>
-                
                 <div class="example">
                     <p><strong>例子 Example:</strong> <span class="highlight">Reading extensively</span> helps you learn vocabulary and grammar.</p>
                     <p>廣泛閱讀有助於你學習詞彙和語法。</p>
                 </div>
             </div>
-            
             <div class="card">
                 <h3>特殊句型：It 為虛構主詞 | Special Pattern: It as Dummy Subject</h3>
                 <p>當動名詞作主詞時，可以使用 It 作為形式主詞，將真正的動名詞主詞放在句末。</p>
                 <p>When a gerund is the subject, we can use "It" as a dummy subject and place the actual gerund subject at the end of the sentence.</p>
-                
                 <div class="example">
                     <p><strong>例子 Example:</strong> <span class="highlight">It is simply a waste of time playing video games.</span></p>
                     <p>玩電子遊戲簡直是浪費時間。</p>
                 </div>
-                
                 <div class="example">
                     <p><strong>例子 Example:</strong> <span class="highlight">It's no use crying after you fail a test.</span></p>
                     <p>考試失敗後哭泣是沒有用的。</p>
                 </div>
             </div>
-            
             <div class="interactive-element">
                 <h3>主詞練習 | Subject Practice</h3>
                 <p>選擇正確的動名詞形式完成句子</p>
@@ -662,47 +650,257 @@
                 </div>
             </div>
         </div>
-        
         <div class="tab-content" id="object">
             <h2>作受詞 | As Object</h2>
-            
             <div class="card">
                 <h3>動名詞作動詞的受詞 | Gerunds as Objects of Verbs</h3>
                 <p>某些動詞後面必須接動名詞作受詞，需要在平時記憶和積累。</p>
                 <p>Some verbs must be followed by a gerund as the object, which needs to be memorized and accumulated over time.</p>
-                
                 <div class="gerund-list">
-                    <div class="gerund-item">admit</div>
-                    <div class="gerund-item">avoid</div>
-                    <div class="gerund-item">forgive</div>
-                    <div class="gerund-item">permit</div>
-                    <div class="gerund-item">advise</div>
-                    <div class="gerund-item">consider</div>
-                    <div class="gerund-item">postpone</div>
-                    <div class="gerund-item">practice</div>
-                    <div class="gerund-item">enjoy</div>
-                    <div class="gerund-item">mind</div>
-                    <div class="gerund-item">prevent</div>
-                    <div class="gerund-item">finish</div>
-                    <div class="gerund-item">suggest</div>
-                    <div class="gerund-item">forbid</div>
-                    <div class="gerund-item">risk</div>
-                    <div class="gerund-item">quit</div>
-                    <div class="gerund-item">can't help</div>
-                    <div class="gerund-item">can't stand</div>
+                    <div class="flip-card" data-verb="admit">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <div class="gerund-item">admit<br>承認</div>
+                            </div>
+                            <div class="flip-card-back">
+                                <div class="example">
+                                    <p><strong>Example:</strong> She admitted <span class="highlight">stealing</span> the money.</p>
+                                    <p>她承認偷了錢。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flip-card" data-verb="avoid">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <div class="gerund-item">avoid<br>避免</div>
+                            </div>
+                            <div class="flip-card-back">
+                                <div class="example">
+                                    <p><strong>Example:</strong> You should avoid <span class="highlight">eating</span> too much sugar.</p>
+                                    <p>你應該避免吃太多糖。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flip-card" data-verb="forgive">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <div class="gerund-item">forgive<br>原諒</div>
+                            </div>
+                            <div class="flip-card-back">
+                                <div class="example">
+                                    <p><strong>Example:</strong> Can you forgive me <span class="highlight">being</span> late?</p>
+                                    <p>你能原諒我遲到嗎？</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flip-card" data-verb="permit">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <div class="gerund-item">permit<br>允許</div>
+                            </div>
+                            <div class="flip-card-back">
+                                <div class="example">
+                                    <p><strong>Example:</strong> The school permits <span class="highlight">wearing</span> casual clothes on Fridays.</p>
+                                    <p>學校允許週五穿便服。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flip-card" data-verb="advise">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <div class="gerund-item">advise<br>建議</div>
+                            </div>
+                            <div class="flip-card-back">
+                                <div class="example">
+                                    <p><strong>Example:</strong> I advise <span class="highlight">taking</span> a break.</p>
+                                    <p>我建議休息一下。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flip-card" data-verb="consider">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <div class="gerund-item">consider<br>考慮</div>
+                            </div>
+                            <div class="flip-card-back">
+                                <div class="example">
+                                    <p><strong>Example:</strong> We are considering <span class="highlight">moving</span> to a new city.</p>
+                                    <p>我們正在考慮搬到一座新城市。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flip-card" data-verb="postpone">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <div class="gerund-item">postpone<br>延遲</div>
+                            </div>
+                            <div class="flip-card-back">
+                                <div class="example">
+                                    <p><strong>Example:</strong> They postponed <span class="highlight">making</span> a decision.</p>
+                                    <p>他們推遲做決定。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flip-card" data-verb="practice">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <div class="gerund-item">practice<br>練習</div>
+                            </div>
+                            <div class="flip-card-back">
+                                <div class="example">
+                                    <p><strong>Example:</strong> He practices <span class="highlight">playing</span> the piano every day.</p>
+                                    <p>他每天練習彈鋼琴。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flip-card" data-verb="enjoy">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <div class="gerund-item">enjoy<br>享受</div>
+                            </div>
+                            <div class="flip-card-back">
+                                <div class="example">
+                                    <p><strong>Example:</strong> I enjoy <span class="highlight">reading</span> novels.</p>
+                                    <p>我喜歡讀小說。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flip-card" data-verb="mind">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <div class="gerund-item">mind<br>介意</div>
+                            </div>
+                            <div class="flip-card-back">
+                                <div class="example">
+                                    <p><strong>Example:</strong> Do you mind <span class="highlight">opening</span> the window?</p>
+                                    <p>你介意開窗嗎？</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flip-card" data-verb="prevent">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <div class="gerund-item">prevent<br>阻止</div>
+                            </div>
+                            <div class="flip-card-back">
+                                <div class="example">
+                                    <p><strong>Example:</strong> Vaccines help prevent <span class="highlight">spreading</span> diseases.</p>
+                                    <p>疫苗有助於防止疾病傳播。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flip-card" data-verb="finish">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <div class="gerund-item">finish<br>完成</div>
+                            </div>
+                            <div class="flip-card-back">
+                                <div class="example">
+                                    <p><strong>Example:</strong> Have you finished <span class="highlight">writing</span> your report?</p>
+                                    <p>你寫完報告了嗎？</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flip-card" data-verb="suggest">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <div class="gerund-item">suggest<br>建議</div>
+                            </div>
+                            <div class="flip-card-back">
+                                <div class="example">
+                                    <p><strong>Example:</strong> I suggest <span class="highlight">going</span> to the beach this weekend.</p>
+                                    <p>我建議本週末去海灘。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flip-card" data-verb="forbid">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <div class="gerund-item">forbid<br>禁止</div>
+                            </div>
+                            <div class="flip-card-back">
+                                <div class="example">
+                                    <p><strong>Example:</strong> The rules forbid <span class="highlight">smoking</span> in public places.</p>
+                                    <p>規定禁止在公共場所吸菸。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flip-card" data-verb="risk">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <div class="gerund-item">risk<br>冒險</div>
+                            </div>
+                            <div class="flip-card-back">
+                                <div class="example">
+                                    <p><strong>Example:</strong> He risked <span class="highlight">losing</span> his job by speaking out.</p>
+                                    <p>他因發言而冒著丟掉工作的風險。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flip-card" data-verb="quit">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <div class="gerund-item">quit<br>放棄</div>
+                            </div>
+                            <div class="flip-card-back">
+                                <div class="example">
+                                    <p><strong>Example:</strong> She quit <span class="highlight">smoking</span> last year.</p>
+                                    <p>她去年戒菸了。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flip-card" data-verb="can't help">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <div class="gerund-item">can't help<br>忍不住</div>
+                            </div>
+                            <div class="flip-card-back">
+                                <div class="example">
+                                    <p><strong>Example:</strong> I can't help <span class="highlight">laughing</span> when I see that movie.</p>
+                                    <p>每當我看那部電影，就忍不住笑。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flip-card" data-verb="can't stand">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <div class="gerund-item">can't stand<br>無法忍受</div>
+                            </div>
+                            <div class="flip-card-back">
+                                <div class="example">
+                                    <p><strong>Example:</strong> I can't stand <span class="highlight">waiting</span> in long lines.</p>
+                                    <p>我無法忍受排長隊。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                
                 <div class="example">
                     <p><strong>例子 Example:</strong> Educators <span class="highlight">advise sending</span> children to schools instead of keeping them at home.</p>
                     <p>教育工作者建議送孩子上學而不是把他們留在家裡。</p>
                 </div>
-                
                 <div class="example">
                     <p><strong>例子 Example:</strong> You should <span class="highlight">quit smoking</span> as it damages your health.</p>
                     <p>你應該戒菸，因為它會損害你的健康。</p>
                 </div>
             </div>
-            
             <div class="interactive-element">
                 <h3>受詞練習 | Object Practice</h3>
                 <p>選擇正確的動詞形式完成句子</p>
@@ -720,33 +918,27 @@
                 </div>
             </div>
         </div>
-        
         <div class="tab-content" id="preposition">
             <h2>介系詞受詞 | After Prepositions</h2>
-            
             <div class="card">
                 <h3>動名詞作介系詞的受詞 | Gerunds as Objects of Prepositions</h3>
                 <p>動名詞經常出現在介系詞後面，作為介系詞的受詞。</p>
                 <p>Gerunds often appear after prepositions, serving as the object of the preposition.</p>
-                
                 <div class="example">
                     <p><strong>例子 Example:</strong> I am <span class="highlight">looking forward to attending</span> the party.</p>
                     <p>我期待參加派對。</p>
                     <p><em>注意: 這裡的 "to" 是介系詞，不是不定詞符號</em></p>
                     <p><em>Note: "to" here is a preposition, not the infinitive marker</em></p>
                 </div>
-                
                 <div class="example">
                     <p><strong>例子 Example:</strong> Many workers are <span class="highlight">opposed to increasing</span> taxes.</p>
                     <p>許多工人反對增加稅收。</p>
                 </div>
-                
                 <div class="example">
                     <p><strong>例子 Example:</strong> She is <span class="highlight">committed to studying</span> abroad.</p>
                     <p>她致力於出國留學。</p>
                 </div>
             </div>
-            
             <div class="card">
                 <h3>常見接動名詞的介系詞片語 | Common Prepositional Phrases with Gerunds</h3>
                 <table>
@@ -786,7 +978,6 @@
                     </tbody>
                 </table>
             </div>
-            
             <div class="interactive-element">
                 <h3>介系詞練習 | Preposition Practice</h3>
                 <p>選擇正確的動名詞形式完成句子</p>
@@ -804,29 +995,23 @@
                 </div>
             </div>
         </div>
-        
         <div class="tab-content" id="complement">
             <h2>作補語 | As Complement</h2>
-            
             <div class="card">
                 <h3>動名詞作連綴動詞後的補語 | Gerunds as Complements after Linking Verbs</h3>
                 <p>動名詞可以在連綴動詞（如be動詞）後作主詞補語。</p>
                 <p>Gerunds can function as subject complements after linking verbs (such as be verbs).</p>
-                
                 <div class="example">
                     <p><strong>例子 Example:</strong> The top task of many companies is <span class="highlight">offering high salaries</span>.</p>
                     <p>許多公司的首要任務是提供高薪。</p>
                 </div>
-                
                 <div class="example">
                     <p><strong>例子 Example:</strong> The main reason for job-hopping is <span class="highlight">taking up new challenges</span>.</p>
                     <p>跳槽的主要原因是接受新挑戰。</p>
                 </div>
-                
                 <p class="highlight">注意：在這裡，be + v-ing 並非現在進行式，而是動名詞作補語。</p>
                 <p class="highlight">Note: Here, be + v-ing is not the present continuous tense, but a gerund functioning as a complement.</p>
             </div>
-            
             <div class="interactive-element">
                 <h3>補語練習 | Complement Practice</h3>
                 <p>選擇正確的動名詞形式完成句子</p>
@@ -844,41 +1029,33 @@
                 </div>
             </div>
         </div>
-        
         <div class="tab-content" id="modifier">
             <h2>作限定詞 | As Modifier</h2>
-            
             <div class="card">
                 <h3>動名詞作名詞前的限定詞 | Gerunds as Modifiers before Nouns</h3>
                 <p>動名詞可以放在名詞前，作為限定詞使用。</p>
                 <p>Gerunds can be placed before nouns, functioning as modifiers.</p>
-                
                 <div class="example">
                     <p><strong>例子 Example:</strong> <span class="highlight">swimming</span> pool</p>
                     <p>游泳池</p>
                 </div>
-                
                 <div class="example">
                     <p><strong>例子 Example:</strong> <span class="highlight">drinking</span> water</p>
                     <p>飲用水</p>
                 </div>
-                
                 <div class="example">
                     <p><strong>例子 Example:</strong> <span class="highlight">working</span> experience</p>
                     <p>工作經驗</p>
                 </div>
-                
                 <div class="example">
                     <p><strong>例子 Example:</strong> <span class="highlight">dancing</span> hall</p>
                     <p>舞廳</p>
                 </div>
-                
                 <div class="example">
                     <p><strong>例子 Example:</strong> <span class="highlight">dining</span> room</p>
                     <p>餐廳</p>
                 </div>
             </div>
-            
             <div class="card">
                 <h3>常見的動名詞限定詞組合 | Common Gerund-Noun Combinations</h3>
                 <div class="gerund-list">
@@ -892,7 +1069,6 @@
                     <div class="gerund-item">training program</div>
                 </div>
             </div>
-            
             <div class="interactive-element">
                 <h3>限定詞練習 | Modifier Practice</h3>
                 <p>選擇正確的動名詞形式完成詞組</p>
@@ -911,12 +1087,10 @@
             </div>
         </div>
     </div>
-    
     <footer>
         <p>Shirley's Gerund Learning Platform | 動名詞學習平台</p>
         <p>© 2023 英語語法學習 | English Grammar Learning</p>
     </footer>
-
     <script>
         // 選項卡功能
         document.querySelectorAll('.tab').forEach(tab => {
@@ -924,27 +1098,30 @@
                 // 移除所有活動標籤和內容
                 document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
                 document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-                
                 // 添加活動類到當前標籤
                 tab.classList.add('active');
-                
                 // 顯示對應的內容
                 const tabId = tab.getAttribute('data-tab');
                 document.getElementById(tabId).classList.add('active');
-                
                 // 播放切換音效
                 playSound('click');
             });
         });
-        
+
+        // ✅ 翻轉卡功能
+        document.querySelectorAll('.flip-card').forEach(card => {
+            card.addEventListener('click', () => {
+                card.classList.toggle('flipped');
+                playSound('click');
+            });
+        });
+
         // 動畫控制
         let animationInterval;
-        
         // 動名詞介紹動畫
         document.getElementById('playAnimation').addEventListener('click', () => {
             const animation = document.getElementById('gerundAnimation');
             animation.innerHTML = 'Verb: work → Gerund: ______';
-            
             let count = 0;
             const verbs = [
                 {verb: 'work', gerund: 'working'},
@@ -953,28 +1130,23 @@
                 {verb: 'study', gerund: 'studying'},
                 {verb: 'write', gerund: 'writing'}
             ];
-            
             clearInterval(animationInterval);
             animationInterval = setInterval(() => {
                 animation.innerHTML = `Verb: ${verbs[count].verb} → Gerund: <span style="color: var(--accent); text-decoration: underline;">${verbs[count].gerund}</span>`;
                 count = (count + 1) % verbs.length;
             }, 1500);
-            
             // 播放音效
             playSound('success');
         });
-        
         document.getElementById('pauseAnimation').addEventListener('click', () => {
             clearInterval(animationInterval);
             // 播放音效
             playSound('click');
         });
-        
         // 主詞動畫
         document.getElementById('playSubjectAnimation').addEventListener('click', () => {
             const animation = document.getElementById('subjectAnimation');
             animation.innerHTML = '______ (exercise) regularly is important for health.';
-            
             let count = 0;
             const sentences = [
                 {verb: 'exercise', gerund: 'Exercising'},
@@ -983,28 +1155,23 @@
                 {verb: 'study', gerund: 'Studying'},
                 {verb: 'swim', gerund: 'Swimming'}
             ];
-            
             clearInterval(animationInterval);
             animationInterval = setInterval(() => {
                 animation.innerHTML = `<span style="color: var(--accent); text-decoration: underline;">${sentences[count].gerund}</span> regularly is important for health.`;
                 count = (count + 1) % sentences.length;
             }, 1500);
-            
             // 播放音效
             playSound('success');
         });
-        
         document.getElementById('pauseSubjectAnimation').addEventListener('click', () => {
             clearInterval(animationInterval);
             // 播放音效
             playSound('click');
         });
-        
         // 受詞動畫
         document.getElementById('playObjectAnimation').addEventListener('click', () => {
             const animation = document.getElementById('objectAnimation');
             animation.innerHTML = 'I enjoy ______ (read) novels in my free time.';
-            
             let count = 0;
             const sentences = [
                 {verb: 'read', gerund: 'reading'},
@@ -1013,28 +1180,23 @@
                 {verb: 'listen', gerund: 'listening'},
                 {verb: 'cook', gerund: 'cooking'}
             ];
-            
             clearInterval(animationInterval);
             animationInterval = setInterval(() => {
                 animation.innerHTML = `I enjoy <span style="color: var(--accent); text-decoration: underline;">${sentences[count].gerund}</span> in my free time.`;
                 count = (count + 1) % sentences.length;
             }, 1500);
-            
             // 播放音效
             playSound('success');
         });
-        
         document.getElementById('pauseObjectAnimation').addEventListener('click', () => {
             clearInterval(animationInterval);
             // 播放音效
             playSound('click');
         });
-        
         // 介系詞動畫
         document.getElementById('playPrepositionAnimation').addEventListener('click', () => {
             const animation = document.getElementById('prepositionAnimation');
             animation.innerHTML = 'She is looking forward to ______ (travel) to Japan.';
-            
             let count = 0;
             const sentences = [
                 {verb: 'travel', gerund: 'traveling'},
@@ -1043,28 +1205,23 @@
                 {verb: 'meet', gerund: 'meeting'},
                 {verb: 'visit', gerund: 'visiting'}
             ];
-            
             clearInterval(animationInterval);
             animationInterval = setInterval(() => {
                 animation.innerHTML = `She is looking forward to <span style="color: var(--accent); text-decoration: underline;">${sentences[count].gerund}</span> to Japan.`;
                 count = (count + 1) % sentences.length;
             }, 1500);
-            
             // 播放音效
             playSound('success');
         });
-        
         document.getElementById('pausePrepositionAnimation').addEventListener('click', () => {
             clearInterval(animationInterval);
             // 播放音效
             playSound('click');
         });
-        
         // 補語動畫
         document.getElementById('playComplementAnimation').addEventListener('click', () => {
             const animation = document.getElementById('complementAnimation');
             animation.innerHTML = 'His favorite activity is ______ (swim) in the ocean.';
-            
             let count = 0;
             const sentences = [
                 {verb: 'swim', gerund: 'swimming'},
@@ -1073,28 +1230,23 @@
                 {verb: 'sing', gerund: 'singing'},
                 {verb: 'paint', gerund: 'painting'}
             ];
-            
             clearInterval(animationInterval);
             animationInterval = setInterval(() => {
                 animation.innerHTML = `His favorite activity is <span style="color: var(--accent); text-decoration: underline;">${sentences[count].gerund}</span> in the ocean.`;
                 count = (count + 1) % sentences.length;
             }, 1500);
-            
             // 播放音效
             playSound('success');
         });
-        
         document.getElementById('pauseComplementAnimation').addEventListener('click', () => {
             clearInterval(animationInterval);
             // 播放音效
             playSound('click');
         });
-        
         // 限定詞動畫
         document.getElementById('playModifierAnimation').addEventListener('click', () => {
             const animation = document.getElementById('modifierAnimation');
             animation.innerHTML = '______ (swim) pool';
-            
             let count = 0;
             const phrases = [
                 {verb: 'swim', gerund: 'Swimming'},
@@ -1103,30 +1255,25 @@
                 {verb: 'dine', gerund: 'Dining'},
                 {verb: 'park', gerund: 'Parking'}
             ];
-            
             clearInterval(animationInterval);
             animationInterval = setInterval(() => {
                 animation.innerHTML = `<span style="color: var(--accent); text-decoration: underline;">${phrases[count].gerund}</span> pool`;
                 count = (count + 1) % phrases.length;
             }, 1500);
-            
             // 播放音效
             playSound('success');
         });
-        
         document.getElementById('pauseModifierAnimation').addEventListener('click', () => {
             clearInterval(animationInterval);
             // 播放音效
             playSound('click');
         });
-        
         // 音效函數
         function playSound(type) {
             // 在實際應用中，這裡會播放相應的音效
             // 由於這是一個示例，我們只模擬音效播放
             console.log(`Playing ${type} sound`);
         }
-        
         // 初始加載時播放歡迎音效
         window.addEventListener('load', () => {
             playSound('welcome');
