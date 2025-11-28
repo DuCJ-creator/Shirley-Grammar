@@ -48,7 +48,7 @@
         }
         
         body {
-            /* subtle dynamic background */
+            /* 緩慢流動的高雅背景 */
             background: linear-gradient(-45deg, #f4f7f9, #eef2f5, #e0eaf0, #f4f7f9);
             background-size: 400% 400%;
             animation: gradientBG 20s ease infinite;
@@ -56,7 +56,7 @@
             line-height: 1.75;
         }
         
-        /* Header: 高雅深邃 */
+        /* Header: 深邃質感 */
         header {
             background: var(--dynamic-gradient);
             color: var(--text-on-dark);
@@ -364,6 +364,7 @@
             position: relative;
             overflow: hidden;
             z-index: 1;
+            text-decoration: none; /* 確保連結沒有下劃線 */
         }
         
         /* 按鈕流光效果 */
@@ -417,7 +418,7 @@
             border-radius: var(--radius-md);
             box-shadow: var(--shadow-soft);
             width: 100%;
-            min-height: 500px; /* 加高一點 */
+            min-height: 500px; 
         }
         
         /* Footer: 與 Header 呼應 */
@@ -1065,6 +1066,11 @@
                 <h3>動詞片語 | Phrasal Verbs</h3>
                 <p>動詞還會跟各種介詞搭配，形成不同的動詞片語。如：put up, take in等，需要積累及記憶。</p>
                 <p>Verbs also combine with various prepositions to form different phrasal verbs. For example: put up, take in, etc. These need to be accumulated and memorized.</p>
+                <div style="margin-top: 1.5rem; text-align: center;">
+                    <a href="https://ducj-creator.github.io/Shirley-Grammar/phrases" target="_blank" class="btn">
+                        <i class="fas fa-book-reader"></i> 進入動詞片語學習 | Learn Phrasal Verbs
+                    </a>
+                </div>
             </div>
             
             <div class="card">
