@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shirley's Questions Learning Platform | 疑問句學習平台</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --primary: #4169e1;
@@ -13,6 +15,12 @@
             --light: #f8f9fa;
             --dark: #343a40;
             --success: #28a745;
+            
+            /* 優雅配色定義 */
+            --elegant-bg: #fdfbf7;
+            --elegant-text: #2c3e50;
+            --elegant-gold: #d4af37;
+            --elegant-gold-light: #fffcf5;
         }
         
         * {
@@ -59,6 +67,7 @@
             padding: 1.5rem;
         }
         
+        /* Tabs Styling */
         .tabs {
             display: flex;
             flex-wrap: wrap;
@@ -108,6 +117,7 @@
             display: block;
         }
         
+        /* Original Components Styling */
         h2 {
             color: var(--primary);
             margin-bottom: 1.5rem;
@@ -127,6 +137,7 @@
             margin-bottom: 1.5rem;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
             transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid #eee;
         }
         
         .card:hover {
@@ -232,36 +243,25 @@
             color: var(--primary);
         }
         
-        .question-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 10px;
-            margin: 1rem 0;
+        .qa-pair {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
         }
         
-        .question-item {
-            background: #f0f7ff;
+        .question {
+            flex: 1;
             padding: 10px;
+            background: #f0f7ff;
             border-radius: 5px;
-            text-align: center;
-            font-weight: bold;
+            margin-right: 10px;
         }
         
-        .comparison-table {
-            width: 100%;
-            margin: 1.5rem 0;
-        }
-        
-        .comparison-table th {
-            background-color: var(--secondary);
-        }
-        
-        .note-box {
-            background-color: #fff3cd;
-            border-left: 4px solid #ffc107;
-            padding: 1rem;
-            margin: 1rem 0;
-            border-radius: 0 8px 8px 0;
+        .answer {
+            flex: 1;
+            padding: 10px;
+            background: #e8f5e9;
+            border-radius: 5px;
         }
         
         .usage-diagram {
@@ -294,305 +294,195 @@
             text-align: center;
             width: 120px;
         }
-        
-        .connector-word {
-            color: var(--accent);
-            font-weight: bold;
-        }
-        
-        .antecedent {
-            color: var(--primary);
-            font-weight: bold;
-        }
-        
-        .qa-pair {
-            display: flex;
-            justify-content: space-between;
-            margin: 10px 0;
-        }
-        
-        .question {
-            flex: 1;
-            padding: 10px;
-            background: #f0f7ff;
-            border-radius: 5px;
-            margin-right: 10px;
-        }
-        
-        .answer {
-            flex: 1;
-            padding: 10px;
-            background: #e8f5e9;
-            border-radius: 5px;
-        }
 
         /* ---------------------------------------------------- */
-        /* --- SPECIAL SENTENCES SECTION STYLING (Premium) --- */
+        /* --- ELEGANT MODULE STYLING (高雅風格模組) --- */
         /* ---------------------------------------------------- */
         
-        .special-section-container {
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); /* 深邃星空漸層 */
-            color: #fff;
-            padding: 2rem;
-            border-radius: 15px;
+        .elegant-wrapper {
+            background-color: var(--elegant-bg);
+            color: var(--elegant-text);
+            padding: 3rem 2rem;
+            border-radius: 8px;
+            font-family: 'Lato', sans-serif;
             position: relative;
             overflow: hidden;
-            min-height: 650px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            font-family: 'Segoe UI', sans-serif;
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.02);
+            margin-bottom: 3rem;
+            border: 1px solid rgba(0,0,0,0.03);
         }
 
-        /* 背景動態光暈 */
-        .special-section-container::before {
+        /* 頂部裝飾線條 */
+        .elegant-wrapper::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,215,0,0.1) 0%, transparent 60%);
-            animation: rotateBg 20s linear infinite;
-            z-index: 0;
-            pointer-events: none;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background-color: var(--elegant-gold);
         }
 
-        @keyframes rotateBg {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* 內部導航 (Sub-navigation) */
-        .special-nav {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 3rem;
-            position: relative;
-            z-index: 2;
-            flex-wrap: wrap;
-        }
-
-        .special-nav-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #aaa;
-            padding: 10px 25px;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            backdrop-filter: blur(5px);
-            font-weight: 600;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-        }
-
-        .special-nav-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-            color: #fff;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
-        }
-
-        .special-nav-btn.active {
-            background: linear-gradient(45deg, #ffd700, #fdb931); /* 金色漸層 */
-            color: #1a1a1a;
-            border-color: transparent;
-            box-shadow: 0 0 20px rgba(253, 185, 49, 0.4);
-            transform: scale(1.05);
-        }
-
-        /* 內容區域動畫 */
-        .special-content-wrapper {
-            position: relative;
-            z-index: 2;
-            display: none; /* 默認隱藏，透過 JS 切換 */
-            animation: slideUpFade 0.6s ease forwards;
-        }
-
-        .special-content-wrapper.active {
-            display: block;
-        }
-
-        @keyframes slideUpFade {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .special-title {
+        .elegant-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
             text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(to right, #fff, #ffd700);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            color: #1a1a1a;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
             border-bottom: none; /* 覆蓋原有 h2 樣式 */
         }
 
-        .special-subtitle {
+        .elegant-subtitle {
             text-align: center;
-            color: #ccc;
-            margin-bottom: 3rem;
-            font-size: 1.1rem;
+            font-family: 'Playfair Display', serif;
             font-style: italic;
+            color: #888;
+            margin-bottom: 3rem;
+            font-size: 1.2rem;
+            position: relative;
+            display: inline-block;
+            width: 100%;
         }
 
-        /* 3D 卡片網格 (Questions 專用) */
-        .cards-grid {
+        /* 卡片容器 */
+        .elegant-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
-            perspective: 1000px; /* 3D 透視 */
+            max-width: 1100px;
+            margin: 0 auto;
         }
 
-        .flip-card {
-            background-color: transparent;
-            height: 400px;
-            cursor: pointer;
-        }
-
-        .flip-card-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
+        /* 優雅卡片設計 */
+        .elegant-card {
+            background: #ffffff;
+            border: 1px solid #eaeaea;
+            padding: 2.5rem 2rem;
             text-align: center;
-            transition: transform 0.8s;
-            transform-style: preserve-3d;
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            z-index: 1;
+            cursor: default;
+            border-radius: 4px;
         }
 
-        .flip-card:hover .flip-card-inner {
-            transform: rotateY(180deg);
+        /* 卡片懸停效果 */
+        .elegant-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+            border-color: var(--elegant-gold);
         }
 
-        .flip-card-front, .flip-card-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            border-radius: 20px;
-            padding: 2rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        /* 卡片正面：玻璃質感 */
-        .flip-card-front {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-        }
-
-        /* 卡片背面：漸層實色 */
-        .flip-card-back {
-            background: linear-gradient(135deg, #434343 0%, #000000 100%);
-            color: white;
-            transform: rotateY(180deg);
-            border: 1px solid #ffd700;
-        }
-
-        .card-icon {
-            font-size: 4rem;
+        .elegant-icon-box {
+            font-size: 1.8rem;
+            color: var(--elegant-gold);
             margin-bottom: 1.5rem;
-            color: #ffd700;
-            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
-            animation: floatIcon 3s ease-in-out infinite;
+            height: 60px;
+            width: 60px;
+            line-height: 60px;
+            border-radius: 50%;
+            background: var(--elegant-gold-light);
+            margin-left: auto;
+            margin-right: auto;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            transition: all 0.5s ease;
         }
 
-        @keyframes floatIcon {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .card-title {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
+        .elegant-card:hover .elegant-icon-box {
+            background: var(--elegant-gold);
             color: #fff;
         }
 
-        .card-desc {
-            color: #ddd;
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        .back-content h4 {
-            color: #ffd700;
+        .card-heading {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
             margin-bottom: 1rem;
-            border-bottom: 1px solid rgba(255,215,0,0.3);
-            padding-bottom: 0.5rem;
-            width: 100%;
+            color: var(--elegant-text);
+            font-weight: 600;
+            margin-top: 0;
         }
 
-        .back-list {
-            text-align: left;
-            width: 100%;
+        .card-text {
+            font-size: 0.95rem;
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        /* 卡片內部分隔線 */
+        .divider-line {
+            width: 40px;
+            height: 1px;
+            background-color: #e0e0e0;
+            margin: 1.5rem auto;
+            transition: width 0.3s ease;
+        }
+
+        .elegant-card:hover .divider-line {
+            width: 80px;
+            background-color: var(--elegant-gold);
+        }
+
+        /* 詳細內容列表 */
+        .detail-list {
             list-style: none;
+            text-align: left;
+            padding: 0;
+            margin-top: 1rem;
+            opacity: 0.9;
         }
 
-        .back-list li {
-            margin-bottom: 10px;
-            padding-left: 20px;
-            position: relative;
+        .detail-list li {
+            margin-bottom: 12px;
             font-size: 0.9rem;
-            color: #eee;
+            color: #444;
+            display: flex;
+            align-items: flex-start;
         }
 
-        .back-list li::before {
-            content: '✦';
-            position: absolute;
-            left: 0;
-            color: #ffd700;
+        .detail-list li i {
+            color: var(--elegant-gold);
+            font-size: 0.5rem;
+            margin-right: 10px;
+            margin-top: 8px; /* 對齊文字 */
         }
 
-        .example-box {
-            background: rgba(255,215,0,0.1);
-            padding: 10px;
-            border-radius: 8px;
-            margin-top: 15px;
-            width: 100%;
+        .detail-example {
             font-style: italic;
-            border-left: 3px solid #ffd700;
-            color: #ddd;
+            color: #7f8c8d;
             font-size: 0.85rem;
+            display: block;
+            margin-top: 4px;
         }
         
         @media (max-width: 768px) {
             .tabs {
                 flex-direction: column;
             }
-            
             .tab {
                 flex: none;
             }
-            
             .container {
                 padding: 1rem;
             }
-            
             h1 {
                 font-size: 1.8rem;
             }
-            
-            .question-list {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            }
-            
             .qa-pair {
                 flex-direction: column;
             }
-            
             .question, .answer {
                 margin-right: 0;
                 margin-bottom: 10px;
             }
-
-            .special-title {
+            .elegant-title {
                 font-size: 2rem;
+            }
+            .elegant-wrapper {
+                padding: 2rem 1rem;
             }
         }
     </style>
@@ -611,11 +501,98 @@
             <div class="tab" data-tab="yesno">Yes/No 疑問句 | Yes/No Questions</div>
             <div class="tab" data-tab="wh">WH 疑問句 | WH Questions</div>
             <div class="tab" data-tab="tag">附加問句 | Tag Questions</div>
-            <div class="tab" data-tab="special-sentences">特殊句型 | Special Sentences</div>
         </div>
         
         <div class="tab-content active" id="intro">
-            <h2>疑問句介紹 | Questions Introduction</h2>
+            
+            <div class="elegant-wrapper">
+                <h2 class="elegant-title">The Art of Inquiry</h2>
+                <span class="elegant-subtitle">Part I: Questions · 疑問句精華</span>
+
+                <div class="elegant-grid">
+                    <div class="elegant-card">
+                        <div class="elegant-icon-box">
+                            <i class="fas fa-question"></i>
+                        </div>
+                        <h3 class="card-heading">General Inquiry</h3>
+                        <p class="card-text">
+                            基礎疑問句是開啟對話的鑰匙，用於獲取資訊或確認事實。
+                        </p>
+                        <div class="divider-line"></div>
+                        <ul class="detail-list">
+                            <li>
+                                <i class="fas fa-circle"></i> 
+                                <div>
+                                    <strong>Yes/No Questions:</strong> 確認是非
+                                    <span class="detail-example">"Can you help me?"</span>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fas fa-circle"></i>
+                                <div>
+                                    <strong>WH- Questions:</strong> 獲取細節
+                                    <span class="detail-example">"Why is the sky blue?"</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="elegant-card">
+                        <div class="elegant-icon-box">
+                            <i class="fas fa-exclamation"></i>
+                        </div>
+                        <h3 class="card-heading">Negative Questions</h3>
+                        <p class="card-text">
+                            否定疑問句帶有強烈的情感色彩，常用於表達驚訝或預期落空。
+                        </p>
+                        <div class="divider-line"></div>
+                        <ul class="detail-list">
+                            <li>
+                                <i class="fas fa-circle"></i>
+                                <div>
+                                    <strong>Expressing Surprise:</strong> 表達驚訝
+                                    <span class="detail-example">"Don't you like it?" (難道你不喜歡？)</span>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fas fa-circle"></i>
+                                <div>
+                                    <strong>Seeking Agreement:</strong> 尋求認同
+                                    <span class="detail-example">"Isn't it a lovely day?"</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="elegant-card">
+                        <div class="elegant-icon-box">
+                            <i class="fas fa-feather-alt"></i>
+                        </div>
+                        <h3 class="card-heading">Rhetorical Questions</h3>
+                        <p class="card-text">
+                            修辭疑問句（反問句）無需回答，旨在強調觀點或引發深思。
+                        </p>
+                        <div class="divider-line"></div>
+                        <ul class="detail-list">
+                            <li>
+                                <i class="fas fa-circle"></i>
+                                <div>
+                                    <strong>Emphasis:</strong> 強調語氣
+                                    <span class="detail-example">"Who cares?" (誰在乎呢？)</span>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fas fa-circle"></i>
+                                <div>
+                                    <strong>Persuasion:</strong> 說服與渲染
+                                    <span class="detail-example">"What's in a name?" (名字代表什麼？)</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <h2>疑問句基礎介紹 | Basic Introduction</h2>
             
             <div class="card">
                 <h3>什麼是疑問句？ | What are Questions?</h3>
@@ -662,7 +639,6 @@
             <div class="card">
                 <h3>疑問句的用法 | Uses of Questions</h3>
                 <p>疑問句在英語交流中扮演著重要角色，用於獲取信息、確認事實、表達好奇等。</p>
-                <p>Questions play an important role in English communication, used to obtain information, confirm facts, express curiosity, etc.</p>
                 
                 <div class="usage-diagram">
                     <div class="diagram-container">
@@ -680,7 +656,6 @@
             <div class="interactive-element">
                 <h3>疑問句練習 | Question Practice</h3>
                 <p>識別不同類型的疑問句</p>
-                <p>Identify different types of questions</p>
                 <div class="question-animation" id="questionAnimation">
                     Is the actor handsome?
                 </div>
@@ -701,7 +676,6 @@
             <div class="card">
                 <h3>Yes/No 疑問句結構 | Yes/No Question Structure</h3>
                 <p>Yes/No疑問句的基本結構是：Auxiliary + Subject + ... ?</p>
-                <p>The basic structure of Yes/No questions is: Auxiliary + Subject + ... ?</p>
                 
                 <div class="qa-pair">
                     <div class="question">
@@ -806,7 +780,6 @@
             <div class="interactive-element">
                 <h3>Yes/No疑問句練習 | Yes/No Question Practice</h3>
                 <p>將陳述句轉換為Yes/No疑問句</p>
-                <p>Convert statements to Yes/No questions</p>
                 <div class="question-animation" id="yesnoAnimation">
                     He is a teacher.
                 </div>
@@ -827,7 +800,6 @@
             <div class="card">
                 <h3>WH 疑問句結構 | WH Question Structure</h3>
                 <p>WH疑問句的基本結構是：WH + Auxiliary + Subject + ... ?</p>
-                <p>The basic structure of WH questions is: WH + Auxiliary + Subject + ... ?</p>
                 
                 <div class="example">
                     <p><strong>例子 Example:</strong> <span class="highlight">What is he doing?</span> | 他在做什麼？</p>
@@ -847,7 +819,6 @@
                 
                 <div class="example">
                     <p><strong>例子 Example:</strong> <span class="highlight">Who did you call?</span> | 你給誰打電話了？</p>
-                    <p><em>(比較: Who called you? 誰給你打電話了？)</em></p>
                 </div>
                 
                 <div class="example">
@@ -928,7 +899,6 @@
             <div class="interactive-element">
                 <h3>WH疑問句練習 | WH Question Practice</h3>
                 <p>選擇正確的WH疑問詞完成句子</p>
-                <p>Select the correct WH question word to complete the sentence</p>
                 <div class="question-animation" id="whAnimation">
                     ______ is your birthday?
                 </div>
@@ -949,15 +919,12 @@
             <div class="card">
                 <h3>附加問句結構 | Tag Question Structure</h3>
                 <p>在英文中, 附加問句是指由助動詞及代名詞(代替主詞)組成的一種簡短問，附加在直述句後面(因而叫附加句)，用以尋求對方的認同、確認、亦或澄清事實。</p>
-                <p>In English, a tag question is a short question formed by an auxiliary verb and a pronoun (replacing the subject), attached after a declarative sentence (hence the name tag question), used to seek the other party's agreement, confirmation, or clarification of facts.</p>
                 
-                <div class="note-box">
+                <div class="note-box" style="background-color: #fff3cd; border-left: 4px solid #ffc107; padding: 1rem; margin: 1rem 0;">
                     <p><strong>特點：</strong>直述句為肯定，附加句為否定；反之亦然。</p>
-                    <p><strong>Characteristic:</strong> If the declarative sentence is positive, the tag is negative; if the declarative sentence is negative, the tag is positive.</p>
                 </div>
                 
-                <h4>1. 肯定陳述句 + 否定附加句 | Positive Statement + Negative Tag</h4>
-                
+                <h4>1. 肯定陳述句 + 否定附加句</h4>
                 <div class="qa-pair">
                     <div class="question">
                         <p><strong>Tag Question:</strong> You are coming, <span class="highlight">aren't you</span>?</p>
@@ -976,35 +943,7 @@
                     </div>
                 </div>
                 
-                <div class="qa-pair">
-                    <div class="question">
-                        <p><strong>Tag Question:</strong> You like coffee, <span class="highlight">don't you</span>?</p>
-                    </div>
-                    <div class="answer">
-                        <p><strong>Answer:</strong> Yes, I do. / No, I don't.</p>
-                    </div>
-                </div>
-                
-                <div class="qa-pair">
-                    <div class="question">
-                        <p><strong>Tag Question:</strong> They will help, <span class="highlight">won't they</span>?</p>
-                    </div>
-                    <div class="answer">
-                        <p><strong>Answer:</strong> Yes, they will. / No, they won't.</p>
-                    </div>
-                </div>
-                
-                <div class="qa-pair">
-                    <div class="question">
-                        <p><strong>Tag Question:</strong> I can come, <span class="highlight">can't I</span>?</p>
-                    </div>
-                    <div class="answer">
-                        <p><strong>Answer:</strong> Yes, you can. / No, you can't.</p>
-                    </div>
-                </div>
-                
-                <h4>2. 否定陳述句 + 肯定附加句 | Negative Statement + Positive Tag</h4>
-                
+                <h4>2. 否定陳述句 + 肯定附加句</h4>
                 <div class="qa-pair">
                     <div class="question">
                         <p><strong>Tag Question:</strong> It isn't raining, <span class="highlight">is it</span>?</p>
@@ -1016,75 +955,31 @@
                 
                 <div class="qa-pair">
                     <div class="question">
-                        <p><strong>Tag Question:</strong> We have never seen that, <span class="highlight">have we</span>?</p>
-                    </div>
-                    <div class="answer">
-                        <p><strong>Answer:</strong> Yes, we have. / No, we haven't.</p>
-                    </div>
-                </div>
-                
-                <div class="qa-pair">
-                    <div class="question">
                         <p><strong>Tag Question:</strong> You don't like coffee, <span class="highlight">do you</span>?</p>
                     </div>
                     <div class="answer">
                         <p><strong>Answer:</strong> Yes, I do. / No, I don't.</p>
-                        <p><em>(這裡翻譯時，需要考慮中文的表達習慣：不，我喜歡；是的，我不喜歡。)</em></p>
-                    </div>
-                </div>
-                
-                <div class="qa-pair">
-                    <div class="question">
-                        <p><strong>Tag Question:</strong> They will not help, <span class="highlight">will they</span>?</p>
-                    </div>
-                    <div class="answer">
-                        <p><strong>Answer:</strong> Yes, they will. / No, they won't.</p>
                     </div>
                 </div>
             </div>
             
             <div class="card">
                 <h3>特殊情況 | Special Cases</h3>
-                
                 <div class="example">
-                    <p><strong>否定副詞的使用：</strong>直述句裡否定副詞的使用，如hardly，barely， seldom等，已經含有否定的意思，故附加句會用肯定式。</p>
-                    <p><strong>Use of Negative Adverbs:</strong> When negative adverbs such as hardly, barely, seldom, etc. are used in the declarative sentence, which already contain a negative meaning, the tag will be positive.</p>
-                    <p>She seldom calls her parents, <span class="highlight">does she</span>? (她很少給她父母親打電話，對嗎？)</p>
-                    <p>Yes, she does. / No, she doesn't.</p>
+                    <p><strong>否定副詞的使用：</strong>如 hardly, barely, seldom 等含有否定意思，附加句用肯定式。</p>
+                    <p>She seldom calls her parents, <span class="highlight">does she</span>?</p>
                 </div>
                 
                 <div class="example">
-                    <p><strong>代名詞的確定：</strong></p>
-                    <p>直述句的主詞為名字，則大致根據性別來選he/she。如：John teaches English, <span class="highlight">doesn't he</span>?</p>
-                    <p>直述句的主詞為this/that，代名詞為it；these/those則為they。如：This is a hard decision, <span class="highlight">isn't it</span>?</p>
-                    <p>直述句為there be 句型，附加句的代名詞為there。如：There is no such thing as a free lunch, <span class="highlight">is there</span>?</p>
-                    <p>直述句的主詞為I，代名詞仍為I。</p>
+                    <p><strong>I am 的用法：</strong></p>
+                    <p>I'm never on time, <span class="highlight">am I</span>? (否定陳述 -> 肯定附加)</p>
+                    <p>I'm going to receive an email, <span class="highlight">aren't I</span>? (肯定陳述 -> aren't I)</p>
                 </div>
-                
-                <div class="example">
-                    <p><strong>助動詞的確定：</strong></p>
-                    <p>助動詞由直述句的時態及主詞來確定，基本保持一致。</p>
-                    <p>You won't tell anyone, <span class="highlight">will you</span>?</p>
-                    <p>I said that already, <span class="highlight">didn't I</span>?</p>
-                    <p>Your mum hadn't met your girlfriend before you got married, <span class="highlight">had she</span>?</p>
-                </div>
-                
-                <div class="example">
-                    <p><strong>特殊情況：</strong>如果直述句裡的助動詞是am, 肯定式的附加句為am I/ ，但否定句的附加句一般為 aren't I？</p>
-                    <p>I'm never on time, <span class="highlight">am I</span>?</p>
-                    <p>I'm going to receive an email from you with the details, <span class="highlight">aren't I</span>?</p>
-                </div>
-            </div>
-            
-            <div class="note-box">
-                <p><strong>注意：</strong>tag questions 附加句一般用於口語表達，寫作中，除非是敘述文裡的對話，否則很少會用到。但在口語中是很重要經常被使用的部分。</p>
-                <p><strong>Note:</strong> Tag questions are generally used in spoken expression. In writing, unless it's dialogue in a narrative, they are rarely used. However, they are an important and frequently used part of spoken language.</p>
             </div>
             
             <div class="interactive-element">
                 <h3>附加問句練習 | Tag Question Practice</h3>
                 <p>為陳述句添加正確的附加問句</p>
-                <p>Add the correct tag question to the statement</p>
                 <div class="question-animation" id="tagAnimation">
                     You like coffee, ______?
                 </div>
@@ -1095,111 +990,6 @@
                     <button class="btn" id="pauseTagAnimation">
                         <i class="fas fa-pause"></i> 暫停 | Pause
                     </button>
-                </div>
-            </div>
-        </div>
-
-        <div class="tab-content" id="special-sentences">
-            <div class="special-section-container">
-                <div class="special-nav">
-                    <button class="special-nav-btn active" onclick="switchSpecial('part1')">Part 1: Questions</button>
-                    <button class="special-nav-btn" onclick="switchSpecial('part2')">Part 2: Exclamation</button>
-                    <button class="special-nav-btn" onclick="switchSpecial('part3')">Part 3: Inverted</button>
-                    <button class="special-nav-btn" onclick="switchSpecial('part4')">Part 4: Subjunctive</button>
-                </div>
-
-                <div id="part1" class="special-content-wrapper active">
-                    <h2 class="special-title">The Art of Inquiry</h2>
-                    <p class="special-subtitle">掌握提問的藝術，開啟溝通的大門 | Master the art of asking.</p>
-
-                    <div class="cards-grid">
-                        <div class="flip-card">
-                            <div class="flip-card-inner">
-                                <div class="flip-card-front">
-                                    <i class="fas fa-question-circle card-icon"></i>
-                                    <h3 class="card-title">General Inquiry</h3>
-                                    <p class="card-desc">基礎疑問句是溝通的核心。</p>
-                                    <p class="card-desc">Basic questions are the core of communication.</p>
-                                    <div style="margin-top:20px; color:#ffd700; font-size:0.8rem;">HOVER TO REVEAL <i class="fas fa-arrow-right"></i></div>
-                                </div>
-                                <div class="flip-card-back">
-                                    <div class="back-content">
-                                        <h4>Key Structures</h4>
-                                        <ul class="back-list">
-                                            <li><strong>Yes/No:</strong> Can you help me?</li>
-                                            <li><strong>WH-:</strong> Why is the sky blue?</li>
-                                            <li><strong>Alternative:</strong> Is it tea or coffee?</li>
-                                        </ul>
-                                        <div class="example-box">
-                                            "Asking the right question is half the answer."
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="flip-card">
-                            <div class="flip-card-inner">
-                                <div class="flip-card-front">
-                                    <i class="fas fa-exclamation-circle card-icon"></i>
-                                    <h3 class="card-title">Negative Questions</h3>
-                                    <p class="card-desc">用於表達驚訝或尋求確認。</p>
-                                    <p class="card-desc">Used to express surprise or seek confirmation.</p>
-                                    <div style="margin-top:20px; color:#ffd700; font-size:0.8rem;">HOVER TO REVEAL <i class="fas fa-arrow-right"></i></div>
-                                </div>
-                                <div class="flip-card-back">
-                                    <div class="back-content">
-                                        <h4>Nuance & Usage</h4>
-                                        <ul class="back-list">
-                                            <li><strong>Surprise:</strong> Don't you like it? (你難道不喜歡嗎？)</li>
-                                            <li><strong>Expectation:</strong> Didn't you go to the party? (我以為你去了)</li>
-                                        </ul>
-                                        <div class="example-box">
-                                            A: "Can't you drive?"<br>
-                                            B: "No, I can't." (注意回答邏輯)
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="flip-card">
-                            <div class="flip-card-inner">
-                                <div class="flip-card-front">
-                                    <i class="fas fa-magic card-icon"></i>
-                                    <h3 class="card-title">Rhetorical Questions</h3>
-                                    <p class="card-desc">無需回答的問題，用於強調。</p>
-                                    <p class="card-desc">Questions that need no answer, used for emphasis.</p>
-                                    <div style="margin-top:20px; color:#ffd700; font-size:0.8rem;">HOVER TO REVEAL <i class="fas fa-arrow-right"></i></div>
-                                </div>
-                                <div class="flip-card-back">
-                                    <div class="back-content">
-                                        <h4>Dramatic Effect</h4>
-                                        <ul class="back-list">
-                                            <li><strong>Emphasis:</strong> Who cares? (沒人在乎)</li>
-                                            <li><strong>Persuasion:</strong> Isn't it beautiful? (它很美，不是嗎？)</li>
-                                        </ul>
-                                        <div class="example-box">
-                                            "What's in a name? That which we call a rose by any other name would smell as sweet."
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="part2" class="special-content-wrapper">
-                    <h2 class="special-title">Exclamation Sentences</h2>
-                    <p class="special-subtitle" style="margin-top: 50px;">Coming Soon: The Power of Emotion...</p>
-                </div>
-                <div id="part3" class="special-content-wrapper">
-                    <h2 class="special-title">Inverted Sentences</h2>
-                    <p class="special-subtitle" style="margin-top: 50px;">Coming Soon: Changing the Order...</p>
-                </div>
-                <div id="part4" class="special-content-wrapper">
-                    <h2 class="special-title">Subjunctive Mood</h2>
-                    <p class="special-subtitle" style="margin-top: 50px;">Coming Soon: Wishes and Hypotheses...</p>
                 </div>
             </div>
         </div>
@@ -1231,46 +1021,22 @@
             });
         });
 
-        // 特殊句型板塊內部的切換邏輯
-        function switchSpecial(partId) {
-            // 1. 移除所有按鈕的 active 狀態
-            document.querySelectorAll('.special-nav-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            
-            // 2. 隱藏所有內容區域
-            document.querySelectorAll('.special-content-wrapper').forEach(content => {
-                content.classList.remove('active');
-                content.style.display = 'none'; // 確保動畫重置
-            });
-            
-            // 3. 激活點擊的按鈕
-            const targetContent = document.getElementById(partId);
-            
-            // 簡單的延遲讓 display:none 生效後再添加 active 類以觸發 CSS 動畫
-            targetContent.style.display = 'block';
-            setTimeout(() => {
-                targetContent.classList.add('active');
-            }, 10);
-            
-            // 更新按鈕狀態
-            const buttons = document.querySelectorAll('.special-nav-btn');
-            if(partId === 'part1') buttons[0].classList.add('active');
-            if(partId === 'part2') buttons[1].classList.add('active');
-            if(partId === 'part3') buttons[2].classList.add('active');
-            if(partId === 'part4') buttons[3].classList.add('active');
-            
-            // 播放音效
-            playSound('click');
+        // 音效函數
+        function playSound(type) {
+            console.log(`Playing ${type} sound`);
         }
         
-        // 動畫控制
+        // 初始加載時播放歡迎音效
+        window.addEventListener('load', () => {
+            playSound('welcome');
+        });
+
+        // --- 動畫控制邏輯 ---
         let animationInterval;
         
         // 疑問句介紹動畫
         document.getElementById('playAnimation').addEventListener('click', () => {
             const animation = document.getElementById('questionAnimation');
-            
             let count = 0;
             const sentences = [
                 {sentence: 'Is the actor handsome?', type: 'Yes/No Question'},
@@ -1285,21 +1051,17 @@
                 animation.innerHTML = `${sentences[count].sentence}<br><small>${sentences[count].type}</small>`;
                 count = (count + 1) % sentences.length;
             }, 2000);
-            
-            // 播放音效
             playSound('success');
         });
         
         document.getElementById('pauseAnimation').addEventListener('click', () => {
             clearInterval(animationInterval);
-            // 播放音效
             playSound('click');
         });
         
         // Yes/No疑問句動畫
         document.getElementById('playYesnoAnimation').addEventListener('click', () => {
             const animation = document.getElementById('yesnoAnimation');
-            
             let count = 0;
             const sentences = [
                 {statement: 'He is a teacher.', question: 'Is he a teacher?'},
@@ -1318,21 +1080,17 @@
                 }
                 count = (count + 1) % (sentences.length * 2);
             }, 2000);
-            
-            // 播放音效
             playSound('success');
         });
         
         document.getElementById('pauseYesnoAnimation').addEventListener('click', () => {
             clearInterval(animationInterval);
-            // 播放音效
             playSound('click');
         });
         
         // WH疑問句動畫
         document.getElementById('playWhAnimation').addEventListener('click', () => {
             const animation = document.getElementById('whAnimation');
-            
             let count = 0;
             const sentences = [
                 {question: '<span class="highlight">When</span> is your birthday?'},
@@ -1347,21 +1105,17 @@
                 animation.innerHTML = `${sentences[count].question}`;
                 count = (count + 1) % sentences.length;
             }, 2000);
-            
-            // 播放音效
             playSound('success');
         });
         
         document.getElementById('pauseWhAnimation').addEventListener('click', () => {
             clearInterval(animationInterval);
-            // 播放音效
             playSound('click');
         });
         
         // 附加問句動畫
         document.getElementById('playTagAnimation').addEventListener('click', () => {
             const animation = document.getElementById('tagAnimation');
-            
             let count = 0;
             const sentences = [
                 {statement: 'You like coffee,', tag: '<span class="highlight">don\'t you</span>?'},
@@ -1376,27 +1130,12 @@
                 animation.innerHTML = `${sentences[count].statement} ${sentences[count].tag}`;
                 count = (count + 1) % sentences.length;
             }, 2000);
-            
-            // 播放音效
             playSound('success');
         });
         
         document.getElementById('pauseTagAnimation').addEventListener('click', () => {
             clearInterval(animationInterval);
-            // 播放音效
             playSound('click');
-        });
-        
-        // 音效函數
-        function playSound(type) {
-            // 在實際應用中，這裡會播放相應的音效
-            // 由於這是一個示例，我們只模擬音效播放
-            console.log(`Playing ${type} sound`);
-        }
-        
-        // 初始加載時播放歡迎音效
-        window.addEventListener('load', () => {
-            playSound('welcome');
         });
     </script>
 </body>
