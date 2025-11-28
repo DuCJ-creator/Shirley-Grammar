@@ -3,121 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shirley's Cyber-Grammar Nexus</title>
+    <title>Shirley's Grammar E-Charger</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@700&family=Rajdhani:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-deep: #050505;
-            --bg-grid: #0f0f0f;
             --neon-blue: #00f3ff;
             --neon-purple: #bc13fe;
             --neon-gold: #ffd700;
             --neon-green: #0aff0a;
-            --glass-panel: rgba(20, 20, 25, 0.7);
-            --border-glow: rgba(0, 243, 255, 0.3);
-            --text-main: #e0e0e0;
-            --text-muted: #888;
+            --text-glow: 0 0 10px rgba(255, 255, 255, 0.8);
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-deep);
-            background-image: 
-                linear-gradient(rgba(0, 243, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 243, 255, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
             margin: 0;
             padding: 0;
             min-height: 100vh;
-            color: var(--text-main);
+            color: #fff;
             overflow-x: hidden;
             display: flex;
             flex-direction: column;
             align-items: center;
+            /* 星空背景基底 */
+            background-color: #020205; 
+            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+            position: relative;
         }
 
-        /* 背景光暈 */
-        .ambient-glow {
+        /* --- 星空特效 (CSS Stars) --- */
+        .stars {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 130px 80px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 160px 120px, #ddd, rgba(0,0,0,0));
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            opacity: 0.5;
+            z-index: -2;
+            animation: twinkle 5s infinite linear;
+        }
+        
+        /* 星雲光暈 */
+        .nebula {
             position: fixed;
             top: 50%; left: 50%;
-            width: 100vw; height: 100vh;
+            width: 120vw; height: 120vh;
             transform: translate(-50%, -50%);
-            background: radial-gradient(circle at center, rgba(0, 243, 255, 0.05) 0%, transparent 70%);
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(188, 19, 254, 0.08), transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(0, 243, 255, 0.08), transparent 50%);
             z-index: -1;
             pointer-events: none;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.5; transform: translateY(0); }
+            50% { opacity: 0.7; }
+            100% { opacity: 0.5; transform: translateY(-20px); }
         }
 
         /* 頂部導航 */
         header {
             width: 100%;
-            padding: 1rem 2rem;
+            padding: 1.5rem 2rem;
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-end; /* 按鈕靠右 */
             align-items: center;
             box-sizing: border-box;
-            background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, transparent 100%);
             z-index: 100;
-            border-bottom: 1px solid rgba(0, 243, 255, 0.1);
         }
 
         .back-btn {
             font-family: 'JetBrains Mono', monospace;
             text-decoration: none;
             color: var(--neon-blue);
-            font-size: 0.9rem;
-            padding: 0.5rem 1.2rem;
-            border: 1px solid var(--neon-blue);
-            background: rgba(0, 243, 255, 0.05);
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 0.6rem 1.5rem;
+            border: 2px solid var(--neon-blue);
+            background: rgba(0, 0, 0, 0.3);
             transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 1px;
-            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+            backdrop-filter: blur(5px);
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(0, 243, 255, 0.1);
         }
         .back-btn:hover {
             background: var(--neon-blue);
             color: #000;
-            box-shadow: 0 0 15px var(--neon-blue);
+            box-shadow: 0 0 25px var(--neon-blue);
         }
 
         /* 主標題區 */
         .hero-section {
             text-align: center;
-            margin-top: 20px;
-            margin-bottom: 10px;
+            margin-top: 10px;
+            margin-bottom: 20px;
             z-index: 2;
         }
 
         h1 {
             font-family: 'Rajdhani', sans-serif;
-            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-size: clamp(3rem, 7vw, 5rem); /* 加大標題 */
             margin: 0;
             text-transform: uppercase;
-            background: linear-gradient(90deg, #fff, var(--neon-blue));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
-            letter-spacing: 2px;
+            color: #fff;
+            text-shadow: 
+                0 0 10px rgba(0, 243, 255, 0.5),
+                0 0 20px rgba(0, 243, 255, 0.3),
+                0 0 40px rgba(188, 19, 254, 0.3);
+            letter-spacing: 3px;
         }
 
         p.subtitle {
             font-family: 'JetBrains Mono', monospace;
             color: var(--neon-gold);
-            font-size: 1rem;
-            margin-top: 10px;
-            opacity: 0.8;
-            letter-spacing: 1px;
+            font-size: 1.1rem;
+            margin-top: 5px;
+            text-shadow: 0 0 5px var(--neon-gold);
+            letter-spacing: 2px;
         }
 
         /* SVG 容器 */
         .svg-container {
             width: 100%;
-            max-width: 1200px;
+            max-width: 1300px;
             height: auto;
             position: relative;
             z-index: 10;
-            /* 讓 SVG 充滿容器 */
             display: flex;
             justify-content: center;
             padding-bottom: 50px;
@@ -127,66 +149,85 @@
             width: 100%;
             height: auto;
             max-height: 85vh;
-            filter: drop-shadow(0 0 10px rgba(0,0,0,0.5));
-            overflow: visible; /* 允許發光特效溢出 */
+            overflow: visible;
         }
 
         /* --- SVG 內部樣式 --- */
 
-        /* 連接線纜 */
-        .cable {
+        /* 靜態線纜 (背景線) */
+        .cable-base {
+            fill: none;
+            stroke: #333;
+            stroke-width: 2;
+            opacity: 0.5;
+        }
+
+        /* 常駐流動電流 (Idle Current) */
+        .cable-idle-flow {
             fill: none;
             stroke-width: 2;
-            opacity: 0.4;
-            transition: all 0.5s ease;
+            stroke-dasharray: 10 15; /* 虛線 */
+            animation: flowAnimation 2s linear infinite; /* 持續流動 */
+            opacity: 0.6;
         }
+
+        /* 懸停高亮電流 (Active Current) */
         .cable-glow {
             fill: none;
-            stroke-width: 3;
-            stroke-dasharray: 2000;
-            stroke-dashoffset: 2000;
-            animation: circuitFlow 3s linear infinite;
-            filter: drop-shadow(0 0 5px currentColor);
-            opacity: 0; /* 默認隱藏，hover 時顯示 */
-            transition: opacity 0.3s;
+            stroke-width: 4;
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            filter: drop-shadow(0 0 8px currentColor);
+            opacity: 0;
+            transition: opacity 0.2s;
         }
 
         .cable-group:hover .cable-glow {
             opacity: 1;
+            animation: surgeFlow 1s linear infinite;
         }
-        .cable-group:hover .cable {
-            opacity: 0.8;
+        
+        /* 加強版：當滑鼠懸停時，原本的流動線變亮 */
+        .cable-group:hover .cable-idle-flow {
+            opacity: 1;
             stroke-width: 3;
+            filter: drop-shadow(0 0 5px currentColor);
         }
 
-        @keyframes circuitFlow {
+        @keyframes flowAnimation {
+            from { stroke-dashoffset: 25; }
             to { stroke-dashoffset: 0; }
         }
 
-        /* 核心能量柱 (Central Pillar) */
+        @keyframes surgeFlow {
+            to { stroke-dashoffset: 0; }
+        }
+
+        /* 核心能量柱 */
         .core-rect {
-            fill: rgba(10, 10, 15, 0.9);
+            fill: rgba(0, 0, 0, 0.7);
             stroke: var(--neon-gold);
             stroke-width: 2;
             transition: all 0.3s;
         }
         .core-group:hover .core-rect {
-            fill: rgba(255, 215, 0, 0.1);
+            fill: rgba(255, 215, 0, 0.2);
+            stroke: #fff;
             filter: drop-shadow(0 0 15px var(--neon-gold));
         }
         .core-text {
             font-family: 'Rajdhani', sans-serif;
             font-weight: 700;
-            font-size: 18px;
+            font-size: 20px; /* 加大 */
             fill: #fff;
             text-anchor: middle;
             pointer-events: none;
-            text-shadow: 0 0 5px rgba(0,0,0,1);
+            text-shadow: 0 0 8px rgba(0,0,0,1);
         }
 
-        /* 紅色按鈕區 (Section Headers) */
+        /* 紅色標題區塊 */
         .section-header-rect {
-            fill: rgba(50, 0, 20, 0.9);
+            fill: rgba(20, 0, 10, 0.8);
             stroke: #ff0055;
             stroke-width: 2;
             cursor: pointer;
@@ -201,80 +242,78 @@
             fill: #fff;
             font-family: 'Rajdhani', sans-serif;
             font-weight: 700;
-            font-size: 16px;
+            font-size: 18px;
             text-anchor: middle;
             pointer-events: none;
+            text-shadow: 0 0 5px #000;
         }
 
-        /* 端口 (Ports) - 關鍵優化 */
+        /* 端口與文字 (重要修改) */
         .port-group {
             cursor: pointer;
             transition: all 0.3s ease;
         }
+        .hit-area { fill: transparent; stroke: none; }
         
-        /* 隱形點擊區，擴大點擊範圍 */
-        .hit-area {
-            fill: transparent; 
-            stroke: none;
+        /* 文字樣式優化：粗體、清晰 */
+        .port-label {
+            fill: #e0e0e0;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px; /* 加大字體 */
+            font-weight: 900; /* 特粗體 */
+            transition: all 0.3s;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.9); /* 黑影襯托白字 */
+            letter-spacing: 0.5px;
         }
 
         .port-circle-outer {
-            fill: rgba(0,0,0,0.8);
-            stroke: #555;
+            fill: rgba(0,0,0,0.9);
+            stroke: #666;
             stroke-width: 2;
             transition: all 0.3s;
         }
         .port-circle-inner {
-            fill: #333;
+            fill: #444;
             transition: all 0.3s;
-        }
-        .port-label {
-            fill: #aaa;
-            font-family: 'Inter', sans-serif;
-            font-size: 14px;
-            font-weight: 500;
-            transition: all 0.3s;
-            text-shadow: 0 1px 3px #000;
         }
 
-        /* Port Hover Effects */
+        /* Hover Effects */
         .port-group:hover .port-circle-outer {
-            stroke: var(--target-color);
-            filter: drop-shadow(0 0 8px var(--target-color));
+            stroke: #fff;
+            filter: drop-shadow(0 0 10px var(--target-color));
         }
         .port-group:hover .port-circle-inner {
-            fill: var(--target-color);
-            filter: drop-shadow(0 0 5px var(--target-color));
+            fill: #fff;
+            filter: drop-shadow(0 0 8px var(--target-color));
         }
         .port-group:hover .port-label {
             fill: #fff;
-            font-weight: 700;
-            transform: translateX(5px); /* 文字稍微移動產生動態感 */
+            filter: drop-shadow(0 0 10px var(--target-color)); /* 文字發光 */
+            transform: scale(1.1); /* 微微放大 */
         }
 
-        /* Modal (Glassmorphism + Cyberpunk) */
+        /* Modal */
         #modal {
             display: none;
             position: fixed;
             z-index: 2000;
             left: 0; top: 0;
             width: 100%; height: 100%;
-            background-color: rgba(0,0,0,0.8);
-            backdrop-filter: blur(8px);
+            background-color: rgba(0,0,0,0.7);
+            backdrop-filter: blur(5px);
             justify-content: center;
             align-items: center;
         }
         
         #modal-content {
-            background: linear-gradient(135deg, rgba(20,20,25,0.95), rgba(10,10,15,0.98));
+            background: rgba(15, 20, 30, 0.95);
             border: 1px solid var(--neon-blue);
-            box-shadow: 0 0 30px rgba(0, 243, 255, 0.2);
+            box-shadow: 0 0 40px rgba(0, 243, 255, 0.15);
             padding: 40px;
             width: 85%;
-            max-width: 700px;
-            border-radius: 4px; /* 硬邊角 */
+            max-width: 650px;
             position: relative;
-            clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
+            color: #fff;
         }
         
         #close {
@@ -284,34 +323,29 @@
             right: 25px;
             font-size: 32px;
             cursor: pointer;
-            line-height: 0.8;
         }
-        #close:hover { text-shadow: 0 0 10px var(--neon-blue); }
         
         .explanation-title {
             color: var(--neon-gold);
             border-bottom: 2px solid rgba(255, 215, 0, 0.3);
             padding-bottom: 15px;
-            font-size: 24px;
+            font-size: 26px;
             font-family: 'Rajdhani', sans-serif;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-top: 0;
         }
         
         .explanation-text {
             line-height: 1.8;
-            color: #d0d0d0;
-            font-size: 1rem;
+            color: #ddd;
+            font-size: 1.1rem;
             margin-top: 20px;
-            font-weight: 300;
         }
 
         .status-message {
             position: fixed;
             bottom: 30px;
             right: 30px;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.8);
             border: 1px solid var(--neon-green);
             color: var(--neon-green);
             padding: 15px 30px;
@@ -322,254 +356,238 @@
             display: none;
             text-transform: uppercase;
         }
-
-        /* 手機版適配 */
-        @media (max-width: 768px) {
-            h1 { font-size: 2rem; }
-            .svg-container { margin-top: 0; }
-            /* SVG 在手機上會自動縮放，因為我們沒有設固定寬度 */
-        }
     </style>
 </head>
 <body>
 
-    <div class="ambient-glow"></div>
+    <div class="stars"></div>
+    <div class="nebula"></div>
 
     <header>
-        <div style="font-family: 'Rajdhani'; font-weight:700; color:#fff; font-size:1.2rem;">GRAMMAR<span style="color:var(--neon-blue)">.SYS</span></div>
         <a href="https://ducj-creator.github.io/Teacher-Shirley/study-tools/index.html" class="back-btn">
             &lt; Return to Base
         </a>
     </header>
 
     <div class="hero-section">
-        <h1>Grammar E-Charger</h1>
-        <p class="subtitle">/// SYSTEM READY /// SELECT MODULE TO CHARGE ///</p>
+        <h1>Shirley's Grammar E-Charger</h1>
+        <p class="subtitle">/// SYSTEM READY /// INITIATING ENERGY FLOW ///</p>
     </div>
 
     <div class="svg-container">
         <svg viewBox="0 0 1200 750" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
             <defs>
-                <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1" />
-                    <stop offset="100%" style="stop-color:#B8860B;stop-opacity:1" />
+                <linearGradient id="goldGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#FFD700;stop-opacity:0" />
+                    <stop offset="50%" style="stop-color:#FFD700;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#FFD700;stop-opacity:0" />
                 </linearGradient>
-                <filter id="glow">
-                    <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
-                    <feMerge>
-                        <feMergeNode in="coloredBlur"/>
-                        <feMergeNode in="SourceGraphic"/>
-                    </feMerge>
-                </filter>
             </defs>
 
-            <path d="M 600 0 L 600 750" stroke="#222" stroke-width="10" />
-            <path d="M 600 0 L 600 750" stroke="var(--neon-gold)" stroke-width="2" stroke-dasharray="10 20" opacity="0.5">
-                <animate attributeName="stroke-dashoffset" from="0" to="300" dur="5s" repeatCount="indefinite" />
+            <path d="M 600 0 L 600 750" stroke="rgba(255,255,255,0.1)" stroke-width="12" />
+            <path d="M 600 0 L 600 750" stroke="url(#goldGrad)" stroke-width="4" stroke-dasharray="20 40">
+                <animate attributeName="stroke-dashoffset" from="0" to="60" dur="1s" repeatCount="indefinite" />
             </path>
 
             <g transform="translate(600, 100)">
-                <rect x="-120" y="-40" width="240" height="60" fill="#111" stroke="var(--neon-gold)" stroke-width="2" rx="4" />
-                <text x="0" y="0" fill="var(--neon-gold)" text-anchor="middle" font-family="Rajdhani" font-weight="700" font-size="24" dominant-baseline="middle" style="text-shadow: 0 0 10px var(--neon-gold);">SENTENCE STRUCTURES</text>
+                <rect x="-130" y="-45" width="260" height="60" fill="#000" stroke="var(--neon-gold)" stroke-width="2" rx="0" />
+                <text x="0" y="0" fill="var(--neon-gold)" text-anchor="middle" font-family="Rajdhani" font-weight="700" font-size="26" dominant-baseline="middle" style="text-shadow: 0 0 15px var(--neon-gold);">SENTENCE STRUCTURES</text>
                 
                 <g class="core-group" onclick="handleLink('simple')">
-                    <rect x="-100" y="50" width="200" height="50" class="core-rect" rx="4"/>
+                    <rect x="-110" y="50" width="220" height="50" class="core-rect" rx="2"/>
                     <text x="0" y="82" class="core-text">1. SIMPLE</text>
                 </g>
-                <line x1="0" y1="100" x2="0" y2="130" stroke="#444" stroke-width="2" />
+                <line x1="0" y1="100" x2="0" y2="130" stroke="#555" stroke-width="2" />
 
                 <g class="core-group" onclick="handleLink('compound')">
-                    <rect x="-100" y="130" width="200" height="50" class="core-rect" rx="4"/>
+                    <rect x="-110" y="130" width="220" height="50" class="core-rect" rx="2"/>
                     <text x="0" y="162" class="core-text">2. COMPOUND</text>
                 </g>
-                <line x1="0" y1="180" x2="0" y2="210" stroke="#444" stroke-width="2" />
+                <line x1="0" y1="180" x2="0" y2="210" stroke="#555" stroke-width="2" />
 
                 <g class="core-group" onclick="handleLink('complex')">
-                    <rect x="-100" y="210" width="200" height="50" class="core-rect" rx="4"/>
+                    <rect x="-110" y="210" width="220" height="50" class="core-rect" rx="2"/>
                     <text x="0" y="242" class="core-text">3. COMPLEX</text>
                 </g>
-                <line x1="0" y1="260" x2="0" y2="290" stroke="#444" stroke-width="2" />
+                <line x1="0" y1="260" x2="0" y2="290" stroke="#555" stroke-width="2" />
 
                 <g class="core-group" onclick="handleLink('compound-complex')">
-                    <rect x="-100" y="290" width="200" height="50" class="core-rect" rx="4"/>
+                    <rect x="-110" y="290" width="220" height="50" class="core-rect" rx="2"/>
                     <text x="0" y="322" class="core-text">4. COMP-COMPLEX</text>
                 </g>
             </g>
 
-            <g class="cable-group">
-                <path d="M 600 130 C 400 130, 400 150, 250 150" class="cable" stroke="var(--neon-blue)" />
-                <path d="M 600 130 C 400 130, 400 150, 250 150" class="cable-glow" stroke="var(--neon-blue)" />
+            <g class="cable-group" style="color: var(--neon-blue)">
+                <path d="M 600 130 C 400 130, 400 150, 250 150" class="cable-base" />
+                <path d="M 600 130 C 400 130, 400 150, 250 150" class="cable-idle-flow" stroke="currentColor" />
+                <path d="M 600 130 C 400 130, 400 150, 250 150" class="cable-glow" stroke="currentColor" />
             </g>
-            <g class="cable-group">
-                <path d="M 600 370 C 400 370, 400 450, 250 450" class="cable" stroke="var(--neon-blue)" />
-                <path d="M 600 370 C 400 370, 400 450, 250 450" class="cable-glow" stroke="var(--neon-blue)" />
+
+            <g class="cable-group" style="color: var(--neon-purple)">
+                <path d="M 600 370 C 400 370, 400 450, 250 450" class="cable-base" />
+                <path d="M 600 370 C 400 370, 400 450, 250 450" class="cable-idle-flow" stroke="currentColor" />
+                <path d="M 600 370 C 400 370, 400 450, 250 450" class="cable-glow" stroke="currentColor" />
             </g>
 
             <g transform="translate(250, 150)">
                 <g class="section-header-group" onclick="showExplanation('parts-of-speech')">
-                    <rect x="-80" y="-25" width="160" height="50" class="section-header-rect" rx="4"/>
-                    <text x="0" y="0" class="section-header-text" dominant-baseline="middle">I. PARTS OF SPEECH</text>
-                    <text x="0" y="15" fill="#aaa" font-size="10" text-anchor="middle">[ INFO ]</text>
+                    <rect x="-90" y="-30" width="180" height="50" class="section-header-rect" rx="2"/>
+                    <text x="0" y="-5" class="section-header-text" dominant-baseline="middle">I. PARTS OF SPEECH</text>
+                    <text x="0" y="12" fill="#aaa" font-size="11" text-anchor="middle" font-family="JetBrains Mono">[INFO]</text>
                 </g>
 
                 <g class="port-group" onclick="handleLink('nouns')" style="--target-color: var(--neon-blue)">
-                    <line x1="0" y1="25" x2="-120" y2="80" stroke="#333" stroke-width="2"/>
-                    <circle cx="-120" cy="80" r="40" class="hit-area" /> <circle cx="-120" cy="80" r="10" class="port-circle-outer" />
-                    <circle cx="-120" cy="80" r="5" class="port-circle-inner" />
-                    <text x="-100" y="85" class="port-label">NOUNS</text>
+                    <line x1="0" y1="20" x2="-130" y2="80" stroke="#444" stroke-width="2"/>
+                    <circle cx="-130" cy="80" r="40" class="hit-area" />
+                    <circle cx="-130" cy="80" r="8" class="port-circle-outer" />
+                    <circle cx="-130" cy="80" r="4" class="port-circle-inner" />
+                    <text x="-110" y="86" class="port-label">NOUNS</text>
                 </g>
 
                 <g class="port-group" onclick="handleLink('pronouns')" style="--target-color: var(--neon-blue)">
-                    <line x1="0" y1="25" x2="-120" y2="130" stroke="#333" stroke-width="2"/>
-                    <circle cx="-120" cy="130" r="40" class="hit-area" />
-                    <circle cx="-120" cy="130" r="10" class="port-circle-outer" />
-                    <circle cx="-120" cy="130" r="5" class="port-circle-inner" />
-                    <text x="-100" y="135" class="port-label">PRONOUNS</text>
+                    <line x1="0" y1="20" x2="-130" y2="140" stroke="#444" stroke-width="2"/>
+                    <circle cx="-130" cy="140" r="40" class="hit-area" />
+                    <circle cx="-130" cy="140" r="8" class="port-circle-outer" />
+                    <circle cx="-130" cy="140" r="4" class="port-circle-inner" />
+                    <text x="-110" y="146" class="port-label">PRONOUNS</text>
                 </g>
 
                 <g class="port-group" onclick="handleLink('verbs')" style="--target-color: var(--neon-blue)">
-                    <line x1="0" y1="25" x2="0" y2="100" stroke="#333" stroke-width="2"/>
-                    <circle cx="0" cy="100" r="40" class="hit-area" />
-                    <circle cx="0" cy="100" r="10" class="port-circle-outer" />
-                    <circle cx="0" cy="100" r="5" class="port-circle-inner" />
-                    <text x="20" y="105" class="port-label">VERBS</text>
+                    <line x1="0" y1="20" x2="0" y2="110" stroke="#444" stroke-width="2"/>
+                    <circle cx="0" cy="110" r="40" class="hit-area" />
+                    <circle cx="0" cy="110" r="8" class="port-circle-outer" />
+                    <circle cx="0" cy="110" r="4" class="port-circle-inner" />
+                    <text x="20" y="116" class="port-label">VERBS</text>
                 </g>
 
                 <g class="port-group" onclick="handleLink('adjectives-adverbs')" style="--target-color: var(--neon-blue)">
-                    <line x1="0" y1="25" x2="120" y2="80" stroke="#333" stroke-width="2"/>
-                    <circle cx="120" cy="80" r="40" class="hit-area" />
-                    <circle cx="120" cy="80" r="10" class="port-circle-outer" />
-                    <circle cx="120" cy="80" r="5" class="port-circle-inner" />
-                    <text x="140" y="85" class="port-label">ADJ & ADV</text>
+                    <line x1="0" y1="20" x2="130" y2="80" stroke="#444" stroke-width="2"/>
+                    <circle cx="130" cy="80" r="40" class="hit-area" />
+                    <circle cx="130" cy="80" r="8" class="port-circle-outer" />
+                    <circle cx="130" cy="80" r="4" class="port-circle-inner" />
+                    <text x="150" y="86" class="port-label">ADJ & ADV</text>
                 </g>
 
                 <g class="port-group" onclick="handleLink('prepositions')" style="--target-color: var(--neon-blue)">
-                    <line x1="0" y1="25" x2="120" y2="130" stroke="#333" stroke-width="2"/>
-                    <circle cx="120" cy="130" r="40" class="hit-area" />
-                    <circle cx="120" cy="130" r="10" class="port-circle-outer" />
-                    <circle cx="120" cy="130" r="5" class="port-circle-inner" />
-                    <text x="140" y="135" class="port-label">PREPOSITIONS</text>
+                    <line x1="0" y1="20" x2="130" y2="140" stroke="#444" stroke-width="2"/>
+                    <circle cx="130" cy="140" r="40" class="hit-area" />
+                    <circle cx="130" cy="140" r="8" class="port-circle-outer" />
+                    <circle cx="130" cy="140" r="4" class="port-circle-inner" />
+                    <text x="150" y="146" class="port-label">PREPOSITIONS</text>
                 </g>
             </g>
 
             <g transform="translate(250, 450)">
                 <g class="section-header-group" onclick="showExplanation('nonfinite-verbs')">
-                    <rect x="-80" y="-25" width="160" height="50" class="section-header-rect" rx="4"/>
-                    <text x="0" y="0" class="section-header-text" dominant-baseline="middle">II. NON-FINITE</text>
-                    <text x="0" y="15" fill="#aaa" font-size="10" text-anchor="middle">[ INFO ]</text>
+                    <rect x="-90" y="-30" width="180" height="50" class="section-header-rect" rx="2"/>
+                    <text x="0" y="-5" class="section-header-text" dominant-baseline="middle">II. NON-FINITE</text>
+                    <text x="0" y="12" fill="#aaa" font-size="11" text-anchor="middle" font-family="JetBrains Mono">[INFO]</text>
                 </g>
 
                 <g class="port-group" onclick="handleLink('infinitive')" style="--target-color: var(--neon-purple)">
-                    <line x1="0" y1="25" x2="-120" y2="80" stroke="#333" stroke-width="2"/>
-                    <circle cx="-120" cy="80" r="40" class="hit-area" />
-                    <circle cx="-120" cy="80" r="10" class="port-circle-outer" />
-                    <circle cx="-120" cy="80" r="5" class="port-circle-inner" />
-                    <text x="-100" y="85" class="port-label">INFINITIVE</text>
+                    <line x1="0" y1="20" x2="-130" y2="80" stroke="#444" stroke-width="2"/>
+                    <circle cx="-130" cy="80" r="40" class="hit-area" />
+                    <circle cx="-130" cy="80" r="8" class="port-circle-outer" />
+                    <text x="-110" y="86" class="port-label">INFINITIVE</text>
                 </g>
 
                 <g class="port-group" onclick="handleLink('gerund')" style="--target-color: var(--neon-purple)">
-                    <line x1="0" y1="25" x2="-60" y2="130" stroke="#333" stroke-width="2"/>
-                    <circle cx="-60" cy="130" r="40" class="hit-area" />
-                    <circle cx="-60" cy="130" r="10" class="port-circle-outer" />
-                    <circle cx="-60" cy="130" r="5" class="port-circle-inner" />
-                    <text x="-40" y="135" class="port-label">GERUND</text>
+                    <line x1="0" y1="20" x2="-65" y2="140" stroke="#444" stroke-width="2"/>
+                    <circle cx="-65" cy="140" r="40" class="hit-area" />
+                    <circle cx="-65" cy="140" r="8" class="port-circle-outer" />
+                    <text x="-45" y="146" class="port-label">GERUND</text>
                 </g>
 
                 <g class="port-group" onclick="handleLink('past-participle')" style="--target-color: var(--neon-purple)">
-                    <line x1="0" y1="25" x2="60" y2="130" stroke="#333" stroke-width="2"/>
-                    <circle cx="60" cy="130" r="40" class="hit-area" />
-                    <circle cx="60" cy="130" r="10" class="port-circle-outer" />
-                    <circle cx="60" cy="130" r="5" class="port-circle-inner" />
-                    <text x="80" y="135" class="port-label">PAST PART.</text>
+                    <line x1="0" y1="20" x2="65" y2="140" stroke="#444" stroke-width="2"/>
+                    <circle cx="65" cy="140" r="40" class="hit-area" />
+                    <circle cx="65" cy="140" r="8" class="port-circle-outer" />
+                    <text x="85" y="146" class="port-label">PAST PART.</text>
                 </g>
 
                 <g class="port-group" onclick="handleLink('present-participle')" style="--target-color: var(--neon-purple)">
-                    <line x1="0" y1="25" x2="120" y2="80" stroke="#333" stroke-width="2"/>
-                    <circle cx="120" cy="80" r="40" class="hit-area" />
-                    <circle cx="120" cy="80" r="10" class="port-circle-outer" />
-                    <circle cx="120" cy="80" r="5" class="port-circle-inner" />
-                    <text x="140" y="85" class="port-label">PRES PART.</text>
+                    <line x1="0" y1="20" x2="130" y2="80" stroke="#444" stroke-width="2"/>
+                    <circle cx="130" cy="80" r="40" class="hit-area" />
+                    <circle cx="130" cy="80" r="8" class="port-circle-outer" />
+                    <text x="150" y="86" class="port-label">PRES PART.</text>
                 </g>
             </g>
 
-            <g class="cable-group">
-                <path d="M 600 130 C 800 130, 800 150, 950 150" class="cable" stroke="var(--neon-blue)" />
-                <path d="M 600 130 C 800 130, 800 150, 950 150" class="cable-glow" stroke="var(--neon-blue)" />
+            <g class="cable-group" style="color: var(--neon-green)">
+                <path d="M 600 130 C 800 130, 800 150, 950 150" class="cable-base" />
+                <path d="M 600 130 C 800 130, 800 150, 950 150" class="cable-idle-flow" stroke="currentColor" />
+                <path d="M 600 130 C 800 130, 800 150, 950 150" class="cable-glow" stroke="currentColor" />
             </g>
-            <g class="cable-group">
-                <path d="M 600 370 C 800 370, 800 450, 950 450" class="cable" stroke="var(--neon-blue)" />
-                <path d="M 600 370 C 800 370, 800 450, 950 450" class="cable-glow" stroke="var(--neon-blue)" />
+            
+            <g class="cable-group" style="color: #ff00ff">
+                <path d="M 600 370 C 800 370, 800 450, 950 450" class="cable-base" />
+                <path d="M 600 370 C 800 370, 800 450, 950 450" class="cable-idle-flow" stroke="currentColor" />
+                <path d="M 600 370 C 800 370, 800 450, 950 450" class="cable-glow" stroke="currentColor" />
             </g>
+
 
             <g transform="translate(950, 150)">
                 <g class="section-header-group" onclick="showExplanation('clauses')">
-                    <rect x="-80" y="-25" width="160" height="50" class="section-header-rect" rx="4"/>
-                    <text x="0" y="0" class="section-header-text" dominant-baseline="middle">III. CLAUSES</text>
-                    <text x="0" y="15" fill="#aaa" font-size="10" text-anchor="middle">[ INFO ]</text>
+                    <rect x="-90" y="-30" width="180" height="50" class="section-header-rect" rx="2"/>
+                    <text x="0" y="-5" class="section-header-text" dominant-baseline="middle">III. CLAUSES</text>
+                    <text x="0" y="12" fill="#aaa" font-size="11" text-anchor="middle" font-family="JetBrains Mono">[INFO]</text>
                 </g>
 
                 <g class="port-group" onclick="handleLink('noun-clause')" style="--target-color: var(--neon-green)">
-                    <line x1="0" y1="25" x2="-80" y2="80" stroke="#333" stroke-width="2"/>
-                    <circle cx="-80" cy="80" r="40" class="hit-area" />
-                    <circle cx="-80" cy="80" r="10" class="port-circle-outer" />
-                    <circle cx="-80" cy="80" r="5" class="port-circle-inner" />
-                    <text x="-180" y="85" class="port-label" text-anchor="end">NOUN CL.</text>
+                    <line x1="0" y1="20" x2="-90" y2="80" stroke="#444" stroke-width="2"/>
+                    <circle cx="-90" cy="80" r="40" class="hit-area" />
+                    <circle cx="-90" cy="80" r="8" class="port-circle-outer" />
+                    <text x="-190" y="86" class="port-label" text-anchor="end">NOUN CL.</text>
                 </g>
 
                 <g class="port-group" onclick="handleLink('adjective-clause')" style="--target-color: var(--neon-green)">
-                    <line x1="0" y1="25" x2="0" y2="120" stroke="#333" stroke-width="2"/>
-                    <circle cx="0" cy="120" r="40" class="hit-area" />
-                    <circle cx="0" cy="120" r="10" class="port-circle-outer" />
-                    <circle cx="0" cy="120" r="5" class="port-circle-inner" />
-                    <text x="0" y="145" class="port-label" text-anchor="middle">ADJ CL.</text>
+                    <line x1="0" y1="20" x2="0" y2="130" stroke="#444" stroke-width="2"/>
+                    <circle cx="0" cy="130" r="40" class="hit-area" />
+                    <circle cx="0" cy="130" r="8" class="port-circle-outer" />
+                    <text x="0" y="156" class="port-label" text-anchor="middle">ADJ CL.</text>
                 </g>
 
                 <g class="port-group" onclick="handleLink('adverb-clause')" style="--target-color: var(--neon-green)">
-                    <line x1="0" y1="25" x2="80" y2="80" stroke="#333" stroke-width="2"/>
-                    <circle cx="80" cy="80" r="40" class="hit-area" />
-                    <circle cx="80" cy="80" r="10" class="port-circle-outer" />
-                    <circle cx="80" cy="80" r="5" class="port-circle-inner" />
-                    <text x="100" y="85" class="port-label" text-anchor="start">ADV CL.</text>
+                    <line x1="0" y1="20" x2="90" y2="80" stroke="#444" stroke-width="2"/>
+                    <circle cx="90" cy="80" r="40" class="hit-area" />
+                    <circle cx="90" cy="80" r="8" class="port-circle-outer" />
+                    <text x="110" y="86" class="port-label" text-anchor="start">ADV CL.</text>
                 </g>
             </g>
 
             <g transform="translate(950, 450)">
                 <g class="section-header-group" onclick="showExplanation('special-sentences')">
-                    <rect x="-80" y="-25" width="160" height="50" class="section-header-rect" rx="4"/>
-                    <text x="0" y="0" class="section-header-text" dominant-baseline="middle">IV. SPECIAL</text>
-                    <text x="0" y="15" fill="#aaa" font-size="10" text-anchor="middle">[ INFO ]</text>
+                    <rect x="-90" y="-30" width="180" height="50" class="section-header-rect" rx="2"/>
+                    <text x="0" y="-5" class="section-header-text" dominant-baseline="middle">IV. SPECIAL</text>
+                    <text x="0" y="12" fill="#aaa" font-size="11" text-anchor="middle" font-family="JetBrains Mono">[INFO]</text>
                 </g>
 
                 <g class="port-group" onclick="handleLink('questions')" style="--target-color: #ff00ff">
-                    <line x1="0" y1="25" x2="-100" y2="80" stroke="#333" stroke-width="2"/>
-                    <circle cx="-100" cy="80" r="40" class="hit-area" />
-                    <circle cx="-100" cy="80" r="10" class="port-circle-outer" />
-                    <circle cx="-100" cy="80" r="5" class="port-circle-inner" />
-                    <text x="-90" y="85" class="port-label" text-anchor="end" style="transform: translateX(-20px)">QUESTIONS</text>
+                    <line x1="0" y1="20" x2="-110" y2="80" stroke="#444" stroke-width="2"/>
+                    <circle cx="-110" cy="80" r="40" class="hit-area" />
+                    <circle cx="-110" cy="80" r="8" class="port-circle-outer" />
+                    <text x="-120" y="86" class="port-label" text-anchor="end">QUESTIONS</text>
                 </g>
 
                 <g class="port-group" onclick="handleLink('exclamations')" style="--target-color: #ff00ff">
-                    <line x1="0" y1="25" x2="-40" y2="130" stroke="#333" stroke-width="2"/>
-                    <circle cx="-40" cy="130" r="40" class="hit-area" />
-                    <circle cx="-40" cy="130" r="10" class="port-circle-outer" />
-                    <circle cx="-40" cy="130" r="5" class="port-circle-inner" />
-                    <text x="-40" y="155" class="port-label" text-anchor="middle">EXCLAMATIONS</text>
+                    <line x1="0" y1="20" x2="-45" y2="140" stroke="#444" stroke-width="2"/>
+                    <circle cx="-45" cy="140" r="40" class="hit-area" />
+                    <circle cx="-45" cy="140" r="8" class="port-circle-outer" />
+                    <text x="-45" y="166" class="port-label" text-anchor="middle">EXCLAMATIONS</text>
                 </g>
 
                 <g class="port-group" onclick="handleLink('inverted')" style="--target-color: #ff00ff">
-                    <line x1="0" y1="25" x2="40" y2="130" stroke="#333" stroke-width="2"/>
-                    <circle cx="40" cy="130" r="40" class="hit-area" />
-                    <circle cx="40" cy="130" r="10" class="port-circle-outer" />
-                    <circle cx="40" cy="130" r="5" class="port-circle-inner" />
-                    <text x="40" y="155" class="port-label" text-anchor="middle">INVERTED</text>
+                    <line x1="0" y1="20" x2="45" y2="140" stroke="#444" stroke-width="2"/>
+                    <circle cx="45" cy="140" r="40" class="hit-area" />
+                    <circle cx="45" cy="140" r="8" class="port-circle-outer" />
+                    <text x="45" y="166" class="port-label" text-anchor="middle">INVERTED</text>
                 </g>
 
                 <g class="port-group" onclick="handleLink('subjunctive')" style="--target-color: #ff00ff">
-                    <line x1="0" y1="25" x2="100" y2="80" stroke="#333" stroke-width="2"/>
-                    <circle cx="100" cy="80" r="40" class="hit-area" />
-                    <circle cx="100" cy="80" r="10" class="port-circle-outer" />
-                    <circle cx="100" cy="80" r="5" class="port-circle-inner" />
-                    <text x="120" y="85" class="port-label" text-anchor="start">SUBJUNCTIVE</text>
+                    <line x1="0" y1="20" x2="110" y2="80" stroke="#444" stroke-width="2"/>
+                    <circle cx="110" cy="80" r="40" class="hit-area" />
+                    <circle cx="110" cy="80" r="8" class="port-circle-outer" />
+                    <text x="130" y="86" class="port-label" text-anchor="start">SUBJUNCTIVE</text>
                 </g>
             </g>
         </svg>
@@ -580,16 +598,11 @@
             <span id="close">&times;</span>
             <h2 id="modal-title" class="explanation-title"></h2>
             <div id="modal-text" class="explanation-text"></div>
-            <div style="margin-top:20px; font-size:0.8rem; color:#666; font-family:'JetBrains Mono'">[END OF TRANSMISSION]</div>
         </div>
     </div>
-
     <div id="status-message" class="status-message"></div>
 
     <script>
-        // ----------------------------------------
-        // 配置與資料
-        // ----------------------------------------
         const grammarCSV = `no.,key point,url
 S-1,simple,https://ducj-creator.github.io/Shirley-Grammar/simple/
 S-2,compound,https://ducj-creator.github.io/Shirley-Grammar/compound/
@@ -615,15 +628,15 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
         const sectionExplanations = {
             'parts-of-speech': {
                 title: "I. Parts of Speech 詞性",
-                text: "The eight parts of speech are the basic categories of words in English grammar. We focus on the core six here:<br><br><strong>• Nouns, Pronouns, Verbs, Adjectives, Adverbs, Prepositions</strong><br><br>Note: Conjunctions are covered in Compound Sentences.<br>英語的八大詞類是詞彙在文法上的基本類別。在此主要著重於前六類。"
+                text: "The eight parts of speech are the basic categories of words in English grammar. We focus on the core six here:<br><br><strong>• Nouns, Pronouns, Verbs, Adjectives, Adverbs, Prepositions</strong>"
             },
             'nonfinite-verbs': {
                 title: "II. Non-finite Verbs 非限定動詞",
-                text: "Non-finite verbs do not show tense, person, or number. They function as other parts of speech (nouns, adjectives, or adverbs).<br><br><strong>• Infinitive (不定詞)<br>• Gerund (動名詞)<br>• Participles (分詞)</strong>"
+                text: "Non-finite verbs do not show tense, person, or number. They function as other parts of speech.<br><br><strong>• Infinitive (不定詞)<br>• Gerund (動名詞)<br>• Participles (分詞)</strong>"
             },
             'clauses': {
                 title: "III. Clauses 子句",
-                text: "A clause contains a subject and a verb. Dependent clauses are classified by function:<br><br><strong>• Noun Clause (名詞子句)<br>• Adjective/Relative Clause (形容詞子句)<br>• Adverb Clause (副詞子句)</strong>"
+                text: "A clause contains a subject and a verb. Dependent clauses are classified by function:<br><br><strong>• Noun Clause (名詞子句)<br>• Adjective Clause (形容詞子句)<br>• Adverb Clause (副詞子句)</strong>"
             },
             'special-sentences': {
                 title: "IV. Special Sentences 特殊句型",
@@ -631,9 +644,6 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
             }
         };
 
-        // ----------------------------------------
-        // 邏輯處理
-        // ----------------------------------------
         function parseCSV(csvText) {
             const lines = csvText.split('\n');
             const result = {};
@@ -659,25 +669,19 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
         function showStatus(msg) {
             statusEl.textContent = `> ${msg}`;
             statusEl.style.display = 'block';
-            // 簡單的打字機效果
             statusEl.style.animation = 'none';
-            statusEl.offsetHeight; /* trigger reflow */
+            statusEl.offsetHeight; 
             statusEl.style.animation = 'fadeIn 0.2s';
-            
-            setTimeout(() => {
-                statusEl.style.display = 'none';
-            }, 2500);
+            setTimeout(() => { statusEl.style.display = 'none'; }, 2000);
         }
 
         function handleLink(key) {
             const lowerKey = key.toLowerCase();
             if (grammarLinks[lowerKey]) {
-                showStatus(`CONNECTING TO DATALINK: [${key.toUpperCase()}]...`);
+                showStatus(`CHARGING MODULE: [${key.toUpperCase()}]...`);
                 setTimeout(() => {
                     window.open(grammarLinks[lowerKey], '_blank');
-                }, 400);
-            } else {
-                showStatus(`ERROR: LINK NOT FOUND FOR [${key}]`);
+                }, 300);
             }
         }
 
@@ -687,7 +691,6 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
                 modalTitle.innerHTML = exp.title;
                 modalText.innerHTML = exp.text;
                 modal.style.display = 'flex';
-                showStatus(`ACCESSING DATABASE: ${key.toUpperCase()}`);
             }
         }
 
@@ -695,12 +698,6 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
         window.onclick = (e) => {
             if (e.target == modal) modal.style.display = 'none';
         }
-
-        // 初始化特效
-        window.onload = () => {
-            showStatus("SYSTEM ONLINE. WAITING FOR INPUT...");
-        };
-
     </script>
 </body>
 </html>
