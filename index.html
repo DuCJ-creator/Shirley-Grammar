@@ -824,15 +824,17 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
                     let isCorrect = false;
 
                     // Check markers: ● at start, or [✓] at end
-                    if (line.includes('[✓]') || line.startsWith('●')) {
+                    // Also robustly checking for [✓] or similar characters
+                    if (line.includes('[✓]') || line.includes('[✔]') || line.startsWith('●')) {
                         isCorrect = true;
                     }
 
-                    // Clean string
+                    // Clean string: remove markers like [x], [✓], ●, o, etc.
                     let cleanText = line
                         .replace(/\[x\]/gi, '')
+                        .replace(/\[✘\]/gi, '')
                         .replace(/\[✓\]/gi, '')
-                        .replace(/\[✔\]/gi, '') // just in case
+                        .replace(/\[✔\]/gi, '') 
                         .replace(/^●\s*/, '')
                         .replace(/^o\s*/, '')
                         .replace(/^○\s*/, '')
