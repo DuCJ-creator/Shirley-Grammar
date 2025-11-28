@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shirley's Grammar E-Charger</title>
+    <title>Shirley's Grammar E-Charger & Racetracks</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@700&family=Rajdhani:wght@700&display=swap" rel="stylesheet">
@@ -13,6 +13,9 @@
             --neon-purple: #bc13fe;
             --neon-gold: #ffd700;
             --neon-green: #0aff0a;
+            --neon-red: #ff0055;
+            --neon-orange: #ff8c00;
+            --glass-bg: rgba(15, 20, 30, 0.95);
             --text-glow: 0 0 10px rgba(255, 255, 255, 0.8);
         }
 
@@ -26,13 +29,12 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            /* 星空背景基底 */
             background-color: #020205; 
             background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
             position: relative;
         }
 
-        /* --- 星空特效 (CSS Stars) --- */
+        /* --- 星空特效 --- */
         .stars {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -51,7 +53,6 @@
             animation: twinkle 5s infinite linear;
         }
         
-        /* 星雲光暈 */
         .nebula {
             position: fixed;
             top: 50%; left: 50%;
@@ -75,7 +76,7 @@
             width: 100%;
             padding: 1.5rem 2rem;
             display: flex;
-            justify-content: flex-end; /* 按鈕靠右 */
+            justify-content: flex-end;
             align-items: center;
             box-sizing: border-box;
             z-index: 100;
@@ -113,7 +114,7 @@
 
         h1 {
             font-family: 'Rajdhani', sans-serif;
-            font-size: clamp(3rem, 7vw, 5rem); /* 加大標題 */
+            font-size: clamp(3rem, 7vw, 5rem);
             margin: 0;
             text-transform: uppercase;
             color: #fff;
@@ -142,7 +143,7 @@
             z-index: 10;
             display: flex;
             justify-content: center;
-            padding-bottom: 50px;
+            /* padding-bottom: 50px; Removed bottom padding to fit racetrack */
         }
 
         svg {
@@ -152,210 +153,304 @@
             overflow: visible;
         }
 
-        /* --- SVG 內部樣式 --- */
-
-        /* 靜態線纜 (背景線) */
-        .cable-base {
-            fill: none;
-            stroke: #333;
-            stroke-width: 2;
-            opacity: 0.5;
-        }
-
-        /* 常駐流動電流 (Idle Current) */
-        .cable-idle-flow {
-            fill: none;
-            stroke-width: 2;
-            stroke-dasharray: 10 15; /* 虛線 */
-            animation: flowAnimation 2s linear infinite; /* 持續流動 */
-            opacity: 0.6;
-        }
-
-        /* 懸停高亮電流 (Active Current) */
-        .cable-glow {
-            fill: none;
-            stroke-width: 4;
-            stroke-dasharray: 1000;
-            stroke-dashoffset: 1000;
-            filter: drop-shadow(0 0 8px currentColor);
-            opacity: 0;
-            transition: opacity 0.2s;
-        }
-
-        .cable-group:hover .cable-glow {
-            opacity: 1;
-            animation: surgeFlow 1s linear infinite;
-        }
+        /* SVG 內部樣式 */
+        .cable-base { fill: none; stroke: #333; stroke-width: 2; opacity: 0.5; }
+        .cable-idle-flow { fill: none; stroke-width: 2; stroke-dasharray: 10 15; animation: flowAnimation 2s linear infinite; opacity: 0.6; }
+        .cable-glow { fill: none; stroke-width: 4; stroke-dasharray: 1000; stroke-dashoffset: 1000; filter: drop-shadow(0 0 8px currentColor); opacity: 0; transition: opacity 0.2s; }
+        .cable-group:hover .cable-glow { opacity: 1; animation: surgeFlow 1s linear infinite; }
+        .cable-group:hover .cable-idle-flow { opacity: 1; stroke-width: 3; filter: drop-shadow(0 0 5px currentColor); }
+        @keyframes flowAnimation { from { stroke-dashoffset: 25; } to { stroke-dashoffset: 0; } }
+        @keyframes surgeFlow { to { stroke-dashoffset: 0; } }
         
-        /* 加強版：當滑鼠懸停時，原本的流動線變亮 */
-        .cable-group:hover .cable-idle-flow {
-            opacity: 1;
-            stroke-width: 3;
-            filter: drop-shadow(0 0 5px currentColor);
-        }
-
-        @keyframes flowAnimation {
-            from { stroke-dashoffset: 25; }
-            to { stroke-dashoffset: 0; }
-        }
-
-        @keyframes surgeFlow {
-            to { stroke-dashoffset: 0; }
-        }
-
-        /* 核心能量柱 */
-        .core-rect {
-            fill: rgba(0, 0, 0, 0.7);
-            stroke: var(--neon-gold);
-            stroke-width: 2;
-            transition: all 0.3s;
-        }
-        .core-group:hover .core-rect {
-            fill: rgba(255, 215, 0, 0.2);
-            stroke: #fff;
-            filter: drop-shadow(0 0 15px var(--neon-gold));
-        }
-        .core-text {
-            font-family: 'Rajdhani', sans-serif;
-            font-weight: 700;
-            font-size: 20px; /* 加大 */
-            fill: #fff;
-            text-anchor: middle;
-            pointer-events: none;
-            text-shadow: 0 0 8px rgba(0,0,0,1);
-        }
-
-        /* 紅色標題區塊 */
-        .section-header-rect {
-            fill: rgba(20, 0, 10, 0.8);
-            stroke: #ff0055;
-            stroke-width: 2;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .section-header-group:hover .section-header-rect {
-            fill: #ff0055;
-            stroke: #fff;
-            filter: drop-shadow(0 0 20px #ff0055);
-        }
-        .section-header-text {
-            fill: #fff;
-            font-family: 'Rajdhani', sans-serif;
-            font-weight: 700;
-            font-size: 18px;
-            text-anchor: middle;
-            pointer-events: none;
-            text-shadow: 0 0 5px #000;
-        }
-
-        /* 端口與文字 (重要修改) */
-        .port-group {
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
+        .core-rect { fill: rgba(0, 0, 0, 0.7); stroke: var(--neon-gold); stroke-width: 2; transition: all 0.3s; }
+        .core-group:hover .core-rect { fill: rgba(255, 215, 0, 0.2); stroke: #fff; filter: drop-shadow(0 0 15px var(--neon-gold)); }
+        .core-text { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 20px; fill: #fff; text-anchor: middle; pointer-events: none; text-shadow: 0 0 8px rgba(0,0,0,1); }
+        
+        .section-header-rect { fill: rgba(20, 0, 10, 0.8); stroke: #ff0055; stroke-width: 2; cursor: pointer; transition: all 0.3s; }
+        .section-header-group:hover .section-header-rect { fill: #ff0055; stroke: #fff; filter: drop-shadow(0 0 20px #ff0055); }
+        .section-header-text { fill: #fff; font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 18px; text-anchor: middle; pointer-events: none; text-shadow: 0 0 5px #000; }
+        
+        .port-group { cursor: pointer; transition: all 0.3s ease; }
         .hit-area { fill: transparent; stroke: none; }
-        
-        /* 文字樣式優化：粗體、清晰 */
-        .port-label {
-            fill: #e0e0e0;
-            font-family: 'Inter', sans-serif;
-            font-size: 16px; /* 加大字體 */
-            font-weight: 900; /* 特粗體 */
-            transition: all 0.3s;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.9); /* 黑影襯托白字 */
-            letter-spacing: 0.5px;
-        }
-
-        .port-circle-outer {
-            fill: rgba(0,0,0,0.9);
-            stroke: #666;
-            stroke-width: 2;
-            transition: all 0.3s;
-        }
-        .port-circle-inner {
-            fill: #444;
-            transition: all 0.3s;
-        }
-
-        /* Hover Effects */
-        .port-group:hover .port-circle-outer {
-            stroke: #fff;
-            filter: drop-shadow(0 0 10px var(--target-color));
-        }
-        .port-group:hover .port-circle-inner {
-            fill: #fff;
-            filter: drop-shadow(0 0 8px var(--target-color));
-        }
-        .port-group:hover .port-label {
-            fill: #fff;
-            filter: drop-shadow(0 0 10px var(--target-color)); /* 文字發光 */
-            transform: scale(1.1); /* 微微放大 */
-        }
+        .port-label { fill: #e0e0e0; font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 900; transition: all 0.3s; text-shadow: 2px 2px 4px rgba(0,0,0,0.9); letter-spacing: 0.5px; }
+        .port-circle-outer { fill: rgba(0,0,0,0.9); stroke: #666; stroke-width: 2; transition: all 0.3s; }
+        .port-circle-inner { fill: #444; transition: all 0.3s; }
+        .port-group:hover .port-circle-outer { stroke: #fff; filter: drop-shadow(0 0 10px var(--target-color)); }
+        .port-group:hover .port-circle-inner { fill: #fff; filter: drop-shadow(0 0 8px var(--target-color)); }
+        .port-group:hover .port-label { fill: #fff; filter: drop-shadow(0 0 10px var(--target-color)); transform: scale(1.1); }
 
         /* Modal */
-        #modal {
-            display: none;
-            position: fixed;
-            z-index: 2000;
-            left: 0; top: 0;
-            width: 100%; height: 100%;
-            background-color: rgba(0,0,0,0.7);
-            backdrop-filter: blur(5px);
-            justify-content: center;
+        #modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); backdrop-filter: blur(5px); justify-content: center; align-items: center; }
+        #modal-content { background: rgba(15, 20, 30, 0.95); border: 1px solid var(--neon-blue); box-shadow: 0 0 40px rgba(0, 243, 255, 0.15); padding: 40px; width: 85%; max-width: 650px; position: relative; color: #fff; }
+        #close { color: var(--neon-blue); position: absolute; top: 20px; right: 25px; font-size: 32px; cursor: pointer; }
+        .explanation-title { color: var(--neon-gold); border-bottom: 2px solid rgba(255, 215, 0, 0.3); padding-bottom: 15px; font-size: 26px; font-family: 'Rajdhani', sans-serif; text-transform: uppercase; }
+        .explanation-text { line-height: 1.8; color: #ddd; font-size: 1.1rem; margin-top: 20px; }
+        
+        .status-message { position: fixed; bottom: 30px; right: 30px; background: rgba(0, 0, 0, 0.8); border: 1px solid var(--neon-green); color: var(--neon-green); padding: 15px 30px; font-family: 'JetBrains Mono', monospace; z-index: 3000; font-size: 14px; box-shadow: 0 0 20px rgba(10, 255, 10, 0.2); display: none; text-transform: uppercase; }
+
+        /* --- RACETRACK SECTION --- */
+        .racetrack-container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 20px auto 80px auto;
+            display: flex;
+            flex-direction: column;
             align-items: center;
-        }
-        
-        #modal-content {
-            background: rgba(15, 20, 30, 0.95);
-            border: 1px solid var(--neon-blue);
-            box-shadow: 0 0 40px rgba(0, 243, 255, 0.15);
-            padding: 40px;
-            width: 85%;
-            max-width: 650px;
-            position: relative;
-            color: #fff;
-        }
-        
-        #close {
-            color: var(--neon-blue);
-            position: absolute;
-            top: 20px;
-            right: 25px;
-            font-size: 32px;
-            cursor: pointer;
-        }
-        
-        .explanation-title {
-            color: var(--neon-gold);
-            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
-            padding-bottom: 15px;
-            font-size: 26px;
-            font-family: 'Rajdhani', sans-serif;
-            text-transform: uppercase;
-        }
-        
-        .explanation-text {
-            line-height: 1.8;
-            color: #ddd;
-            font-size: 1.1rem;
-            margin-top: 20px;
+            z-index: 50;
         }
 
-        .status-message {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: rgba(0, 0, 0, 0.8);
-            border: 1px solid var(--neon-green);
-            color: var(--neon-green);
-            padding: 15px 30px;
-            font-family: 'JetBrains Mono', monospace;
-            z-index: 3000;
-            font-size: 14px;
-            box-shadow: 0 0 20px rgba(10, 255, 10, 0.2);
+        .race-entry-btn {
+            background: linear-gradient(90deg, #b20a2c 0%, #ff0055 100%);
+            border: none;
+            padding: 1.5rem 4rem;
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 900;
+            font-size: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            cursor: pointer;
+            clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(255, 0, 85, 0.4);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 40px;
+        }
+
+        .race-entry-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: 0.5s;
+        }
+
+        .race-entry-btn:hover::before {
+            left: 100%;
+        }
+
+        .race-entry-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 50px rgba(255, 0, 85, 0.8);
+            text-shadow: 0 0 10px white;
+        }
+
+        /* Track Selection Area */
+        .tracks-wrapper {
+            display: none; /* Hidden by default */
+            width: 100%;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            animation: slideUp 0.5s ease forwards;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .track-card {
+            width: 200px;
+            height: 120px;
+            background: rgba(20, 20, 20, 0.8);
+            border: 2px solid #333;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            clip-path: polygon(15% 0, 100% 0, 100% 85%, 85% 100%, 0 100%, 0 15%);
+        }
+
+        .track-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .track-card h3 {
+            margin: 0;
+            font-family: 'Rajdhani', sans-serif;
+            text-transform: uppercase;
+            font-size: 1.2rem;
+            z-index: 2;
+        }
+
+        /* Track specific colors */
+        .track-1 { border-color: var(--neon-gold); box-shadow: 0 0 10px rgba(255, 215, 0, 0.1); }
+        .track-1:hover { background: rgba(255, 215, 0, 0.1); box-shadow: 0 0 25px var(--neon-gold); }
+        .track-1 h3 { color: var(--neon-gold); }
+
+        .track-2 { border-color: var(--neon-blue); box-shadow: 0 0 10px rgba(0, 243, 255, 0.1); }
+        .track-2:hover { background: rgba(0, 243, 255, 0.1); box-shadow: 0 0 25px var(--neon-blue); }
+        .track-2 h3 { color: var(--neon-blue); }
+
+        .track-3 { border-color: var(--neon-purple); box-shadow: 0 0 10px rgba(188, 19, 254, 0.1); }
+        .track-3:hover { background: rgba(188, 19, 254, 0.1); box-shadow: 0 0 25px var(--neon-purple); }
+        .track-3 h3 { color: var(--neon-purple); }
+
+        .track-4 { border-color: var(--neon-green); box-shadow: 0 0 10px rgba(10, 255, 10, 0.1); }
+        .track-4:hover { background: rgba(10, 255, 10, 0.1); box-shadow: 0 0 25px var(--neon-green); }
+        .track-4 h3 { color: var(--neon-green); }
+
+        .track-5 { border-color: var(--neon-orange); box-shadow: 0 0 10px rgba(255, 140, 0, 0.1); }
+        .track-5:hover { background: rgba(255, 140, 0, 0.1); box-shadow: 0 0 25px var(--neon-orange); }
+        .track-5 h3 { color: var(--neon-orange); }
+
+        /* QUIZ HUD INTERFACE */
+        #quiz-overlay {
             display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.92);
+            z-index: 5000;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hud-container {
+            width: 90%;
+            max-width: 800px;
+            background: rgba(10, 15, 20, 0.95);
+            border: 2px solid #444;
+            padding: 30px;
+            position: relative;
+            box-shadow: 0 0 50px rgba(0,0,0,0.8);
+        }
+
+        .hud-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .hud-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.8rem;
+            color: #fff;
             text-transform: uppercase;
         }
+
+        .hud-score {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--neon-gold);
+            font-size: 1.2rem;
+        }
+
+        .question-box {
+            font-size: 1.3rem;
+            line-height: 1.5;
+            margin-bottom: 30px;
+            font-weight: 700;
+            color: #eee;
+        }
+
+        .options-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .option-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid #555;
+            padding: 15px 20px;
+            text-align: left;
+            color: #ccc;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .option-btn:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: #888;
+        }
+
+        .option-btn.selected {
+            border-color: var(--neon-blue);
+            background: rgba(0, 243, 255, 0.1);
+            color: #fff;
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
+        }
+
+        .option-btn.correct {
+            border-color: var(--neon-green);
+            background: rgba(10, 255, 10, 0.15);
+            color: #fff;
+        }
+
+        .option-btn.wrong {
+            border-color: var(--neon-red);
+            background: rgba(255, 0, 85, 0.15);
+            color: #fff;
+        }
+
+        .controls {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .hud-btn {
+            background: transparent;
+            border: 2px solid #555;
+            color: #888;
+            padding: 10px 30px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .hud-btn:hover {
+            border-color: #fff;
+            color: #fff;
+        }
+
+        .submit-btn {
+            border-color: var(--neon-green);
+            color: var(--neon-green);
+        }
+        .submit-btn:hover {
+            background: var(--neon-green);
+            color: #000;
+            box-shadow: 0 0 20px var(--neon-green);
+        }
+
+        .result-screen {
+            text-align: center;
+        }
+        .final-score {
+            font-size: 4rem;
+            font-family: 'Rajdhani', sans-serif;
+            color: var(--neon-gold);
+            text-shadow: 0 0 20px var(--neon-gold);
+            margin: 20px 0;
+        }
+        
+        .loading-spinner {
+            border: 4px solid rgba(255,255,255,0.1);
+            border-top: 4px solid var(--neon-blue);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
     </style>
 </head>
 <body>
@@ -593,6 +688,59 @@
         </svg>
     </div>
 
+    <div class="racetrack-container">
+        <button class="race-entry-btn" onclick="toggleRacetracks()">
+            >>> ENTER RACETRACKS <<<
+        </button>
+
+        <div class="tracks-wrapper" id="tracks-wrapper">
+            <div class="track-card track-1" onclick="startRace('structure')">
+                <h3>Sentence<br>Structures</h3>
+            </div>
+            <div class="track-card track-2" onclick="startRace('pos')">
+                <h3>Parts of<br>Speech</h3>
+            </div>
+            <div class="track-card track-3" onclick="startRace('nonfinite')">
+                <h3>Non-Finite<br>Verbs</h3>
+            </div>
+            <div class="track-card track-4" onclick="startRace('clauses')">
+                <h3>Clauses</h3>
+            </div>
+            <div class="track-card track-5" onclick="startRace('special')">
+                <h3>Special<br>Sentences</h3>
+            </div>
+        </div>
+    </div>
+
+    <div id="quiz-overlay">
+        <div class="hud-container">
+            <div id="quiz-content">
+                <div class="hud-header">
+                    <span class="hud-title" id="hud-title">TRACK: STRUCTURES</span>
+                    <span class="hud-score" id="hud-progress">Q: 1/10</span>
+                </div>
+                <div id="loading-spinner" class="loading-spinner" style="display:none;"></div>
+                <div id="quiz-body">
+                    </div>
+                <div class="controls">
+                    <button class="hud-btn" onclick="closeQuiz()">Exit Track</button>
+                    <button class="hud-btn submit-btn" id="submit-btn" onclick="submitAnswer()">Submit &gt;</button>
+                </div>
+            </div>
+            
+            <div id="result-content" class="result-screen" style="display:none;">
+                <h2 class="hud-title">RACE COMPLETE</h2>
+                <div class="final-score" id="final-score">80/100</div>
+                <p style="color:#aaa;">Grammar Engine Status Updated.</p>
+                <div class="controls" style="justify-content: center; gap: 20px;">
+                    <button class="hud-btn" onclick="closeQuiz()">Return to Garage</button>
+                    <button class="hud-btn submit-btn" onclick="restartRace()">Race Again</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <div id="modal">
         <div id="modal-content">
             <span id="close">&times;</span>
@@ -603,6 +751,7 @@
     <div id="status-message" class="status-message"></div>
 
     <script>
+        // Existing CSV Config
         const grammarCSV = `no.,key point,url
 S-1,simple,https://ducj-creator.github.io/Shirley-Grammar/simple/
 S-2,compound,https://ducj-creator.github.io/Shirley-Grammar/compound/
@@ -625,25 +774,237 @@ SS-2,exclamations,https://ducj-creator.github.io/Shirley-Grammar/exclamations/
 SS-3,inverted,https://ducj-creator.github.io/Shirley-Grammar/inverted/
 SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
 
+        // Existing Explanations
         const sectionExplanations = {
-            'parts-of-speech': {
-                title: "I. Parts of Speech 詞性",
-                text: "The eight parts of speech are the basic categories of words in English grammar. We focus on the core six here:<br><br><strong>• Nouns, Pronouns, Verbs, Adjectives, Adverbs, Prepositions</strong>"
-            },
-            'nonfinite-verbs': {
-                title: "II. Non-finite Verbs 非限定動詞",
-                text: "Non-finite verbs do not show tense, person, or number. They function as other parts of speech.<br><br><strong>• Infinitive (不定詞)<br>• Gerund (動名詞)<br>• Participles (分詞)</strong>"
-            },
-            'clauses': {
-                title: "III. Clauses 子句",
-                text: "A clause contains a subject and a verb. Dependent clauses are classified by function:<br><br><strong>• Noun Clause (名詞子句)<br>• Adjective Clause (形容詞子句)<br>• Adverb Clause (副詞子句)</strong>"
-            },
-            'special-sentences': {
-                title: "IV. Special Sentences 特殊句型",
-                text: "Categories based on function or specific word arrangement:<br><br><strong>• Questions (疑問句)<br>• Exclamations (感嘆句)<br>• Inverted Sentences (倒裝句)<br>• Subjunctive Mood (虛擬語氣)</strong>"
-            }
+            'parts-of-speech': { title: "I. Parts of Speech 詞性", text: "The eight parts of speech are the basic categories of words in English grammar. We focus on the core six here:<br><br><strong>• Nouns, Pronouns, Verbs, Adjectives, Adverbs, Prepositions</strong>" },
+            'nonfinite-verbs': { title: "II. Non-finite Verbs 非限定動詞", text: "Non-finite verbs do not show tense, person, or number. They function as other parts of speech.<br><br><strong>• Infinitive (不定詞)<br>• Gerund (動名詞)<br>• Participles (分詞)</strong>" },
+            'clauses': { title: "III. Clauses 子句", text: "A clause contains a subject and a verb. Dependent clauses are classified by function:<br><br><strong>• Noun Clause (名詞子句)<br>• Adjective Clause (形容詞子句)<br>• Adverb Clause (副詞子句)</strong>" },
+            'special-sentences': { title: "IV. Special Sentences 特殊句型", text: "Categories based on function or specific word arrangement:<br><br><strong>• Questions (疑問句)<br>• Exclamations (感嘆句)<br>• Inverted Sentences (倒裝句)<br>• Subjunctive Mood (虛擬語氣)</strong>" }
         };
 
+        // --- NEW QUIZ CONFIGURATION ---
+        const quizUrls = {
+            'structure': 'https://ducj-creator.github.io/Shirley-Grammar/assets/sentence%20structure%20quiz.txt',
+            'pos': 'https://ducj-creator.github.io/Shirley-Grammar/assets/I%20part%20of%20speech%20quiz.txt',
+            'nonfinite': 'https://ducj-creator.github.io/Shirley-Grammar/assets/II%20non-infinite%20quiz.txt',
+            'clauses': 'https://ducj-creator.github.io/Shirley-Grammar/assets/III%20clauses%20quiz.txt',
+            'special': 'https://ducj-creator.github.io/Shirley-Grammar/assets/IV%20special%20sentence%20quiz.txt'
+        };
+
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let userScore = 0;
+        let selectedOptionIndex = -1;
+        let currentQuizId = '';
+
+        // --- PARSING LOGIC ---
+        function parseQuestions(text) {
+            // Remove BOM if present and standardize newlines
+            text = text.replace(/^\uFEFF/, '').replace(/\r\n/g, '\n');
+            
+            // Split by questions (assuming they start with "1. ", "2. ", etc.)
+            // Regex looks for a newline followed by a number and a dot.
+            const rawBlocks = text.split(/\n(?=\d+\.)/);
+            
+            const questions = [];
+
+            rawBlocks.forEach(block => {
+                const lines = block.split('\n').map(l => l.trim()).filter(l => l !== '');
+                if (lines.length < 2) return;
+
+                // First line is the question (remove leading number)
+                const questionText = lines[0].replace(/^\d+\.\s*/, '');
+                
+                const options = [];
+                let correctIndex = -1;
+
+                // Remaining lines are options
+                for (let i = 1; i < lines.length; i++) {
+                    let line = lines[i];
+                    let isCorrect = false;
+
+                    // Check markers: ● at start, or [✓] at end
+                    if (line.includes('[✓]') || line.startsWith('●')) {
+                        isCorrect = true;
+                    }
+
+                    // Clean string
+                    let cleanText = line
+                        .replace(/\[x\]/gi, '')
+                        .replace(/\[✓\]/gi, '')
+                        .replace(/\[✔\]/gi, '') // just in case
+                        .replace(/^●\s*/, '')
+                        .replace(/^o\s*/, '')
+                        .replace(/^○\s*/, '')
+                        .trim();
+
+                    if (cleanText) {
+                        options.push(cleanText);
+                        if (isCorrect) correctIndex = options.length - 1;
+                    }
+                }
+
+                if (options.length > 0 && correctIndex !== -1) {
+                    questions.push({
+                        q: questionText,
+                        options: options,
+                        correct: correctIndex
+                    });
+                }
+            });
+
+            return questions;
+        }
+
+        // --- RACETRACK FUNCTIONS ---
+        function toggleRacetracks() {
+            const wrapper = document.getElementById('tracks-wrapper');
+            if (wrapper.style.display === 'flex') {
+                wrapper.style.display = 'none';
+            } else {
+                wrapper.style.display = 'flex';
+                // Scroll to view
+                setTimeout(() => wrapper.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+            }
+        }
+
+        function startRace(id) {
+            currentQuizId = id;
+            document.getElementById('quiz-overlay').style.display = 'flex';
+            document.getElementById('quiz-content').style.display = 'block';
+            document.getElementById('result-content').style.display = 'none';
+            document.getElementById('hud-title').innerText = "TRACK: " + id.toUpperCase();
+            document.getElementById('quiz-body').innerHTML = '';
+            document.getElementById('loading-spinner').style.display = 'block';
+            document.getElementById('submit-btn').style.display = 'none'; // Hide until loaded
+
+            fetch(quizUrls[id])
+                .then(response => response.text())
+                .then(text => {
+                    const allQuestions = parseQuestions(text);
+                    // Randomize and pick 10
+                    currentQuestions = allQuestions.sort(() => 0.5 - Math.random()).slice(0, 10);
+                    currentQuestionIndex = 0;
+                    userScore = 0;
+                    
+                    document.getElementById('loading-spinner').style.display = 'none';
+                    if (currentQuestions.length > 0) {
+                        renderQuestion();
+                    } else {
+                        document.getElementById('quiz-body').innerHTML = '<p>Error loading pit crew (no questions found).</p>';
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    document.getElementById('loading-spinner').style.display = 'none';
+                    document.getElementById('quiz-body').innerHTML = '<p>Connection lost to race control.</p>';
+                });
+        }
+
+        function renderQuestion() {
+            const q = currentQuestions[currentQuestionIndex];
+            selectedOptionIndex = -1;
+            
+            document.getElementById('hud-progress').innerText = `LAP: ${currentQuestionIndex + 1}/10`;
+            
+            let html = `<div class="question-box">${currentQuestionIndex + 1}. ${q.q}</div>`;
+            html += `<div class="options-grid">`;
+            
+            q.options.forEach((opt, idx) => {
+                html += `<div class="option-btn" onclick="selectOption(${idx})" id="opt-${idx}">${opt}</div>`;
+            });
+            html += `</div>`;
+
+            document.getElementById('quiz-body').innerHTML = html;
+            
+            // Update button state
+            const btn = document.getElementById('submit-btn');
+            btn.style.display = 'inline-block';
+            btn.innerText = (currentQuestionIndex === 9) ? "FINISH LINE >" : "NEXT CHECKPOINT >";
+            btn.disabled = true;
+            btn.style.opacity = '0.5';
+            btn.style.cursor = 'not-allowed';
+        }
+
+        function selectOption(idx) {
+            // If already answered (visual feedback shown), ignore clicks
+            const submitBtn = document.getElementById('submit-btn');
+            if (submitBtn.dataset.answered === "true") return;
+
+            // Clear previous selection
+            document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+            
+            // Set new selection
+            selectedOptionIndex = idx;
+            document.getElementById(`opt-${idx}`).classList.add('selected');
+            
+            // Enable submit
+            submitBtn.disabled = false;
+            submitBtn.style.opacity = '1';
+            submitBtn.style.cursor = 'pointer';
+        }
+
+        function submitAnswer() {
+            const btn = document.getElementById('submit-btn');
+            
+            // Phase 1: Reveal Answer
+            if (btn.dataset.answered !== "true") {
+                const q = currentQuestions[currentQuestionIndex];
+                const correctIdx = q.correct;
+                
+                // Show Correct/Wrong styles
+                document.getElementById(`opt-${correctIdx}`).classList.add('correct');
+                
+                if (selectedOptionIndex === correctIdx) {
+                    userScore += 10;
+                } else {
+                    document.getElementById(`opt-${selectedOptionIndex}`).classList.add('wrong');
+                }
+
+                btn.dataset.answered = "true";
+                
+                if (currentQuestionIndex === 9) {
+                    btn.innerText = "VIEW RESULTS";
+                } else {
+                    btn.innerText = "CONTINUE >";
+                }
+                return; 
+            }
+
+            // Phase 2: Move to Next
+            btn.dataset.answered = "false"; // Reset flag
+            currentQuestionIndex++;
+            
+            if (currentQuestionIndex < 10) {
+                renderQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quiz-content').style.display = 'none';
+            document.getElementById('result-content').style.display = 'block';
+            
+            const scoreDisplay = document.getElementById('final-score');
+            // Animate score
+            let tempScore = 0;
+            const interval = setInterval(() => {
+                tempScore += 1;
+                scoreDisplay.innerText = `${tempScore}/100`;
+                if (tempScore >= userScore) clearInterval(interval);
+            }, 20);
+        }
+
+        function restartRace() {
+            startRace(currentQuizId);
+        }
+
+        function closeQuiz() {
+            document.getElementById('quiz-overlay').style.display = 'none';
+        }
+
+        // --- EXISTING UTILS ---
         function parseCSV(csvText) {
             const lines = csvText.split('\n');
             const result = {};
