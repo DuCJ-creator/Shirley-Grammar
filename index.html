@@ -521,29 +521,29 @@
 
             <g transform="translate(600, 100)">
                 <rect x="-130" y="-45" width="260" height="60" fill="#000" stroke="var(--neon-gold)" stroke-width="2" rx="0" />
-                <text x="0" y="0" fill="var(--neon-gold)" text-anchor="middle" font-family="Rajdhani" font-weight="700" font-size="26" dominant-baseline="middle" style="text-shadow: 0 0 15px var(--neon-gold);">SENTENCE STRUCTURES</text>
+                <text x="0" y="0" fill="var(--neon-gold)" text-anchor="middle" font-family="Rajdhani" font-weight="700" font-size="26" dominant-baseline="middle" style="text-shadow: 0 0 15px var(--neon-gold);">SENTENCE STRUCTURES句子結構</text>
                 
                 <g class="core-group" onclick="handleLink('simple')">
                     <rect x="-110" y="50" width="220" height="50" class="core-rect" rx="2"/>
-                    <text x="0" y="82" class="core-text">1. SIMPLE</text>
+                    <text x="0" y="82" class="core-text">1. SIMPLE簡單句</text>
                 </g>
                 <line x1="0" y1="100" x2="0" y2="130" stroke="#555" stroke-width="2" />
 
                 <g class="core-group" onclick="handleLink('compound')">
                     <rect x="-110" y="130" width="220" height="50" class="core-rect" rx="2"/>
-                    <text x="0" y="162" class="core-text">2. COMPOUND</text>
+                    <text x="0" y="162" class="core-text">2. COMPOUND複合句</text>
                 </g>
                 <line x1="0" y1="180" x2="0" y2="210" stroke="#555" stroke-width="2" />
 
                 <g class="core-group" onclick="handleLink('complex')">
                     <rect x="-110" y="210" width="220" height="50" class="core-rect" rx="2"/>
-                    <text x="0" y="242" class="core-text">3. COMPLEX</text>
+                    <text x="0" y="242" class="core-text">3. COMPLEX複雜句</text>
                 </g>
                 <line x1="0" y1="260" x2="0" y2="290" stroke="#555" stroke-width="2" />
 
                 <g class="core-group" onclick="handleLink('compound-complex')">
                     <rect x="-110" y="290" width="220" height="50" class="core-rect" rx="2"/>
-                    <text x="0" y="322" class="core-text">4. COMP-COMPLEX</text>
+                    <text x="0" y="322" class="core-text">4. COMP-COMPLEX複合複雜句</text>
                 </g>
             </g>
 
@@ -562,7 +562,7 @@
             <g transform="translate(250, 150)">
                 <g class="section-header-group" onclick="showExplanation('parts-of-speech')">
                     <rect x="-90" y="-30" width="180" height="50" class="section-header-rect" rx="2"/>
-                    <text x="0" y="-5" class="section-header-text" dominant-baseline="middle">I. PARTS OF SPEECH</text>
+                    <text x="0" y="-5" class="section-header-text" dominant-baseline="middle">I. PARTS OF SPEECH詞性</text>
                     <text x="0" y="12" fill="#aaa" font-size="11" text-anchor="middle" font-family="JetBrains Mono">[INFO]</text>
                 </g>
 
@@ -571,7 +571,7 @@
                     <circle cx="-130" cy="80" r="40" class="hit-area" />
                     <circle cx="-130" cy="80" r="8" class="port-circle-outer" />
                     <circle cx="-130" cy="80" r="4" class="port-circle-inner" />
-                    <text x="-110" y="86" class="port-label">NOUNS</text>
+                    <text x="-110" y="86" class="port-label">NOUNS名詞</text>
                 </g>
 
                 <g class="port-group" onclick="handleLink('pronouns')" style="--target-color: var(--neon-blue)">
@@ -579,7 +579,7 @@
                     <circle cx="-130" cy="140" r="40" class="hit-area" />
                     <circle cx="-130" cy="140" r="8" class="port-circle-outer" />
                     <circle cx="-130" cy="140" r="4" class="port-circle-inner" />
-                    <text x="-110" y="146" class="port-label">PRONOUNS</text>
+                    <text x="-110" y="146" class="port-label">PRONOUNS代名詞</text>
                 </g>
 
                 <g class="port-group" onclick="handleLink('verbs')" style="--target-color: var(--neon-blue)">
@@ -587,7 +587,7 @@
                     <circle cx="0" cy="110" r="40" class="hit-area" />
                     <circle cx="0" cy="110" r="8" class="port-circle-outer" />
                     <circle cx="0" cy="110" r="4" class="port-circle-inner" />
-                    <text x="20" y="116" class="port-label">VERBS</text>
+                    <text x="20" y="116" class="port-label">VERBS動詞</text>
                 </g>
 
                 <g class="port-group" onclick="handleLink('adjectives-adverbs')" style="--target-color: var(--neon-blue)">
@@ -595,7 +595,7 @@
                     <circle cx="130" cy="80" r="40" class="hit-area" />
                     <circle cx="130" cy="80" r="8" class="port-circle-outer" />
                     <circle cx="130" cy="80" r="4" class="port-circle-inner" />
-                    <text x="150" y="86" class="port-label">ADJ & ADV</text>
+                    <text x="150" y="86" class="port-label">ADJ & ADV形容詞&副詞</text>
                 </g>
 
                 <g class="port-group" onclick="handleLink('prepositions')" style="--target-color: var(--neon-blue)">
@@ -603,14 +603,14 @@
                     <circle cx="130" cy="140" r="40" class="hit-area" />
                     <circle cx="130" cy="140" r="8" class="port-circle-outer" />
                     <circle cx="130" cy="140" r="4" class="port-circle-inner" />
-                    <text x="150" y="146" class="port-label">PREPOSITIONS</text>
+                    <text x="150" y="146" class="port-label">PREP.介係詞</text>
                 </g>
             </g>
 
             <g transform="translate(250, 450)">
                 <g class="section-header-group" onclick="showExplanation('nonfinite-verbs')">
                     <rect x="-90" y="-30" width="180" height="50" class="section-header-rect" rx="2"/>
-                    <text x="0" y="-5" class="section-header-text" dominant-baseline="middle">II. NON-FINITE</text>
+                    <text x="0" y="-5" class="section-header-text" dominant-baseline="middle">II. NON-FINITE非限定動詞</text>
                     <text x="0" y="12" fill="#aaa" font-size="11" text-anchor="middle" font-family="JetBrains Mono">[INFO]</text>
                 </g>
 
@@ -618,28 +618,28 @@
                     <line x1="0" y1="20" x2="-130" y2="80" stroke="#444" stroke-width="2"/>
                     <circle cx="-130" cy="80" r="40" class="hit-area" />
                     <circle cx="-130" cy="80" r="8" class="port-circle-outer" />
-                    <text x="-110" y="86" class="port-label">INFINITIVE</text>
+                    <text x="-110" y="86" class="port-label">INFINITIVE不定詞</text>
                 </g>
 
                 <g class="port-group" onclick="handleLink('gerund')" style="--target-color: var(--neon-purple)">
                     <line x1="0" y1="20" x2="-65" y2="140" stroke="#444" stroke-width="2"/>
                     <circle cx="-65" cy="140" r="40" class="hit-area" />
                     <circle cx="-65" cy="140" r="8" class="port-circle-outer" />
-                    <text x="-45" y="146" class="port-label">GERUND</text>
+                    <text x="-45" y="146" class="port-label">GERUND動名詞</text>
                 </g>
 
                 <g class="port-group" onclick="handleLink('past-participle')" style="--target-color: var(--neon-purple)">
                     <line x1="0" y1="20" x2="65" y2="140" stroke="#444" stroke-width="2"/>
                     <circle cx="65" cy="140" r="40" class="hit-area" />
                     <circle cx="65" cy="140" r="8" class="port-circle-outer" />
-                    <text x="85" y="146" class="port-label">PAST PART.</text>
+                    <text x="85" y="146" class="port-label">PAST PART.過去分詞</text>
                 </g>
 
                 <g class="port-group" onclick="handleLink('present-participle')" style="--target-color: var(--neon-purple)">
                     <line x1="0" y1="20" x2="130" y2="80" stroke="#444" stroke-width="2"/>
                     <circle cx="130" cy="80" r="40" class="hit-area" />
                     <circle cx="130" cy="80" r="8" class="port-circle-outer" />
-                    <text x="150" y="86" class="port-label">PRES PART.</text>
+                    <text x="150" y="86" class="port-label">PRES PART.現在分詞</text>
                 </g>
             </g>
 
@@ -659,7 +659,7 @@
             <g transform="translate(950, 150)">
                 <g class="section-header-group" onclick="showExplanation('clauses')">
                     <rect x="-90" y="-30" width="180" height="50" class="section-header-rect" rx="2"/>
-                    <text x="0" y="-5" class="section-header-text" dominant-baseline="middle">III. CLAUSES</text>
+                    <text x="0" y="-5" class="section-header-text" dominant-baseline="middle">III. CLAUSES子句</text>
                     <text x="0" y="12" fill="#aaa" font-size="11" text-anchor="middle" font-family="JetBrains Mono">[INFO]</text>
                 </g>
 
@@ -667,28 +667,28 @@
                     <line x1="0" y1="20" x2="-90" y2="80" stroke="#444" stroke-width="2"/>
                     <circle cx="-90" cy="80" r="40" class="hit-area" />
                     <circle cx="-90" cy="80" r="8" class="port-circle-outer" />
-                    <text x="-190" y="86" class="port-label" text-anchor="end">NOUN CL.</text>
+                    <text x="-190" y="86" class="port-label" text-anchor="end">NOUN CL.名詞子句</text>
                 </g>
 
                 <g class="port-group" onclick="handleLink('adjective-clause')" style="--target-color: var(--neon-green)">
                     <line x1="0" y1="20" x2="0" y2="130" stroke="#444" stroke-width="2"/>
                     <circle cx="0" cy="130" r="40" class="hit-area" />
                     <circle cx="0" cy="130" r="8" class="port-circle-outer" />
-                    <text x="0" y="156" class="port-label" text-anchor="middle">ADJ CL.</text>
+                    <text x="0" y="156" class="port-label" text-anchor="middle">ADJ CL.形容詞子句</text>
                 </g>
 
                 <g class="port-group" onclick="handleLink('adverb-clause')" style="--target-color: var(--neon-green)">
                     <line x1="0" y1="20" x2="90" y2="80" stroke="#444" stroke-width="2"/>
                     <circle cx="90" cy="80" r="40" class="hit-area" />
                     <circle cx="90" cy="80" r="8" class="port-circle-outer" />
-                    <text x="110" y="86" class="port-label" text-anchor="start">ADV CL.</text>
+                    <text x="110" y="86" class="port-label" text-anchor="start">ADV CL.副詞子句</text>
                 </g>
             </g>
 
             <g transform="translate(950, 450)">
                 <g class="section-header-group" onclick="showExplanation('special-sentences')">
                     <rect x="-90" y="-30" width="180" height="50" class="section-header-rect" rx="2"/>
-                    <text x="0" y="-5" class="section-header-text" dominant-baseline="middle">IV. SPECIAL</text>
+                    <text x="0" y="-5" class="section-header-text" dominant-baseline="middle">IV. SPECIAL特殊句型</text>
                     <text x="0" y="12" fill="#aaa" font-size="11" text-anchor="middle" font-family="JetBrains Mono">[INFO]</text>
                 </g>
 
@@ -696,28 +696,28 @@
                     <line x1="0" y1="20" x2="-110" y2="80" stroke="#444" stroke-width="2"/>
                     <circle cx="-110" cy="80" r="40" class="hit-area" />
                     <circle cx="-110" cy="80" r="8" class="port-circle-outer" />
-                    <text x="-120" y="86" class="port-label" text-anchor="end">QUESTIONS</text>
+                    <text x="-120" y="86" class="port-label" text-anchor="end">QUESTIONS疑問句</text>
                 </g>
 
                 <g class="port-group" onclick="handleLink('exclamations')" style="--target-color: #ff00ff">
                     <line x1="0" y1="20" x2="-45" y2="140" stroke="#444" stroke-width="2"/>
                     <circle cx="-45" cy="140" r="40" class="hit-area" />
                     <circle cx="-45" cy="140" r="8" class="port-circle-outer" />
-                    <text x="-45" y="166" class="port-label" text-anchor="middle">EXCLAMATIONS</text>
+                    <text x="-45" y="166" class="port-label" text-anchor="middle">EXCLAMATIONS感嘆句</text>
                 </g>
 
                 <g class="port-group" onclick="handleLink('inverted')" style="--target-color: #ff00ff">
                     <line x1="0" y1="20" x2="45" y2="140" stroke="#444" stroke-width="2"/>
                     <circle cx="45" cy="140" r="40" class="hit-area" />
                     <circle cx="45" cy="140" r="8" class="port-circle-outer" />
-                    <text x="45" y="166" class="port-label" text-anchor="middle">INVERTED</text>
+                    <text x="45" y="166" class="port-label" text-anchor="middle">INVERTED倒裝句</text>
                 </g>
 
                 <g class="port-group" onclick="handleLink('subjunctive')" style="--target-color: #ff00ff">
                     <line x1="0" y1="20" x2="110" y2="80" stroke="#444" stroke-width="2"/>
                     <circle cx="110" cy="80" r="40" class="hit-area" />
                     <circle cx="110" cy="80" r="8" class="port-circle-outer" />
-                    <text x="130" y="86" class="port-label" text-anchor="start">SUBJUNCTIVE</text>
+                    <text x="130" y="86" class="port-label" text-anchor="start">SUBJUNCTIVE虛擬語氣</text>
                 </g>
             </g>
         </svg>
