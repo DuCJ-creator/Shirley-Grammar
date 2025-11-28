@@ -356,10 +356,11 @@
             gap: 15px;
         }
 
+        /* --- UPDATED OPTION BUTTON WITH VISUAL RADIO --- */
         .option-btn {
             background: rgba(255,255,255,0.05);
             border: 1px solid #555;
-            padding: 15px 20px;
+            padding: 15px 20px 15px 50px; /* Left padding for circle */
             text-align: left;
             color: #ccc;
             font-family: 'Inter', sans-serif;
@@ -367,11 +368,30 @@
             cursor: pointer;
             transition: all 0.2s;
             position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Custom Radio Circle (CSS Only) */
+        .option-btn::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            width: 18px;
+            height: 18px;
+            border: 2px solid #666;
+            border-radius: 50%;
+            transition: all 0.3s;
         }
 
         .option-btn:hover {
             background: rgba(255,255,255,0.1);
             border-color: #888;
+        }
+
+        .option-btn:hover::before {
+            border-color: #fff;
+            box-shadow: 0 0 5px rgba(255,255,255,0.5);
         }
 
         .option-btn.selected {
@@ -381,10 +401,21 @@
             box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
         }
 
+        /* Filled Center for Selected */
+        .option-btn.selected::before {
+            background: var(--neon-blue);
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 10px var(--neon-blue);
+        }
+
         .option-btn.correct {
             border-color: var(--neon-green);
             background: rgba(10, 255, 10, 0.15);
             color: #fff;
+        }
+        .option-btn.correct::before {
+            background: var(--neon-green);
+            border-color: var(--neon-green);
         }
 
         .option-btn.wrong {
@@ -392,6 +423,12 @@
             background: rgba(255, 0, 85, 0.15);
             color: #fff;
         }
+        .option-btn.wrong::before {
+            border-color: var(--neon-red);
+            background: transparent;
+        }
+
+        /* --- END UPDATE --- */
 
         .controls {
             margin-top: 30px;
@@ -795,7 +832,7 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
         let selectedOptionIndex = -1;
         let currentQuizId = '';
 
-        // --- ROBUST PARSING LOGIC (SMART CLEANER) ---
+        // --- ROBUST PARSING LOGIC (AGGRESSIVE CLEANER) ---
         function parseQuestions(text) {
             // Normalize content
             text = text.replace(/^\uFEFF/, '').replace(/\r\n/g, '\n');
@@ -820,7 +857,7 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
                 const options = [];
                 let correctIdx = -1;
 
-                // 2. Identify Options and CLEAN THEM
+                // 2. Identify Options and CLEAN THEM AGGRESSIVELY
                 for (let i = 1; i < lines.length; i++) {
                     const line = lines[i];
                     
@@ -829,9 +866,13 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
                     
                     // Clean option text vigorously
                     let optText = line
-                        .replace(/\[.*?\]/g, '')        // remove [x], [✓]
-                        .replace(/[●○•⚫⚪✔✘]/g, '')   // remove bullets, dots, circles
-                        .replace(/^\s*[\w\d]+[\.\)]\s*/, '') // remove "a)", "A.", "1." prefix
+                        // Remove markers like [x], [✓], (answer)
+                        .replace(/\[.*?\]/g, '')
+                        .replace(/\(.*?\)/g, '')
+                        // Remove specific bullet characters globally
+                        .replace(/[●○•⚫⚪✔✘]/g, '')
+                        // Remove leading numbering like "A.", "a)", "1." AND whitespace
+                        .replace(/^\s*[\w\d]+[\.\)]\s*/, '')
                         .trim();
 
                     if (optText) {
