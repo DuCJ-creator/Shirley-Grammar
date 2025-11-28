@@ -110,13 +110,6 @@
    ◯ The children have eaten the cake.  [✖]
 
 
-17. Choose the correct translation for "Ella corre rápidamente" in English.
-   ◯ She running quick.  [✖]
-   ◯ She quickly run.  [✖]
-   ◉ She runs quickly.  [✔]
-   ◯ She run quick.  [✖]
-
-
 18. Select the correct past tense form of the verb "to swim" for this sentence: "Last summer, I _____ in the lake."
    ◯ swimmed  [✖]
    ◯ swims  [✖]
@@ -243,25 +236,12 @@
    ◉ I had finished my homework before dinner.  [✔]
 
 
-36. What is the correct translation for "Ellos están jugando en el parque" in English?
-   ◯ They played in the park.  [✖]
-   ◉ They are playing in the park.  [✔]
-   ◯ They are play in the park.  [✖]
-   ◯ They is playing in the park.  [✖]
-
 
 37. What is the correct past tense of the verb "to drink" in this sentence? "He _____ too much soda yesterday."
    ◯ drinks  [✖]
    ◯ drinked  [✖]
    ◯ drunk  [✖]
    ◉ drank  [✔]
-
-
-38. Choose the correct translation for "I am learning to cook" in Spanish.
-   ◯ Estoy aprender a cocinar  [✖]
-   ◉ Estoy aprendiendo a cocinar  [✔]
-   ◯ Yo aprendí a cocinar  [✖]
-   ◯ Yo aprendiendo para cocinar  [✖]
 
 
 39. Which sentence is correctly written in the future continuous tense?
@@ -312,12 +292,6 @@
    ◯ By next week, I completed my assignment.  [✖]
    ◯ By next week, I will complete my assignment.  [✖]
 
-
-46. What is the correct translation of "I can swim very well" into Spanish?
-   ◉ Puedo nadar muy bien.  [✔]
-   ◯ Yo nadar muy bien.  [✖]
-   ◯ Puedo nadar bien muy.  [✖]
-   ◯ Yo puedo nadar buena.  [✖]
 
 
 47. Select the correct form of the verb to fill in this sentence: "They _____ to the park every Sunday."
@@ -390,13 +364,6 @@
    ◯ is  [✖]
 
 
-57. What is the correct translation of "Ella está trabajando en un proyecto"?
-   ◉ She is working on a project.  [✔]
-   ◯ She works on a project.  [✖]
-   ◯ She was working in a project.  [✖]
-   ◯ She is work on a project.  [✖]
-
-
 58. Which of the following sentences correctly uses the present perfect tense?
    ◯ I visited Paris two times.  [✖]
    ◯ I visit Paris twice.  [✖]
@@ -453,13 +420,6 @@
    ◯ do  [✖]
 
 
-66. What is the correct translation of "Ella tiene una gata negra" in English?
-   ◯ She have a black cat.  [✖]
-   ◉ She has a black cat.  [✔]
-   ◯ She is having a black cat.  [✖]
-   ◯ She has black cat.  [✖]
-
-
 67. Which sentence correctly uses the verb "to go" in the future tense?
    ◯ I will going to the store tomorrow.  [✖]
    ◉ I will go to the store tomorrow.  [✔]
@@ -479,13 +439,6 @@
    ◯ breaked  [✖]
    ◯ breaking  [✖]
    ◯ broke  [✖]
-
-
-70. Choose the correct translation for "I have lived here for five years."
-   ◯ He vivir aquí por cinco años.  [✖]
-   ◉ He vivido aquí por cinco años.  [✔]
-   ◯ Vivo aquí por cinco años.  [✖]
-   ◯ Yo vive aquí desde cinco años.  [✖]
 
 
 71. Select the correct form of the adjective to complete the sentence: "This test is _____ than the last one."
@@ -563,13 +516,6 @@
    ◯ The choir sung the song.  [✖]
    ◉ The song was sung by the choir.  [✔]
    ◯ The choir is singing the song.  [✖]
-
-
-82. What is the correct translation of "Ella está escribiendo un mensaje" in English?
-   ◯ She wrote a message.  [✖]
-   ◯ She writes a message.  [✖]
-   ◉ She is writing a message.  [✔]
-   ◯ She is write a message.  [✖]
 
 
 83. Which of the following is the correct past tense form of the verb "to eat" in the sentence? "Yesterday, I _____ a delicious meal."
@@ -695,4 +641,5 @@
    ◯ There is fewer apples in this basket than in that one.  [✖]
    ◯ There are less apples in this basket than in that one.  [✖]
    ◉ There are fewer apples in this basket than in that one.  [✔]
+
    ◯ There is fewer apple in this basket than in that one.  [✖]
