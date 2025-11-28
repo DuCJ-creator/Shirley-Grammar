@@ -6,101 +6,183 @@
     <title>Shirley's Infinitive Learning Platform | 不定詞學習平台</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Nunito:wght@400;600;700;800&display=swap');
+
         :root {
-            --primary: #6a5acd;
-            --secondary: #9370db;
-            --accent: #ff69b4;
-            --light: #f8f9fa;
-            --dark: #343a40;
-            --success: #28a745;
+            /* 高雅配色系統：深海藍、墨綠搭配流金點綴 */
+            --primary-dark: #0F2027;  /* 深邃背景 */
+            --primary-mid: #203A43;   /* 中間調 */
+            --primary-accent: #2C5364; /* 亮部 */
+            
+            --gold-accent: #FFD700;   /* 高雅金 */
+            --gold-dark: #B8860B;     /* 深金 */
+            
+            /* 為了兼容原本 JS 中的 var(--accent) 調用，將其映射為金色 */
+            --accent: #FFD700; 
+            
+            --dynamic-gradient: linear-gradient(135deg, #2C5364 0%, #203A43 50%, #0F2027 100%);
+            --gold-gradient: linear-gradient(45deg, #B8860B, #FFD700, #B8860B);
+
+            --bg-body: #f4f7f9;       
+            --bg-card: rgba(255, 255, 255, 0.95);
+            
+            --text-main: #1a1a1a;
+            --text-light: #5a6a7a;
+            --text-on-dark: #ffffff;
+            
+            --shadow-soft: 0 10px 30px -10px rgba(0,0,0,0.1);
+            --shadow-glow: 0 5px 15px rgba(255, 215, 0, 0.3);
+            
+            --radius-lg: 24px;
+            --radius-md: 16px;
         }
         
+        /* 動態背景動畫 */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', 'Microsoft JhengHei', '微軟正黑體', Arial, sans-serif;
+            font-family: 'Nunito', 'Noto Sans TC', '微軟正黑體', sans-serif;
         }
         
         body {
-            background-color: var(--light);
-            color: var(--dark);
-            line-height: 1.6;
+            background: linear-gradient(-45deg, #f4f7f9, #eef2f5, #e0eaf0, #f4f7f9);
+            background-size: 400% 400%;
+            animation: gradientBG 20s ease infinite;
+            color: var(--text-main);
+            line-height: 1.75;
         }
         
+        /* Header: 深邃質感 */
         header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 1.5rem;
+            background: var(--dynamic-gradient);
+            color: var(--text-on-dark);
+            padding: 4rem 1.5rem 5rem;
             text-align: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             position: relative;
             overflow: hidden;
+            box-shadow: 0 10px 30px rgba(15, 32, 39, 0.3);
         }
         
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+
         .header-content {
             position: relative;
             z-index: 1;
         }
-        
+
         h1 {
-            font-size: 2.2rem;
-            margin-bottom: 0.5rem;
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            background: linear-gradient(to right, #ffffff, #cce0ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
         
         .subtitle {
             font-size: 1.2rem;
             opacity: 0.9;
+            font-weight: 600;
+            color: var(--gold-accent);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 215, 0, 0.2);
         }
         
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 1.5rem;
+            padding: 0 2rem 4rem;
+            position: relative;
+            z-index: 10;
         }
         
+        /* Tabs: 玻璃擬態 */
         .tabs {
             display: flex;
             flex-wrap: wrap;
-            margin-bottom: 1.5rem;
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            justify-content: center;
+            gap: 12px;
+            margin: -3.5rem auto 3rem;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(15px);
+            border-radius: 60px;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid rgba(255,255,255,0.4);
+            max-width: fit-content;
         }
         
         .tab {
-            padding: 1rem 1.5rem;
+            padding: 0.9rem 1.8rem;
             cursor: pointer;
-            flex: 1;
             text-align: center;
-            transition: all 0.3s ease;
-            font-weight: bold;
+            transition: all 0.4s ease;
+            font-weight: 700;
+            color: var(--text-light);
+            border-radius: 50px;
             position: relative;
             overflow: hidden;
+            font-size: 1rem;
+            flex: 0 1 auto; /* 防止過度伸展 */
         }
         
+        .tab::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 15%;
+            width: 70%;
+            height: 3px;
+            background: var(--gold-accent);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+            border-radius: 10px;
+        }
+
         .tab:hover {
-            background-color: rgba(106, 90, 205, 0.1);
+            color: var(--primary-dark);
+            background: rgba(255,255,255,0.8);
         }
         
         .tab.active {
-            background-color: var(--primary);
-            color: white;
+            color: var(--primary-dark);
+            background: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .tab.active::before {
+            transform: scaleX(1);
+            box-shadow: 0 0 10px var(--gold-accent);
         }
         
         .tab-content {
             display: none;
-            background: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            margin-bottom: 2rem;
-            animation: fadeIn 0.5s ease;
+            animation: slideUpFade 0.7s cubic-bezier(0.25, 1, 0.5, 1);
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+        @keyframes slideUpFade {
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
@@ -109,181 +191,279 @@
         }
         
         h2 {
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--accent);
+            color: var(--primary-dark);
+            margin-bottom: 2.5rem;
+            font-size: 2rem;
+            font-weight: 800;
+            text-align: center;
+            position: relative;
+            padding-bottom: 1rem;
+            border-bottom: none; /* 移除舊樣式 */
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 4px;
+            width: 60px;
+            background: var(--gold-gradient);
+            border-radius: 2px;
         }
         
         h3 {
-            color: var(--secondary);
-            margin: 1.5rem 0 1rem;
+            color: var(--primary-mid);
+            margin: 0 0 1.2rem;
+            font-size: 1.4rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
         }
         
+        h3::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 24px;
+            background: var(--gold-accent);
+            margin-right: 12px;
+            border-radius: 4px;
+        }
+        
+        /* Card Styles */
         .card {
-            background: white;
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s, box-shadow 0.3s;
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid rgba(255,255,255,0.8);
+            transition: all 0.3s ease;
         }
         
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-7px);
+            box-shadow: 0 15px 40px -10px rgba(0,0,0,0.15);
+            border-color: rgba(255, 215, 0, 0.3);
         }
         
+        /* Table Styles */
         table {
             width: 100%;
-            border-collapse: collapse;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: white;
+            min-width: 600px;
             margin: 1.5rem 0;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
         }
         
         th, td {
-            padding: 12px 15px;
+            padding: 18px 24px;
             text-align: left;
-            border-bottom: 1px solid #e0e0e0;
+            border-bottom: 1px solid #eef2f5;
         }
         
         th {
-            background-color: var(--primary);
+            background: var(--primary-mid);
             color: white;
+            font-weight: 700;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 3px solid var(--gold-accent);
         }
         
         tr:nth-child(even) {
-            background-color: #f8f9fa;
+            background-color: #fcfdfd; /* 覆蓋舊樣式 */
         }
         
+        tr:hover td {
+            background-color: #f0f4f8;
+        }
+
+        /* 比較表格特殊處理 */
+        .comparison-table th {
+            background-color: var(--primary-dark); /* 更深的顏色以示區別 */
+        }
+        
+        /* Example Box */
         .example {
-            background-color: #f0f7ff;
-            border-left: 4px solid var(--accent);
-            padding: 1rem;
-            margin: 1rem 0;
-            border-radius: 0 8px 8px 0;
+            background: linear-gradient(to right, #fffcf0, #fff);
+            border-left: 5px solid var(--gold-accent);
+            padding: 1.5rem 2rem;
+            margin: 1.5rem 0;
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+            color: var(--text-main);
         }
         
-        .interactive-element {
-            background-color: var(--light);
-            border: 2px dashed var(--secondary);
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin: 1.5rem 0;
+        .highlight {
+            color: var(--primary-dark);
+            background: transparent;
+            padding: 2px 6px;
+            font-weight: 700;
+            background: linear-gradient(120deg, transparent 0%, transparent 6px, var(--gold-accent) 6px, var(--gold-accent) 100%);
+            background-size: 100% 10px;
+            background-repeat: no-repeat;
+            background-position: bottom;
+            border-radius: 0;
+        }
+
+        /* Infinitive List Styles (Chips) */
+        .infinitive-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 15px;
+            margin: 2rem 0;
+        }
+        
+        .infinitive-item {
+            background: var(--primary-mid);
+            color: white;
+            padding: 15px;
+            border-radius: 50px; /* Chip style */
             text-align: center;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border: 1px solid transparent;
         }
         
-        .btn {
-            background-color: var(--accent);
-            color: white;
+        .infinitive-item:hover {
+            transform: translateY(-5px);
+            background: var(--primary-dark);
+            border-color: var(--gold-accent);
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.2);
+        }
+        
+        /* Interactive Element */
+        .interactive-element {
+            background: white;
             border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 30px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        
-        .btn:hover {
-            background-color: #ff5ba3;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(255, 105, 180, 0.3);
-        }
-        
-        .animation-controls {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 1rem;
-        }
-        
-        .infinitive-animation {
-            height: 200px;
-            background: linear-gradient(135deg, #9370db, #6a5acd);
-            border-radius: 10px;
-            margin: 1.5rem 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-            font-weight: bold;
+            padding: 3rem;
+            border-radius: var(--radius-lg);
+            margin: 4rem 0;
+            text-align: center;
+            box-shadow: var(--shadow-soft);
             position: relative;
             overflow: hidden;
         }
         
+        .interactive-element::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.05) 0%, transparent 70%);
+            animation: rotate 30s linear infinite;
+            z-index: 0;
+        }
+        
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        .interactive-element > * { position: relative; z-index: 1; }
+        
+        /* Buttons */
+        .btn {
+            background: var(--dynamic-gradient);
+            color: white;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(32, 58, 67, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(32, 58, 67, 0.4), var(--shadow-glow);
+            background: var(--dynamic-gradient); /* 覆蓋舊 hover */
+        }
+        
+        .btn:hover::before { left: 100%; }
+        
+        /* Animation Box */
+        .infinitive-animation {
+            height: 220px;
+            background: var(--primary-dark); /* 黑板風格 */
+            border-radius: var(--radius-md);
+            margin: 2.5rem auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+            font-weight: bold;
+            box-shadow: inset 0 0 40px rgba(0,0,0,0.8);
+            border: 6px solid #2c3e50;
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        /* Warning Box */
+        .warning {
+            background: rgba(255, 215, 0, 0.05);
+            border-left: 5px solid var(--gold-accent);
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: var(--radius-md);
+            color: var(--text-main);
+        }
+        
+        .warning strong {
+            color: var(--gold-dark);
+            font-size: 1.1rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
         footer {
             text-align: center;
-            padding: 2rem;
-            margin-top: 2rem;
-            background-color: var(--dark);
-            color: white;
-            border-radius: 10px 10px 0 0;
+            padding: 4rem 2rem;
+            margin-top: 5rem;
+            background: var(--primary-dark);
+            color: rgba(255,255,255,0.6);
+            border-radius: 0; /* 覆蓋舊樣式 */
+            position: relative;
         }
         
-        .highlight {
-            background-color: #fff9e6;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-weight: bold;
-            color: var(--primary);
+        footer::before {
+             content: '';
+             position: absolute;
+             top: 0; left: 0; width: 100%; height: 4px;
+             background: var(--gold-gradient);
         }
-        
-        .infinitive-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 10px;
-            margin: 1rem 0;
-        }
-        
-        .infinitive-item {
-            background: #f0f7ff;
-            padding: 10px;
-            border-radius: 5px;
-            text-align: center;
-            font-weight: bold;
-        }
-        
-        .comparison-table {
-            width: 100%;
-            margin: 1.5rem 0;
-        }
-        
-        .comparison-table th {
-            background-color: var(--secondary);
-        }
-        
-        .warning {
-            background-color: #fff3cd;
-            border-left: 4px solid #ffc107;
-            padding: 1rem;
-            margin: 1rem 0;
-            border-radius: 0 8px 8px 0;
-        }
-        
+
         @media (max-width: 768px) {
-            .tabs {
-                flex-direction: column;
-            }
-            
-            .tab {
-                flex: none;
-            }
-            
-            .container {
-                padding: 1rem;
-            }
-            
-            h1 {
-                font-size: 1.8rem;
-            }
-            
-            .infinitive-list {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            }
+            header { padding: 3rem 1rem 4rem; }
+            h1 { font-size: 2rem; }
+            .tabs { margin-top: -2rem; width: 95%; flex-direction: row; overflow-x: auto; justify-content: flex-start; }
+            .tab { flex: 0 0 auto; padding: 0.7rem 1.2rem; min-width: auto; }
+            .infinitive-list { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+            .animation-controls { flex-wrap: wrap; }
+            table { display: block; overflow-x: auto; }
         }
     </style>
 </head>
@@ -305,7 +485,6 @@
             <div class="tab" data-tab="modifier">作限定詞 | As Modifier</div>
         </div>
         
-        <!-- 不定詞介紹 -->
         <div class="tab-content active" id="intro">
             <h2>不定詞介紹 | Infinitive Introduction</h2>
             
@@ -387,7 +566,6 @@
             </div>
         </div>
         
-        <!-- 作主詞 -->
         <div class="tab-content" id="subject">
             <h2>作主詞 | As Subject</h2>
             
@@ -436,7 +614,6 @@
             </div>
         </div>
         
-        <!-- 作受詞 -->
         <div class="tab-content" id="object">
             <h2>作受詞 | As Object</h2>
             
@@ -508,7 +685,6 @@
             </div>
         </div>
         
-        <!-- 與動名詞區別 -->
         <div class="tab-content" id="comparison">
             <h2>與動名詞區別 | Gerund vs Infinitive</h2>
             
@@ -590,7 +766,6 @@
             </div>
         </div>
         
-        <!-- 作補語 -->
         <div class="tab-content" id="complement">
             <h2>作補語 | As Complement</h2>
             
@@ -654,7 +829,6 @@
             </div>
         </div>
         
-        <!-- 作限定詞 -->
         <div class="tab-content" id="modifier">
             <h2>作限定詞 | As Modifier</h2>
             
