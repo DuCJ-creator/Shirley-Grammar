@@ -832,7 +832,7 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
         let selectedOptionIndex = -1;
         let currentQuizId = '';
 
-        // --- ROBUST PARSING LOGIC (AGGRESSIVE CLEANER) ---
+        // --- ROBUST PARSING LOGIC (THE NUCLEAR CLEANER) ---
         function parseQuestions(text) {
             // Normalize content
             text = text.replace(/^\uFEFF/, '').replace(/\r\n/g, '\n');
@@ -857,26 +857,30 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
                 const options = [];
                 let correctIdx = -1;
 
-                // 2. Identify Options and CLEAN THEM AGGRESSIVELY
+                // 2. Identify Options and CLEAN THEM
                 for (let i = 1; i < lines.length; i++) {
                     const line = lines[i];
                     
                     // Detect markers (before cleaning)
                     const isCorrect = line.includes('●') || line.includes('⚫') || line.includes('[✓]') || line.includes('[✔]') || line.includes('[v]') || line.toLowerCase().includes('(answer)');
                     
-                    // Clean option text vigorously
-                    let optText = line
-                        // Remove markers like [x], [✓], (answer)
-                        .replace(/\[.*?\]/g, '')
-                        .replace(/\(.*?\)/g, '')
-                        // Remove specific bullet characters globally
-                        .replace(/[●○•⚫⚪✔✘]/g, '')
-                        // Remove leading numbering like "A.", "a)", "1." AND whitespace
-                        .replace(/^\s*[\w\d]+[\.\)]\s*/, '')
-                        .trim();
+                    let cleanLine = line;
+                    
+                    // 1. Remove bracketed comments like [x] or [✓] or (answer)
+                    cleanLine = cleanLine.replace(/\[.*?\]/g, '').replace(/\(.*?\)/g, '');
+                    
+                    // 2. Remove SPECIFIC bullet characters (including the standard white/black circles)
+                    cleanLine = cleanLine.replace(/[●○•⚫⚪✔✘√]/g, '');
 
-                    if (optText) {
-                        options.push(optText);
+                    // 3. Remove alphanumeric numbering at the start (e.g., "A.", "1.", "a)")
+                    // This regex looks for: Start of line -> any letters/numbers -> followed by dot or parenthesis -> whitespace
+                    cleanLine = cleanLine.replace(/^[A-Za-z0-9]+\s*[\.\)]\s*/, '');
+                    
+                    // 4. Final Trim
+                    cleanLine = cleanLine.trim();
+
+                    if (cleanLine) {
+                        options.push(cleanLine);
                         if (isCorrect) correctIdx = options.length - 1;
                     }
                 }
@@ -1120,4 +1124,3 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
     </script>
 </body>
 </html>
-}
