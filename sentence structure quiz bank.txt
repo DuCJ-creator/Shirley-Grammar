@@ -1,0 +1,698 @@
+﻿1. Translate the following sentence into English: "他們每天都去公園。"
+   ◯ They goes to the park every day.  [✖]
+   ◯ They went to the park every day.  [✖]
+   ◯ They going to the park every day.  [✖]
+   ◉ They go to the park every day.  [✔]
+
+
+2. Identify the incorrect word form in the following sentence: "He enjoy playing basketball on weekends."
+   ◯ Playing  [✖]
+   ◉ Enjoy  [✔]
+   ◯ Weekends  [✖]
+   ◯ Basketball  [✖]
+
+
+3. Translate the following sentence into Traditional Chinese: "We are studying hard for the exam."
+   ◯ 我們學習努力為考試。  [✖]
+   ◉ 我們正在努力學習準備考試。  [✔]
+   ◯ 我們在考試學習努力。  [✖]
+   ◯ 我們努力學習考試。  [✖]
+
+
+4. Which of the following sentences is an example of a simple sentence?
+   ◯ When the dog barked, the neighbors complained.  [✖]
+   ◯ Because the dog barked, we were scared.  [✖]
+   ◯ The dog barked loudly, and the cat ran away.  [✖]
+   ◉ The dog barked loudly.  [✔]
+
+
+5. Choose the correct form of the verb to complete the sentence: "She _____ to the store every Saturday."
+   ◯ go  [✖]
+   ◯ gone  [✖]
+   ◉ goes  [✔]
+   ◯ going  [✖]
+
+
+6. Which sentence is a compound-complex sentence?
+   ◯ I finished my homework before it got late.  [✖]
+   ◉ Although it was late, I finished my homework, and I went to bed.  [✔]
+   ◯ When I finished my homework, I went to bed.  [✖]
+   ◯ I finished my homework, and then I watched a movie before going to bed.  [✖]
+
+
+7. Translate the following sentence into English: "我每天都喝咖啡。"
+   ◯ I drinks coffee every day.  [✖]
+   ◯ I drinking coffee every day.  [✖]
+   ◯ I drinked coffee every day.  [✖]
+   ◉ I drink coffee every day.  [✔]
+
+
+8. Which of the following is a correct use of the past tense?
+   ◉ She walked to the park yesterday.  [✔]
+   ◯ She walk to the park yesterday.  [✖]
+   ◯ She walking to the park yesterday.  [✖]
+   ◯ She walkeds to the park yesterday.  [✖]
+
+
+9. Identify the sentence that uses a linking verb.
+   ◉ The cake smells delicious.  [✔]
+   ◯ The chef baked the cake.  [✖]
+   ◯ The children eat the cake.  [✖]
+   ◯ The baker is making a cake.  [✖]
+
+
+10. Translate the following sentence into Traditional Chinese: "They will visit their grandparents next week."
+   ◯ 他們去看祖父母下星期。  [✖]
+   ◉ 他們下星期會去看祖父母。  [✔]
+   ◯ 他們祖父母下星期會去看。  [✖]
+   ◯ 他們下星期看祖父母會。  [✖]
+
+
+11. Which of the following sentences correctly uses the future tense?
+   ◉ I will travel to Japan next year.  [✔]
+   ◯ I travels to Japan next year.  [✖]
+   ◯ I will traveled to Japan next year.  [✖]
+   ◯ I am travel to Japan next year.  [✖]
+
+
+12. Identify the sentence that contains an indirect object.
+   ◯ She gave a gift to her friend.  [✖]
+   ◯ She gave a gift.  [✖]
+   ◯ Her friend received a gift.  [✖]
+   ◉ She gave her friend a gift.  [✔]
+
+
+13. Which of the following sentences is written in the present continuous tense?
+   ◯ She will read a book tomorrow.  [✖]
+   ◉ She is reading a book right now.  [✔]
+   ◯ She read a book yesterday.  [✖]
+   ◯ She reads books every day.  [✖]
+
+
+14. Translate the following sentence into English: "他們正在看電影。"
+   ◯ They watch a movie.  [✖]
+   ◯ They will watch a movie.  [✖]
+   ◯ They watched a movie.  [✖]
+   ◉ They are watching a movie.  [✔]
+
+
+15. Which of the following sentences correctly uses the past perfect tense?
+   ◯ She was finishing her homework before dinner.  [✖]
+   ◯ She finished her homework before dinner.  [✖]
+   ◉ She had finished her homework before dinner.  [✔]
+   ◯ She has finished her homework before dinner.  [✖]
+
+
+16. Translate the following sentence into Traditional Chinese: "He has been working here for three years."
+   ◯ 他工作三年在這裡。  [✖]
+   ◉ 他在這裡工作了三年。  [✔]
+   ◯ 他三年工作在這裡。  [✖]
+   ◯ 他工作了三年的在這裡。  [✖]
+
+
+17. Choose the correct past tense form of the verb: "Yesterday, they ___ to the market."
+   ◯ gone  [✖]
+   ◉ went  [✔]
+   ◯ goes  [✖]
+   ◯ going  [✖]
+
+
+18. Identify the sentence that uses the correct preposition: "She is interested ___ learning new languages."
+   ◯ for  [✖]
+   ◯ on  [✖]
+   ◯ at  [✖]
+   ◉ in  [✔]
+
+
+19. Translate the following sentence into English: "我喜歡在週末看書。"
+   ◯ I like reading book in weekends.  [✖]
+   ◉ I like to read books on weekends.  [✔]
+   ◯ I liking to read books on weekends.  [✖]
+   ◯ I liked to read books on weekend.  [✖]
+
+
+20. Which of the following sentences is written in the present perfect tense?
+   ◯ They visit the museum several times.  [✖]
+   ◉ They have visited the museum several times.  [✔]
+   ◯ They will visit the museum several times.  [✖]
+   ◯ They visiting the museum several times.  [✖]
+
+
+21. Which of the following sentences uses the correct form of the verb in the past tense?
+   ◉ She walked her dog yesterday.  [✔]
+   ◯ She walking her dog yesterday.  [✖]
+   ◯ She walk her dog yesterday.  [✖]
+   ◯ She walks her dog yesterday.  [✖]
+
+
+22. Translate the following sentence into English: "他們正在討論這個問題。"
+   ◯ They discuss the issue.  [✖]
+   ◯ They are discuss the issue.  [✖]
+   ◯ They discussed this issue.  [✖]
+   ◉ They are discussing the issue.  [✔]
+
+
+23. Identify the correct sentence structure for the following: "Although it was late, we decided to stay."
+   ◉ Complex sentence  [✔]
+   ◯ Compound-complex sentence  [✖]
+   ◯ Simple sentence  [✖]
+   ◯ Compound sentence  [✖]
+
+
+24. Which of the following sentences correctly uses the present perfect tense?
+   ◉ I have eaten breakfast already.  [✔]
+   ◯ I eating breakfast already.  [✖]
+   ◯ I eat breakfast already.  [✖]
+   ◯ I has eaten breakfast already.  [✖]
+
+
+25. Choose the correct past tense form of the verb: "Last week, I ___ to the concert."
+   ◯ go  [✖]
+   ◯ goed  [✖]
+   ◉ went  [✔]
+   ◯ going  [✖]
+
+
+26. Which of the following sentences is correct?
+   ◉ She doesn't have any money left.  [✔]
+   ◯ She don't have any money left.  [✖]
+   ◯ She hasn't no money left.  [✖]
+   ◯ She doesn't has any money left.  [✖]
+
+
+27. Fill in the blank with the correct form of the verb: "If he ___ harder, he would pass the exam."
+   ◯ studying  [✖]
+   ◉ studied  [✔]
+   ◯ studies  [✖]
+   ◯ study  [✖]
+
+
+28. Translate the following sentence into English: "我會在明天去學校。"
+   ◯ I gone to school tomorrow.  [✖]
+   ◯ I will going to school tomorrow.  [✖]
+   ◉ I will go to school tomorrow.  [✔]
+   ◯ I going to school tomorrow.  [✖]
+
+
+29. Identify the correct sentence structure: "After I finish my homework, I will watch TV."
+   ◯ Compound sentence  [✖]
+   ◯ Simple sentence  [✖]
+   ◯ Compound-complex sentence  [✖]
+   ◉ Complex sentence  [✔]
+
+
+30. Which of the following sentences is correctly using the gerund form?
+   ◉ I enjoy swimming in the ocean.  [✔]
+   ◯ I enjoy swim in the ocean.  [✖]
+   ◯ I enjoy to swim in the ocean.  [✖]
+   ◯ I enjoys swimming in the ocean.  [✖]
+
+
+31. What is the correct translation of "她會說三種語言" into English?
+   ◯ She is able to speak three language.  [✖]
+   ◯ She can speaks three languages.  [✖]
+   ◯ She speaking three languages.  [✖]
+   ◉ She can speak three languages.  [✔]
+
+
+32. Choose the correct form of the verb to complete the sentence: "If it rains tomorrow, we ___ the picnic."
+   ◯ cancelled  [✖]
+   ◯ cancels  [✖]
+   ◯ canceling  [✖]
+   ◉ will cancel  [✔]
+
+
+33. Translate the following sentence into English: "我最喜歡的顏色是藍色。"
+   ◉ My favorite color is blue.  [✔]
+   ◯ I like blue color the most.  [✖]
+   ◯ I favorite color is blue.  [✖]
+   ◯ My color favorite is blue.  [✖]
+
+
+34. Which of the following sentences is in the passive voice?
+   ◉ The book was read by the student.  [✔]
+   ◯ The student has read the book.  [✖]
+   ◯ The student reads the book.  [✖]
+   ◯ The student is reading a book.  [✖]
+
+
+35. Which sentence is correctly using the comparative form of the adjective?
+   ◉ This book is more interesting than that one.  [✔]
+   ◯ This book is interestinger than that one.  [✖]
+   ◯ This book is interest than that one.  [✖]
+   ◯ This book is the most interesting than that one.  [✖]
+
+
+36. What is the correct translation of "他們的計畫很成功" into English?
+   ◯ Their plan is very success.  [✖]
+   ◯ Their plans was very successful.  [✖]
+   ◉ Their plan was very successful.  [✔]
+   ◯ Their plans is very successful.  [✖]
+
+
+37. Which of the following sentences is correctly using the future perfect tense?
+   ◯ By next year, I will have complete my degree.  [✖]
+   ◯ By next year, I will complete my degree.  [✖]
+   ◉ By next year, I will have completed my degree.  [✔]
+   ◯ By next year, I will has completed my degree.  [✖]
+
+
+38. Translate the following sentence into Traditional Chinese: "She has been working here since 2019."
+   ◉ 她自2019年以來一直在這裡工作。  [✔]
+   ◯ 她在2019年工作了這裡。  [✖]
+   ◯ 她從2019年工作在這裡。  [✖]
+   ◯ 她在2019年開始工作這裡。  [✖]
+
+
+39. Identify the correct form of the verb in the following sentence: "If I ___ you, I would apologize."
+   ◉ were  [✔]
+   ◯ am  [✖]
+   ◯ be  [✖]
+   ◯ was  [✖]
+
+
+40. Translate the following sentence into English: "我們正在考慮這個提議。"
+   ◯ We are consider this proposal.  [✖]
+   ◯ We considering this proposal.  [✖]
+   ◉ We are considering this proposal.  [✔]
+   ◯ We considered this proposal.  [✖]
+
+
+41. Which of the following sentences is correct?
+   ◯ I visiting Paris three times have.  [✖]
+   ◯ I visited Paris three times have.  [✖]
+   ◯ I have visit Paris three times.  [✖]
+   ◉ I have visited Paris three times.  [✔]
+
+
+42. Choose the correct word to complete the sentence: "He is not only a great musician, but he is also a great ____."
+   ◉ singer  [✔]
+   ◯ sing  [✖]
+   ◯ sang  [✖]
+   ◯ singing  [✖]
+
+
+43. Translate the following sentence into English: "她每天都去健身房。"
+   ◯ She going to the gym every day.  [✖]
+   ◯ She gone to the gym every day.  [✖]
+   ◉ She goes to the gym every day.  [✔]
+   ◯ She go to the gym every day.  [✖]
+
+
+44. Which sentence uses the correct form of the adjective?
+   ◯ This movie is interestinger than the last one.  [✖]
+   ◉ This movie is more interesting than the last one.  [✔]
+   ◯ This movie is most interesting than the last one.  [✖]
+   ◯ This movie is interestingest than the last one.  [✖]
+
+
+45. Identify the correct sentence structure: "Although he was tired, he finished his work, and then he went to bed."
+   ◯ A single independent clause only  [✖]
+   ◯ Complex sentence  [✖]
+   ◯ Compound sentence  [✖]
+   ◉ Compound-complex sentence  [✔]
+
+
+46. What is the correct past tense form of the verb in the sentence: "Yesterday, I ___ to the store."
+   ◯ gone  [✖]
+   ◉ went  [✔]
+   ◯ going  [✖]
+   ◯ goes  [✖]
+
+
+47. Translate the following sentence into English: "我今早吃了早餐。"
+   ◯ I eating breakfast this morning.  [✖]
+   ◉ I had breakfast this morning.  [✔]
+   ◯ I have breakfast this morning.  [✖]
+   ◯ I eat breakfast this morning.  [✖]
+
+
+48. Choose the correct form of the verb to complete the sentence: "If she ___ harder, she would get better grades."
+   ◯ studying  [✖]
+   ◉ studied  [✔]
+   ◯ study  [✖]
+   ◯ studies  [✖]
+
+
+49. Translate the following sentence into Traditional Chinese: "They are planning a trip next month."
+   ◯ 他們上個月計劃一次旅行。  [✖]
+   ◉ 他們下個月正在計劃一次旅行。  [✔]
+   ◯ 他們計劃旅行下個月。  [✖]
+   ◯ 他們計劃一次旅行下個月。  [✖]
+
+
+50. Which of the following sentences is correctly structured?
+   ◯ She enjoy to listen music while studying.  [✖]
+   ◯ She enjoys listen to music while study.  [✖]
+   ◯ She listening to music enjoys while studying.  [✖]
+   ◉ She enjoys listening to music while studying.  [✔]
+
+
+51. Translate the following sentence into English: "他們正在學習英語。"
+   ◯ They learning English.  [✖]
+   ◯ They are learn English.  [✖]
+   ◉ They are learning English.  [✔]
+   ◯ They learn English.  [✖]
+
+
+52. Choose the correct form of the verb to complete the sentence: "If I ___ time, I will help you with your project."
+   ◯ had  [✖]
+   ◯ having  [✖]
+   ◯ has  [✖]
+   ◉ have  [✔]
+
+
+53. Which sentence uses the correct form of the adjective?
+   ◯ This exercise is easy than the last one.  [✖]
+   ◯ This exercise is more easier than the last one.  [✖]
+   ◯ This exercise is easiest than the last one.  [✖]
+   ◉ This exercise is easier than the last one.  [✔]
+
+
+54. Translate the following sentence into Traditional Chinese: "She will finish her homework by tomorrow."
+   ◯ 她明天完成作業會。  [✖]
+   ◯ 她完成她的作業在明天。  [✖]
+   ◉ 她明天之前會完成她的作業。  [✔]
+   ◯ 她會完成作業明天之前。  [✖]
+
+
+55. Identify the correct sentence structure: "While I was cooking, my friend called me, and we talked for an hour."
+   ◯ Compound sentence  [✖]
+   ◉ Compound-complex sentence  [✔]
+   ◯ Complex sentence  [✖]
+   ◯ Simple sentence  [✖]
+
+
+56. What is the correct past tense form of the verb in the sentence: "They ___ to the party last night."
+   ◉ went  [✔]
+   ◯ goed  [✖]
+   ◯ going  [✖]
+   ◯ go  [✖]
+
+
+57. Translate the following sentence into English: "我哥哥喜歡打籃球。"
+   ◯ My brother liking to play basketball.  [✖]
+   ◯ My brother liked to play basketball.  [✖]
+   ◯ My brother like to play basketball.  [✖]
+   ◉ My brother likes to play basketball.  [✔]
+
+
+58. If I ___ you, I would take the opportunity.
+   ◯ am  [✖]
+   ◉ were  [✔]
+   ◯ was  [✖]
+   ◯ be  [✖]
+
+
+59. Which sentence is correctly formed using the future continuous tense?
+   ◯ I will study at 8 PM tomorrow.  [✖]
+   ◯ I will studying at 8 PM tomorrow.  [✖]
+   ◯ I be studying at 8 PM tomorrow.  [✖]
+   ◉ I will be studying at 8 PM tomorrow.  [✔]
+
+
+60. What is the correct past tense form of the verb in the sentence: "She ___ a great meal yesterday."
+   ◯ cooking  [✖]
+   ◉ cooked  [✔]
+   ◯ cooks  [✖]
+   ◯ cook  [✖]
+
+
+61. Choose the correct word to complete the sentence: "The teacher asked us to __ our homework before the weekend."
+   ◯ finishing  [✖]
+   ◉ finish  [✔]
+   ◯ finishes  [✖]
+   ◯ finished  [✖]
+
+
+62. Choose the correct form of the verb to complete the sentence: "She ___ to the gym every morning."
+   ◯ go  [✖]
+   ◯ going  [✖]
+   ◉ goes  [✔]
+   ◯ gone  [✖]
+
+
+63. Translate the following sentence into English: "這本書非常有趣。"
+   ◯ This book is very interest.  [✖]
+   ◯ This books are very interesting.  [✖]
+   ◯ This book was very interesting.  [✖]
+   ◉ This book is very interesting.  [✔]
+
+
+64. Which sentence correctly uses the past tense?
+   ◯ They visits the museum last weekend.  [✖]
+   ◉ They visited the museum last weekend.  [✔]
+   ◯ They visiting the museum last weekend.  [✖]
+   ◯ They visit the museum last weekend.  [✖]
+
+
+65. Fill in the blank with the correct form of the adjective: "This puzzle is ____ than the last one."
+   ◉ easier  [✔]
+   ◯ more easy  [✖]
+   ◯ easiest  [✖]
+   ◯ easyer  [✖]
+
+
+66. Translate the following sentence into Traditional Chinese: "I am going to the library to study."
+   ◉ 我去圖書館學習。  [✔]
+   ◯ 我在圖書館去的學習。  [✖]
+   ◯ 我去學習圖書館。  [✖]
+   ◯ 我在圖書館去學習。  [✖]
+
+
+67. Fill in the blank with the correct past tense of the verb: "Last week, she ___ her friends for lunch."
+   ◯ invite  [✖]
+   ◉ invited  [✔]
+   ◯ inviting  [✖]
+   ◯ invites  [✖]
+
+
+68. Translate the following sentence into Traditional Chinese: "I want to eat something sweet."
+   ◉ 我想吃一些甜的東西。  [✔]
+   ◯ 我想吃一些東西甜。  [✖]
+   ◯ 我想吃甜的東西些。  [✖]
+   ◯ 我想吃東西甜的。  [✖]
+
+
+69. Choose the correct form of the verb in the sentence: "If he ___ the instructions, he will complete the task."
+   ◯ following  [✖]
+   ◯ followed  [✖]
+   ◯ follow  [✖]
+   ◉ follows  [✔]
+
+
+70. Translate the following sentence into English: "她每天都喝水。"
+   ◯ She drinking water every day.  [✖]
+   ◯ She drink water every day.  [✖]
+   ◉ She drinks water every day.  [✔]
+   ◯ She drinked water every day.  [✖]
+
+
+71. Fill in the blank with the correct form of the verb: "They ___ to the concert last night."
+   ◉ went  [✔]
+   ◯ goes  [✖]
+   ◯ gone  [✖]
+   ◯ going  [✖]
+
+
+72. Identify the correct sentence structure: "After the meeting ended, we went for lunch."
+   ◉ Complex sentence  [✔]
+   ◯ Simple sentence  [✖]
+   ◯ Fragment sentence  [✖]
+   ◯ Compound sentence  [✖]
+
+
+73. What is the correct past tense form of the verb in the sentence: "She ___ her homework last night."
+   ◯ complete  [✖]
+   ◯ completes  [✖]
+   ◯ completing  [✖]
+   ◉ completed  [✔]
+
+
+74. Which of the following sentences is correctly structured?
+   ◉ I have been learning English for two years.  [✔]
+   ◯ I learning English for two years.  [✖]
+   ◯ I am learned English for two years.  [✖]
+   ◯ I have been learning English since two years ago.  [✖]
+
+
+75. Fill in the blank with the correct form of the verb: "If I ___ enough money, I will buy a new car."
+   ◉ have  [✔]
+   ◯ having  [✖]
+   ◯ has  [✖]
+   ◯ had  [✖]
+
+
+76. Translate the following sentence into English: "我昨天去看醫生。"
+   ◉ I went to see the doctor yesterday.  [✔]
+   ◯ I go to see the doctor yesterday.  [✖]
+   ◯ I seen the doctor yesterday.  [✖]
+   ◯ I was going to see the doctor yesterday.  [✖]
+
+
+77. Choose the correct form of the verb to complete the sentence: "If you ___ the instructions carefully, you will understand better."
+   ◉ read  [✔]
+   ◯ readed  [✖]
+   ◯ reads  [✖]
+   ◯ reading  [✖]
+
+
+78. Translate the following sentence into English: "他們正在準備考試。"
+   ◯ They prepared for the exam.  [✖]
+   ◯ They are preparing the exam.  [✖]
+   ◯ They prepare for the exam.  [✖]
+   ◉ They are preparing for the exam.  [✔]
+
+
+79. Choose the correct verb form to complete the sentence: "She ___ to the store every Saturday."
+   ◯ going  [✖]
+   ◉ goes  [✔]
+   ◯ gone  [✖]
+   ◯ go  [✖]
+
+
+80. Which of the following sentences correctly uses the future tense?
+   ◯ I visits my grandparents next week.  [✖]
+   ◉ I will visit my grandparents next week.  [✔]
+   ◯ I am visit my grandparents next week.  [✖]
+   ◯ I will visited my grandparents next week.  [✖]
+
+
+81. Choose the correct translation for the sentence: "我喜歡這部電影。"
+   ◯ I liked this movie.  [✖]
+   ◯ I liking this movie.  [✖]
+   ◉ I like this movie.  [✔]
+   ◯ I likes this movie.  [✖]
+
+
+82. Which of the following sentences is correctly structured?
+   ◯ I always wanted travel the world.  [✖]
+   ◉ I have always wanted to travel the world.  [✔]
+   ◯ I have always want to travel the world.  [✖]
+   ◯ I always want to traveling the world.  [✖]
+
+
+83. Choose the correct form of the verb to complete the sentence: "If you ___ hard, you will succeed."
+   ◯ works  [✖]
+   ◉ work  [✔]
+   ◯ working  [✖]
+   ◯ worked  [✖]
+
+
+84. Which sentence correctly uses the present perfect tense?
+   ◯ I seen that movie before.  [✖]
+   ◯ I seeing that movie before.  [✖]
+   ◯ I have saw that movie before.  [✖]
+   ◉ I have seen that movie before.  [✔]
+
+
+85. Translate the following sentence into English: "他每週都去游泳。"
+   ◯ He go swimming every week.  [✖]
+   ◯ He gone swimming every week.  [✖]
+   ◯ He is going to swim every week.  [✖]
+   ◉ He goes swimming every week.  [✔]
+
+
+86. Choose the correct verb form to complete the sentence: "She ___ to finish her project on time."
+   ◯ needed  [✖]
+   ◯ needing  [✖]
+   ◉ needs  [✔]
+   ◯ need  [✖]
+
+
+87. Translate the following sentence into Traditional Chinese: "I am going to the market."
+   ◉ 我去市場。  [✔]
+   ◯ 我在市場去。  [✖]
+   ◯ 我去的市場。  [✖]
+   ◯ 我市場去。  [✖]
+
+
+88. Choose the correct past tense form of the verb in the sentence: "Yesterday, he ___ his bike to school."
+   ◉ rode  [✔]
+   ◯ ride  [✖]
+   ◯ rides  [✖]
+   ◯ rided  [✖]
+
+
+89. Which of the following sentences is grammatically correct?
+   ◯ She has studying for three hours.  [✖]
+   ◯ She have been studying for three hours.  [✖]
+   ◉ She has been studying for three hours.  [✔]
+   ◯ She studied for three hour.  [✖]
+
+
+90. Fill in the blank with the correct verb form: "If it ___ tomorrow, we will stay inside."
+   ◯ rain  [✖]
+   ◯ raining  [✖]
+   ◯ rained  [✖]
+   ◉ rains  [✔]
+
+
+91. Choose the correct form of the verb to complete the sentence: "He ___ to the gym every morning before work."
+   ◯ gone  [✖]
+   ◯ going  [✖]
+   ◯ go  [✖]
+   ◉ goes  [✔]
+
+
+92. Translate the following sentence into English: "我昨天看了一部很有趣的電影。"
+   ◉ I watched a very interesting movie yesterday.  [✔]
+   ◯ I was watching a very interesting movie yesterday.  [✖]
+   ◯ I watch a very interesting movie yesterday.  [✖]
+   ◯ I seen a very interesting movie yesterday.  [✖]
+
+
+93. Which sentence is correctly punctuated?
+   ◯ I enjoy reading writing and painting.  [✖]
+   ◯ I enjoy, reading, writing and painting.  [✖]
+   ◯ I enjoy reading; writing and painting.  [✖]
+   ◉ I enjoy reading, writing, and painting.  [✔]
+
+
+94. What is the past tense of the verb "to go"?
+   ◉ Went  [✔]
+   ◯ Goed  [✖]
+   ◯ Go  [✖]
+   ◯ Going  [✖]
+
+
+95. Translate the following sentence into English: "她的狗很可愛。"
+   ◯ Her dog very cute.  [✖]
+   ◯ Her dog was very cute.  [✖]
+   ◉ Her dog is very cute.  [✔]
+   ◯ Her dogs are very cute.  [✖]
+
+
+96. Which of the following sentences is an example of the future perfect tense?
+   ◉ By next month, she will have completed her project.  [✔]
+   ◯ By next month, she completes her project.  [✖]
+   ◯ By next month, she will complete her project.  [✖]
+   ◯ By next month, she completed her project.  [✖]
+
+
+97. Choose the correct word to complete the sentence: "He is more ___ than his brother."
+   ◯ intelligently  [✖]
+   ◯ intelligenter  [✖]
+   ◯ most intelligent  [✖]
+   ◉ intelligent  [✔]
+
+
+98. Which sentence correctly uses the present continuous tense?
+   ◉ She is studying for her exam right now.  [✔]
+   ◯ She was studying for her exam right now.  [✖]
+   ◯ She study for her exam right now.  [✖]
+   ◯ She studies for her exam right now.  [✖]
+
+
+99. What is the correct past tense form of the verb in the sentence: "We ___ to the beach last summer."
+   ◯ go  [✖]
+   ◯ goed  [✖]
+   ◉ went  [✔]
+   ◯ goes  [✖]
+
+
+100. Which of the following sentences uses the correct form of the verb?
+   ◉ I have finished my homework.  [✔]
+   ◯ I have finish my homework.  [✖]
+   ◯ I has finished my homework.  [✖]
+   ◯ I finisheds my homework.  [✖]
