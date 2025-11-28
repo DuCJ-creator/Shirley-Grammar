@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shirley's Grammar E-Charger | 虛擬語氣學習平台</title>
+    <title>Shirley's Subjunctive Mood | 虛擬語氣學習平台</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     
@@ -71,9 +71,7 @@
             padding: 2rem;
         }
 
-        /* ------------------------------------------- */
-        /* --- 導航 Tabs --- */
-        /* ------------------------------------------- */
+        /* Tabs */
         .tabs {
             display: flex;
             justify-content: center;
@@ -114,10 +112,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* ------------------------------------------- */
-        /* --- 高級內容卡片 (Elegant Cards) --- */
-        /* ------------------------------------------- */
-        
+        /* Elegant Section Styling */
         .elegant-section {
             background: white;
             border-radius: 8px;
@@ -145,16 +140,40 @@
             color: #888;
         }
 
-        /* 規則區塊 */
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+            vertical-align: top;
+        }
+
+        th {
+            background-color: #f3e8ff; /* 淺紫表頭 */
+            color: var(--sub-primary);
+            font-weight: bold;
+            border-bottom: 2px solid var(--sub-primary);
+        }
+
+        tr:nth-child(even) {
+            background-color: #fcfaff;
+        }
+
+        /* Rules & Examples */
         .rule-block {
             margin-bottom: 2.5rem;
             padding-bottom: 2rem;
             border-bottom: 1px solid #eee;
         }
-
-        .rule-block:last-child {
-            border-bottom: none;
-        }
+        
+        .rule-block:last-child { border-bottom: none; }
 
         .rule-title {
             font-size: 1.2rem;
@@ -168,24 +187,9 @@
         .rule-title i {
             color: var(--sub-accent);
             margin-right: 10px;
-            font-size: 1rem;
         }
 
-        .grammar-formula {
-            background: var(--sub-bg);
-            padding: 1.2rem;
-            border-radius: 4px;
-            font-family: 'Courier New', monospace;
-            font-weight: bold;
-            color: #2e1065;
-            margin-bottom: 1rem;
-            border-left: 3px solid var(--sub-accent);
-        }
-
-        /* 例句列表 */
-        .example-list {
-            list-style: none;
-        }
+        .example-list { list-style: none; }
 
         .example-item {
             margin-bottom: 1.2rem;
@@ -207,47 +211,46 @@
             color: #2c3e50;
             font-weight: 500;
         }
-        
-        .highlight-purple {
-            color: var(--sub-secondary);
-            font-weight: bold;
-            background-color: rgba(91, 33, 182, 0.1);
-            padding: 0 4px;
-            border-radius: 2px;
-        }
 
         .cn-trans {
             font-size: 0.9rem;
             color: #7f8c8d;
             margin-top: 2px;
-            font-style: italic;
-        }
-
-        /* 關鍵詞標籤 */
-        .keyword-tag {
-            display: inline-block;
-            background: var(--sub-primary);
-            color: white;
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            margin-right: 5px;
-            margin-bottom: 5px;
-            font-weight: bold;
-            letter-spacing: 0.5px;
         }
         
-        /* 比較表格 (用於 Fact vs Unreal) */
-        .comparison-note {
-            background-color: #f9f9f9;
-            border: 1px dashed #ccc;
-            padding: 1rem;
-            border-radius: 4px;
-            margin-bottom: 1.5rem;
-            font-size: 0.95rem;
+        .highlight {
+            color: var(--sub-secondary);
+            font-weight: bold;
+            background: rgba(91, 33, 182, 0.05);
+            padding: 0 3px;
         }
 
-        /* --- 動畫演示區 --- */
+        .word-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        .keyword-tag {
+            background: var(--sub-bg);
+            color: var(--sub-primary);
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            border: 1px solid rgba(46, 16, 101, 0.1);
+        }
+
+        .note-box {
+            background-color: #fff8e1;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            color: #856404;
+        }
+
+        /* Animation Area */
         .anim-container {
             background: linear-gradient(135deg, var(--sub-primary), var(--sub-secondary));
             border-radius: 8px;
@@ -256,78 +259,47 @@
             color: white;
             margin-top: 3rem;
             box-shadow: 0 10px 25px rgba(46, 16, 101, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        /* 動態背景星光 */
-        .anim-container::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
-            animation: rotate 20s linear infinite;
-        }
-        
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
         }
 
         .anim-display {
             font-family: 'Playfair Display', serif;
-            font-size: 1.6rem;
-            min-height: 120px;
+            font-size: 1.5rem;
+            min-height: 100px;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             margin-bottom: 1.5rem;
             background: rgba(255,255,255,0.1);
             border-radius: 8px;
-            padding: 2rem;
-            position: relative;
-            z-index: 1;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255,255,255,0.1);
+            padding: 1rem;
+            border: 1px solid rgba(255,255,255,0.2);
         }
 
         .btn {
             background: var(--sub-accent);
             color: var(--sub-primary);
             border: none;
-            padding: 0.9rem 2.5rem;
+            padding: 0.8rem 2rem;
             border-radius: 50px;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
-            font-size: 1rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .btn:hover {
-            background: white;
-            transform: translateY(-2px);
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
-        }
-
-        /* 手機適配 */
-        @media (max-width: 768px) {
-            .section-title { font-size: 1.6rem; }
-            .container { padding: 1rem; }
-            .elegant-section { padding: 2rem 1.5rem; }
         }
         
+        .btn:hover { background: white; transform: translateY(-2px); }
+
         footer {
             text-align: center;
             padding: 2rem;
             color: #888;
             border-top: 1px solid #ddd;
             margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            table { font-size: 0.85rem; }
+            th, td { padding: 10px; }
+            .container { padding: 1rem; }
         }
     </style>
 </head>
@@ -337,88 +309,83 @@
         <h1>Shirley's Grammar E-Charger</h1>
         <p class="subtitle">The Realm of Possibility · 虛擬語氣學習平台</p>
     </header>
-
+   
         <div id="subjunctive" class="tab-content active">
             
             <div class="elegant-section">
                 <div class="section-header">
-                    <h2 class="section-title">Introduction</h2>
-                    <span class="section-subtitle">什麼是虛擬語氣？</span>
-                </div>
-                <div class="rule-block">
-                    <p>虛擬語氣 (Subjunctive Mood) 用來表達<strong>非事實</strong>、<strong>想像</strong>、<strong>願望</strong>或<strong>強烈建議</strong>。</p>
-                    <p>核心概念：<strong>「時間退一步」</strong>。現在的假設用過去式，過去的假設用過去完成式。</p>
-                </div>
-            </div>
-
-            <div class="elegant-section">
-                <div class="section-header">
-                    <h2 class="section-title">1. If Conditions</h2>
-                    <span class="section-subtitle">條件句與假設語氣</span>
+                    <h2 class="section-title">1. Conditional Sentences</h2>
+                    <span class="section-subtitle">條件句完整解析</span>
                 </div>
 
+                <div style="overflow-x:auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width:20%">類型</th>
+                                <th style="width:30%">結構</th>
+                                <th style="width:50%">例句</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Zero Conditional</strong><br>表達基本事實，沒有假設</td>
+                                <td>主句和子句都用現在簡單式</td>
+                                <td>
+                                    <div class="en-sentence">If you heat ice, it melts. (Ice melts if you heat it.)</div>
+                                    <div class="cn-trans">把冰加熱，冰就會融化。(這裏if 可以改成when)</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>First Conditional</strong><br>將來可能發生，但不保證一定發生</td>
+                                <td>主句：將來簡單式<br>子句：現在簡單式</td>
+                                <td>
+                                    <div class="en-sentence">You will miss the bus if you don't leave soon.</div>
+                                    <div class="cn-trans">你再不走就趕不上巴士了。</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Second Conditional</strong><br>將來基本不會發生(與將來事實相反)</td>
+                                <td>主句：情態助動詞(could, should, would, might)+ 動詞<br>子句：過去簡單式</td>
+                                <td>
+                                    <div class="en-sentence">If I inherited a billion dollars, I would travel to the moon.</div>
+                                    <div class="cn-trans">(如果我繼承了10億元，我就會到月球去旅行。)</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Third Conditional</strong><br>與過去事實相反</td>
+                                <td>主句：情態助動詞(could, should, would, might) + have done<br>子句：過去完成式 (had done)</td>
+                                <td>
+                                    <div class="en-sentence">She would have gone to your birthday party if she hadn't been sick.</div>
+                                    <div class="cn-trans">她如果沒有生病，就去你的生日會了。(即：她生病了，也沒有去生日會。所說的情形跟過去事實相反)</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="note-box">
+                    <strong>注意:</strong> 當條件子句放在主句前時，句子之間需要用逗號。
+                </div>
+
                 <div class="rule-block">
-                    <div class="rule-title"><i class="fas fa-check-circle"></i> Zero Conditional (事實與真理)</div>
-                    <div class="comparison-note">
-                        <strong>注意：</strong>這是「直陳語氣」(Real Condition)，表示<strong>科學事實</strong>或<strong>必然結果</strong>。
-                    </div>
-                    <div class="grammar-formula">
-                        If + S + <span class="highlight-purple">V (present)</span> ..., S + <span class="highlight-purple">V (present)</span> ...
-                    </div>
+                    <div class="rule-title"><i class="fas fa-random"></i> if 可以被省略 (倒裝)</div>
                     <ul class="example-list">
                         <li class="example-item">
-                            <div class="en-sentence">If you <span class="highlight-purple">heat</span> ice, it <span class="highlight-purple">melts</span>.</div>
-                            <div class="cn-trans">如果你加熱冰，它就會融化。(科學事實)</div>
+                            <div class="en-sentence">If I were you, I wouldn't get involved.</div>
+                            <div class="cn-trans">→ <span class="highlight">Were I you</span>, I wouldn't get involved.</div>
                         </li>
                         <li class="example-item">
-                            <div class="en-sentence">If I <span class="highlight-purple">am</span> late, my boss <span class="highlight-purple">gets</span> angry.</div>
-                            <div class="cn-trans">如果我遲到，我的老闆就會生氣。(習慣/必然)</div>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="rule-block">
-                    <div class="rule-title"><i class="fas fa-cloud-moon"></i> Present Unreal (與現在事實相反)</div>
-                    <div class="comparison-note">
-                        表示現在不可能發生的事情，或純粹的想像。be 動詞一律用 <strong>were</strong>。
-                    </div>
-                    <div class="grammar-formula">
-                        If + S + <span class="highlight-purple">V-ed / were</span> ..., S + <span class="highlight-purple">would/could/might</span> + V ...
-                    </div>
-                    <ul class="example-list">
-                        <li class="example-item">
-                            <div class="en-sentence">If I <span class="highlight-purple">were</span> you, I <span class="highlight-purple">would accept</span> the offer.</div>
-                            <div class="cn-trans">如果我是你，我就會接受這個提議。(事實：我不是你)</div>
+                            <div class="en-sentence">If I had known, I would have offered help.</div>
+                            <div class="cn-trans">→ <span class="highlight">Had I known</span>, I would have offered help.</div>
                         </li>
                         <li class="example-item">
-                            <div class="en-sentence">If I <span class="highlight-purple">had</span> enough money, I <span class="highlight-purple">would buy</span> that car.</div>
-                            <div class="cn-trans">如果我有足夠的錢，我就會買那輛車。(事實：我現在沒錢)</div>
+                            <div class="en-sentence">If you should have any questions, please email me.</div>
+                            <div class="cn-trans">→ <span class="highlight">Should you have</span> any questions, please email me.</div>
                         </li>
-                    </ul>
-                </div>
-
-                <div class="rule-block">
-                    <div class="rule-title"><i class="fas fa-history"></i> Past Unreal (與過去事實相反)</div>
-                    <div class="grammar-formula">
-                        If + S + <span class="highlight-purple">had + Vpp</span> ..., S + <span class="highlight-purple">would/could + have + Vpp</span> ...
-                    </div>
-                    <ul class="example-list">
                         <li class="example-item">
-                            <div class="en-sentence">If I <span class="highlight-purple">had known</span> the truth, I <span class="highlight-purple">would have told</span> you.</div>
-                            <div class="cn-trans">如果我當時知道真相，我就會告訴你了。(事實：我當時不知道，也沒告訴你)</div>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="rule-block">
-                    <div class="rule-title"><i class="fas fa-forward"></i> Future Unreal (與未來相反/萬一)</div>
-                    <div class="grammar-formula">
-                        If + S + <span class="highlight-purple">should / were to</span> + V ..., S + <span class="highlight-purple">would/could/will</span> + V ...
-                    </div>
-                    <ul class="example-list">
-                        <li class="example-item">
-                            <div class="en-sentence">If it <span class="highlight-purple">should rain</span> tomorrow, the picnic will be cancelled.</div>
-                            <div class="cn-trans">萬一明天下雨，野餐就會取消。</div>
+                            <div class="en-sentence">But for your help, we couldn't have succeeded in the experiment.</div>
+                            <div class="cn-trans">(如果沒有你的幫助，我們的實驗不會成功的。意思是：你幫助了我們，我們的實驗成功了。if 暗藏在文中。)</div>
                         </li>
                     </ul>
                 </div>
@@ -426,25 +393,75 @@
 
             <div class="elegant-section">
                 <div class="section-header">
-                    <h2 class="section-title">2. Wish & Desire</h2>
-                    <span class="section-subtitle">願望與遺憾</span>
+                    <h2 class="section-title">2. Mandative Subjunctive</h2>
+                    <span class="section-subtitle">表示「要求」、「命令」、「建議」的名詞子句</span>
                 </div>
 
                 <div class="rule-block">
-                    <div class="rule-title"><i class="fas fa-star"></i> Wish + 過去式 / 過去完成式</div>
-                    <p>表達「希望但不可能發生」的事情。</p>
+                    <div class="rule-title"><i class="fas fa-play-circle"></i> 動詞 (Verbs)</div>
+                    <p>主句的動詞表示請求，命令，建議，如：</p>
+                    <div class="word-cloud">
+                        <span class="keyword-tag">advise</span> <span class="keyword-tag">agree</span> <span class="keyword-tag">determine</span>
+                        <span class="keyword-tag">demand</span> <span class="keyword-tag">command</span> <span class="keyword-tag">request</span>
+                        <span class="keyword-tag">recommend</span> <span class="keyword-tag">require</span> <span class="keyword-tag">suggest</span>
+                        <span class="keyword-tag">urge</span> <span class="keyword-tag">order</span> <span class="keyword-tag">insist</span>
+                    </div>
                     <ul class="example-list">
                         <li class="example-item">
-                            <div class="en-sentence">I wish I <span class="highlight-purple">were</span> taller.</div>
-                            <div class="cn-trans">我希望我能高一點。(現在的遺憾)</div>
+                            <div class="en-sentence">I suggest that he (should) study for the upcoming exam.</div>
                         </li>
                         <li class="example-item">
-                            <div class="en-sentence">I wish I <span class="highlight-purple">had studied</span> harder last night.</div>
-                            <div class="cn-trans">我真希望我昨晚有更努力唸書。(過去的遺憾)</div>
+                            <div class="en-sentence">The audience demand that the media (should) provide unbiased and unprejudiced information every day.</div>
                         </li>
                         <li class="example-item">
-                            <div class="en-sentence"><strong>If only</strong> I <span class="highlight-purple">could fly</span>!</div>
-                            <div class="cn-trans">如果我會飛就好了！(語氣比 wish 更強烈)</div>
+                            <div class="en-sentence">Many citizens require that the bars (should) be closed before 1 am.</div>
+                        </li>
+                        <li class="example-item">
+                            <div class="en-sentence">The boss requests that all the employees (should) be notified of the meeting tomorrow.</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="rule-block">
+                    <div class="rule-title"><i class="fas fa-book"></i> 名詞 (Nouns)</div>
+                    <p>表示請求, 命令, 建議的名詞, 如：</p>
+                    <div class="word-cloud">
+                        <span class="keyword-tag">advice</span> <span class="keyword-tag">agreement</span> <span class="keyword-tag">command</span>
+                        <span class="keyword-tag">decision</span> <span class="keyword-tag">demand</span> <span class="keyword-tag">determination</span>
+                        <span class="keyword-tag">insistence</span> <span class="keyword-tag">preference</span> <span class="keyword-tag">proposal</span>
+                        <span class="keyword-tag">request</span> <span class="keyword-tag">requirement</span> <span class="keyword-tag">order</span>
+                    </div>
+                    <ul class="example-list">
+                        <li class="example-item">
+                            <div class="en-sentence">They made a suggestion that we (should) be early.</div>
+                        </li>
+                        <li class="example-item">
+                            <div class="en-sentence">He made a proposal that the company (should) buy more land.</div>
+                        </li>
+                        <li class="example-item">
+                            <div class="en-sentence">He requested that the car park (should) not be locked at night.</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="rule-block">
+                    <div class="rule-title"><i class="fas fa-star"></i> 形容詞 (Adjectives)</div>
+                    <p>表示請求, 命令, 建議的形容詞, 如：</p>
+                    <div class="word-cloud">
+                        <span class="keyword-tag">advisable</span> <span class="keyword-tag">anxious</span> <span class="keyword-tag">urgent</span>
+                        <span class="keyword-tag">crucial</span> <span class="keyword-tag">desirable</span> <span class="keyword-tag">vital</span>
+                        <span class="keyword-tag">important</span> <span class="keyword-tag">natural</span> <span class="keyword-tag">necessary</span>
+                        <span class="keyword-tag">compulsory</span> <span class="keyword-tag">imperative</span>
+                    </div>
+                    <ul class="example-list">
+                        <li class="example-item">
+                            <div class="en-sentence">It is advisable that she (should) take a vacation for a week.</div>
+                        </li>
+                        <li class="example-item">
+                            <div class="en-sentence">It was essential that the technology (should) advance rapidly.</div>
+                        </li>
+                        <li class="example-item">
+                            <div class="en-sentence">They are keen that he (should) not be hurt.</div>
                         </li>
                     </ul>
                 </div>
@@ -452,82 +469,59 @@
 
             <div class="elegant-section">
                 <div class="section-header">
-                    <h2 class="section-title">3. The Mandative</h2>
-                    <span class="section-subtitle">命令、建議、要求</span>
+                    <h2 class="section-title">3. Usage of Wish</h2>
+                    <span class="section-subtitle">表示 wish：與現在, 將來，或過去相反</span>
                 </div>
 
-                <div class="rule-block">
-                    <p>表示建議、命令、要求的動詞或形容詞後面的 that 子句，動詞必須用<strong>原形動詞 (Root Verb)</strong>，因為省略了 should。</p>
-                    <div class="grammar-formula">
-                        S + V (suggest/order...) + that + S + (should) + <span class="highlight-purple">V (root)</span>
-                    </div>
-                </div>
-
-                <div class="rule-block">
-                    <div class="rule-title"><i class="fas fa-gavel"></i> Key Words</div>
-                    <div style="margin-bottom:1rem;">
-                        <span class="keyword-tag">Suggest</span>
-                        <span class="keyword-tag">Recommend</span>
-                        <span class="keyword-tag">Insist</span>
-                        <span class="keyword-tag">Order</span>
-                        <span class="keyword-tag">Demand</span>
-                        <span class="keyword-tag">Request</span>
-                        <span class="keyword-tag">Essential</span>
-                        <span class="keyword-tag">Vital</span>
-                        <span class="keyword-tag">Crucial</span>
-                    </div>
-                    <ul class="example-list">
-                        <li class="example-item">
-                            <div class="en-sentence">I suggest that he <span class="highlight-purple">finish</span> the work now.</div>
-                            <div class="cn-trans">我建議他現在完成工作。(注意：不是 finishes)</div>
-                        </li>
-                        <li class="example-item">
-                            <div class="en-sentence">The doctor insisted that she <span class="highlight-purple">stay</span> in bed.</div>
-                            <div class="cn-trans">醫生堅持她臥床休息。(注意：不是 stayed)</div>
-                        </li>
-                        <li class="example-item">
-                            <div class="en-sentence">It is essential that everyone <span class="highlight-purple">be</span> on time.</div>
-                            <div class="cn-trans">每個人準時是至關重要的。(注意：用 be 而不是 are)</div>
-                        </li>
-                    </ul>
-                </div>
+                <ul class="example-list">
+                    <li class="example-item">
+                        <div class="en-sentence">I wish I were home.</div>
+                        <div class="cn-trans">(我希望我在家。意思是: 我現在不在家。)</div>
+                    </li>
+                    <li class="example-item">
+                        <div class="en-sentence">I wish it would rain tomorrow.</div>
+                        <div class="cn-trans">(我希望明天下雨。意思是: 明天不會下雨。)</div>
+                    </li>
+                    <li class="example-item">
+                        <div class="en-sentence">I wish I could not have left my laptop in your home.</div>
+                        <div class="cn-trans">(我希望我沒有把筆電落在家。意思是: 我把筆電落在家裡了。)</div>
+                    </li>
+                </ul>
             </div>
 
             <div class="elegant-section">
                 <div class="section-header">
-                    <h2 class="section-title">4. Special Cases</h2>
-                    <span class="section-subtitle">其他虛擬句型</span>
+                    <h2 class="section-title">4. Special Structures</h2>
+                    <span class="section-subtitle">一些常見特殊結構表假設</span>
                 </div>
 
                 <div class="rule-block">
-                    <div class="rule-title"><i class="fas fa-theater-masks"></i> As if / As though (彷彿)</div>
+                    <div class="rule-title"><i class="fas fa-clock"></i> It's time / It's high time</div>
+                    <p>是...的時候了：子句用過去式。表達在時間上已經有一點晚了。</p>
                     <ul class="example-list">
-                        <li class="example-item">
-                            <div class="en-sentence">He talks as if he <span class="highlight-purple">knew</span> everything.</div>
-                            <div class="cn-trans">他講起話來好像他什麼都知道一樣。(其實不知道)</div>
-                        </li>
+                        <li class="example-item"><div class="en-sentence">It’s time we went home.</div></li>
+                        <li class="example-item"><div class="en-sentence">It's time we started packing.</div></li>
+                        <li class="example-item"><div class="en-sentence">It’s high time I bought a new computer.</div></li>
                     </ul>
                 </div>
 
                 <div class="rule-block">
-                    <div class="rule-title"><i class="fas fa-hourglass-half"></i> It is (high) time (該是...的時候了)</div>
-                    <div class="grammar-formula">It is time + S + <span class="highlight-purple">V-ed (過去式)</span></div>
+                    <div class="rule-title"><i class="fas fa-balance-scale"></i> Would rather</div>
+                    <p>寧願：當主句的主詞與子句的主詞不一樣時，子句用過去式。</p>
                     <ul class="example-list">
-                        <li class="example-item">
-                            <div class="en-sentence">It is high time we <span class="highlight-purple">went</span> home.</div>
-                            <div class="cn-trans">我們該回家了。(暗示動作有點晚了)</div>
-                        </li>
+                        <li class="example-item"><div class="en-sentence">I would rather (that) you came another time.</div></li>
+                        <li class="example-item"><div class="en-sentence">She’d rather (that) he weren't so angry.</div></li>
                     </ul>
                 </div>
             </div>
 
             <div class="anim-container">
-                <h3 style="margin-bottom:1rem; font-family:'Playfair Display',serif;">Fact vs. Imagination</h3>
+                <h3 style="margin-bottom:1rem; font-family:'Playfair Display',serif;">Fact vs. Subjunctive Demo</h3>
                 <div class="anim-display" id="animDisplay">
-                    點擊按鈕開始演示
+                    Click Start to see examples
                 </div>
                 <button class="btn" id="animBtn" onclick="toggleAnimation()">
-                    <i class="fas fa-play"></i> Start Transformation
+                    <i class="fas fa-play"></i> Start Demo
                 </button>
             </div>
 
@@ -545,11 +539,11 @@
         const btn = document.getElementById('animBtn');
         
         const examples = [
-            { fact: "If you heat ice, it melts.", subjunctive: "(Zero Conditional: Fact)" },
-            { fact: "I am not a bird.", subjunctive: "If I <span style='color:#d4af37'>were</span> a bird, I could fly." },
-            { fact: "I didn't study yesterday.", subjunctive: "I wish I <span style='color:#d4af37'>had studied</span> yesterday." },
-            { fact: "He is late. (My suggestion)", subjunctive: "I suggest that he <span style='color:#d4af37'>be</span> on time." },
-            { fact: "She doesn't know the answer.", subjunctive: "She acts as if she <span style='color:#d4af37'>knew</span> the answer." }
+            { fact: "Zero Conditional (Fact)", text: "If you heat ice, it melts." },
+            { fact: "Fact: I am not you.", text: "If I <span style='color:#d4af37'>were</span> you, I wouldn't get involved." },
+            { fact: "Fact: I'm not home.", text: "I wish I <span style='color:#d4af37'>were</span> home." },
+            { fact: "Suggestion", text: "I suggest that he <span style='color:#d4af37'>study</span> for the exam." },
+            { fact: "Fact: It's getting late.", text: "It's high time we <span style='color:#d4af37'>went</span> home." }
         ];
 
         let currentIndex = 0;
@@ -561,7 +555,7 @@
                 isPlaying = false;
             } else {
                 playSequence();
-                intervalId = setInterval(playSequence, 4500); // 延長時間方便閱讀
+                intervalId = setInterval(playSequence, 4000);
                 btn.innerHTML = '<i class="fas fa-pause"></i> Pause';
                 isPlaying = true;
             }
@@ -570,40 +564,12 @@
         function playSequence() {
             const item = examples[currentIndex];
             
-            // 如果是 Zero Conditional，顯示特別的邏輯
-            if (currentIndex === 0) {
-                 display.style.opacity = 0;
-                 setTimeout(() => {
-                    display.innerHTML = `<span style="font-size:0.8rem; display:block; color:#ccc; margin-bottom:10px; letter-spacing:2px;">ZERO CONDITIONAL (FACT)</span>${item.fact}`;
-                    display.style.opacity = 1;
-                    display.style.background = 'rgba(255,255,255,0.1)';
-                 }, 500);
-            } else {
-                // 一般 Subjunctive 邏輯
-                // Step 1: Show Fact
-                display.style.opacity = 0;
-                display.style.transform = 'scale(0.95)';
-                display.style.transition = 'all 0.5s ease';
-                
-                setTimeout(() => {
-                    display.innerHTML = `<span style="font-size:0.8rem; display:block; color:#ccc; margin-bottom:10px; letter-spacing:2px;">REALITY (FACT)</span>${item.fact}`;
-                    display.style.opacity = 1;
-                    display.style.transform = 'scale(1)';
-                    display.style.background = 'rgba(255,255,255,0.1)';
-                }, 500);
-
-                // Step 2: Show Subjunctive
-                setTimeout(() => {
-                    display.style.opacity = 0;
-                    display.style.transform = 'scale(0.95)';
-                    setTimeout(() => {
-                        display.innerHTML = `<span style="font-size:0.8rem; display:block; color:#d4af37; margin-bottom:10px; letter-spacing:2px;">SUBJUNCTIVE MOOD</span>${item.subjunctive}`;
-                        display.style.opacity = 1;
-                        display.style.transform = 'scale(1)';
-                        display.style.background = 'rgba(46, 16, 101, 0.4)'; 
-                    }, 500);
-                }, 2500);
-            }
+            // Show label
+            display.style.opacity = 0;
+            setTimeout(() => {
+                display.innerHTML = `<span style="font-size:0.8rem; display:block; color:#ccc; margin-bottom:10px;">${item.fact}</span>${item.text}`;
+                display.style.opacity = 1;
+            }, 500);
 
             currentIndex = (currentIndex + 1) % examples.length;
         }
