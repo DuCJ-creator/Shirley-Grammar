@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shirley's Subjunctive Mood | 虛擬語氣學習</title>
+    <title>Shirley's Grammar E-Charger | 虛擬語氣學習平台</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     
@@ -13,10 +13,10 @@
             --sub-primary: #2e1065;   /* 深紫羅蘭 (主色) */
             --sub-secondary: #5b21b6; /* 亮紫色 (漸層用) */
             --sub-accent: #d4af37;    /* 香檳金 (點綴) */
-            --sub-light: #f3e8ff;     /* 極淡紫 (背景微調) */
-            --white: #ffffff;
+            --sub-bg: #f3e8ff;        /* 淺紫背景 */
+            --sub-light-bg: #fcfaff;  /* 頁面背景 */
             --text-dark: #2c3e50;
-            --text-grey: #666666;
+            --white: #ffffff;
         }
         
         * {
@@ -27,16 +27,16 @@
         }
         
         body {
-            background-color: #fcfaff; /* 帶紫調的暖白背景 */
+            background-color: var(--sub-light-bg);
             color: var(--text-dark);
             line-height: 1.7;
         }
         
-        /* --- Header 設計 --- */
+        /* Header */
         header {
             background: linear-gradient(135deg, #1e0542, #3b0764);
             color: white;
-            padding: 3rem 1.5rem;
+            padding: 2.5rem 1.5rem;
             text-align: center;
             position: relative;
             box-shadow: 0 4px 20px rgba(46, 16, 101, 0.3);
@@ -56,7 +56,6 @@
             font-family: 'Playfair Display', serif;
             font-size: 2.5rem;
             margin-bottom: 0.5rem;
-            letter-spacing: 1px;
         }
         
         .subtitle {
@@ -64,188 +63,195 @@
             font-style: italic;
             font-size: 1.2rem;
             color: var(--sub-accent);
-            opacity: 0.9;
         }
         
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 3rem 1.5rem;
+            padding: 2rem;
         }
 
-        /* --- 高級模組樣式 (Elegant Module) --- */
-        .elegant-wrapper {
-            background-color: var(--white);
-            padding: 4rem 2rem;
-            border-radius: 8px;
-            position: relative;
-            margin-bottom: 3rem;
-            box-shadow: 0 10px 40px rgba(46, 16, 101, 0.08);
-            text-align: center;
-            border-top: 5px solid var(--sub-primary); /* 頂部深紫色線條 */
-        }
-
-        .elegant-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 3rem;
-            color: var(--sub-primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .elegant-subtitle {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            color: #888;
-            margin-bottom: 3.5rem;
-            font-size: 1.3rem;
-            display: block;
-        }
-
-        /* 卡片網格 */
-        .elegant-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-
-        /* 卡片設計 */
-        .elegant-card {
-            background: #ffffff;
-            border: 1px solid rgba(46, 16, 101, 0.1);
-            padding: 2.5rem 2rem;
-            text-align: center;
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-            position: relative;
-            border-radius: 6px;
-        }
-
-        .elegant-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(46, 16, 101, 0.15);
-            border-color: var(--sub-primary);
-        }
-
-        /* 圖標盒子 */
-        .elegant-icon-box {
-            font-size: 1.8rem;
-            color: var(--white);
-            background-color: var(--sub-primary);
-            width: 70px;
-            height: 70px;
-            line-height: 70px;
-            border-radius: 50%;
-            margin: 0 auto 1.5rem;
-            box-shadow: 0 5px 15px rgba(46, 16, 101, 0.3);
-            transition: all 0.4s ease;
-        }
-
-        .elegant-card:hover .elegant-icon-box {
-            background-color: var(--sub-accent); /* 懸停變金 */
-            color: white;
-            transform: rotate(360deg); /* 旋轉特效 */
-        }
-
-        .card-heading {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            color: var(--text-dark);
-            margin-bottom: 1rem;
-            font-weight: 700;
-        }
-
-        .card-text {
-            font-size: 0.95rem;
-            color: var(--text-grey);
-            margin-bottom: 1.5rem;
-            line-height: 1.8;
-        }
-
-        /* 分隔線 */
-        .divider-line {
-            width: 30px;
-            height: 1px;
-            background-color: #ddd;
-            margin: 1.5rem auto;
-            transition: width 0.3s ease;
-        }
-
-        .elegant-card:hover .divider-line {
-            width: 60px;
-            background-color: var(--sub-primary);
-        }
-
-        /* 列表樣式 */
-        .detail-list {
-            padding: 0;
-            margin: 0;
-        }
-
-        .detail-list li {
-            list-style: none;
-            text-align: left;
-            margin-bottom: 15px;
-            font-size: 0.95rem;
-            color: #555;
+        /* ------------------------------------------- */
+        /* --- 導航 Tabs --- */
+        /* ------------------------------------------- */
+        .tabs {
             display: flex;
-            align-items: flex-start;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 3rem;
         }
         
-        .detail-list li i {
+        .tab {
+            padding: 1rem 2rem;
+            cursor: pointer;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            background: white;
+            border: 1px solid #ddd;
+            color: #666;
+        }
+        
+        .tab.active {
+            background: var(--sub-primary);
             color: var(--sub-accent);
-            margin-right: 12px;
-            margin-top: 6px;
-            font-size: 0.6rem;
+            border-color: var(--sub-primary);
+            box-shadow: 0 5px 15px rgba(46, 16, 101, 0.3);
         }
 
-        .detail-example {
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.6s ease;
+        }
+        
+        .tab-content.active {
             display: block;
-            font-style: italic;
-            color: #888;
-            font-size: 0.9rem;
-            margin-top: 4px;
-            border-left: 2px solid var(--sub-accent);
-            padding-left: 8px;
-            margin-left: 0;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- 動畫互動區 --- */
-        .interactive-section {
-            margin-top: 5rem;
-            padding-top: 3rem;
-            border-top: 1px solid #eee;
+        /* ------------------------------------------- */
+        /* --- 高級內容卡片 (Elegant Cards) --- */
+        /* ------------------------------------------- */
+        
+        .elegant-section {
+            background: white;
+            border-radius: 8px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(46, 16, 101, 0.08);
+            border-top: 4px solid var(--sub-primary);
+        }
+
+        .section-header {
             text-align: center;
+            margin-bottom: 2.5rem;
         }
 
         .section-title {
             font-family: 'Playfair Display', serif;
+            font-size: 2rem;
             color: var(--sub-primary);
-            margin-bottom: 2rem;
-            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
         }
 
-        .anim-box {
-            background: linear-gradient(135deg, var(--sub-primary), var(--sub-secondary));
+        .section-subtitle {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: #888;
+        }
+
+        /* 規則區塊 */
+        .rule-block {
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .rule-block:last-child {
+            border-bottom: none;
+        }
+
+        .rule-title {
+            font-size: 1.2rem;
+            color: var(--sub-primary);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .rule-title i {
+            color: var(--sub-accent);
+            margin-right: 10px;
+            font-size: 1rem;
+        }
+
+        .grammar-formula {
+            background: var(--sub-bg);
+            padding: 1.2rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #2e1065;
+            margin-bottom: 1rem;
+            border-left: 3px solid var(--sub-accent);
+        }
+
+        /* 例句列表 */
+        .example-list {
+            list-style: none;
+        }
+
+        .example-item {
+            margin-bottom: 1.2rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+
+        .example-item::before {
+            content: '✦';
+            color: var(--sub-accent);
+            position: absolute;
+            left: -5px;
+            font-size: 0.8rem;
+            top: 4px;
+        }
+
+        .en-sentence {
+            font-size: 1.05rem;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+        
+        .highlight-purple {
+            color: var(--sub-secondary);
+            font-weight: bold;
+            background-color: rgba(91, 33, 182, 0.1);
+            padding: 0 4px;
+            border-radius: 2px;
+        }
+
+        .cn-trans {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-top: 2px;
+            font-style: italic;
+        }
+
+        /* 關鍵詞標籤 */
+        .keyword-tag {
+            display: inline-block;
+            background: var(--sub-primary);
             color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        /* --- 動畫演示區 --- */
+        .anim-container {
+            background: linear-gradient(135deg, var(--sub-primary), var(--sub-secondary));
             border-radius: 8px;
             padding: 3rem;
-            margin: 0 auto;
-            max-width: 800px;
-            min-height: 200px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Playfair Display', serif;
-            font-size: 1.6rem;
-            box-shadow: 0 15px 35px rgba(46, 16, 101, 0.25);
+            text-align: center;
+            color: white;
+            margin-top: 3rem;
+            box-shadow: 0 10px 25px rgba(46, 16, 101, 0.3);
             position: relative;
             overflow: hidden;
         }
         
-        /* 夢幻背景特效 */
-        .anim-box::before {
+        /* 動態背景星光 */
+        .anim-container::before {
             content: '';
             position: absolute;
             top: -50%;
@@ -253,86 +259,64 @@
             width: 200%;
             height: 200%;
             background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
-            animation: pulse 4s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.1); opacity: 0.8; }
-            100% { transform: scale(1); opacity: 0.5; }
+            animation: rotate 20s linear infinite;
         }
         
-        .anim-label {
-            font-family: 'Lato', sans-serif;
-            font-size: 0.85rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 15px;
-            opacity: 0.7;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .anim-text {
-            position: relative;
-            z-index: 1;
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
-        .anim-controls {
+        .anim-display {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            min-height: 120px;
             display: flex;
+            flex-direction: column;
+            align-items: center;
             justify-content: center;
-            gap: 15px;
-            margin-top: 2rem;
+            margin-bottom: 1.5rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .btn {
+            background: var(--sub-accent);
+            color: var(--sub-primary);
             border: none;
             padding: 0.9rem 2.5rem;
             border-radius: 50px;
-            cursor: pointer;
             font-weight: bold;
-            letter-spacing: 1px;
+            cursor: pointer;
             transition: all 0.3s;
-            color: white;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             font-size: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .btn-play {
-            background: var(--sub-primary);
+            position: relative;
+            z-index: 1;
         }
 
-        .btn-play:hover {
-            background: var(--sub-secondary);
+        .btn:hover {
+            background: white;
             transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(46, 16, 101, 0.2);
-        }
-        
-        .btn-pause {
-            background: #95a5a6;
-        }
-        
-        .btn-pause:hover {
-            background: #7f8c8d;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
         }
 
         /* 手機適配 */
         @media (max-width: 768px) {
-            .elegant-title { font-size: 2.2rem; }
-            .container { padding: 1.5rem; }
-            .elegant-wrapper { padding: 2rem 1rem; }
-            .anim-box { padding: 2rem 1rem; font-size: 1.3rem; }
+            .section-title { font-size: 1.6rem; }
+            .container { padding: 1rem; }
+            .elegant-section { padding: 2rem 1.5rem; }
         }
         
         footer {
             text-align: center;
             padding: 2rem;
             color: #888;
-            font-size: 0.9rem;
-            border-top: 1px solid #eee;
+            border-top: 1px solid #ddd;
             margin-top: 3rem;
         }
     </style>
@@ -341,183 +325,244 @@
 
     <header>
         <h1>Shirley's Grammar E-Charger</h1>
-        <p class="subtitle">The Art of Language · 高級語法學習平台</p>
+        <p class="subtitle">The Realm of Possibility · 虛擬語氣學習平台</p>
     </header>
-    
-    <div class="container">
-        <div class="elegant-wrapper">
-            <h2 class="elegant-title">The Realm of Possibility</h2>
-            <span class="elegant-subtitle">Part IV: Subjunctive Mood · 想像與願望</span>
 
-            <div class="elegant-grid">
-                
-                <div class="elegant-card">
-                    <div class="elegant-icon-box">
-                        <i class="fas fa-cloud-moon"></i>
+        <div id="subjunctive" class="tab-content active">
+            
+            <div class="elegant-section">
+                <div class="section-header">
+                    <h2 class="section-title">Introduction</h2>
+                    <span class="section-subtitle">什麼是虛擬語氣？</span>
+                </div>
+                <div class="rule-block">
+                    <p>虛擬語氣 (Subjunctive Mood) 用來表達<strong>非事實</strong>、<strong>想像</strong>、<strong>願望</strong>或<strong>強烈建議</strong>。</p>
+                    <p>核心概念：<strong>「時間退一步」</strong>。現在的假設用過去式，過去的假設用過去完成式。</p>
+                </div>
+            </div>
+
+            <div class="elegant-section">
+                <div class="section-header">
+                    <h2 class="section-title">1. If Conditions</h2>
+                    <span class="section-subtitle">與事實相反的假設</span>
+                </div>
+
+                <div class="rule-block">
+                    <div class="rule-title"><i class="fas fa-clock"></i> Present Unreal (與現在事實相反)</div>
+                    <div class="grammar-formula">
+                        If + S + <span class="highlight-purple">V-ed / were</span> ..., S + <span class="highlight-purple">would/could/might</span> + V ...
                     </div>
-                    <h3 class="card-heading">The Unreal</h3>
-                    <p class="card-text">
-                        表達與事實相反的假設。過去式表示現在的假設，過去完成式表示過去的假設。
-                    </p>
-                    <div class="divider-line"></div>
-                    <ul class="detail-list">
-                        <li>
-                            <i class="fas fa-circle"></i> 
-                            <div>
-                                <strong>Present Unreal:</strong> If I were...
-                                <span class="detail-example">"If I were you, I would go."</span>
-                            </div>
+                    <ul class="example-list">
+                        <li class="example-item">
+                            <div class="en-sentence">If I <span class="highlight-purple">were</span> you, I <span class="highlight-purple">would accept</span> the offer.</div>
+                            <div class="cn-trans">如果我是你，我就會接受這個提議。(事實：我不是你)</div>
                         </li>
-                        <li>
-                            <i class="fas fa-circle"></i> 
-                            <div>
-                                <strong>Past Unreal:</strong> If I had known...
-                                <span class="detail-example">"If I had known, I would have helped."</span>
-                            </div>
+                        <li class="example-item">
+                            <div class="en-sentence">If I <span class="highlight-purple">had</span> enough money, I <span class="highlight-purple">would buy</span> that car.</div>
+                            <div class="cn-trans">如果我有足夠的錢，我就會買那輛車。(事實：我現在沒錢)</div>
                         </li>
                     </ul>
                 </div>
 
-                <div class="elegant-card">
-                    <div class="elegant-icon-box">
-                        <i class="fas fa-magic"></i>
+                <div class="rule-block">
+                    <div class="rule-title"><i class="fas fa-history"></i> Past Unreal (與過去事實相反)</div>
+                    <div class="grammar-formula">
+                        If + S + <span class="highlight-purple">had + Vpp</span> ..., S + <span class="highlight-purple">would/could + have + Vpp</span> ...
                     </div>
-                    <h3 class="card-heading">The Desire</h3>
-                    <p class="card-text">
-                        使用 <strong>Wish</strong> 或 <strong>If only</strong> 來表達無法實現的願望或遺憾。
-                    </p>
-                    <div class="divider-line"></div>
-                    <ul class="detail-list">
-                        <li>
-                            <i class="fas fa-circle"></i> 
-                            <div>
-                                <strong>Regret:</strong> I wish I had...
-                                <span class="detail-example">"I wish I had studied harder."</span>
-                            </div>
-                        </li>
-                        <li>
-                            <i class="fas fa-circle"></i> 
-                            <div>
-                                <strong>Desire:</strong> I wish I could...
-                                <span class="detail-example">"If only I could fly."</span>
-                            </div>
+                    <ul class="example-list">
+                        <li class="example-item">
+                            <div class="en-sentence">If I <span class="highlight-purple">had known</span> the truth, I <span class="highlight-purple">would have told</span> you.</div>
+                            <div class="cn-trans">如果我當時知道真相，我就會告訴你了。(事實：我當時不知道，也沒告訴你)</div>
                         </li>
                     </ul>
                 </div>
 
-                <div class="elegant-card">
-                    <div class="elegant-icon-box">
-                        <i class="fas fa-gavel"></i>
+                <div class="rule-block">
+                    <div class="rule-title"><i class="fas fa-forward"></i> Future Unreal (與未來相反/萬一)</div>
+                    <div class="grammar-formula">
+                        If + S + <span class="highlight-purple">should / were to</span> + V ..., S + <span class="highlight-purple">would/could/will</span> + V ...
                     </div>
-                    <h3 class="card-heading">The Mandate</h3>
-                    <p class="card-text">
-                        在表示建議、命令、要求的動詞後，名詞子句需使用原形動詞 (省略 should)。
-                    </p>
-                    <div class="divider-line"></div>
-                    <ul class="detail-list">
-                        <li>
-                            <i class="fas fa-circle"></i> 
-                            <div>
-                                <strong>Suggest/Order:</strong> that he (should) do...
-                                <span class="detail-example">"I suggest that he be present."</span>
-                            </div>
-                        </li>
-                        <li>
-                            <i class="fas fa-circle"></i> 
-                            <div>
-                                <strong>Adjectives:</strong> essential / vital
-                                <span class="detail-example">"It is vital that she arrive on time."</span>
-                            </div>
+                    <ul class="example-list">
+                        <li class="example-item">
+                            <div class="en-sentence">If it <span class="highlight-purple">should rain</span> tomorrow, the picnic will be cancelled.</div>
+                            <div class="cn-trans">萬一明天下雨，野餐就會取消。</div>
                         </li>
                     </ul>
                 </div>
             </div>
 
-            <div class="interactive-section">
-                <h3 class="section-title">Fact vs. Imagination</h3>
-                
-                <div class="anim-box" id="anim-box">
-                    <span class="anim-label" id="anim-label">REALITY (FACT)</span>
-                    <div class="anim-text" id="anim-text">I am not a bird, so I cannot fly.</div>
+            <div class="elegant-section">
+                <div class="section-header">
+                    <h2 class="section-title">2. Wish & Desire</h2>
+                    <span class="section-subtitle">願望與遺憾</span>
                 </div>
-                
-                <div class="anim-controls">
-                    <button class="btn btn-play" id="playBtn" onclick="playSubAnimation()">
-                        <i class="fas fa-play"></i> Start Demo
-                    </button>
-                    <button class="btn btn-pause" id="pauseBtn" onclick="pauseAnim()">
-                        <i class="fas fa-pause"></i> Pause
-                    </button>
+
+                <div class="rule-block">
+                    <div class="rule-title"><i class="fas fa-star"></i> Wish + 過去式 / 過去完成式</div>
+                    <p>表達「希望但不可能發生」的事情。</p>
+                    <ul class="example-list">
+                        <li class="example-item">
+                            <div class="en-sentence">I wish I <span class="highlight-purple">were</span> taller.</div>
+                            <div class="cn-trans">我希望我能高一點。(現在的遺憾)</div>
+                        </li>
+                        <li class="example-item">
+                            <div class="en-sentence">I wish I <span class="highlight-purple">had studied</span> harder last night.</div>
+                            <div class="cn-trans">我真希望我昨晚有更努力唸書。(過去的遺憾)</div>
+                        </li>
+                        <li class="example-item">
+                            <div class="en-sentence"><strong>If only</strong> I <span class="highlight-purple">could fly</span>!</div>
+                            <div class="cn-trans">如果我會飛就好了！(語氣比 wish 更強烈)</div>
+                        </li>
+                    </ul>
                 </div>
             </div>
+
+            <div class="elegant-section">
+                <div class="section-header">
+                    <h2 class="section-title">3. The Mandative</h2>
+                    <span class="section-subtitle">命令、建議、要求</span>
+                </div>
+
+                <div class="rule-block">
+                    <p>表示建議、命令、要求的動詞或形容詞後面的 that 子句，動詞必須用<strong>原形動詞 (Root Verb)</strong>，因為省略了 should。</p>
+                    <div class="grammar-formula">
+                        S + V (suggest/order...) + that + S + (should) + <span class="highlight-purple">V (root)</span>
+                    </div>
+                </div>
+
+                <div class="rule-block">
+                    <div class="rule-title"><i class="fas fa-gavel"></i> Key Words</div>
+                    <div style="margin-bottom:1rem;">
+                        <span class="keyword-tag">Suggest</span>
+                        <span class="keyword-tag">Recommend</span>
+                        <span class="keyword-tag">Insist</span>
+                        <span class="keyword-tag">Order</span>
+                        <span class="keyword-tag">Demand</span>
+                        <span class="keyword-tag">Request</span>
+                        <span class="keyword-tag">Essential</span>
+                        <span class="keyword-tag">Vital</span>
+                        <span class="keyword-tag">Crucial</span>
+                    </div>
+                    <ul class="example-list">
+                        <li class="example-item">
+                            <div class="en-sentence">I suggest that he <span class="highlight-purple">finish</span> the work now.</div>
+                            <div class="cn-trans">我建議他現在完成工作。(注意：不是 finishes)</div>
+                        </li>
+                        <li class="example-item">
+                            <div class="en-sentence">The doctor insisted that she <span class="highlight-purple">stay</span> in bed.</div>
+                            <div class="cn-trans">醫生堅持她臥床休息。(注意：不是 stayed)</div>
+                        </li>
+                        <li class="example-item">
+                            <div class="en-sentence">It is essential that everyone <span class="highlight-purple">be</span> on time.</div>
+                            <div class="cn-trans">每個人準時是至關重要的。(注意：用 be 而不是 are)</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="elegant-section">
+                <div class="section-header">
+                    <h2 class="section-title">4. Special Cases</h2>
+                    <span class="section-subtitle">其他虛擬句型</span>
+                </div>
+
+                <div class="rule-block">
+                    <div class="rule-title"><i class="fas fa-theater-masks"></i> As if / As though (彷彿)</div>
+                    <ul class="example-list">
+                        <li class="example-item">
+                            <div class="en-sentence">He talks as if he <span class="highlight-purple">knew</span> everything.</div>
+                            <div class="cn-trans">他講起話來好像他什麼都知道一樣。(其實不知道)</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="rule-block">
+                    <div class="rule-title"><i class="fas fa-hourglass-half"></i> It is (high) time (該是...的時候了)</div>
+                    <div class="grammar-formula">It is time + S + <span class="highlight-purple">V-ed (過去式)</span></div>
+                    <ul class="example-list">
+                        <li class="example-item">
+                            <div class="en-sentence">It is high time we <span class="highlight-purple">went</span> home.</div>
+                            <div class="cn-trans">我們該回家了。(暗示動作有點晚了)</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="anim-container">
+                <h3 style="margin-bottom:1rem; font-family:'Playfair Display',serif;">Fact vs. Imagination</h3>
+                <div class="anim-display" id="animDisplay">
+                    點擊按鈕開始演示
+                </div>
+                <button class="btn" id="animBtn" onclick="toggleAnimation()">
+                    <i class="fas fa-play"></i> Start Transformation
+                </button>
+            </div>
+
         </div>
     </div>
-    
+
     <footer>
-        <p>© 2025 Shirley's Grammar E-Charger · Designed with Elegance</p>
+        <p>© 2025 Shirley's Grammar E-Charger · Premium Edition</p>
     </footer>
 
     <script>
-        let animInterval;
-        const animBox = document.getElementById('anim-box');
-        const animText = document.getElementById('anim-text');
-        const animLabel = document.getElementById('anim-label');
+        let intervalId;
+        let isPlaying = false;
+        const display = document.getElementById('animDisplay');
+        const btn = document.getElementById('animBtn');
         
-        // 虛擬語氣演示數據 [事實, 虛擬]
-        const pairs = [
-            ['I am not a bird, so I cannot fly.', 'If I were a bird, I could fly.'],
-            ['I did not study, so I failed.', 'If I had studied, I would have passed.'],
-            ['He is absent. (My suggestion)', 'I suggest that he be present.'],
-            ['I am short. (My regret)', 'I wish I were taller.'],
-            ['It is raining now.', 'I wish it would stop raining.']
+        const examples = [
+            { fact: "I am not a bird.", subjunctive: "If I <span style='color:#d4af37'>were</span> a bird, I could fly." },
+            { fact: "I didn't study yesterday.", subjunctive: "I wish I <span style='color:#d4af37'>had studied</span> yesterday." },
+            { fact: "He is late. (My suggestion)", subjunctive: "I suggest that he <span style='color:#d4af37'>be</span> on time." },
+            { fact: "She doesn't know the answer.", subjunctive: "She acts as if she <span style='color:#d4af37'>knew</span> the answer." },
+            { fact: "We are still here. (Should have left)", subjunctive: "It is time we <span style='color:#d4af37'>went</span> home." }
         ];
 
-        function playSubAnimation() {
-            // 清除之前的動畫以防重疊
-            pauseAnim();
-            
-            let idx = 0;
-            
-            // 立即執行第一次顯示
-            showSequence(idx);
+        let currentIndex = 0;
 
-            animInterval = setInterval(() => {
-                idx = (idx + 1) % pairs.length;
-                showSequence(idx);
-            }, 4500); // 切換間隔
+        function toggleAnimation() {
+            if (isPlaying) {
+                clearInterval(intervalId);
+                btn.innerHTML = '<i class="fas fa-play"></i> Resume';
+                isPlaying = false;
+            } else {
+                playSequence();
+                intervalId = setInterval(playSequence, 4500); // 延長時間方便閱讀
+                btn.innerHTML = '<i class="fas fa-pause"></i> Pause';
+                isPlaying = true;
+            }
         }
 
-        function showSequence(index) {
-            const currentPair = pairs[index];
+        function playSequence() {
+            const item = examples[currentIndex];
             
-            // 1. 顯示事實 (Reality)
-            animLabel.innerText = "REALITY (FACT)";
-            animLabel.style.color = "rgba(255,255,255,0.6)";
-            animText.innerText = currentPair[0];
-            animBox.style.background = "linear-gradient(135deg, #4b5563, #6b7280)"; // 灰色調表示現實枯燥
-
-            // 2. 2秒後顯示虛擬 (Subjunctive)
+            // Step 1: Show Fact (Reality)
+            display.style.opacity = 0;
+            display.style.transform = 'scale(0.95)';
+            display.style.transition = 'all 0.5s ease';
+            
             setTimeout(() => {
-                // 檢查是否還在播放中
-                if (animInterval || index === 0) { 
-                    animLabel.innerText = "IMAGINATION (SUBJUNCTIVE)";
-                    animLabel.style.color = "#d4af37"; // 金色文字
-                    animText.innerText = currentPair[1];
-                    // 切換回神秘紫漸層
-                    animBox.style.background = "linear-gradient(135deg, #2e1065, #5b21b6)";
-                }
-            }, 2000);
-        }
+                display.innerHTML = `<span style="font-size:0.8rem; display:block; color:#ccc; margin-bottom:10px; letter-spacing:2px;">REALITY (FACT)</span>${item.fact}`;
+                display.style.opacity = 1;
+                display.style.transform = 'scale(1)';
+                display.style.background = 'rgba(255,255,255,0.1)';
+            }, 500);
 
-        function pauseAnim() {
-            clearInterval(animInterval);
-            animInterval = null;
+            // Step 2: Show Subjunctive (Imagination) after 2 seconds
+            setTimeout(() => {
+                display.style.opacity = 0;
+                display.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    display.innerHTML = `<span style="font-size:0.8rem; display:block; color:#d4af37; margin-bottom:10px; letter-spacing:2px;">SUBJUNCTIVE MOOD</span>${item.subjunctive}`;
+                    display.style.opacity = 1;
+                    display.style.transform = 'scale(1)';
+                    display.style.background = 'rgba(46, 16, 101, 0.4)'; // 加深背景色
+                }, 500);
+            }, 2500);
+
+            currentIndex = (currentIndex + 1) % examples.length;
         }
-        
-        // 頁面加載時播放歡迎音效 (模擬)
-        window.addEventListener('load', () => {
-            console.log("Welcome to Subjunctive Mood Module");
-        });
     </script>
 </body>
 </html>
