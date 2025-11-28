@@ -795,17 +795,16 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
         let selectedOptionIndex = -1;
         let currentQuizId = '';
 
-        // --- ROBUST PARSING LOGIC (SMART PARSER) ---
+        // --- ROBUST PARSING LOGIC (SMART CLEANER) ---
         function parseQuestions(text) {
             // Normalize content
             text = text.replace(/^\uFEFF/, '').replace(/\r\n/g, '\n');
             const questions = [];
             
-            // Split by double newlines (assuming blocks are separated by at least one empty line)
-            // If the file is tight (no empty lines), we fallback to regex split
+            // Split by double newlines 
             let blocks = text.split(/\n\s*\n/);
             
-            // Fallback: if blocks are too few, maybe try splitting by "digit dot"
+            // Fallback for tight files
             if (blocks.length < 2) {
                 const reSplit = text.split(/\n(?=\d+[\.\、])/);
                 if (reSplit.length > blocks.length) blocks = reSplit;
@@ -813,28 +812,26 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
 
             blocks.forEach(block => {
                 const lines = block.split('\n').map(l => l.trim()).filter(l => l !== '');
-                if (lines.length < 2) return; // Need at least question + 1 option
+                if (lines.length < 2) return; 
 
-                // 1. Identify Question (First non-empty line)
-                // Remove numbering like "1.", "1、", "Q1.", etc.
+                // 1. Identify Question 
                 const qText = lines[0].replace(/^(?:\d+[\.\、\)]|Q\d+[\.\:\s])\s*/i, '');
                 
                 const options = [];
                 let correctIdx = -1;
 
-                // 2. Identify Options
+                // 2. Identify Options and CLEAN THEM
                 for (let i = 1; i < lines.length; i++) {
                     const line = lines[i];
                     
-                    // Detect markers
-                    const isCorrect = line.includes('●') || line.includes('[✓]') || line.includes('[✔]') || line.includes('[v]') || line.toLowerCase().includes('(answer)');
-                    const isWrong = line.includes('[x]') || line.includes('[✘]');
-
-                    // Clean option text (remove markers and prefixes like "a)", "A.")
+                    // Detect markers (before cleaning)
+                    const isCorrect = line.includes('●') || line.includes('⚫') || line.includes('[✓]') || line.includes('[✔]') || line.includes('[v]') || line.toLowerCase().includes('(answer)');
+                    
+                    // Clean option text vigorously
                     let optText = line
-                        .replace(/\[.*?\]/g, '') // remove [x], [✓]
-                        .replace(/[●○]/g, '')    // remove dots
-                        .replace(/^[\w\d]+\)[\s\.]*/, '') // remove "a)", "A."
+                        .replace(/\[.*?\]/g, '')        // remove [x], [✓]
+                        .replace(/[●○•⚫⚪✔✘]/g, '')   // remove bullets, dots, circles
+                        .replace(/^\s*[\w\d]+[\.\)]\s*/, '') // remove "a)", "A.", "1." prefix
                         .trim();
 
                     if (optText) {
@@ -843,11 +840,7 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
                     }
                 }
 
-                // Only add if we have options and a valid question
                 if (options.length >= 2) {
-                    // If no correct answer marked, default to first (failsafe) or skip? 
-                    // Let's assume user might miss marker, set -1 to prevent crash but logic needs it.
-                    // We will just keep it as -1 and handle it in UI (maybe no score).
                     questions.push({
                         q: qText,
                         options: options,
@@ -882,7 +875,6 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
             document.getElementById('submit-btn').style.display = 'none'; 
 
             const url = quizUrls[id];
-            console.log("Fetching:", url);
 
             fetch(url)
                 .then(response => {
@@ -892,7 +884,6 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
                     return response.text();
                 })
                 .then(text => {
-                    // Safety check: Is this HTML masquerading as text?
                     if (text.trim().startsWith('<!DOCTYPE') || text.trim().startsWith('<html')) {
                         throw new Error("Invalid Format: Received HTML page instead of TXT file.");
                     }
@@ -900,7 +891,6 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
                     const allQuestions = parseQuestions(text);
                     
                     if (allQuestions.length === 0) {
-                        console.warn("Parsed text preview:", text.substring(0, 200));
                         throw new Error("Parse Error: No questions found in file.");
                     }
 
@@ -919,7 +909,6 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
                         <div style="color: #ff5555; text-align: center; border: 1px solid #ff5555; padding: 20px;">
                             <h3>⚠️ PIT CREW FAILURE</h3>
                             <p>${err.message}</p>
-                            <p style="font-size: 0.9em; color: #aaa;">Target: ${url}</p>
                         </div>
                     `;
                 });
@@ -941,14 +930,13 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
 
             document.getElementById('quiz-body').innerHTML = html;
             
-            // Update button state
             const btn = document.getElementById('submit-btn');
             btn.style.display = 'inline-block';
             btn.innerText = (currentQuestionIndex === 9) ? "FINISH LINE >" : "NEXT CHECKPOINT >";
             btn.disabled = true;
             btn.style.opacity = '0.5';
             btn.style.cursor = 'not-allowed';
-            btn.dataset.answered = "false"; // Reset answer state
+            btn.dataset.answered = "false"; 
         }
 
         function selectOption(idx) {
@@ -1011,13 +999,13 @@ SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
             
             const scoreDisplay = document.getElementById('final-score');
             let tempScore = 0;
-            // Simple animation
             const targetScore = userScore;
+            
             if (targetScore === 0) {
                  scoreDisplay.innerText = "0/100";
             } else {
                 const interval = setInterval(() => {
-                    tempScore += 5; // increment by 5
+                    tempScore += 5; 
                     if (tempScore > targetScore) tempScore = targetScore;
                     scoreDisplay.innerText = `${tempScore}/100`;
                     if (tempScore >= targetScore) clearInterval(interval);
