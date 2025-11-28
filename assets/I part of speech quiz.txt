@@ -1,0 +1,698 @@
+﻿1. Which word in the following sentence is a verb? "The children quickly ran to the playground."
+   ◯ children  [✖]
+   ◯ playground  [✖]
+   ◯ quickly  [✖]
+   ◉ ran  [✔]
+
+
+2. Choose the correct pronoun to fill in the blank: "_____ is my best friend."
+   ◯ Happy  [✖]
+   ◯ Them  [✖]
+   ◯ Quickly  [✖]
+   ◉ She  [✔]
+
+
+3. Identify the correct adjective in this sentence: "He lives in a _____ house."
+   ◉ large  [✔]
+   ◯ quickly  [✖]
+   ◯ ran  [✖]
+   ◯ very  [✖]
+
+
+4. Select the correct form of the verb to complete the sentence: "They _____ a movie last night."
+   ◯ watches  [✖]
+   ◯ watching  [✖]
+   ◯ watch  [✖]
+   ◉ watched  [✔]
+
+
+5. What is the correct preposition to fill in the blank? "The dog jumped _____ the fence."
+   ◯ dog  [✖]
+   ◯ blue  [✖]
+   ◯ quickly  [✖]
+   ◉ over  [✔]
+
+
+6. Which word correctly completes the sentence? "She is _____ than her sister."
+   ◯ tall  [✖]
+   ◯ talling  [✖]
+   ◯ tallest  [✖]
+   ◉ taller  [✔]
+
+
+7. What is the correct past tense form of the verb in this sentence? "Yesterday, he _____ to the gym."
+   ◉ went  [✔]
+   ◯ going  [✖]
+   ◯ goes  [✖]
+   ◯ go  [✖]
+
+
+8. Select the correct pronoun for this sentence: "Jessica and I are going to the movies. Would you like to join _____?"
+   ◯ them  [✖]
+   ◉ us  [✔]
+   ◯ we  [✖]
+   ◯ our  [✖]
+
+
+9. What is the correct adjective to complete the sentence? "The movie was very _____."
+   ◯ interests  [✖]
+   ◯ interested  [✖]
+   ◯ interest  [✖]
+   ◉ interesting  [✔]
+
+
+10. Which sentence uses the verb "to be" correctly in the past tense?
+   ◉ She was happy at the party.  [✔]
+   ◯ She been happy at the party.  [✖]
+   ◯ She be happy at the party.  [✖]
+   ◯ She is happy at the party.  [✖]
+
+
+11. Select the correct adverb to complete the sentence: "He completed his homework _____."
+   ◉ quickly  [✔]
+   ◯ more quick  [✖]
+   ◯ quickest  [✖]
+   ◯ quick  [✖]
+
+
+12. Choose the correct form of the verb to complete the sentence: "By the time we arrived, the film _____ already started."
+   ◯ was  [✖]
+   ◯ is  [✖]
+   ◯ has  [✖]
+   ◉ had  [✔]
+
+
+13. Which sentence correctly uses a preposition?
+   ◯ She sat at chair.  [✖]
+   ◉ She sat on the chair.  [✔]
+   ◯ She sat the chair on.  [✖]
+   ◯ She sat in chair the.  [✖]
+
+
+14. What is the correct pronoun to fill in the blank? "Neither of the boys brought _____ lunch."
+   ◯ them  [✖]
+   ◯ its  [✖]
+   ◉ his  [✔]
+   ◯ their  [✖]
+
+
+15. Select the correct adjective to complete the sentence: "The weather today is _____ than yesterday."
+   ◯ badly  [✖]
+   ◉ worse  [✔]
+   ◯ badder  [✖]
+   ◯ more bad  [✖]
+
+
+16. Which sentence is in the passive voice?
+   ◯ The children were eating the cake.  [✖]
+   ◯ The children eat the cake.  [✖]
+   ◉ The cake was eaten by the children.  [✔]
+   ◯ The children have eaten the cake.  [✖]
+
+
+17. Choose the correct translation for "Ella corre rápidamente" in English.
+   ◯ She running quick.  [✖]
+   ◯ She quickly run.  [✖]
+   ◉ She runs quickly.  [✔]
+   ◯ She run quick.  [✖]
+
+
+18. Select the correct past tense form of the verb "to swim" for this sentence: "Last summer, I _____ in the lake."
+   ◯ swimmed  [✖]
+   ◯ swims  [✖]
+   ◯ swimming  [✖]
+   ◉ swam  [✔]
+
+
+19. Identify the correct adjective to complete this sentence: "This is the _____ movie I've ever seen."
+   ◯ better  [✖]
+   ◯ well  [✖]
+   ◉ best  [✔]
+   ◯ goodest  [✖]
+
+
+20. What is the correct past tense of the verb "to write" in this sentence? "Yesterday, I _____ a letter."
+   ◉ wrote  [✔]
+   ◯ writeed  [✖]
+   ◯ writed  [✖]
+   ◯ writing  [✖]
+
+
+21. Choose the correct form of the verb to complete the sentence: "If I _____ enough money, I would buy a new car."
+   ◯ has  [✖]
+   ◯ having  [✖]
+   ◉ had  [✔]
+   ◯ have  [✖]
+
+
+22. Which of the following sentences is grammatically correct?
+   ◯ I haven’t seen never such a beautiful sunset.  [✖]
+   ◯ I seen never such beautiful sunset.  [✖]
+   ◉ I have never seen such a beautiful sunset.  [✔]
+   ◯ I never seen a beautiful sunset.  [✖]
+
+
+23. Select the correct adverb to complete the sentence: "She danced _____ at the party."
+   ◉ gracefully  [✔]
+   ◯ gracefull  [✖]
+   ◯ gracefullly  [✖]
+   ◯ gracing  [✖]
+
+
+24. Which of the following sentences is correctly punctuated?
+   ◯ Yes I would, like some coffee.  [✖]
+   ◯ Yes, I would like some coffee  [✖]
+   ◯ Yes I would like, some coffee.  [✖]
+   ◉ Yes, I would like some coffee.  [✔]
+
+
+25. Which word correctly completes the sentence? "The book was _____ by the author last year."
+   ◯ write  [✖]
+   ◯ wrote  [✖]
+   ◉ written  [✔]
+   ◯ writed  [✖]
+
+
+26. Select the correct adjective to complete the sentence: "This puzzle is _____ than the last one."
+   ◯ easyer  [✖]
+   ◯ more easy  [✖]
+   ◉ easier  [✔]
+   ◯ easiest  [✖]
+
+
+27. What is the correct way to say "I am going to the store" in the past tense?
+   ◯ I gone to the store.  [✖]
+   ◯ I go to the store.  [✖]
+   ◯ I going to the store.  [✖]
+   ◉ I went to the store.  [✔]
+
+
+28. Which sentence correctly uses a preposition?
+   ◯ The cat sits in the roof.  [✖]
+   ◉ The cat is sitting on the roof.  [✔]
+   ◯ The cat sitting on roof.  [✖]
+   ◯ The cat is sitting at the roof.  [✖]
+
+
+29. What is the correct present continuous form of the verb "to eat" for this sentence? "She _____ dinner right now."
+   ◯ eats  [✖]
+   ◯ was eating  [✖]
+   ◉ is eating  [✔]
+   ◯ have eaten  [✖]
+
+
+30. Which sentence correctly uses the future tense?
+   ◯ I called you tomorrow.  [✖]
+   ◉ I will call you tomorrow.  [✔]
+   ◯ I calls you tomorrow.  [✖]
+   ◯ I call you tomorrow.  [✖]
+
+
+31. Select the correct word to complete the sentence: "He is the _____ player on the team."
+   ◉ best  [✔]
+   ◯ well  [✖]
+   ◯ better  [✖]
+   ◯ goodest  [✖]
+
+
+32. Choose the correct past tense form of the verb "to go" for this sentence: "Last week, we _____ to the concert."
+   ◯ gone  [✖]
+   ◯ going  [✖]
+   ◉ went  [✔]
+   ◯ goes  [✖]
+
+
+33. Which sentence correctly uses the future perfect tense?
+   ◯ By next year, I completed my degree.  [✖]
+   ◉ By next year, I will have completed my degree.  [✔]
+   ◯ By next year, I complete my degree.  [✖]
+   ◯ By next year, I will completing my degree.  [✖]
+
+
+34. What is the correct past participle form of the verb "to see" for this sentence? "I have _____ that movie before."
+   ◯ saw  [✖]
+   ◉ seen  [✔]
+   ◯ see  [✖]
+   ◯ seeing  [✖]
+
+
+35. Which sentence is correctly written in the past perfect tense?
+   ◯ I finishing my homework before dinner.  [✖]
+   ◯ I have finished my homework before dinner.  [✖]
+   ◯ I finished my homework before dinner.  [✖]
+   ◉ I had finished my homework before dinner.  [✔]
+
+
+36. What is the correct translation for "Ellos están jugando en el parque" in English?
+   ◯ They played in the park.  [✖]
+   ◉ They are playing in the park.  [✔]
+   ◯ They are play in the park.  [✖]
+   ◯ They is playing in the park.  [✖]
+
+
+37. What is the correct past tense of the verb "to drink" in this sentence? "He _____ too much soda yesterday."
+   ◯ drinks  [✖]
+   ◯ drinked  [✖]
+   ◯ drunk  [✖]
+   ◉ drank  [✔]
+
+
+38. Choose the correct translation for "I am learning to cook" in Spanish.
+   ◯ Estoy aprender a cocinar  [✖]
+   ◉ Estoy aprendiendo a cocinar  [✔]
+   ◯ Yo aprendí a cocinar  [✖]
+   ◯ Yo aprendiendo para cocinar  [✖]
+
+
+39. Which sentence is correctly written in the future continuous tense?
+   ◯ I will study at 8 PM tonight.  [✖]
+   ◯ I studied at 8 PM tonight.  [✖]
+   ◯ I will be studying at 8 PM this evening.  [✖]
+   ◉ I will be studying at 8 PM tonight.  [✔]
+
+
+40. What is the correct way to say "They are not here" in the past tense?
+   ◯ They are not here before.  [✖]
+   ◯ They was not here.  [✖]
+   ◉ They were not here.  [✔]
+   ◯ They not here.  [✖]
+
+
+41. Select the correct adjective to complete the sentence: "This exam is _____ than the last one."
+   ◯ more hard  [✖]
+   ◯ hardier  [✖]
+   ◉ harder  [✔]
+   ◯ hardest  [✖]
+
+
+42. What is the correct past tense form of the verb "to begin" in this sentence? "She _____ her homework early."
+   ◯ beginned  [✖]
+   ◯ begins  [✖]
+   ◯ begun  [✖]
+   ◉ began  [✔]
+
+
+43. Which of the following sentences uses a comparative adjective correctly?
+   ◉ This book is more interesting than that one.  [✔]
+   ◯ This book is interest than that one.  [✖]
+   ◯ This book is interestinger than that one.  [✖]
+   ◯ This book more interesting than that one.  [✖]
+
+
+44. What is the correct form of the verb "to have" in the present perfect tense for this sentence? "They _____ finished their project."
+   ◯ has  [✖]
+   ◯ had  [✖]
+   ◉ have  [✔]
+   ◯ having  [✖]
+
+
+45. Which of the following sentences is correct in the future perfect tense?
+   ◯ By next week, I will have complete my assignment.  [✖]
+   ◉ By next week, I will have completed my assignment.  [✔]
+   ◯ By next week, I completed my assignment.  [✖]
+   ◯ By next week, I will complete my assignment.  [✖]
+
+
+46. What is the correct translation of "I can swim very well" into Spanish?
+   ◉ Puedo nadar muy bien.  [✔]
+   ◯ Yo nadar muy bien.  [✖]
+   ◯ Puedo nadar bien muy.  [✖]
+   ◯ Yo puedo nadar buena.  [✖]
+
+
+47. Select the correct form of the verb to fill in this sentence: "They _____ to the park every Sunday."
+   ◯ going  [✖]
+   ◉ go  [✔]
+   ◯ gone  [✖]
+   ◯ goes  [✖]
+
+
+48. Which of the following sentences correctly uses the word "fewer"?
+   ◯ There are fewer apple in this basket than in that one.  [✖]
+   ◉ There are fewer apples in this basket than in that one.  [✔]
+   ◯ There is fewer apples in this basket than in that one.  [✖]
+   ◯ There are less apples in this basket than in that one.  [✖]
+
+
+49. What is the correct past tense form of the verb "to forget" in this sentence? "I _____ my keys at home."
+   ◯ forgetted  [✖]
+   ◉ forgot  [✔]
+   ◯ forget  [✖]
+   ◯ forgetting  [✖]
+
+
+50. Which sentence correctly uses the past continuous tense?
+   ◉ I was studying when the phone rang.  [✔]
+   ◯ I was study when the phone rang.  [✖]
+   ◯ I were studying when the phone rang.  [✖]
+   ◯ I studied when the phone was ringing.  [✖]
+
+
+51. Choose the correct form of the verb to fill in the blank: "If it _____ tomorrow, we will cancel the picnic."
+   ◉ rains  [✔]
+   ◯ rained  [✖]
+   ◯ raining  [✖]
+   ◯ rain  [✖]
+
+
+52. What is the correct way to say "We will finish the project" in the past tense?
+   ◉ We finished the project.  [✔]
+   ◯ We finishes the project.  [✖]
+   ◯ We will finished the project.  [✖]
+   ◯ We finish the project.  [✖]
+
+
+53. Select the correct adjective to complete the sentence: "She is the _____ student in the class."
+   ◉ smartest  [✔]
+   ◯ more smart  [✖]
+   ◯ smarter  [✖]
+   ◯ smart  [✖]
+
+
+54. What is the correct past tense form of the verb "to play" in this sentence? "Yesterday, they _____ soccer at the park."
+   ◯ play  [✖]
+   ◯ plays  [✖]
+   ◉ played  [✔]
+   ◯ playing  [✖]
+
+
+55. Which sentence correctly uses the word "less"?
+   ◯ There is fewer water in this bottle than in that one.  [✖]
+   ◉ There is less water in this bottle than in that one.  [✔]
+   ◯ There is lesser water in this bottle than in that one.  [✖]
+   ◯ There is lesses water in this bottle than in that one.  [✖]
+
+
+56. What is the correct form of the verb "to be" in this sentence? "I _____ excited about the trip."
+   ◯ be  [✖]
+   ◉ am  [✔]
+   ◯ are  [✖]
+   ◯ is  [✖]
+
+
+57. What is the correct translation of "Ella está trabajando en un proyecto"?
+   ◉ She is working on a project.  [✔]
+   ◯ She works on a project.  [✖]
+   ◯ She was working in a project.  [✖]
+   ◯ She is work on a project.  [✖]
+
+
+58. Which of the following sentences correctly uses the present perfect tense?
+   ◯ I visited Paris two times.  [✖]
+   ◯ I visit Paris twice.  [✖]
+   ◉ I have visited Paris twice.  [✔]
+   ◯ I have visit Paris twice.  [✖]
+
+
+59. What is the correct past continuous form of the verb "to watch" for this sentence? "Last night at 8 PM, I _____ a movie."
+   ◯ watched  [✖]
+   ◯ were watching  [✖]
+   ◯ watch  [✖]
+   ◉ was watching  [✔]
+
+
+60. Which sentence is grammatically correct?
+   ◉ If I had known about the meeting, I would have attended.  [✔]
+   ◯ If I know about the meeting, I would have attended.  [✖]
+   ◯ If I knew about the meeting, I will attend.  [✖]
+   ◯ If I would have known about the meeting, I would attend.  [✖]
+
+
+61. Choose the correct preposition to complete this sentence: "He is interested _____ learning new languages."
+   ◉ in  [✔]
+   ◯ on  [✖]
+   ◯ for  [✖]
+   ◯ at  [✖]
+
+
+62. What is the correct past tense form of the verb "to run" in this sentence? "Yesterday, I _____ in the park."
+   ◉ ran  [✔]
+   ◯ ranned  [✖]
+   ◯ running  [✖]
+   ◯ runned  [✖]
+
+
+63. What is the correct present perfect form of the verb "to see" for the sentence? "I _____ that movie three times."
+   ◉ have seen  [✔]
+   ◯ saw  [✖]
+   ◯ seeed  [✖]
+   ◯ seeing  [✖]
+
+
+64. Which of the following sentences correctly uses the past simple tense?
+   ◉ She cooked dinner last night.  [✔]
+   ◯ She is cooked dinner last night.  [✖]
+   ◯ She cooks dinner last night.  [✖]
+   ◯ She has cook dinner last night.  [✖]
+
+
+65. What is the correct form of the verb "to do" in the negative past tense? "They _____ not finish their homework."
+   ◯ does  [✖]
+   ◯ doing  [✖]
+   ◉ did  [✔]
+   ◯ do  [✖]
+
+
+66. What is the correct translation of "Ella tiene una gata negra" in English?
+   ◯ She have a black cat.  [✖]
+   ◉ She has a black cat.  [✔]
+   ◯ She is having a black cat.  [✖]
+   ◯ She has black cat.  [✖]
+
+
+67. Which sentence correctly uses the verb "to go" in the future tense?
+   ◯ I will going to the store tomorrow.  [✖]
+   ◉ I will go to the store tomorrow.  [✔]
+   ◯ I go to the store tomorrow.  [✖]
+   ◯ I going to the store tomorrow.  [✖]
+
+
+68. Which sentence is grammatically correct?
+   ◯ She has working here since 2015.  [✖]
+   ◯ She is been working here since 2015.  [✖]
+   ◉ She has been working here since 2015.  [✔]
+   ◯ She have been working here since 2015.  [✖]
+
+
+69. What is the correct past participle form of the verb "to break"?
+   ◉ broken  [✔]
+   ◯ breaked  [✖]
+   ◯ breaking  [✖]
+   ◯ broke  [✖]
+
+
+70. Choose the correct translation for "I have lived here for five years."
+   ◯ He vivir aquí por cinco años.  [✖]
+   ◉ He vivido aquí por cinco años.  [✔]
+   ◯ Vivo aquí por cinco años.  [✖]
+   ◯ Yo vive aquí desde cinco años.  [✖]
+
+
+71. Select the correct form of the adjective to complete the sentence: "This test is _____ than the last one."
+   ◉ harder  [✔]
+   ◯ hardier  [✖]
+   ◯ more hard  [✖]
+   ◯ hardest  [✖]
+
+
+72. What is the correct past tense form of the verb "to sing" in this sentence? "Last night, she _____ a beautiful song."
+   ◯ singed  [✖]
+   ◯ sings  [✖]
+   ◯ sung  [✖]
+   ◉ sang  [✔]
+
+
+73. What is the correct present continuous form of the verb "to read" in this sentence? "Right now, she _____ a book."
+   ◯ read  [✖]
+   ◯ was reading  [✖]
+   ◯ reads  [✖]
+   ◉ is reading  [✔]
+
+
+74. Which of the following sentences correctly uses the future perfect tense?
+   ◯ By next month, I have finished my project.  [✖]
+   ◯ By next month, I will finish my project.  [✖]
+   ◉ By next month, I will have finished my project.  [✔]
+   ◯ By next month, I finished my project.  [✖]
+
+
+75. What is the correct past form of the verb "to teach"?
+   ◉ taught  [✔]
+   ◯ teaching  [✖]
+   ◯ teach  [✖]
+   ◯ teached  [✖]
+
+
+76. Fill in the blank with the correct form of the verb: "She _____ to the gym every day."
+   ◯ gone  [✖]
+   ◉ goes  [✔]
+   ◯ going  [✖]
+   ◯ go  [✖]
+
+
+77. Which sentence correctly uses the future tense?
+   ◯ I visits my grandparents next weekend.  [✖]
+   ◯ I visit my grandparents next weekend.  [✖]
+   ◉ I will visit my grandparents next weekend.  [✔]
+   ◯ I visiting my grandparents next weekend.  [✖]
+
+
+78. What is the correct past tense form of the verb "to write" in this sentence? "Yesterday, she _____ a letter."
+   ◉ wrote  [✔]
+   ◯ write  [✖]
+   ◯ writed  [✖]
+   ◯ writing  [✖]
+
+
+79. Fill in the blank with the correct form: "If it _____ tomorrow, we will stay home."
+   ◯ raining  [✖]
+   ◯ rain  [✖]
+   ◉ rains  [✔]
+   ◯ rained  [✖]
+
+
+80. Which sentence is correctly written in the present perfect tense?
+   ◯ I have visit my grandparents this year.  [✖]
+   ◯ I visit my grandparents this year.  [✖]
+   ◯ I visited my grandparents this year.  [✖]
+   ◉ I have visited my grandparents this year.  [✔]
+
+
+81. Which sentence is correctly structured in the passive voice?
+   ◯ The song sings by the choir.  [✖]
+   ◯ The choir sung the song.  [✖]
+   ◉ The song was sung by the choir.  [✔]
+   ◯ The choir is singing the song.  [✖]
+
+
+82. What is the correct translation of "Ella está escribiendo un mensaje" in English?
+   ◯ She wrote a message.  [✖]
+   ◯ She writes a message.  [✖]
+   ◉ She is writing a message.  [✔]
+   ◯ She is write a message.  [✖]
+
+
+83. Which of the following is the correct past tense form of the verb "to eat" in the sentence? "Yesterday, I _____ a delicious meal."
+   ◯ eated  [✖]
+   ◯ eat  [✖]
+   ◯ eaten  [✖]
+   ◉ ate  [✔]
+
+
+84. What is the correct way to say "We are going to the movies tonight" in the past tense?
+   ◉ We went to the movies last night.  [✔]
+   ◯ We going to the movies last night.  [✖]
+   ◯ We are went to the movies last night.  [✖]
+   ◯ We go to the movies tonight.  [✖]
+
+
+85. Select the correct form of the verb to fill in the blank: "If I _____ more time, I would help you."
+   ◯ have  [✖]
+   ◉ had  [✔]
+   ◯ has  [✖]
+   ◯ having  [✖]
+
+
+86. What is the correct past tense of the verb "to go" in this sentence? "Last week, I _____ to the beach."
+   ◯ go  [✖]
+   ◯ gone  [✖]
+   ◯ going  [✖]
+   ◉ went  [✔]
+
+
+87. Which sentence is correctly structured in the future continuous tense?
+   ◯ I will studied at 6 PM tomorrow.  [✖]
+   ◉ I will be studying at 6 PM tomorrow.  [✔]
+   ◯ I studied at 6 PM tomorrow.  [✖]
+   ◯ I will study at 6 PM tomorrow.  [✖]
+
+
+88. Select the correct form of the verb to complete this sentence: "They _____ soccer every Saturday."
+   ◯ plays  [✖]
+   ◯ played  [✖]
+   ◉ play  [✔]
+   ◯ playing  [✖]
+
+
+89. Identify the correct form of the adjective to complete the sentence: "This puzzle is much _____ than the last one."
+   ◯ hardier  [✖]
+   ◉ harder  [✔]
+   ◯ hardest  [✖]
+   ◯ more hard  [✖]
+
+
+90. What is the correct present perfect form of the verb "to finish" for this sentence? "She _____ her homework already."
+   ◉ has finished  [✔]
+   ◯ is finishing  [✖]
+   ◯ has finish  [✖]
+   ◯ finished  [✖]
+
+
+91. What is the correct past tense form of the verb "to swim" in this sentence? "Last summer, I _____ in the ocean."
+   ◉ swam  [✔]
+   ◯ swims  [✖]
+   ◯ swimmed  [✖]
+   ◯ swim  [✖]
+
+
+92. Choose the correct form of the verb to complete this sentence: "If she _____ harder, she would pass the exam."
+   ◯ study  [✖]
+   ◯ studying  [✖]
+   ◉ studied  [✔]
+   ◯ studies  [✖]
+
+
+93. Select the correct form of the adjective to complete the sentence: "This math problem is _____ than the previous one."
+   ◯ more easy  [✖]
+   ◯ easy  [✖]
+   ◉ easier  [✔]
+   ◯ most easy  [✖]
+
+
+94. Which sentence correctly uses the passive voice?
+   ◉ The letter was written by John.  [✔]
+   ◯ The letter is writing by John.  [✖]
+   ◯ John wrote the letter.  [✖]
+   ◯ John is writing the letter.  [✖]
+
+
+95. What is the correct present continuous form of the verb "to play" in this sentence? "Right now, they _____ basketball in the park."
+   ◯ played  [✖]
+   ◉ are playing  [✔]
+   ◯ are play  [✖]
+   ◯ is playing now  [✖]
+
+
+96. Which of the following sentences is in the present perfect tense?
+   ◉ I have visited that museum several times.  [✔]
+   ◯ I visited that museum yesterday.  [✖]
+   ◯ I visit that museum several times.  [✖]
+   ◯ I was visiting that museum last week.  [✖]
+
+
+97. What is the correct form of the verb to fill in the blank? "If he _____ earlier, he would have caught the bus."
+   ◯ leaving  [✖]
+   ◯ has left  [✖]
+   ◉ had left  [✔]
+   ◯ leave  [✖]
+
+
+98. Which sentence correctly uses an adverb?
+   ◯ She sing beautifully at the concert.  [✖]
+   ◉ She sings beautifully at the concert.  [✔]
+   ◯ She beautiful sings at the concert.  [✖]
+   ◯ She sings beauty at the concert.  [✖]
+
+
+99. What is the correct past tense form of the verb "to read" in this sentence? "Last night, I _____ an interesting book."
+   ◉ read  [✔]
+   ◯ reads  [✖]
+   ◯ reading  [✖]
+   ◯ readed  [✖]
+
+
+100. Which of the following sentences uses the word "fewer" correctly?
+   ◯ There is fewer apples in this basket than in that one.  [✖]
+   ◯ There are less apples in this basket than in that one.  [✖]
+   ◉ There are fewer apples in this basket than in that one.  [✔]
+   ◯ There is fewer apple in this basket than in that one.  [✖]

@@ -1,0 +1,698 @@
+﻿1. Which part of the sentence is the noun clause: "I can't believe that you passed the test."?
+   ◯ I can't believe  [✖]
+   ◯ you passed the exam successfully  [✖]
+   ◉ that you passed the test  [✔]
+   ◯ the test  [✖]
+
+
+2. Identify the adjective clause in this sentence: "The flowers that bloom in spring are beautiful."
+   ◯ in spring  [✖]
+   ◉ that bloom in spring  [✔]
+   ◯ are beautiful  [✖]
+   ◯ the beautiful spring flowers  [✖]
+
+
+3. Choose the adverb clause in the following sentence: "She danced as if no one was watching."
+   ◯ the audience was not present  [✖]
+   ◯ She danced  [✖]
+   ◉ as if no one was watching  [✔]
+   ◯ was watching  [✖]
+
+
+4. Which option best completes the sentence: "The book, _____, was a bestseller."
+   ◯ I read last summer  [✖]
+   ◯ last summer  [✖]
+   ◯ was a bestseller  [✖]
+   ◉ which I read last summer  [✔]
+
+
+5. Identify the noun clause in this sentence: "What you decide will affect your future."
+   ◯ will affect  [✖]
+   ◯ the decision you make  [✖]
+   ◉ What you decide  [✔]
+   ◯ your future  [✖]
+
+
+6. Identify the noun clause in the sentence: "I wonder if she will come to the party."
+   ◉ if she will come to the party  [✔]
+   ◯ to the party  [✖]
+   ◯ I am curious about her coming  [✖]
+   ◯ she will come  [✖]
+
+
+7. Choose the adjective clause in this sentence: "The car, which is parked outside, belongs to my brother."
+   ◯ belongs to my brother  [✖]
+   ◯ The car  [✖]
+   ◉ which is parked outside  [✔]
+   ◯ parked outside  [✖]
+
+
+8. Select the adverb clause in the following sentence: "Whenever it rains, I like to stay indoors."
+   ◯ stay indoors  [✖]
+   ◉ Whenever it rains  [✔]
+   ◯ I like to stay  [✖]
+   ◯ it rains  [✖]
+
+
+9. Which option correctly completes this sentence: "The teacher said _____ that the exam would be on Friday."
+   ◯ which  [✖]
+   ◯ the  [✖]
+   ◯ who  [✖]
+   ◉ that  [✔]
+
+
+10. Identify the noun clause in the following sentence: "Whether we go or not depends on the weather."
+   ◯ we go  [✖]
+   ◯ depends on  [✖]
+   ◯ the condition of the weather  [✖]
+   ◉ Whether we go or not  [✔]
+
+
+11. What is the function of the clause in the sentence: "He didn't know that she was coming to the event."?
+   ◯ Prepositional phrase  [✖]
+   ◯ Adverb clause  [✖]
+   ◉ Noun clause  [✔]
+   ◯ Adjective clause  [✖]
+
+
+12. Choose the adjective clause in the sentence: "The book that you lent me was fascinating."
+   ◯ was fascinating  [✖]
+   ◯ The book  [✖]
+   ◉ that you lent me  [✔]
+   ◯ you lent  [✖]
+
+
+13. Identify the adverb clause in the following sentence: "After I finish my homework, I will watch a movie."
+   ◯ finish my homework  [✖]
+   ◉ After I finish my homework  [✔]
+   ◯ watch a movie  [✖]
+   ◯ I will watch a movie  [✖]
+
+
+14. In the sentence "Because she was tired, she went to bed early," what type of clause is "Because she was tired"?
+   ◉ Adverb clause  [✔]
+   ◯ Independent clause  [✖]
+   ◯ Adjective clause  [✖]
+   ◯ Noun clause  [✖]
+
+
+15. Identify the clause type in the sentence: "I will give you a call when I finish my work."
+   ◉ Adverb clause  [✔]
+   ◯ Noun clause  [✖]
+   ◯ Adjective clause  [✖]
+   ◯ Independent clause  [✖]
+
+
+16. Which part of the sentence is the adjective clause: "The artist who painted this mural is very talented."
+   ◉ who painted this mural  [✔]
+   ◯ The artist  [✖]
+   ◯ painted this mural  [✖]
+   ◯ is very talented  [✖]
+
+
+17. Which clause correctly completes the sentence: "I will go to the concert _____ I finish my work."?
+   ◯ although  [✖]
+   ◉ when  [✔]
+   ◯ where  [✖]
+   ◯ because  [✖]
+
+
+18. Identify the correct adjective clause in the sentence: "The movie _____ was nominated for several awards."
+   ◯ last week  [✖]
+   ◯ which I enjoyed  [✖]
+   ◯ I watched last week  [✖]
+   ◉ that I watched last week  [✔]
+
+
+19. Select the adverb clause in the following sentence: "I will help you as long as you ask nicely."
+   ◯ I will help you  [✖]
+   ◯ help you  [✖]
+   ◉ as long as you ask nicely  [✔]
+   ◯ ask nicely for help  [✖]
+
+
+20. Identify the correct noun clause in the sentence: "I can't remember where I put my keys."
+   ◉ where I put my keys  [✔]
+   ◯ my keys are lost  [✖]
+   ◯ put my keys  [✖]
+   ◯ I can't remember  [✖]
+
+
+21. Choose the adjective clause in the following sentence: "The students who studied hard passed the exam."
+   ◯ studied for the exam  [✖]
+   ◉ who studied hard  [✔]
+   ◯ The students  [✖]
+   ◯ passed the exam  [✖]
+
+
+22. Which part of the sentence is the adverb clause: "He will succeed if he works hard."?
+   ◉ if he works hard  [✔]
+   ◯ He will succeed  [✖]
+   ◯ works hard  [✖]
+   ◯ succeed in his tasks  [✖]
+
+
+23. Identify the noun clause in the sentence: "I believe that everyone deserves a second chance."
+   ◯ deserves a second chance  [✖]
+   ◯ everyone deserves  [✖]
+   ◯ I think everyone should get a second chance  [✖]
+   ◉ that everyone deserves a second chance  [✔]
+
+
+24. Choose the adjective clause in this sentence: "The house which we visited last summer is for sale."
+   ◯ we visited last summer  [✖]
+   ◯ The house  [✖]
+   ◉ which we visited last summer  [✔]
+   ◯ is for sale  [✖]
+
+
+25. In the sentence "Whenever he calls, I feel happy," what is the function of "Whenever he calls"?
+   ◯ Noun clause  [✖]
+   ◯ Adjective clause  [✖]
+   ◯ Independent clause  [✖]
+   ◉ Adverb clause  [✔]
+
+
+26. Select the noun clause in the sentence: "What you decide now will affect your future."
+   ◯ will affect  [✖]
+   ◯ decide now  [✖]
+   ◯ your future  [✖]
+   ◉ What you decide now  [✔]
+
+
+27. Identify the correct noun clause in this sentence: "She asked if we were ready for the presentation."
+   ◯ for the presentation  [✖]
+   ◯ asked for the presentation  [✖]
+   ◯ we were ready  [✖]
+   ◉ if we were ready for the presentation  [✔]
+
+
+28. Which part of the sentence is an adjective clause: "The bike that he bought last week is already broken."
+   ◯ The bike  [✖]
+   ◯ is already broken  [✖]
+   ◯ bought last week  [✖]
+   ◉ that he bought last week  [✔]
+
+
+29. Select the adverb clause in the sentence: "We will go out for dinner after we finish our work."
+   ◯ go out for dinner  [✖]
+   ◯ when we complete our tasks  [✖]
+   ◉ after we finish our work  [✔]
+   ◯ We will go  [✖]
+
+
+30. Identify the adjective clause in the following sentence: "The students who participate in class discussions learn more effectively."
+   ◯ learn more effectively  [✖]
+   ◯ The students  [✖]
+   ◯ that engage in discussions during class time  [✖]
+   ◉ who participate in class discussions  [✔]
+
+
+31. Which part of the sentence is the noun clause: "I really want to know what he thinks about the project."?
+   ◯ I truly desire to understand his opinion  [✖]
+   ◯ about the project  [✖]
+   ◯ to know what he thinks  [✖]
+   ◉ what he thinks about the project  [✔]
+
+
+32. In the sentence "The cake that she baked for the party was delicious," what is the adjective clause?
+   ◯ The cake  [✖]
+   ◯ she baked for the party's guests  [✖]
+   ◯ was delicious  [✖]
+   ◉ that she baked for the party  [✔]
+
+
+33. Which of the following sentences contains a noun clause?
+   ◉ She believes that honesty is the best policy.  [✔]
+   ◯ The honest man is my friend.  [✖]
+   ◯ The book on the table is interesting.  [✖]
+   ◯ He is running fast to catch the bus.  [✖]
+
+
+34. Select the sentence that includes an adjective clause.
+   ◯ He is going to the store today.  [✖]
+   ◯ They will arrive soon.  [✖]
+   ◉ The girl who won the race is my sister.  [✔]
+   ◯ I quickly finished my homework.  [✖]
+
+
+35. Which part of the following sentence is an adverb clause? "Although it was late, we decided to continue our discussion."
+   ◯ we decided to continue our discussion  [✖]
+   ◯ continue the conversation  [✖]
+   ◯ to continue our discussion  [✖]
+   ◉ Although it was late  [✔]
+
+
+36. Identify the sentence that contains a noun clause.
+   ◯ The flowers in the garden are blooming.  [✖]
+   ◯ She walked to the store quickly.  [✖]
+   ◯ The manager announced the new policy.  [✖]
+   ◉ I wonder what time the meeting starts.  [✔]
+
+
+37. Which option best completes the sentence: "The teacher explained the concept clearly because _____."
+   ◯ they are learning  [✖]
+   ◯ it was difficult  [✖]
+   ◯ he is experienced  [✖]
+   ◉ the students were confused  [✔]
+
+
+38. Which of the following sentences contains a noun clause?
+   ◯ The agenda is on the table.  [✖]
+   ◯ They are discussing the schedule.  [✖]
+   ◉ I forgot what time the meeting starts.  [✔]
+   ◯ The meeting starts at noon.  [✖]
+
+
+39. Select the adverb clause in this sentence: "She will go to the park if it stops raining."
+   ◯ it stops raining  [✖]
+   ◉ if it stops raining  [✔]
+   ◯ She will go to the park  [✖]
+   ◯ to the park  [✖]
+
+
+40. Identify the adjective clause in the following sentence: "The teacher who assigned the homework is absent today."
+   ◯ The teacher  [✖]
+   ◯ is absent today  [✖]
+   ◯ that gave us the homework task  [✖]
+   ◉ who assigned the homework  [✔]
+
+
+41. Which part of the sentence is a noun clause: "Can you tell me whether he will join us for dinner?"
+   ◉ whether he will join us for dinner  [✔]
+   ◯ Can you tell me  [✖]
+   ◯ join us for dinner  [✖]
+   ◯ if he will be joining us for dinner  [✖]
+
+
+42. Identify the adjective clause in the following sentence: "The book that you lent me was fascinating."
+   ◉ that you lent me  [✔]
+   ◯ was fascinating  [✖]
+   ◯ you lent  [✖]
+   ◯ The book  [✖]
+
+
+43. Which part of the sentence is the noun clause: "I am not sure what he meant by that."?
+   ◯ meant by that  [✖]
+   ◉ what he meant by that  [✔]
+   ◯ he meant  [✖]
+   ◯ I am not sure  [✖]
+
+
+44. In the sentence "She will finish her report before the deadline," what is the function of "before the deadline"?
+   ◯ Noun clause  [✖]
+   ◉ Adverb clause  [✔]
+   ◯ Adjective clause  [✖]
+   ◯ Independent clause  [✖]
+
+
+45. Identify the adverb clause in this sentence: "If you want to succeed, you must work hard."
+   ◯ must work hard to achieve  [✖]
+   ◯ you must work hard  [✖]
+   ◉ If you want to succeed  [✔]
+   ◯ succeed in your goals  [✖]
+
+
+46. Identify the clause type and function in the sentence: "If it rains tomorrow, we will stay indoors."
+   ◯ Adjective clause; describes the noun 'tomorrow'  [✖]
+   ◯ Independent clause; expresses a complete thought  [✖]
+   ◉ Adverb clause; provides a condition for the main clause  [✔]
+   ◯ Noun clause; serves as the subject of the sentence  [✖]
+
+
+47. Choose the correct adjective clause to complete the sentence: "The musician, _____, played beautifully at the concert."
+   ◉ who has won several awards  [✔]
+   ◯ played beautifully  [✖]
+   ◯ is my favorite musician  [✖]
+   ◯ at the concert  [✖]
+
+
+48. Which part of the sentence is the noun clause: "Can you explain why the project was delayed?"?
+   ◯ Can you explain  [✖]
+   ◯ you can explain the reason why  [✖]
+   ◯ the project was delayed  [✖]
+   ◉ why the project was delayed  [✔]
+
+
+49. Identify the adjective clause in this sentence: "The cookies that she baked were delicious."
+   ◯ were delicious  [✖]
+   ◉ that she baked  [✔]
+   ◯ she baked  [✖]
+   ◯ The cookies  [✖]
+
+
+50. Choose the adverb clause in this sentence: "Although he was tired, he finished his work."
+   ◯ was tired  [✖]
+   ◯ he finished his work  [✖]
+   ◯ finished his work  [✖]
+   ◉ Although he was tired  [✔]
+
+
+51. Which part of the sentence is the noun clause: "I don't know whether she will come to the party."?
+   ◉ whether she will come to the party  [✔]
+   ◯ if she will attend the gathering or not  [✖]
+   ◯ she will come  [✖]
+   ◯ I don't know  [✖]
+
+
+52. Identify the adjective clause in the following sentence: "The car that he drives is very fast."
+   ◯ The car  [✖]
+   ◯ he drives  [✖]
+   ◯ is very fast  [✖]
+   ◉ that he drives  [✔]
+
+
+53. Which part of the sentence is the noun clause: "What he said during the meeting was very insightful."?
+   ◯ said during the meeting  [✖]
+   ◯ was truly insightful and thought-provoking  [✖]
+   ◯ he said  [✖]
+   ◉ What he said during the meeting  [✔]
+
+
+54. Choose the adverb clause in this sentence: "Since it was raining, we stayed indoors."
+   ◯ we stayed indoors  [✖]
+   ◯ it was raining  [✖]
+   ◯ stayed inside  [✖]
+   ◉ Since it was raining  [✔]
+
+
+55. In the sentence "I will help you if you ask nicely," what is the function of "if you ask nicely"?
+   ◉ Adverb clause  [✔]
+   ◯ Adjective clause  [✖]
+   ◯ Independent clause  [✖]
+   ◯ Noun clause  [✖]
+
+
+56. Select the noun clause in the sentence: "I don't understand why she left so early."
+   ◯ she left so early  [✖]
+   ◯ understand why  [✖]
+   ◉ why she left so early  [✔]
+   ◯ I do not comprehend this fact  [✖]
+
+
+57. Which of the following sentences contains an adverb clause?
+   ◯ I saw the movie that you recommended.  [✖]
+   ◯ The book that she read was interesting.  [✖]
+   ◉ Although it was cold, we went for a walk.  [✔]
+   ◯ The flowers bloom beautifully in spring.  [✖]
+
+
+58. Identify the adjective clause in this sentence: "The teacher who loves science is my favorite."
+   ◯ loves science very much  [✖]
+   ◯ is my favorite  [✖]
+   ◉ who loves science  [✔]
+   ◯ The teacher  [✖]
+
+
+59. Identify the noun clause in the sentence: "Can you tell me why the meeting was canceled?"
+   ◯ tell me about the cancellation  [✖]
+   ◯ the meeting was canceled  [✖]
+   ◯ Can you tell me  [✖]
+   ◉ why the meeting was canceled  [✔]
+
+
+60. Which part of the sentence is the adverb clause: "Even though she was tired, she finished her homework on time."?
+   ◉ Even though she was tired  [✔]
+   ◯ she finished her homework  [✖]
+   ◯ on time  [✖]
+   ◯ she was very tired  [✖]
+
+
+61. Choose the adjective clause in the following sentence: "The student who studies the hardest usually gets the best grades."
+   ◉ who studies the hardest  [✔]
+   ◯ gets the best grades  [✖]
+   ◯ The student  [✖]
+   ◯ studies the hardest for exams  [✖]
+
+
+62. Identify the adverb clause in this sentence: "Because she was late, she missed the bus."
+   ◯ she missed the bus  [✖]
+   ◉ Because she was late  [✔]
+   ◯ she was late  [✖]
+   ◯ missed the bus  [✖]
+
+
+63. Which part of the sentence is the noun clause: "I don't know how they solved the problem."?
+   ◯ they solved  [✖]
+   ◯ I don't know  [✖]
+   ◉ how they solved the problem  [✔]
+   ◯ solved the problem  [✖]
+
+
+64. Choose the adjective clause in this sentence: "The artist who painted that mural is famous."
+   ◯ painted that mural  [✖]
+   ◯ The artist  [✖]
+   ◉ who painted that mural  [✔]
+   ◯ is famous  [✖]
+
+
+65. What is the function of the clause in the sentence: "If it snows tomorrow, we will cancel the picnic."?
+   ◯ Adjective clause  [✖]
+   ◯ Noun clause  [✖]
+   ◯ Independent clause  [✖]
+   ◉ Adverb clause  [✔]
+
+
+66. Select the noun clause in this sentence: "I wonder whether he will accept the job offer."
+   ◯ if he will take the job offer or not  [✖]
+   ◯ the job offer  [✖]
+   ◯ I wonder  [✖]
+   ◉ whether he will accept the job offer  [✔]
+
+
+67. Identify the correct adjective clause in the following sentence: "The book that was on the table belongs to Sarah."
+   ◯ belongs to Sarah  [✖]
+   ◉ that was on the table  [✔]
+   ◯ was on the table belongs  [✖]
+   ◯ The book  [✖]
+
+
+68. Choose the correct noun clause in this sentence: "She asked me whether I had completed my assignment."
+   ◯ she inquired about my assignment completion  [✖]
+   ◯ I had completed my assignment  [✖]
+   ◯ completed my assignment  [✖]
+   ◉ whether I had completed my assignment  [✔]
+
+
+69. Select the adverb clause in this sentence: "If you study for the test, you will do well."
+   ◯ do well on the exam  [✖]
+   ◯ studying for the upcoming test  [✖]
+   ◯ you will do well  [✖]
+   ◉ If you study for the test  [✔]
+
+
+70. Identify the adjective clause in this sentence: "The car that he drives is very old."
+   ◉ that he drives  [✔]
+   ◯ he drives a lot  [✖]
+   ◯ is very old  [✖]
+   ◯ The car  [✖]
+
+
+71. What is the function of the clause in the sentence: "Although it was raining, we decided to go for a hike."?
+   ◯ Independent clause  [✖]
+   ◯ Adjective clause  [✖]
+   ◯ Noun clause  [✖]
+   ◉ Adverb clause  [✔]
+
+
+72. Which part of the sentence is the adverb clause: "When the sun sets, the sky turns orange."?
+   ◯ sets in the evening  [✖]
+   ◉ When the sun sets  [✔]
+   ◯ the sun is setting  [✖]
+   ◯ the sky turns orange  [✖]
+
+
+73. Identify the noun clause in this sentence: "I can't believe that he won the competition."
+   ◯ he won the competition  [✖]
+   ◯ I can't believe  [✖]
+   ◯ the competition was won  [✖]
+   ◉ that he won the competition  [✔]
+
+
+74. Which part of the sentence is the adjective clause: "The man who is wearing a blue shirt is my uncle."?
+   ◯ wearing a blue shirt  [✖]
+   ◉ who is wearing a blue shirt  [✔]
+   ◯ The man  [✖]
+   ◯ is my uncle  [✖]
+
+
+75. Select the correct adverb clause in this sentence: "If you finish your homework, you can play outside."
+   ◯ finish your homework quickly  [✖]
+   ◯ you can play outside  [✖]
+   ◯ finish and then play  [✖]
+   ◉ If you finish your homework  [✔]
+
+
+76. What is the function of the clause in the sentence: "Although he was busy, he helped me with my project."?
+   ◉ Adverb clause  [✔]
+   ◯ Independent clause  [✖]
+   ◯ Noun clause  [✖]
+   ◯ Adjective clause  [✖]
+
+
+77. Identify the noun clause in the sentence: "She didn't know that he was coming to the party."
+   ◯ coming to the party  [✖]
+   ◯ he was coming  [✖]
+   ◉ that he was coming to the party  [✔]
+   ◯ she didn't know  [✖]
+
+
+78. Which part of the sentence is the adverb clause: "Since it was raining, we stayed indoors."
+   ◯ we stayed indoors  [✖]
+   ◯ stayed indoors  [✖]
+   ◯ it was raining  [✖]
+   ◉ Since it was raining  [✔]
+
+
+79. Choose the correct adjective clause in this sentence: "The dog that barked all night kept us awake."
+   ◯ The dog  [✖]
+   ◯ barked loudly  [✖]
+   ◯ kept us awake  [✖]
+   ◉ that barked all night  [✔]
+
+
+80. In the sentence "When I finish my work, I will go for a walk," what is the function of "When I finish my work"?
+   ◉ Adverb clause  [✔]
+   ◯ Noun clause  [✖]
+   ◯ Independent clause  [✖]
+   ◯ Adjective clause  [✖]
+
+
+81. Which part of the sentence is the adjective clause: "The book which you recommended was insightful."
+   ◯ was insightful  [✖]
+   ◯ The book  [✖]
+   ◉ which you recommended  [✔]
+   ◯ recommended by you  [✖]
+
+
+82. Identify the adverb clause in this sentence: "If you arrive early, we can have breakfast together."
+   ◉ If you arrive early  [✔]
+   ◯ arrive early  [✖]
+   ◯ have breakfast together  [✖]
+   ◯ we can have breakfast  [✖]
+
+
+83. Which part of the sentence is the adjective clause: "The musician who won the award is performing tonight."?
+   ◯ is performing tonight  [✖]
+   ◉ who won the award  [✔]
+   ◯ won the award  [✖]
+   ◯ The musician  [✖]
+
+
+84. Choose the correct noun clause in the sentence: "I know that you studied hard for the exam."
+   ◯ you worked hard to prepare for the exam  [✖]
+   ◉ that you studied hard for the exam  [✔]
+   ◯ studied hard for the exam  [✖]
+   ◯ I know  [✖]
+
+
+85. In the sentence "Although it was late, he continued to work," what is the function of "Although it was late"?
+   ◯ Noun clause  [✖]
+   ◯ Independent clause  [✖]
+   ◉ Adverb clause  [✔]
+   ◯ Adjective clause  [✖]
+
+
+86. Identify the adjective clause in the sentence: "The book that she wrote received great reviews."
+   ◯ received great reviews  [✖]
+   ◯ The book  [✖]
+   ◯ great reviews  [✖]
+   ◉ that she wrote  [✔]
+
+
+87. Identify the noun clause in the following sentence: "I don't understand how he solved the problem."
+   ◉ how he solved the problem  [✔]
+   ◯ the problem was solved  [✖]
+   ◯ understand how  [✖]
+   ◯ he figured out the solution  [✖]
+
+
+88. Choose the correct adjective clause in this sentence: "The movie that we watched last night was thrilling."
+   ◉ that we watched last night  [✔]
+   ◯ was thrilling  [✖]
+   ◯ the movie was exciting  [✖]
+   ◯ we watched last night  [✖]
+
+
+89. Which part of the sentence is the adverb clause: "Even though she was tired, she finished her homework on time."?
+   ◉ Even though she was tired  [✔]
+   ◯ she finished her homework  [✖]
+   ◯ homework was completed  [✖]
+   ◯ finished her homework on time  [✖]
+
+
+90. Select the noun clause in this sentence: "What she said during the meeting surprised everyone."
+   ◉ What she said during the meeting  [✔]
+   ◯ during the meeting  [✖]
+   ◯ she said during the meeting  [✖]
+   ◯ surprised everyone  [✖]
+
+
+91. Identify the adjective clause in the sentence: "The student who studies the most usually gets good grades."
+   ◯ gets good grades  [✖]
+   ◉ who studies the most  [✔]
+   ◯ studies the most  [✖]
+   ◯ the student who is diligent  [✖]
+
+
+92. Identify the noun clause in the sentence: "I believe that honesty is the best policy."
+   ◯ I believe  [✖]
+   ◯ the best policy is honest  [✖]
+   ◉ that honesty is the best policy  [✔]
+   ◯ honesty is the best policy  [✖]
+
+
+93. Which part of the sentence is the adverb clause: "Although he was tired, he completed his project on time."?
+   ◯ completed his project on time  [✖]
+   ◯ he completed his project  [✖]
+   ◯ he was exhausted  [✖]
+   ◉ Although he was tired  [✔]
+
+
+94. Choose the correct adjective clause in this sentence: "The teacher who helps students after school is very kind."
+   ◉ who helps students after school  [✔]
+   ◯ helps students who need assistance  [✖]
+   ◯ the teacher is kind  [✖]
+   ◯ is very kind  [✖]
+
+
+95. In the sentence "If it rains tomorrow, we will cancel the picnic," what is the function of "If it rains tomorrow"?
+   ◯ Independent clause  [✖]
+   ◯ Noun clause  [✖]
+   ◉ Adverb clause  [✔]
+   ◯ Adjective clause  [✖]
+
+
+96. Select the noun clause in the sentence: "I don't know what he wants for his birthday."
+   ◯ his birthday is soon  [✖]
+   ◉ what he wants for his birthday  [✔]
+   ◯ I don't know about his gift  [✖]
+   ◯ he wants for his birthday  [✖]
+
+
+97. Which part of the sentence is the noun clause: "I can't believe that she passed the exam."?
+   ◯ she passed the exam  [✖]
+   ◉ that she passed the exam  [✔]
+   ◯ the exam was passed  [✖]
+   ◯ can't believe  [✖]
+
+
+98. Identify the adjective clause in the following sentence: "The car that he bought last year is red."
+   ◯ bought last year  [✖]
+   ◯ The car  [✖]
+   ◉ that he bought last year  [✔]
+   ◯ is red  [✖]
+
+
+99. Choose the correct adverb clause in this sentence: "Even if it rains, we will go for a walk."
+   ◯ go for a walk  [✖]
+   ◯ it rains tomorrow  [✖]
+   ◯ we will go for a walk  [✖]
+   ◉ Even if it rains  [✔]
+
+
+100. Which part of the sentence is the adjective clause: "The cake that she baked was delicious."
+   ◯ was delicious  [✖]
+   ◯ she baked the cake  [✖]
+   ◉ that she baked  [✔]
+   ◯ The cake  [✖]
