@@ -510,6 +510,11 @@
         }
 
         /* Quiz Styles */
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
         .quiz-card {
             background: var(--bg-card);
             border-radius: var(--radius-lg);
@@ -517,39 +522,50 @@
             margin-bottom: 2rem;
             box-shadow: var(--shadow-soft);
             border: 1px solid rgba(255,255,255,0.8);
+            animation: fadeIn 0.5s ease;
+        }
+
+        .quiz-progress {
+            margin-bottom: 1.5rem;
+            color: var(--text-light);
+            font-weight: 700;
+            text-align: right;
+            font-size: 0.9rem;
         }
 
         .quiz-question {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: 700;
             color: var(--primary-mid);
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
             border-left: 4px solid var(--gold-accent);
-            padding-left: 15px;
+            padding-left: 20px;
+            line-height: 1.6;
         }
 
         .quiz-options {
             display: grid;
-            gap: 12px;
+            gap: 15px;
         }
 
         .quiz-option {
-            padding: 15px 20px;
+            padding: 18px 25px;
             background: white;
             border: 2px solid #eef2f5;
             border-radius: 12px;
             cursor: pointer;
             transition: all 0.2s ease;
-            font-weight: 500;
-            color: var(--text-light);
+            font-weight: 600;
+            color: var(--text-main);
             text-align: left;
             position: relative;
+            font-size: 1.05rem;
         }
 
-        .quiz-option:hover {
+        .quiz-option:hover:not(.disabled) {
             border-color: var(--primary-accent);
             background: #f8fafc;
-            color: var(--primary-dark);
+            transform: translateX(5px);
         }
 
         .quiz-option.correct {
@@ -558,49 +574,71 @@
             color: #155724;
         }
 
-        .quiz-option.correct::after {
-            content: '\f00c';
-            font-family: "Font Awesome 6 Free";
-            font-weight: 900;
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
         .quiz-option.incorrect {
             background-color: #f8d7da;
             border-color: #dc3545;
             color: #721c24;
-            opacity: 0.7;
+            opacity: 0.8;
         }
-        
-        .quiz-option.incorrect::after {
-            content: '\f00d';
-            font-family: "Font Awesome 6 Free";
-            font-weight: 900;
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
+
+        .quiz-option.disabled {
+            cursor: default;
+            opacity: 0.7;
         }
 
         .quiz-explanation {
-            margin-top: 20px;
-            padding: 15px;
+            margin-top: 25px;
+            padding: 20px;
             background: rgba(255, 215, 0, 0.1);
-            border-radius: 8px;
+            border-radius: 12px;
+            border-left: 4px solid var(--gold-dark);
             color: var(--text-main);
             display: none;
-            animation: fadeIn 0.5s ease;
+            animation: slideDown 0.4s ease;
         }
 
         .quiz-explanation.show {
             display: block;
         }
 
+        .quiz-nav {
+            margin-top: 25px;
+            text-align: right;
+            display: none;
+        }
+
+        .quiz-nav.show {
+            display: block;
+        }
+
+        .quiz-result {
+            text-align: center;
+            padding: 3rem;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            background: var(--dynamic-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            color: var(--gold-accent);
+            font-size: 3rem;
+            font-weight: 800;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border: 4px solid rgba(255, 255, 255, 0.2);
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -1073,8 +1111,10 @@
 
         <div class="tab-content" id="quiz">
             <h2>自我檢測 | Quiz</h2>
-            <div class="quiz-container" id="quiz-container">
-                </div>
+            <div class="quiz-container">
+                <div id="quiz-question-container">
+                    </div>
+            </div>
         </div>
     </div>
     
@@ -1099,85 +1139,320 @@
                 document.getElementById(tabId).classList.add('active');
             });
         });
-        
-        // Quiz Data
+
+        // 30 Practical English Questions Database
         const quizQuestions = [
+            // Linking Verbs
             {
-                question: "1. 以下哪個動詞是「連綴動詞 (Linking Verb)」?",
-                options: ["run", "eat", "become", "make"],
-                correct: 2,
-                explanation: "<strong>解析：</strong> 'become' (變得) 是連綴動詞，用來連接主詞與補語（形容詞或名詞），表示狀態的改變。而 run, eat, make 都是動作動詞。"
-            },
-            {
-                question: "2. 句子 'The cake _____ by my mom yesterday.' 應該填入什麼?",
-                options: ["bakes", "was baked", "is baking", "baked"],
-                correct: 1,
-                explanation: "<strong>解析：</strong> 這是「過去被動語態」。句子有 'yesterday' 表示過去式，且蛋糕是被烤的，所以結構為 be + p.p (過去分詞)。正確答案是 'was baked'。"
-            },
-            {
-                question: "3. 'I have been living here for 10 years.' 這是什麼時態?",
-                options: ["現在完成式", "現在進行式", "現在完成進行式", "過去完成進行式"],
-                correct: 2,
-                explanation: "<strong>解析：</strong> 結構為 have + been + V-ing，表示從過去持續到現在的動作，這是「現在完成進行式 (Present Perfect Continuous)」。"
-            },
-            {
-                question: "4. 以下關於情態助動詞 (Modal Verbs) 的敘述，何者正確?",
-                options: ["後面接動詞的過去式", "會隨主詞人稱變化 (如加s)", "後面接動詞原形", "兩個情態助動詞可以連用"],
-                correct: 2,
-                explanation: "<strong>解析：</strong> 情態助動詞 (can, may, must, should...) 後面必須接「動詞原形」，且本身不隨主詞變化。"
-            },
-            {
-                question: "5. 'He looks happy.' 中的 'looks' 是什麼詞性?",
-                options: ["不及物動詞 (連綴動詞)", "及物動詞", "助動詞", "過去分詞"],
+                question: "1. She _____ tired after the long run.",
+                options: ["looks", "look", "is looking", "looked at"],
                 correct: 0,
-                explanation: "<strong>解析：</strong> 這裡的 looks 是連綴動詞，後面接形容詞 happy 來描述主詞 He 的狀態，且不需要受詞，故屬於不及物動詞的一種。"
+                explanation: "<strong>Explanation:</strong> 'Looks' is a linking verb connecting 'She' to the adjective 'tired'. We use Present Simple for facts/states."
+            },
+            {
+                question: "2. The soup _____ delicious.",
+                options: ["tastes", "tasting", "taste", "is tasted"],
+                correct: 0,
+                explanation: "<strong>Explanation:</strong> 'Tastes' is a linking verb here describing the state of the soup. 'The soup' is singular, so we add 's'."
+            },
+            
+            // Transitive/Intransitive
+            {
+                question: "3. Please _____ the book on the table.",
+                options: ["lie", "lay", "rise", "sat"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> 'Lay' is transitive (needs an object, 'the book'). 'Lie' is intransitive."
+            },
+            
+            // Modals
+            {
+                question: "4. When I was five, I _____ swim very well.",
+                options: ["can", "could", "should", "will"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> We use 'could' to express ability in the past."
+            },
+            {
+                question: "5. You _____ wear a seatbelt when driving. It's the law.",
+                options: ["must", "might", "could", "may"],
+                correct: 0,
+                explanation: "<strong>Explanation:</strong> 'Must' is used for strong obligations or laws."
+            },
+            {
+                question: "6. You look sick. You _____ go to the doctor.",
+                options: ["should", "can", "will", "might"],
+                correct: 0,
+                explanation: "<strong>Explanation:</strong> 'Should' is used to give advice."
+            },
+            
+            // Auxiliaries
+            {
+                question: "7. _____ you like pizza?",
+                options: ["Are", "Do", "Have", "Can"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> Use 'Do' for questions in the Present Simple with main verbs (like)."
+            },
+            {
+                question: "8. _____ you finished your homework yet?",
+                options: ["Did", "Have", "Are", "Do"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> Use 'Have' to form the Present Perfect tense (Have + V3)."
+            },
+            
+            // Simple Tenses
+            {
+                question: "9. My brother _____ to school every morning.",
+                options: ["walk", "walks", "is walking", "walked"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> Use Present Simple for daily habits. 'Brother' is singular, so add 's'."
+            },
+            {
+                question: "10. We _____ to London last summer.",
+                options: ["go", "gone", "went", "have gone"],
+                correct: 2,
+                explanation: "<strong>Explanation:</strong> Use Past Simple ('went') for actions completed at a specific time in the past ('last summer')."
+            },
+            {
+                question: "11. Don't worry, I _____ help you.",
+                options: ["am going to", "will", "am", "shall"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> Use 'will' for offers or decisions made at the moment of speaking."
+            },
+            
+            // Continuous Tenses
+            {
+                question: "12. Listen! The baby _____.",
+                options: ["cries", "is crying", "cried", "has cried"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> Use Present Continuous ('is crying') for actions happening right now."
+            },
+            {
+                question: "13. I _____ TV when the phone rang.",
+                options: ["watched", "am watching", "was watching", "have watched"],
+                correct: 2,
+                explanation: "<strong>Explanation:</strong> Use Past Continuous ('was watching') for a long action interrupted by a short action in the past."
+            },
+            
+            // Perfect Tenses
+            {
+                question: "14. I _____ my keys. I can't find them anywhere.",
+                options: ["lose", "lost", "have lost", "am losing"],
+                correct: 2,
+                explanation: "<strong>Explanation:</strong> Use Present Perfect ('have lost') when a past action has a result in the present."
+            },
+            {
+                question: "15. She has lived here _____ ten years.",
+                options: ["since", "for", "in", "during"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> Use 'for' with a duration of time (ten years)."
+            },
+            {
+                question: "16. The train _____ already left when we arrived at the station.",
+                options: ["has", "had", "was", "did"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> Use Past Perfect ('had left') for an action that happened before another past action."
+            },
+            {
+                question: "17. By next year, I _____ from university.",
+                options: ["will graduate", "graduate", "will have graduated", "graduated"],
+                correct: 2,
+                explanation: "<strong>Explanation:</strong> Use Future Perfect ('will have graduated') for an action that will be completed by a specific time in the future."
+            },
+            
+            // Perfect Continuous
+            {
+                question: "18. It _____ raining all day.",
+                options: ["is", "has been", "was", "did"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> Use Present Perfect Continuous ('has been') to emphasize the duration of an action."
+            },
+            
+            // Passive Voice
+            {
+                question: "19. The letter _____ by Mark yesterday.",
+                options: ["wrote", "was written", "is written", "writes"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> Past Passive: was/were + Past Participle ('written'). Used with 'yesterday'."
+            },
+            {
+                question: "20. English _____ spoken in many countries.",
+                options: ["is", "are", "has", "does"],
+                correct: 0,
+                explanation: "<strong>Explanation:</strong> Present Passive: is/are + Past Participle ('spoken')."
+            },
+            {
+                question: "21. The work _____ be finished tomorrow.",
+                options: ["will", "is", "has", "did"],
+                correct: 0,
+                explanation: "<strong>Explanation:</strong> Future Passive: will + be + Past Participle."
+            },
+            
+            // Gerunds and Infinitives
+            {
+                question: "22. I enjoy _____ movies on weekends.",
+                options: ["watch", "to watch", "watching", "watched"],
+                correct: 2,
+                explanation: "<strong>Explanation:</strong> 'Enjoy' is always followed by a Gerund (V-ing)."
+            },
+            {
+                question: "23. She decided _____ to Paris.",
+                options: ["go", "going", "to go", "went"],
+                correct: 2,
+                explanation: "<strong>Explanation:</strong> 'Decide' is followed by an Infinitive (to + V)."
+            },
+            {
+                question: "24. He stopped _____ because it was bad for his health.",
+                options: ["smoking", "to smoke", "smoke", "smoked"],
+                correct: 0,
+                explanation: "<strong>Explanation:</strong> 'Stop + V-ing' means to quit an activity."
+            },
+            
+            // Conditionals
+            {
+                question: "25. If it rains, I _____ stay at home.",
+                options: ["would", "will", "am", "stayed"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> First Conditional: If + Present, ... will + Verb."
+            },
+            {
+                question: "26. If I _____ a bird, I would fly to you.",
+                options: ["was", "am", "were", "be"],
+                correct: 2,
+                explanation: "<strong>Explanation:</strong> Second Conditional (Hypothetical): Use 'were' for all subjects in the 'if' clause."
+            },
+            
+            // Phrasal Verbs
+            {
+                question: "27. Please turn _____ the lights when you leave the room.",
+                options: ["on", "in", "off", "up"],
+                correct: 2,
+                explanation: "<strong>Explanation:</strong> 'Turn off' means to stop the flow of electricity/light."
+            },
+            
+            // Subject-Verb Agreement
+            {
+                question: "28. Everyone _____ happy about the news.",
+                options: ["are", "is", "were", "have"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> 'Everyone' is a singular subject, so it takes the singular verb 'is'."
+            },
+            
+            // Stative Verbs
+            {
+                question: "29. I _____ you are right.",
+                options: ["am believing", "believe", "believed", "was believing"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> 'Believe' is a stative verb and is rarely used in continuous tenses."
+            },
+            
+            // Causative
+            {
+                question: "30. The teacher made the student _____ his homework.",
+                options: ["rewrite", "to rewrite", "rewriting", "rewritten"],
+                correct: 0,
+                explanation: "<strong>Explanation:</strong> Causative 'make' is followed by the base form of the verb (make someone do something)."
             }
         ];
 
-        // Render Quiz
-        const quizContainer = document.getElementById('quiz-container');
+        let currentQuestionIndex = 0;
+        let score = 0;
 
-        quizQuestions.forEach((q, index) => {
-            const card = document.createElement('div');
-            card.className = 'quiz-card';
+        // 初始化 Quiz
+        function initQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            showQuestion(currentQuestionIndex);
+        }
+
+        // 顯示題目
+        function showQuestion(index) {
+            const container = document.getElementById('quiz-question-container');
             
-            const questionTitle = document.createElement('div');
-            questionTitle.className = 'quiz-question';
-            questionTitle.innerText = q.question;
+            // 如果題目做完了
+            if (index >= quizQuestions.length) {
+                showResult(container);
+                return;
+            }
+
+            const q = quizQuestions[index];
             
-            const optionsDiv = document.createElement('div');
-            optionsDiv.className = 'quiz-options';
+            let html = `
+                <div class="quiz-card">
+                    <div class="quiz-progress">Question ${index + 1} / ${quizQuestions.length}</div>
+                    <div class="quiz-question">${q.question}</div>
+                    <div class="quiz-options">
+                        ${q.options.map((opt, i) => `
+                            <div class="quiz-option" onclick="checkAnswer(this, ${i})">${opt}</div>
+                        `).join('')}
+                    </div>
+                    <div class="quiz-explanation" id="explanation-${index}">
+                        ${q.explanation}
+                    </div>
+                    <div class="quiz-nav" id="nav-${index}">
+                        <button class="btn" onclick="nextQuestion()">Next Question <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+            `;
             
-            const explanationDiv = document.createElement('div');
-            explanationDiv.className = 'quiz-explanation';
-            explanationDiv.innerHTML = q.explanation;
-            
-            q.options.forEach((opt, optIndex) => {
-                const btn = document.createElement('div');
-                btn.className = 'quiz-option';
-                btn.innerText = opt;
-                btn.addEventListener('click', function() {
-                    // Prevent multiple clicks on the same question
-                    if (card.classList.contains('answered')) return;
-                    
-                    card.classList.add('answered');
-                    explanationDiv.classList.add('show');
-                    
-                    if (optIndex === q.correct) {
-                        this.classList.add('correct');
-                    } else {
-                        this.classList.add('incorrect');
-                        // Highlight the correct answer automatically
-                        optionsDiv.children[q.correct].classList.add('correct');
-                    }
-                });
-                optionsDiv.appendChild(btn);
-            });
-            
-            card.appendChild(questionTitle);
-            card.appendChild(optionsDiv);
-            card.appendChild(explanationDiv);
-            quizContainer.appendChild(card);
+            container.innerHTML = html;
+        }
+
+        // 檢查答案
+        window.checkAnswer = function(optionElement, selectedIndex) {
+            const currentQ = quizQuestions[currentQuestionIndex];
+            const explanation = document.getElementById(`explanation-${currentQuestionIndex}`);
+            const nav = document.getElementById(`nav-${currentQuestionIndex}`);
+            const allOptions = document.querySelectorAll('.quiz-option');
+
+            // 防止重複點擊
+            if (optionElement.parentElement.classList.contains('answered')) return;
+            optionElement.parentElement.classList.add('answered');
+
+            // 標記選項
+            if (selectedIndex === currentQ.correct) {
+                optionElement.classList.add('correct');
+                score++;
+            } else {
+                optionElement.classList.add('incorrect');
+                // 顯示正確答案
+                allOptions[currentQ.correct].classList.add('correct');
+            }
+
+            // 禁用其他選項
+            allOptions.forEach(opt => opt.classList.add('disabled'));
+
+            // 顯示解析與下一題按鈕
+            explanation.classList.add('show');
+            nav.classList.add('show');
+        }
+
+        // 下一題
+        window.nextQuestion = function() {
+            currentQuestionIndex++;
+            showQuestion(currentQuestionIndex);
+        }
+
+        // 顯示結果
+        function showResult(container) {
+            container.innerHTML = `
+                <div class="card quiz-result">
+                    <div class="score-circle">${score}</div>
+                    <h2>Quiz Completed!</h2>
+                    <p>Your Score: ${score} / ${quizQuestions.length}</p>
+                    <p>${score >= 25 ? "Excellent! You have a great understanding of verbs!" : score >= 18 ? "Good job! Keep practicing to improve even more." : "Keep trying! Review the lessons and try again."}</p>
+                    <button class="btn" onclick="initQuiz()" style="margin-top: 20px;">
+                        <i class="fas fa-redo"></i> Restart Quiz
+                    </button>
+                </div>
+            `;
+        }
+
+        // 當點擊 Quiz 分頁時初始化 (如果是第一次)
+        document.querySelector('.tab[data-tab="quiz"]').addEventListener('click', () => {
+             // 可以選擇每次進入都重置，或者保留狀態。這裡選擇若未開始則開始。
+             const container = document.getElementById('quiz-question-container');
+             if (container.innerHTML.trim() === '') {
+                 initQuiz();
+             }
         });
 
     </script>
