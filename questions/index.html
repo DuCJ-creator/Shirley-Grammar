@@ -21,13 +21,21 @@
             --elegant-text: #2c3e50;
             --elegant-gold: #d4af37;
             --elegant-gold-light: #fffcf5;
+
+            /* Quiz Specific Colors */
+            --correct-bg: #d4edda;
+            --correct-border: #28a745;
+            --correct-text: #155724;
+            --wrong-bg: #f8d7da;
+            --wrong-border: #dc3545;
+            --wrong-text: #721c24;
         }
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', 'Microsoft JhengHei', '微軟正黑體', Arial, sans-serif;
+            font-family: 'Lato', 'Segoe UI', 'Microsoft JhengHei', '微軟正黑體', Arial, sans-serif;
         }
         
         body {
@@ -36,6 +44,7 @@
             line-height: 1.6;
         }
         
+        /* Layout - Header (維持原樣) */
         header {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
@@ -54,11 +63,14 @@
         h1 {
             font-size: 2.2rem;
             margin-bottom: 0.5rem;
+            font-family: 'Playfair Display', serif;
         }
         
         .subtitle {
             font-size: 1.2rem;
             opacity: 0.9;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
         }
         
         .container {
@@ -67,7 +79,7 @@
             padding: 1.5rem;
         }
         
-        /* Tabs Styling */
+        /* Layout - Tabs (維持原樣) */
         .tabs {
             display: flex;
             flex-wrap: wrap;
@@ -117,17 +129,19 @@
             display: block;
         }
         
-        /* Original Components Styling */
+        /* Content Components */
         h2 {
             color: var(--primary);
             margin-bottom: 1.5rem;
             padding-bottom: 0.5rem;
             border-bottom: 2px solid var(--accent);
+            font-family: 'Playfair Display', serif;
         }
         
         h3 {
             color: var(--secondary);
             margin: 1.5rem 0 1rem;
+            font-weight: 700;
         }
         
         .card {
@@ -174,56 +188,21 @@
             border-radius: 0 8px 8px 0;
         }
         
-        .interactive-element {
-            background-color: var(--light);
-            border: 2px dashed var(--secondary);
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin: 1.5rem 0;
-            text-align: center;
-        }
-        
-        .btn {
-            background-color: var(--accent);
-            color: white;
+        /* Audio Button Style */
+        .audio-btn {
+            background: none;
             border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 30px;
+            color: var(--elegant-gold);
             cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+            margin-left: 8px;
+            font-size: 1.1rem;
+            transition: all 0.2s;
+            vertical-align: middle;
         }
         
-        .btn:hover {
-            background-color: #ff5252;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(255, 107, 107, 0.3);
-        }
-        
-        .animation-controls {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 1rem;
-        }
-        
-        .question-animation {
-            height: 200px;
-            background: linear-gradient(135deg, #6495ed, #4169e1);
-            border-radius: 10px;
-            margin: 1.5rem 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-            font-weight: bold;
-            position: relative;
-            overflow: hidden;
+        .audio-btn:hover {
+            color: var(--primary);
+            transform: scale(1.15);
         }
         
         footer {
@@ -264,6 +243,14 @@
             border-radius: 5px;
         }
         
+        .note-box {
+            background-color: #fff3cd; 
+            border-left: 4px solid #ffc107; 
+            padding: 1rem; 
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
         .usage-diagram {
             text-align: center;
             margin: 2rem 0;
@@ -293,12 +280,11 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             text-align: center;
             width: 120px;
+            font-weight: bold;
+            color: var(--primary);
         }
 
-        /* ---------------------------------------------------- */
-        /* --- ELEGANT MODULE STYLING (高雅風格模組) --- */
-        /* ---------------------------------------------------- */
-        
+        /* --- Elegant Module Styles (Preserved) --- */
         .elegant-wrapper {
             background-color: var(--elegant-bg);
             color: var(--elegant-text);
@@ -312,7 +298,6 @@
             border: 1px solid rgba(0,0,0,0.03);
         }
 
-        /* 頂部裝飾線條 */
         .elegant-wrapper::before {
             content: '';
             position: absolute;
@@ -332,7 +317,7 @@
             margin-bottom: 0.5rem;
             font-weight: 700;
             letter-spacing: 1px;
-            border-bottom: none; /* 覆蓋原有 h2 樣式 */
+            border-bottom: none;
         }
 
         .elegant-subtitle {
@@ -347,7 +332,6 @@
             width: 100%;
         }
 
-        /* 卡片容器 */
         .elegant-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -356,7 +340,6 @@
             margin: 0 auto;
         }
 
-        /* 優雅卡片設計 */
         .elegant-card {
             background: #ffffff;
             border: 1px solid #eaeaea;
@@ -369,7 +352,6 @@
             border-radius: 4px;
         }
 
-        /* 卡片懸停效果 */
         .elegant-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 15px 30px rgba(0,0,0,0.08);
@@ -412,7 +394,6 @@
             margin-bottom: 1.5rem;
         }
 
-        /* 卡片內部分隔線 */
         .divider-line {
             width: 40px;
             height: 1px;
@@ -426,7 +407,6 @@
             background-color: var(--elegant-gold);
         }
 
-        /* 詳細內容列表 */
         .detail-list {
             list-style: none;
             text-align: left;
@@ -447,7 +427,7 @@
             color: var(--elegant-gold);
             font-size: 0.5rem;
             margin-right: 10px;
-            margin-top: 8px; /* 對齊文字 */
+            margin-top: 8px;
         }
 
         .detail-example {
@@ -457,33 +437,124 @@
             display: block;
             margin-top: 4px;
         }
+
+        /* Quiz Styles */
+        .quiz-container { max-width: 800px; margin: 0 auto; }
+        .quiz-progress {
+            margin-bottom: 1.5rem;
+            color: #666;
+            font-weight: 700;
+            text-align: right;
+            font-size: 0.9rem;
+        }
+        .quiz-card {
+            background: white;
+            border-radius: 8px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid #eee;
+            animation: fadeIn 0.5s ease;
+        }
+        .quiz-question {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--elegant-gold);
+            padding-left: 20px;
+            line-height: 1.6;
+        }
+        .quiz-options { display: grid; gap: 15px; }
+        .quiz-option {
+            padding: 18px 25px;
+            background: white;
+            border: 2px solid #eef2f5;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 600;
+            color: var(--dark);
+            text-align: left;
+            position: relative;
+            font-size: 1.05rem;
+        }
+        .quiz-option:hover:not(.disabled) {
+            border-color: var(--primary);
+            background: #f8fafc;
+            transform: translateX(5px);
+        }
+        .quiz-option.correct {
+            background-color: var(--correct-bg);
+            border-color: var(--correct-border);
+            color: var(--correct-text);
+        }
+        .quiz-option.incorrect {
+            background-color: var(--wrong-bg);
+            border-color: var(--wrong-border);
+            color: var(--wrong-text);
+            opacity: 0.8;
+        }
+        .quiz-option.disabled { cursor: default; opacity: 0.7; pointer-events: none; }
+        .quiz-explanation {
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 8px;
+            border-left: 4px solid var(--elegant-gold);
+            color: var(--dark);
+            display: none;
+            animation: slideDown 0.4s ease;
+        }
+        .quiz-explanation.show { display: block; }
+        .quiz-nav { margin-top: 25px; text-align: right; display: none; }
+        .quiz-nav.show { display: block; }
+        .quiz-result { text-align: center; padding: 3rem; }
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            color: white;
+            font-size: 3rem;
+            font-weight: 800;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border: 4px solid rgba(255, 255, 255, 0.2);
+        }
+        .btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn:hover {
+            background-color: #ff5252;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(255, 107, 107, 0.3);
+        }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
         
         @media (max-width: 768px) {
-            .tabs {
-                flex-direction: column;
-            }
-            .tab {
-                flex: none;
-            }
-            .container {
-                padding: 1rem;
-            }
-            h1 {
-                font-size: 1.8rem;
-            }
-            .qa-pair {
-                flex-direction: column;
-            }
-            .question, .answer {
-                margin-right: 0;
-                margin-bottom: 10px;
-            }
-            .elegant-title {
-                font-size: 2rem;
-            }
-            .elegant-wrapper {
-                padding: 2rem 1rem;
-            }
+            .tabs { flex-direction: column; }
+            .tab { flex: none; }
+            .container { padding: 1rem; }
+            h1 { font-size: 1.8rem; }
+            .qa-pair { flex-direction: column; }
+            .question, .answer { margin-right: 0; margin-bottom: 10px; }
+            .elegant-title { font-size: 2rem; }
+            .elegant-wrapper { padding: 2rem 1rem; }
         }
     </style>
 </head>
@@ -497,10 +568,11 @@
     
     <div class="container">
         <div class="tabs">
-            <div class="tab active" data-tab="intro">疑問句介紹 | Questions Introduction</div>
+            <div class="tab active" data-tab="intro">疑問句介紹 | Intro</div>
             <div class="tab" data-tab="yesno">Yes/No 疑問句 | Yes/No Questions</div>
             <div class="tab" data-tab="wh">WH 疑問句 | WH Questions</div>
             <div class="tab" data-tab="tag">附加問句 | Tag Questions</div>
+            <div class="tab" data-tab="quiz">自我檢測 | Quiz</div>
         </div>
         
         <div class="tab-content active" id="intro">
@@ -524,14 +596,14 @@
                                 <i class="fas fa-circle"></i> 
                                 <div>
                                     <strong>Yes/No Questions:</strong> 確認是非
-                                    <span class="detail-example">"Can you help me?"</span>
+                                    <span class="detail-example">"Can you help me?" <button class="audio-btn" onclick="speak('Can you help me?')"><i class="fas fa-volume-up"></i></button></span>
                                 </div>
                             </li>
                             <li>
                                 <i class="fas fa-circle"></i>
                                 <div>
                                     <strong>WH- Questions:</strong> 獲取細節
-                                    <span class="detail-example">"Why is the sky blue?"</span>
+                                    <span class="detail-example">"Why is the sky blue?" <button class="audio-btn" onclick="speak('Why is the sky blue?')"><i class="fas fa-volume-up"></i></button></span>
                                 </div>
                             </li>
                         </ul>
@@ -551,14 +623,14 @@
                                 <i class="fas fa-circle"></i>
                                 <div>
                                     <strong>Expressing Surprise:</strong> 表達驚訝
-                                    <span class="detail-example">"Don't you like it?" (難道你不喜歡？)</span>
+                                    <span class="detail-example">"Don't you like it?" (難道你不喜歡？) <button class="audio-btn" onclick="speak('Do not you like it?')"><i class="fas fa-volume-up"></i></button></span>
                                 </div>
                             </li>
                             <li>
                                 <i class="fas fa-circle"></i>
                                 <div>
                                     <strong>Seeking Agreement:</strong> 尋求認同
-                                    <span class="detail-example">"Isn't it a lovely day?"</span>
+                                    <span class="detail-example">"Isn't it a lovely day?" <button class="audio-btn" onclick="speak('Is not it a lovely day?')"><i class="fas fa-volume-up"></i></button></span>
                                 </div>
                             </li>
                         </ul>
@@ -578,14 +650,14 @@
                                 <i class="fas fa-circle"></i>
                                 <div>
                                     <strong>Emphasis:</strong> 強調語氣
-                                    <span class="detail-example">"Who cares?" (誰在乎呢？)</span>
+                                    <span class="detail-example">"Who cares?" (誰在乎呢？) <button class="audio-btn" onclick="speak('Who cares?')"><i class="fas fa-volume-up"></i></button></span>
                                 </div>
                             </li>
                             <li>
                                 <i class="fas fa-circle"></i>
                                 <div>
                                     <strong>Persuasion:</strong> 說服與渲染
-                                    <span class="detail-example">"What's in a name?" (名字代表什麼？)</span>
+                                    <span class="detail-example">"What's in a name?" (名字代表什麼？) <button class="audio-btn" onclick="speak('What is in a name?')"><i class="fas fa-volume-up"></i></button></span>
                                 </div>
                             </li>
                         </ul>
@@ -600,9 +672,9 @@
                 <p>Questions are sentences used to ask for information. In English, there are various forms including Yes/No questions, WH questions, and tag questions.</p>
                 
                 <div class="example">
-                    <p><strong>Yes/No Question:</strong> <span class="highlight">Is the actor handsome?</span> | 這個演員帥嗎？</p>
-                    <p><strong>WH Question:</strong> <span class="highlight">What is he doing?</span> | 他在做什麼？</p>
-                    <p><strong>Tag Question:</strong> <span class="highlight">You are coming, aren't you?</span> | 你會來，對吧？</p>
+                    <p><strong>Yes/No Question:</strong> <span class="highlight">Is the actor handsome?</span> | 這個演員帥嗎？ <button class="audio-btn" onclick="speak('Is the actor handsome?')"><i class="fas fa-volume-up"></i></button></p>
+                    <p><strong>WH Question:</strong> <span class="highlight">What is he doing?</span> | 他在做什麼？ <button class="audio-btn" onclick="speak('What is he doing?')"><i class="fas fa-volume-up"></i></button></p>
+                    <p><strong>Tag Question:</strong> <span class="highlight">You are coming, aren't you?</span> | 你會來，對吧？ <button class="audio-btn" onclick="speak('You are coming, are not you?')"><i class="fas fa-volume-up"></i></button></p>
                 </div>
             </div>
             
@@ -620,17 +692,17 @@
                         <tr>
                             <td>Yes/No 疑問句</td>
                             <td>Auxiliary + Subject + ... ?</td>
-                            <td>Is he a teacher?</td>
+                            <td>Is he a teacher? <button class="audio-btn" onclick="speak('Is he a teacher?')"><i class="fas fa-volume-up"></i></button></td>
                         </tr>
                         <tr>
                             <td>WH 疑問句</td>
                             <td>WH + Auxiliary + Subject + ... ?</td>
-                            <td>Where do you live?</td>
+                            <td>Where do you live? <button class="audio-btn" onclick="speak('Where do you live?')"><i class="fas fa-volume-up"></i></button></td>
                         </tr>
                         <tr>
                             <td>附加問句</td>
                             <td>Statement, + Auxiliary + Subject?</td>
-                            <td>You like coffee, don't you?</td>
+                            <td>You like coffee, don't you? <button class="audio-btn" onclick="speak('You like coffee, do not you?')"><i class="fas fa-volume-up"></i></button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -652,22 +724,6 @@
                     </div>
                 </div>
             </div>
-            
-            <div class="interactive-element">
-                <h3>疑問句練習 | Question Practice</h3>
-                <p>識別不同類型的疑問句</p>
-                <div class="question-animation" id="questionAnimation">
-                    Is the actor handsome?
-                </div>
-                <div class="animation-controls">
-                    <button class="btn" id="playAnimation">
-                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
-                    </button>
-                    <button class="btn" id="pauseAnimation">
-                        <i class="fas fa-pause"></i> 暫停 | Pause
-                    </button>
-                </div>
-            </div>
         </div>
         
         <div class="tab-content" id="yesno">
@@ -679,55 +735,55 @@
                 
                 <div class="qa-pair">
                     <div class="question">
-                        <p><strong>Question:</strong> Is the actor handsome?</p>
+                        <p><strong>Question:</strong> Is the actor handsome? <button class="audio-btn" onclick="speak('Is the actor handsome?')"><i class="fas fa-volume-up"></i></button></p>
                     </div>
                     <div class="answer">
-                        <p><strong>Answer:</strong> Yes, he is. / No, he isn't.</p>
+                        <p><strong>Answer:</strong> Yes, he is. / No, he isn't. <button class="audio-btn" onclick="speak('Yes, he is. No, he is not.')"><i class="fas fa-volume-up"></i></button></p>
                     </div>
                 </div>
                 
                 <div class="qa-pair">
                     <div class="question">
-                        <p><strong>Question:</strong> Were you tired yesterday?</p>
+                        <p><strong>Question:</strong> Were you tired yesterday? <button class="audio-btn" onclick="speak('Were you tired yesterday?')"><i class="fas fa-volume-up"></i></button></p>
                     </div>
                     <div class="answer">
-                        <p><strong>Answer:</strong> Yes, I was. / No, I wasn't.</p>
+                        <p><strong>Answer:</strong> Yes, I was. / No, I wasn't. <button class="audio-btn" onclick="speak('Yes, I was. No, I was not.')"><i class="fas fa-volume-up"></i></button></p>
                     </div>
                 </div>
                 
                 <div class="qa-pair">
                     <div class="question">
-                        <p><strong>Question:</strong> Do you like sushi?</p>
+                        <p><strong>Question:</strong> Do you like sushi? <button class="audio-btn" onclick="speak('Do you like sushi?')"><i class="fas fa-volume-up"></i></button></p>
                     </div>
                     <div class="answer">
-                        <p><strong>Answer:</strong> Yes, I do. / No, I don't.</p>
+                        <p><strong>Answer:</strong> Yes, I do. / No, I don't. <button class="audio-btn" onclick="speak('Yes, I do. No, I do not.')"><i class="fas fa-volume-up"></i></button></p>
                     </div>
                 </div>
                 
                 <div class="qa-pair">
                     <div class="question">
-                        <p><strong>Question:</strong> Does this machine need batteries?</p>
+                        <p><strong>Question:</strong> Does this machine need batteries? <button class="audio-btn" onclick="speak('Does this machine need batteries?')"><i class="fas fa-volume-up"></i></button></p>
                     </div>
                     <div class="answer">
-                        <p><strong>Answer:</strong> Yes, it does. / No, it doesn't.</p>
+                        <p><strong>Answer:</strong> Yes, it does. / No, it doesn't. <button class="audio-btn" onclick="speak('Yes, it does. No, it does not.')"><i class="fas fa-volume-up"></i></button></p>
                     </div>
                 </div>
                 
                 <div class="qa-pair">
                     <div class="question">
-                        <p><strong>Question:</strong> Did Bob buy lunch?</p>
+                        <p><strong>Question:</strong> Did Bob buy lunch? <button class="audio-btn" onclick="speak('Did Bob buy lunch?')"><i class="fas fa-volume-up"></i></button></p>
                     </div>
                     <div class="answer">
-                        <p><strong>Answer:</strong> Yes, he did. / No, he didn't.</p>
+                        <p><strong>Answer:</strong> Yes, he did. / No, he didn't. <button class="audio-btn" onclick="speak('Yes, he did. No, he did not.')"><i class="fas fa-volume-up"></i></button></p>
                     </div>
                 </div>
                 
                 <div class="qa-pair">
                     <div class="question">
-                        <p><strong>Question:</strong> Have you had lunch?</p>
+                        <p><strong>Question:</strong> Have you had lunch? <button class="audio-btn" onclick="speak('Have you had lunch?')"><i class="fas fa-volume-up"></i></button></p>
                     </div>
                     <div class="answer">
-                        <p><strong>Answer:</strong> Yes, I have. / No, I haven't.</p>
+                        <p><strong>Answer:</strong> Yes, I have. / No, I haven't. <button class="audio-btn" onclick="speak('Yes, I have. No, I have not.')"><i class="fas fa-volume-up"></i></button></p>
                     </div>
                 </div>
             </div>
@@ -746,51 +802,35 @@
                         <tr>
                             <td>現在簡單式</td>
                             <td>Do/Does + Subject + Verb...?</td>
-                            <td>Do you speak English?</td>
+                            <td>Do you speak English? <button class="audio-btn" onclick="speak('Do you speak English?')"><i class="fas fa-volume-up"></i></button></td>
                         </tr>
                         <tr>
                             <td>過去簡單式</td>
                             <td>Did + Subject + Verb...?</td>
-                            <td>Did you see the movie?</td>
+                            <td>Did you see the movie? <button class="audio-btn" onclick="speak('Did you see the movie?')"><i class="fas fa-volume-up"></i></button></td>
                         </tr>
                         <tr>
                             <td>現在進行式</td>
                             <td>Am/Is/Are + Subject + Verb-ing...?</td>
-                            <td>Are you studying now?</td>
+                            <td>Are you studying now? <button class="audio-btn" onclick="speak('Are you studying now?')"><i class="fas fa-volume-up"></i></button></td>
                         </tr>
                         <tr>
                             <td>過去進行式</td>
                             <td>Was/Were + Subject + Verb-ing...?</td>
-                            <td>Were you sleeping when I called?</td>
+                            <td>Were you sleeping when I called? <button class="audio-btn" onclick="speak('Were you sleeping when I called?')"><i class="fas fa-volume-up"></i></button></td>
                         </tr>
                         <tr>
                             <td>現在完成式</td>
                             <td>Have/Has + Subject + Past Participle...?</td>
-                            <td>Have you finished your homework?</td>
+                            <td>Have you finished your homework? <button class="audio-btn" onclick="speak('Have you finished your homework?')"><i class="fas fa-volume-up"></i></button></td>
                         </tr>
                         <tr>
                             <td>未來式</td>
                             <td>Will + Subject + Verb...?</td>
-                            <td>Will you come to the party?</td>
+                            <td>Will you come to the party? <button class="audio-btn" onclick="speak('Will you come to the party?')"><i class="fas fa-volume-up"></i></button></td>
                         </tr>
                     </tbody>
                 </table>
-            </div>
-            
-            <div class="interactive-element">
-                <h3>Yes/No疑問句練習 | Yes/No Question Practice</h3>
-                <p>將陳述句轉換為Yes/No疑問句</p>
-                <div class="question-animation" id="yesnoAnimation">
-                    He is a teacher.
-                </div>
-                <div class="animation-controls">
-                    <button class="btn" id="playYesnoAnimation">
-                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
-                    </button>
-                    <button class="btn" id="pauseYesnoAnimation">
-                        <i class="fas fa-pause"></i> 暫停 | Pause
-                    </button>
-                </div>
             </div>
         </div>
         
@@ -802,27 +842,27 @@
                 <p>WH疑問句的基本結構是：WH + Auxiliary + Subject + ... ?</p>
                 
                 <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="highlight">What is he doing?</span> | 他在做什麼？</p>
+                    <p><strong>例子 Example:</strong> <span class="highlight">What is he doing?</span> | 他在做什麼？ <button class="audio-btn" onclick="speak('What is he doing?')"><i class="fas fa-volume-up"></i></button></p>
                 </div>
                 
                 <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="highlight">When do you study?</span> | 你什麼時候學習？</p>
+                    <p><strong>例子 Example:</strong> <span class="highlight">When do you study?</span> | 你什麼時候學習？ <button class="audio-btn" onclick="speak('When do you study?')"><i class="fas fa-volume-up"></i></button></p>
                 </div>
                 
                 <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="highlight">Where did you buy that shirt?</span> | 你在哪裡買的那件襯衫？</p>
+                    <p><strong>例子 Example:</strong> <span class="highlight">Where did you buy that shirt?</span> | 你在哪裡買的那件襯衫？ <button class="audio-btn" onclick="speak('Where did you buy that shirt?')"><i class="fas fa-volume-up"></i></button></p>
                 </div>
                 
                 <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="highlight">How have you been lately?</span> | 你最近怎麼樣？</p>
+                    <p><strong>例子 Example:</strong> <span class="highlight">How have you been lately?</span> | 你最近怎麼樣？ <button class="audio-btn" onclick="speak('How have you been lately?')"><i class="fas fa-volume-up"></i></button></p>
                 </div>
                 
                 <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="highlight">Who did you call?</span> | 你給誰打電話了？</p>
+                    <p><strong>例子 Example:</strong> <span class="highlight">Who did you call?</span> | 你給誰打電話了？ <button class="audio-btn" onclick="speak('Who did you call?')"><i class="fas fa-volume-up"></i></button></p>
                 </div>
                 
                 <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="highlight">Why will you leave?</span> | 你為什麼要離開？</p>
+                    <p><strong>例子 Example:</strong> <span class="highlight">Why will you leave?</span> | 你為什麼要離開？ <button class="audio-btn" onclick="speak('Why will you leave?')"><i class="fas fa-volume-up"></i></button></p>
                 </div>
             </div>
             
@@ -840,76 +880,60 @@
                         <tr>
                             <td>What</td>
                             <td>詢問事物、活動</td>
-                            <td>What is your name?</td>
+                            <td>What is your name? <button class="audio-btn" onclick="speak('What is your name?')"><i class="fas fa-volume-up"></i></button></td>
                         </tr>
                         <tr>
                             <td>When</td>
                             <td>詢問時間</td>
-                            <td>When is your birthday?</td>
+                            <td>When is your birthday? <button class="audio-btn" onclick="speak('When is your birthday?')"><i class="fas fa-volume-up"></i></button></td>
                         </tr>
                         <tr>
                             <td>Where</td>
                             <td>詢問地點</td>
-                            <td>Where do you live?</td>
+                            <td>Where do you live? <button class="audio-btn" onclick="speak('Where do you live?')"><i class="fas fa-volume-up"></i></button></td>
                         </tr>
                         <tr>
                             <td>Why</td>
                             <td>詢問原因</td>
-                            <td>Why are you late?</td>
+                            <td>Why are you late? <button class="audio-btn" onclick="speak('Why are you late?')"><i class="fas fa-volume-up"></i></button></td>
                         </tr>
                         <tr>
                             <td>Who</td>
                             <td>詢問人（主格）</td>
-                            <td>Who is that man?</td>
+                            <td>Who is that man? <button class="audio-btn" onclick="speak('Who is that man?')"><i class="fas fa-volume-up"></i></button></td>
                         </tr>
                         <tr>
                             <td>Whom</td>
                             <td>詢問人（受格）</td>
-                            <td>Whom did you meet?</td>
+                            <td>Whom did you meet? <button class="audio-btn" onclick="speak('Whom did you meet?')"><i class="fas fa-volume-up"></i></button></td>
                         </tr>
                         <tr>
                             <td>Whose</td>
                             <td>詢問所有權</td>
-                            <td>Whose book is this?</td>
+                            <td>Whose book is this? <button class="audio-btn" onclick="speak('Whose book is this?')"><i class="fas fa-volume-up"></i></button></td>
                         </tr>
                         <tr>
                             <td>Which</td>
                             <td>詢問選擇</td>
-                            <td>Which one do you prefer?</td>
+                            <td>Which one do you prefer? <button class="audio-btn" onclick="speak('Which one do you prefer?')"><i class="fas fa-volume-up"></i></button></td>
                         </tr>
                         <tr>
                             <td>How</td>
                             <td>詢問方式、狀態</td>
-                            <td>How are you feeling?</td>
+                            <td>How are you feeling? <button class="audio-btn" onclick="speak('How are you feeling?')"><i class="fas fa-volume-up"></i></button></td>
                         </tr>
                         <tr>
                             <td>How many</td>
                             <td>詢問數量（可數）</td>
-                            <td>How many students are there?</td>
+                            <td>How many students are there? <button class="audio-btn" onclick="speak('How many students are there?')"><i class="fas fa-volume-up"></i></button></td>
                         </tr>
                         <tr>
                             <td>How much</td>
                             <td>詢問數量（不可數）</td>
-                            <td>How much water do you need?</td>
+                            <td>How much water do you need? <button class="audio-btn" onclick="speak('How much water do you need?')"><i class="fas fa-volume-up"></i></button></td>
                         </tr>
                     </tbody>
                 </table>
-            </div>
-            
-            <div class="interactive-element">
-                <h3>WH疑問句練習 | WH Question Practice</h3>
-                <p>選擇正確的WH疑問詞完成句子</p>
-                <div class="question-animation" id="whAnimation">
-                    ______ is your birthday?
-                </div>
-                <div class="animation-controls">
-                    <button class="btn" id="playWhAnimation">
-                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
-                    </button>
-                    <button class="btn" id="pauseWhAnimation">
-                        <i class="fas fa-pause"></i> 暫停 | Pause
-                    </button>
-                </div>
             </div>
         </div>
         
@@ -920,14 +944,14 @@
                 <h3>附加問句結構 | Tag Question Structure</h3>
                 <p>在英文中, 附加問句是指由助動詞及代名詞(代替主詞)組成的一種簡短問，附加在直述句後面(因而叫附加句)，用以尋求對方的認同、確認、亦或澄清事實。</p>
                 
-                <div class="note-box" style="background-color: #fff3cd; border-left: 4px solid #ffc107; padding: 1rem; margin: 1rem 0;">
+                <div class="note-box">
                     <p><strong>特點：</strong>直述句為肯定，附加句為否定；反之亦然。</p>
                 </div>
                 
                 <h4>1. 肯定陳述句 + 否定附加句</h4>
                 <div class="qa-pair">
                     <div class="question">
-                        <p><strong>Tag Question:</strong> You are coming, <span class="highlight">aren't you</span>?</p>
+                        <p><strong>Tag Question:</strong> You are coming, <span class="highlight">aren't you</span>? <button class="audio-btn" onclick="speak('You are coming, are not you?')"><i class="fas fa-volume-up"></i></button></p>
                     </div>
                     <div class="answer">
                         <p><strong>Answer:</strong> Yes, I am. / No, I'm not.</p>
@@ -936,7 +960,7 @@
                 
                 <div class="qa-pair">
                     <div class="question">
-                        <p><strong>Tag Question:</strong> We have finished, <span class="highlight">haven't we</span>?</p>
+                        <p><strong>Tag Question:</strong> We have finished, <span class="highlight">haven't we</span>? <button class="audio-btn" onclick="speak('We have finished, have not we?')"><i class="fas fa-volume-up"></i></button></p>
                     </div>
                     <div class="answer">
                         <p><strong>Answer:</strong> Yes, we have. / No, we haven't.</p>
@@ -946,7 +970,7 @@
                 <h4>2. 否定陳述句 + 肯定附加句</h4>
                 <div class="qa-pair">
                     <div class="question">
-                        <p><strong>Tag Question:</strong> It isn't raining, <span class="highlight">is it</span>?</p>
+                        <p><strong>Tag Question:</strong> It isn't raining, <span class="highlight">is it</span>? <button class="audio-btn" onclick="speak('It is not raining, is it?')"><i class="fas fa-volume-up"></i></button></p>
                     </div>
                     <div class="answer">
                         <p><strong>Answer:</strong> Yes, it is. / No, it isn't.</p>
@@ -955,7 +979,7 @@
                 
                 <div class="qa-pair">
                     <div class="question">
-                        <p><strong>Tag Question:</strong> You don't like coffee, <span class="highlight">do you</span>?</p>
+                        <p><strong>Tag Question:</strong> You don't like coffee, <span class="highlight">do you</span>? <button class="audio-btn" onclick="speak('You do not like coffee, do you?')"><i class="fas fa-volume-up"></i></button></p>
                     </div>
                     <div class="answer">
                         <p><strong>Answer:</strong> Yes, I do. / No, I don't.</p>
@@ -967,30 +991,22 @@
                 <h3>特殊情況 | Special Cases</h3>
                 <div class="example">
                     <p><strong>否定副詞的使用：</strong>如 hardly, barely, seldom 等含有否定意思，附加句用肯定式。</p>
-                    <p>She seldom calls her parents, <span class="highlight">does she</span>?</p>
+                    <p>She seldom calls her parents, <span class="highlight">does she</span>? <button class="audio-btn" onclick="speak('She seldom calls her parents, does she?')"><i class="fas fa-volume-up"></i></button></p>
                 </div>
                 
                 <div class="example">
                     <p><strong>I am 的用法：</strong></p>
-                    <p>I'm never on time, <span class="highlight">am I</span>? (否定陳述 -> 肯定附加)</p>
-                    <p>I'm going to receive an email, <span class="highlight">aren't I</span>? (肯定陳述 -> aren't I)</p>
+                    <p>I'm never on time, <span class="highlight">am I</span>? (否定陳述 -> 肯定附加) <button class="audio-btn" onclick="speak('I am never on time, am I?')"><i class="fas fa-volume-up"></i></button></p>
+                    <p>I'm going to receive an email, <span class="highlight">aren't I</span>? (肯定陳述 -> aren't I) <button class="audio-btn" onclick="speak('I am going to receive an email, are not I?')"><i class="fas fa-volume-up"></i></button></p>
                 </div>
             </div>
-            
-            <div class="interactive-element">
-                <h3>附加問句練習 | Tag Question Practice</h3>
-                <p>為陳述句添加正確的附加問句</p>
-                <div class="question-animation" id="tagAnimation">
-                    You like coffee, ______?
-                </div>
-                <div class="animation-controls">
-                    <button class="btn" id="playTagAnimation">
-                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
-                    </button>
-                    <button class="btn" id="pauseTagAnimation">
-                        <i class="fas fa-pause"></i> 暫停 | Pause
-                    </button>
-                </div>
+        </div>
+
+        <div class="tab-content" id="quiz">
+            <h2>自我檢測 | Quiz</h2>
+            <div class="quiz-container">
+                <div id="quiz-question-container">
+                    </div>
             </div>
         </div>
 
@@ -1016,127 +1032,236 @@
                 const tabId = tab.getAttribute('data-tab');
                 document.getElementById(tabId).classList.add('active');
                 
-                // 播放切換音效
-                playSound('click');
+                // 初始化測驗 (如果點擊的是 quiz tab)
+                if (tabId === 'quiz') {
+                    const container = document.getElementById('quiz-question-container');
+                    if (container.innerHTML.trim() === '') {
+                        initQuiz();
+                    }
+                }
             });
         });
 
-        // 音效函數
-        function playSound(type) {
-            console.log(`Playing ${type} sound`);
-        }
-        
-        // 初始加載時播放歡迎音效
-        window.addEventListener('load', () => {
-            playSound('welcome');
-        });
+        // 語音播放功能
+        function speak(text) {
+            if ('speechSynthesis' in window) {
+                speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.9;
+                
+                const voices = speechSynthesis.getVoices();
+                const enVoice = voices.find(v => v.lang.includes('en-US') || v.lang.includes('en-GB'));
+                if(enVoice) utterance.voice = enVoice;
 
-        // --- 動畫控制邏輯 ---
-        let animationInterval;
-        
-        // 疑問句介紹動畫
-        document.getElementById('playAnimation').addEventListener('click', () => {
-            const animation = document.getElementById('questionAnimation');
-            let count = 0;
-            const sentences = [
-                {sentence: 'Is the actor handsome?', type: 'Yes/No Question'},
-                {sentence: 'What is he doing?', type: 'WH Question'},
-                {sentence: 'You are coming, aren\'t you?', type: 'Tag Question'},
-                {sentence: 'Do you like sushi?', type: 'Yes/No Question'},
-                {sentence: 'Where do you live?', type: 'WH Question'}
-            ];
-            
-            clearInterval(animationInterval);
-            animationInterval = setInterval(() => {
-                animation.innerHTML = `${sentences[count].sentence}<br><small>${sentences[count].type}</small>`;
-                count = (count + 1) % sentences.length;
-            }, 2000);
-            playSound('success');
-        });
-        
-        document.getElementById('pauseAnimation').addEventListener('click', () => {
-            clearInterval(animationInterval);
-            playSound('click');
-        });
-        
-        // Yes/No疑問句動畫
-        document.getElementById('playYesnoAnimation').addEventListener('click', () => {
-            const animation = document.getElementById('yesnoAnimation');
-            let count = 0;
-            const sentences = [
-                {statement: 'He is a teacher.', question: 'Is he a teacher?'},
-                {statement: 'She likes coffee.', question: 'Does she like coffee?'},
-                {statement: 'They went to the park.', question: 'Did they go to the park?'},
-                {statement: 'We have finished our work.', question: 'Have we finished our work?'},
-                {statement: 'You will come to the party.', question: 'Will you come to the party?'}
-            ];
-            
-            clearInterval(animationInterval);
-            animationInterval = setInterval(() => {
-                if (count % 2 === 0) {
-                    animation.innerHTML = `${sentences[Math.floor(count/2)].statement}<br><small>陳述句 Statement</small>`;
-                } else {
-                    animation.innerHTML = `${sentences[Math.floor(count/2)].question}<br><small>疑問句 Question</small>`;
-                }
-                count = (count + 1) % (sentences.length * 2);
-            }, 2000);
-            playSound('success');
-        });
-        
-        document.getElementById('pauseYesnoAnimation').addEventListener('click', () => {
-            clearInterval(animationInterval);
-            playSound('click');
-        });
-        
-        // WH疑問句動畫
-        document.getElementById('playWhAnimation').addEventListener('click', () => {
-            const animation = document.getElementById('whAnimation');
-            let count = 0;
-            const sentences = [
-                {question: '<span class="highlight">When</span> is your birthday?'},
-                {question: '<span class="highlight">Where</span> do you live?'},
-                {question: '<span class="highlight">What</span> is your name?'},
-                {question: '<span class="highlight">Why</span> are you late?'},
-                {question: '<span class="highlight">How</span> are you feeling?'}
-            ];
-            
-            clearInterval(animationInterval);
-            animationInterval = setInterval(() => {
-                animation.innerHTML = `${sentences[count].question}`;
-                count = (count + 1) % sentences.length;
-            }, 2000);
-            playSound('success');
-        });
-        
-        document.getElementById('pauseWhAnimation').addEventListener('click', () => {
-            clearInterval(animationInterval);
-            playSound('click');
-        });
-        
-        // 附加問句動畫
-        document.getElementById('playTagAnimation').addEventListener('click', () => {
-            const animation = document.getElementById('tagAnimation');
-            let count = 0;
-            const sentences = [
-                {statement: 'You like coffee,', tag: '<span class="highlight">don\'t you</span>?'},
-                {statement: 'She is a teacher,', tag: '<span class="highlight">isn\'t she</span>?'},
-                {statement: 'They will help,', tag: '<span class="highlight">won\'t they</span>?'},
-                {statement: 'We have finished,', tag: '<span class="highlight">haven\'t we</span>?'},
-                {statement: 'He can swim,', tag: '<span class="highlight">can\'t he</span>?'}
-            ];
-            
-            clearInterval(animationInterval);
-            animationInterval = setInterval(() => {
-                animation.innerHTML = `${sentences[count].statement} ${sentences[count].tag}`;
-                count = (count + 1) % sentences.length;
-            }, 2000);
-            playSound('success');
-        });
-        
-        document.getElementById('pauseTagAnimation').addEventListener('click', () => {
-            clearInterval(animationInterval);
-            playSound('click');
-        });
+                speechSynthesis.speak(utterance);
+            } else {
+                alert("Sorry, your browser doesn't support text-to-speech.");
+            }
+        }
+
+        // Quiz Logic
+        const quizQuestions = [
+            {
+                question: "1. ______ you like pizza?",
+                options: ["Are", "Do", "Does", "Is"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> 'Do' is used with 'you' in present simple questions."
+            },
+            {
+                question: "2. ______ she play the piano?",
+                options: ["Do", "Does", "Is", "Are"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> 'Does' is used with 'she' (third person singular) in present simple questions."
+            },
+            {
+                question: "3. ______ they coming to the party?",
+                options: ["Do", "Did", "Are", "Have"],
+                correct: 2,
+                explanation: "<strong>Explanation:</strong> 'Are' is used with 'they' in present continuous questions (Are + V-ing)."
+            },
+            {
+                question: "4. ______ you finished your homework?",
+                options: ["Did", "Have", "Are", "Do"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> 'Have' is used to form the present perfect tense (Have + Past Participle)."
+            },
+            {
+                question: "5. ______ he go to school yesterday?",
+                options: ["Do", "Does", "Did", "Was"],
+                correct: 2,
+                explanation: "<strong>Explanation:</strong> 'Did' is used for past simple questions."
+            },
+            {
+                question: "6. ______ is your name?",
+                options: ["Who", "What", "Where", "When"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> 'What' is used to ask about things or names."
+            },
+            {
+                question: "7. ______ do you live?",
+                options: ["Who", "What", "Where", "When"],
+                correct: 2,
+                explanation: "<strong>Explanation:</strong> 'Where' is used to ask about places."
+            },
+            {
+                question: "8. ______ is that man?",
+                options: ["Who", "What", "Where", "When"],
+                correct: 0,
+                explanation: "<strong>Explanation:</strong> 'Who' is used to ask about people."
+            },
+            {
+                question: "9. ______ time is it?",
+                options: ["Who", "What", "Where", "How"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> 'What time' is the correct phrase to ask about time."
+            },
+            {
+                question: "10. ______ are you crying?",
+                options: ["Who", "What", "Where", "Why"],
+                correct: 3,
+                explanation: "<strong>Explanation:</strong> 'Why' is used to ask for a reason."
+            },
+            {
+                question: "11. You are a student, ______?",
+                options: ["aren't you", "don't you", "are you", "do you"],
+                correct: 0,
+                explanation: "<strong>Explanation:</strong> Positive statement ('You are') -> Negative tag ('aren't you')."
+            },
+            {
+                question: "12. She likes apples, ______?",
+                options: ["isn't she", "doesn't she", "don't she", "didn't she"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> Positive statement with 'likes' (present simple) -> Negative tag with 'doesn't'."
+            },
+            {
+                question: "13. He didn't go to the park, ______?",
+                options: ["did he", "didn't he", "does he", "doesn't he"],
+                correct: 0,
+                explanation: "<strong>Explanation:</strong> Negative statement ('didn't go') -> Positive tag ('did he')."
+            },
+            {
+                question: "14. They can swim, ______?",
+                options: ["can they", "can't they", "do they", "don't they"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> Positive statement with modal 'can' -> Negative tag 'can't they'."
+            },
+            {
+                question: "15. It isn't raining, ______?",
+                options: ["is it", "isn't it", "does it", "doesn't it"],
+                correct: 0,
+                explanation: "<strong>Explanation:</strong> Negative statement ('isn't') -> Positive tag ('is it')."
+            },
+            {
+                question: "16. You have finished, ______?",
+                options: ["haven't you", "don't you", "didn't you", "have you"],
+                correct: 0,
+                explanation: "<strong>Explanation:</strong> Positive statement with auxiliary 'have' -> Negative tag 'haven't you'."
+            },
+            {
+                question: "17. Let's go for a walk, ______?",
+                options: ["will we", "shall we", "do we", "don't we"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> 'Let's' takes the tag 'shall we'."
+            },
+            {
+                question: "18. Don't be late, ______?",
+                options: ["will you", "do you", "don't you", "are you"],
+                correct: 0,
+                explanation: "<strong>Explanation:</strong> Imperatives (commands) usually take 'will you' as a tag."
+            },
+            {
+                question: "19. There is a book on the table, ______?",
+                options: ["isn't there", "is there", "isn't it", "is it"],
+                correct: 0,
+                explanation: "<strong>Explanation:</strong> 'There is' -> tag 'isn't there'."
+            },
+            {
+                question: "20. I am right, ______?",
+                options: ["amn't I", "aren't I", "am I not", "don't I"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> 'I am' takes the special tag 'aren't I' in negative tags."
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        function initQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            showQuestion(currentQuestionIndex);
+        }
+
+        function showQuestion(index) {
+            const container = document.getElementById('quiz-question-container');
+            if (index >= quizQuestions.length) {
+                showResult(container);
+                return;
+            }
+            const q = quizQuestions[index];
+            let html = `
+                <div class="quiz-card">
+                    <div class="quiz-progress">Question ${index + 1} / ${quizQuestions.length}</div>
+                    <div class="quiz-question">${q.question}</div>
+                    <div class="quiz-options">
+                        ${q.options.map((opt, i) => `
+                            <div class="quiz-option" onclick="checkAnswer(this, ${i})">${opt}</div>
+                        `).join('')}
+                    </div>
+                    <div class="quiz-explanation" id="explanation-${index}">
+                        ${q.explanation}
+                    </div>
+                    <div class="quiz-nav" id="nav-${index}">
+                        <button class="btn" onclick="nextQuestion()">Next Question <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+            `;
+            container.innerHTML = html;
+        }
+
+        window.checkAnswer = function(optionElement, selectedIndex) {
+            const currentQ = quizQuestions[currentQuestionIndex];
+            const explanation = document.getElementById(`explanation-${currentQuestionIndex}`);
+            const nav = document.getElementById(`nav-${currentQuestionIndex}`);
+            const allOptions = optionElement.parentElement.children;
+
+            if (optionElement.classList.contains('disabled')) return;
+
+            // Disable all options
+            for (let i = 0; i < allOptions.length; i++) {
+                allOptions[i].classList.add('disabled');
+            }
+
+            if (selectedIndex === currentQ.correct) {
+                optionElement.classList.add('correct');
+                score++;
+            } else {
+                optionElement.classList.add('incorrect');
+                allOptions[currentQ.correct].classList.add('correct');
+            }
+            explanation.classList.add('show');
+            nav.classList.add('show');
+        }
+
+        window.nextQuestion = function() {
+            currentQuestionIndex++;
+            showQuestion(currentQuestionIndex);
+        }
+
+        function showResult(container) {
+            container.innerHTML = `
+                <div class="card quiz-result">
+                    <div class="score-circle">${score}</div>
+                    <h2>Quiz Completed!</h2>
+                    <p>Your Score: ${score} / ${quizQuestions.length}</p>
+                    <p>${score >= 18 ? "Excellent! You mastered Questions!" : score >= 12 ? "Good job! Keep practicing." : "Review the lessons and try again!"}</p>
+                    <button class="btn" onclick="initQuiz()" style="margin-top: 20px;">
+                        <i class="fas fa-redo"></i> Restart Quiz
+                    </button>
+                </div>
+            `;
+        }
     </script>
 </body>
 </html>
