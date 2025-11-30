@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shirley's Grammar E-Charger | 虛擬語氣學習平台</title>
+    <title>Shirley's Subjunctive Mood Learning Platform | 虛擬語氣學習平台</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     
@@ -17,6 +17,14 @@
             --sub-light-bg: #fcfaff;  /* 頁面背景 */
             --text-dark: #2c3e50;
             --white: #ffffff;
+
+            /* Quiz Colors */
+            --correct-bg: #d4edda;
+            --correct-border: #28a745;
+            --correct-text: #155724;
+            --wrong-bg: #f8d7da;
+            --wrong-border: #dc3545;
+            --wrong-text: #721c24;
         }
         
         * {
@@ -89,6 +97,11 @@
             background: white;
             border: 1px solid #ddd;
             color: #666;
+        }
+        
+        .tab:hover {
+            border-color: var(--sub-secondary);
+            color: var(--sub-primary);
         }
         
         .tab.active {
@@ -260,31 +273,109 @@
             color: var(--sub-primary);
         }
 
-        /* Animation Area */
-        .anim-container {
-            background: linear-gradient(135deg, var(--sub-primary), var(--sub-secondary));
-            border-radius: 8px;
-            padding: 3rem;
-            text-align: center;
-            color: white;
-            margin-top: 3rem;
-            box-shadow: 0 10px 25px rgba(46, 16, 101, 0.3);
+        /* Audio Button */
+        .audio-btn {
+            background: none;
+            border: none;
+            color: var(--sub-accent);
+            cursor: pointer;
+            margin-left: 8px;
+            font-size: 1.1rem;
+            transition: all 0.2s;
+            vertical-align: middle;
+        }
+        .audio-btn:hover {
+            color: var(--sub-primary);
+            transform: scale(1.15);
         }
 
-        .anim-display {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            min-height: 100px;
+        /* Quiz Styles */
+        .quiz-container { max-width: 800px; margin: 0 auto; }
+        .quiz-progress {
+            margin-bottom: 1.5rem;
+            color: #666;
+            font-weight: 700;
+            text-align: right;
+            font-size: 0.9rem;
+        }
+        .quiz-card {
+            background: white;
+            border-radius: 8px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid #eee;
+            animation: fadeIn 0.5s ease;
+        }
+        .quiz-question {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--sub-primary);
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--sub-accent);
+            padding-left: 20px;
+            line-height: 1.6;
+        }
+        .quiz-options { display: grid; gap: 15px; }
+        .quiz-option {
+            padding: 18px 25px;
+            background: white;
+            border: 2px solid #eef2f5;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 600;
+            color: var(--text-dark);
+            text-align: left;
+            position: relative;
+            font-size: 1.05rem;
+        }
+        .quiz-option:hover:not(.disabled) {
+            border-color: var(--sub-primary);
+            background: #f8fafc;
+            transform: translateX(5px);
+        }
+        .quiz-option.correct {
+            background-color: var(--correct-bg);
+            border-color: var(--correct-border);
+            color: var(--correct-text);
+        }
+        .quiz-option.incorrect {
+            background-color: var(--wrong-bg);
+            border-color: var(--wrong-border);
+            color: var(--wrong-text);
+            opacity: 0.8;
+        }
+        .quiz-option.disabled { cursor: default; opacity: 0.7; pointer-events: none; }
+        .quiz-explanation {
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 8px;
+            border-left: 4px solid var(--sub-accent);
+            color: var(--text-dark);
+            display: none;
+            animation: slideDown 0.4s ease;
+        }
+        .quiz-explanation.show { display: block; }
+        .quiz-nav { margin-top: 25px; text-align: right; display: none; }
+        .quiz-nav.show { display: block; }
+        .quiz-result { text-align: center; padding: 3rem; }
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, var(--sub-primary), var(--sub-secondary));
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 1.5rem;
-            background: rgba(255,255,255,0.1);
-            border-radius: 8px;
-            padding: 1rem;
-            border: 1px solid rgba(255,255,255,0.2);
+            margin: 0 auto 2rem;
+            color: white;
+            font-size: 3rem;
+            font-weight: 800;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border: 4px solid var(--sub-accent);
         }
-
         .btn {
             background: var(--sub-accent);
             color: var(--sub-primary);
@@ -295,8 +386,8 @@
             cursor: pointer;
             transition: all 0.3s;
         }
-        
         .btn:hover { background: white; transform: translateY(-2px); }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
         footer {
             text-align: center;
@@ -322,11 +413,14 @@
     
     <div class="container">
         <div class="tabs">
-            <div class="tab active"> Subjunctive Mood</div>
+            <div class="tab active" data-tab="intro">介紹 | Intro</div>
+            <div class="tab" data-tab="conditional">條件句 | Conditionals</div>
+            <div class="tab" data-tab="mandative">意志動詞 | Mandative</div>
+            <div class="tab" data-tab="wish">Wish & Others | Wish & Special</div>
+            <div class="tab" data-tab="quiz">自我檢測 | Quiz</div>
         </div>
 
-        <div id="subjunctive" class="tab-content active">
-            
+        <div id="intro" class="tab-content active">
             <div class="elegant-section">
                 <div class="section-header">
                     <h2 class="section-title">Introduction</h2>
@@ -362,10 +456,12 @@
                     </div>
                 </div>
             </div>
-            
+        </div>
+
+        <div id="conditional" class="tab-content">
             <div class="elegant-section">
                 <div class="section-header">
-                    <h2 class="section-title">1. Conditional Sentences</h2>
+                    <h2 class="section-title">Conditional Sentences</h2>
                     <span class="section-subtitle">條件句完整解析</span>
                 </div>
 
@@ -383,7 +479,7 @@
                                 <td><strong>Zero Conditional</strong><br>表達基本事實，沒有假設</td>
                                 <td>主句和子句都用現在簡單式</td>
                                 <td>
-                                    <div class="en-sentence">If you heat ice, it melts. (Ice melts if you heat it.)</div>
+                                    <div class="en-sentence">If you heat ice, it melts. <button class="audio-btn" onclick="speak('If you heat ice, it melts.')"><i class="fas fa-volume-up"></i></button></div>
                                     <div class="cn-trans">把冰加熱，冰就會融化。(這裏if 可以改成when)</div>
                                 </td>
                             </tr>
@@ -391,7 +487,7 @@
                                 <td><strong>First Conditional</strong><br>將來可能發生，但不保證一定發生</td>
                                 <td>主句：將來簡單式<br>子句：現在簡單式</td>
                                 <td>
-                                    <div class="en-sentence">You will miss the bus if you don't leave soon.</div>
+                                    <div class="en-sentence">You will miss the bus if you don't leave soon. <button class="audio-btn" onclick="speak('You will miss the bus if you do not leave soon.')"><i class="fas fa-volume-up"></i></button></div>
                                     <div class="cn-trans">你再不走就趕不上巴士了。</div>
                                 </td>
                             </tr>
@@ -399,7 +495,7 @@
                                 <td><strong>Second Conditional</strong><br>將來基本不會發生(與將來事實相反)</td>
                                 <td>主句：情態助動詞(could, should, would, might)+ 動詞<br>子句：過去簡單式</td>
                                 <td>
-                                    <div class="en-sentence">If I inherited a billion dollars, I would travel to the moon.</div>
+                                    <div class="en-sentence">If I inherited a billion dollars, I would travel to the moon. <button class="audio-btn" onclick="speak('If I inherited a billion dollars, I would travel to the moon.')"><i class="fas fa-volume-up"></i></button></div>
                                     <div class="cn-trans">(如果我繼承了10億元，我就會到月球去旅行。)</div>
                                 </td>
                             </tr>
@@ -407,8 +503,8 @@
                                 <td><strong>Third Conditional</strong><br>與過去事實相反</td>
                                 <td>主句：情態助動詞(could, should, would, might) + have done<br>子句：過去完成式 (had done)</td>
                                 <td>
-                                    <div class="en-sentence">She would have gone to your birthday party if she hadn't been sick.</div>
-                                    <div class="cn-trans">她如果沒有生病，就去你的生日會了。(即：她生病了，也沒有去生日會。所說的情形跟過去事實相反)</div>
+                                    <div class="en-sentence">She would have gone to your birthday party if she hadn't been sick. <button class="audio-btn" onclick="speak('She would have gone to your birthday party if she had not been sick.')"><i class="fas fa-volume-up"></i></button></div>
+                                    <div class="cn-trans">她如果沒有生病，就去你的生日會了。</div>
                                 </td>
                             </tr>
                         </tbody>
@@ -424,33 +520,31 @@
                     <ul class="example-list">
                         <li class="example-item">
                             <div class="en-sentence">If I were you, I wouldn't get involved.</div>
-                            <div class="cn-trans">→ <span class="highlight">Were I you</span>, I wouldn't get involved.</div>
+                            <div class="cn-trans">→ <span class="highlight">Were I you</span>, I wouldn't get involved. <button class="audio-btn" onclick="speak('Were I you, I would not get involved.')"><i class="fas fa-volume-up"></i></button></div>
                         </li>
                         <li class="example-item">
                             <div class="en-sentence">If I had known, I would have offered help.</div>
-                            <div class="cn-trans">→ <span class="highlight">Had I known</span>, I would have offered help.</div>
+                            <div class="cn-trans">→ <span class="highlight">Had I known</span>, I would have offered help. <button class="audio-btn" onclick="speak('Had I known, I would have offered help.')"><i class="fas fa-volume-up"></i></button></div>
                         </li>
                         <li class="example-item">
                             <div class="en-sentence">If you should have any questions, please email me.</div>
-                            <div class="cn-trans">→ <span class="highlight">Should you have</span> any questions, please email me.</div>
-                        </li>
-                        <li class="example-item">
-                            <div class="en-sentence">But for your help, we couldn't have succeeded in the experiment.</div>
-                            <div class="cn-trans">(如果沒有你的幫助，我們的實驗不會成功的。意思是：你幫助了我們，我們的實驗成功了。if 暗藏在文中。)</div>
+                            <div class="cn-trans">→ <span class="highlight">Should you have</span> any questions, please email me. <button class="audio-btn" onclick="speak('Should you have any questions, please email me.')"><i class="fas fa-volume-up"></i></button></div>
                         </li>
                     </ul>
                 </div>
             </div>
+        </div>
 
+        <div id="mandative" class="tab-content">
             <div class="elegant-section">
                 <div class="section-header">
-                    <h2 class="section-title">2. Mandative Subjunctive</h2>
+                    <h2 class="section-title">Mandative Subjunctive</h2>
                     <span class="section-subtitle">表示「要求」、「命令」、「建議」的名詞子句</span>
                 </div>
 
                 <div class="rule-block">
                     <div class="rule-title"><i class="fas fa-play-circle"></i> 動詞 (Verbs)</div>
-                    <p>主句的動詞表示請求，命令，建議，如：</p>
+                    <p>主句的動詞表示請求，命令，建議，後接 that 子句時，動詞使用<strong>原形</strong>（省略 should）。</p>
                     <div class="word-cloud">
                         <span class="keyword-tag">advise</span> <span class="keyword-tag">agree</span> <span class="keyword-tag">determine</span>
                         <span class="keyword-tag">demand</span> <span class="keyword-tag">command</span> <span class="keyword-tag">request</span>
@@ -459,16 +553,13 @@
                     </div>
                     <ul class="example-list">
                         <li class="example-item">
-                            <div class="en-sentence">I suggest that he (should) study for the upcoming exam.</div>
+                            <div class="en-sentence">I suggest that he (should) study for the upcoming exam. <button class="audio-btn" onclick="speak('I suggest that he study for the upcoming exam.')"><i class="fas fa-volume-up"></i></button></div>
                         </li>
                         <li class="example-item">
-                            <div class="en-sentence">The audience demand that the media (should) provide unbiased and unprejudiced information every day.</div>
+                            <div class="en-sentence">The audience demand that the media (should) provide unbiased information. <button class="audio-btn" onclick="speak('The audience demand that the media provide unbiased information.')"><i class="fas fa-volume-up"></i></button></div>
                         </li>
                         <li class="example-item">
-                            <div class="en-sentence">Many citizens require that the bars (should) be closed before 1 am.</div>
-                        </li>
-                        <li class="example-item">
-                            <div class="en-sentence">The boss requests that all the employees (should) be notified of the meeting tomorrow.</div>
+                            <div class="en-sentence">Many citizens require that the bars (should) be closed before 1 am. <button class="audio-btn" onclick="speak('Many citizens require that the bars be closed before 1 am.')"><i class="fas fa-volume-up"></i></button></div>
                         </li>
                     </ul>
                 </div>
@@ -484,20 +575,17 @@
                     </div>
                     <ul class="example-list">
                         <li class="example-item">
-                            <div class="en-sentence">They made a suggestion that we (should) be early.</div>
+                            <div class="en-sentence">They made a suggestion that we (should) be early. <button class="audio-btn" onclick="speak('They made a suggestion that we be early.')"><i class="fas fa-volume-up"></i></button></div>
                         </li>
                         <li class="example-item">
-                            <div class="en-sentence">He made a proposal that the company (should) buy more land.</div>
-                        </li>
-                        <li class="example-item">
-                            <div class="en-sentence">He requested that the car park (should) not be locked at night.</div>
+                            <div class="en-sentence">He made a proposal that the company (should) buy more land. <button class="audio-btn" onclick="speak('He made a proposal that the company buy more land.')"><i class="fas fa-volume-up"></i></button></div>
                         </li>
                     </ul>
                 </div>
 
                 <div class="rule-block">
                     <div class="rule-title"><i class="fas fa-star"></i> 形容詞 (Adjectives)</div>
-                    <p>表示請求, 命令, 建議的形容詞, 如：</p>
+                    <p>It is + Adj + that ... 句型中，形容詞若表重要、必要、急迫，子句動詞用原形。</p>
                     <div class="word-cloud">
                         <span class="keyword-tag">advisable</span> <span class="keyword-tag">anxious</span> <span class="keyword-tag">urgent</span>
                         <span class="keyword-tag">crucial</span> <span class="keyword-tag">desirable</span> <span class="keyword-tag">vital</span>
@@ -506,77 +594,78 @@
                     </div>
                     <ul class="example-list">
                         <li class="example-item">
-                            <div class="en-sentence">It is advisable that she (should) take a vacation for a week.</div>
+                            <div class="en-sentence">It is advisable that she (should) take a vacation. <button class="audio-btn" onclick="speak('It is advisable that she take a vacation.')"><i class="fas fa-volume-up"></i></button></div>
                         </li>
                         <li class="example-item">
-                            <div class="en-sentence">It was essential that the technology (should) advance rapidly.</div>
-                        </li>
-                        <li class="example-item">
-                            <div class="en-sentence">They are keen that he (should) not be hurt.</div>
+                            <div class="en-sentence">It was essential that the technology (should) advance rapidly. <button class="audio-btn" onclick="speak('It was essential that the technology advance rapidly.')"><i class="fas fa-volume-up"></i></button></div>
                         </li>
                     </ul>
                 </div>
             </div>
+        </div>
 
+        <div id="wish" class="tab-content">
             <div class="elegant-section">
                 <div class="section-header">
-                    <h2 class="section-title">3. Usage of Wish</h2>
-                    <span class="section-subtitle">表示 wish：與現在, 將來，或過去相反</span>
+                    <h2 class="section-title">Usage of Wish</h2>
+                    <span class="section-subtitle">表示願望：與現在、過去或將來事實相反</span>
                 </div>
 
                 <ul class="example-list">
                     <li class="example-item">
-                        <div class="en-sentence">I wish I were home.</div>
-                        <div class="cn-trans">(我希望我在家。意思是: 我現在不在家。)</div>
+                        <div class="en-sentence">I wish I were home. <button class="audio-btn" onclick="speak('I wish I were home.')"><i class="fas fa-volume-up"></i></button></div>
+                        <div class="cn-trans">(與現在相反：be 動詞一律用 were)</div>
                     </li>
                     <li class="example-item">
-                        <div class="en-sentence">I wish it would rain tomorrow.</div>
-                        <div class="cn-trans">(我希望明天下雨。意思是: 明天不會下雨。)</div>
+                        <div class="en-sentence">I wish it would rain tomorrow. <button class="audio-btn" onclick="speak('I wish it would rain tomorrow.')"><i class="fas fa-volume-up"></i></button></div>
+                        <div class="cn-trans">(與將來相反：用 would/could + V)</div>
                     </li>
                     <li class="example-item">
-                        <div class="en-sentence">I wish I could not have left my laptop in your home.</div>
-                        <div class="cn-trans">(我希望我沒有把筆電落在家。意思是: 我把筆電落在家裡了。)</div>
+                        <div class="en-sentence">I wish I had not left my laptop at home. <button class="audio-btn" onclick="speak('I wish I had not left my laptop at home.')"><i class="fas fa-volume-up"></i></button></div>
+                        <div class="cn-trans">(與過去相反：用 had + p.p.)</div>
                     </li>
                 </ul>
             </div>
 
             <div class="elegant-section">
                 <div class="section-header">
-                    <h2 class="section-title">4. Special Structures</h2>
-                    <span class="section-subtitle">一些常見特殊結構表假設</span>
+                    <h2 class="section-title">Special Structures</h2>
+                    <span class="section-subtitle">常見特殊結構</span>
                 </div>
 
                 <div class="rule-block">
                     <div class="rule-title"><i class="fas fa-clock"></i> It's time / It's high time</div>
-                    <p>是...的時候了：子句用過去式。表達在時間上已經有一點晚了。</p>
+                    <p>是...的時候了：子句用過去式。表達「早該做而未做」的急迫感。</p>
                     <ul class="example-list">
-                        <li class="example-item"><div class="en-sentence">It’s time we went home.</div></li>
-                        <li class="example-item"><div class="en-sentence">It's time we started packing.</div></li>
-                        <li class="example-item"><div class="en-sentence">It’s high time I bought a new computer.</div></li>
+                        <li class="example-item"><div class="en-sentence">It’s time we went home. <button class="audio-btn" onclick="speak('It is time we went home.')"><i class="fas fa-volume-up"></i></button></div></li>
+                        <li class="example-item"><div class="en-sentence">It’s high time I bought a new computer. <button class="audio-btn" onclick="speak('It is high time I bought a new computer.')"><i class="fas fa-volume-up"></i></button></div></li>
                     </ul>
                 </div>
 
                 <div class="rule-block">
                     <div class="rule-title"><i class="fas fa-balance-scale"></i> Would rather</div>
-                    <p>寧願：當主句的主詞與子句的主詞不一樣時，子句用過去式。</p>
+                    <p>寧願：當主句的主詞與子句的主詞不一樣時，子句用過去式（表現在/將來）或過去完成式（表過去）。</p>
                     <ul class="example-list">
-                        <li class="example-item"><div class="en-sentence">I would rather (that) you came another time.</div></li>
-                        <li class="example-item"><div class="en-sentence">She’d rather (that) he weren't so angry.</div></li>
+                        <li class="example-item"><div class="en-sentence">I would rather you came another time. <button class="audio-btn" onclick="speak('I would rather you came another time.')"><i class="fas fa-volume-up"></i></button></div></li>
+                        <li class="example-item"><div class="en-sentence">She’d rather he weren't so angry. <button class="audio-btn" onclick="speak('She would rather he were not so angry.')"><i class="fas fa-volume-up"></i></button></div></li>
                     </ul>
                 </div>
             </div>
-
-            <div class="anim-container">
-                <h3 style="margin-bottom:1rem; font-family:'Playfair Display',serif;">Fact vs. Subjunctive Demo</h3>
-                <div class="anim-display" id="animDisplay">
-                    Click Start to see examples
-                </div>
-                <button class="btn" id="animBtn" onclick="toggleAnimation()">
-                    <i class="fas fa-play"></i> Start Demo
-                </button>
-            </div>
-
         </div>
+
+        <div id="quiz" class="tab-content">
+            <div class="elegant-section">
+                <div class="section-header">
+                    <h2 class="section-title">Subjunctive Quiz</h2>
+                    <span class="section-subtitle">自我檢測 | Test Your Knowledge</span>
+                </div>
+                <div class="quiz-container">
+                    <div id="quiz-question-container">
+                        </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <footer>
@@ -584,45 +673,242 @@
     </footer>
 
     <script>
-        let intervalId;
-        let isPlaying = false;
-        const display = document.getElementById('animDisplay');
-        const btn = document.getElementById('animBtn');
-        
-        const examples = [
-            { fact: "Zero Conditional (Fact)", text: "If you heat ice, it melts." },
-            { fact: "Fact: I am not you.", text: "If I <span style='color:#d4af37'>were</span> you, I wouldn't get involved." },
-            { fact: "Fact: I'm not home.", text: "I wish I <span style='color:#d4af37'>were</span> home." },
-            { fact: "Suggestion", text: "I suggest that he <span style='color:#d4af37'>study</span> for the exam." },
-            { fact: "Fact: It's getting late.", text: "It's high time we <span style='color:#d4af37'>went</span> home." }
-        ];
+        // Tab Functionality
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                tab.classList.add('active');
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
 
-        let currentIndex = 0;
+                if (tabId === 'quiz') {
+                    const container = document.getElementById('quiz-question-container');
+                    if (container.innerHTML.trim() === '') {
+                        initQuiz();
+                    }
+                }
+            });
+        });
 
-        function toggleAnimation() {
-            if (isPlaying) {
-                clearInterval(intervalId);
-                btn.innerHTML = '<i class="fas fa-play"></i> Resume';
-                isPlaying = false;
+        // Speech Functionality
+        function speak(text) {
+            if ('speechSynthesis' in window) {
+                speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.9;
+                
+                const voices = speechSynthesis.getVoices();
+                const enVoice = voices.find(v => v.lang.includes('en-US') || v.lang.includes('en-GB'));
+                if(enVoice) utterance.voice = enVoice;
+
+                speechSynthesis.speak(utterance);
             } else {
-                playSequence();
-                intervalId = setInterval(playSequence, 4000);
-                btn.innerHTML = '<i class="fas fa-pause"></i> Pause';
-                isPlaying = true;
+                alert("Sorry, your browser doesn't support text-to-speech.");
             }
         }
 
-        function playSequence() {
-            const item = examples[currentIndex];
-            
-            // Show label
-            display.style.opacity = 0;
-            setTimeout(() => {
-                display.innerHTML = `<span style="font-size:0.8rem; display:block; color:#ccc; margin-bottom:10px;">${item.fact}</span>${item.text}`;
-                display.style.opacity = 1;
-            }, 500);
+        // Quiz Logic
+        const quizQuestions = [
+            {
+                question: "1. If I ______ (be) you, I would accept the offer.",
+                options: ["am", "was", "were", "been"],
+                correct: 2,
+                explanation: "<strong>Explanation:</strong> In the second conditional (hypothetical present), 'were' is used for all subjects."
+            },
+            {
+                question: "2. I suggest that he ______ (go) to the doctor.",
+                options: ["goes", "go", "went", "going"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> Mandative subjunctive: suggest + that + subject + (should) base verb."
+            },
+            {
+                question: "3. It is essential that she ______ (be) on time.",
+                options: ["is", "was", "be", "being"],
+                correct: 2,
+                explanation: "<strong>Explanation:</strong> Adjectives of necessity (essential) followed by 'that' take the base form 'be'."
+            },
+            {
+                question: "4. I wish I ______ (know) the answer now.",
+                options: ["know", "knew", "known", "have known"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> Wish + past simple expresses a desire for a different present situation."
+            },
+            {
+                question: "5. If it ______ (rain) tomorrow, we will cancel the picnic.",
+                options: ["rains", "rained", "rain", "will rain"],
+                correct: 0,
+                explanation: "<strong>Explanation:</strong> First conditional (possible future): If + present simple, ... will + verb."
+            },
+            {
+                question: "6. Had I known, I ______ (help) you.",
+                options: ["would help", "will help", "would have helped", "helped"],
+                correct: 2,
+                explanation: "<strong>Explanation:</strong> Third conditional inversion (Had I known = If I had known) requires 'would have + p.p.' in the main clause."
+            },
+            {
+                question: "7. It's high time we ______ (leave).",
+                options: ["leave", "left", "leaving", "have left"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> 'It's high time' is followed by the past simple tense."
+            },
+            {
+                question: "8. The boss insisted that Mark ______ (finish) the report.",
+                options: ["finished", "finishes", "finish", "has finished"],
+                correct: 2,
+                explanation: "<strong>Explanation:</strong> 'Insist' triggers the subjunctive mood (base form)."
+            },
+            {
+                question: "9. ______ (Be) I rich, I would buy a boat.",
+                options: ["Am", "Was", "Were", "If"],
+                correct: 2,
+                explanation: "<strong>Explanation:</strong> Inversion of 'If I were rich'."
+            },
+            {
+                question: "10. I would rather you ______ (stay) here tonight.",
+                options: ["stay", "stayed", "staying", "will stay"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> 'Would rather' + object + past simple refers to the present/future."
+            },
+            {
+                question: "11. If I ______ (have) enough money, I would buy a car.",
+                options: ["have", "had", "has", "having"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> Second conditional: If + past simple."
+            },
+            {
+                question: "12. Unless he ______ (hurry), he will be late.",
+                options: ["hurries", "hurried", "hurry", "will hurry"],
+                correct: 0,
+                explanation: "<strong>Explanation:</strong> 'Unless' acts like 'If not' in a first conditional sentence (present simple)."
+            },
+            {
+                question: "13. ______ (Should) you need help, please call me.",
+                options: ["If", "Should", "Were", "Had"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> Inversion of 'If you should need help'."
+            },
+            {
+                question: "14. It is important that he ______ (not/be) late.",
+                options: ["is not", "was not", "not be", "not being"],
+                correct: 2,
+                explanation: "<strong>Explanation:</strong> Subjunctive negative form: 'not + base verb'."
+            },
+            {
+                question: "15. I demand that the truth ______ (tell).",
+                options: ["be told", "is told", "was told", "told"],
+                correct: 0,
+                explanation: "<strong>Explanation:</strong> Passive subjunctive: 'be + past participle'."
+            },
+            {
+                question: "16. If she ______ (study) harder, she would have passed.",
+                options: ["studies", "studied", "had studied", "has studied"],
+                correct: 2,
+                explanation: "<strong>Explanation:</strong> Third conditional: If + past perfect."
+            },
+            {
+                question: "17. I wish I ______ (can) speak French.",
+                options: ["can", "could", "will", "would"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> Wish + could expresses ability/possibility in the present/future."
+            },
+            {
+                question: "18. The law requires that everyone ______ (wear) a seatbelt.",
+                options: ["wears", "wore", "wear", "wearing"],
+                correct: 2,
+                explanation: "<strong>Explanation:</strong> 'Require' triggers the subjunctive mood."
+            },
+            {
+                question: "19. If only I ______ (listen) to your advice!",
+                options: ["listen", "listened", "had listened", "have listened"],
+                correct: 2,
+                explanation: "<strong>Explanation:</strong> 'If only' with past perfect expresses regret about the past."
+            },
+            {
+                question: "20. I propose that the meeting ______ (postpone).",
+                options: ["is postponed", "be postponed", "was postponed", "postponed"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> Passive subjunctive: 'be + p.p.' after 'propose'."
+            }
+        ];
 
-            currentIndex = (currentIndex + 1) % examples.length;
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        function initQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            showQuestion(currentQuestionIndex);
+        }
+
+        function showQuestion(index) {
+            const container = document.getElementById('quiz-question-container');
+            if (index >= quizQuestions.length) {
+                showResult(container);
+                return;
+            }
+            const q = quizQuestions[index];
+            let html = `
+                <div class="quiz-card">
+                    <div class="quiz-progress">Question ${index + 1} / ${quizQuestions.length}</div>
+                    <div class="quiz-question">${q.question}</div>
+                    <div class="quiz-options">
+                        ${q.options.map((opt, i) => `
+                            <div class="quiz-option" onclick="checkAnswer(this, ${i})">${opt}</div>
+                        `).join('')}
+                    </div>
+                    <div class="quiz-explanation" id="explanation-${index}">
+                        ${q.explanation}
+                    </div>
+                    <div class="quiz-nav" id="nav-${index}">
+                        <button class="btn" onclick="nextQuestion()">Next Question <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+            `;
+            container.innerHTML = html;
+        }
+
+        window.checkAnswer = function(optionElement, selectedIndex) {
+            const currentQ = quizQuestions[currentQuestionIndex];
+            const explanation = document.getElementById(`explanation-${currentQuestionIndex}`);
+            const nav = document.getElementById(`nav-${currentQuestionIndex}`);
+            const allOptions = optionElement.parentElement.children;
+
+            if (optionElement.classList.contains('disabled')) return;
+
+            for (let i = 0; i < allOptions.length; i++) {
+                allOptions[i].classList.add('disabled');
+            }
+
+            if (selectedIndex === currentQ.correct) {
+                optionElement.classList.add('correct');
+                score++;
+            } else {
+                optionElement.classList.add('incorrect');
+                allOptions[currentQ.correct].classList.add('correct');
+            }
+            explanation.classList.add('show');
+            nav.classList.add('show');
+        }
+
+        window.nextQuestion = function() {
+            currentQuestionIndex++;
+            showQuestion(currentQuestionIndex);
+        }
+
+        function showResult(container) {
+            container.innerHTML = `
+                <div class="quiz-result">
+                    <div class="score-circle">${score}</div>
+                    <h2>Quiz Completed!</h2>
+                    <p>Your Score: ${score} / ${quizQuestions.length}</p>
+                    <button class="btn" onclick="initQuiz()" style="margin-top: 20px;">
+                        <i class="fas fa-redo"></i> Restart Quiz
+                    </button>
+                </div>
+            `;
         }
     </script>
 </body>
