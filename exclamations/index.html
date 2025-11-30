@@ -30,7 +30,15 @@
             --elegant-text: #2c3e50;
             --elegant-gold: #d4af37;
             --elegant-gold-light: #fffcf5;
-            --elegant-shadow: rgba(128, 0, 32, 0.08); /* 帶紅調的陰影 */
+            --elegant-shadow: rgba(128, 0, 32, 0.08);
+
+            /* Quiz Colors */
+            --correct-bg: #d4edda;
+            --correct-border: #28a745;
+            --correct-text: #155724;
+            --wrong-bg: #f8d7da;
+            --wrong-border: #dc3545;
+            --wrong-text: #721c24;
         }
         
         * {
@@ -286,57 +294,20 @@
             background: linear-gradient(135deg, #e6c34e, #d4af37);
         }
         
-        /* 動畫區域優化 */
-        .interactive-element {
-            background-color: #fff;
-            border: 1px dashed #d1d1d1;
-            padding: 2rem;
-            border-radius: 8px;
-            margin-top: 2rem;
-            text-align: center;
+        /* Audio Button */
+        .audio-btn {
+            background: none;
+            border: none;
+            color: var(--elegant-gold);
+            cursor: pointer;
+            margin-left: 8px;
+            font-size: 1.1rem;
+            transition: all 0.2s;
+            vertical-align: middle;
         }
-
-        .exclamation-animation {
-            height: 180px;
-            /* 酒紅到玫瑰金的漸層 */
-            background: linear-gradient(135deg, #800020, #b35a66);
-            border-radius: 8px;
-            margin: 2rem 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.6rem;
-            font-family: 'Playfair Display', serif;
-            box-shadow: 0 10px 30px rgba(128, 0, 32, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        /* 背景光效 */
-        .exclamation-animation::before {
-            content: '';
-            position: absolute;
-            width: 150%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transform: skewX(-20deg) translateX(-150%);
-            animation: shine 3s infinite;
-        }
-        
-        @keyframes shine {
-            0% { transform: skewX(-20deg) translateX(-150%); }
-            100% { transform: skewX(-20deg) translateX(150%); }
-        }
-        
-        small {
-            font-family: 'Lato', sans-serif;
-            font-size: 0.9rem;
-            opacity: 0.8;
-            margin-top: 10px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
+        .audio-btn:hover {
+            color: var(--primary);
+            transform: scale(1.15);
         }
         
         footer {
@@ -484,6 +455,95 @@
             font-size: 0.85rem;
             margin-top: 3px;
         }
+
+        /* Quiz Styles */
+        .quiz-container { max-width: 800px; margin: 0 auto; }
+        .quiz-progress {
+            margin-bottom: 1.5rem;
+            color: #666;
+            font-weight: 700;
+            text-align: right;
+            font-size: 0.9rem;
+        }
+        .quiz-card {
+            background: white;
+            border-radius: 8px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid #eee;
+            animation: fadeIn 0.5s ease;
+        }
+        .quiz-question {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--elegant-gold);
+            padding-left: 20px;
+            line-height: 1.6;
+        }
+        .quiz-options { display: grid; gap: 15px; }
+        .quiz-option {
+            padding: 18px 25px;
+            background: white;
+            border: 2px solid #eef2f5;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 600;
+            color: var(--dark);
+            text-align: left;
+            position: relative;
+            font-size: 1.05rem;
+        }
+        .quiz-option:hover:not(.disabled) {
+            border-color: var(--primary);
+            background: #f8fafc;
+            transform: translateX(5px);
+        }
+        .quiz-option.correct {
+            background-color: var(--correct-bg);
+            border-color: var(--correct-border);
+            color: var(--correct-text);
+        }
+        .quiz-option.incorrect {
+            background-color: var(--wrong-bg);
+            border-color: var(--wrong-border);
+            color: var(--wrong-text);
+            opacity: 0.8;
+        }
+        .quiz-option.disabled { cursor: default; opacity: 0.7; pointer-events: none; }
+        .quiz-explanation {
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 8px;
+            border-left: 4px solid var(--elegant-gold);
+            color: var(--dark);
+            display: none;
+            animation: slideDown 0.4s ease;
+        }
+        .quiz-explanation.show { display: block; }
+        .quiz-nav { margin-top: 25px; text-align: right; display: none; }
+        .quiz-nav.show { display: block; }
+        .quiz-result { text-align: center; padding: 3rem; }
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            color: white;
+            font-size: 3rem;
+            font-weight: 800;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border: 4px solid rgba(255, 255, 255, 0.2);
+        }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
         
         @media (max-width: 768px) {
             .elegant-title { font-size: 2.2rem; }
@@ -508,6 +568,7 @@
             <div class="tab" data-tab="how">How 感嘆句 | How</div>
             <div class="tab" data-tab="what">What 感嘆句 | What</div>
             <div class="tab" data-tab="so-such">So/Such 加強 | So/Such</div>
+            <div class="tab" data-tab="quiz">自我檢測 | Quiz</div>
         </div>
         
         <div class="tab-content active" id="intro">
@@ -531,7 +592,7 @@
                                 <i class="fas fa-circle"></i> 
                                 <div>
                                     <strong>Structure:</strong> How + Adj/Adv + S + V!
-                                    <span class="detail-example">"How beautiful she is!"</span>
+                                    <span class="detail-example">"How beautiful she is!" <button class="audio-btn" onclick="speak('How beautiful she is!')"><i class="fas fa-volume-up"></i></button></span>
                                 </div>
                             </li>
                         </ul>
@@ -551,7 +612,7 @@
                                 <i class="fas fa-circle"></i>
                                 <div>
                                     <strong>Structure:</strong> What + (a/an) + N!
-                                    <span class="detail-example">"What a lovely day!"</span>
+                                    <span class="detail-example">"What a lovely day!" <button class="audio-btn" onclick="speak('What a lovely day!')"><i class="fas fa-volume-up"></i></button></span>
                                 </div>
                             </li>
                         </ul>
@@ -571,7 +632,7 @@
                                 <i class="fas fa-circle"></i>
                                 <div>
                                     <strong>So/Such:</strong> 如此... / 真是...
-                                    <span class="detail-example">"You are so kind!"</span>
+                                    <span class="detail-example">"You are so kind!" <button class="audio-btn" onclick="speak('You are so kind!')"><i class="fas fa-volume-up"></i></button></span>
                                 </div>
                             </li>
                         </ul>
@@ -584,24 +645,8 @@
                 <h3>什麼是感嘆句？ | What are Exclamations?</h3>
                 <p>感嘆句是用來表達強烈情感的句子，如驚訝、喜悅、憤怒、讚美等。在英語中，感嘆句通常以感嘆號(!)結尾。</p>
                 <div class="example">
-                    <p><strong>Example:</strong> <span class="highlight">How beautiful the girl is!</span> (這個女孩多麼漂亮啊！)</p>
-                    <p><strong>Example:</strong> <span class="highlight">What a beautiful girl she is!</span> (她是一個多麼漂亮的女孩啊！)</p>
-                </div>
-            </div>
-            
-            <div class="interactive-element">
-                <h3>感嘆句練習 | Exclamation Practice</h3>
-                <p>識別不同類型的感嘆句</p>
-                <div class="exclamation-animation" id="exclamationAnimation">
-                    How beautiful the girl is!
-                </div>
-                <div class="animation-controls">
-                    <button class="btn" id="playAnimation">
-                        <i class="fas fa-play"></i> Play Animation
-                    </button>
-                    <button class="btn" id="pauseAnimation" style="background: #999; box-shadow:none;">
-                        <i class="fas fa-pause"></i> Pause
-                    </button>
+                    <p><strong>Example:</strong> <span class="highlight">How beautiful the girl is!</span> (這個女孩多麼漂亮啊！) <button class="audio-btn" onclick="speak('How beautiful the girl is!')"><i class="fas fa-volume-up"></i></button></p>
+                    <p><strong>Example:</strong> <span class="highlight">What a beautiful girl she is!</span> (她是一個多麼漂亮的女孩啊！) <button class="audio-btn" onclick="speak('What a beautiful girl she is!')"><i class="fas fa-volume-up"></i></button></p>
                 </div>
             </div>
         </div>
@@ -621,7 +666,10 @@
                 </div>
                 
                 <div class="example">
-                    <p><span class="highlight">How slowly</span> the snail is crawling! (這隻蝸牛爬得多慢啊！)</p>
+                    <p><span class="highlight">How slowly</span> the snail is crawling! (這隻蝸牛爬得多慢啊！) <button class="audio-btn" onclick="speak('How slowly the snail is crawling!')"><i class="fas fa-volume-up"></i></button></p>
+                </div>
+                <div class="example">
+                    <p><span class="highlight">How famous</span> Hemingway was! (海明威是多麼有名啊！) <button class="audio-btn" onclick="speak('How famous Hemingway was!')"><i class="fas fa-volume-up"></i></button></p>
                 </div>
             </div>
             
@@ -630,23 +678,12 @@
                 <div class="qa-pair">
                     <div class="question">
                         <strong>陳述句 (Declarative)</strong><br>
-                        The girl is <span style="color:var(--primary)">very beautiful</span>.
+                        The girl is <span style="color:var(--primary)">very beautiful</span>. <button class="audio-btn" onclick="speak('The girl is very beautiful.')"><i class="fas fa-volume-up"></i></button>
                     </div>
                     <div class="answer">
                         <strong>感嘆句 (Exclamation)</strong><br>
-                        <span style="color:var(--primary)">How beautiful</span> the girl is!
+                        <span style="color:var(--primary)">How beautiful</span> the girl is! <button class="audio-btn" onclick="speak('How beautiful the girl is!')"><i class="fas fa-volume-up"></i></button>
                     </div>
-                </div>
-            </div>
-            
-            <div class="interactive-element">
-                <h3>How 感嘆句動態演示 | Live Demo</h3>
-                <div class="exclamation-animation" id="howAnimation">
-                    The girl is very beautiful.
-                </div>
-                <div class="animation-controls">
-                    <button class="btn" id="playHowAnimation"><i class="fas fa-play"></i> Play</button>
-                    <button class="btn" id="pauseHowAnimation" style="background: #999; box-shadow:none;"><i class="fas fa-pause"></i> Pause</button>
                 </div>
             </div>
         </div>
@@ -670,19 +707,10 @@
                 </div>
                 
                 <div class="example">
-                    <p><span class="highlight">What a beautiful girl</span> she is! (她是個多麼漂亮的女孩！)</p>
-                    <p><span class="highlight">What bad weather</span> it is! (天氣真糟！ *不可數)</p>
-                </div>
-            </div>
-            
-            <div class="interactive-element">
-                <h3>What 感嘆句動態演示 | Live Demo</h3>
-                <div class="exclamation-animation" id="whatAnimation">
-                    She is a very beautiful girl.
-                </div>
-                <div class="animation-controls">
-                    <button class="btn" id="playWhatAnimation"><i class="fas fa-play"></i> Play</button>
-                    <button class="btn" id="pauseWhatAnimation" style="background: #999; box-shadow:none;"><i class="fas fa-pause"></i> Pause</button>
+                    <p><span class="highlight">What a beautiful girl</span> she is! (她是個多麼漂亮的女孩！) <button class="audio-btn" onclick="speak('What a beautiful girl she is!')"><i class="fas fa-volume-up"></i></button></p>
+                    <p><span class="highlight">What bad weather</span> it is! (天氣真糟！ *不可數) <button class="audio-btn" onclick="speak('What bad weather it is!')"><i class="fas fa-volume-up"></i></button></p>
+                    <p><span class="highlight">What an interesting movie</span> it was! (那是一部多麼有趣的電影啊！) <button class="audio-btn" onclick="speak('What an interesting movie it was!')"><i class="fas fa-volume-up"></i></button></p>
+                    <p><span class="highlight">What a fast runner</span> he is! (他是個多麼快的跑者啊！) <button class="audio-btn" onclick="speak('What a fast runner he is!')"><i class="fas fa-volume-up"></i></button></p>
                 </div>
             </div>
         </div>
@@ -697,24 +725,26 @@
                 <div class="qa-pair">
                     <div class="question" style="background: #fffcf5; border:1px solid #d4af37;">
                         <h4 style="color:#d4af37; margin-bottom:10px;">SO + Adj.</h4>
-                        <p>The girl is <span class="highlight">so</span> beautiful.</p>
+                        <p>The girl is <span class="highlight">so</span> beautiful. <button class="audio-btn" onclick="speak('The girl is so beautiful.')"><i class="fas fa-volume-up"></i></button></p>
                     </div>
                     <div class="answer" style="background: #fffcf5; border:1px solid #d4af37; color:#444;">
                         <h4 style="color:#d4af37; margin-bottom:10px;">SUCH + Noun</h4>
-                        <p>She is <span class="highlight">such</span> a beautiful girl!</p>
+                        <p>She is <span class="highlight">such</span> a beautiful girl! <button class="audio-btn" onclick="speak('She is such a beautiful girl!')"><i class="fas fa-volume-up"></i></button></p>
                     </div>
                 </div>
+                
+                <div class="example">
+                    <p>He runs <span class="highlight">so</span> fast! (他跑得好快！) <button class="audio-btn" onclick="speak('He runs so fast!')"><i class="fas fa-volume-up"></i></button></p>
+                    <p>He is <span class="highlight">such</span> a fast runner! (他真是個跑得快的跑者！) <button class="audio-btn" onclick="speak('He is such a fast runner!')"><i class="fas fa-volume-up"></i></button></p>
+                </div>
             </div>
-            
-            <div class="interactive-element">
-                <h3>轉換練習 | Transformation</h3>
-                <div class="exclamation-animation" id="soSuchAnimation">
-                    How beautiful the girl is!
-                </div>
-                <div class="animation-controls">
-                    <button class="btn" id="playSoSuchAnimation"><i class="fas fa-play"></i> Play</button>
-                    <button class="btn" id="pauseSoSuchAnimation" style="background: #999; box-shadow:none;"><i class="fas fa-pause"></i> Pause</button>
-                </div>
+        </div>
+
+        <div class="tab-content" id="quiz">
+            <h2>自我檢測 | Quiz</h2>
+            <div class="quiz-container">
+                <div id="quiz-question-container">
+                    </div>
             </div>
         </div>
     </div>
@@ -734,118 +764,237 @@
                 tab.classList.add('active');
                 const tabId = tab.getAttribute('data-tab');
                 document.getElementById(tabId).classList.add('active');
+
+                // 初始化測驗 (如果點擊的是 quiz tab)
+                if (tabId === 'quiz') {
+                    const container = document.getElementById('quiz-question-container');
+                    if (container.innerHTML.trim() === '') {
+                        initQuiz();
+                    }
+                }
             });
         });
         
-        // 動畫控制變量
-        let animationInterval;
-        
-        // 1. Intro Animation
-        document.getElementById('playAnimation').addEventListener('click', () => {
-            const animation = document.getElementById('exclamationAnimation');
-            let count = 0;
-            const sentences = [
-                {sentence: 'How beautiful the girl is!', type: 'How Exclamation'},
-                {sentence: 'What a beautiful girl she is!', type: 'What Exclamation'},
-                {sentence: 'How slowly the snail is crawling!', type: 'How Exclamation'},
-                {sentence: 'What a famous writer Hemingway was!', type: 'What Exclamation'}
-            ];
-            
-            clearInterval(animationInterval);
-            animationInterval = setInterval(() => {
-                animation.innerHTML = `${sentences[count].sentence}<br><small>${sentences[count].type}</small>`;
-                count = (count + 1) % sentences.length;
-            }, 2000);
-        });
-        
-        document.getElementById('pauseAnimation').addEventListener('click', () => {
-            clearInterval(animationInterval);
-        });
-        
-        // 2. How Animation
-        document.getElementById('playHowAnimation').addEventListener('click', () => {
-            const animation = document.getElementById('howAnimation');
-            let count = 0;
-            const sentences = [
-                {declarative: 'The girl is very beautiful.', exclamation: 'How beautiful the girl is!'},
-                {declarative: 'The snail is crawling very slowly.', exclamation: 'How slowly the snail is crawling!'},
-                {declarative: 'Hemingway was very famous.', exclamation: 'How famous Hemingway was!'}
-            ];
-            
-            clearInterval(animationInterval);
-            animationInterval = setInterval(() => {
-                if (count % 2 === 0) {
-                    animation.innerHTML = `${sentences[Math.floor(count/2)].declarative}<br><small>Statement</small>`;
-                    animation.style.background = 'linear-gradient(135deg, #eee, #ddd)';
-                    animation.style.color = '#555';
-                } else {
-                    animation.innerHTML = `${sentences[Math.floor(count/2)].exclamation}<br><small>Exclamation</small>`;
-                    animation.style.background = 'linear-gradient(135deg, #800020, #b35a66)'; // 酒紅漸層
-                    animation.style.color = '#fff';
-                }
-                count = (count + 1) % (sentences.length * 2);
-            }, 1800);
-        });
-        
-        document.getElementById('pauseHowAnimation').addEventListener('click', () => {
-            clearInterval(animationInterval);
-        });
-        
-        // 3. What Animation
-        document.getElementById('playWhatAnimation').addEventListener('click', () => {
-            const animation = document.getElementById('whatAnimation');
-            let count = 0;
-            const sentences = [
-                {declarative: 'She is a very beautiful girl.', exclamation: 'What a beautiful girl she is!'},
-                {declarative: 'It was a very interesting movie.', exclamation: 'What an interesting movie it was!'},
-                {declarative: 'He is a very fast runner.', exclamation: 'What a fast runner he is!'}
-            ];
-            
-            clearInterval(animationInterval);
-            animationInterval = setInterval(() => {
-                if (count % 2 === 0) {
-                    animation.innerHTML = `${sentences[Math.floor(count/2)].declarative}<br><small>Statement</small>`;
-                    animation.style.background = 'linear-gradient(135deg, #eee, #ddd)';
-                    animation.style.color = '#555';
-                } else {
-                    animation.innerHTML = `${sentences[Math.floor(count/2)].exclamation}<br><small>Exclamation</small>`;
-                    animation.style.background = 'linear-gradient(135deg, #800020, #b35a66)';
-                    animation.style.color = '#fff';
-                }
-                count = (count + 1) % (sentences.length * 2);
-            }, 1800);
-        });
-        
-        document.getElementById('pauseWhatAnimation').addEventListener('click', () => {
-            clearInterval(animationInterval);
-        });
-        
-        // 4. So/Such Animation
-        document.getElementById('playSoSuchAnimation').addEventListener('click', () => {
-            const animation = document.getElementById('soSuchAnimation');
-            let count = 0;
-            const sentences = [
-                {exclamation: 'How beautiful the girl is!', emphasis: 'The girl is so beautiful!'},
-                {exclamation: 'What a beautiful girl she is!', emphasis: 'She is such a beautiful girl!'},
-                {exclamation: 'How fast he runs!', emphasis: 'He runs so fast!'}
-            ];
-            
-            clearInterval(animationInterval);
-            animationInterval = setInterval(() => {
-                if (count % 2 === 0) {
-                    animation.innerHTML = `${sentences[Math.floor(count/2)].exclamation}<br><small>Standard Exclamation</small>`;
-                    animation.style.background = 'linear-gradient(135deg, #800020, #b35a66)';
-                } else {
-                    animation.innerHTML = `${sentences[Math.floor(count/2)].emphasis}<br><small>Emphasis (So/Such)</small>`;
-                    animation.style.background = 'linear-gradient(135deg, #d4af37, #c5a028)'; // 金色漸層
-                }
-                count = (count + 1) % (sentences.length * 2);
-            }, 1800);
-        });
-        
-        document.getElementById('pauseSoSuchAnimation').addEventListener('click', () => {
-            clearInterval(animationInterval);
-        });
+        // 語音播放功能
+        function speak(text) {
+            if ('speechSynthesis' in window) {
+                speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.9;
+                
+                const voices = speechSynthesis.getVoices();
+                const enVoice = voices.find(v => v.lang.includes('en-US') || v.lang.includes('en-GB'));
+                if(enVoice) utterance.voice = enVoice;
+
+                speechSynthesis.speak(utterance);
+            } else {
+                alert("Sorry, your browser doesn't support text-to-speech.");
+            }
+        }
+
+        // Quiz Logic
+        const quizQuestions = [
+            {
+                question: "1. ______ a beautiful day it is!",
+                options: ["How", "What", "So", "Such"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> Structure: What + (a) + Adj + Noun + S + V. 'Day' is a noun."
+            },
+            {
+                question: "2. ______ beautiful the day is!",
+                options: ["How", "What", "So", "Such"],
+                correct: 0,
+                explanation: "<strong>Explanation:</strong> Structure: How + Adj + S + V. 'Beautiful' is an adjective."
+            },
+            {
+                question: "3. ______ clever boy he is!",
+                options: ["What a", "What", "How", "How a"],
+                correct: 0,
+                explanation: "<strong>Explanation:</strong> 'Boy' is a singular countable noun, so we need 'What a'."
+            },
+            {
+                question: "4. ______ fast he runs!",
+                options: ["What", "How", "So", "Such"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> 'Fast' is an adverb modifying 'runs', so we use 'How'."
+            },
+            {
+                question: "5. ______ strange news this is!",
+                options: ["What a", "What", "How", "How a"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> 'News' is uncountable, so we use 'What' without 'a'."
+            },
+            {
+                question: "6. She is ______ a nice person!",
+                options: ["so", "such", "how", "what"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> 'Such' is used before 'a/an + Adjective + Noun'."
+            },
+            {
+                question: "7. You are ______ kind!",
+                options: ["so", "such", "what", "how"],
+                correct: 0,
+                explanation: "<strong>Explanation:</strong> 'So' is used before an adjective without a noun."
+            },
+            {
+                question: "8. ______ expensive car you have!",
+                options: ["What a", "What an", "How", "So"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> 'Expensive' starts with a vowel sound, so we use 'What an'."
+            },
+            {
+                question: "9. ______ lovely flowers these are!",
+                options: ["What a", "What", "How", "So"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> 'Flowers' is plural, so we use 'What' without 'a/an'."
+            },
+            {
+                question: "10. ______ well she sings!",
+                options: ["What", "How", "Such", "What a"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> 'Well' is an adverb, so we use 'How'."
+            },
+            {
+                question: "11. Look ______ dirty your hands are!",
+                options: ["what", "how", "so", "such"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> How + Adj (dirty) + S + V."
+            },
+            {
+                question: "12. ______ a mess!",
+                options: ["How", "What", "So", "Such"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> 'What a mess!' is a common exclamation with a noun phrase."
+            },
+            {
+                question: "13. The weather is ______ bad!",
+                options: ["so", "such", "what", "how"],
+                correct: 0,
+                explanation: "<strong>Explanation:</strong> 'So' modifies the adjective 'bad'."
+            },
+            {
+                question: "14. It is ______ bad weather!",
+                options: ["so", "such", "how", "what"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> 'Such' modifies the noun phrase 'bad weather'."
+            },
+            {
+                question: "15. ______ delicious food!",
+                options: ["What a", "What", "How", "How a"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> 'Food' is uncountable, so 'What' is used without 'a'."
+            },
+            {
+                question: "16. ______ tired I am!",
+                options: ["What", "How", "What a", "Such"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> How + Adj (tired) + S + V."
+            },
+            {
+                question: "17. ______ an exciting game it was!",
+                options: ["How", "What", "So", "Such"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> 'What' is used with the noun phrase 'an exciting game'."
+            },
+            {
+                question: "18. ______ they have grown!",
+                options: ["What", "How", "So", "Such"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> How + S + V (to express degree of action/change). 'How they have grown!'"
+            },
+            {
+                question: "19. ______ cold it is today!",
+                options: ["What", "How", "What a", "Such"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> How + Adj (cold) + S + V."
+            },
+            {
+                question: "20. He is ______ a genius!",
+                options: ["so", "such", "how", "what"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> 'Such' emphasizes the noun 'genius'."
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        function initQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            showQuestion(currentQuestionIndex);
+        }
+
+        function showQuestion(index) {
+            const container = document.getElementById('quiz-question-container');
+            if (index >= quizQuestions.length) {
+                showResult(container);
+                return;
+            }
+            const q = quizQuestions[index];
+            let html = `
+                <div class="quiz-card">
+                    <div class="quiz-progress">Question ${index + 1} / ${quizQuestions.length}</div>
+                    <div class="quiz-question">${q.question}</div>
+                    <div class="quiz-options">
+                        ${q.options.map((opt, i) => `
+                            <div class="quiz-option" onclick="checkAnswer(this, ${i})">${opt}</div>
+                        `).join('')}
+                    </div>
+                    <div class="quiz-explanation" id="explanation-${index}">
+                        ${q.explanation}
+                    </div>
+                    <div class="quiz-nav" id="nav-${index}">
+                        <button class="btn" onclick="nextQuestion()">Next Question <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+            `;
+            container.innerHTML = html;
+        }
+
+        window.checkAnswer = function(optionElement, selectedIndex) {
+            const currentQ = quizQuestions[currentQuestionIndex];
+            const explanation = document.getElementById(`explanation-${currentQuestionIndex}`);
+            const nav = document.getElementById(`nav-${currentQuestionIndex}`);
+            const allOptions = optionElement.parentElement.children;
+
+            if (optionElement.classList.contains('disabled')) return;
+
+            // Disable all options
+            for (let i = 0; i < allOptions.length; i++) {
+                allOptions[i].classList.add('disabled');
+            }
+
+            if (selectedIndex === currentQ.correct) {
+                optionElement.classList.add('correct');
+                score++;
+            } else {
+                optionElement.classList.add('incorrect');
+                allOptions[currentQ.correct].classList.add('correct');
+            }
+            explanation.classList.add('show');
+            nav.classList.add('show');
+        }
+
+        window.nextQuestion = function() {
+            currentQuestionIndex++;
+            showQuestion(currentQuestionIndex);
+        }
+
+        function showResult(container) {
+            container.innerHTML = `
+                <div class="card quiz-result">
+                    <div class="score-circle">${score}</div>
+                    <h2>Quiz Completed!</h2>
+                    <p>Your Score: ${score} / ${quizQuestions.length}</p>
+                    <p>${score >= 18 ? "Excellent! You mastered Exclamations!" : score >= 12 ? "Good job! Keep practicing." : "Review the lessons and try again!"}</p>
+                    <button class="btn" onclick="initQuiz()" style="margin-top: 20px;">
+                        <i class="fas fa-redo"></i> Restart Quiz
+                    </button>
+                </div>
+            `;
+        }
     </script>
 </body>
 </html>
