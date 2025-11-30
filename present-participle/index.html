@@ -13,28 +13,27 @@
             --primary-dark: #0F2027;  /* 深邃背景 */
             --primary-mid: #203A43;   /* 中間調 */
             --primary-accent: #2C5364; /* 亮部 */
-            
             --gold-accent: #FFD700;   /* 高雅金 */
             --gold-dark: #B8860B;     /* 深金 */
-            
-            /* 兼容舊 JS 邏輯 */
-            --accent: #FFD700; 
-            
             --dynamic-gradient: linear-gradient(135deg, #2C5364 0%, #203A43 50%, #0F2027 100%);
             --gold-gradient: linear-gradient(45deg, #B8860B, #FFD700, #B8860B);
-
             --bg-body: #f4f7f9;       
             --bg-card: rgba(255, 255, 255, 0.95);
-            
             --text-main: #1a1a1a;
             --text-light: #5a6a7a;
             --text-on-dark: #ffffff;
-            
             --shadow-soft: 0 10px 30px -10px rgba(0,0,0,0.1);
             --shadow-glow: 0 5px 15px rgba(255, 215, 0, 0.3);
-            
             --radius-lg: 24px;
             --radius-md: 16px;
+
+            /* Quiz Colors */
+            --correct-bg: #d4edda;
+            --correct-border: #28a745;
+            --correct-text: #155724;
+            --wrong-bg: #f8d7da;
+            --wrong-border: #dc3545;
+            --wrong-text: #721c24;
         }
 
         * {
@@ -45,34 +44,20 @@
         }
         
         body {
-            /* 調整為深色背景以突顯粒子效果，或保持淺色但粒子顏色加深 */
-            background: #f4f7f9; 
-            color: var(--text-main);
-            line-height: 1.75;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        /* 粒子背景 Canvas */
-        #particles-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1; /* 置於最底層 */
             background: linear-gradient(-45deg, #f4f7f9, #eef2f5, #e0eaf0, #f4f7f9);
             background-size: 400% 400%;
             animation: gradientBG 20s ease infinite;
+            color: var(--text-main);
+            line-height: 1.75;
         }
-        
+
         @keyframes gradientBG {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
         
-        /* Header: 深邃質感 */
+        /* Header */
         header {
             background: var(--dynamic-gradient);
             color: var(--text-on-dark);
@@ -126,7 +111,7 @@
             z-index: 10;
         }
         
-        /* Tabs: 玻璃擬態 */
+        /* Tabs */
         .tabs {
             display: flex;
             flex-wrap: wrap;
@@ -169,35 +154,13 @@
             border-radius: 10px;
         }
 
-        .tab:hover {
-            color: var(--primary-dark);
-            background: rgba(255,255,255,0.8);
-        }
+        .tab:hover { color: var(--primary-dark); background: rgba(255,255,255,0.8); }
+        .tab.active { color: var(--primary-dark); background: white; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .tab.active::before { transform: scaleX(1); box-shadow: 0 0 10px var(--gold-accent); }
         
-        .tab.active {
-            color: var(--primary-dark);
-            background: white;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-
-        .tab.active::before {
-            transform: scaleX(1);
-            box-shadow: 0 0 10px var(--gold-accent);
-        }
-        
-        .tab-content {
-            display: none;
-            animation: slideUpFade 0.7s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-        
-        @keyframes slideUpFade {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .tab-content.active {
-            display: block;
-        }
+        .tab-content { display: none; animation: slideUpFade 0.7s cubic-bezier(0.25, 1, 0.5, 1); }
+        @keyframes slideUpFade { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .tab-content.active { display: block; }
         
         h2 {
             color: var(--primary-dark);
@@ -207,9 +170,7 @@
             text-align: center;
             position: relative;
             padding-bottom: 1rem;
-            border-bottom: none;
         }
-        
         h2::after {
             content: '';
             position: absolute;
@@ -221,7 +182,6 @@
             background: var(--gold-gradient);
             border-radius: 2px;
         }
-        
         h3 {
             color: var(--primary-mid);
             margin: 0 0 1.2rem;
@@ -230,7 +190,6 @@
             display: flex;
             align-items: center;
         }
-        
         h3::before {
             content: '';
             display: inline-block;
@@ -250,9 +209,9 @@
             box-shadow: var(--shadow-soft);
             border: 1px solid rgba(255,255,255,0.8);
             transition: all 0.3s ease;
-            backdrop-filter: blur(5px); /* 讓背景粒子隱約透出 */
+            position: relative;
+            z-index: 5;
         }
-        
         .card:hover {
             transform: translateY(-7px);
             box-shadow: 0 15px 40px -10px rgba(0,0,0,0.15);
@@ -271,13 +230,7 @@
             overflow: hidden;
             box-shadow: var(--shadow-soft);
         }
-        
-        th, td {
-            padding: 18px 24px;
-            text-align: left;
-            border-bottom: 1px solid #eef2f5;
-        }
-        
+        th, td { padding: 18px 24px; text-align: left; border-bottom: 1px solid #eef2f5; }
         th {
             background: var(--primary-mid);
             color: white;
@@ -287,14 +240,8 @@
             letter-spacing: 1px;
             border-bottom: 3px solid var(--gold-accent);
         }
-        
-        tr:nth-child(even) {
-            background-color: #fcfdfd;
-        }
-        
-        tr:hover td {
-            background-color: #f0f4f8;
-        }
+        tr:nth-child(even) { background-color: #fcfdfd; }
+        tr:hover td { background-color: #f0f4f8; }
         
         /* Example Box */
         .example {
@@ -305,6 +252,8 @@
             border-radius: 0 var(--radius-md) var(--radius-md) 0;
             box-shadow: 0 5px 15px rgba(0,0,0,0.03);
             color: var(--text-main);
+            position: relative;
+            z-index: 1;
         }
         
         .highlight {
@@ -328,9 +277,7 @@
             margin: 1.5rem 0;
             border-radius: 0 var(--radius-md) var(--radius-md) 0;
         }
-        .note-box strong {
-             color: var(--text-main);
-        }
+        .note-box strong { color: var(--text-main); }
 
         /* Participle List Styles (Chips) */
         .participle-list {
@@ -339,7 +286,6 @@
             gap: 15px;
             margin: 2rem 0;
         }
-        
         .participle-item {
             background: var(--primary-mid);
             color: white;
@@ -351,7 +297,6 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             border: 1px solid transparent;
         }
-        
         .participle-item:hover {
             transform: translateY(-5px);
             background: var(--primary-dark);
@@ -359,100 +304,25 @@
             box-shadow: 0 8px 20px rgba(255, 215, 0, 0.2);
         }
         
-        /* Interactive Element */
-        .interactive-element {
-            background: white;
+        /* Audio Button */
+        .audio-btn {
+            background: none;
             border: none;
-            padding: 3rem;
-            border-radius: var(--radius-lg);
-            margin: 4rem 0;
-            text-align: center;
-            box-shadow: var(--shadow-soft);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .interactive-element::before {
-            content: '';
-            position: absolute;
-            top: -50%; left: -50%; width: 200%; height: 200%;
-            background: radial-gradient(circle, rgba(255, 215, 0, 0.05) 0%, transparent 70%);
-            animation: rotate 30s linear infinite;
-            z-index: 0;
-        }
-        
-        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
-        .interactive-element > * { position: relative; z-index: 1; }
-        
-        /* Buttons */
-        .btn {
-            background: var(--dynamic-gradient);
-            color: white;
-            border: none;
-            padding: 12px 32px;
-            border-radius: 50px;
+            color: var(--gold-dark);
             cursor: pointer;
-            font-weight: 700;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            box-shadow: 0 4px 15px rgba(32, 58, 67, 0.3);
-            position: relative;
-            overflow: hidden;
-            z-index: 2;
+            margin-left: 10px;
+            font-size: 1.1rem;
+            transition: all 0.2s;
+            vertical-align: middle;
         }
-        
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.5s;
+        .audio-btn:hover {
+            color: var(--primary-accent);
+            transform: scale(1.15);
         }
 
-        .btn:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 8px 25px rgba(32, 58, 67, 0.4), var(--shadow-glow);
-            background: var(--dynamic-gradient);
-        }
-        
-        .btn:hover::before { left: 100%; }
-        
-        /* Animation Box */
-        .participle-animation {
-            height: 220px;
-            background: var(--primary-dark);
-            border-radius: var(--radius-md);
-            margin: 2.5rem auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.8rem;
-            font-weight: bold;
-            box-shadow: inset 0 0 40px rgba(0,0,0,0.8);
-            border: 6px solid #2c3e50;
-            position: relative;
-            overflow: hidden;
-            letter-spacing: 1px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-        }
-        
-        /* Usage Diagram Styling - Tech Dashboard Style */
-        .usage-diagram {
-            text-align: center;
-            margin: 3rem 0;
-        }
-        
-        .diagram-container {
-            display: flex;
-            justify-content: center;
-            margin: 1.5rem 0;
-        }
-        
+        /* Usage Diagram Styling */
+        .usage-diagram { text-align: center; margin: 3rem 0; }
+        .diagram-container { display: flex; justify-content: center; margin: 1.5rem 0; }
         .diagram {
             width: 100%;
             max-width: 600px;
@@ -464,7 +334,6 @@
             border: 2px solid var(--primary-accent);
             box-shadow: inset 0 0 30px rgba(0,0,0,0.3);
         }
-        
         .diagram::before {
             content: '';
             position: absolute;
@@ -475,7 +344,6 @@
             background-size: 20px 20px;
             opacity: 0.5;
         }
-        
         .diagram-item {
             position: absolute;
             padding: 12px;
@@ -490,11 +358,114 @@
             transition: transform 0.3s;
             font-size: 0.95rem;
         }
-        
-        .diagram-item:hover {
-            transform: scale(1.1);
-            z-index: 10;
+        .diagram-item:hover { transform: scale(1.1); z-index: 10; }
+
+        /* Quiz Styles */
+        .quiz-container { max-width: 800px; margin: 0 auto; }
+        .quiz-progress {
+            margin-bottom: 1.5rem;
+            color: var(--text-light);
+            font-weight: 700;
+            text-align: right;
+            font-size: 0.9rem;
         }
+        .quiz-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid rgba(255,255,255,0.8);
+            animation: fadeIn 0.5s ease;
+        }
+        .quiz-question {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-mid);
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--gold-accent);
+            padding-left: 20px;
+            line-height: 1.6;
+        }
+        .quiz-options { display: grid; gap: 15px; }
+        .quiz-option {
+            padding: 18px 25px;
+            background: white;
+            border: 2px solid #eef2f5;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 600;
+            color: var(--text-main);
+            text-align: left;
+            position: relative;
+            font-size: 1.05rem;
+        }
+        .quiz-option:hover:not(.disabled) {
+            border-color: var(--primary-accent);
+            background: #f8fafc;
+            transform: translateX(5px);
+        }
+        .quiz-option.correct {
+            background-color: var(--correct-bg);
+            border-color: var(--correct-border);
+            color: var(--correct-text);
+        }
+        .quiz-option.incorrect {
+            background-color: var(--wrong-bg);
+            border-color: var(--wrong-border);
+            color: var(--wrong-text);
+            opacity: 0.8;
+        }
+        .quiz-option.disabled { cursor: default; opacity: 0.7; pointer-events: none; }
+        .quiz-explanation {
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 12px;
+            border-left: 4px solid var(--gold-dark);
+            color: var(--text-main);
+            display: none;
+            animation: slideDown 0.4s ease;
+        }
+        .quiz-explanation.show { display: block; }
+        .quiz-nav { margin-top: 25px; text-align: right; display: none; }
+        .quiz-nav.show { display: block; }
+        .quiz-result { text-align: center; padding: 3rem; }
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            background: var(--dynamic-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            color: var(--gold-accent);
+            font-size: 3rem;
+            font-weight: 800;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border: 4px solid rgba(255, 255, 255, 0.2);
+        }
+        .btn {
+            background: var(--dynamic-gradient);
+            color: white;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(32, 58, 67, 0.3);
+        }
+        .btn:hover { transform: translateY(-3px); }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
         footer {
             text-align: center;
@@ -506,23 +477,19 @@
             position: relative;
             z-index: 10;
         }
-        
         footer::before {
              content: '';
              position: absolute;
              top: 0; left: 0; width: 100%; height: 4px;
              background: var(--gold-gradient);
         }
-
         @media (max-width: 768px) {
             header { padding: 3rem 1rem 4rem; }
             h1 { font-size: 2rem; }
             .tabs { margin-top: -2rem; width: 95%; flex-direction: row; overflow-x: auto; justify-content: flex-start; }
             .tab { flex: 0 0 auto; padding: 0.7rem 1.2rem; min-width: auto; }
             .participle-list { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
-            .animation-controls { flex-wrap: wrap; }
             table { display: block; overflow-x: auto; }
-            
             .diagram { height: auto; padding-bottom: 2rem; display: flex; flex-direction: column; align-items: center; background: transparent; border: none; box-shadow: none; }
             .diagram::before { display: none; }
             .diagram-item { position: relative; top: auto !important; left: auto !important; right: auto !important; bottom: auto !important; margin: 10px 0; width: 80%; }
@@ -530,8 +497,6 @@
     </style>
 </head>
 <body>
-    <canvas id="particles-canvas"></canvas>
-
     <header>
         <div class="header-content">
             <h1>Shirley's Present Participle Learning Platform</h1>
@@ -546,6 +511,7 @@
             <div class="tab" data-tab="modifier">作修飾語 | As Modifier</div>
             <div class="tab" data-tab="object-complement">作受詞補語 | Obj. Complement</div>
             <div class="tab" data-tab="phrase">分詞片語 | Phrases</div>
+            <div class="tab" data-tab="quiz">自我檢測 | Quiz</div>
         </div>
         
         <div class="tab-content active" id="intro">
@@ -557,8 +523,8 @@
                 <p>A present participle is formed by adding -ing to a verb, expressing "active" or "ongoing" meaning. It generally functions as an adjective.</p>
                 
                 <div class="example">
-                    <p><strong>例子 Example:</strong> The <span class="highlight">boring</span> lecture made students sleepy. | 無聊的講座讓學生們昏昏欲睡。</p>
-                    <p><strong>例子 Example:</strong> The <span class="highlight">crying</span> child needed attention. | 哭泣的孩子需要關注。</p>
+                    <p><strong>例子 Example:</strong> The <span class="highlight">boring</span> lecture made students sleepy. | 無聊的講座讓學生們昏昏欲睡。 <button class="audio-btn" onclick="speak('The boring lecture made students sleepy.')"><i class="fas fa-volume-up"></i></button></p>
+                    <p><strong>例子 Example:</strong> The <span class="highlight">crying</span> child needed attention. | 哭泣的孩子需要關注。 <button class="audio-btn" onclick="speak('The crying child needed attention.')"><i class="fas fa-volume-up"></i></button></p>
                 </div>
             </div>
             
@@ -576,22 +542,22 @@
                         <tr>
                             <td>work</td>
                             <td>working</td>
-                            <td>the working mother</td>
+                            <td>the working mother <button class="audio-btn" onclick="speak('the working mother')"><i class="fas fa-volume-up"></i></button></td>
                         </tr>
                         <tr>
                             <td>interest</td>
                             <td>interesting</td>
-                            <td>an interesting book</td>
+                            <td>an interesting book <button class="audio-btn" onclick="speak('an interesting book')"><i class="fas fa-volume-up"></i></button></td>
                         </tr>
                         <tr>
                             <td>excite</td>
                             <td>exciting</td>
-                            <td>an exciting game</td>
+                            <td>an exciting game <button class="audio-btn" onclick="speak('an exciting game')"><i class="fas fa-volume-up"></i></button></td>
                         </tr>
                         <tr>
                             <td>challenge</td>
                             <td>challenging</td>
-                            <td>a challenging task</td>
+                            <td>a challenging task <button class="audio-btn" onclick="speak('a challenging task')"><i class="fas fa-volume-up"></i></button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -621,30 +587,13 @@
                 <p>One basic use of present participles is with "be" to form various continuous tenses of verbs.</p>
                 
                 <div class="example">
-                    <p><strong>例子 Example:</strong> She <span class="highlight">is studying</span> for her exam. | 她正在為考試學習。</p>
-                    <p><strong>例子 Example:</strong> They <span class="highlight">were working</span> when I called. | 我打電話時他們正在工作。</p>
+                    <p><strong>例子 Example:</strong> She <span class="highlight">is studying</span> for her exam. | 她正在為考試學習。 <button class="audio-btn" onclick="speak('She is studying for her exam.')"><i class="fas fa-volume-up"></i></button></p>
+                    <p><strong>例子 Example:</strong> They <span class="highlight">were working</span> when I called. | 我打電話時他們正在工作。 <button class="audio-btn" onclick="speak('They were working when I called.')"><i class="fas fa-volume-up"></i></button></p>
                 </div>
                 
                 <div class="note-box">
                     <p><strong>注意：</strong>現在分詞作為形容詞使用時，與進行式中的現在分詞形式相同，但功能不同。</p>
                     <p><strong>Note:</strong> When present participles are used as adjectives, they have the same form as in continuous tenses but serve different functions.</p>
-                </div>
-            </div>
-            
-            <div class="interactive-element">
-                <h3>現在分詞練習 | Present Participle Practice</h3>
-                <p>將動詞轉換為現在分詞形式</p>
-                <p>Convert verbs to present participle form</p>
-                <div class="participle-animation" id="participleAnimation">
-                    Verb: interest → Present Participle: ______
-                </div>
-                <div class="animation-controls">
-                    <button class="btn" id="playAnimation">
-                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
-                    </button>
-                    <button class="btn" id="pauseAnimation">
-                        <i class="fas fa-pause"></i> 暫停 | Pause
-                    </button>
                 </div>
             </div>
         </div>
@@ -658,35 +607,18 @@
                 <p>Present participles can function as subject complements after linking verbs (such as be verbs).</p>
                 
                 <div class="example">
-                    <p><strong>例子 Example:</strong> Some advertisements are <span class="highlight">misleading and cheating</span>.</p>
+                    <p><strong>例子 Example:</strong> Some advertisements are <span class="highlight">misleading and cheating</span>. <button class="audio-btn" onclick="speak('Some advertisements are misleading and cheating.')"><i class="fas fa-volume-up"></i></button></p>
                     <p>一些廣告具有誤導性和欺騙性。</p>
                 </div>
                 
                 <div class="example">
-                    <p><strong>例子 Example:</strong> The reason for the alcohol ban sounds <span class="highlight">convincing</span>.</p>
+                    <p><strong>例子 Example:</strong> The reason for the alcohol ban sounds <span class="highlight">convincing</span>. <button class="audio-btn" onclick="speak('The reason for the alcohol ban sounds convincing.')"><i class="fas fa-volume-up"></i></button></p>
                     <p>禁酒的理由聽起來很有說服力。</p>
                 </div>
                 
                 <div class="example">
-                    <p><strong>例子 Example:</strong> The movie was <span class="highlight">exciting</span> from beginning to end.</p>
+                    <p><strong>例子 Example:</strong> The movie was <span class="highlight">exciting</span> from beginning to end. <button class="audio-btn" onclick="speak('The movie was exciting from beginning to end.')"><i class="fas fa-volume-up"></i></button></p>
                     <p>這部電影從頭到尾都很精彩。</p>
-                </div>
-            </div>
-            
-            <div class="interactive-element">
-                <h3>補語練習 | Complement Practice</h3>
-                <p>選擇正確的現在分詞形式完成句子</p>
-                <p>Select the correct present participle form to complete the sentence</p>
-                <div class="participle-animation" id="complementAnimation">
-                    The news was ______ (shock) to everyone.
-                </div>
-                <div class="animation-controls">
-                    <button class="btn" id="playComplementAnimation">
-                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
-                    </button>
-                    <button class="btn" id="pauseComplementAnimation">
-                        <i class="fas fa-pause"></i> 暫停 | Pause
-                    </button>
                 </div>
             </div>
         </div>
@@ -700,22 +632,22 @@
                 <p>Present participles can be placed before or after nouns, functioning as modifiers.</p>
                 
                 <div class="example">
-                    <p><strong>例子 Example:</strong> English writing is a <span class="highlight">challenging</span> task.</p>
+                    <p><strong>例子 Example:</strong> English writing is a <span class="highlight">challenging</span> task. <button class="audio-btn" onclick="speak('English writing is a challenging task.')"><i class="fas fa-volume-up"></i></button></p>
                     <p>英語寫作是一項具有挑戰性的任務。</p>
                 </div>
                 
                 <div class="example">
-                    <p><strong>例子 Example:</strong> The <span class="highlight">crying</span> baby woke the whole family up.</p>
+                    <p><strong>例子 Example:</strong> The <span class="highlight">crying</span> baby woke the whole family up. <button class="audio-btn" onclick="speak('The crying baby woke the whole family up.')"><i class="fas fa-volume-up"></i></button></p>
                     <p>哭泣的嬰兒把全家人都吵醒了。</p>
                 </div>
                 
                 <div class="example">
-                    <p><strong>例子 Example:</strong> Employees <span class="highlight">working at home</span> have fewer interruptions and distractions.</p>
+                    <p><strong>例子 Example:</strong> Employees <span class="highlight">working at home</span> have fewer interruptions and distractions. <button class="audio-btn" onclick="speak('Employees working at home have fewer interruptions and distractions.')"><i class="fas fa-volume-up"></i></button></p>
                     <p>在家工作的員工受到較少的干擾和分心。</p>
                 </div>
                 
                 <div class="example">
-                    <p><strong>例子 Example:</strong> The man <span class="highlight">standing by the door</span> is my brother.</p>
+                    <p><strong>例子 Example:</strong> The man <span class="highlight">standing by the door</span> is my brother. <button class="audio-btn" onclick="speak('The man standing by the door is my brother.')"><i class="fas fa-volume-up"></i></button></p>
                     <p>站在門邊的那個人是我的兄弟。</p>
                 </div>
             </div>
@@ -733,23 +665,6 @@
                     <div class="participle-item">confusing instructions</div>
                 </div>
             </div>
-            
-            <div class="interactive-element">
-                <h3>修飾語練習 | Modifier Practice</h3>
-                <p>選擇正確的現在分詞形式完成句子</p>
-                <p>Select the correct present participle form to complete the sentence</p>
-                <div class="participle-animation" id="modifierAnimation">
-                    The ______ (run) water was cold and refreshing.
-                </div>
-                <div class="animation-controls">
-                    <button class="btn" id="playModifierAnimation">
-                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
-                    </button>
-                    <button class="btn" id="pauseModifierAnimation">
-                        <i class="fas fa-pause"></i> 暫停 | Pause
-                    </button>
-                </div>
-            </div>
         </div>
         
         <div class="tab-content" id="object-complement">
@@ -761,22 +676,22 @@
                 <p>Present participles can function as object complements after certain verbs.</p>
                 
                 <div class="example">
-                    <p><strong>例子 Example:</strong> People under great work stress find life <span class="highlight">frustrating and depressing</span>.</p>
+                    <p><strong>例子 Example:</strong> People under great work stress find life <span class="highlight">frustrating and depressing</span>. <button class="audio-btn" onclick="speak('People under great work stress find life frustrating and depressing.')"><i class="fas fa-volume-up"></i></button></p>
                     <p>工作壓力大的人覺得生活令人沮喪和壓抑。</p>
                 </div>
                 
                 <div class="example">
-                    <p><strong>例子 Example:</strong> The girl kept her boyfriend <span class="highlight">waiting</span> for two hours.</p>
+                    <p><strong>例子 Example:</strong> The girl kept her boyfriend <span class="highlight">waiting</span> for two hours. <button class="audio-btn" onclick="speak('The girl kept her boyfriend waiting for two hours.')"><i class="fas fa-volume-up"></i></button></p>
                     <p>那個女孩讓她的男朋友等了兩個小時。</p>
                 </div>
                 
                 <div class="example">
-                    <p><strong>例子 Example:</strong> I saw him <span class="highlight">running</span> in the park.</p>
+                    <p><strong>例子 Example:</strong> I saw him <span class="highlight">running</span> in the park. <button class="audio-btn" onclick="speak('I saw him running in the park.')"><i class="fas fa-volume-up"></i></button></p>
                     <p>我看到他在公園裡跑步。</p>
                 </div>
                 
                 <div class="example">
-                    <p><strong>例子 Example:</strong> We heard the children <span class="highlight">laughing</span> outside.</p>
+                    <p><strong>例子 Example:</strong> We heard the children <span class="highlight">laughing</span> outside. <button class="audio-btn" onclick="speak('We heard the children laughing outside.')"><i class="fas fa-volume-up"></i></button></p>
                     <p>我們聽到孩子們在外面笑。</p>
                 </div>
             </div>
@@ -794,23 +709,6 @@
                     <div class="participle-item">catch</div>
                 </div>
             </div>
-            
-            <div class="interactive-element">
-                <h3>受詞補語練習 | Object Complement Practice</h3>
-                <p>選擇正確的現在分詞形式完成句子</p>
-                <p>Select the correct present participle form to complete the sentence</p>
-                <div class="participle-animation" id="objectComplementAnimation">
-                    I saw the dog ______ (chase) its tail.
-                </div>
-                <div class="animation-controls">
-                    <button class="btn" id="playObjectComplementAnimation">
-                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
-                    </button>
-                    <button class="btn" id="pauseObjectComplementAnimation">
-                        <i class="fas fa-pause"></i> 暫停 | Pause
-                    </button>
-                </div>
-            </div>
         </div>
         
         <div class="tab-content" id="phrase">
@@ -822,22 +720,22 @@
                 <p>Present participle phrases can function as adjectives, usually placed at the beginning or end of a sentence.</p>
                 
                 <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="highlight">Hearing the noise</span>, she woke up.</p>
+                    <p><strong>例子 Example:</strong> <span class="highlight">Hearing the noise</span>, she woke up. <button class="audio-btn" onclick="speak('Hearing the noise, she woke up.')"><i class="fas fa-volume-up"></i></button></p>
                     <p>聽到噪音，她醒了。</p>
                 </div>
                 
                 <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="highlight">Facing high competition</span>, people may suffer great pressure.</p>
+                    <p><strong>例子 Example:</strong> <span class="highlight">Facing high competition</span>, people may suffer great pressure. <button class="audio-btn" onclick="speak('Facing high competition, people may suffer great pressure.')"><i class="fas fa-volume-up"></i></button></p>
                     <p>面對激烈的競爭，人們可能會承受巨大的壓力。</p>
                 </div>
                 
                 <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="highlight">Being confronted with economic pressure</span>, women have to go outside to work.</p>
+                    <p><strong>例子 Example:</strong> <span class="highlight">Being confronted with economic pressure</span>, women have to go outside to work. <button class="audio-btn" onclick="speak('Being confronted with economic pressure, women have to go outside to work.')"><i class="fas fa-volume-up"></i></button></p>
                     <p>面對經濟壓力，女性不得不外出工作。</p>
                 </div>
                 
                 <div class="example">
-                    <p><strong>例子 Example:</strong> The man, <span class="highlight">feeling tired</span>, decided to take a break.</p>
+                    <p><strong>例子 Example:</strong> The man, <span class="highlight">feeling tired</span>, decided to take a break. <button class="audio-btn" onclick="speak('The man, feeling tired, decided to take a break.')"><i class="fas fa-volume-up"></i></button></p>
                     <p>那個男人感到疲倦，決定休息一下。</p>
                 </div>
             </div>
@@ -857,39 +755,30 @@
                     <tbody>
                         <tr>
                             <td>時間 Time</td>
-                            <td>Walking down the street, I met an old friend.</td>
+                            <td>Walking down the street, I met an old friend. <button class="audio-btn" onclick="speak('Walking down the street, I met an old friend.')"><i class="fas fa-volume-up"></i></button></td>
                         </tr>
                         <tr>
                             <td>原因 Reason</td>
-                            <td>Feeling tired, he went to bed early.</td>
+                            <td>Feeling tired, he went to bed early. <button class="audio-btn" onclick="speak('Feeling tired, he went to bed early.')"><i class="fas fa-volume-up"></i></button></td>
                         </tr>
                         <tr>
                             <td>條件 Condition</td>
-                            <td>Working hard, you will succeed.</td>
+                            <td>Working hard, you will succeed. <button class="audio-btn" onclick="speak('Working hard, you will succeed.')"><i class="fas fa-volume-up"></i></button></td>
                         </tr>
                         <tr>
                             <td>讓步 Concession</td>
-                            <td>Knowing the truth, she still couldn't believe it.</td>
+                            <td>Knowing the truth, she still couldn't believe it. <button class="audio-btn" onclick="speak('Knowing the truth, she still could not believe it.')"><i class="fas fa-volume-up"></i></button></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            
-            <div class="interactive-element">
-                <h3>分詞片語練習 | Participle Phrase Practice</h3>
-                <p>選擇正確的現在分詞形式完成句子</p>
-                <p>Select the correct present participle form to complete the sentence</p>
-                <div class="participle-animation" id="phraseAnimation">
-                    ______ (walk) in the park, I saw a beautiful bird.
-                </div>
-                <div class="animation-controls">
-                    <button class="btn" id="playPhraseAnimation">
-                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
-                    </button>
-                    <button class="btn" id="pausePhraseAnimation">
-                        <i class="fas fa-pause"></i> 暫停 | Pause
-                    </button>
-                </div>
+        </div>
+
+        <div class="tab-content" id="quiz">
+            <h2>自我檢測 | Quiz</h2>
+            <div class="quiz-container">
+                <div id="quiz-question-container">
+                    </div>
             </div>
         </div>
     </div>
@@ -900,87 +789,6 @@
     </footer>
 
     <script>
-        // --- 粒子效果腳本 ---
-        const canvas = document.getElementById('particles-canvas');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.vx = (Math.random() - 0.5) * 0.5; // 緩慢移動速度
-                this.vy = (Math.random() - 0.5) * 0.5;
-                this.size = Math.random() * 2 + 1;
-                // 使用金色和深藍色的粒子
-                this.color = Math.random() > 0.5 ? 'rgba(255, 215, 0, 0.4)' : 'rgba(44, 83, 100, 0.3)';
-            }
-
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
-
-                // 邊界檢查
-                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-            }
-
-            draw() {
-                ctx.fillStyle = this.color;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        function initParticles() {
-            particles = [];
-            // 根據螢幕大小決定粒子數量
-            const particleCount = Math.floor(window.innerWidth / 15); 
-            for (let i = 0; i < particleCount; i++) {
-                particles.push(new Particle());
-            }
-        }
-
-        function animateParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            particles.forEach((p, index) => {
-                p.update();
-                p.draw();
-                
-                // 繪製連結線
-                for (let j = index + 1; j < particles.length; j++) {
-                    const p2 = particles[j];
-                    const dx = p.x - p2.x;
-                    const dy = p.y - p2.y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
-                    
-                    if (distance < 100) {
-                        ctx.strokeStyle = `rgba(184, 134, 11, ${0.15 - distance/1000})`; // 金色連結線
-                        ctx.lineWidth = 0.5;
-                        ctx.beginPath();
-                        ctx.moveTo(p.x, p.y);
-                        ctx.lineTo(p2.x, p2.y);
-                        ctx.stroke();
-                    }
-                }
-            });
-            requestAnimationFrame(animateParticles);
-        }
-
-        initParticles();
-        animateParticles();
-
-        // --- 原有互動邏輯 ---
-        
         // 選項卡功能
         document.querySelectorAll('.tab').forEach(tab => {
             tab.addEventListener('click', () => {
@@ -990,162 +798,236 @@
                 tab.classList.add('active');
                 const tabId = tab.getAttribute('data-tab');
                 document.getElementById(tabId).classList.add('active');
-                
-                playSound('click');
             });
         });
-        
-        // 動畫控制
-        let animationInterval;
-        
-        // 現在分詞介紹動畫
-        document.getElementById('playAnimation').addEventListener('click', () => {
-            const animation = document.getElementById('participleAnimation');
-            animation.innerHTML = 'Verb: interest → Present Participle: ______';
-            
-            let count = 0;
-            const verbs = [
-                {verb: 'interest', participle: 'interesting'},
-                {verb: 'excite', participle: 'exciting'},
-                {verb: 'bore', participle: 'boring'},
-                {verb: 'challenge', participle: 'challenging'},
-                {verb: 'surprise', participle: 'surprising'}
-            ];
-            
-            clearInterval(animationInterval);
-            animationInterval = setInterval(() => {
-                animation.innerHTML = `Verb: ${verbs[count].verb} → Present Participle: <span style="color: var(--accent); text-decoration: underline;">${verbs[count].participle}</span>`;
-                count = (count + 1) % verbs.length;
-            }, 1500);
-            
-            playSound('success');
-        });
-        
-        document.getElementById('pauseAnimation').addEventListener('click', () => {
-            clearInterval(animationInterval);
-            playSound('click');
-        });
-        
-        // 補語動畫
-        document.getElementById('playComplementAnimation').addEventListener('click', () => {
-            const animation = document.getElementById('complementAnimation');
-            animation.innerHTML = 'The news was ______ (shock) to everyone.';
-            
-            let count = 0;
-            const sentences = [
-                {verb: 'shock', participle: 'shocking'},
-                {verb: 'excite', participle: 'exciting'},
-                {verb: 'surprise', participle: 'surprising'},
-                {verb: 'amaze', participle: 'amazing'},
-                {verb: 'disappoint', participle: 'disappointing'}
-            ];
-            
-            clearInterval(animationInterval);
-            animationInterval = setInterval(() => {
-                animation.innerHTML = `The news was <span style="color: var(--accent); text-decoration: underline;">${sentences[count].participle}</span> to everyone.`;
-                count = (count + 1) % sentences.length;
-            }, 1500);
-            
-            playSound('success');
-        });
-        
-        document.getElementById('pauseComplementAnimation').addEventListener('click', () => {
-            clearInterval(animationInterval);
-            playSound('click');
-        });
-        
-        // 修飾語動畫
-        document.getElementById('playModifierAnimation').addEventListener('click', () => {
-            const animation = document.getElementById('modifierAnimation');
-            animation.innerHTML = 'The ______ (run) water was cold and refreshing.';
-            
-            let count = 0;
-            const sentences = [
-                {verb: 'run', participle: 'running'},
-                {verb: 'fall', participle: 'falling'},
-                {verb: 'flow', participle: 'flowing'},
-                {verb: 'drip', participle: 'dripping'},
-                {verb: 'bubble', participle: 'bubbling'}
-            ];
-            
-            clearInterval(animationInterval);
-            animationInterval = setInterval(() => {
-                animation.innerHTML = `The <span style="color: var(--accent); text-decoration: underline;">${sentences[count].participle}</span> water was cold and refreshing.`;
-                count = (count + 1) % sentences.length;
-            }, 1500);
-            
-            playSound('success');
-        });
-        
-        document.getElementById('pauseModifierAnimation').addEventListener('click', () => {
-            clearInterval(animationInterval);
-            playSound('click');
-        });
-        
-        // 受詞補語動畫
-        document.getElementById('playObjectComplementAnimation').addEventListener('click', () => {
-            const animation = document.getElementById('objectComplementAnimation');
-            animation.innerHTML = 'I saw the dog ______ (chase) its tail.';
-            
-            let count = 0;
-            const sentences = [
-                {verb: 'chase', participle: 'chasing'},
-                {verb: 'run', participle: 'running'},
-                {verb: 'play', participle: 'playing'},
-                {verb: 'bark', participle: 'barking'},
-                {verb: 'jump', participle: 'jumping'}
-            ];
-            
-            clearInterval(animationInterval);
-            animationInterval = setInterval(() => {
-                animation.innerHTML = `I saw the dog <span style="color: var(--accent); text-decoration: underline;">${sentences[count].participle}</span> its tail.`;
-                count = (count + 1) % sentences.length;
-            }, 1500);
-            
-            playSound('success');
-        });
-        
-        document.getElementById('pauseObjectComplementAnimation').addEventListener('click', () => {
-            clearInterval(animationInterval);
-            playSound('click');
-        });
-        
-        // 分詞片語動畫
-        document.getElementById('playPhraseAnimation').addEventListener('click', () => {
-            const animation = document.getElementById('phraseAnimation');
-            animation.innerHTML = '______ (walk) in the park, I saw a beautiful bird.';
-            
-            let count = 0;
-            const sentences = [
-                {verb: 'walk', participle: 'Walking'},
-                {verb: 'jog', participle: 'Jogging'},
-                {verb: 'run', participle: 'Running'},
-                {verb: 'sit', participle: 'Sitting'},
-                {verb: 'stand', participle: 'Standing'}
-            ];
-            
-            clearInterval(animationInterval);
-            animationInterval = setInterval(() => {
-                animation.innerHTML = `<span style="color: var(--accent); text-decoration: underline;">${sentences[count].participle}</span> in the park, I saw a beautiful bird.`;
-                count = (count + 1) % sentences.length;
-            }, 1500);
-            
-            playSound('success');
-        });
-        
-        document.getElementById('pausePhraseAnimation').addEventListener('click', () => {
-            clearInterval(animationInterval);
-            playSound('click');
-        });
-        
-        // 音效函數
-        function playSound(type) {
-            console.log(`Playing ${type} sound`);
+
+        // 語音播放功能
+        function speak(text) {
+            if ('speechSynthesis' in window) {
+                speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.9;
+                
+                const voices = speechSynthesis.getVoices();
+                const enVoice = voices.find(v => v.lang.includes('en-US') || v.lang.includes('en-GB'));
+                if(enVoice) utterance.voice = enVoice;
+
+                speechSynthesis.speak(utterance);
+            } else {
+                alert("Sorry, your browser doesn't support text-to-speech.");
+            }
         }
-        
-        // 初始加載時播放歡迎音效
-        window.addEventListener('load', () => {
-            playSound('welcome');
+
+        // Quiz Logic
+        const quizQuestions = [
+            {
+                question: "1. The movie was so ____ (bore) that I fell asleep.",
+                options: ["bore", "boring", "bored", "to bore"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> 'Boring' describes the movie itself (the cause of the feeling). 'Bored' would describe how I felt."
+            },
+            {
+                question: "2. I saw a ____ (run) dog in the park.",
+                options: ["ran", "run", "running", "to run"],
+                correct: 2,
+                explanation: "<strong>Explanation:</strong> 'Running' acts as an adjective modifying the noun 'dog'."
+            },
+            {
+                question: "3. The ____ (cry) baby needs some milk.",
+                options: ["crying", "cry", "cried", "to cry"],
+                correct: 0,
+                explanation: "<strong>Explanation:</strong> 'Crying' functions as a modifier for the noun 'baby'."
+            },
+            {
+                question: "4. She found the job ____ (tire).",
+                options: ["tired", "tiring", "tire", "to tire"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> The job causes the feeling, so we use the present participle 'tiring'."
+            },
+            {
+                question: "5. He kept me ____ (wait) for an hour.",
+                options: ["wait", "waited", "waiting", "to wait"],
+                correct: 2,
+                explanation: "<strong>Explanation:</strong> 'Keep' + object + present participle (meaning 'to cause to continue')."
+            },
+            {
+                question: "6. ____ (Walk) down the street, I met an old friend.",
+                options: ["Walked", "Walking", "To walk", "Walks"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> A present participle phrase at the beginning of a sentence indicates simultaneous action or time."
+            },
+            {
+                question: "7. The results were ____ (disappoint).",
+                options: ["disappointed", "disappointing", "disappoint", "to disappoint"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> The results caused the disappointment, so we use 'disappointing'."
+            },
+            {
+                question: "8. I heard someone ____ (sing) in the next room.",
+                options: ["sang", "singing", "to sing", "sung"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> Hear + object + present participle emphasizes the action in progress."
+            },
+            {
+                question: "9. It was an ____ (excite) game.",
+                options: ["excited", "excite", "exciting", "to excite"],
+                correct: 2,
+                explanation: "<strong>Explanation:</strong> 'Exciting' modifies the noun 'game'."
+            },
+            {
+                question: "10. ____ (Know) the answer, she raised her hand.",
+                options: ["Known", "Knowing", "Knew", "To know"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> Participle phrase expressing reason: 'Because she knew the answer...'"
+            },
+            {
+                question: "11. The ____ (rise) sun looked beautiful.",
+                options: ["rose", "risen", "rising", "to rise"],
+                correct: 2,
+                explanation: "<strong>Explanation:</strong> 'Rising' modifies the noun 'sun'."
+            },
+            {
+                question: "12. We watched the birds ____ (fly) in the sky.",
+                options: ["flew", "flown", "flying", "to fly"],
+                correct: 2,
+                explanation: "<strong>Explanation:</strong> Watch + object + present participle."
+            },
+            {
+                question: "13. This book is very ____ (interest).",
+                options: ["interested", "interesting", "interest", "to interest"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> The book causes interest, so it is 'interesting'."
+            },
+            {
+                question: "14. ____ (Feel) sick, he went home early.",
+                options: ["Felt", "Feeling", "To feel", "Feels"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> Participle phrase expressing reason."
+            },
+            {
+                question: "15. Be careful of the ____ (break) glass.",
+                options: ["breaking", "broken", "broke", "to break"],
+                correct: 0,
+                explanation: "<strong>Explanation:</strong> In this context, if we imply glass that is currently breaking or the act itself, 'breaking' is the participle form. (Note: 'Broken glass' is more common for the state, but 'breaking news/breaking waves' uses the present participle. Here as a grammar exercise for present participles, 'breaking' fits the form, though 'broken' is the past participle state)."
+            },
+            {
+                question: "16. The ____ (sleep) cat looks cute.",
+                options: ["slept", "sleeping", "sleep", "to sleep"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> 'Sleeping' modifies the noun 'cat'."
+            },
+            {
+                question: "17. The news is ____ (shock).",
+                options: ["shocked", "shocking", "shock", "to shock"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> The news causes shock, so it is 'shocking'."
+            },
+            {
+                question: "18. Don't wake the ____ (sleep) lion.",
+                options: ["sleeping", "slept", "sleep", "sleeps"],
+                correct: 0,
+                explanation: "<strong>Explanation:</strong> 'Sleeping' is the modifier."
+            },
+            {
+                question: "19. I caught him ____ (steal) my pen.",
+                options: ["stole", "stealing", "to steal", "stolen"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> Catch + object + present participle."
+            },
+            {
+                question: "20. ____ (Smile) broadly, she accepted the award.",
+                options: ["Smiled", "Smiling", "To smile", "Smiles"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> Participle phrase indicating manner or accompanying action."
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        function initQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            showQuestion(currentQuestionIndex);
+        }
+
+        function showQuestion(index) {
+            const container = document.getElementById('quiz-question-container');
+            if (index >= quizQuestions.length) {
+                showResult(container);
+                return;
+            }
+            const q = quizQuestions[index];
+            let html = `
+                <div class="quiz-card">
+                    <div class="quiz-progress">Question ${index + 1} / ${quizQuestions.length}</div>
+                    <div class="quiz-question">${q.question}</div>
+                    <div class="quiz-options">
+                        ${q.options.map((opt, i) => `
+                            <div class="quiz-option" onclick="checkAnswer(this, ${i})">${opt}</div>
+                        `).join('')}
+                    </div>
+                    <div class="quiz-explanation" id="explanation-${index}">
+                        ${q.explanation}
+                    </div>
+                    <div class="quiz-nav" id="nav-${index}">
+                        <button class="btn" onclick="nextQuestion()">Next Question <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+            `;
+            container.innerHTML = html;
+        }
+
+        window.checkAnswer = function(optionElement, selectedIndex) {
+            const currentQ = quizQuestions[currentQuestionIndex];
+            const explanation = document.getElementById(`explanation-${currentQuestionIndex}`);
+            const nav = document.getElementById(`nav-${currentQuestionIndex}`);
+            const allOptions = optionElement.parentElement.children;
+
+            if (optionElement.classList.contains('disabled')) return;
+
+            // Disable all options
+            for (let i = 0; i < allOptions.length; i++) {
+                allOptions[i].classList.add('disabled');
+            }
+
+            if (selectedIndex === currentQ.correct) {
+                optionElement.classList.add('correct');
+                score++;
+            } else {
+                optionElement.classList.add('incorrect');
+                allOptions[currentQ.correct].classList.add('correct');
+            }
+            explanation.classList.add('show');
+            nav.classList.add('show');
+        }
+
+        window.nextQuestion = function() {
+            currentQuestionIndex++;
+            showQuestion(currentQuestionIndex);
+        }
+
+        function showResult(container) {
+            container.innerHTML = `
+                <div class="card quiz-result">
+                    <div class="score-circle">${score}</div>
+                    <h2>Quiz Completed!</h2>
+                    <p>Your Score: ${score} / ${quizQuestions.length}</p>
+                    <p>${score >= 18 ? "Excellent! You mastered Present Participles!" : score >= 12 ? "Good job! Keep practicing." : "Review the lessons and try again!"}</p>
+                    <button class="btn" onclick="initQuiz()" style="margin-top: 20px;">
+                        <i class="fas fa-redo"></i> Restart Quiz
+                    </button>
+                </div>
+            `;
+        }
+
+        // Initialize quiz when tab is clicked
+        document.querySelector('.tab[data-tab="quiz"]').addEventListener('click', () => {
+             const container = document.getElementById('quiz-question-container');
+             if (container.innerHTML.trim() === '') {
+                 initQuiz();
+             }
         });
     </script>
 </body>
