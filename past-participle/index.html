@@ -9,32 +9,31 @@
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Nunito:wght@400;600;700;800&display=swap');
 
         :root {
-            /* 高雅配色系統：深海藍、墨綠搭配流金點綴 */
+            /* 高雅配色系統 */
             --primary-dark: #0F2027;  /* 深邃背景 */
             --primary-mid: #203A43;   /* 中間調 */
             --primary-accent: #2C5364; /* 亮部 */
-            
             --gold-accent: #FFD700;   /* 高雅金 */
             --gold-dark: #B8860B;     /* 深金 */
-            
-            /* 兼容舊 JS 邏輯 */
-            --accent: #FFD700; 
-            
             --dynamic-gradient: linear-gradient(135deg, #2C5364 0%, #203A43 50%, #0F2027 100%);
             --gold-gradient: linear-gradient(45deg, #B8860B, #FFD700, #B8860B);
-
             --bg-body: #f4f7f9;       
             --bg-card: rgba(255, 255, 255, 0.95);
-            
             --text-main: #1a1a1a;
             --text-light: #5a6a7a;
             --text-on-dark: #ffffff;
-            
             --shadow-soft: 0 10px 30px -10px rgba(0,0,0,0.1);
             --shadow-glow: 0 5px 15px rgba(255, 215, 0, 0.3);
-            
             --radius-lg: 24px;
             --radius-md: 16px;
+
+            /* Quiz Colors */
+            --correct-bg: #d4edda;
+            --correct-border: #28a745;
+            --correct-text: #155724;
+            --wrong-bg: #f8d7da;
+            --wrong-border: #dc3545;
+            --wrong-text: #721c24;
         }
 
         * {
@@ -45,33 +44,20 @@
         }
         
         body {
-            background: #f4f7f9; 
-            color: var(--text-main);
-            line-height: 1.75;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        /* 粒子背景 Canvas */
-        #particles-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
             background: linear-gradient(-45deg, #f4f7f9, #eef2f5, #e0eaf0, #f4f7f9);
             background-size: 400% 400%;
             animation: gradientBG 20s ease infinite;
+            color: var(--text-main);
+            line-height: 1.75;
         }
-        
+
         @keyframes gradientBG {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
         
-        /* Header: 深邃質感 */
+        /* Header */
         header {
             background: var(--dynamic-gradient);
             color: var(--text-on-dark);
@@ -89,11 +75,6 @@
             top: 0; left: 0; right: 0; bottom: 0;
             background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
             opacity: 0.5;
-        }
-
-        .header-content {
-            position: relative;
-            z-index: 1;
         }
 
         h1 {
@@ -130,7 +111,7 @@
             z-index: 10;
         }
         
-        /* Tabs: 玻璃擬態 */
+        /* Tabs */
         .tabs {
             display: flex;
             flex-wrap: wrap;
@@ -173,35 +154,13 @@
             border-radius: 10px;
         }
 
-        .tab:hover {
-            color: var(--primary-dark);
-            background: rgba(255,255,255,0.8);
-        }
+        .tab:hover { color: var(--primary-dark); background: rgba(255,255,255,0.8); }
+        .tab.active { color: var(--primary-dark); background: white; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .tab.active::before { transform: scaleX(1); box-shadow: 0 0 10px var(--gold-accent); }
         
-        .tab.active {
-            color: var(--primary-dark);
-            background: white;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-
-        .tab.active::before {
-            transform: scaleX(1);
-            box-shadow: 0 0 10px var(--gold-accent);
-        }
-        
-        .tab-content {
-            display: none;
-            animation: slideUpFade 0.7s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-        
-        @keyframes slideUpFade {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .tab-content.active {
-            display: block;
-        }
+        .tab-content { display: none; animation: slideUpFade 0.7s cubic-bezier(0.25, 1, 0.5, 1); }
+        @keyframes slideUpFade { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .tab-content.active { display: block; }
         
         h2 {
             color: var(--primary-dark);
@@ -211,9 +170,7 @@
             text-align: center;
             position: relative;
             padding-bottom: 1rem;
-            border-bottom: none;
         }
-        
         h2::after {
             content: '';
             position: absolute;
@@ -225,7 +182,6 @@
             background: var(--gold-gradient);
             border-radius: 2px;
         }
-        
         h3 {
             color: var(--primary-mid);
             margin: 0 0 1.2rem;
@@ -234,7 +190,6 @@
             display: flex;
             align-items: center;
         }
-        
         h3::before {
             content: '';
             display: inline-block;
@@ -254,9 +209,9 @@
             box-shadow: var(--shadow-soft);
             border: 1px solid rgba(255,255,255,0.8);
             transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
+            position: relative;
+            z-index: 5;
         }
-        
         .card:hover {
             transform: translateY(-7px);
             box-shadow: 0 15px 40px -10px rgba(0,0,0,0.15);
@@ -275,13 +230,7 @@
             overflow: hidden;
             box-shadow: var(--shadow-soft);
         }
-        
-        th, td {
-            padding: 18px 24px;
-            text-align: left;
-            border-bottom: 1px solid #eef2f5;
-        }
-        
+        th, td { padding: 18px 24px; text-align: left; border-bottom: 1px solid #eef2f5; }
         th {
             background: var(--primary-mid);
             color: white;
@@ -291,19 +240,8 @@
             letter-spacing: 1px;
             border-bottom: 3px solid var(--gold-accent);
         }
-        
-        tr:nth-child(even) {
-            background-color: #fcfdfd;
-        }
-        
-        tr:hover td {
-            background-color: #f0f4f8;
-        }
-
-        /* 比較表格特殊樣式 */
-        .comparison-table th {
-            background-color: var(--primary-dark);
-        }
+        tr:nth-child(even) { background-color: #fcfdfd; }
+        tr:hover td { background-color: #f0f4f8; }
         
         /* Example Box */
         .example {
@@ -314,6 +252,8 @@
             border-radius: 0 var(--radius-md) var(--radius-md) 0;
             box-shadow: 0 5px 15px rgba(0,0,0,0.03);
             color: var(--text-main);
+            position: relative;
+            z-index: 1;
         }
         
         .highlight {
@@ -337,172 +277,22 @@
             margin: 1.5rem 0;
             border-radius: 0 var(--radius-md) var(--radius-md) 0;
         }
-        .note-box strong {
-             color: var(--text-main);
-        }
-
-        /* Participle List Styles (Chips) */
-        .participle-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 15px;
-            margin: 2rem 0;
-        }
+        .note-box strong { color: var(--text-main); }
         
-        .participle-item {
-            background: var(--primary-mid);
-            color: white;
-            padding: 15px;
-            border-radius: 50px;
-            text-align: center;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            border: 1px solid transparent;
-        }
-        
-        .participle-item:hover {
-            transform: translateY(-5px);
-            background: var(--primary-dark);
-            border-color: var(--gold-accent);
-            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.2);
-        }
-        
-        /* Interactive Element */
-        .interactive-element {
-            background: white;
+        /* Audio Button */
+        .audio-btn {
+            background: none;
             border: none;
-            padding: 3rem;
-            border-radius: var(--radius-lg);
-            margin: 4rem 0;
-            text-align: center;
-            box-shadow: var(--shadow-soft);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .interactive-element::before {
-            content: '';
-            position: absolute;
-            top: -50%; left: -50%; width: 200%; height: 200%;
-            background: radial-gradient(circle, rgba(255, 215, 0, 0.05) 0%, transparent 70%);
-            animation: rotate 30s linear infinite;
-            z-index: 0;
-        }
-        
-        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
-        .interactive-element > * { position: relative; z-index: 1; }
-        
-        /* Buttons */
-        .btn {
-            background: var(--dynamic-gradient);
-            color: white;
-            border: none;
-            padding: 12px 32px;
-            border-radius: 50px;
+            color: var(--gold-dark);
             cursor: pointer;
-            font-weight: 700;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            box-shadow: 0 4px 15px rgba(32, 58, 67, 0.3);
-            position: relative;
-            overflow: hidden;
-            z-index: 2;
+            margin-left: 10px;
+            font-size: 1.1rem;
+            transition: all 0.2s;
+            vertical-align: middle;
         }
-        
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.5s;
-        }
-
-        .btn:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 8px 25px rgba(32, 58, 67, 0.4), var(--shadow-glow);
-            background: var(--dynamic-gradient);
-        }
-        
-        .btn:hover::before { left: 100%; }
-        
-        /* Animation Box */
-        .participle-animation {
-            height: 220px;
-            background: var(--primary-dark);
-            border-radius: var(--radius-md);
-            margin: 2.5rem auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.8rem;
-            font-weight: bold;
-            box-shadow: inset 0 0 40px rgba(0,0,0,0.8);
-            border: 6px solid #2c3e50;
-            position: relative;
-            overflow: hidden;
-            letter-spacing: 1px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-        }
-        
-        /* Usage Diagram Styling - Tech Dashboard Style */
-        .usage-diagram {
-            text-align: center;
-            margin: 3rem 0;
-        }
-        
-        .diagram-container {
-            display: flex;
-            justify-content: center;
-            margin: 1.5rem 0;
-        }
-        
-        .diagram {
-            width: 100%;
-            max-width: 600px;
-            height: 350px;
-            background: var(--primary-mid);
-            border-radius: var(--radius-md);
-            position: relative;
-            overflow: hidden;
-            border: 2px solid var(--primary-accent);
-            box-shadow: inset 0 0 30px rgba(0,0,0,0.3);
-        }
-        
-        .diagram::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-image: 
-                linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
-            background-size: 20px 20px;
-            opacity: 0.5;
-        }
-        
-        .diagram-item {
-            position: absolute;
-            padding: 12px;
-            background: rgba(255,255,255,0.95);
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            text-align: center;
-            width: 160px;
-            font-weight: 700;
-            color: var(--primary-dark);
-            border-top: 4px solid var(--gold-accent);
-            transition: transform 0.3s;
-            font-size: 0.95rem;
-        }
-        
-        .diagram-item:hover {
-            transform: scale(1.1);
-            z-index: 10;
+        .audio-btn:hover {
+            color: var(--primary-accent);
+            transform: scale(1.15);
         }
 
         /* 不規則動詞練習平台 - 尊爵暗黑版 */
@@ -518,7 +308,6 @@
             text-align: center;
             border: 1px solid rgba(255, 215, 0, 0.1);
         }
-
         .practice-platform::after {
             content: '';
             position: absolute;
@@ -529,7 +318,6 @@
             opacity: 0.3;
             filter: blur(5px);
         }
-
         .platform-title {
             font-size: 2rem;
             color: var(--gold-accent);
@@ -541,11 +329,6 @@
             font-weight: 800;
             text-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
         }
-
-        .platform-title::before {
-            content: none;
-        }
-
         .platform-description {
             color: rgba(255,255,255,0.9);
             margin-bottom: 2.5rem;
@@ -555,7 +338,6 @@
             margin-right: auto;
             line-height: 1.8;
         }
-
         .platform-button {
             display: inline-flex;
             align-items: center;
@@ -570,15 +352,12 @@
             font-size: 1.2rem;
             box-shadow: 0 10px 25px rgba(255, 215, 0, 0.4);
             margin-bottom: 3rem;
-            border: none;
         }
-
         .platform-button:hover {
             transform: translateY(-5px) scale(1.05);
             box-shadow: 0 15px 35px rgba(255, 215, 0, 0.6);
             background: linear-gradient(45deg, #FFD700, #fffadd, #FFD700);
         }
-
         .platform-features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -586,35 +365,137 @@
             margin-top: 2rem;
             text-align: left;
         }
-
         .feature-item {
             background: rgba(255,255,255,0.08);
             padding: 1.8rem;
             border-radius: var(--radius-md);
             border-top: 3px solid var(--gold-accent);
-            border-left: none;
             transition: transform 0.3s, background 0.3s;
             backdrop-filter: blur(10px);
             color: rgba(255,255,255,0.7);
         }
-        
         .feature-item:hover {
             transform: translateY(-10px);
             background: rgba(255,255,255,0.12);
         }
-
         .feature-item i {
             color: var(--gold-accent);
             margin-right: 12px;
             font-size: 1.4rem;
         }
-        
         .feature-item strong {
             color: white;
             font-size: 1.1rem;
             display: block;
             margin-bottom: 0.5rem;
         }
+
+        /* Quiz Styles */
+        .quiz-container { max-width: 800px; margin: 0 auto; }
+        .quiz-progress {
+            margin-bottom: 1.5rem;
+            color: var(--text-light);
+            font-weight: 700;
+            text-align: right;
+            font-size: 0.9rem;
+        }
+        .quiz-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid rgba(255,255,255,0.8);
+            animation: fadeIn 0.5s ease;
+        }
+        .quiz-question {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-mid);
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--gold-accent);
+            padding-left: 20px;
+            line-height: 1.6;
+        }
+        .quiz-options { display: grid; gap: 15px; }
+        .quiz-option {
+            padding: 18px 25px;
+            background: white;
+            border: 2px solid #eef2f5;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 600;
+            color: var(--text-main);
+            text-align: left;
+            position: relative;
+            font-size: 1.05rem;
+        }
+        .quiz-option:hover:not(.disabled) {
+            border-color: var(--primary-accent);
+            background: #f8fafc;
+            transform: translateX(5px);
+        }
+        .quiz-option.correct {
+            background-color: var(--correct-bg);
+            border-color: var(--correct-border);
+            color: var(--correct-text);
+        }
+        .quiz-option.incorrect {
+            background-color: var(--wrong-bg);
+            border-color: var(--wrong-border);
+            color: var(--wrong-text);
+            opacity: 0.8;
+        }
+        .quiz-option.disabled { cursor: default; opacity: 0.7; pointer-events: none; }
+        .quiz-explanation {
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 12px;
+            border-left: 4px solid var(--gold-dark);
+            color: var(--text-main);
+            display: none;
+            animation: slideDown 0.4s ease;
+        }
+        .quiz-explanation.show { display: block; }
+        .quiz-nav { margin-top: 25px; text-align: right; display: none; }
+        .quiz-nav.show { display: block; }
+        .quiz-result { text-align: center; padding: 3rem; }
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            background: var(--dynamic-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            color: var(--gold-accent);
+            font-size: 3rem;
+            font-weight: 800;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border: 4px solid rgba(255, 255, 255, 0.2);
+        }
+        .btn {
+            background: var(--dynamic-gradient);
+            color: white;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(32, 58, 67, 0.3);
+        }
+        .btn:hover { transform: translateY(-3px); }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
         footer {
             text-align: center;
@@ -626,36 +507,24 @@
             position: relative;
             z-index: 10;
         }
-        
         footer::before {
              content: '';
              position: absolute;
              top: 0; left: 0; width: 100%; height: 4px;
              background: var(--gold-gradient);
         }
-
         @media (max-width: 768px) {
             header { padding: 3rem 1rem 4rem; }
             h1 { font-size: 2rem; }
             .tabs { margin-top: -2rem; width: 95%; flex-direction: row; overflow-x: auto; justify-content: flex-start; }
             .tab { flex: 0 0 auto; padding: 0.7rem 1.2rem; min-width: auto; }
-            .participle-list { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
-            .animation-controls { flex-wrap: wrap; }
             table { display: block; overflow-x: auto; }
-            
-            .diagram { height: auto; padding-bottom: 2rem; display: flex; flex-direction: column; align-items: center; background: transparent; border: none; box-shadow: none; }
-            .diagram::before { display: none; }
-            .diagram-item { position: relative; top: auto !important; left: auto !important; right: auto !important; bottom: auto !important; margin: 10px 0; width: 80%; }
-            
             .practice-platform { padding: 2rem 1.5rem; }
-            .platform-title { font-size: 1.5rem; flex-direction: column; }
             .platform-button { width: 100%; justify-content: center; }
         }
     </style>
 </head>
 <body>
-    <canvas id="particles-canvas"></canvas>
-
     <header>
         <div class="header-content">
             <h1>Shirley's Past Participle Learning Platform</h1>
@@ -665,12 +534,11 @@
     
     <div class="container">
         <div class="tabs">
-            <div class="tab active" data-tab="intro">過去分詞介紹 | Past Participle Introduction</div>
-            <div class="tab" data-tab="complement">作補語 | As Complement</div>
-            <div class="tab" data-tab="modifier">作修飾語 | As Modifier</div>
-            <div class="tab" data-tab="object-complement">作受詞補語 | As Object Complement</div>
-            <div class="tab" data-tab="phrase">過去分詞片語 | Participle Phrases</div>
-            <div class="tab" data-tab="comparison">與現在分詞區別 | Present vs Past Participle</div>
+            <div class="tab active" data-tab="intro">過去分詞介紹 | Intro</div>
+            <div class="tab" data-tab="subject-complement">作主詞補語 | Subject Complement</div>
+            <div class="tab" data-tab="modifier">作修飾詞 | As Modifier</div>
+            <div class="tab" data-tab="object-complement">作受詞補語 | Object Complement</div>
+            <div class="tab" data-tab="quiz">自我檢測 | Quiz</div>
         </div>
         
         <div class="tab-content active" id="intro">
@@ -678,12 +546,12 @@
             
             <div class="card">
                 <h3>什麼是過去分詞？ | What is a Past Participle?</h3>
-                <p>過去分詞表達「被動」或「完成」的意味。一般充當形容詞的功能。</p>
-                <p>A past participle expresses "passive" or "completed" meaning. It generally functions as an adjective.</p>
+                <p>過去分詞通常由動詞加 -ed 構成（不規則動詞除外），表達「被動」或「已經完成」的意味。</p>
+                <p>A past participle is usually formed by adding -ed to a verb (except irregular verbs), expressing "passive" or "completed" meaning.</p>
                 
                 <div class="example">
-                    <p><strong>例子 Example:</strong> The <span class="highlight">broken</span> window needs to be fixed. | 破損的窗戶需要修理。</p>
-                    <p><strong>例子 Example:</strong> The <span class="highlight">excited</span> children couldn't sleep. | 興奮的孩子們睡不著。</p>
+                    <p><strong>例子 Example:</strong> The <span class="highlight">broken</span> window needs to be fixed. | 破掉的窗戶需要修理。(已經破了/被打破) <button class="audio-btn" onclick="speak('The broken window needs to be fixed.')"><i class="fas fa-volume-up"></i></button></p>
+                    <p><strong>例子 Example:</strong> I have <span class="highlight">finished</span> my homework. | 我已經完成了作業。(完成) <button class="audio-btn" onclick="speak('I have finished my homework.')"><i class="fas fa-volume-up"></i></button></p>
                 </div>
             </div>
             
@@ -692,74 +560,53 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>動詞 Verb</th>
+                            <th>原形 Verb</th>
                             <th>過去分詞 Past Participle</th>
-                            <th>例子 Example</th>
+                            <th>規則 Rule</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>break</td>
-                            <td>broken</td>
-                            <td>a broken heart</td>
+                            <td>work</td>
+                            <td>worked</td>
+                            <td>規則變化 (+ed) <button class="audio-btn" onclick="speak('worked')"><i class="fas fa-volume-up"></i></button></td>
                         </tr>
                         <tr>
-                            <td>excite</td>
-                            <td>excited</td>
-                            <td>excited fans</td>
+                            <td>like</td>
+                            <td>liked</td>
+                            <td>以e結尾 (+d) <button class="audio-btn" onclick="speak('liked')"><i class="fas fa-volume-up"></i></button></td>
                         </tr>
                         <tr>
-                            <td>tire</td>
-                            <td>tired</td>
-                            <td>a tired worker</td>
+                            <td>study</td>
+                            <td>studied</td>
+                            <td>去y加ied <button class="audio-btn" onclick="speak('studied')"><i class="fas fa-volume-up"></i></button></td>
                         </tr>
                         <tr>
-                            <td>interest</td>
-                            <td>interested</td>
-                            <td>an interested student</td>
+                            <td>stop</td>
+                            <td>stopped</td>
+                            <td>重複字尾加ed <button class="audio-btn" onclick="speak('stopped')"><i class="fas fa-volume-up"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td>go</td>
+                            <td>gone</td>
+                            <td>不規則變化 (Irregular) <button class="audio-btn" onclick="speak('gone')"><i class="fas fa-volume-up"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td>write</td>
+                            <td>written</td>
+                            <td>不規則變化 (Irregular) <button class="audio-btn" onclick="speak('written')"><i class="fas fa-volume-up"></i></button></td>
                         </tr>
                     </tbody>
                 </table>
-            </div>
-            
-            <div class="card">
-                <h3>過去分詞的用法 | Uses of Past Participles</h3>
-                <p>過去分詞在句子中可以擔任多種角色：</p>
-                <p>Past participles can serve various roles in a sentence:</p>
-                
-                <div class="usage-diagram">
-                    <div class="diagram-container">
-                        <div class="diagram">
-                            <div class="diagram-item" style="top: 20px; left: 50px;">補語<br>Complement</div>
-                            <div class="diagram-item" style="top: 20px; right: 50px;">修飾語<br>Modifier</div>
-                            <div class="diagram-item" style="top: 120px; left: 150px;">受詞補語<br>Object Complement</div>
-                            <div class="diagram-item" style="top: 120px; right: 150px;">分詞片語<br>Participle Phrase</div>
-                            <div class="diagram-item" style="bottom: 20px; left: 50%; transform: translateX(-50%); width: 200px;">完成式<br>Perfect Tense</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="card">
-                <h3>過去分詞與完成式/被動語態 | Past Participles and Perfect Tenses/Passive Voice</h3>
-                <p>過去分詞的一種基本用法是與 have/has/had 一起形成動詞的各種完成式，以及和 be 一起形成各種被動語態。</p>
-                <p>One basic use of past participles is with "have/has/had" to form various perfect tenses of verbs, and with "be" to form various passive voices.</p>
-                
-                <div class="example">
-                    <p><strong>完成式 Perfect Tense:</strong> I <span class="highlight">have finished</span> my homework. | 我已經完成了作業。</p>
-                    <p><strong>被動語態 Passive Voice:</strong> The window <span class="highlight">was broken</span> by the storm. | 窗戶被暴風雨打破了。</p>
-                </div>
-                
                 <div class="note-box">
-                    <p><strong>注意：</strong>過去分詞作為形容詞使用時，與完成式或被動語態中的過去分詞形式相同，但功能不同。</p>
-                    <p><strong>Note:</strong> When past participles are used as adjectives, they have the same form as in perfect tenses or passive voice but serve different functions.</p>
+                    <strong>💡 學習提示：</strong> 不規則動詞的過去分詞變化多端，需要特別記憶。例如：see-saw-seen, eat-ate-eaten, break-broke-broken。
                 </div>
             </div>
 
             <div class="practice-platform">
                 <div class="platform-title">🎯 Shirley's 不規則動詞練習平台</div>
                 <div class="platform-description">
-                    想要掌握不規則動詞的過去分詞變化嗎？點擊下方按鈕進入互動式練習平台，透過多種練習模式強化不規則動詞的記憶！
+                    不規則動詞是掌握過去分詞的關鍵！點擊下方按鈕進入互動式練習平台，透過多種練習模式強化記憶！
                 </div>
                 <a href="https://ducj-creator.github.io/Shirley-Grammar/irregular/verbs/" 
                    target="_blank" 
@@ -788,133 +635,78 @@
                         激勵學習動力
                     </div>
                 </div>
-                <div class="note-box" style="margin-top: 25px; text-align: left; padding: 20px; border-radius: 12px; background: rgba(255, 215, 0, 0.1) !important; color: var(--gold-dark) !important;">
-                    <strong>💡 學習提示：</strong> 過去分詞的學習需要掌握不規則動詞變化，建議每天練習10-15分鐘，持續一週即可看到明顯進步！
-                </div>
-            </div>
-            
-            <div class="interactive-element">
-                <h3>過去分詞練習 | Past Participle Practice</h3>
-                <p>將動詞轉換為過去分詞形式</p>
-                <p>Convert verbs to past participle form</p>
-                <div class="participle-animation" id="participleAnimation">
-                    Verb: break → Past Participle: ______
-                </div>
-                <div class="animation-controls">
-                    <button class="btn" id="playAnimation">
-                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
-                    </button>
-                    <button class="btn" id="pauseAnimation">
-                        <i class="fas fa-pause"></i> 暫停 | Pause
-                    </button>
-                </div>
             </div>
         </div>
         
-        <div class="tab-content" id="complement">
-            <h2>作補語 | As Complement</h2>
+        <div class="tab-content" id="subject-complement">
+            <h2>作主詞補語 | As Subject Complement</h2>
             
             <div class="card">
-                <h3>過去分詞作連綴動詞後的補語 | Past Participles as Complements after Linking Verbs</h3>
-                <p>過去分詞可以在連綴動詞（如be動詞）後作主詞補語。</p>
-                <p>Past participles can function as subject complements after linking verbs (such as be verbs).</p>
+                <h3>表達「感覺」的形容詞 | Feelings and Emotions</h3>
+                <p>過去分詞放在連綴動詞（如 be, become, feel）後，作主詞補語，描述主詞的「感覺」或「情緒」。</p>
+                <p>Past participles placed after linking verbs serve as subject complements, describing the subject's "feelings".</p>
                 
                 <div class="example">
-                    <p><strong>例子 Example:</strong> I am <span class="highlight">well-prepared</span>.</p>
-                    <p>我準備充分。</p>
+                    <p><strong>例子 Example:</strong> I am <span class="highlight">interested</span> in English. | 我對英語感興趣。(我感到興趣) <button class="audio-btn" onclick="speak('I am interested in English.')"><i class="fas fa-volume-up"></i></button></p>
+                    <p><strong>例子 Example:</strong> She was <span class="highlight">excited</span> about the news. | 她對這個消息感到興奮。 <button class="audio-btn" onclick="speak('She was excited about the news.')"><i class="fas fa-volume-up"></i></button></p>
+                    <p><strong>例子 Example:</strong> We were <span class="highlight">bored</span> during the movie. | 我們在看電影時感到無聊。 <button class="audio-btn" onclick="speak('We were bored during the movie.')"><i class="fas fa-volume-up"></i></button></p>
                 </div>
                 
-                <div class="example">
-                    <p><strong>例子 Example:</strong> Old people are usually more <span class="highlight">experienced and committed</span>.</p>
-                    <p>老年人通常更有經驗和責任感。</p>
-                </div>
-                
-                <div class="example">
-                    <p><strong>例子 Example:</strong> The old building appears <span class="highlight">abandoned</span>.</p>
-                    <p>這座舊建築看起來被廢棄了。</p>
-                </div>
-                
-                <div class="example">
-                    <p><strong>例子 Example:</strong> Her father felt <span class="highlight">worried</span>.</p>
-                    <p>她的父親感到擔憂。</p>
+                <div class="note-box">
+                    <strong>比較：</strong>
+                    <ul>
+                        <li>Past Participle (-ed): Describes how someone <strong>feels</strong>. (e.g., I am bored.)</li>
+                        <li>Present Participle (-ing): Describes what <strong>causes</strong> the feeling. (e.g., The movie is boring.)</li>
+                    </ul>
                 </div>
             </div>
             
-            <div class="interactive-element">
-                <h3>補語練習 | Complement Practice</h3>
-                <p>選擇正確的過去分詞形式完成句子</p>
-                <p>Select the correct past participle form to complete the sentence</p>
-                <div class="participle-animation" id="complementAnimation">
-                    She seemed ______ (tire) after the long journey.
+            <div class="card">
+                <h3>被動語態與狀態 | Passive Voice & State</h3>
+                <p>結構：<strong>be + Past Participle</strong>。這在語法上也是主詞補語的一種，表示主詞處於「被動」或「已完成」的狀態。</p>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> The letter <span class="highlight">was written</span> by John. | 這封信是約翰寫的。 <button class="audio-btn" onclick="speak('The letter was written by John.')"><i class="fas fa-volume-up"></i></button></p>
                 </div>
-                <div class="animation-controls">
-                    <button class="btn" id="playComplementAnimation">
-                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
-                    </button>
-                    <button class="btn" id="pauseComplementAnimation">
-                        <i class="fas fa-pause"></i> 暫停 | Pause
-                    </button>
+                <div class="example">
+                    <p><strong>例子 Example:</strong> The window <span class="highlight">is broken</span>. | 窗戶破了。(描述狀態) <button class="audio-btn" onclick="speak('The window is broken.')"><i class="fas fa-volume-up"></i></button></p>
                 </div>
             </div>
         </div>
         
         <div class="tab-content" id="modifier">
-            <h2>作修飾語 | As Modifier</h2>
+            <h2>作修飾詞 | As Modifier</h2>
             
             <div class="card">
-                <h3>過去分詞作名詞的修飾語 | Past Participles as Modifiers of Nouns</h3>
-                <p>過去分詞可以放在名詞前或後，作為修飾語使用。</p>
-                <p>Past participles can be placed before or after nouns, functioning as modifiers.</p>
+                <h3>過去分詞作前位修飾詞 | Pre-modifiers</h3>
+                <p>單個過去分詞通常放在名詞前面，修飾該名詞，表示「被動」或「完成」的狀態。</p>
                 
                 <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="highlight">Retired</span> people still can make great contributions to society.</p>
-                    <p>退休人員仍然可以為社會做出巨大貢獻。</p>
+                    <p><strong>例子 Example:</strong> Please throw away the <span class="highlight">broken</span> glass. | 請丟掉碎掉的玻璃。 <button class="audio-btn" onclick="speak('Please throw away the broken glass.')"><i class="fas fa-volume-up"></i></button></p>
                 </div>
-                
                 <div class="example">
-                    <p><strong>例子 Example:</strong> Practice is the only way to improve your <span class="highlight">spoken</span> English.</p>
-                    <p>練習是提高英語口語的唯一方法。</p>
+                    <p><strong>例子 Example:</strong> I like <span class="highlight">fried</span> chicken. | 我喜歡炸雞。 <button class="audio-btn" onclick="speak('I like fried chicken.')"><i class="fas fa-volume-up"></i></button></p>
                 </div>
-                
                 <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="highlight">Boiled</span> water is safer to drink than tap water.</p>
-                    <p>開水比自來水更安全。</p>
-                </div>
-                
-                <div class="example">
-                    <p><strong>例子 Example:</strong> The books <span class="highlight">borrowed from the library</span> must be returned on time.</p>
-                    <p>從圖書館借來的書必須按時歸還。</p>
+                    <p><strong>例子 Example:</strong> He bought a <span class="highlight">used</span> car. | 他買了一輛二手車。 <button class="audio-btn" onclick="speak('He bought a used car.')"><i class="fas fa-volume-up"></i></button></p>
                 </div>
             </div>
-            
+
             <div class="card">
-                <h3>常見的過去分詞修飾語 | Common Past Participle Modifiers</h3>
-                <div class="participle-list">
-                    <div class="participle-item">broken heart</div>
-                    <div class="participle-item">written exam</div>
-                    <div class="participle-item">spoken language</div>
-                    <div class="participle-item">frozen food</div>
-                    <div class="participle-item">stolen goods</div>
-                    <div class="participle-item">lost property</div>
-                    <div class="participle-item">finished product</div>
-                    <div class="participle-item">closed door</div>
+                <h3>過去分詞片語作後位修飾詞 | Post-modifiers (Phrases)</h3>
+                <p>過去分詞片語（由過去分詞加上其他字詞組成）通常放在名詞後面進行修飾。</p>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> The book <span class="highlight">written by JK Rowling</span> is famous. | 由JK羅琳寫的這本書很有名。 <button class="audio-btn" onclick="speak('The book written by JK Rowling is famous.')"><i class="fas fa-volume-up"></i></button></p>
+                    <p><em>(Original: The book which was written by JK Rowling...)</em></p>
                 </div>
-            </div>
-            
-            <div class="interactive-element">
-                <h3>修飾語練習 | Modifier Practice</h3>
-                <p>選擇正確的過去分詞形式完成句子</p>
-                <p>Select the correct past participle form to complete the sentence</p>
-                <div class="participle-animation" id="modifierAnimation">
-                    The ______ (close) store will reopen next week.
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">Shocked by the news</span>, she started to cry. | 被這消息震驚，她哭了起來。(分詞構句) <button class="audio-btn" onclick="speak('Shocked by the news, she started to cry.')"><i class="fas fa-volume-up"></i></button></p>
                 </div>
-                <div class="animation-controls">
-                    <button class="btn" id="playModifierAnimation">
-                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
-                    </button>
-                    <button class="btn" id="pauseModifierAnimation">
-                        <i class="fas fa-pause"></i> 暫停 | Pause
-                    </button>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> <span class="highlight">Born in Taiwan</span>, he speaks Chinese fluently. | 出生在台灣，他中文說得很流利。 <button class="audio-btn" onclick="speak('Born in Taiwan, he speaks Chinese fluently.')"><i class="fas fa-volume-up"></i></button></p>
                 </div>
             </div>
         </div>
@@ -923,535 +715,288 @@
             <h2>作受詞補語 | As Object Complement</h2>
             
             <div class="card">
-                <h3>過去分詞作受詞補語 | Past Participles as Object Complements</h3>
-                <p>過去分詞可以在某些動詞後作受詞補語。</p>
-                <p>Past participles can function as object complements after certain verbs.</p>
+                <h3>使役動詞的受詞補語 | Causative Verbs</h3>
+                <p>結構：<strong>have/get + Object + Past Participle</strong></p>
+                <p>表示「讓某事被做」（通常指請別人做）。</p>
                 
                 <div class="example">
-                    <p><strong>例子 Example:</strong> She had her hair <span class="highlight">cut</span>.</p>
-                    <p>她理了髮。</p>
+                    <p><strong>例子 Example:</strong> I need to <span class="highlight">have my car repaired</span>. | 我需要把我的車送修（讓車被修）。 <button class="audio-btn" onclick="speak('I need to have my car repaired.')"><i class="fas fa-volume-up"></i></button></p>
                 </div>
-                
                 <div class="example">
-                    <p><strong>例子 Example:</strong> The teacher found the student <span class="highlight">frustrated</span> when he told her about the test result.</p>
-                    <p>老師告訴學生考試結果時，發現他很沮喪。</p>
-                </div>
-                
-                <div class="example">
-                    <p><strong>例子 Example:</strong> You should have work and life <span class="highlight">balanced</span>.</p>
-                    <p>你應該平衡工作和生活。</p>
-                </div>
-                
-                <div class="example">
-                    <p><strong>例子 Example:</strong> I want this report <span class="highlight">finished</span> by Friday.</p>
-                    <p>我希望這份報告在星期五之前完成。</p>
+                    <p><strong>例子 Example:</strong> He <span class="highlight">got his hair cut</span> yesterday. | 他昨天去剪了頭髮。 <button class="audio-btn" onclick="speak('He got his hair cut yesterday.')"><i class="fas fa-volume-up"></i></button></p>
                 </div>
             </div>
-            
+
             <div class="card">
-                <h3>常見接過去分詞作受詞補語的動詞 | Verbs Commonly Followed by Past Participle Object Complements</h3>
-                <div class="participle-list">
-                    <div class="participle-item">have</div>
-                    <div class="participle-item">get</div>
-                    <div class="participle-item">make</div>
-                    <div class="participle-item">find</div>
-                    <div class="participle-item">want</div>
-                    <div class="participle-item">keep</div>
-                    <div class="participle-item">leave</div>
-                    <div class="participle-item">see</div>
+                <h3>表狀態或發現的受詞補語 | Verbs of State/Finding</h3>
+                <p>在 find, keep, leave, want 等動詞後，過去分詞可作受詞補語，描述受詞的狀態。</p>
+                
+                <div class="example">
+                    <p><strong>例子 Example:</strong> I <span class="highlight">found the door locked</span>. | 我發現門被鎖上了。 <button class="audio-btn" onclick="speak('I found the door locked.')"><i class="fas fa-volume-up"></i></button></p>
                 </div>
-            </div>
-            
-            <div class="interactive-element">
-                <h3>受詞補語練習 | Object Complement Practice</h3>
-                <p>選擇正確的過去分詞形式完成句子</p>
-                <p>Select the correct past participle form to complete the sentence</p>
-                <div class="participle-animation" id="objectComplementAnimation">
-                    I need to get my car ______ (repair).
+                <div class="example">
+                    <p><strong>例子 Example:</strong> Please <span class="highlight">keep the door closed</span>. | 請保持門關閉。 <button class="audio-btn" onclick="speak('Please keep the door closed.')"><i class="fas fa-volume-up"></i></button></p>
                 </div>
-                <div class="animation-controls">
-                    <button class="btn" id="playObjectComplementAnimation">
-                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
-                    </button>
-                    <button class="btn" id="pauseObjectComplementAnimation">
-                        <i class="fas fa-pause"></i> 暫停 | Pause
-                    </button>
+                <div class="example">
+                    <p><strong>例子 Example:</strong> I <span class="highlight">want this work finished</span> by 5 PM. | 我想要這項工作在下午5點前被完成。 <button class="audio-btn" onclick="speak('I want this work finished by 5 PM.')"><i class="fas fa-volume-up"></i></button></p>
                 </div>
             </div>
         </div>
-        
-        <div class="tab-content" id="phrase">
-            <h2>過去分詞片語 | Participle Phrases</h2>
-            
-            <div class="card">
-                <h3>過去分詞片語作形容詞/副詞使用 | Past Participle Phrases as Adjectives/Adverbs</h3>
-                <p>過去分詞片語可以作為形容詞或副詞使用，通常放在句首或句尾。</p>
-                <p>Past participle phrases can function as adjectives or adverbs, usually placed at the beginning or end of a sentence.</p>
-                
-                <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="highlight">Confronted with such a pressing unemployment problem</span>, many experts bring up constructive solutions.</p>
-                    <p>面對如此緊迫的就業問題，許多專家提出了建設性的解決方案。</p>
-                </div>
-                
-                <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="highlight">Frightened by the thunder</span>, the little girl ran to her mother.</p>
-                    <p>被雷聲嚇到，小女孩跑向她的母親。</p>
-                </div>
-                
-                <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="highlight">Built in the 18th century</span>, the castle attracts many tourists.</p>
-                    <p>這座建於18世紀的城堡吸引了許多遊客。</p>
-                </div>
-                
-                <div class="example">
-                    <p><strong>例子 Example:</strong> The man, <span class="highlight">exhausted from work</span>, fell asleep immediately.</p>
-                    <p>那個男人因工作而筋疲力盡，立即睡著了。</p>
-                </div>
-            </div>
-            
-            <div class="card">
-                <h3>過去分詞片語的用法 | Uses of Past Participle Phrases</h3>
-                <p>過去分詞片語可以表示時間、原因、條件、讓步等關係。</p>
-                <p>Past participle phrases can express relationships of time, reason, condition, concession, etc.</p>
-                
-                <table>
-                    <thead>
-                        <tr>
-                            <th>關係 Relationship</th>
-                            <th>例子 Example</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>時間 Time</td>
-                            <td>Seen from a distance, the mountain looks beautiful.</td>
-                        </tr>
-                        <tr>
-                            <td>原因 Reason</td>
-                            <td>Exhausted by the journey, they decided to rest.</td>
-                        </tr>
-                        <tr>
-                            <td>條件 Condition</td>
-                            <td>Given more time, I could finish the project.</td>
-                        </tr>
-                        <tr>
-                            <td>讓步 Concession</td>
-                            <td>Though warned about the danger, he still went ahead.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            
-            <div class="interactive-element">
-                <h3>分詞片語練習 | Participle Phrase Practice</h3>
-                <p>選擇正確的過去分詞形式完成句子</p>
-                <p>Select the correct past participle form to complete the sentence</p>
-                <div class="participle-animation" id="phraseAnimation">
-                    ______ (inspire) by her teacher, she decided to study harder.
-                </div>
-                <div class="animation-controls">
-                    <button class="btn" id="playPhraseAnimation">
-                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
-                    </button>
-                    <button class="btn" id="pausePhraseAnimation">
-                        <i class="fas fa-pause"></i> 暫停 | Pause
-                    </button>
-                </div>
-            </div>
-        </div>
-        
-        <div class="tab-content" id="comparison">
-            <h2>與現在分詞區別 | Present vs Past Participle</h2>
-            
-            <div class="card">
-                <h3>現在分詞與過去分詞的本質區別 | Essential Differences between Present and Past Participles</h3>
-                <p>現在分詞和過去分詞作為形容詞時有本質區別：現在分詞表達「主動」或「正在」，而過去分詞表達「被動」或「完成」。</p>
-                <p>Present and past participles have essential differences when used as adjectives: present participles express "active" or "ongoing", while past participles express "passive" or "completed".</p>
-                
-                <table class="comparison-table">
-                    <thead>
-                        <tr>
-                            <th>現在分詞 Present Participle</th>
-                            <th>過去分詞 Past Participle</th>
-                            <th>區別說明 Explanation</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>an interesting book<br>一本有趣的書</td>
-                            <td>an interested reader<br>一個感興趣的讀者</td>
-                            <td>書本身有趣 vs 讀者對書感興趣</td>
-                        </tr>
-                        <tr>
-                            <td>a boring lecture<br>無聊的講座</td>
-                            <td>a bored student<br>感到無聊的學生</td>
-                            <td>講座本身無聊 vs 學生感到無聊</td>
-                        </tr>
-                        <tr>
-                            <td>an exciting game<br>令人興奮的比賽</td>
-                            <td>an excited fan<br>興奮的粉絲</td>
-                            <td>比賽令人興奮 vs 粉絲感到興奮</td>
-                        </tr>
-                        <tr>
-                            <td>a tiring job<br>累人的工作</td>
-                            <td>a tired worker<br>疲憊的工人</td>
-                            <td>工作使人疲勞 vs 工人感到疲勞</td>
-                        </tr>
-                    </tbody>
-                </table>
-                
-                <div class="note-box">
-                    <p><strong>關鍵區別：</strong>現在分詞描述事物本身具有的特質（主動），而過去分詞描述人或事物受到影響後的狀態（被動）。</p>
-                    <p><strong>Key Difference:</strong> Present participles describe the inherent qualities of things (active), while past participles describe the state of people or things after being affected (passive).</p>
-                </div>
-            </div>
-            
-            <div class="card">
-                <h3>更多對比例句 | More Comparison Examples</h3>
-                
-                <div class="example">
-                    <p><strong>現在分詞 Present Participle:</strong> The <span class="highlight">surprising</span> news made everyone happy.</p>
-                    <p>令人驚訝的消息讓每個人都高興。</p>
-                    <p><em>(消息本身令人驚訝)</em></p>
-                </div>
-                
-                <div class="example">
-                    <p><strong>過去分詞 Past Participle:</strong> The <span class="highlight">surprised</span> audience applauded loudly.</p>
-                    <p>感到驚訝的觀眾大聲鼓掌。</p>
-                    <p><em>(觀眾感到驚訝)</em></p>
-                </div>
-                
-                <div class="example">
-                    <p><strong>現在分詞 Present Participle:</strong> The <span class="highlight">confusing</span> instructions caused many problems.</p>
-                    <p>令人困惑的說明導致了許多問題。</p>
-                    <p><em>(說明本身令人困惑)</em></p>
-                </div>
-                
-                <div class="example">
-                    <p><strong>過去分詞 Past Participle:</strong> The <span class="highlight">confused</span> students asked for clarification.</p>
-                    <p>感到困惑的學生要求澄清。</p>
-                    <p><em>(學生感到困惑)</em></p>
-                </div>
-            </div>
-            
-            <div class="interactive-element">
-                <h3>區別練習 | Comparison Practice</h3>
-                <p>選擇正確的分詞形式完成句子</p>
-                <p>Select the correct participle form to complete the sentence</p>
-                <div class="participle-animation" id="comparisonAnimation">
-                    The ______ (frighten) movie kept me awake all night.
-                </div>
-                <div class="animation-controls">
-                    <button class="btn" id="playComparisonAnimation">
-                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
-                    </button>
-                    <button class="btn" id="pauseComparisonAnimation">
-                        <i class="fas fa-pause"></i> 暫停 | Pause
-                    </button>
-                </div>
+
+        <div class="tab-content" id="quiz">
+            <h2>自我檢測 | Quiz</h2>
+            <div class="quiz-container">
+                <div id="quiz-question-container">
+                    </div>
             </div>
         </div>
     </div>
     
     <footer>
         <p>Shirley's Past Participle Learning Platform | 過去分詞學習平台</p>
-        <p>© 2025 | Shirley's Grammar E-Charger</p>
+        <p>© 2025 Shirley's Grammar E-Charger</p>
     </footer>
 
     <script>
-        // --- 粒子效果腳本 ---
-        const canvas = document.getElementById('particles-canvas');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.vx = (Math.random() - 0.5) * 0.5; // 緩慢移動速度
-                this.vy = (Math.random() - 0.5) * 0.5;
-                this.size = Math.random() * 2 + 1;
-                // 使用金色和深藍色的粒子
-                this.color = Math.random() > 0.5 ? 'rgba(255, 215, 0, 0.4)' : 'rgba(44, 83, 100, 0.3)';
-            }
-
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
-
-                // 邊界檢查
-                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-            }
-
-            draw() {
-                ctx.fillStyle = this.color;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        function initParticles() {
-            particles = [];
-            // 根據螢幕大小決定粒子數量
-            const particleCount = Math.floor(window.innerWidth / 15); 
-            for (let i = 0; i < particleCount; i++) {
-                particles.push(new Particle());
-            }
-        }
-
-        function animateParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            particles.forEach((p, index) => {
-                p.update();
-                p.draw();
-                
-                // 繪製連結線
-                for (let j = index + 1; j < particles.length; j++) {
-                    const p2 = particles[j];
-                    const dx = p.x - p2.x;
-                    const dy = p.y - p2.y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
-                    
-                    if (distance < 100) {
-                        ctx.strokeStyle = `rgba(184, 134, 11, ${0.15 - distance/1000})`; // 金色連結線
-                        ctx.lineWidth = 0.5;
-                        ctx.beginPath();
-                        ctx.moveTo(p.x, p.y);
-                        ctx.lineTo(p2.x, p2.y);
-                        ctx.stroke();
-                    }
-                }
-            });
-            requestAnimationFrame(animateParticles);
-        }
-
-        initParticles();
-        animateParticles();
-
-        // --- 原有互動邏輯 ---
-
         // 選項卡功能
         document.querySelectorAll('.tab').forEach(tab => {
             tab.addEventListener('click', () => {
-                // 移除所有活動標籤和內容
                 document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
                 document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
                 
-                // 添加活動類到當前標籤
                 tab.classList.add('active');
-                
-                // 顯示對應的內容
                 const tabId = tab.getAttribute('data-tab');
                 document.getElementById(tabId).classList.add('active');
-                
-                // 播放切換音效
-                playSound('click');
             });
         });
-        
-        // 動畫控制
-        let animationInterval;
-        
-        // 過去分詞介紹動畫
-        document.getElementById('playAnimation').addEventListener('click', () => {
-            const animation = document.getElementById('participleAnimation');
-            animation.innerHTML = 'Verb: break → Past Participle: ______';
-            
-            let count = 0;
-            const verbs = [
-                {verb: 'break', participle: 'broken'},
-                {verb: 'excite', participle: 'excited'},
-                {verb: 'tire', participle: 'tired'},
-                {verb: 'interest', participle: 'interested'},
-                {verb: 'surprise', participle: 'surprised'}
-            ];
-            
-            clearInterval(animationInterval);
-            animationInterval = setInterval(() => {
-                animation.innerHTML = `Verb: ${verbs[count].verb} → Past Participle: <span style="color: var(--accent); text-decoration: underline;">${verbs[count].participle}</span>`;
-                count = (count + 1) % verbs.length;
-            }, 1500);
-            
-            // 播放音效
-            playSound('success');
-        });
-        
-        document.getElementById('pauseAnimation').addEventListener('click', () => {
-            clearInterval(animationInterval);
-            // 播放音效
-            playSound('click');
-        });
-        
-        // 補語動畫
-        document.getElementById('playComplementAnimation').addEventListener('click', () => {
-            const animation = document.getElementById('complementAnimation');
-            animation.innerHTML = 'She seemed ______ (tire) after the long journey.';
-            
-            let count = 0;
-            const sentences = [
-                {verb: 'tire', participle: 'tired'},
-                {verb: 'exhaust', participle: 'exhausted'},
-                {verb: 'refresh', participle: 'refreshed'},
-                {verb: 'please', participle: 'pleased'},
-                {verb: 'disappoint', participle: 'disappointed'}
-            ];
-            
-            clearInterval(animationInterval);
-            animationInterval = setInterval(() => {
-                animation.innerHTML = `She seemed <span style="color: var(--accent); text-decoration: underline;">${sentences[count].participle}</span> after the long journey.`;
-                count = (count + 1) % sentences.length;
-            }, 1500);
-            
-            // 播放音效
-            playSound('success');
-        });
-        
-        document.getElementById('pauseComplementAnimation').addEventListener('click', () => {
-            clearInterval(animationInterval);
-            // 播放音效
-            playSound('click');
-        });
-        
-        // 修飾語動畫
-        document.getElementById('playModifierAnimation').addEventListener('click', () => {
-            const animation = document.getElementById('modifierAnimation');
-            animation.innerHTML = 'The ______ (close) store will reopen next week.';
-            
-            let count = 0;
-            const sentences = [
-                {verb: 'close', participle: 'closed'},
-                {verb: 'open', participle: 'opened'},
-                {verb: 'renovate', participle: 'renovated'},
-                {verb: 'paint', participle: 'painted'},
-                {verb: 'clean', participle: 'cleaned'}
-            ];
-            
-            clearInterval(animationInterval);
-            animationInterval = setInterval(() => {
-                animation.innerHTML = `The <span style="color: var(--accent); text-decoration: underline;">${sentences[count].participle}</span> store will reopen next week.`;
-                count = (count + 1) % sentences.length;
-            }, 1500);
-            
-            // 播放音效
-            playSound('success');
-        });
-        
-        document.getElementById('pauseModifierAnimation').addEventListener('click', () => {
-            clearInterval(animationInterval);
-            // 播放音效
-            playSound('click');
-        });
-        
-        // 受詞補語動畫
-        document.getElementById('playObjectComplementAnimation').addEventListener('click', () => {
-            const animation = document.getElementById('objectComplementAnimation');
-            animation.innerHTML = 'I need to get my car ______ (repair).';
-            
-            let count = 0;
-            const sentences = [
-                {verb: 'repair', participle: 'repaired'},
-                {verb: 'wash', participle: 'washed'},
-                {verb: 'service', participle: 'serviced'},
-                {verb: 'check', participle: 'checked'},
-                {verb: 'fix', participle: 'fixed'}
-            ];
-            
-            clearInterval(animationInterval);
-            animationInterval = setInterval(() => {
-                animation.innerHTML = `I need to get my car <span style="color: var(--accent); text-decoration: underline;">${sentences[count].participle}</span>.`;
-                count = (count + 1) % sentences.length;
-            }, 1500);
-            
-            // 播放音效
-            playSound('success');
-        });
-        
-        document.getElementById('pauseObjectComplementAnimation').addEventListener('click', () => {
-            clearInterval(animationInterval);
-            // 播放音效
-            playSound('click');
-        });
-        
-        // 分詞片語動畫
-        document.getElementById('playPhraseAnimation').addEventListener('click', () => {
-            const animation = document.getElementById('phraseAnimation');
-            animation.innerHTML = '______ (inspire) by her teacher, she decided to study harder.';
-            
-            let count = 0;
-            const sentences = [
-                {verb: 'inspire', participle: 'Inspired'},
-                {verb: 'encourage', participle: 'Encouraged'},
-                {verb: 'motivate', participle: 'Motivated'},
-                {verb: 'impress', participle: 'Impressed'},
-                {verb: 'touch', participle: 'Touched'}
-            ];
-            
-            clearInterval(animationInterval);
-            animationInterval = setInterval(() => {
-                animation.innerHTML = `<span style="color: var(--accent); text-decoration: underline;">${sentences[count].participle}</span> by her teacher, she decided to study harder.`;
-                count = (count + 1) % sentences.length;
-            }, 1500);
-            
-            // 播放音效
-            playSound('success');
-        });
-        
-        document.getElementById('pausePhraseAnimation').addEventListener('click', () => {
-            clearInterval(animationInterval);
-            // 播放音效
-            playSound('click');
-        });
-        
-        // 比較動畫
-        document.getElementById('playComparisonAnimation').addEventListener('click', () => {
-            const animation = document.getElementById('comparisonAnimation');
-            animation.innerHTML = 'The ______ (frighten) movie kept me awake all night.';
-            
-            let count = 0;
-            const sentences = [
-                {verb: 'frighten', participle: 'frightening'},
-                {verb: 'excite', participle: 'exciting'},
-                {verb: 'bore', participle: 'boring'},
-                {verb: 'interest', participle: 'interesting'},
-                {verb: 'amaze', participle: 'amazing'}
-            ];
-            
-            clearInterval(animationInterval);
-            animationInterval = setInterval(() => {
-                animation.innerHTML = `The <span style="color: var(--accent); text-decoration: underline;">${sentences[count].participle}</span> movie kept me awake all night.`;
-                count = (count + 1) % sentences.length;
-            }, 1500);
-            
-            // 播放音效
-            playSound('success');
-        });
-        
-        document.getElementById('pauseComparisonAnimation').addEventListener('click', () => {
-            clearInterval(animationInterval);
-            // 播放音效
-            playSound('click');
-        });
-        
-        // 音效函數
-        function playSound(type) {
-            // 在實際應用中，這裡會播放相應的音效
-            // 由於這是一個示例，我們只模擬音效播放
-            console.log(`Playing ${type} sound`);
+
+        // 語音播放功能
+        function speak(text) {
+            if ('speechSynthesis' in window) {
+                speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.9;
+                
+                const voices = speechSynthesis.getVoices();
+                const enVoice = voices.find(v => v.lang.includes('en-US') || v.lang.includes('en-GB'));
+                if(enVoice) utterance.voice = enVoice;
+
+                speechSynthesis.speak(utterance);
+            } else {
+                alert("Sorry, your browser doesn't support text-to-speech.");
+            }
         }
-        
-        // 初始加載時播放歡迎音效
-        window.addEventListener('load', () => {
-            playSound('welcome');
+
+        // Quiz Logic
+        const quizQuestions = [
+            {
+                question: "1. The window was ____ (break) by the ball.",
+                options: ["break", "broke", "broken", "breaking"],
+                correct: 2,
+                explanation: "<strong>Explanation:</strong> Passive voice: was + past participle (broken)."
+            },
+            {
+                question: "2. I have ____ (finish) my work.",
+                options: ["finish", "finished", "finishing", "finishes"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> Present Perfect tense: have + past participle (finished)."
+            },
+            {
+                question: "3. She is ____ (interest) in history.",
+                options: ["interest", "interesting", "interested", "interests"],
+                correct: 2,
+                explanation: "<strong>Explanation:</strong> Adjective describing feeling: 'interested' (relates to the person)."
+            },
+            {
+                question: "4. The ____ (steal) car was found near the park.",
+                options: ["stole", "steal", "stolen", "stealing"],
+                correct: 2,
+                explanation: "<strong>Explanation:</strong> Past participle 'stolen' used as an adjective to describe the car (passive meaning)."
+            },
+            {
+                question: "5. ____ (Shock) by the loud noise, the baby cried.",
+                options: ["Shocking", "Shocked", "Shock", "To shock"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> Participle phrase expressing a passive cause: 'Because the baby was shocked...'."
+            },
+            {
+                question: "6. He had his hair ____ (cut) yesterday.",
+                options: ["cut", "cutting", "to cut", "cuts"],
+                correct: 0,
+                explanation: "<strong>Explanation:</strong> Causative: have + object + past participle (cut - irregular verb, p.p. is cut)."
+            },
+            {
+                question: "7. The letter ____ (write) by her is very touching.",
+                options: ["wrote", "writing", "written", "write"],
+                correct: 2,
+                explanation: "<strong>Explanation:</strong> Past participle phrase modifying 'The letter' (passive: which was written)."
+            },
+            {
+                question: "8. Are you ____ (satisfy) with the service?",
+                options: ["satisfying", "satisfied", "satisfy", "satisfies"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> Describes feeling/state: 'satisfied'."
+            },
+            {
+                question: "9. The book ____ (publish) in 2020 became a bestseller.",
+                options: ["publishing", "published", "publish", "publishes"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> Past participle phrase: 'which was published'."
+            },
+            {
+                question: "10. I am ____ (confuse) about the instructions.",
+                options: ["confusing", "confused", "confuse", "confuses"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> I feel confused. (Adjective describing feeling)."
+            },
+            {
+                question: "11. ____ (Tire) after the long walk, they sat down.",
+                options: ["Tiring", "Tired", "Tire", "Tires"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> 'Because they were tired...' -> Tired after..."
+            },
+            {
+                question: "12. The cup is ____ (fill) with coffee.",
+                options: ["filling", "filled", "fill", "fills"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> State/Passive: is filled with."
+            },
+            {
+                question: "13. English is ____ (speak) all over the world.",
+                options: ["spoke", "speaking", "spoken", "speak"],
+                correct: 2,
+                explanation: "<strong>Explanation:</strong> Passive voice: is + spoken."
+            },
+            {
+                question: "14. The problem ____ (solve) last week was difficult.",
+                options: ["solving", "solved", "solve", "solves"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> Past participle phrase: 'which was solved'."
+            },
+            {
+                question: "15. She felt ____ (disappoint) when she failed.",
+                options: ["disappointing", "disappointed", "disappoint", "disappoints"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> She felt disappointed. (Feeling)."
+            },
+            {
+                question: "16. Be careful on the ____ (freeze) lake.",
+                options: ["froze", "freezing", "frozen", "freeze"],
+                correct: 2,
+                explanation: "<strong>Explanation:</strong> 'Frozen' describes the state of the lake (completed action/state)."
+            },
+            {
+                question: "17. I want to get this work ____ (do).",
+                options: ["do", "doing", "done", "did"],
+                correct: 2,
+                explanation: "<strong>Explanation:</strong> Causative/State: get + object + past participle."
+            },
+            {
+                question: "18. ____ (Lose) in the city, the tourist asked for a map.",
+                options: ["Losing", "Lost", "Lose", "To lose"],
+                correct: 1,
+                explanation: "<strong>Explanation:</strong> 'Because he was lost...' -> Lost in..."
+            },
+            {
+                question: "19. The room needs to be ____ (clean).",
+                options: ["clean", "cleaning", "cleaned", "cleans"],
+                correct: 2,
+                explanation: "<strong>Explanation:</strong> Passive infinitive: to be + past participle."
+            },
+            {
+                question: "20. I found the door ____ (lock).",
+                options: ["locking", "lock", "locked", "locks"],
+                correct: 2,
+                explanation: "<strong>Explanation:</strong> Object complement describing the state of the door: locked."
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        function initQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            showQuestion(currentQuestionIndex);
+        }
+
+        function showQuestion(index) {
+            const container = document.getElementById('quiz-question-container');
+            if (index >= quizQuestions.length) {
+                showResult(container);
+                return;
+            }
+            const q = quizQuestions[index];
+            let html = `
+                <div class="quiz-card">
+                    <div class="quiz-progress">Question ${index + 1} / ${quizQuestions.length}</div>
+                    <div class="quiz-question">${q.question}</div>
+                    <div class="quiz-options">
+                        ${q.options.map((opt, i) => `
+                            <div class="quiz-option" onclick="checkAnswer(this, ${i})">${opt}</div>
+                        `).join('')}
+                    </div>
+                    <div class="quiz-explanation" id="explanation-${index}">
+                        ${q.explanation}
+                    </div>
+                    <div class="quiz-nav" id="nav-${index}">
+                        <button class="btn" onclick="nextQuestion()">Next Question <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+            `;
+            container.innerHTML = html;
+        }
+
+        window.checkAnswer = function(optionElement, selectedIndex) {
+            const currentQ = quizQuestions[currentQuestionIndex];
+            const explanation = document.getElementById(`explanation-${currentQuestionIndex}`);
+            const nav = document.getElementById(`nav-${currentQuestionIndex}`);
+            const allOptions = optionElement.parentElement.children;
+
+            if (optionElement.classList.contains('disabled')) return;
+
+            // Disable all options
+            for (let i = 0; i < allOptions.length; i++) {
+                allOptions[i].classList.add('disabled');
+            }
+
+            if (selectedIndex === currentQ.correct) {
+                optionElement.classList.add('correct');
+                score++;
+            } else {
+                optionElement.classList.add('incorrect');
+                allOptions[currentQ.correct].classList.add('correct');
+            }
+            explanation.classList.add('show');
+            nav.classList.add('show');
+        }
+
+        window.nextQuestion = function() {
+            currentQuestionIndex++;
+            showQuestion(currentQuestionIndex);
+        }
+
+        function showResult(container) {
+            container.innerHTML = `
+                <div class="card quiz-result">
+                    <div class="score-circle">${score}</div>
+                    <h2>Quiz Completed!</h2>
+                    <p>Your Score: ${score} / ${quizQuestions.length}</p>
+                    <p>${score >= 18 ? "Excellent! You mastered Past Participles!" : score >= 12 ? "Good job! Keep practicing." : "Review the lessons and try again!"}</p>
+                    <button class="btn" onclick="initQuiz()" style="margin-top: 20px;">
+                        <i class="fas fa-redo"></i> Restart Quiz
+                    </button>
+                </div>
+            `;
+        }
+
+        // Initialize quiz when tab is clicked
+        document.querySelector('.tab[data-tab="quiz"]').addEventListener('click', () => {
+             const container = document.getElementById('quiz-question-container');
+             if (container.innerHTML.trim() === '') {
+                 initQuiz();
+             }
         });
     </script>
 </body>
