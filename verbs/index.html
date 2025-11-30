@@ -310,42 +310,6 @@
             margin-bottom: 0;
         }
         
-        /* Interactive Element & Buttons: 強烈動感 */
-        .interactive-element {
-            background: white;
-            border: none;
-            padding: 3rem;
-            border-radius: var(--radius-lg);
-            margin: 4rem 0;
-            text-align: center;
-            box-shadow: var(--shadow-soft);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        /* 背景裝飾 */
-        .interactive-element::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 215, 0, 0.05) 0%, transparent 70%);
-            animation: rotate 30s linear infinite;
-            z-index: 0;
-        }
-
-        @keyframes rotate {
-             from { transform: rotate(0deg); }
-             to { transform: rotate(360deg); }
-        }
-
-        .interactive-element > * {
-            position: relative;
-            z-index: 1;
-        }
-        
         .btn {
             background: var(--dynamic-gradient);
             color: white;
@@ -387,30 +351,6 @@
 
         .btn:hover::before {
             left: 100%;
-        }
-        
-        .verb-animation {
-            height: 200px;
-            background: var(--primary-dark); /* 黑板風格 */
-            border-radius: var(--radius-md);
-            margin: 2.5rem auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.8rem;
-            font-weight: bold;
-            box-shadow: inset 0 0 40px rgba(0,0,0,0.8);
-            border: 6px solid #2c3e50;
-            max-width: 650px;
-            letter-spacing: 1px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-        }
-
-        .verb-animation span {
-            color: var(--gold-accent) !important;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-            padding: 0 5px;
         }
         
         .tense-visualization iframe {
@@ -569,6 +509,101 @@
              color: var(--text-main);
         }
 
+        /* Quiz Styles */
+        .quiz-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid rgba(255,255,255,0.8);
+        }
+
+        .quiz-question {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-mid);
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--gold-accent);
+            padding-left: 15px;
+        }
+
+        .quiz-options {
+            display: grid;
+            gap: 12px;
+        }
+
+        .quiz-option {
+            padding: 15px 20px;
+            background: white;
+            border: 2px solid #eef2f5;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            color: var(--text-light);
+            text-align: left;
+            position: relative;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--primary-accent);
+            background: #f8fafc;
+            color: var(--primary-dark);
+        }
+
+        .quiz-option.correct {
+            background-color: #d4edda;
+            border-color: #28a745;
+            color: #155724;
+        }
+
+        .quiz-option.correct::after {
+            content: '\f00c';
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .quiz-option.incorrect {
+            background-color: #f8d7da;
+            border-color: #dc3545;
+            color: #721c24;
+            opacity: 0.7;
+        }
+        
+        .quiz-option.incorrect::after {
+            content: '\f00d';
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .quiz-explanation {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 8px;
+            color: var(--text-main);
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .quiz-explanation.show {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         /* 響應式調整 */
         @media (max-width: 768px) {
             header {
@@ -615,6 +650,7 @@
             <div class="tab" data-tab="tenses">時態 | Tenses</div>
             <div class="tab" data-tab="voices">語態 | Voices</div>
             <div class="tab" data-tab="keypoints">重點內容 | Key Points</div>
+            <div class="tab" data-tab="quiz">自我檢測 | Quiz</div>
         </div>
         
         <div class="tab-content active" id="types">
@@ -742,23 +778,6 @@
                             </tr>
                         </tbody>
                     </table>
-                </div>
-            </div>
-            
-            <div class="interactive-element">
-                <h3>動詞種類練習 | Verb Types Practice</h3>
-                <p>選擇正確的動詞類型完成句子</p>
-                <p>Select the correct verb type to complete the sentence</p>
-                <div class="verb-animation" id="verbAnimation">
-                    She ______ happy today.
-                </div>
-                <div class="animation-controls">
-                    <button class="btn" id="playAnimation">
-                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
-                    </button>
-                    <button class="btn" id="pauseAnimation">
-                        <i class="fas fa-pause"></i> 暫停 | Pause
-                    </button>
                 </div>
             </div>
         </div>
@@ -945,23 +964,6 @@
                     </table>
                 </div>
             </div>
-            
-            <div class="interactive-element">
-                <h3>時態練習 | Tense Practice</h3>
-                <p>選擇正確的時態完成句子</p>
-                <p>Select the correct tense to complete the sentence</p>
-                <div class="verb-animation" id="tenseAnimation">
-                    I ______ to school every day.
-                </div>
-                <div class="animation-controls">
-                    <button class="btn" id="playTenseAnimation">
-                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
-                    </button>
-                    <button class="btn" id="pauseTenseAnimation">
-                        <i class="fas fa-pause"></i> 暫停 | Pause
-                    </button>
-                </div>
-            </div>
         </div>
         
         <div class="tab-content" id="voices">
@@ -1028,23 +1030,6 @@
                     </table>
                 </div>
             </div>
-            
-            <div class="interactive-element">
-                <h3>語態轉換練習 | Voice Conversion Practice</h3>
-                <p>將主動語態轉換為被動語態</p>
-                <p>Convert active voice to passive voice</p>
-                <div class="verb-animation" id="voiceAnimation">
-                    The chef cooks the meal. → The meal ______ by the chef.
-                </div>
-                <div class="animation-controls">
-                    <button class="btn" id="playVoiceAnimation">
-                        <i class="fas fa-play"></i> 播放動畫 | Play Animation
-                    </button>
-                    <button class="btn" id="pauseVoiceAnimation">
-                        <i class="fas fa-pause"></i> 暫停 | Pause
-                    </button>
-                </div>
-            </div>
         </div>
         
         <div class="tab-content" id="keypoints">
@@ -1085,6 +1070,12 @@
                 </ul>
             </div>
         </div>
+
+        <div class="tab-content" id="quiz">
+            <h2>自我檢測 | Quiz</h2>
+            <div class="quiz-container" id="quiz-container">
+                </div>
+        </div>
     </div>
     
     <footer>
@@ -1106,108 +1097,89 @@
                 // 顯示對應的內容
                 const tabId = tab.getAttribute('data-tab');
                 document.getElementById(tabId).classList.add('active');
-                
-                // 播放切換音效
-                playSound('click');
             });
         });
         
-        // 動畫控制
-        let animationInterval;
-        
-        document.getElementById('playAnimation').addEventListener('click', () => {
-            const animation = document.getElementById('verbAnimation');
-            animation.innerHTML = 'She ______ happy today.';
+        // Quiz Data
+        const quizQuestions = [
+            {
+                question: "1. 以下哪個動詞是「連綴動詞 (Linking Verb)」?",
+                options: ["run", "eat", "become", "make"],
+                correct: 2,
+                explanation: "<strong>解析：</strong> 'become' (變得) 是連綴動詞，用來連接主詞與補語（形容詞或名詞），表示狀態的改變。而 run, eat, make 都是動作動詞。"
+            },
+            {
+                question: "2. 句子 'The cake _____ by my mom yesterday.' 應該填入什麼?",
+                options: ["bakes", "was baked", "is baking", "baked"],
+                correct: 1,
+                explanation: "<strong>解析：</strong> 這是「過去被動語態」。句子有 'yesterday' 表示過去式，且蛋糕是被烤的，所以結構為 be + p.p (過去分詞)。正確答案是 'was baked'。"
+            },
+            {
+                question: "3. 'I have been living here for 10 years.' 這是什麼時態?",
+                options: ["現在完成式", "現在進行式", "現在完成進行式", "過去完成進行式"],
+                correct: 2,
+                explanation: "<strong>解析：</strong> 結構為 have + been + V-ing，表示從過去持續到現在的動作，這是「現在完成進行式 (Present Perfect Continuous)」。"
+            },
+            {
+                question: "4. 以下關於情態助動詞 (Modal Verbs) 的敘述，何者正確?",
+                options: ["後面接動詞的過去式", "會隨主詞人稱變化 (如加s)", "後面接動詞原形", "兩個情態助動詞可以連用"],
+                correct: 2,
+                explanation: "<strong>解析：</strong> 情態助動詞 (can, may, must, should...) 後面必須接「動詞原形」，且本身不隨主詞變化。"
+            },
+            {
+                question: "5. 'He looks happy.' 中的 'looks' 是什麼詞性?",
+                options: ["不及物動詞 (連綴動詞)", "及物動詞", "助動詞", "過去分詞"],
+                correct: 0,
+                explanation: "<strong>解析：</strong> 這裡的 looks 是連綴動詞，後面接形容詞 happy 來描述主詞 He 的狀態，且不需要受詞，故屬於不及物動詞的一種。"
+            }
+        ];
+
+        // Render Quiz
+        const quizContainer = document.getElementById('quiz-container');
+
+        quizQuestions.forEach((q, index) => {
+            const card = document.createElement('div');
+            card.className = 'quiz-card';
             
-            let count = 0;
-            const verbs = ['is', 'looks', 'seems', 'appears', 'feels'];
+            const questionTitle = document.createElement('div');
+            questionTitle.className = 'quiz-question';
+            questionTitle.innerText = q.question;
             
-            clearInterval(animationInterval);
-            animationInterval = setInterval(() => {
-                animation.innerHTML = `She <span>${verbs[count]}</span> happy today.`;
-                count = (count + 1) % verbs.length;
-            }, 1500);
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'quiz-options';
             
-            // 播放音效
-            playSound('success');
+            const explanationDiv = document.createElement('div');
+            explanationDiv.className = 'quiz-explanation';
+            explanationDiv.innerHTML = q.explanation;
+            
+            q.options.forEach((opt, optIndex) => {
+                const btn = document.createElement('div');
+                btn.className = 'quiz-option';
+                btn.innerText = opt;
+                btn.addEventListener('click', function() {
+                    // Prevent multiple clicks on the same question
+                    if (card.classList.contains('answered')) return;
+                    
+                    card.classList.add('answered');
+                    explanationDiv.classList.add('show');
+                    
+                    if (optIndex === q.correct) {
+                        this.classList.add('correct');
+                    } else {
+                        this.classList.add('incorrect');
+                        // Highlight the correct answer automatically
+                        optionsDiv.children[q.correct].classList.add('correct');
+                    }
+                });
+                optionsDiv.appendChild(btn);
+            });
+            
+            card.appendChild(questionTitle);
+            card.appendChild(optionsDiv);
+            card.appendChild(explanationDiv);
+            quizContainer.appendChild(card);
         });
-        
-        document.getElementById('pauseAnimation').addEventListener('click', () => {
-            clearInterval(animationInterval);
-            // 播放音效
-            playSound('click');
-        });
-        
-        // 時態動畫控制
-        document.getElementById('playTenseAnimation').addEventListener('click', () => {
-            const animation = document.getElementById('tenseAnimation');
-            animation.innerHTML = 'I ______ to school every day.';
-            
-            let count = 0;
-            const tenses = [
-                {verb: 'walk', tense: '現在簡單式 Present Simple'},
-                {verb: 'walked', tense: '過去簡單式 Past Simple'},
-                {verb: 'will walk', tense: '未來簡單式 Future Simple'},
-                {verb: 'am walking', tense: '現在進行式 Present Continuous'},
-                {verb: 'have walked', tense: '現在完成式 Present Perfect'},
-                {verb: 'have been walking', tense: '現在完成進行式 Present Perfect Continuous'}
-            ];
-            
-            clearInterval(animationInterval);
-            animationInterval = setInterval(() => {
-                animation.innerHTML = `I <span>${tenses[count].verb}</span> to school every day. <br><small style="color:#ccc">${tenses[count].tense}</small>`;
-                count = (count + 1) % tenses.length;
-            }, 2000);
-            
-            // 播放音效
-            playSound('success');
-        });
-        
-        document.getElementById('pauseTenseAnimation').addEventListener('click', () => {
-            clearInterval(animationInterval);
-            // 播放音效
-            playSound('click');
-        });
-        
-        // 語態動畫控制
-        document.getElementById('playVoiceAnimation').addEventListener('click', () => {
-            const animation = document.getElementById('voiceAnimation');
-            animation.innerHTML = 'The chef cooks the meal. → The meal ______ by the chef.';
-            
-            let count = 0;
-            const voices = [
-                {verb: 'is cooked', voice: '現在簡單式被動 Present Simple Passive'},
-                {verb: 'was cooked', voice: '過去簡單式被動 Past Simple Passive'},
-                {verb: 'will be cooked', voice: '未來簡單式被動 Future Simple Passive'},
-                {verb: 'is being cooked', voice: '現在進行式被動 Present Continuous Passive'},
-                {verb: 'has been cooked', voice: '現在完成式被動 Present Perfect Passive'}
-            ];
-            
-            clearInterval(animationInterval);
-            animationInterval = setInterval(() => {
-                animation.innerHTML = `The chef cooks the meal. → The meal <span>${voices[count].verb}</span> by the chef. <br><small style="color:#ccc">${voices[count].voice}</small>`;
-                count = (count + 1) % voices.length;
-            }, 2000);
-            
-            // 播放音效
-            playSound('success');
-        });
-        
-        document.getElementById('pauseVoiceAnimation').addEventListener('click', () => {
-            clearInterval(animationInterval);
-            // 播放音效
-            playSound('click');
-        });
-        
-        // 音效函數
-        function playSound(type) {
-            console.log(`Playing ${type} sound`);
-        }
-        
-        // 初始加載時播放歡迎音效
-        window.addEventListener('load', () => {
-            playSound('welcome');
-        });
+
     </script>
 </body>
 </html>
