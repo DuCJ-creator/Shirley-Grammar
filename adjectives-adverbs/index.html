@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
   <title>Shirley's Grammar | Adjectives & Adverbs</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Inter:wght@400;500;600&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
     :root {
@@ -27,6 +28,14 @@
       --tip-border: #3a5a40;
       --warn-bg: #fff5f5;
       --warn-border: #a83232;
+      
+      /* Quiz Specific Colors */
+      --correct-bg: #d4edda;
+      --correct-border: #28a745;
+      --correct-text: #155724;
+      --wrong-bg: #f8d7da;
+      --wrong-border: #dc3545;
+      --wrong-text: #721c24;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; outline: none; -webkit-tap-highlight-color: transparent; }
@@ -218,6 +227,113 @@
     .mistakes th.wrong { color: #a83232; }
     .mistakes th.right { color: #2e7d32; }
 
+    /* === QUIZ Styles === */
+    .quiz-container {
+        margin-top: 1rem;
+    }
+    .quiz-progress {
+        text-align: right;
+        font-size: 0.9rem;
+        color: var(--secondary-tone);
+        font-weight: 700;
+        margin-bottom: 1rem;
+        font-family: 'Inter', sans-serif;
+    }
+    .question-box {
+        margin-bottom: 2rem;
+        animation: fadeIn 0.5s ease;
+    }
+    .question-text {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        color: var(--primary-tone);
+        font-family: 'Playfair Display', serif;
+        line-height: 1.6;
+    }
+    .options-grid {
+        display: grid;
+        gap: 12px;
+    }
+    .quiz-option {
+        padding: 16px 20px;
+        background: #fff;
+        border: 2px solid var(--border-soft);
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-weight: 500;
+        color: var(--text-main);
+        position: relative;
+    }
+    .quiz-option:hover:not(.disabled) {
+        border-color: var(--secondary-tone);
+        background: #fefcf8;
+    }
+    .quiz-option.correct {
+        background-color: var(--correct-bg);
+        border-color: var(--correct-border);
+        color: var(--correct-text);
+    }
+    .quiz-option.incorrect {
+        background-color: var(--wrong-bg);
+        border-color: var(--wrong-border);
+        color: var(--wrong-text);
+        opacity: 0.7;
+    }
+    .quiz-option.correct::after {
+        content: '\f00c';
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    .quiz-option.disabled {
+        cursor: default;
+        pointer-events: none;
+    }
+
+    .explanation {
+        margin-top: 20px;
+        padding: 20px;
+        background: var(--bg-cream);
+        border-left: 4px solid var(--secondary-tone);
+        border-radius: 0 8px 8px 0;
+        display: none;
+        animation: slideDown 0.4s ease;
+    }
+    .explanation.show { display: block; }
+
+    .quiz-nav {
+        margin-top: 25px;
+        text-align: right;
+        display: none;
+    }
+    .quiz-nav.show { display: block; }
+
+    .quiz-result {
+        text-align: center;
+        padding: 2rem 0;
+    }
+    .score-display {
+        font-size: 3rem;
+        font-weight: 700;
+        color: var(--secondary-tone);
+        font-family: 'Playfair Display', serif;
+        margin-bottom: 1rem;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideDown {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
     @media (max-width: 768px) {
       .bilingual-box { flex-direction: column; }
       .bi-play { position: static; margin-bottom: 10px; }
@@ -311,8 +427,6 @@
     <div class="section-card">
       <h2>Comparatives & Superlatives</h2>
       
-      
-
       <div class="table-responsive">
         <table>
           <tr><th>Original</th><th>Comparative</th><th>Superlative</th></tr>
@@ -388,6 +502,17 @@
       </div>
     </div>
 
+    <div class="section-card" id="quiz-section" style="border-top-color: var(--secondary-tone);">
+        <h2><i class="fas fa-pencil-alt" style="margin-right:12px;"></i> Practice Quiz 測驗</h2>
+        <p style="margin-bottom: 20px; color: var(--text-light);">
+            Test your knowledge with these 20 fill-in-the-blank questions. <br>
+            通過 20 題填空測驗來檢視你的學習成果。
+        </p>
+        
+        <div class="quiz-container" id="quiz-container">
+            </div>
+    </div>
+
   </div>
 
   <script>
@@ -407,6 +532,222 @@
         alert("Sorry, your browser doesn't support text-to-speech.");
       }
     }
+
+    // === QUIZ LOGIC ===
+    const quizQuestions = [
+        {
+            question: "1. The soup smells _____.",
+            options: ["deliciously", "delicious", "well", "badly"],
+            correct: 1,
+            explanation: "<strong>Explanation:</strong> 'Smell' is a linking verb (連綴動詞) here, so it must be followed by an adjective (delicious), not an adverb."
+        },
+        {
+            question: "2. He drives very _____.",
+            options: ["careful", "carefully", "slow", "good"],
+            correct: 1,
+            explanation: "<strong>Explanation:</strong> We need an adverb to modify the verb 'drives'. 'Carefully' is the adverb form of careful."
+        },
+        {
+            question: "3. This is a _____ walk.",
+            options: ["ten-minutes", "ten minute", "ten-minute", "ten minutes"],
+            correct: 2,
+            explanation: "<strong>Explanation:</strong> In compound adjectives (複合形容詞) before a noun, the noun part is singular and hyphenated: 'ten-minute'."
+        },
+        {
+            question: "4. The rich _____ not always happy.",
+            options: ["is", "are", "be", "does"],
+            correct: 1,
+            explanation: "<strong>Explanation:</strong> 'The rich' means 'rich people' (plural), so we use the plural verb 'are'."
+        },
+        {
+            question: "5. She is _____ a nice person that everyone likes her.",
+            options: ["so", "such", "very", "too"],
+            correct: 1,
+            explanation: "<strong>Explanation:</strong> We use 'such' before a noun phrase (a nice person). 'So' is used before adjectives alone (so nice)."
+        },
+        {
+            question: "6. He studies _____ for the exam.",
+            options: ["hardly", "hard", "hards", "harderly"],
+            correct: 1,
+            explanation: "<strong>Explanation:</strong> 'Hard' implies effort (努力地). 'Hardly' means almost not (幾乎不)."
+        },
+        {
+            question: "7. I haven't seen him _____.",
+            options: ["late", "lately", "latest", "later"],
+            correct: 1,
+            explanation: "<strong>Explanation:</strong> 'Lately' means 'recently' (最近). 'Late' means 'not on time'."
+        },
+        {
+            question: "8. This movie is _____ than the one we saw yesterday.",
+            options: ["exciting", "more exciting", "most exciting", "excited"],
+            correct: 1,
+            explanation: "<strong>Explanation:</strong> We use 'more + adjective' for long adjectives in comparatives. 'Than' indicates comparison."
+        },
+        {
+            question: "9. Of all the students, Tom works _____.",
+            options: ["the hardest", "harder", "most hard", "hardly"],
+            correct: 0,
+            explanation: "<strong>Explanation:</strong> Superlative degree (最高級) is needed here because we are comparing Tom to 'all' students. 'Hardest' is the superlative of 'hard'."
+        },
+        {
+            question: "10. She plays the piano very _____.",
+            options: ["good", "goodly", "well", "nice"],
+            correct: 2,
+            explanation: "<strong>Explanation:</strong> 'Well' is the adverb form of 'good'. It modifies the verb 'plays'."
+        },
+        {
+            question: "11. The baby is _____.",
+            options: ["sleeping", "asleep", "sleep", "asleeping"],
+            correct: 1,
+            explanation: "<strong>Explanation:</strong> 'Asleep' is an adjective often used after be-verbs (predicative use). 'Sleeping' is a participle, but 'asleep' specifically describes the state."
+        },
+        {
+            question: "12. Please be _____ in the library.",
+            options: ["quietly", "quiet", "quietness", "quieter"],
+            correct: 1,
+            explanation: "<strong>Explanation:</strong> After the verb 'be', we use an adjective (quiet) to describe the subject (You)."
+        },
+        {
+            question: "13. Her car is faster than _____.",
+            options: ["me", "mine", "I", "my"],
+            correct: 1,
+            explanation: "<strong>Explanation:</strong> We are comparing 'her car' with 'my car' (mine). Comparing 'her car' with 'me' (a person) is logically incorrect."
+        },
+        {
+            question: "14. It is _____ hot to go outside.",
+            options: ["so", "such", "too", "very"],
+            correct: 2,
+            explanation: "<strong>Explanation:</strong> 'Too... to...' structure means 'excessively... so that one cannot...'. (太...以至於不能...)"
+        },
+        {
+            question: "15. The test was _____ easy.",
+            options: ["surprising", "surprisingly", "surprise", "surprised"],
+            correct: 1,
+            explanation: "<strong>Explanation:</strong> An adverb (Surprisingly) is needed to modify the adjective 'easy'."
+        },
+        {
+            question: "16. He _____ knows anyone at the party.",
+            options: ["hard", "hardly", "harder", "hards"],
+            correct: 1,
+            explanation: "<strong>Explanation:</strong> 'Hardly' means 'almost not' (幾乎不). He almost doesn't know anyone."
+        },
+        {
+            question: "17. That sounds _____.",
+            options: ["great", "greatly", "well", "greatness"],
+            correct: 0,
+            explanation: "<strong>Explanation:</strong> 'Sound' is a linking verb, followed by an adjective (great)."
+        },
+        {
+            question: "18. She is the _____ singer in the group.",
+            options: ["good", "better", "best", "goodest"],
+            correct: 2,
+            explanation: "<strong>Explanation:</strong> 'The best' is the irregular superlative form of 'good'."
+        },
+        {
+            question: "19. The traffic is _____ today than yesterday.",
+            options: ["bad", "badder", "worse", "worst"],
+            correct: 2,
+            explanation: "<strong>Explanation:</strong> 'Worse' is the irregular comparative form of 'bad'."
+        },
+        {
+            question: "20. He looked at me _____.",
+            options: ["angry", "angrily", "anger", "angrier"],
+            correct: 1,
+            explanation: "<strong>Explanation:</strong> Here 'looked' is an action verb (glanced), not a linking verb (appeared). So we use the adverb 'angrily'."
+        }
+    ];
+
+    let currentQIndex = 0;
+    let score = 0;
+
+    function renderQuiz() {
+        const container = document.getElementById('quiz-container');
+        
+        if (currentQIndex >= quizQuestions.length) {
+            renderResult(container);
+            return;
+        }
+
+        const q = quizQuestions[currentQIndex];
+        
+        container.innerHTML = `
+            <div class="quiz-progress">Question ${currentQIndex + 1} / ${quizQuestions.length}</div>
+            <div class="question-box">
+                <div class="question-text">${q.question}</div>
+                <div class="options-grid">
+                    ${q.options.map((opt, idx) => `
+                        <div class="quiz-option" onclick="checkAnswer(this, ${idx})">${opt}</div>
+                    `).join('')}
+                </div>
+                <div class="explanation" id="explanation">
+                    ${q.explanation}
+                </div>
+                <div class="quiz-nav" id="quiz-nav">
+                    <button class="btn-cta" onclick="nextQuestion()">Next Question <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+        `;
+    }
+
+    function checkAnswer(el, idx) {
+        if (el.parentElement.classList.contains('answered')) return;
+        el.parentElement.classList.add('answered');
+        
+        const q = quizQuestions[currentQIndex];
+        const options = document.querySelectorAll('.quiz-option');
+        const expl = document.getElementById('explanation');
+        const nav = document.getElementById('quiz-nav');
+
+        if (idx === q.correct) {
+            el.classList.add('correct');
+            score++;
+        } else {
+            el.classList.add('incorrect');
+            options[q.correct].classList.add('correct');
+        }
+
+        // Disable all options
+        options.forEach(opt => opt.classList.add('disabled'));
+
+        expl.classList.add('show');
+        nav.classList.add('show');
+    }
+
+    function nextQuestion() {
+        currentQIndex++;
+        renderQuiz();
+    }
+
+    function renderResult(container) {
+        let msg = "";
+        if (score === 20) msg = "Perfect! You are a grammar master! 🏆";
+        else if (score >= 16) msg = "Great job! Keep it up! 🌟";
+        else if (score >= 12) msg = "Good effort! Review the notes and try again. 💪";
+        else msg = "Keep practicing! You can do it! 📚";
+
+        container.innerHTML = `
+            <div class="quiz-result">
+                <div class="score-display">${score} / 20</div>
+                <h3 style="border:none; text-align:center;">Quiz Completed!</h3>
+                <p style="font-size:1.1rem; color:var(--text-light); margin-bottom:20px;">${msg}</p>
+                <button class="btn-cta" onclick="restartQuiz()">
+                    <i class="fas fa-redo"></i> Restart Quiz
+                </button>
+            </div>
+        `;
+    }
+
+    function restartQuiz() {
+        currentQIndex = 0;
+        score = 0;
+        renderQuiz();
+    }
+
+    // Initialize Quiz on Load
+    document.addEventListener('DOMContentLoaded', () => {
+        renderQuiz();
+    });
+
   </script>
 </body>
 </html>
