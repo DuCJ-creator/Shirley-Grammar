@@ -1,1089 +1,586 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shirley's Infinitive Learning Platform | 不定詞學習平台</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Nunito:wght@400;600;700;800&display=swap');
-        :root {
-            /* 高雅配色系統 */
-            --primary-dark: #0F2027;
-            --primary-mid: #203A43;
-            --primary-accent: #2C5364;
-            --gold-accent: #FFD700;
-            --gold-dark: #B8860B;
-            --accent: #FFD700; 
-            --dynamic-gradient: linear-gradient(135deg, #2C5364 0%, #203A43 50%, #0F2027 100%);
-            --gold-gradient: linear-gradient(45deg, #B8860B, #FFD700, #B8860B);
-            --bg-body: #f4f7f9;       
-            --bg-card: rgba(255, 255, 255, 0.95);
-            --text-main: #1a1a1a;
-            --text-light: #5a6a7a;
-            --text-on-dark: #ffffff;
-            --shadow-soft: 0 10px 30px -10px rgba(0,0,0,0.1);
-            --shadow-glow: 0 5px 15px rgba(255, 215, 0, 0.3);
-            --radius-lg: 24px;
-            --radius-md: 16px;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Shirley's Grammar | Infinitives</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Inter:wght@400;500;600&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      /* --- 不定詞專屬配色 (Navy & Gold) --- */
+      --primary-tone: #1e3a8a; /* 海軍深藍 */
+      --secondary-tone: #d4af37; /* 香檳金 */
+      --text-main: #2c3e50;
+      --bg-cool: #f4f7f6; /* 冷調灰白背景 */
+      --highlight-bg: #e3effd;
+      
+      /* --- 尺寸變數 --- */
+      --node-size: 115px; 
+      --center-size: 200px;
+    }
 
-            /* Quiz Colors */
-            --correct-bg: #d4edda;
-            --correct-border: #28a745;
-            --correct-text: #155724;
-            --wrong-bg: #f8d7da;
-            --wrong-border: #dc3545;
-            --wrong-text: #721c24;
-        }
-        
-        /* 動態背景動畫 */
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Nunito', 'Noto Sans TC', '微軟正黑體', sans-serif;
-        }
-        
-        body {
-            background: linear-gradient(-45deg, #f4f7f9, #eef2f5, #e0eaf0, #f4f7f9);
-            background-size: 400% 400%;
-            animation: gradientBG 20s ease infinite;
-            color: var(--text-main);
-            line-height: 1.75;
-        }
-        
-        /* Header */
-        header {
-            background: var(--dynamic-gradient);
-            color: var(--text-on-dark);
-            padding: 4rem 1.5rem 5rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(15, 32, 39, 0.3);
-        }
-        header::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            opacity: 0.5;
-        }
-        .header-content { position: relative; z-index: 1; }
-        
-        h1 {
-            font-size: 2.8rem;
-            margin-bottom: 1rem;
-            font-weight: 800;
-            letter-spacing: -1px;
-            background: linear-gradient(to right, #ffffff, #cce0ee);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        
-        .subtitle {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            font-weight: 600;
-            color: var(--gold-accent);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            display: inline-block;
-            padding: 0.5rem 1.5rem;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50px;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 215, 0, 0.2);
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem 4rem;
-            position: relative;
-            z-index: 10;
-        }
-        
-        /* Tabs */
-        .tabs {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 12px;
-            margin: -3.5rem auto 3rem;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(15px);
-            border-radius: 60px;
-            box-shadow: var(--shadow-soft);
-            border: 1px solid rgba(255,255,255,0.4);
-            max-width: fit-content;
-        }
-        .tab {
-            padding: 0.9rem 1.8rem;
-            cursor: pointer;
-            text-align: center;
-            transition: all 0.4s ease;
-            font-weight: 700;
-            color: var(--text-light);
-            border-radius: 50px;
-            position: relative;
-            overflow: hidden;
-            font-size: 1rem;
-            flex: 0 1 auto;
-        }
-        .tab::before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 15%;
-            width: 70%;
-            height: 3px;
-            background: var(--gold-accent);
-            transform: scaleX(0);
-            transition: transform 0.4s ease;
-            border-radius: 10px;
-        }
-        .tab:hover { color: var(--primary-dark); background: rgba(255,255,255,0.8); }
-        .tab.active { color: var(--primary-dark); background: white; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        .tab.active::before { transform: scaleX(1); box-shadow: 0 0 10px var(--gold-accent); }
-        
-        .tab-content { display: none; animation: slideUpFade 0.7s cubic-bezier(0.25, 1, 0.5, 1); }
-        @keyframes slideUpFade { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        .tab-content.active { display: block; }
-        
-        h2 {
-            color: var(--primary-dark);
-            margin-bottom: 2.5rem;
-            font-size: 2rem;
-            font-weight: 800;
-            text-align: center;
-            position: relative;
-            padding-bottom: 1rem;
-        }
-        h2::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            height: 4px;
-            width: 60px;
-            background: var(--gold-gradient);
-            border-radius: 2px;
-        }
-        h3 {
-            color: var(--primary-mid);
-            margin: 0 0 1.2rem;
-            font-size: 1.4rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-        }
-        h3::before {
-            content: '';
-            display: inline-block;
-            width: 8px;
-            height: 24px;
-            background: var(--gold-accent);
-            margin-right: 12px;
-            border-radius: 4px;
-        }
-        
-        /* Card Styles */
-        .card {
-            background: var(--bg-card);
-            border-radius: var(--radius-lg);
-            padding: 2.5rem;
-            margin-bottom: 2.5rem;
-            box-shadow: var(--shadow-soft);
-            border: 1px solid rgba(255,255,255,0.8);
-            transition: all 0.3s ease;
-            position: relative;
-            z-index: 5;
-        }
-        .card:hover {
-            transform: translateY(-7px);
-            box-shadow: 0 15px 40px -10px rgba(0,0,0,0.15);
-            border-color: rgba(255, 215, 0, 0.3);
-        }
-        
-        /* Table Styles */
-        table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            background: white;
-            min-width: 600px;
-            margin: 1.5rem 0;
-            border-radius: var(--radius-md);
-            overflow: hidden;
-            box-shadow: var(--shadow-soft);
-        }
-        th, td { padding: 18px 24px; text-align: left; border-bottom: 1px solid #eef2f5; }
-        th {
-            background: var(--primary-mid);
-            color: white;
-            font-weight: 700;
-            font-size: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-bottom: 3px solid var(--gold-accent);
-        }
-        tr:nth-child(even) { background-color: #fcfdfd; }
-        tr:hover td { background-color: #f0f4f8; }
-        .comparison-table th { background-color: var(--primary-dark); }
-        
-        /* Example Box */
-        .example {
-            background: linear-gradient(to right, #fffcf0, #fff);
-            border-left: 5px solid var(--gold-accent);
-            padding: 1.5rem 2rem;
-            margin: 1.5rem 0;
-            border-radius: 0 var(--radius-md) var(--radius-md) 0;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
-            color: var(--text-main);
-            position: relative;
-            z-index: 1;
-        }
-        .highlight {
-            color: var(--primary-dark);
-            background: transparent;
-            padding: 2px 6px;
-            font-weight: 700;
-            background: linear-gradient(120deg, transparent 0%, transparent 6px, var(--gold-accent) 6px, var(--gold-accent) 100%);
-            background-size: 100% 10px;
-            background-repeat: no-repeat;
-            background-position: bottom;
-            border-radius: 0;
-        }
-        
-        /* Audio Button */
-        .audio-btn {
-            background: none;
-            border: none;
-            color: var(--gold-dark);
-            cursor: pointer;
-            margin-left: 10px;
-            font-size: 1.1rem;
-            transition: all 0.2s;
-            vertical-align: middle;
-        }
-        .audio-btn:hover {
-            color: var(--primary-accent);
-            transform: scale(1.15);
-        }
-        
-        /* Flip Card Styles */
-        .infinitive-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-            gap: 15px;
-            margin: 2rem 0;
-            position: relative;
-            z-index: 10;
-        }
-        .flip-card {
-            perspective: 1000px;
-            height: 100%;
-            cursor: pointer;
-            position: relative;
-            z-index: 20;
-        }
-        .flip-card-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            transition: transform 0.6s;
-            transform-style: preserve-3d;
-        }
-        .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
-        .flip-card-front, .flip-card-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            border-radius: 50px;
-        }
-        .infinitive-item {
-            background: var(--primary-mid);
-            color: white;
-            padding: 15px;
-            border-radius: 50px;
-            text-align: center;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            border: 1px solid transparent;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 80px;
-        }
-        .infinitive-item:hover {
-            transform: translateY(-5px);
-            background: var(--primary-dark);
-            border-color: var(--gold-accent);
-            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.2);
-        }
-        .flip-card-back {
-            background: white;
-            transform: rotateY(180deg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            border: 1px solid rgba(255,215,0,0.3);
-            position: relative;
-            z-index: 30;
-        }
-        .flip-card-back .example {
-            background: none;
-            border-left: none;
-            padding: 0;
-            margin: 0;
-            text-align: center;
-            color: var(--text-main);
-            font-size: 0.95rem;
-            box-shadow: none;
-        }
-        .flip-card-back .example strong { display: block; margin-bottom: 0.5rem; color: var(--primary-mid); }
-        .flip-card-back .example p { margin: 0.3rem 0; }
-        
-        /* Warning Box */
-        .warning {
-            background: rgba(255, 215, 0, 0.05);
-            border-left: 5px solid var(--gold-accent);
-            padding: 2rem;
-            margin: 2rem 0;
-            border-radius: var(--radius-md);
-            color: var(--text-main);
-        }
-        .warning strong {
-            color: var(--gold-dark);
-            font-size: 1.1rem;
-            display: block;
-            margin-bottom: 0.5rem;
-        }
+    * { box-sizing: border-box; margin: 0; padding: 0; outline: none; -webkit-tap-highlight-color: transparent; }
 
-        /* Quiz Styles */
-        .quiz-container { max-width: 800px; margin: 0 auto; }
-        .quiz-progress {
-            margin-bottom: 1.5rem;
-            color: var(--text-light);
-            font-weight: 700;
-            text-align: right;
-            font-size: 0.9rem;
-        }
-        .quiz-card {
-            background: var(--bg-card);
-            border-radius: var(--radius-lg);
-            padding: 2.5rem;
-            margin-bottom: 2rem;
-            box-shadow: var(--shadow-soft);
-            border: 1px solid rgba(255,255,255,0.8);
-            animation: fadeIn 0.5s ease;
-        }
-        .quiz-question {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--primary-mid);
-            margin-bottom: 2rem;
-            border-left: 4px solid var(--gold-accent);
-            padding-left: 20px;
-            line-height: 1.6;
-        }
-        .quiz-options { display: grid; gap: 15px; }
-        .quiz-option {
-            padding: 18px 25px;
-            background: white;
-            border: 2px solid #eef2f5;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-weight: 600;
-            color: var(--text-main);
-            text-align: left;
-            position: relative;
-            font-size: 1.05rem;
-        }
-        .quiz-option:hover:not(.disabled) {
-            border-color: var(--primary-accent);
-            background: #f8fafc;
-            transform: translateX(5px);
-        }
-        .quiz-option.correct {
-            background-color: var(--correct-bg);
-            border-color: var(--correct-border);
-            color: var(--correct-text);
-        }
-        .quiz-option.incorrect {
-            background-color: var(--wrong-bg);
-            border-color: var(--wrong-border);
-            color: var(--wrong-text);
-            opacity: 0.8;
-        }
-        .quiz-option.disabled { cursor: default; opacity: 0.7; pointer-events: none; }
-        .quiz-explanation {
-            margin-top: 25px;
-            padding: 20px;
-            background: rgba(255, 215, 0, 0.1);
-            border-radius: 12px;
-            border-left: 4px solid var(--gold-dark);
-            color: var(--text-main);
-            display: none;
-            animation: slideDown 0.4s ease;
-        }
-        .quiz-explanation.show { display: block; }
-        .quiz-nav { margin-top: 25px; text-align: right; display: none; }
-        .quiz-nav.show { display: block; }
-        .quiz-result { text-align: center; padding: 3rem; }
-        .score-circle {
-            width: 150px;
-            height: 150px;
-            background: var(--dynamic-gradient);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 2rem;
-            color: var(--gold-accent);
-            font-size: 3rem;
-            font-weight: 800;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            border: 4px solid rgba(255, 255, 255, 0.2);
-        }
-        .btn {
-            background: var(--dynamic-gradient);
-            color: white;
-            border: none;
-            padding: 12px 32px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 700;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            box-shadow: 0 4px 15px rgba(32, 58, 67, 0.3);
-            text-decoration: none;
-        }
-        .btn:hover { transform: translateY(-3px); }
+    body {
+      font-family: 'Inter', 'Noto Sans TC', sans-serif;
+      background-color: var(--bg-cool);
+      color: var(--text-main);
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      position: relative;
+    }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+    /* === 1. 背景漂浮單字 (Floating Infinitives) === */
+    .floating-objects {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 0; overflow: hidden;
+    }
+    .float-item {
+      position: absolute; opacity: 0.08;
+      font-family: 'Playfair Display', serif; font-weight: 700;
+      color: var(--primary-tone);
+      animation: floatUp 28s infinite linear;
+      white-space: nowrap;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(110vh) rotate(0deg); }
+      100% { transform: translateY(-20vh) rotate(360deg); }
+    }
 
-        footer {
-            text-align: center;
-            padding: 4rem 2rem;
-            margin-top: 5rem;
-            background: var(--primary-dark);
-            color: rgba(255,255,255,0.6);
-            border-radius: 0;
-            position: relative;
-        }
-        footer::before {
-             content: '';
-             position: absolute;
-             top: 0; left: 0; width: 100%; height: 4px;
-             background: var(--gold-gradient);
-        }
-        @media (max-width: 768px) {
-            header { padding: 3rem 1rem 4rem; }
-            h1 { font-size: 2rem; }
-            .tabs { margin-top: -2rem; width: 95%; flex-direction: row; overflow-x: auto; justify-content: flex-start; }
-            .tab { flex: 0 0 auto; padding: 0.7rem 1.2rem; min-width: auto; }
-            .infinitive-list { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
-            table { display: block; overflow-x: auto; }
-        }
-    </style>
+    /* === 2. Mind Map 舞台 === */
+    .mindmap-stage {
+      position: relative; width: 100%; height: 100%;
+      display: flex; justify-content: center; align-items: center;
+      z-index: 10;
+    }
+    .connections {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 1;
+    }
+    .connection-line {
+      stroke: var(--secondary-tone); stroke-width: 2;
+      stroke-dasharray: 6, 6; opacity: 0.4;
+    }
+
+    /* 核心 Core */
+    .core-node {
+      width: var(--center-size); height: var(--center-size);
+      background: var(--primary-tone); color: white;
+      border-radius: 50%;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      text-align: center; z-index: 5;
+      box-shadow: 0 0 0 12px rgba(30, 58, 138, 0.08), 0 25px 50px rgba(0,0,0,0.25);
+      animation: corePulse 5s infinite ease-in-out; cursor: default;
+    }
+    .core-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; line-height: 1.1; }
+    .core-sub { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; margin-top: 8px; color: var(--secondary-tone); }
+
+    @keyframes corePulse {
+      0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); }
+    }
+
+    /* 子節點 Satellite */
+    .satellite {
+      position: absolute; width: var(--node-size); height: var(--node-size);
+      border-radius: 50%; background: white;
+      border: 2px solid var(--primary-tone);
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      text-align: center; cursor: pointer; z-index: 5;
+      box-shadow: 0 10px 25px rgba(30, 58, 138, 0.1);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      font-family: 'Playfair Display', serif; font-weight: 600;
+      font-size: 0.85rem; color: var(--primary-tone); padding: 5px;
+    }
+    .satellite:hover {
+      transform: scale(1.15); background: var(--primary-tone);
+      color: white; border-color: var(--secondary-tone);
+      box-shadow: 0 15px 35px rgba(30, 58, 138, 0.3); z-index: 10;
+    }
+
+    .step-badge {
+      position: absolute; top: -5px; left: 50%; transform: translateX(-50%);
+      background: var(--secondary-tone); color: white;
+      font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 700;
+      width: 24px; height: 24px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      border: 2px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    .satellite.quiz-node { border-color: var(--secondary-tone); background: #fffcf5; }
+    .satellite.quiz-node .step-badge { background: #d32f2f; }
+
+    /* === 3. Modal 內容區 === */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(244, 247, 246, 0.95); backdrop-filter: blur(5px);
+      z-index: 100; opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease;
+      display: flex; justify-content: center; align-items: center;
+    }
+    .modal-overlay.active { opacity: 1; pointer-events: auto; }
+
+    .modal-content {
+      width: 90%; max-width: 950px; max-height: 85vh;
+      background: white; border-radius: 16px;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.2);
+      border-top: 6px solid var(--primary-tone);
+      overflow-y: auto; padding: 40px;
+      display: none; animation: slideUp 0.4s ease-out;
+    }
+    @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+    .close-btn {
+      position: absolute; top: 20px; right: 20px;
+      width: 40px; height: 40px; border-radius: 50%; border: none;
+      background: #f4f4f4; color: var(--text-main); font-size: 1.5rem;
+      cursor: pointer; transition: all 0.2s; z-index: 20;
+    }
+    .close-btn:hover { background: var(--secondary-tone); color: white; }
+
+    /* 內容排版 */
+    h2 { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--primary-tone); margin-bottom: 20px; border-bottom: 2px solid var(--secondary-tone); padding-bottom: 10px; }
+    h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--primary-tone); margin: 30px 0 15px; border-left: 4px solid var(--secondary-tone); padding-left: 12px; }
+    
+    .bilingual-box { display: flex; gap: 20px; background: #f8f9fa; padding: 25px; border-radius: 8px; border: 1px solid #eee; margin-bottom: 20px; }
+    .highlight { background: var(--highlight-bg); padding: 2px 6px; border-radius: 4px; color: var(--primary-tone); font-weight: 600; }
+    
+    /* Table */
+    .table-responsive { overflow-x: auto; margin: 20px 0; border: 1px solid #e0e0e0; border-radius: 8px; }
+    table { width: 100%; border-collapse: collapse; min-width: 600px; }
+    th { background: #eef2f5; color: var(--primary-tone); padding: 15px; text-align: left; font-family: 'Playfair Display', serif; border-bottom: 2px solid #dde1e4; white-space: nowrap; }
+    td { padding: 14px; border-bottom: 1px solid #eee; }
+    tr:nth-child(even) { background-color: #fbfbfb; }
+
+    /* Note Box */
+    .note-box { padding: 20px; margin: 20px 0; border-radius: 0 8px 8px 0; line-height: 1.6; }
+    .note-tip { background: #edf2f7; border-left: 4px solid var(--primary-tone); color: #2d3748; }
+    .note-warn { background: #fff5f5; border-left: 4px solid #c53030; color: #742a2a; }
+
+    /* Audio Button */
+    .audio-btn { background: var(--secondary-tone); color: white; border: none; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; margin-left: 10px; transition: 0.2s; font-size: 0.8rem; }
+    .audio-btn:hover { background: var(--primary-tone); transform: scale(1.1); }
+
+    /* Quiz Styling */
+    .quiz-progress { text-align: right; color: var(--secondary-tone); font-weight: 700; margin-bottom: 15px; }
+    .quiz-question-box { background: #fff; padding: 25px; border-radius: 12px; border: 1px solid #eee; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 20px; }
+    .quiz-q-text { font-size: 1.2rem; font-weight: 600; color: var(--primary-tone); margin-bottom: 20px; }
+    .quiz-opt { display: block; width: 100%; padding: 15px 20px; margin-bottom: 10px; border: 2px solid #f0f0f0; border-radius: 8px; background: white; text-align: left; cursor: pointer; transition: all 0.2s; font-size: 1rem; }
+    .quiz-opt:hover:not(:disabled) { border-color: var(--secondary-tone); background: #fffbf5; }
+    .quiz-opt.correct { background: #e8f5e9; border-color: #4caf50; color: #2e7d32; }
+    .quiz-opt.incorrect { background: #ffebee; border-color: #ef5350; color: #c62828; }
+    
+    .explanation { margin-top: 20px; padding: 15px; background: #faf8f2; border-left: 4px solid var(--secondary-tone); display: none; }
+    .explanation.show { display: block; animation: fadeIn 0.3s; }
+    @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+    
+    .result-card { text-align: center; padding: 40px; display: none; }
+    .result-score { font-size: 4rem; font-family: 'Playfair Display', serif; color: var(--primary-tone); font-weight: 700; }
+    
+    .btn-cta { background: var(--secondary-tone); color: white; padding: 12px 30px; border-radius: 50px; border: none; font-size: 1rem; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; transition: 0.3s; font-weight: 600; margin-top: 15px; }
+    .btn-cta:hover { background: var(--primary-tone); transform: translateY(-2px); }
+
+    /* RWD */
+    @media (max-width: 768px) {
+      body { overflow-y: auto; height: auto; }
+      .floating-objects { height: 100vh; position: fixed; }
+      .mindmap-stage { flex-direction: column; height: auto; padding: 50px 20px; }
+      .connections { display: none; }
+      .core-node { margin-bottom: 40px; width: 160px; height: 160px; }
+      .satellite { 
+        position: relative; top: auto !important; left: auto !important; transform: none !important;
+        width: 100%; min-height: 70px; margin-bottom: 12px; flex-direction: row; 
+        justify-content: flex-start; text-align: left; gap: 20px; padding: 15px 25px;
+      }
+      .satellite:hover { transform: translateY(-3px) !important; }
+      .step-badge { position: static; transform: none; margin-right: 0; min-width: 24px; }
+      .modal-content { padding: 25px; width: 95%; max-height: 90vh; }
+      .bilingual-box { flex-direction: column; }
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <div class="header-content">
-            <h1>Shirley's Infinitive Learning Platform</h1>
-            <p class="subtitle">不定詞學習平台</p>
-        </div>
-    </header>
-    <div class="container">
-        <div class="tabs">
-            <div class="tab active" data-tab="intro">不定詞介紹 | Intro</div>
-            <div class="tab" data-tab="subject">作主詞 | Subject</div>
-            <div class="tab" data-tab="object">作受詞 | Object</div>
-            <div class="tab" data-tab="comparison">與動名詞區別 | Gerund vs Inf</div>
-            <div class="tab" data-tab="complement">作補語 | Complement</div>
-            <div class="tab" data-tab="modifier">作限定詞 | Modifier</div>
-            <div class="tab" data-tab="quiz">自我檢測 | Quiz</div>
-        </div>
-        
-        <div class="tab-content active" id="intro">
-            <h2>不定詞介紹 | Infinitive Introduction</h2>
-            <div class="card">
-                <h3>什麼是不定詞？ | What is an Infinitive?</h3>
-                <p>不定詞是動詞的一種形式，通常由 "to" 加上動詞原形構成，在句子中可以充當名詞、形容詞或副詞。</p>
-                <p>An infinitive is a form of verb, usually consisting of "to" plus the base form of the verb, which can function as a noun, adjective, or adverb in a sentence.</p>
-                <div class="example">
-                    <p><strong>例子 Example:</strong> I want <span class="highlight">to learn</span> English. | 我想學習英語。 <button class="audio-btn" onclick="speak('I want to learn English.')"><i class="fas fa-volume-up"></i></button></p>
-                    <p><strong>例子 Example:</strong> She needs a book <span class="highlight">to read</span>. | 她需要一本書來讀。 <button class="audio-btn" onclick="speak('She needs a book to read.')"><i class="fas fa-volume-up"></i></button></p>
-                </div>
-            </div>
-            <div class="card">
-                <h3>不定詞的形式 | Infinitive Forms</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>動詞 Verb</th>
-                            <th>不定詞 Infinitive</th>
-                            <th>例子 Example</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>work</td>
-                            <td>to work</td>
-                            <td>I plan to work from home. <button class="audio-btn" onclick="speak('I plan to work from home.')"><i class="fas fa-volume-up"></i></button></td>
-                        </tr>
-                        <tr>
-                            <td>study</td>
-                            <td>to study</td>
-                            <td>She needs to study harder. <button class="audio-btn" onclick="speak('She needs to study harder.')"><i class="fas fa-volume-up"></i></button></td>
-                        </tr>
-                        <tr>
-                            <td>travel</td>
-                            <td>to travel</td>
-                            <td>They hope to travel abroad. <button class="audio-btn" onclick="speak('They hope to travel abroad.')"><i class="fas fa-volume-up"></i></button></td>
-                        </tr>
-                        <tr>
-                            <td>learn</td>
-                            <td>to learn</td>
-                            <td>We want to learn new skills. <button class="audio-btn" onclick="speak('We want to learn new skills.')"><i class="fas fa-volume-up"></i></button></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="card">
-                <h3>不定詞的用法 | Uses of Infinitives</h3>
-                <p>不定詞在句子中可以擔任多種角色：</p>
-                <div class="infinitive-list">
-                    <div class="infinitive-item">作主詞<br>As Subject</div>
-                    <div class="infinitive-item">作受詞<br>As Object</div>
-                    <div class="infinitive-item">作補語<br>As Complement</div>
-                    <div class="infinitive-item">作限定詞<br>As Modifier</div>
-                    <div class="infinitive-item">作受詞補語<br>As Object Complement</div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="tab-content" id="subject">
-            <h2>作主詞 | As Subject</h2>
-            <div class="card">
-                <h3>不定詞作主詞 | Infinitives as Subjects</h3>
-                <p>不定詞可以在句子中擔任主詞的角色。</p>
-                <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="highlight">To work from home</span> is one of her dreams.</p>
-                    <p>在家工作是他的夢想之一。 <button class="audio-btn" onclick="speak('To work from home is one of her dreams.')"><i class="fas fa-volume-up"></i></button></p>
-                </div>
-                <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="highlight">To see</span> is <span class="highlight">to believe</span>.</p>
-                    <p>眼見為實。 <button class="audio-btn" onclick="speak('To see is to believe.')"><i class="fas fa-volume-up"></i></button></p>
-                </div>
-            </div>
-            <div class="card">
-                <h3>特殊句型：It 為虛構主詞 | Special Pattern: It as Dummy Subject</h3>
-                <p>當不定詞作主詞時，可以使用 It 作為形式主詞，將真正的不定詞主詞放在句末。</p>
-                <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="highlight">It is significant to create a secure home environment</span> for our children.</p>
-                    <p>為我們的孩子創造一個安全的家庭環境是很重要的。 <button class="audio-btn" onclick="speak('It is significant to create a secure home environment for our children.')"><i class="fas fa-volume-up"></i></button></p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="tab-content" id="object">
-            <h2>作受詞 | As Object</h2>
-            <div class="card">
-                <h3>不定詞作動詞的受詞 | Infinitives as Objects of Verbs</h3>
-                <p>某些動詞後面必須接不定詞作受詞，需要在平時記憶和積累。</p>
-                <div class="infinitive-list">
-                    <div class="flip-card" data-verb="ask">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front"><div class="infinitive-item">ask<br>詢問、要求</div></div>
-                            <div class="flip-card-back">
-                                <div class="example">
-                                    <p><strong>Example:</strong> She asked me <span class="highlight">to help her</span>. <button class="audio-btn" onclick="speak('She asked me to help her.')"><i class="fas fa-volume-up"></i></button></p>
-                                    <p>她要求我幫她。</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flip-card" data-verb="afford">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front"><div class="infinitive-item">afford<br>負擔得起</div></div>
-                            <div class="flip-card-back">
-                                <div class="example">
-                                    <p><strong>Example:</strong> I can't afford <span class="highlight">to buy a new car</span>. <button class="audio-btn" onclick="speak('I cannot afford to buy a new car.')"><i class="fas fa-volume-up"></i></button></p>
-                                    <p>我負擔不起買新車。</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flip-card" data-verb="agree">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front"><div class="infinitive-item">agree<br>同意</div></div>
-                            <div class="flip-card-back">
-                                <div class="example">
-                                    <p><strong>Example:</strong> He agreed <span class="highlight">to sign the contract</span>. <button class="audio-btn" onclick="speak('He agreed to sign the contract.')"><i class="fas fa-volume-up"></i></button></p>
-                                    <p>他同意簽署合約。</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flip-card" data-verb="attempt">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front"><div class="infinitive-item">attempt<br>嘗試</div></div>
-                            <div class="flip-card-back">
-                                <div class="example">
-                                    <p><strong>Example:</strong> They attempted <span class="highlight">to climb the mountain</span>. <button class="audio-btn" onclick="speak('They attempted to climb the mountain.')"><i class="fas fa-volume-up"></i></button></p>
-                                    <p>他們嘗試攀登那座山。</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flip-card" data-verb="decide">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front"><div class="infinitive-item">decide<br>決定</div></div>
-                            <div class="flip-card-back">
-                                <div class="example">
-                                    <p><strong>Example:</strong> We decided <span class="highlight">to take a vacation</span>. <button class="audio-btn" onclick="speak('We decided to take a vacation.')"><i class="fas fa-volume-up"></i></button></p>
-                                    <p>我們決定去度假。</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flip-card" data-verb="want">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front"><div class="infinitive-item">want<br>想要</div></div>
-                            <div class="flip-card-back">
-                                <div class="example">
-                                    <p><strong>Example:</strong> I really want <span class="highlight">to visit Japan</span>. <button class="audio-btn" onclick="speak('I really want to visit Japan.')"><i class="fas fa-volume-up"></i></button></p>
-                                    <p>我真的很想去日本玩。</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flip-card" data-verb="offer">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front"><div class="infinitive-item">offer<br>提供</div></div>
-                            <div class="flip-card-back">
-                                <div class="example">
-                                    <p><strong>Example:</strong> He offered <span class="highlight">to drive us home</span>. <button class="audio-btn" onclick="speak('He offered to drive us home.')"><i class="fas fa-volume-up"></i></button></p>
-                                    <p>他主動提出要載我們回家。</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flip-card" data-verb="plan">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front"><div class="infinitive-item">plan<br>計畫</div></div>
-                            <div class="flip-card-back">
-                                <div class="example">
-                                    <p><strong>Example:</strong> They plan <span class="highlight">to get married next year</span>. <button class="audio-btn" onclick="speak('They plan to get married next year.')"><i class="fas fa-volume-up"></i></button></p>
-                                    <p>他們計畫明年結婚。</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="example">
-                    <p><strong>例子 Example:</strong> Modern people <span class="highlight">tend to take in</span> a large amount of fat, protein and alcohol. <button class="audio-btn" onclick="speak('Modern people tend to take in a large amount of fat, protein and alcohol.')"><i class="fas fa-volume-up"></i></button></p>
-                    <p>現代人傾向攝入大量的脂肪、蛋白質和酒精。</p>
-                </div>
-                <div class="example">
-                    <p><strong>例子 Example:</strong> Many multinational companies <span class="highlight">prefer to hire</span> people with an overseas educational background. <button class="audio-btn" onclick="speak('Many multinational companies prefer to hire people with an overseas educational background.')"><i class="fas fa-volume-up"></i></button></p>
-                    <p>許多跨國公司更喜歡僱用有海外教育背景的人。</p>
-                </div>
-                <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="highlight">Don't hesitate to contact</span> me. <button class="audio-btn" onclick="speak('Do not hesitate to contact me.')"><i class="fas fa-volume-up"></i></button></p>
-                    <p>請隨時與我聯繫。</p>
-                </div>
-                <div class="example">
-                    <p><strong>例子 Example:</strong> This paper <span class="highlight">attempts to examine</span> the underlying factors of Internet addiction. <button class="audio-btn" onclick="speak('This paper attempts to examine the underlying factors of Internet addiction.')"><i class="fas fa-volume-up"></i></button></p>
-                    <p>本文試圖檢驗網絡成癮的潛在因素。</p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="tab-content" id="comparison">
-            <h2>與動名詞區別 | Gerund vs Infinitive</h2>
-            <div class="card">
-                <h3>動名詞與不定詞的區別</h3>
-                <p>有些動詞同時可以接動名詞和不定詞，但所表達的意思不一樣。</p>
-                <table class="comparison-table">
-                    <thead>
-                        <tr>
-                            <th>動詞 Verb</th>
-                            <th>接不定詞 + Infinitive</th>
-                            <th>接動名詞 + Gerund</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>remember</td>
-                            <td>記得要做某事<br>I remembered to lock the door.</td>
-                            <td>記得做過某事<br>I remember locking the door.</td>
-                        </tr>
-                        <tr>
-                            <td>forget</td>
-                            <td>忘記要做某事<br>I forgot to call him.</td>
-                            <td>忘記做過某事<br>I'll never forget meeting her.</td>
-                        </tr>
-                        <tr>
-                            <td>stop</td>
-                            <td>停下來去做另一件事<br>He stopped to buy a coffee.</td>
-                            <td>停止做某事<br>He stopped smoking.</td>
-                        </tr>
-                        <tr>
-                            <td>try</td>
-                            <td>嘗試/努力做某事<br>I tried to open the window.</td>
-                            <td>試驗做某事<br>I tried opening the window.</td>
-                        </tr>
-                        <tr>
-                            <td>regret</td>
-                            <td>對要做的事情感到遺憾<br>We regret to inform you...</td>
-                            <td>對做了的事情感到後悔<br>I regret sending the email.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="example">
-                    <p><strong>例子 Example:</strong> We <span class="highlight">regret to inform</span> you that your visa application has been declined. <button class="audio-btn" onclick="speak('We regret to inform you that your visa application has been declined.')"><i class="fas fa-volume-up"></i></button></p>
-                    <p>我們遺憾地通知您，您的簽證申請已被拒絕。</p>
-                </div>
-                <div class="example">
-                    <p><strong>例子 Example:</strong> I <span class="highlight">regret sending</span> the email to him. <button class="audio-btn" onclick="speak('I regret sending the email to him.')"><i class="fas fa-volume-up"></i></button></p>
-                    <p>我後悔發了那封郵件給他。</p>
-                </div>
-                <div class="warning">
-                    <p><strong>🎯Main Difference：</strong> Gerund (動名詞): Focuses on the act itself (the experience, the fact). 著重於行為本身（經驗、事實）。</p>
-                    <p><strong> Infinitive (不定詞): </strong> Focuses on the intention or potential (the purpose, the future). 著重於意圖或潛力（目的、將來）。</p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="tab-content" id="complement">
-            <h2>作補語 | As Complement</h2>
-            <div class="card">
-                <h3>主詞補語（連綴動詞後）</h3>
-                <div class="example">
-                    <p><strong>例子 Example:</strong> The government's obligation is <span class="highlight">to remove poverty</span>. <button class="audio-btn" onclick="speak('The government\'s obligation is to remove poverty.')"><i class="fas fa-volume-up"></i></button></p>
-                    <p>政府的義務是消除貧困。</p>
-                </div>
-                <div class="example">
-                    <p><strong>例子 Example:</strong> The best solution is <span class="highlight">to enhance awareness</span>. <button class="audio-btn" onclick="speak('The best solution is to enhance awareness.')"><i class="fas fa-volume-up"></i></button></p>
-                    <p>最佳解決方案是提升意識。</p>
-                </div>
-            </div>
-            <div class="card">
-                <h3>受詞補語（使役動詞後）</h3>
-                <p>使役動詞 <strong>let, make, have</strong> 後接不定詞作受詞補語時，<strong>必須省略 "to"</strong>。</p>
-                <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="highlight">Let's play</span> basketball. <button class="audio-btn" onclick="speak('Let us play basketball.')"><i class="fas fa-volume-up"></i></button></p>
-                    <p>我們打籃球吧。<em>（不是 to play）</em></p>
-                </div>
-                <div class="example">
-                    <p><strong>例子 Example:</strong> The new policy <span class="highlight">made him attend</span> the training course. <button class="audio-btn" onclick="speak('The new policy made him attend the training course.')"><i class="fas fa-volume-up"></i></button></p>
-                    <p>新政策迫使他參加培訓課程。</p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="tab-content" id="modifier">
-            <h2>作限定詞 | As Modifier</h2>
-            <div class="card">
-                <h3>不定詞作名詞的限定詞</h3>
-                <p>不定詞可以放在名詞後，作為限定詞（形容詞功能）使用。</p>
-                <div class="example">
-                    <p><strong>例子 Example:</strong> We have the ability <span class="highlight">to fight against the virus</span>. <button class="audio-btn" onclick="speak('We have the ability to fight against the virus.')"><i class="fas fa-volume-up"></i></button></p>
-                    <p>我們有能力對抗病毒。</p>
-                </div>
-                <div class="example">
-                    <p><strong>例子 Example:</strong> The office is not a place <span class="highlight">to talk loudly</span>. <button class="audio-btn" onclick="speak('The office is not a place to talk loudly.')"><i class="fas fa-volume-up"></i></button></p>
-                    <p>辦公室不是大聲說話的地方。</p>
-                </div>
-            </div>
-        </div>
 
-        <div class="tab-content" id="quiz">
-            <h2>自我檢測 | Quiz</h2>
-            <div class="quiz-container">
-                <div id="quiz-question-container">
-                    </div>
-            </div>
-        </div>
+  <div class="floating-objects" id="floatingBg"></div>
+
+  <div class="mindmap-stage" id="stage">
+    <svg class="connections" id="svgLines"></svg>
+
+    <div class="core-node">
+      <div class="core-title">Shirley's<br>Infinitives</div>
+      <div class="core-sub">Non-finite Series 1</div>
+    </div>
+
+    <div class="satellite" data-target="def-modal">
+      <div class="step-badge">1</div>
+      <div>Definition<br>定義與形式</div>
     </div>
     
-    <footer>
-        <p>Shirley's Infinitive Learning Platform | 不定詞學習平台</p>
-        <p>© 2025 Shirley's Grammar E-Charger</p>
-    </footer>
+    <div class="satellite" data-target="noun-modal">
+      <div class="step-badge">2</div>
+      <div>As Noun<br>名詞用法</div>
+    </div>
     
-    <script>
-        // Tab Functionality
-        document.querySelectorAll('.tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-                tab.classList.add('active');
-                const tabId = tab.getAttribute('data-tab');
-                document.getElementById(tabId).classList.add('active');
-            });
-        });
+    <div class="satellite" data-target="adv-adj-modal">
+      <div class="step-badge">3</div>
+      <div>Adj / Adv<br>形容詞/副詞</div>
+    </div>
+    
+    <div class="satellite" data-target="pattern-modal">
+      <div class="step-badge">4</div>
+      <div>Patterns<br>動詞句型</div>
+    </div>
 
-        // Flip Card Functionality
-        document.querySelectorAll('.flip-card').forEach(card => {
-            card.addEventListener('click', () => {
-                card.classList.toggle('flipped');
-            });
-        });
+    <div class="satellite" data-target="it-modal">
+      <div class="step-badge">5</div>
+      <div>Dummy Subject<br>虛主詞 It</div>
+    </div>
 
-        // Text-to-Speech Function
-        function speak(text) {
-            if ('speechSynthesis' in window) {
-                speechSynthesis.cancel();
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'en-US';
-                utterance.rate = 0.9;
-                
-                const voices = speechSynthesis.getVoices();
-                const enVoice = voices.find(v => v.lang.includes('en-US') || v.lang.includes('en-GB'));
-                if(enVoice) utterance.voice = enVoice;
+    <div class="satellite" data-target="bare-modal">
+      <div class="step-badge">6</div>
+      <div>Bare Infinitive<br>原形不定詞</div>
+    </div>
 
-                speechSynthesis.speak(utterance);
-            } else {
-                alert("Sorry, your browser doesn't support text-to-speech.");
-            }
-        }
+    <div class="satellite" data-target="too-modal">
+      <div class="step-badge">7</div>
+      <div>Too...to<br>特殊句型</div>
+    </div>
+    
+    <div class="satellite quiz-node" data-target="quiz-modal">
+      <div class="step-badge">8</div>
+      <div>Quiz<br>20題挑戰</div>
+    </div>
+  </div>
 
-        // Quiz Logic
-        const quizQuestions = [
-            {
-                question: "1. It is important ______ (exercise) regularly.",
-                options: ["to exercise", "exercising", "exercise", "exercised"],
-                correct: 0,
-                explanation: "<strong>Explanation:</strong> 'It' is a dummy subject, and the real subject is the infinitive 'to exercise'."
-            },
-            {
-                question: "2. She decided ______ (study) abroad.",
-                options: ["studying", "to study", "study", "studied"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> The verb 'decide' is followed by an infinitive."
-            },
-            {
-                question: "3. He made me ______ (cry).",
-                options: ["to cry", "crying", "cry", "cried"],
-                correct: 2,
-                explanation: "<strong>Explanation:</strong> After causative verbs (make, let, have), we use the base form of the verb without 'to'."
-            },
-            {
-                question: "4. I have a lot of homework ______ (do).",
-                options: ["do", "doing", "to do", "done"],
-                correct: 2,
-                explanation: "<strong>Explanation:</strong> The infinitive 'to do' modifies the noun 'homework' (Adjectival use)."
-            },
-            {
-                question: "5. He stopped ______ (buy) a newspaper on his way home.",
-                options: ["buying", "to buy", "buy", "bought"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> 'Stop to do something' means stopping one action in order to do another (purpose)."
-            },
-            {
-                question: "6. Please remember ______ (lock) the door when you leave.",
-                options: ["locking", "to lock", "lock", "locked"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> 'Remember to do' refers to a future task you need to not forget."
-            },
-            {
-                question: "7. She enjoys ______ (read) novels.",
-                options: ["to read", "reading", "read", "reads"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> 'Enjoy' is always followed by a gerund (reading), not an infinitive."
-            },
-            {
-                question: "8. My dream is ______ (become) a pilot.",
-                options: ["become", "became", "to become", "becoming"],
-                correct: 2,
-                explanation: "<strong>Explanation:</strong> The infinitive functions as a subject complement after the linking verb 'is'."
-            },
-            {
-                question: "9. They planned ______ (visit) the museum.",
-                options: ["visiting", "to visit", "visit", "visited"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> 'Plan' is followed by an infinitive."
-            },
-            {
-                question: "10. The teacher asked the students ______ (be) quiet.",
-                options: ["be", "being", "to be", "been"],
-                correct: 2,
-                explanation: "<strong>Explanation:</strong> Pattern: ask + object + infinitive."
-            },
-            {
-                question: "11. He is too young ______ (drive) a car.",
-                options: ["driving", "drive", "to drive", "drove"],
-                correct: 2,
-                explanation: "<strong>Explanation:</strong> 'Too + adjective + to-infinitive' pattern."
-            },
-            {
-                question: "12. I don't know what ______ (do).",
-                options: ["doing", "to do", "do", "done"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> Wh-word (what, where, how) + infinitive."
-            },
-            {
-                question: "13. Let him ______ (go).",
-                options: ["to go", "going", "go", "went"],
-                correct: 2,
-                explanation: "<strong>Explanation:</strong> 'Let' is a causative verb, followed by the base verb."
-            },
-            {
-                question: "14. We are happy ______ (see) you.",
-                options: ["see", "seeing", "to see", "seen"],
-                correct: 2,
-                explanation: "<strong>Explanation:</strong> Infinitive used to modify an adjective (happy) to show the cause/reason."
-            },
-            {
-                question: "15. He failed ______ (pass) the exam.",
-                options: ["passing", "to pass", "pass", "passed"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> 'Fail' is followed by an infinitive."
-            },
-            {
-                question: "16. She refused ______ (answer) the question.",
-                options: ["answer", "answering", "to answer", "answered"],
-                correct: 2,
-                explanation: "<strong>Explanation:</strong> 'Refuse' takes an infinitive as an object."
-            },
-            {
-                question: "17. The coffee is not warm enough ______ (drink).",
-                options: ["drink", "to drink", "drinking", "drank"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> 'Adjective + enough + to-infinitive' pattern."
-            },
-            {
-                question: "18. I saw him ______ (cross) the street. (Focus on the whole action)",
-                options: ["to cross", "cross", "crossed", "to crossing"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> See/Watch/Hear + object + base verb (for the complete action)."
-            },
-            {
-                question: "19. It is dangerous ______ (swim) in this river.",
-                options: ["swimming", "swim", "to swim", "swam"],
-                correct: 2,
-                explanation: "<strong>Explanation:</strong> 'It is + adjective + to-infinitive'."
-            },
-            {
-                question: "20. I regret ______ (tell) you that you failed.",
-                options: ["telling", "to tell", "tell", "told"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> 'Regret to tell' is used for bad news (future/present focus), whereas 'regret telling' is for past actions."
-            }
-        ];
+  <div class="modal-overlay" id="modalOverlay">
+    <button class="close-btn" onclick="closeModal()">✕</button>
 
-        let currentQuestionIndex = 0;
-        let score = 0;
+    <div id="def-modal" class="modal-content">
+      <h2>1. Definition 定義與形式</h2>
+      <div class="bilingual-box">
+        <div style="flex:1">
+          <p>不定詞 (Infinitive) 是動詞的一種形式，基本結構為：</p>
+          <h3 style="text-align:center; color:var(--primary-tone); margin:20px 0;">To + V (原形動詞)</h3>
+          <p>它不具有時態，通常表示<strong>「目的」、「未來」或「尚未發生」</strong>的動作。</p>
+        </div>
+      </div>
+      <div class="note-box note-warn">
+        <strong>⚠️ 注意：</strong> 這裡的 "to" 不是介係詞，所以後面不能接 V-ing 或名詞。
+      </div>
+    </div>
 
-        function initQuiz() {
-            currentQuestionIndex = 0;
-            score = 0;
-            showQuestion(currentQuestionIndex);
-        }
+    <div id="noun-modal" class="modal-content">
+      <h2>2. As Noun 名詞用法</h2>
+      <p>不定詞可以像名詞一樣，擔任句子的主詞、受詞或補語。</p>
+      
+      <div class="table-responsive">
+        <table>
+          <tr><th>Role</th><th>Example</th><th>Meaning</th></tr>
+          <tr>
+            <td><strong>Subject (主詞)</strong></td>
+            <td><span class="highlight">To learn</span> English is important.<button class="audio-btn" onclick="speak('To learn English is important.')">🔊</button></td>
+            <td>學習英文...</td>
+          </tr>
+          <tr>
+            <td><strong>Object (受詞)</strong></td>
+            <td>I want <span class="highlight">to buy</span> a car.<button class="audio-btn" onclick="speak('I want to buy a car.')">🔊</button></td>
+            <td>我想要買...</td>
+          </tr>
+          <tr>
+            <td><strong>Complement (補語)</strong></td>
+            <td>My dream is <span class="highlight">to travel</span> around the world.<button class="audio-btn" onclick="speak('My dream is to travel around the world.')">🔊</button></td>
+            <td>我的夢想是去旅行...</td>
+          </tr>
+        </table>
+      </div>
+    </div>
 
-        function showQuestion(index) {
-            const container = document.getElementById('quiz-question-container');
-            if (index >= quizQuestions.length) {
-                showResult(container);
-                return;
-            }
-            const q = quizQuestions[index];
-            let html = `
-                <div class="quiz-card">
-                    <div class="quiz-progress">Question ${index + 1} / ${quizQuestions.length}</div>
-                    <div class="quiz-question">${q.question}</div>
-                    <div class="quiz-options">
-                        ${q.options.map((opt, i) => `
-                            <div class="quiz-option" onclick="checkAnswer(this, ${i})">${opt}</div>
-                        `).join('')}
-                    </div>
-                    <div class="quiz-explanation" id="explanation-${index}">
-                        ${q.explanation}
-                    </div>
-                    <div class="quiz-nav" id="nav-${index}">
-                        <button class="btn" onclick="nextQuestion()">Next Question <i class="fas fa-arrow-right"></i></button>
-                    </div>
-                </div>
-            `;
-            container.innerHTML = html;
-        }
+    <div id="adv-adj-modal" class="modal-content">
+      <h2>3. As Adjective & Adverb 修飾用法</h2>
+      
+      <h3>As Adjective (形容詞用法)</h3>
+      <p>放在名詞後面，用來修飾該名詞。</p>
+      <div class="bilingual-box">
+        <p>I have a lot of homework <span class="highlight">to do</span>.</p>
+        <p>我有許多<strong>要做的</strong>功課。</p>
+      </div>
 
-        window.checkAnswer = function(optionElement, selectedIndex) {
-            const currentQ = quizQuestions[currentQuestionIndex];
-            const explanation = document.getElementById(`explanation-${currentQuestionIndex}`);
-            const nav = document.getElementById(`nav-${currentQuestionIndex}`);
-            const allOptions = optionElement.parentElement.children;
+      <h3>As Adverb (副詞用法 - 表目的)</h3>
+      <p>這是最常見的用法，表示「為了...」。</p>
+      <div class="bilingual-box">
+        <p>She went to the park <span class="highlight">to play</span>.</p>
+        <p>她去公園<strong>是為了玩耍</strong>。</p>
+      </div>
+    </div>
 
-            if (optionElement.classList.contains('disabled')) return;
+    <div id="pattern-modal" class="modal-content">
+      <h2>4. Verb Patterns 必接不定詞的動詞</h2>
+      <p>有些動詞後面只能接不定詞，通常帶有「未來、計畫、意圖」的含義。</p>
+      
+      <div class="table-responsive">
+        <table>
+          <tr><th>Category</th><th>Verbs</th><th>Example</th></tr>
+          <tr><td>計畫/意圖</td><td>plan, decide, intend, aim</td><td>I <strong>decided to</strong> go.</td></tr>
+          <tr><td>希望/想要</td><td>want, hope, wish, expect</td><td>She <strong>hopes to</strong> win.</td></tr>
+          <tr><td>嘗試/承諾</td><td>try, promise, refuse, agree</td><td>He <strong>promised to</strong> help.</td></tr>
+        </table>
+      </div>
 
-            // Disable all options
-            for (let i = 0; i < allOptions.length; i++) {
-                allOptions[i].classList.add('disabled');
-            }
+      <h3>Pattern: V + Object + to V</h3>
+      <p>動詞 + 受詞 + 不定詞 (告訴/要求某人做某事)</p>
+      <div class="note-box note-tip">
+        <strong>常見動詞：</strong> tell, ask, want, invite, advise, allow<br>
+        <em>e.g., He told <strong>me to open</strong> the door.</em>
+      </div>
+    </div>
 
-            if (selectedIndex === currentQ.correct) {
-                optionElement.classList.add('correct');
-                score++;
-            } else {
-                optionElement.classList.add('incorrect');
-                allOptions[currentQ.correct].classList.add('correct');
-            }
-            explanation.classList.add('show');
-            nav.classList.add('show');
-        }
+    <div id="it-modal" class="modal-content">
+      <h2>5. Dummy Subject 虛主詞 It</h2>
+      <p>當不定詞當主詞太長時，習慣用 <strong>It</strong> 放在句首。</p>
+      
+      <div class="bilingual-box" style="flex-direction:column; gap:10px;">
+        <div style="text-align:center; font-weight:bold; color:#999;">
+          <s>To learn a new language is difficult.</s> (頭重腳輕)
+        </div>
+        <div style="text-align:center; font-size:1.2rem; color:var(--primary-tone); font-weight:bold;">
+          ⬇
+        </div>
+        <div style="text-align:center; font-weight:bold;">
+          <span class="highlight">It</span> is difficult <span class="highlight">to learn</span> a new language.
+        </div>
+      </div>
 
-        window.nextQuestion = function() {
-            currentQuestionIndex++;
-            showQuestion(currentQuestionIndex);
-        }
+      <p><strong>句型：It is + Adj + (for + 人) + to V</strong></p>
+      <p><em>It is important <strong>for you to sleep</strong> early.</em></p>
+    </div>
 
-        function showResult(container) {
-            container.innerHTML = `
-                <div class="card quiz-result">
-                    <div class="score-circle">${score}</div>
-                    <h2>Quiz Completed!</h2>
-                    <p>Your Score: ${score} / ${quizQuestions.length}</p>
-                    <p>${score >= 18 ? "Excellent! You mastered Infinitives!" : score >= 12 ? "Good job! Keep practicing." : "Review the lessons and try again!"}</p>
-                    <button class="btn" onclick="initQuiz()" style="margin-top: 20px;">
-                        <i class="fas fa-redo"></i> Restart Quiz
-                    </button>
-                </div>
-            `;
-        }
+    <div id="bare-modal" class="modal-content">
+      <h2>6. Bare Infinitive 原形不定詞</h2>
+      <p>在某些特殊情況下，"to" 必須省略，只保留原形動詞。</p>
+      
+      <h3>Causative Verbs 使役動詞</h3>
+      <p><strong>Make, Have, Let</strong> + O + <span class="highlight">VR</span></p>
+      <ul>
+        <li>My mom <strong>made</strong> me <span class="highlight">clean</span> my room. (不是 to clean)</li>
+        <li><strong>Let</strong> him <span class="highlight">go</span>.</li>
+      </ul>
 
-        // Initialize quiz when tab is clicked
-        document.querySelector('.tab[data-tab="quiz"]').addEventListener('click', () => {
-             const container = document.getElementById('quiz-question-container');
-             if (container.innerHTML.trim() === '') {
-                 initQuiz();
-             }
-        });
-    </script>
+      <h3>Sensory Verbs 感官動詞</h3>
+      <p><strong>See, Watch, Hear, Feel</strong> + O + <span class="highlight">VR</span> (強調事實/過程)</p>
+      <ul>
+        <li>I <strong>saw</strong> him <span class="highlight">cross</span> the street.</li>
+      </ul>
+      <div class="note-box note-tip">
+        <strong>補充：</strong> 感官動詞也可以接 V-ing (強調正在進行)。
+      </div>
+    </div>
+
+    <div id="too-modal" class="modal-content">
+      <h2>7. Special Patterns 特殊句型</h2>
+      
+      <h3>Too... to... (太...以至於不能...)</h3>
+      <p>帶有否定意味。</p>
+      <div class="bilingual-box">
+        <p>He is <strong>too</strong> young <strong>to</strong> drive.</p>
+        <p>他太年輕了，所以不能開車。</p>
+      </div>
+
+      <h3>Enough to... (足夠...去做...)</h3>
+      <p>Enough 放在形容詞後面。</p>
+      <div class="bilingual-box">
+        <p>She is old <strong>enough to</strong> drive.</p>
+        <p>她年紀夠大了，可以開車。</p>
+      </div>
+    </div>
+
+    <div id="quiz-modal" class="modal-content">
+      <h2>8. Infinitive Challenge (20 Qs) 🏆</h2>
+      <p style="margin-bottom:20px; color:#666;">Test your knowledge of Infinitives!</p>
+      <div id="quiz-container"></div>
+      <div id="result-area" class="result-card">
+        <div class="result-score" id="score-display">0 / 20</div>
+        <h3>Quiz Completed!</h3>
+        <p id="result-msg"></p>
+        <button onclick="startQuiz()" class="btn-cta">↺ Restart Quiz</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // === 1. Floating Background ===
+    const floatWords = ['To be', 'To do', 'To go', 'To see', 'To eat', 'To run', 'To fly', 'To ask', 'To buy', 'To learn'];
+    const floatContainer = document.getElementById('floatingBg');
+
+    function createFloatingIcons() {
+      for(let i=0; i<15; i++) {
+        const el = document.createElement('div');
+        el.classList.add('float-item');
+        el.innerText = floatWords[Math.floor(Math.random() * floatWords.length)];
+        el.style.left = Math.random() * 100 + 'vw';
+        el.style.animationDuration = (25 + Math.random() * 10) + 's';
+        el.style.animationDelay = (Math.random() * 5) + 's';
+        el.style.fontSize = (1.5 + Math.random() * 2) + 'rem';
+        floatContainer.appendChild(el);
+      }
+    }
+    createFloatingIcons();
+
+    // === 2. Mind Map Layout ===
+    function updateLayout() {
+      const satellites = document.querySelectorAll('.satellite');
+      const stage = document.getElementById('stage');
+      const svg = document.getElementById('svgLines');
+      const isMobile = window.innerWidth <= 768;
+
+      while(svg.firstChild) svg.removeChild(svg.firstChild);
+
+      if(isMobile) return; 
+
+      const centerX = stage.offsetWidth / 2;
+      const centerY = stage.offsetHeight / 2;
+      const radius = 280;
+      const total = satellites.length;
+
+      satellites.forEach((node, index) => {
+        const angle = (index / total) * 2 * Math.PI - (Math.PI / 2);
+        const x = centerX + radius * Math.cos(angle);
+        const y = centerY + radius * Math.sin(angle);
+
+        node.style.left = x + 'px';
+        node.style.top = y + 'px';
+        node.style.transform = 'translate(-50%, -50%)';
+
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', centerX);
+        line.setAttribute('y1', centerY);
+        line.setAttribute('x2', x);
+        line.setAttribute('y2', y);
+        line.classList.add('connection-line');
+        svg.appendChild(line);
+      });
+    }
+    window.addEventListener('resize', updateLayout);
+    window.addEventListener('load', updateLayout);
+
+    // === 3. Modal Logic ===
+    const overlay = document.getElementById('modalOverlay');
+    document.querySelectorAll('.satellite').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetId = btn.getAttribute('data-target');
+        if(!targetId) return;
+
+        document.querySelectorAll('.modal-content').forEach(c => c.style.display = 'none');
+        document.getElementById(targetId).style.display = 'block';
+        overlay.classList.add('active');
+        if(targetId === 'quiz-modal') startQuiz();
+      });
+    });
+    function closeModal() { overlay.classList.remove('active'); }
+    overlay.addEventListener('click', (e) => { if(e.target === overlay) closeModal(); });
+
+    function speak(text) {
+      if ('speechSynthesis' in window) {
+        speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        speechSynthesis.speak(utterance);
+      }
+    }
+
+    // === 4. Quiz Logic (20 Qs) ===
+    const quizQuestions = [
+      { q: "I decided _____ to the party.", options: ["go", "to go", "going", "went"], correct: 1, expl: "Decide + to V (Infinitive)." },
+      { q: "She wants _____ a new car.", options: ["buy", "buying", "to buy", "bought"], correct: 2, expl: "Want + to V." },
+      { q: "He makes me _____ happy.", options: ["to feel", "feel", "feeling", "felt"], correct: 1, expl: "Make (Causative) + VR (Bare Infinitive)." },
+      { q: "It is important _____ water.", options: ["drink", "to drink", "drinking", "drank"], correct: 1, expl: "It is adj + to V (Dummy subject)." },
+      { q: "I went to the store _____ some milk.", options: ["buy", "to buy", "buying", "for buy"], correct: 1, expl: "To + V indicates purpose (in order to)." },
+      { q: "She is too tired _____ work.", options: ["to", "for", "that", "so"], correct: 0, expl: "Too... to... pattern." },
+      { q: "They planned _____ us.", options: ["visit", "visiting", "to visit", "visited"], correct: 2, expl: "Plan + to V." },
+      { q: "My parents let me _____ out late.", options: ["stay", "to stay", "staying", "stayed"], correct: 0, expl: "Let (Causative) + VR." },
+      { q: "I promised _____ you.", options: ["help", "to help", "helping", "helped"], correct: 1, expl: "Promise + to V." },
+      { q: "He told me _____ the door.", options: ["close", "closing", "to close", "closed"], correct: 2, expl: "Tell + Object + to V." },
+      { q: "It is nice _____ you to help.", options: ["of", "for", "to", "with"], correct: 0, expl: "It is adj (personality) + OF + person + to V." },
+      { q: "It is hard _____ me to understand.", options: ["of", "for", "to", "with"], correct: 1, expl: "It is adj (difficulty) + FOR + person + to V." },
+      { q: "I would like _____ a pizza.", options: ["order", "ordering", "to order", "ordered"], correct: 2, expl: "Would like + to V." },
+      { q: "He refused _____ the money.", options: ["take", "taking", "to take", "taken"], correct: 2, expl: "Refuse + to V." },
+      { q: "We hope _____ you soon.", options: ["see", "seeing", "to see", "seen"], correct: 2, expl: "Hope + to V." },
+      { q: "She is old enough _____ alone.", options: ["live", "to live", "living", "lived"], correct: 1, expl: "Adj + enough + to V." },
+      { q: "I saw him _____ the street.", options: ["cross", "to cross", "crossed", "crosses"], correct: 0, expl: "See (Sensory) + VR (emphasizing fact)." },
+      { q: "Don't forget _____ your homework.", options: ["do", "doing", "to do", "done"], correct: 2, expl: "Forget + to V (something you need to do)." },
+      { q: "My dream is _____ a pilot.", options: ["become", "becoming", "to become", "became"], correct: 2, expl: "Subject complement (Noun use)." },
+      { q: "He asked her _____ quiet.", options: ["be", "being", "to be", "been"], correct: 2, expl: "Ask + Object + to V." }
+    ];
+
+    let currentQ = 0;
+    let score = 0;
+
+    function startQuiz() {
+      currentQ = 0;
+      score = 0;
+      document.getElementById('quiz-container').style.display = 'block';
+      document.getElementById('result-area').style.display = 'none';
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      if(currentQ >= quizQuestions.length) {
+        showResult();
+        return;
+      }
+      const q = quizQuestions[currentQ];
+      const container = document.getElementById('quiz-container');
+      
+      let html = `
+        <div class="quiz-progress">Question ${currentQ + 1} / ${quizQuestions.length}</div>
+        <div class="quiz-question-box">
+          <div class="quiz-q-text">${q.q.replace('_____', '<span style="border-bottom:2px solid var(--secondary-tone); color:var(--secondary-tone);">?</span>')}</div>
+          <div style="display:grid; gap:10px;">
+            ${q.options.map((opt, idx) => `
+              <button class="quiz-opt" onclick="checkAns(this, ${idx})">${opt}</button>
+            `).join('')}
+          </div>
+          <div class="explanation" id="expl-${currentQ}">${q.expl}</div>
+          <div style="text-align:right; margin-top:15px; display:none;" id="nav-${currentQ}">
+            <button class="btn-cta" onclick="nextQ()">Next →</button>
+          </div>
+        </div>
+      `;
+      container.innerHTML = html;
+    }
+
+    function checkAns(btn, idx) {
+      const q = quizQuestions[currentQ];
+      const parent = btn.parentElement;
+      const allBtns = parent.querySelectorAll('.quiz-opt');
+      allBtns.forEach(b => b.disabled = true);
+      
+      if(idx === q.correct) {
+        btn.classList.add('correct');
+        score++;
+      } else {
+        btn.classList.add('incorrect');
+        allBtns[q.correct].classList.add('correct');
+      }
+      document.getElementById(`expl-${currentQ}`).classList.add('show');
+      document.getElementById(`nav-${currentQ}`).style.display = 'block';
+    }
+
+    function nextQ() {
+      currentQ++;
+      renderQuestion();
+    }
+
+    function showResult() {
+      document.getElementById('quiz-container').style.display = 'none';
+      document.getElementById('result-area').style.display = 'block';
+      document.getElementById('score-display').innerText = `${score} / 20`;
+      
+      let msg = score >= 18 ? "Infinitive Master! 🏆" : (score >= 12 ? "Good Job! Keep practicing! 💪" : "Review the rules and try again! 📚");
+      document.getElementById('result-msg').innerText = msg;
+    }
+  </script>
 </body>
 </html>
