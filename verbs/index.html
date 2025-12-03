@@ -1,1460 +1,663 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Shirley's English Verb Learning Platform 英語動詞學習平台 |</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Nunito:wght@400;600;700;800&display=swap');
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Shirley's Grammar | Verbs Masterclass</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Inter:wght@400;500;600&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      /* --- 核心配色 --- */
+      --primary-tone: #3a5a40; /* 森林深綠 */
+      --secondary-tone: #c9a972; /* 復古金 */
+      --text-main: #333333;
+      --bg-cream: #faf8f2;
+      --highlight-bg: #f0eadd;
+      
+      /* --- 尺寸變數 --- */
+      --node-size: 115px; 
+      --center-size: 200px;
+    }
 
-        :root {
-            /* 高雅配色系統：深海藍、墨綠搭配流金點綴 */
-            --primary-dark: #0F2027;  /* 深邃背景 */
-            --primary-mid: #203A43;   /* 中間調 */
-            --primary-accent: #2C5364; /* 亮部 */
-            
-            --gold-accent: #FFD700;   /* 高雅金 */
-            --gold-dark: #B8860B;     /* 深金 */
-            --dynamic-gradient: linear-gradient(135deg, #2C5364 0%, #203A43 50%, #0F2027 100%);
-            --gold-gradient: linear-gradient(45deg, #B8860B, #FFD700, #B8860B);
+    * { box-sizing: border-box; margin: 0; padding: 0; outline: none; -webkit-tap-highlight-color: transparent; }
 
-            --bg-body: #f4f7f9;       /* 非常淡的藍灰色背景，比純白更有質感 */
-            --bg-card: rgba(255, 255, 255, 0.95);
-            
-            --text-main: #1a1a1a;
-            --text-light: #5a6a7a;
-            --text-on-dark: #ffffff;
-            
-            --shadow-soft: 0 10px 30px -10px rgba(0,0,0,0.1);
-            --shadow-glow: 0 5px 15px rgba(255, 215, 0, 0.3); /* 金色光暈 */
-            
-            --radius-lg: 24px;
-            --radius-md: 16px;
-        }
-        
-        /* 動態背景動畫 */
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+    body {
+      font-family: 'Inter', 'Noto Sans TC', sans-serif;
+      background-color: var(--bg-cream);
+      color: var(--text-main);
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      position: relative;
+    }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Nunito', 'Noto Sans TC', sans-serif;
-        }
-        
-        body {
-            /* 緩慢流動的高雅背景 */
-            background: linear-gradient(-45deg, #f4f7f9, #eef2f5, #e0eaf0, #f4f7f9);
-            background-size: 400% 400%;
-            animation: gradientBG 20s ease infinite;
-            color: var(--text-main);
-            line-height: 1.75;
-        }
-        
-        /* Header: 深邃質感 */
-        header {
-            background: var(--dynamic-gradient);
-            color: var(--text-on-dark);
-            padding: 4rem 1.5rem 5rem; /* 底部留白給 tabs */
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(15, 32, 39, 0.3);
-        }
-        
-        /* 增加 Header 的紋理感 */
-        header::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            opacity: 0.5;
-        }
+    /* === 1. 背景漂浮動詞 === */
+    .floating-objects {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 0; overflow: hidden;
+    }
+    .float-item {
+      position: absolute; opacity: 0.08;
+      font-family: 'Playfair Display', serif; font-weight: 700;
+      color: var(--primary-tone);
+      animation: floatUp 28s infinite linear;
+      white-space: nowrap;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(110vh) rotate(0deg); }
+      100% { transform: translateY(-20vh) rotate(360deg); }
+    }
 
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            font-weight: 800;
-            letter-spacing: -1px;
-            background: linear-gradient(to right, #ffffff, #cce0ee);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        
-        .subtitle {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            font-weight: 600;
-            color: var(--gold-accent);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            display: inline-block;
-            padding: 0.5rem 1.5rem;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50px;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 215, 0, 0.2);
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem 4rem;
-            position: relative;
-            z-index: 10;
-        }
-        
-        /* Tabs: 玻璃擬態與金色動態 */
-        .tabs {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 12px;
-            margin: -3.5rem auto 3rem; /* 上移重疊 header */
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(15px);
-            border-radius: 60px;
-            box-shadow: var(--shadow-soft);
-            border: 1px solid rgba(255,255,255,0.4);
-            max-width: fit-content;
-        }
-        
-        .tab {
-            padding: 0.9rem 2rem;
-            cursor: pointer;
-            text-align: center;
-            transition: all 0.4s ease;
-            font-weight: 700;
-            color: var(--text-light);
-            border-radius: 50px;
-            position: relative;
-            overflow: hidden;
-            font-size: 1.05rem;
-        }
-        
-        .tab::before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 15%;
-            width: 70%;
-            height: 3px;
-            background: var(--gold-accent);
-            transform: scaleX(0);
-            transition: transform 0.4s ease;
-            border-radius: 10px;
-        }
+    /* === 2. Mind Map 舞台 === */
+    .mindmap-stage {
+      position: relative; width: 100%; height: 100%;
+      display: flex; justify-content: center; align-items: center;
+      z-index: 10;
+    }
+    .connections {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 1;
+    }
+    .connection-line {
+      stroke: var(--secondary-tone); stroke-width: 2;
+      stroke-dasharray: 6, 6; opacity: 0.4;
+    }
 
-        .tab:hover {
-            color: var(--primary-dark);
-            background: rgba(255,255,255,0.8);
-        }
-        
-        .tab.active {
-            color: var(--primary-dark);
-            background: white;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
+    /* 核心 Core */
+    .core-node {
+      width: var(--center-size); height: var(--center-size);
+      background: var(--primary-tone); color: white;
+      border-radius: 50%;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      text-align: center; z-index: 5;
+      box-shadow: 0 0 0 12px rgba(58, 90, 64, 0.08), 0 25px 50px rgba(0,0,0,0.25);
+      animation: corePulse 5s infinite ease-in-out; cursor: default;
+    }
+    .core-title { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 700; line-height: 1; }
+    .core-sub { font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase; margin-top: 10px; color: var(--secondary-tone); }
 
-        .tab.active::before {
-            transform: scaleX(1);
-            box-shadow: 0 0 10px var(--gold-accent);
-        }
-        
-        /* Content Area */
-        .tab-content {
-            display: none;
-            animation: slideUpFade 0.7s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-        
-        @keyframes slideUpFade {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .tab-content.active {
-            display: block;
-        }
-        
-        h2 {
-            color: var(--primary-dark);
-            margin-bottom: 2.5rem;
-            font-size: 2rem;
-            font-weight: 800;
-            text-align: center;
-            position: relative;
-            padding-bottom: 1rem;
-        }
-        
-        h2::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            height: 4px;
-            width: 60px;
-            background: var(--gold-gradient);
-            border-radius: 2px;
-        }
-        
-        h3 {
-            color: var(--primary-mid);
-            margin: 0 0 1.2rem;
-            font-size: 1.4rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-        }
-        
-        h3::before {
-            content: '';
-            display: inline-block;
-            width: 8px;
-            height: 24px;
-            background: var(--gold-accent);
-            margin-right: 12px;
-            border-radius: 4px;
-        }
+    @keyframes corePulse {
+      0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); }
+    }
 
-        /* Card: 精緻化 */
-        .card {
-            background: var(--bg-card);
-            border-radius: var(--radius-lg);
-            padding: 2.5rem;
-            margin-bottom: 2.5rem;
-            box-shadow: var(--shadow-soft);
-            border: 1px solid rgba(255,255,255,0.8);
-            transition: all 0.3s ease;
-        }
-        
-        .card:hover {
-            transform: translateY(-7px);
-            box-shadow: 0 15px 40px -10px rgba(0,0,0,0.15);
-            border-color: rgba(255, 215, 0, 0.3);
-        }
-        
-        /* Table: 專業高雅 */
-        .table-wrapper {
-            overflow-x: auto;
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-soft);
-            margin: 2rem 0;
-            border: 1px solid rgba(0,0,0,0.05);
-        }
+    /* 子節點 Satellite */
+    .satellite {
+      position: absolute; width: var(--node-size); height: var(--node-size);
+      border-radius: 50%; background: white;
+      border: 2px solid var(--primary-tone);
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      text-align: center; cursor: pointer; z-index: 5;
+      box-shadow: 0 10px 25px rgba(58, 90, 64, 0.1);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      font-family: 'Playfair Display', serif; font-weight: 600;
+      font-size: 0.85rem; color: var(--primary-tone); padding: 5px;
+    }
+    .satellite:hover {
+      transform: scale(1.15); background: var(--primary-tone);
+      color: white; border-color: var(--secondary-tone);
+      box-shadow: 0 15px 35px rgba(58, 90, 64, 0.3); z-index: 10;
+    }
 
-        table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            background: white;
-            min-width: 700px;
-        }
-        
-        th, td {
-            padding: 18px 24px;
-            text-align: left;
-            border-bottom: 1px solid #eef2f5;
-        }
-        
-        th {
-            background: var(--primary-mid); /* 深色表頭 */
-            color: white;
-            font-weight: 700;
-            font-size: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-bottom: 3px solid var(--gold-accent);
-        }
-        
-        tr:last-child td {
-            border-bottom: none;
-        }
-        
-        tr:nth-child(even) td {
-            background-color: #fcfdfd;
-        }
+    .step-badge {
+      position: absolute; top: -5px; left: 50%; transform: translateX(-50%);
+      background: var(--secondary-tone); color: white;
+      font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 700;
+      width: 24px; height: 24px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      border: 2px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
 
-        tr:hover td {
-            background-color: #f0f4f8;
-        }
+    /* 特殊節點樣式 */
+    .satellite.quiz-node { border-color: var(--secondary-tone); background: #fffcf5; }
+    .satellite.quiz-node .step-badge { background: #d32f2f; }
+    
+    .satellite.visual-node { border-color: #1976d2; color: #1565c0; }
+    .satellite.visual-node .step-badge { background: #1976d2; }
+    .satellite.visual-node:hover { background: #1976d2; color: white; }
 
-        td:first-child {
-            font-weight: 700;
-            color: var(--primary-accent);
-        }
-        
-        /* Example Box: 質感提升 */
-        .example {
-            background: linear-gradient(to right, #fffcf0, #fff); /* 淡淡的金黃色漸層 */
-            border-left: 5px solid var(--gold-accent);
-            padding: 1.5rem 2rem;
-            margin: 1.8rem 0 0;
-            border-radius: 0 var(--radius-md) var(--radius-md) 0;
-            position: relative;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
-        }
-        
-        .example p {
-            margin-bottom: 0.8rem;
-            color: var(--text-main);
-        }
-        .example p:last-child {
-            margin-bottom: 0;
-        }
-        
-        .btn {
-            background: var(--dynamic-gradient);
-            color: white;
-            border: none;
-            padding: 12px 32px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 700;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            font-size: 1rem;
-            box-shadow: 0 4px 15px rgba(32, 58, 67, 0.3);
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-            text-decoration: none; /* 確保連結沒有下劃線 */
-        }
-        
-        /* 按鈕流光效果 */
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.5s;
-            z-index: -1;
-        }
+    .satellite.special-node { border-color: #d32f2f; color: #c62828; }
+    .satellite.special-node .step-badge { background: #d32f2f; }
+    .satellite.special-node:hover { background: #d32f2f; color: white; }
 
-        .btn:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 8px 25px rgba(32, 58, 67, 0.4), var(--shadow-glow);
-        }
+    /* === 3. Modal 內容區 === */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(250, 248, 242, 0.95); backdrop-filter: blur(5px);
+      z-index: 100; opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease;
+      display: flex; justify-content: center; align-items: center;
+    }
+    .modal-overlay.active { opacity: 1; pointer-events: auto; }
 
-        .btn:hover::before {
-            left: 100%;
-        }
-        
-        .tense-visualization iframe {
-            border: none;
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-soft);
-            width: 100%;
-            min-height: 500px; 
-        }
-        
-        /* Footer: 與 Header 呼應 */
-        footer {
-            text-align: center;
-            padding: 4rem 2rem;
-            margin-top: 5rem;
-            background: var(--primary-dark);
-            color: rgba(255,255,255,0.6);
-            font-size: 0.95rem;
-            position: relative;
-        }
-        
-        footer::before {
-             content: '';
-             position: absolute;
-             top: 0; left: 0; width: 100%; height: 4px;
-             background: var(--gold-gradient);
-        }
-        
-        .highlight {
-            color: var(--primary-dark);
-            padding: 2px 6px;
-            font-weight: 700;
-            background: linear-gradient(120deg, transparent 0%, transparent 6px, var(--gold-accent) 6px, var(--gold-accent) 100%);
-            background-size: 100% 10px;
-            background-repeat: no-repeat;
-            background-position: bottom;
-        }
+    .modal-content {
+      width: 90%; max-width: 950px; max-height: 85vh;
+      background: white; border-radius: 16px;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.2);
+      border-top: 6px solid var(--primary-tone);
+      overflow-y: auto; padding: 40px;
+      display: none; animation: slideUp 0.4s ease-out;
+    }
+    @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-        /* 不規則動詞練習平台 - 尊爵暗黑版 */
-        .practice-platform {
-            /* 改用深色背景，營造高級感 */
-            background: var(--primary-dark);
-            color: var(--text-on-dark);
-            border-radius: var(--radius-lg);
-            padding: 4rem 3rem;
-            margin: 4rem 0;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-            text-align: center;
-            border: 1px solid rgba(255, 215, 0, 0.1);
-        }
+    .close-btn {
+      position: absolute; top: 20px; right: 20px;
+      width: 40px; height: 40px; border-radius: 50%; border: none;
+      background: #f4f4f4; color: var(--text-main); font-size: 1.5rem;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .close-btn:hover { background: var(--secondary-tone); color: white; }
 
-        /* 金色邊框流動效果 */
-        .practice-platform::after {
-            content: '';
-            position: absolute;
-            top: -2px; left: -2px; right: -2px; bottom: -2px;
-            background: linear-gradient(45deg, var(--gold-dark), var(--gold-accent), var(--gold-dark));
-            z-index: -1;
-            border-radius: calc(var(--radius-lg) + 2px);
-            opacity: 0.3;
-            filter: blur(5px);
-        }
+    /* 內容排版 */
+    h2 { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--primary-tone); margin-bottom: 20px; border-bottom: 2px solid var(--secondary-tone); padding-bottom: 10px; }
+    h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--primary-tone); margin: 30px 0 15px; border-left: 4px solid var(--secondary-tone); padding-left: 12px; }
+    
+    /* 表格優化 */
+    .table-responsive { overflow-x: auto; margin: 20px 0; border: 1px solid #e8e4d9; border-radius: 8px; }
+    table { width: 100%; border-collapse: collapse; min-width: 600px; }
+    th { background: #f4f1ea; color: var(--primary-tone); padding: 15px; text-align: left; font-family: 'Playfair Display', serif; border-bottom: 2px solid #e8e4d9; white-space: nowrap; }
+    td { padding: 14px; border-bottom: 1px solid #eee; }
+    tr:nth-child(even) { background-color: #fcfcfc; }
+    
+    .bilingual-box { display: flex; gap: 20px; background: #fbfbf9; padding: 25px; border-radius: 8px; border: 1px solid #eee; margin-bottom: 20px; }
+    .highlight { background: var(--highlight-bg); padding: 2px 6px; border-radius: 4px; color: var(--primary-tone); font-weight: 600; }
+    .note-box { padding: 20px; margin: 20px 0; border-radius: 0 8px 8px 0; line-height: 1.6; }
+    .note-tip { background: #f1f8f1; border-left: 4px solid #3a5a40; color: #2d4632; }
+    
+    .btn-cta { background: var(--secondary-tone); color: white; padding: 12px 30px; border-radius: 50px; border: none; font-size: 1rem; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; transition: 0.3s; font-weight: 600; margin-top: 15px; }
+    .btn-cta:hover { background: var(--primary-tone); transform: translateY(-2px); }
 
-        .platform-title {
-            font-size: 2rem;
-            color: var(--gold-accent); /* 金色標題 */
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            font-weight: 800;
-            text-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
-        }
+    /* Timeline Preview Style */
+    .timeline-preview {
+      display: flex; align-items: center; justify-content: space-between;
+      margin: 40px 0; position: relative; padding: 40px 20px;
+      background: #fcfcfc; border-radius: 12px; border: 1px solid #eee; min-height: 150px;
+    }
+    .timeline-line {
+      position: absolute; top: 50%; left: 40px; right: 40px; height: 4px; background: #e0e0e0; z-index: 0;
+    }
+    .timeline-point {
+      position: relative; z-index: 1; width: 16px; height: 16px;
+      background: var(--secondary-tone); border-radius: 50%;
+      box-shadow: 0 0 0 5px white;
+    }
+    .timeline-label {
+      position: absolute; top: -35px; left: 50%; transform: translateX(-50%);
+      font-weight: bold; color: var(--primary-tone); white-space: nowrap;
+    }
+    .timeline-sub {
+      position: absolute; bottom: -35px; left: 50%; transform: translateX(-50%);
+      font-size: 0.85rem; color: #666; width: 120px; text-align: center;
+    }
 
-        .platform-description {
-            color: rgba(255,255,255,0.9);
-            margin-bottom: 2.5rem;
-            font-size: 1.15rem;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-            line-height: 1.8;
-        }
+    /* Quiz Styling */
+    .quiz-question-box { background: #fff; padding: 25px; border-radius: 12px; border: 1px solid #eee; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 20px; }
+    .quiz-q-text { font-size: 1.2rem; font-weight: 600; color: var(--primary-tone); margin-bottom: 20px; }
+    .quiz-opt { display: block; width: 100%; padding: 15px 20px; margin-bottom: 10px; border: 2px solid #f0f0f0; border-radius: 8px; background: white; text-align: left; cursor: pointer; transition: all 0.2s; font-size: 1rem; }
+    .quiz-opt:hover:not(:disabled) { border-color: var(--secondary-tone); background: #fffbf5; }
+    .quiz-opt.correct { background: #e8f5e9; border-color: #4caf50; color: #2e7d32; }
+    .quiz-opt.incorrect { background: #ffebee; border-color: #ef5350; color: #c62828; }
+    
+    .explanation { margin-top: 20px; padding: 15px; background: #faf8f2; border-left: 4px solid var(--secondary-tone); display: none; }
+    .explanation.show { display: block; animation: fadeIn 0.3s; }
+    @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+    
+    .result-card { text-align: center; padding: 40px; display: none; }
+    .result-score { font-size: 4rem; font-family: 'Playfair Display', serif; color: var(--primary-tone); font-weight: 700; }
 
-        .platform-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            background: var(--gold-gradient); /* 金色按鈕 */
-            color: var(--primary-dark);
-            text-decoration: none;
-            padding: 18px 45px;
-            border-radius: 50px;
-            font-weight: 800;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            font-size: 1.2rem;
-            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.4);
-            margin-bottom: 3rem;
-        }
-
-        .platform-button:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 15px 35px rgba(255, 215, 0, 0.6);
-            background: linear-gradient(45deg, #FFD700, #fffadd, #FFD700);
-        }
-
-        .platform-features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 25px;
-            margin-top: 2rem;
-            text-align: left;
-        }
-
-        .feature-item {
-            background: rgba(255,255,255,0.08); /* 半透明深色背景 */
-            padding: 1.8rem;
-            border-radius: var(--radius-md);
-            border-top: 3px solid var(--gold-accent);
-            transition: transform 0.3s, background 0.3s;
-            backdrop-filter: blur(10px);
-        }
-        
-        .feature-item:hover {
-            transform: translateY(-10px);
-            background: rgba(255,255,255,0.12);
-        }
-
-        .feature-item i {
-            color: var(--gold-accent);
-            margin-right: 12px;
-            font-size: 1.4rem;
-        }
-        
-        .feature-item strong {
-            color: white;
-            font-size: 1.1rem;
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-        
-        .feature-item {
-            color: rgba(255,255,255,0.7);
-        }
-        
-        .note {
-            background: rgba(255, 215, 0, 0.1) !important;
-            border-left: 4px solid var(--gold-accent) !important;
-            color: var(--gold-dark) !important;
-            font-weight: 600;
-        }
-        .note strong {
-             color: var(--text-main);
-        }
-
-        /* Quiz Styles */
-        .quiz-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .quiz-card {
-            background: var(--bg-card);
-            border-radius: var(--radius-lg);
-            padding: 2.5rem;
-            margin-bottom: 2rem;
-            box-shadow: var(--shadow-soft);
-            border: 1px solid rgba(255,255,255,0.8);
-            animation: fadeIn 0.5s ease;
-        }
-
-        .quiz-progress {
-            margin-bottom: 1.5rem;
-            color: var(--text-light);
-            font-weight: 700;
-            text-align: right;
-            font-size: 0.9rem;
-        }
-
-        .quiz-question {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--primary-mid);
-            margin-bottom: 2rem;
-            border-left: 4px solid var(--gold-accent);
-            padding-left: 20px;
-            line-height: 1.6;
-        }
-
-        .quiz-options {
-            display: grid;
-            gap: 15px;
-        }
-
-        .quiz-option {
-            padding: 18px 25px;
-            background: white;
-            border: 2px solid #eef2f5;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-weight: 600;
-            color: var(--text-main);
-            text-align: left;
-            position: relative;
-            font-size: 1.05rem;
-        }
-
-        .quiz-option:hover:not(.disabled) {
-            border-color: var(--primary-accent);
-            background: #f8fafc;
-            transform: translateX(5px);
-        }
-
-        .quiz-option.correct {
-            background-color: #d4edda;
-            border-color: #28a745;
-            color: #155724;
-        }
-
-        .quiz-option.incorrect {
-            background-color: #f8d7da;
-            border-color: #dc3545;
-            color: #721c24;
-            opacity: 0.8;
-        }
-
-        .quiz-option.disabled {
-            cursor: default;
-            opacity: 0.7;
-        }
-
-        .quiz-explanation {
-            margin-top: 25px;
-            padding: 20px;
-            background: rgba(255, 215, 0, 0.1);
-            border-radius: 12px;
-            border-left: 4px solid var(--gold-dark);
-            color: var(--text-main);
-            display: none;
-            animation: slideDown 0.4s ease;
-        }
-
-        .quiz-explanation.show {
-            display: block;
-        }
-
-        .quiz-nav {
-            margin-top: 25px;
-            text-align: right;
-            display: none;
-        }
-
-        .quiz-nav.show {
-            display: block;
-        }
-
-        .quiz-result {
-            text-align: center;
-            padding: 3rem;
-        }
-
-        .score-circle {
-            width: 150px;
-            height: 150px;
-            background: var(--dynamic-gradient);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 2rem;
-            color: var(--gold-accent);
-            font-size: 3rem;
-            font-weight: 800;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            border: 4px solid rgba(255, 255, 255, 0.2);
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* 響應式調整 */
-        @media (max-width: 768px) {
-            header {
-                padding: 3rem 1rem 4rem;
-            }
-            h1 { font-size: 2.2rem; }
-            
-            .tabs {
-                margin-top: -2rem;
-                width: 95%;
-                gap: 8px;
-                padding: 8px;
-            }
-            .tab {
-                padding: 0.7rem 1rem;
-                font-size: 0.9rem;
-                flex: 1 1 auto;
-            }
-            
-            .card { padding: 1.5rem; }
-            
-            .platform-title {
-                font-size: 1.5rem;
-                flex-direction: column;
-            }
-            .platform-button {
-                 width: 100%;
-                 justify-content: center;
-            }
-        }
-    </style>
+    /* RWD */
+    @media (max-width: 768px) {
+      body { overflow-y: auto; height: auto; }
+      .floating-objects { height: 100vh; position: fixed; }
+      .mindmap-stage { flex-direction: column; height: auto; padding: 50px 20px; }
+      .connections { display: none; }
+      .core-node { margin-bottom: 40px; width: 160px; height: 160px; }
+      .satellite { 
+        position: relative; top: auto !important; left: auto !important; transform: none !important;
+        width: 100%; min-height: 70px; margin-bottom: 12px; flex-direction: row; 
+        justify-content: flex-start; text-align: left; gap: 20px; padding: 15px 25px;
+      }
+      .satellite:hover { transform: translateY(-3px) !important; }
+      .step-badge { position: static; transform: none; margin-right: 0; min-width: 24px; }
+      .modal-content { padding: 25px; width: 95%; max-height: 90vh; }
+      .bilingual-box { flex-direction: column; }
+      .timeline-preview { flex-direction: column; height: 350px; gap: 40px; align-items: center; justify-content: center; }
+      .timeline-line { width: 4px; height: 80%; top: 50%; bottom: auto; left: 50%; right: auto; transform: translate(-50%, -50%); }
+      .timeline-point { margin: 30px 0; }
+      .timeline-label { top: 50%; left: -80px; transform: translateY(-50%); text-align: right; width: 70px; }
+      .timeline-sub { bottom: auto; top: 50%; left: 30px; transform: translateY(-50%); text-align: left; width: 100px; }
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <div class="header-content">
-            <h1>英語動詞學習平台</h1>
-            <p class="subtitle">Shirley's English Verb Learning Platform</p>
-        </div>
-    </header>
-    
-    <div class="container">
-        <div class="tabs">
-            <div class="tab active" data-tab="types">動詞種類 | Verb Types</div>
-            <div class="tab" data-tab="tenses">時態 | Tenses</div>
-            <div class="tab" data-tab="voices">語態 | Voices</div>
-            <div class="tab" data-tab="keypoints">重點內容 | Key Points</div>
-            <div class="tab" data-tab="quiz">自我檢測 | Quiz</div>
-        </div>
-        
-        <div class="tab-content active" id="types">
-            <h2>動詞種類 | Verb Types</h2>
-            
-            <div class="card">
-                <h3>連綴動詞 | Linking Verbs</h3>
-                <p>連綴動詞不表示動作，而是連接主語和描述主語的詞。</p>
-                <p>Linking verbs do not show action but connect the subject to a word that describes it.</p>
-                <div class="example">
-                    <p><strong>例子 Example:</strong> She <span class="highlight">is</span> a teacher. | 她是一名老師。</p>
-                    <p><strong>例子 Example:</strong> He <span class="highlight">feels</span> happy. | 他感到快樂。</p>
-                </div>
-            </div>
-            
-            <div class="card">
-                <h3>及物動詞和不及物動詞 | Transitive and Intransitive Verbs</h3>
-                <p><strong>及物動詞 (Transitive verbs)</strong> 需要接受詞。</p>
-                <p><strong>不及物動詞 (Intransitive verbs)</strong> 不需要接受詞。</p>
-                <div class="example">
-                    <p><strong>及物 Transitive:</strong> She <span class="highlight">reads</span> a book. | 她讀一本書。</p>
-                    <p><strong>不及物 Intransitive:</strong> He <span class="highlight">sleeps</span>. | 他睡覺。</p>
-                </div>
-            </div>
-            
-            <div class="card">
-                <h3>情態助動詞 | Modal Auxiliary Verbs</h3>
-                <p>情態助動詞後面接動詞原形，不受主語影響。</p>
-                <p>Modal auxiliary verbs are followed by the base form of the verb and are not affected by the subject.</p>
-                
-                <div class="table-wrapper">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>單詞 Word</th>
-                                <th>意思 Meaning</th>
-                                <th>例子 Example</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>can</td>
-                                <td>能力; 允許; 請求; 可能性</td>
-                                <td>I can speak three languages. (能力)</td>
-                            </tr>
-                            <tr>
-                                <td>could</td>
-                                <td>能力; 請求; 猜測</td>
-                                <td>Could you open the window? (禮貌請求)</td>
-                            </tr>
-                            <tr>
-                                <td>may</td>
-                                <td>請求、允許; 祝願; 猜測</td>
-                                <td>May I open the window? (請求)</td>
-                            </tr>
-                            <tr>
-                                <td>might</td>
-                                <td>可能; 請求</td>
-                                <td>You might be disappointed. (可能)</td>
-                            </tr>
-                            <tr>
-                                <td>must</td>
-                                <td>必須; 命令; 猜測</td>
-                                <td>Students must do homework. (義務)</td>
-                            </tr>
-                            <tr>
-                                <td>ought to</td>
-                                <td>應該/應當; 可能性</td>
-                                <td>You ought to work harder next year. (應當)</td>
-                            </tr>
-                            <tr>
-                                <td>shall</td>
-                                <td>建議; 將/會</td>
-                                <td>Shall we leave now? (詢問意見)</td>
-                            </tr>
-                            <tr>
-                                <td>should</td>
-                                <td>應該/該</td>
-                                <td>You should finish the task on time. (責任)</td>
-                            </tr>
-                            <tr>
-                                <td>will</td>
-                                <td>未來可能/意願</td>
-                                <td>I will be away for a week.</td>
-                            </tr>
-                            <tr>
-                                <td>would</td>
-                                <td>希望/邀請</td>
-                                <td>Would you like to go skating with us?</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            
-            <div class="card">
-                <h3>助動詞 | Auxiliary Verbs</h3>
-                <p>幫助主要動詞構成各種時態、語態、句型(如疑問句否定句)，沒有實際語意。</p>
-                <p>Auxiliary verbs help main verbs form various tenses, voices, and sentence patterns (such as questions and negatives), and have no actual meaning.</p>
-                
-                <div class="table-wrapper">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>助動詞 Auxiliary Verb</th>
-                                <th>用法 Usage</th>
-                                <th>例子 Example</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>be (am/is/are/was/were)</td>
-                                <td>用於進行式和被動語態</td>
-                                <td>She is studying. (進行式)<br>The car was repaired. (被動語態)</td>
-                            </tr>
-                            <tr>
-                                <td>do/does/did</td>
-                                <td>用於簡單式疑問句和否定句</td>
-                                <td>Do you like coffee? (疑問句)<br>He doesn't live here. (否定句)</td>
-                            </tr>
-                            <tr>
-                                <td>have/has/had</td>
-                                <td>用於完成式</td>
-                                <td>I have finished my work. (現在完成式)<br>She had left before I arrived. (過去完成式)</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        
-        <div class="tab-content" id="tenses">
-            <h2>時態 | Tenses</h2>
-            
-            <div class="card">
-                <h3>時態概述 | Tense Overview</h3>
-                <p>英語動詞時態表示動作發生的時間。</p>
-                <p>English verb tenses indicate the time when an action occurs.</p>
-                
-                <div class="tense-visualization">
-                    <h3>時態可視化 | Tense Visualization</h3>
-                    <p>點擊下方鏈接查看時態可視化圖表</p>
-                    <p>Click the link below to view the tense visualization chart</p>
-                    <a href="https://ducj-creator.github.io/Shirley-Grammar/verbs/tensevisual.html" target="_blank" class="btn">
-                        <i class="fas fa-external-link-alt"></i> 查看時態圖表 | View Tense Chart
-                    </a>
-                </div>
-            </div>
 
-            <div class="practice-platform">
-                <div class="platform-title">🎯 Shirley's 不規則動詞練習平台</div>
-                <div class="platform-description">
-                    想要掌握不規則動詞的變化嗎？點擊下方按鈕進入互動式練習平台，透過多種練習模式強化不規則動詞的記憶！
-                </div>
-                <a href="https://ducj-creator.github.io/Shirley-Grammar/irregular/verbs/" 
-                   target="_blank" 
-                   class="platform-button">
-                    <i class="fas fa-gamepad"></i> 開始練習不規則動詞
-                </a>
-                <div class="platform-features">
-                    <div class="feature-item">
-                        <i class="fas fa-check-circle"></i>
-                        <strong>互動練習</strong><br>
-                        多種題型選擇
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-chart-line"></i>
-                        <strong>進度追蹤</strong><br>
-                        記錄學習成果
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-lightbulb"></i>
-                        <strong>即時反饋</strong><br>
-                        立即知道對錯
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-trophy"></i>
-                        <strong>成就系統</strong><br>
-                        激勵學習動力
-                    </div>
-                </div>
-                <div class="note" style="margin-top: 25px; text-align: left; padding: 20px; border-radius: 12px;">
-                    <strong>💡 學習提示：</strong> 1).不規則動詞是英語學習的關鍵! 2).過去式僅用於過去簡單式中，但過去分詞的使用範圍非常廣泛：完成式；被動態；形容詞；過去分詞構句等等。更多內容，請至「過去分詞」頁面學習。
-                </div>
-            </div>
-            
-            <div class="card">
-                <h3>簡單時態 | Simple Tenses</h3>
-                <div class="table-wrapper">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>時態 Tense</th>
-                                <th>用法 Usage</th>
-                                <th>例子 Example</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>現在簡單式 Present Simple</td>
-                                <td>習慣、事實、常規</td>
-                                <td>She works every day.</td>
-                            </tr>
-                            <tr>
-                                <td>過去簡單式 Past Simple</td>
-                                <td>過去完成的動作</td>
-                                <td>He visited Paris last year.</td>
-                            </tr>
-                            <tr>
-                                <td>未來簡單式 Future Simple</td>
-                                <td>未來的動作或預測</td>
-                                <td>They will arrive tomorrow.</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            
-            <div class="card">
-                <h3>進行時態 | Continuous Tenses</h3>
-                <div class="table-wrapper">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>時態 Tense</th>
-                                <th>用法 Usage</th>
-                                <th>例子 Example</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>現在進行式 Present Continuous</td>
-                                <td>現在正在進行的動作</td>
-                                <td>I am studying now.</td>
-                            </tr>
-                            <tr>
-                                <td>過去進行式 Past Continuous</td>
-                                <td>過去某一時刻正在進行的動作</td>
-                                <td>She was cooking when I called.</td>
-                            </tr>
-                            <tr>
-                                <td>未來進行式 Future Continuous</td>
-                                <td>未來某一時刻將進行的動作</td>
-                                <td>They will be traveling this time next week.</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            
-            <div class="card">
-                <h3>完成時態 | Perfect Tenses</h3>
-                <div class="table-wrapper">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>時態 Tense</th>
-                                <th>用法 Usage</th>
-                                <th>例子 Example</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>現在完成式 Present Perfect</td>
-                                <td>過去發生但與現在有關的動作</td>
-                                <td>I have finished my homework.</td>
-                            </tr>
-                            <tr>
-                                <td>過去完成式 Past Perfect</td>
-                                <td>過去某時之前已完成的動作</td>
-                                <td>She had left before I arrived.</td>
-                            </tr>
-                            <tr>
-                                <td>未來完成式 Future Perfect</td>
-                                <td>未來某時之前將完成的動作</td>
-                                <td>By next year, I will have graduated.</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            
-            <div class="card">
-                <h3>完成進行時態 | Perfect Continuous Tenses</h3>
-                <div class="table-wrapper">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>時態 Tense</th>
-                                <th>用法 Usage</th>
-                                <th>例子 Example</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>現在完成進行式 Present Perfect Continuous</td>
-                                <td>從過去持續到現在的動作</td>
-                                <td>I have been studying for two hours.</td>
-                            </tr>
-                            <tr>
-                                <td>過去完成進行式 Past Perfect Continuous</td>
-                                <td>過去某時之前持續的動作</td>
-                                <td>She had been waiting for an hour when he arrived.</td>
-                            </tr>
-                            <tr>
-                                <td>未來完成進行式 Future Perfect Continuous</td>
-                                <td>未來某時之前將持續的動作</td>
-                                <td>By next month, I will have been working here for five years.</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        
-        <div class="tab-content" id="voices">
-            <h2>語態 | Voices</h2>
-            
-            <div class="card">
-                <h3>主動語態 | Active Voice</h3>
-                <p>主語執行動作。</p>
-                <p>The subject performs the action.</p>
-                <div class="example">
-                    <p><strong>例子 Example:</strong> The cat <span class="highlight">chased</span> the mouse. | 貓追老鼠。</p>
-                </div>
-            </div>
-            
-            <div class="card">
-                <h3>被動語態 | Passive Voice</h3>
-                <p>主語接受動作。基本構成是 be + 過去分詞。</p>
-                <p>The subject receives the action. Basic structure is be + past participle.</p>
-                <div class="example">
-                    <p><strong>例子 Example:</strong> The mouse <span class="highlight">was chased</span> by the cat. | 老鼠被貓追。</p>
-                </div>
-                
-                <div class="table-wrapper">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>時態 Tense</th>
-                                <th>被動結構 Passive Structure</th>
-                                <th>例子 Example</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>現在簡單式 Present Simple</td>
-                                <td>am/is/are + past participle</td>
-                                <td>The car is not locked.</td>
-                            </tr>
-                            <tr>
-                                <td>過去簡單式 Past Simple</td>
-                                <td>was/were + past participle</td>
-                                <td>My purse was stolen.</td>
-                            </tr>
-                            <tr>
-                                <td>未來簡單式 Future Simple</td>
-                                <td>will be + past participle</td>
-                                <td>The meeting will be held next Wednesday.</td>
-                            </tr>
-                            <tr>
-                                <td>現在進行式 Present Continuous</td>
-                                <td>am/is/are being + past participle</td>
-                                <td>The meeting is being held now.</td>
-                            </tr>
-                            <tr>
-                                <td>現在完成式 Present Perfect</td>
-                                <td>has/have been + past participle</td>
-                                <td>The flight has been canceled due to bad weather.</td>
-                            </tr>
-                            <tr>
-                                <td>過去完成式 Past Perfect</td>
-                                <td>had been + past participle</td>
-                                <td>The flight had been canceled before the flight crew were ready.</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        
-        <div class="tab-content" id="keypoints">
-            <h2>重點內容 | Key Points</h2>
-            
-            <div class="card">
-                <h3>動詞的重要性 | Importance of Verbs</h3>
-                <p>動詞是英語學習中的重中之重。五種基本句型中，動詞都是核心。寫作時也一定要先釐清每一個句子的主動詞。</p>
-                <p>Verbs are the most important part of English learning. In the five basic sentence patterns, verbs are the core. When writing, it is essential to clarify the main verb of each sentence first.</p>
-            </div>
-            
-            <div class="card">
-                <h3>時態和語態的規律 | Patterns of Tenses and Voices</h3>
-                <p>主動詞有時態和語態的變化，但時態和語態都是有規律的，記住規律，多加練習。</p>
-                <p>Main verbs change in tense and voice, but these changes follow patterns. Remember the patterns and practice more.</p>
-            </div>
-            
-            <div class="card">
-                <h3>動詞片語 | Phrasal Verbs</h3>
-                <p>動詞還會跟各種介詞搭配，形成不同的動詞片語。如：put up, take in等，需要積累及記憶。</p>
-                <p>Verbs also combine with various prepositions to form different phrasal verbs. For example: put up, take in, etc. These need to be accumulated and memorized.</p>
-                <div style="margin-top: 1.5rem; text-align: center;">
-                    <a href="https://ducj-creator.github.io/Shirley-Grammar/phrases" target="_blank" class="btn">
-                        <i class="fas fa-book-reader"></i> 進入動詞片語學習 | Learn Phrasal Verbs
-                    </a>
-                </div>
-            </div>
-            
-            <div class="card">
-                <h3>重要提醒 | Important Reminders</h3>
-                <ul>
-                    <li>現在簡單式要注意動詞的第三人稱單數形式，如：She likes jogging.</li>
-                    <li>過去簡單式要注意過去式的不規則變化。</li>
-                    <li>完成時態要注意使用動詞的過去分詞，並注意過去分詞的不規則變化。</li>
-                    <li>助動詞 do, does, did, have, has, had 本身也可以做主要動詞，如：What do you do? I have had lunch 等。不要混淆。</li>
-                    <li>未來式中，will 一般表示臨時起意，而be going to 表示計畫好的事。如：It's cold; I'll close the window. I am going to buy a new phone.</li>
-                    <li>被動語態需要和 be + -ed 形容詞區分開, 如: I am excited. 不是被動語態。</li>
-                </ul>
-            </div>
-        </div>
+  <div class="floating-objects" id="floatingBg"></div>
 
-        <div class="tab-content" id="quiz">
-            <h2>自我檢測 | Quiz</h2>
-            <div class="quiz-container">
-                <div id="quiz-question-container">
-                    </div>
-            </div>
-        </div>
+  <div class="mindmap-stage" id="stage">
+    <svg class="connections" id="svgLines"></svg>
+
+    <div class="core-node">
+      <div class="core-title">Shirley's<br>Verbs</div>
+      <div class="core-sub">Complete Guide</div>
+    </div>
+
+    <div class="satellite" data-target="type-basic-modal">
+      <div class="step-badge">1</div>
+      <div>Verb Types<br>基本種類</div>
     </div>
     
-    <footer>
-        <p>英語動詞學習平台 | Shirley's English Verb Learning Platform</p>
-        <p>© since 2025| Teacher Shirley</p>
-    </footer>
+    <div class="satellite" data-target="type-helper-modal">
+      <div class="step-badge">2</div>
+      <div>Modals<br>情態助動詞</div>
+    </div>
+    
+    <div class="satellite" data-target="tense-simple-modal">
+      <div class="step-badge">3</div>
+      <div>Simple Tense<br>簡單/進行式</div>
+    </div>
+    
+    <div class="satellite" data-target="tense-perfect-modal">
+      <div class="step-badge">4</div>
+      <div>Perfect Tense<br>完成時態</div>
+    </div>
 
-    <script>
-        // 選項卡功能
-        document.querySelectorAll('.tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                // 移除所有活動標籤和內容
-                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-                
-                // 添加活動類到當前標籤
-                tab.classList.add('active');
-                
-                // 顯示對應的內容
-                const tabId = tab.getAttribute('data-tab');
-                document.getElementById(tabId).classList.add('active');
-            });
-        });
+    <div class="satellite visual-node" data-target="visual-modal">
+      <div class="step-badge">5</div>
+      <div>Timeline<br>時態可視化</div>
+    </div>
 
-        // 30 Practical English Questions Database
-        const quizQuestions = [
-            // Linking Verbs
-            {
-                question: "1. She _____ tired after the long run.",
-                options: ["looks", "look", "is looking", "looked at"],
-                correct: 0,
-                explanation: "<strong>Explanation:</strong> 'Looks' is a linking verb connecting 'She' to the adjective 'tired'. We use Present Simple for facts/states."
-            },
-            {
-                question: "2. The soup _____ delicious.",
-                options: ["tastes", "tasting", "taste", "is tasted"],
-                correct: 0,
-                explanation: "<strong>Explanation:</strong> 'Tastes' is a linking verb here describing the state of the soup. 'The soup' is singular, so we add 's'."
-            },
-            
-            // Transitive/Intransitive
-            {
-                question: "3. Please _____ the book on the table.",
-                options: ["lie", "lay", "rise", "sat"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> 'Lay' is transitive (needs an object, 'the book'). 'Lie' is intransitive."
-            },
-            
-            // Modals
-            {
-                question: "4. When I was five, I _____ swim very well.",
-                options: ["can", "could", "should", "will"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> We use 'could' to express ability in the past."
-            },
-            {
-                question: "5. You _____ wear a seatbelt when driving. It's the law.",
-                options: ["must", "might", "could", "may"],
-                correct: 0,
-                explanation: "<strong>Explanation:</strong> 'Must' is used for strong obligations or laws."
-            },
-            {
-                question: "6. You look sick. You _____ go to the doctor.",
-                options: ["should", "can", "will", "might"],
-                correct: 0,
-                explanation: "<strong>Explanation:</strong> 'Should' is used to give advice."
-            },
-            
-            // Auxiliaries
-            {
-                question: "7. _____ you like pizza?",
-                options: ["Are", "Do", "Have", "Can"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> Use 'Do' for questions in the Present Simple with main verbs (like)."
-            },
-            {
-                question: "8. _____ you finished your homework yet?",
-                options: ["Did", "Have", "Are", "Do"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> Use 'Have' to form the Present Perfect tense (Have + V3)."
-            },
-            
-            // Simple Tenses
-            {
-                question: "9. My brother _____ to school every morning.",
-                options: ["walk", "walks", "is walking", "walked"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> Use Present Simple for daily habits. 'Brother' is singular, so add 's'."
-            },
-            {
-                question: "10. We _____ to London last summer.",
-                options: ["go", "gone", "went", "have gone"],
-                correct: 2,
-                explanation: "<strong>Explanation:</strong> Use Past Simple ('went') for actions completed at a specific time in the past ('last summer')."
-            },
-            {
-                question: "11. Don't worry, I _____ help you.",
-                options: ["am going to", "will", "am", "shall"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> Use 'will' for offers or decisions made at the moment of speaking."
-            },
-            
-            // Continuous Tenses
-            {
-                question: "12. Listen! The baby _____.",
-                options: ["cries", "is crying", "cried", "has cried"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> Use Present Continuous ('is crying') for actions happening right now."
-            },
-            {
-                question: "13. I _____ TV when the phone rang.",
-                options: ["watched", "am watching", "was watching", "have watched"],
-                correct: 2,
-                explanation: "<strong>Explanation:</strong> Use Past Continuous ('was watching') for a long action interrupted by a short action in the past."
-            },
-            
-            // Perfect Tenses
-            {
-                question: "14. I _____ my keys. I can't find them anywhere.",
-                options: ["lose", "lost", "have lost", "am losing"],
-                correct: 2,
-                explanation: "<strong>Explanation:</strong> Use Present Perfect ('have lost') when a past action has a result in the present."
-            },
-            {
-                question: "15. She has lived here _____ ten years.",
-                options: ["since", "for", "in", "during"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> Use 'for' with a duration of time (ten years)."
-            },
-            {
-                question: "16. The train _____ already left when we arrived at the station.",
-                options: ["has", "had", "was", "did"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> Use Past Perfect ('had left') for an action that happened before another past action."
-            },
-            {
-                question: "17. By next year, I _____ from university.",
-                options: ["will graduate", "graduate", "will have graduated", "graduated"],
-                correct: 2,
-                explanation: "<strong>Explanation:</strong> Use Future Perfect ('will have graduated') for an action that will be completed by a specific time in the future."
-            },
-            
-            // Perfect Continuous
-            {
-                question: "18. It _____ raining all day.",
-                options: ["is", "has been", "was", "did"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> Use Present Perfect Continuous ('has been') to emphasize the duration of an action."
-            },
-            
-            // Passive Voice
-            {
-                question: "19. The letter _____ by Mark yesterday.",
-                options: ["wrote", "was written", "is written", "writes"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> Past Passive: was/were + Past Participle ('written'). Used with 'yesterday'."
-            },
-            {
-                question: "20. English _____ spoken in many countries.",
-                options: ["is", "are", "has", "does"],
-                correct: 0,
-                explanation: "<strong>Explanation:</strong> Present Passive: is/are + Past Participle ('spoken')."
-            },
-            {
-                question: "21. The work _____ be finished tomorrow.",
-                options: ["will", "is", "has", "did"],
-                correct: 0,
-                explanation: "<strong>Explanation:</strong> Future Passive: will + be + Past Participle."
-            },
-            
-            // Gerunds and Infinitives
-            {
-                question: "22. I enjoy _____ movies on weekends.",
-                options: ["watch", "to watch", "watching", "watched"],
-                correct: 2,
-                explanation: "<strong>Explanation:</strong> 'Enjoy' is always followed by a Gerund (V-ing)."
-            },
-            {
-                question: "23. She decided _____ to Paris.",
-                options: ["go", "going", "to go", "went"],
-                correct: 2,
-                explanation: "<strong>Explanation:</strong> 'Decide' is followed by an Infinitive (to + V)."
-            },
-            {
-                question: "24. He stopped _____ because it was bad for his health.",
-                options: ["smoking", "to smoke", "smoke", "smoked"],
-                correct: 0,
-                explanation: "<strong>Explanation:</strong> 'Stop + V-ing' means to quit an activity."
-            },
-            
-            // Conditionals
-            {
-                question: "25. If it rains, I _____ stay at home.",
-                options: ["would", "will", "am", "stayed"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> First Conditional: If + Present, ... will + Verb."
-            },
-            {
-                question: "26. If I _____ a bird, I would fly to you.",
-                options: ["was", "am", "were", "be"],
-                correct: 2,
-                explanation: "<strong>Explanation:</strong> Second Conditional (Hypothetical): Use 'were' for all subjects in the 'if' clause."
-            },
-            
-            // Phrasal Verbs
-            {
-                question: "27. Please turn _____ the lights when you leave the room.",
-                options: ["on", "in", "off", "up"],
-                correct: 2,
-                explanation: "<strong>Explanation:</strong> 'Turn off' means to stop the flow of electricity/light."
-            },
-            
-            // Subject-Verb Agreement
-            {
-                question: "28. Everyone _____ happy about the news.",
-                options: ["are", "is", "were", "have"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> 'Everyone' is a singular subject, so it takes the singular verb 'is'."
-            },
-            
-            // Stative Verbs
-            {
-                question: "29. I _____ you are right.",
-                options: ["am believing", "believe", "believed", "was believing"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> 'Believe' is a stative verb and is rarely used in continuous tenses."
-            },
-            
-            // Causative
-            {
-                question: "30. The teacher made the student _____ his homework.",
-                options: ["rewrite", "to rewrite", "rewriting", "rewritten"],
-                correct: 0,
-                explanation: "<strong>Explanation:</strong> Causative 'make' is followed by the base form of the verb (make someone do something)."
-            }
-        ];
+    <div class="satellite special-node" onclick="window.open('https://ducj-creator.github.io/Shirley-Grammar/irregular/verbs/', '_blank')">
+      <div class="step-badge">6</div>
+      <div>Irregular<br>不規則動詞 (Tool)</div>
+    </div>
 
-        let currentQuestionIndex = 0;
-        let score = 0;
+    <div class="satellite" data-target="voice-modal">
+      <div class="step-badge">7</div>
+      <div>Voices<br>被動語態</div>
+    </div>
+    
+    <div class="satellite" data-target="keypoint-modal">
+      <div class="step-badge">8</div>
+      <div>Key Points<br>重點提醒</div>
+    </div>
+    
+    <div class="satellite quiz-node" data-target="quiz-modal">
+      <div class="step-badge">9</div>
+      <div>Quiz<br>30題挑戰</div>
+    </div>
+  </div>
 
-        // 初始化 Quiz
-        function initQuiz() {
-            currentQuestionIndex = 0;
-            score = 0;
-            showQuestion(currentQuestionIndex);
-        }
+  <div class="modal-overlay" id="modalOverlay">
+    <button class="close-btn" onclick="closeModal()">✕</button>
 
-        // 顯示題目
-        function showQuestion(index) {
-            const container = document.getElementById('quiz-question-container');
-            
-            // 如果題目做完了
-            if (index >= quizQuestions.length) {
-                showResult(container);
-                return;
-            }
+    <div id="type-basic-modal" class="modal-content">
+      <h2>1. Basic Verb Types 動詞種類</h2>
+      <div class="bilingual-box">
+        <p>動詞是句子的心臟，描述動作 (Action) 或狀態 (State)。</p>
+      </div>
+      
+      <h3>Linking Verbs 連綴動詞</h3>
+      <p>不表示動作，而是連接主語和描述詞。</p>
+      <div class="table-responsive">
+        <table>
+          <tr><th>Word</th><th>Example</th></tr>
+          <tr><td><strong>be</strong> (is, am, are)</td><td>She <span class="highlight">is</span> a teacher.</td></tr>
+          <tr><td><strong>feel</strong> (感覺)</td><td>I <span class="highlight">feel</span> tired.</td></tr>
+          <tr><td><strong>become</strong> (變得)</td><td>He <span class="highlight">became</span> angry.</td></tr>
+        </table>
+      </div>
 
-            const q = quizQuestions[index];
-            
-            let html = `
-                <div class="quiz-card">
-                    <div class="quiz-progress">Question ${index + 1} / ${quizQuestions.length}</div>
-                    <div class="quiz-question">${q.question}</div>
-                    <div class="quiz-options">
-                        ${q.options.map((opt, i) => `
-                            <div class="quiz-option" onclick="checkAnswer(this, ${i})">${opt}</div>
-                        `).join('')}
-                    </div>
-                    <div class="quiz-explanation" id="explanation-${index}">
-                        ${q.explanation}
-                    </div>
-                    <div class="quiz-nav" id="nav-${index}">
-                        <button class="btn" onclick="nextQuestion()">Next Question <i class="fas fa-arrow-right"></i></button>
-                    </div>
-                </div>
-            `;
-            
-            container.innerHTML = html;
-        }
+      <h3>Transitive vs Intransitive 及物/不及物</h3>
+      <div class="table-responsive">
+        <table>
+          <tr><th>Type</th><th>Need Object?</th><th>Example</th></tr>
+          <tr><td><strong>Transitive (及物)</strong></td><td>Yes (需要受詞)</td><td>She <span class="highlight">reads</span> a book.</td></tr>
+          <tr><td><strong>Intransitive (不及物)</strong></td><td>No (不需要)</td><td>The baby <span class="highlight">sleeps</span>.</td></tr>
+        </table>
+      </div>
+    </div>
 
-        // 檢查答案
-        window.checkAnswer = function(optionElement, selectedIndex) {
-            const currentQ = quizQuestions[currentQuestionIndex];
-            const explanation = document.getElementById(`explanation-${currentQuestionIndex}`);
-            const nav = document.getElementById(`nav-${currentQuestionIndex}`);
-            const allOptions = document.querySelectorAll('.quiz-option');
+    <div id="type-helper-modal" class="modal-content">
+      <h2>2. Modals & Auxiliary Verbs</h2>
+      <p>這是英語中最關鍵的輔助系統。請仔細區分「情態助動詞」與「一般助動詞」。</p>
 
-            // 防止重複點擊
-            if (optionElement.parentElement.classList.contains('answered')) return;
-            optionElement.parentElement.classList.add('answered');
+      <h3>A. Modal Verbs 情態助動詞</h3>
+      <div class="note-box note-tip">
+        <strong>特徵：</strong> 後面必須接<strong>原形動詞 (VR)</strong>，沒有人稱變化 (不加 s)。
+      </div>
+      <div class="table-responsive">
+        <table>
+          <tr><th>Modal</th><th>Function (功能)</th><th>Example</th></tr>
+          <tr><td><strong>can</strong></td><td>能力 / 許可</td><td>I can swim.</td></tr>
+          <tr><td><strong>could</strong></td><td>過去能力 / 委婉請求</td><td>Could you help me?</td></tr>
+          <tr><td><strong>may</strong></td><td>可能 / 許可 (正式)</td><td>It may rain tomorrow.</td></tr>
+          <tr><td><strong>might</strong></td><td>可能 (機率較低)</td><td>He might come later.</td></tr>
+          <tr><td><strong>must</strong></td><td>必須 (強烈) / 推測</td><td>You must wear a mask.</td></tr>
+          <tr><td><strong>should</strong></td><td>應該 (建議 / 義務)</td><td>You should sleep early.</td></tr>
+          <tr><td><strong>will</strong></td><td>未來 / 意願</td><td>I will call you.</td></tr>
+          <tr><td><strong>would</strong></td><td>過去未來 / 委婉 / 習慣</td><td>I would like some tea.</td></tr>
+        </table>
+      </div>
 
-            // 標記選項
-            if (selectedIndex === currentQ.correct) {
-                optionElement.classList.add('correct');
-                score++;
-            } else {
-                optionElement.classList.add('incorrect');
-                // 顯示正確答案
-                allOptions[currentQ.correct].classList.add('correct');
-            }
+      <h3>B. Auxiliary Verbs 一般助動詞</h3>
+      <div class="table-responsive">
+        <table>
+          <tr><th>Verb</th><th>Usage</th><th>Example</th></tr>
+          <tr><td><strong>be</strong> (is/am/are)</td><td>進行式 / 被動語態</td><td>She <strong>is</strong> working.</td></tr>
+          <tr><td><strong>do</strong> (do/does/did)</td><td>疑問句 / 否定句 / 強調</td><td><strong>Do</strong> you like it?</td></tr>
+          <tr><td><strong>have</strong> (have/has/had)</td><td>完成式</td><td>I <strong>have</strong> finished.</td></tr>
+        </table>
+      </div>
+    </div>
 
-            // 禁用其他選項
-            allOptions.forEach(opt => opt.classList.add('disabled'));
+    <div id="tense-simple-modal" class="modal-content">
+      <h2>3. Simple & Continuous Tenses</h2>
+      
+      <h3>Simple Tenses 簡單式</h3>
+      <div class="table-responsive">
+        <table>
+          <tr><th>Tense</th><th>Usage</th><th>Structure</th></tr>
+          <tr><td>Present Simple</td><td>習慣、事實</td><td>S + V(s/es)</td></tr>
+          <tr><td>Past Simple</td><td>過去發生的動作</td><td>S + V-ed / V2</td></tr>
+          <tr><td>Future Simple</td><td>未來動作</td><td>S + will + V</td></tr>
+        </table>
+      </div>
 
-            // 顯示解析與下一題按鈕
-            explanation.classList.add('show');
-            nav.classList.add('show');
-        }
+      <h3>Continuous Tenses 進行式</h3>
+      <div class="table-responsive">
+        <table>
+          <tr><th>Tense</th><th>Usage</th><th>Structure</th></tr>
+          <tr><td>Present Cont.</td><td>現在正在進行</td><td>am/is/are + V-ing</td></tr>
+          <tr><td>Past Cont.</td><td>過去某時正在做</td><td>was/were + V-ing</td></tr>
+        </table>
+      </div>
+    </div>
 
-        // 下一題
-        window.nextQuestion = function() {
-            currentQuestionIndex++;
-            showQuestion(currentQuestionIndex);
-        }
+    <div id="tense-perfect-modal" class="modal-content">
+      <h2>4. Perfect Tenses 完成時態</h2>
+      <div class="note-box note-tip">
+        <strong>💡 核心概念：</strong> 完成式表示「發生在過去，但與現在(或某個時間點)有關聯」。
+      </div>
 
-        // 顯示結果
-        function showResult(container) {
-            container.innerHTML = `
-                <div class="card quiz-result">
-                    <div class="score-circle">${score}</div>
-                    <h2>Quiz Completed!</h2>
-                    <p>Your Score: ${score} / ${quizQuestions.length}</p>
-                    <p>${score >= 25 ? "Excellent! You have a great understanding of verbs!" : score >= 18 ? "Good job! Keep practicing to improve even more." : "Keep trying! Review the lessons and try again."}</p>
-                    <button class="btn" onclick="initQuiz()" style="margin-top: 20px;">
-                        <i class="fas fa-redo"></i> Restart Quiz
-                    </button>
-                </div>
-            `;
-        }
+      <div class="table-responsive">
+        <table>
+          <tr><th>Tense</th><th>Structure</th><th>Context</th></tr>
+          <tr><td>Present Perfect</td><td>have/has + p.p.</td><td>過去發生，影響現在 (I have lost my key.)</td></tr>
+          <tr><td>Past Perfect</td><td>had + p.p.</td><td>過去的過去 (She had left before I came.)</td></tr>
+          <tr><td>Future Perfect</td><td>will have + p.p.</td><td>未來某時之前將完成</td></tr>
+        </table>
+      </div>
+    </div>
 
-        // 當點擊 Quiz 分頁時初始化 (如果是第一次)
-        document.querySelector('.tab[data-tab="quiz"]').addEventListener('click', () => {
-             // 可以選擇每次進入都重置，或者保留狀態。這裡選擇若未開始則開始。
-             const container = document.getElementById('quiz-question-container');
-             if (container.innerHTML.trim() === '') {
-                 initQuiz();
-             }
-        });
+    <div id="visual-modal" class="modal-content">
+      <h2>5. Tense Visualization 時態可視化</h2>
+      <p>了解時間軸是掌握時態的關鍵。以下是一個簡易的時態概念圖。</p>
+      
+      <div class="timeline-preview">
+        <div class="timeline-line"></div>
+        
+        <div class="timeline-point" style="left: 20%;">
+          <div class="timeline-label">Past</div>
+          <div class="timeline-sub">V-ed / was / did</div>
+        </div>
+        
+        <div class="timeline-point" style="left: 50%; transform: scale(1.3); background: var(--primary-tone);">
+          <div class="timeline-label">NOW</div>
+          <div class="timeline-sub">Present</div>
+        </div>
+        
+        <div class="timeline-point" style="left: 80%;">
+          <div class="timeline-label">Future</div>
+          <div class="timeline-sub">will / be going to</div>
+        </div>
+      </div>
 
-    </script>
+      <div style="text-align:center; margin-top:30px;">
+        <p>想要查看包含完成式、進行式的完整互動圖表嗎？</p>
+        <a href="https://ducj-creator.github.io/Shirley-Grammar/verbs/tensevisual.html" target="_blank" class="btn-cta" style="font-size:1.1rem; padding:15px 40px;">
+          <i class="fas fa-chart-line"></i> 開啟完整時態圖表工具 (Interactive Chart)
+        </a>
+      </div>
+    </div>
+
+    <div id="voice-modal" class="modal-content">
+      <h2>7. Passive Voice 被動語態</h2>
+      <p>當「動作接受者」比「執行者」重要時使用。</p>
+      <div class="note-box note-tip">
+        <strong>公式：</strong> Be動詞 + 過去分詞 (p.p.)
+      </div>
+
+      <div class="table-responsive">
+        <table>
+          <tr><th>Tense</th><th>Passive Structure</th><th>Example</th></tr>
+          <tr><td>Present</td><td>am/is/are + p.p.</td><td>The door is locked.</td></tr>
+          <tr><td>Past</td><td>was/were + p.p.</td><td>My bike was stolen.</td></tr>
+          <tr><td>Future</td><td>will be + p.p.</td><td>It will be done.</td></tr>
+          <tr><td>Perfect</td><td>have been + p.p.</td><td>It has been fixed.</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div id="keypoint-modal" class="modal-content">
+      <h2>8. Key Points & Reminders</h2>
+      <div class="bilingual-box">
+        <div style="flex:1">
+          <h3>Phrasal Verbs 動詞片語</h3>
+          <p>動詞 + 介系詞 = 新意義。</p>
+          <ul>
+            <li><strong>give up</strong> (放棄)</li>
+            <li><strong>look after</strong> (照顧)</li>
+          </ul>
+          <a href="https://ducj-creator.github.io/Shirley-Grammar/phrases" target="_blank" style="color:var(--primary-tone); font-weight:bold;">→ 學習更多片語</a>
+        </div>
+        <div style="flex:1">
+          <h3>Common Mistakes</h3>
+          <ul>
+            <li><span style="color:#c62828">X</span> She like pizza.</li>
+            <li><span style="color:#2e7d32">O</span> She like<strong>s</strong> pizza. (3rd Person)</li>
+            <li><span style="color:#c62828">X</span> I must to go.</li>
+            <li><span style="color:#2e7d32">O</span> I must go. (Modal + VR)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="quiz-modal" class="modal-content">
+      <h2>9. Verb Challenge (30 Qs) 🏆</h2>
+      <p style="margin-bottom:20px; color:#666;">Test your mastery of English Verbs!</p>
+      <div id="quiz-container"></div>
+      <div id="result-area" class="result-card">
+        <div class="result-score" id="score-display">0 / 30</div>
+        <h3>Quiz Completed!</h3>
+        <p id="result-msg"></p>
+        <button onclick="startQuiz()" class="btn-cta">↺ Restart Quiz</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // === 1. Floating Background ===
+    const floatWords = ['Run', 'Swim', 'Eat', 'Go', 'Do', 'Have', 'Be', 'Can', 'Will', 'Must', 'Play', 'Sleep', 'Read', 'Write'];
+    const floatContainer = document.getElementById('floatingBg');
+
+    function createFloatingIcons() {
+      for(let i=0; i<20; i++) {
+        const el = document.createElement('div');
+        el.classList.add('float-item');
+        el.innerText = floatWords[Math.floor(Math.random() * floatWords.length)];
+        el.style.left = Math.random() * 100 + 'vw';
+        el.style.animationDuration = (22 + Math.random() * 10) + 's';
+        el.style.animationDelay = (Math.random() * 5) + 's';
+        el.style.fontSize = (1.5 + Math.random() * 2) + 'rem';
+        floatContainer.appendChild(el);
+      }
+    }
+    createFloatingIcons();
+
+    // === 2. Mind Map Layout ===
+    function updateLayout() {
+      const satellites = document.querySelectorAll('.satellite');
+      const stage = document.getElementById('stage');
+      const svg = document.getElementById('svgLines');
+      const isMobile = window.innerWidth <= 768;
+
+      while(svg.firstChild) svg.removeChild(svg.firstChild);
+
+      if(isMobile) return; 
+
+      const centerX = stage.offsetWidth / 2;
+      const centerY = stage.offsetHeight / 2;
+      const radius = 290;
+      const total = satellites.length;
+
+      satellites.forEach((node, index) => {
+        const angle = (index / total) * 2 * Math.PI - (Math.PI / 2);
+        const x = centerX + radius * Math.cos(angle);
+        const y = centerY + radius * Math.sin(angle);
+
+        node.style.left = x + 'px';
+        node.style.top = y + 'px';
+        node.style.transform = 'translate(-50%, -50%)';
+
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', centerX);
+        line.setAttribute('y1', centerY);
+        line.setAttribute('x2', x);
+        line.setAttribute('y2', y);
+        line.classList.add('connection-line');
+        svg.appendChild(line);
+      });
+    }
+    window.addEventListener('resize', updateLayout);
+    window.addEventListener('load', updateLayout);
+
+    // === 3. Modal Logic ===
+    const overlay = document.getElementById('modalOverlay');
+    document.querySelectorAll('.satellite').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if(btn.classList.contains('special-node') && !btn.hasAttribute('data-target')) return;
+        const targetId = btn.getAttribute('data-target');
+        if(!targetId) return;
+
+        document.querySelectorAll('.modal-content').forEach(c => c.style.display = 'none');
+        document.getElementById(targetId).style.display = 'block';
+        overlay.classList.add('active');
+        if(targetId === 'quiz-modal') startQuiz();
+      });
+    });
+    function closeModal() { overlay.classList.remove('active'); }
+    overlay.addEventListener('click', (e) => { if(e.target === overlay) closeModal(); });
+
+    // === 4. Quiz Logic (30 Questions) ===
+    const quizQuestions = [
+        { q: "1. She _____ tired after the long run.", options: ["looks", "look", "is looking", "looked at"], correct: 0, expl: "Looks is a linking verb connecting She to tired." },
+        { q: "2. The soup _____ delicious.", options: ["tastes", "tasting", "taste", "is tasted"], correct: 0, expl: "Tastes describes the state of the soup (singular)." },
+        { q: "3. Please _____ the book on the table.", options: ["lie", "lay", "rise", "sat"], correct: 1, expl: "Lay is transitive (needs object the book)." },
+        { q: "4. When I was five, I _____ swim very well.", options: ["can", "could", "should", "will"], correct: 1, expl: "Could expresses ability in the past." },
+        { q: "5. You _____ wear a seatbelt when driving. It's the law.", options: ["must", "might", "could", "may"], correct: 0, expl: "Must is used for strong obligations or laws." },
+        { q: "6. You look sick. You _____ go to the doctor.", options: ["should", "can", "will", "might"], correct: 0, expl: "Should is used to give advice." },
+        { q: "7. _____ you like pizza?", options: ["Are", "Do", "Have", "Can"], correct: 1, expl: "Use Do for Present Simple questions with main verbs." },
+        { q: "8. _____ you finished your homework yet?", options: ["Did", "Have", "Are", "Do"], correct: 1, expl: "Use Have for Present Perfect (Have + V3)." },
+        { q: "9. My brother _____ to school every morning.", options: ["walk", "walks", "is walking", "walked"], correct: 1, expl: "Present Simple for habits. Singular subject." },
+        { q: "10. We _____ to London last summer.", options: ["go", "gone", "went", "have gone"], correct: 2, expl: "Past Simple (went) for specific past time." },
+        { q: "11. Don't worry, I _____ help you.", options: ["am going to", "will", "am", "shall"], correct: 1, expl: "Will for offers/decisions at the moment." },
+        { q: "12. Listen! The baby _____.", options: ["cries", "is crying", "cried", "has cried"], correct: 1, expl: "Present Continuous for actions happening now." },
+        { q: "13. I _____ TV when the phone rang.", options: ["watched", "am watching", "was watching", "have watched"], correct: 2, expl: "Past Continuous interrupted by a short action." },
+        { q: "14. I _____ my keys. I can't find them anywhere.", options: ["lose", "lost", "have lost", "am losing"], correct: 2, expl: "Present Perfect (result in present)." },
+        { q: "15. She has lived here _____ ten years.", options: ["since", "for", "in", "during"], correct: 1, expl: "For + duration of time." },
+        { q: "16. The train _____ already left when we arrived.", options: ["has", "had", "was", "did"], correct: 1, expl: "Past Perfect (had left) happened before another past action." },
+        { q: "17. By next year, I _____ from university.", options: ["will graduate", "graduate", "will have graduated", "graduated"], correct: 2, expl: "Future Perfect (completed by a future time)." },
+        { q: "18. It _____ raining all day.", options: ["is", "has been", "was", "did"], correct: 1, expl: "Present Perfect Continuous emphasizing duration." },
+        { q: "19. The letter _____ by Mark yesterday.", options: ["wrote", "was written", "is written", "writes"], correct: 1, expl: "Past Passive: was + written." },
+        { q: "20. English _____ spoken in many countries.", options: ["is", "are", "has", "does"], correct: 0, expl: "Present Passive: is + spoken." },
+        { q: "21. The work _____ be finished tomorrow.", options: ["will", "is", "has", "did"], correct: 0, expl: "Future Passive: will + be + finished." },
+        { q: "22. I enjoy _____ movies on weekends.", options: ["watch", "to watch", "watching", "watched"], correct: 2, expl: "Enjoy + V-ing (Gerund)." },
+        { q: "23. She decided _____ to Paris.", options: ["go", "going", "to go", "went"], correct: 2, expl: "Decide + to V (Infinitive)." },
+        { q: "24. He stopped _____ because it was bad for his health.", options: ["smoking", "to smoke", "smoke", "smoked"], correct: 0, expl: "Stop + V-ing means to quit." },
+        { q: "25. If it rains, I _____ stay at home.", options: ["would", "will", "am", "stayed"], correct: 1, expl: "First Conditional: If + Present, ... will." },
+        { q: "26. If I _____ a bird, I would fly to you.", options: ["was", "am", "were", "be"], correct: 2, expl: "Second Conditional uses 'were' for all subjects." },
+        { q: "27. Please turn _____ the lights when you leave.", options: ["on", "in", "off", "up"], correct: 2, expl: "Turn off = stop the light." },
+        { q: "28. Everyone _____ happy about the news.", options: ["are", "is", "were", "have"], correct: 1, expl: "Everyone is singular." },
+        { q: "29. I _____ you are right.", options: ["am believing", "believe", "believed", "was believing"], correct: 1, expl: "Believe is a stative verb (no continuous)." },
+        { q: "30. The teacher made the student _____ his homework.", options: ["rewrite", "to rewrite", "rewriting", "rewritten"], correct: 0, expl: "Make someone do (base form)." }
+    ];
+
+    let currentQ = 0;
+    let score = 0;
+
+    function startQuiz() {
+      currentQ = 0;
+      score = 0;
+      document.getElementById('quiz-container').style.display = 'block';
+      document.getElementById('result-area').style.display = 'none';
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      if(currentQ >= quizQuestions.length) {
+        showResult();
+        return;
+      }
+      const q = quizQuestions[currentQ];
+      const container = document.getElementById('quiz-container');
+      
+      let html = `
+        <div class="quiz-progress">Question ${currentQ + 1} / ${quizQuestions.length}</div>
+        <div class="quiz-question-box">
+          <div class="quiz-q-text">${q.q.replace('_____', '<span style="border-bottom:2px solid var(--secondary-tone); color:var(--secondary-tone);">?</span>')}</div>
+          <div class="quiz-options-grid">
+            ${q.options.map((opt, idx) => `
+              <button class="quiz-opt" onclick="checkAns(this, ${idx})">${opt}</button>
+            `).join('')}
+          </div>
+          <div class="explanation" id="expl-${currentQ}">${q.expl}</div>
+          <div class="quiz-nav" id="nav-${currentQ}">
+            <button class="btn-cta" onclick="nextQ()">Next →</button>
+          </div>
+        </div>
+      `;
+      container.innerHTML = html;
+    }
+
+    function checkAns(btn, idx) {
+      const q = quizQuestions[currentQ];
+      const parent = btn.parentElement;
+      const allBtns = parent.querySelectorAll('.quiz-opt');
+      
+      allBtns.forEach(b => b.disabled = true);
+      
+      if(idx === q.correct) {
+        btn.classList.add('correct');
+        score++;
+      } else {
+        btn.classList.add('incorrect');
+        allBtns[q.correct].classList.add('correct');
+      }
+      
+      document.getElementById(`expl-${currentQ}`).classList.add('show');
+      document.getElementById(`nav-${currentQ}`).classList.add('show');
+    }
+
+    function nextQ() {
+      currentQ++;
+      renderQuestion();
+    }
+
+    function showResult() {
+      document.getElementById('quiz-container').style.display = 'none';
+      document.getElementById('result-area').style.display = 'block';
+      document.getElementById('score-display').innerText = `${score} / 30`;
+      
+      let msg = "";
+      if(score === 30) msg = "Perfect! You are a Verb Master! 🏆";
+      else if(score >= 24) msg = "Excellent work! Keep it up! 🌟";
+      else if(score >= 18) msg = "Good job! Review the tricky parts. 💪";
+      else msg = "Keep practicing! You can do it! 📚";
+      
+      document.getElementById('result-msg').innerText = msg;
+    }
+  </script>
 </body>
 </html>
