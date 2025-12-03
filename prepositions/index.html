@@ -1,538 +1,729 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shirley's Advanced Preposition Lab | 介係詞完全體</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            /* 延續高質感的深紫色系 */
-            --primary: #6C5CE7;
-            --primary-dark: #4834D4;
-            --secondary: #A29BFE;
-            --accent: #FDCB6E;        
-            --phrasal-color: #00B894; /* 片語專用色 (青綠色) */
-            
-            --surface: rgba(255, 255, 255, 0.95);
-            --bg-gradient: linear-gradient(135deg, #F5F6FA 0%, #DFE6E9 100%);
-            
-            --text-main: #2D3436;
-            --text-light: #636E72;
-            
-            --radius: 20px;
-            --shadow: 0 10px 30px rgba(108, 92, 231, 0.15);
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Shirley's Grammar | Prepositions Masterclass</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Inter:wght@400;500;600&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      /* --- 核心配色 --- */
+      --primary-tone: #3a5a40; /* 森林深綠 */
+      --secondary-tone: #c9a972; /* 復古金 */
+      --text-main: #333333;
+      --bg-cream: #faf8f2;
+      --highlight-bg: #f0eadd;
+      
+      /* --- 尺寸變數 --- */
+      --node-size: 115px; 
+      --center-size: 200px;
+    }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Nunito', 'Noto Sans TC', sans-serif; }
-        
-        body {
-            background: var(--bg-gradient);
-            color: var(--text-main);
-            min-height: 100vh;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-        }
+    * { box-sizing: border-box; margin: 0; padding: 0; outline: none; -webkit-tap-highlight-color: transparent; }
 
-        .app-container {
-            width: 100%;
-            max-width: 1200px;
-            background: var(--surface);
-            backdrop-filter: blur(20px);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            border: 1px solid rgba(255,255,255,0.8);
-            display: grid;
-            grid-template-rows: auto 1fr auto;
-            overflow: hidden;
-            min-height: 800px;
-        }
+    body {
+      font-family: 'Inter', 'Noto Sans TC', sans-serif;
+      background-color: var(--bg-cream);
+      color: var(--text-main);
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      position: relative;
+    }
 
-        /* Header */
-        header {
-            padding: 20px 30px;
-            background: white;
-            border-bottom: 1px solid #eee;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .brand h1 { font-size: 1.6rem; color: var(--primary-dark); font-weight: 800; }
-        .brand span { background: var(--accent); padding: 4px 10px; border-radius: 8px; font-size: 0.8rem; font-weight: 700; margin-left: 10px;}
+    /* === 1. 背景漂浮介係詞 === */
+    .floating-objects {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 0; overflow: hidden;
+    }
+    .float-item {
+      position: absolute; opacity: 0.08;
+      font-family: 'Playfair Display', serif; font-weight: 700;
+      color: var(--primary-tone);
+      animation: floatUp 25s infinite linear;
+      white-space: nowrap;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(110vh) rotate(0deg); }
+      100% { transform: translateY(-20vh) rotate(360deg); }
+    }
 
-        /* Grid Layout */
-        .main-grid {
-            display: grid;
-            grid-template-columns: 4fr 5fr;
-            height: 100%;
-            overflow: hidden;
-        }
+    /* === 2. Mind Map 舞台 === */
+    .mindmap-stage {
+      position: relative; width: 100%; height: 100%;
+      display: flex; justify-content: center; align-items: center;
+      z-index: 10;
+    }
+    .connections {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 1;
+    }
+    .connection-line {
+      stroke: var(--secondary-tone); stroke-width: 2;
+      stroke-dasharray: 6, 6; opacity: 0.4;
+    }
 
-        /* Left: Visualizer */
-        .visualizer-panel {
-            background: #F8F9FA;
-            padding: 25px;
-            border-right: 1px solid #eee;
-            display: flex;
-            flex-direction: column;
-        }
+    /* 核心 Core */
+    .core-node {
+      width: var(--center-size); height: var(--center-size);
+      background: var(--primary-tone); color: white;
+      border-radius: 50%;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      text-align: center; z-index: 5;
+      box-shadow: 0 0 0 12px rgba(58, 90, 64, 0.08), 0 25px 50px rgba(0,0,0,0.25);
+      animation: corePulse 5s infinite ease-in-out; cursor: default;
+    }
+    .core-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; line-height: 1.1; }
+    .core-sub { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; margin-top: 8px; color: var(--secondary-tone); }
 
-        .canvas-wrapper {
-            flex: 1;
-            background: white;
-            border-radius: var(--radius);
-            border: 2px solid #eee;
-            position: relative;
-            overflow: hidden;
-            min-height: 300px;
-            margin-bottom: 15px;
-        }
-        canvas { width: 100%; height: 100%; }
+    @keyframes corePulse {
+      0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); }
+    }
 
-        .scene-controls {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-        }
+    /* 子節點 Satellite */
+    .satellite {
+      position: absolute; width: var(--node-size); height: var(--node-size);
+      border-radius: 50%; background: white;
+      border: 2px solid var(--primary-tone);
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      text-align: center; cursor: pointer; z-index: 5;
+      box-shadow: 0 10px 25px rgba(58, 90, 64, 0.1);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      font-family: 'Playfair Display', serif; font-weight: 600;
+      font-size: 0.85rem; color: var(--primary-tone); padding: 5px;
+    }
+    .satellite:hover {
+      transform: scale(1.15); background: var(--primary-tone);
+      color: white; border-color: var(--secondary-tone);
+      box-shadow: 0 15px 35px rgba(58, 90, 64, 0.3); z-index: 10;
+    }
 
-        .scene-btn {
-            padding: 10px;
-            border: 1px solid var(--secondary);
-            background: white;
-            color: var(--primary);
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.2s;
-            font-size: 0.85rem;
-        }
-        .scene-btn:hover, .scene-btn.active {
-            background: var(--primary); color: white; transform: translateY(-2px);
-        }
+    .step-badge {
+      position: absolute; top: -5px; left: 50%; transform: translateX(-50%);
+      background: var(--secondary-tone); color: white;
+      font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 700;
+      width: 24px; height: 24px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      border: 2px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
 
-        /* Right: Content */
-        .content-panel {
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            background: white;
-        }
+    /* 特殊節點：Visual Lab (強調色) */
+    .satellite.visual-node { border-color: #00897b; color: #00695c; }
+    .satellite.visual-node .step-badge { background: #00897b; }
+    .satellite.visual-node:hover { background: #00897b; color: white; }
 
-        .tabs {
-            display: flex;
-            padding: 0 20px;
-            border-bottom: 1px solid #eee;
-            background: #FAFAFA;
-        }
+    /* 特殊節點：Quiz */
+    .satellite.quiz-node { border-color: var(--secondary-tone); background: #fffcf5; }
+    .satellite.quiz-node .step-badge { background: #d32f2f; }
 
-        .tab {
-            padding: 15px 20px;
-            cursor: pointer;
-            font-weight: 700;
-            color: var(--text-light);
-            border-bottom: 3px solid transparent;
-            transition: all 0.3s;
-        }
-        .tab:hover { color: var(--primary); background: rgba(108, 92, 231, 0.05); }
-        .tab.active { color: var(--primary); border-bottom-color: var(--primary); background: white; }
+    /* === 3. Modal 內容區 === */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(250, 248, 242, 0.95); backdrop-filter: blur(5px);
+      z-index: 100; opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease;
+      display: flex; justify-content: center; align-items: center;
+    }
+    .modal-overlay.active { opacity: 1; pointer-events: auto; }
 
-        .content-scroll {
-            padding: 25px;
-            overflow-y: auto;
-            flex: 1;
-        }
+    .modal-content {
+      width: 90%; max-width: 950px; max-height: 85vh;
+      background: white; border-radius: 16px;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.2);
+      border-top: 6px solid var(--primary-tone);
+      overflow-y: auto; padding: 40px;
+      display: none; animation: slideUp 0.4s ease-out;
+    }
+    @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-        .section-content { display: none; animation: fadeIn 0.3s; }
-        .section-content.active { display: block; }
+    .close-btn {
+      position: absolute; top: 20px; right: 20px;
+      width: 40px; height: 40px; border-radius: 50%; border: none;
+      background: #f4f4f4; color: var(--text-main); font-size: 1.5rem;
+      cursor: pointer; transition: all 0.2s; z-index: 20;
+    }
+    .close-btn:hover { background: var(--secondary-tone); color: white; }
 
-        /* Card Styles */
-        .concept-card {
-            background: white;
-            border: 1px solid #eee;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 15px;
-            border-left: 4px solid var(--primary);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
-        }
-        .concept-card.phrasal { border-left-color: var(--phrasal-color); }
+    /* 內容排版 */
+    h2 { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--primary-tone); margin-bottom: 20px; border-bottom: 2px solid var(--secondary-tone); padding-bottom: 10px; }
+    h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--primary-tone); margin: 30px 0 15px; border-left: 4px solid var(--secondary-tone); padding-left: 12px; }
+    
+    .bilingual-box { display: flex; gap: 20px; background: #fbfbf9; padding: 25px; border-radius: 8px; border: 1px solid #eee; margin-bottom: 20px; }
+    .highlight { background: var(--highlight-bg); padding: 2px 6px; border-radius: 4px; color: var(--primary-tone); font-weight: 600; }
+    
+    /* Table */
+    .table-responsive { overflow-x: auto; margin: 20px 0; border: 1px solid #e8e4d9; border-radius: 8px; }
+    table { width: 100%; border-collapse: collapse; min-width: 600px; }
+    th { background: #f4f1ea; color: var(--primary-tone); padding: 15px; text-align: left; font-family: 'Playfair Display', serif; border-bottom: 2px solid #e8e4d9; white-space: nowrap; }
+    td { padding: 14px; border-bottom: 1px solid #eee; }
+    tr:nth-child(even) { background-color: #fcfcfc; }
 
-        .tag-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
-        .ex-tag {
-            background: #F1F2F6; padding: 4px 10px; border-radius: 6px; font-size: 0.9rem; color: #555;
-            border: 1px solid #e1e1e1;
-        }
-        .ex-tag strong { color: var(--primary-dark); }
+    /* Canvas Lab Style */
+    .canvas-wrapper {
+      width: 100%; height: 350px; background: #fdfdfd; 
+      border: 2px solid #eee; border-radius: 12px; 
+      position: relative; margin-bottom: 20px;
+      overflow: hidden;
+    }
+    canvas { width: 100%; height: 100%; }
+    .scene-controls { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+    .scene-btn {
+      padding: 8px 16px; border: 1px solid #ddd; background: white; border-radius: 50px; cursor: pointer; font-size: 0.9rem; transition: 0.2s;
+    }
+    .scene-btn.active, .scene-btn:hover { background: var(--primary-tone); color: white; border-color: var(--primary-tone); }
 
-        /* Portal Link Button (High-End) */
-        .portal-link {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: linear-gradient(135deg, #00B894 0%, #00CEC9 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 16px;
-            text-decoration: none;
-            margin-bottom: 25px;
-            box-shadow: 0 8px 20px rgba(0, 184, 148, 0.3);
-            transition: transform 0.2s;
-        }
-        .portal-link:hover { transform: translateY(-3px); }
-        .portal-icon { font-size: 2rem; margin-right: 15px; }
+    /* Quiz Styling */
+    .quiz-progress { text-align: right; color: var(--secondary-tone); font-weight: 700; margin-bottom: 15px; }
+    .quiz-question-box { background: #fff; padding: 25px; border-radius: 12px; border: 1px solid #eee; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 20px; }
+    .quiz-q-text { font-size: 1.2rem; font-weight: 600; color: var(--primary-tone); margin-bottom: 20px; }
+    .quiz-opt { display: block; width: 100%; padding: 15px 20px; margin-bottom: 10px; border: 2px solid #f0f0f0; border-radius: 8px; background: white; text-align: left; cursor: pointer; transition: all 0.2s; font-size: 1rem; }
+    .quiz-opt:hover:not(:disabled) { border-color: var(--secondary-tone); background: #fffbf5; }
+    .quiz-opt.correct { background: #e8f5e9; border-color: #4caf50; color: #2e7d32; }
+    .quiz-opt.incorrect { background: #ffebee; border-color: #ef5350; color: #c62828; }
+    
+    .explanation { margin-top: 20px; padding: 15px; background: #faf8f2; border-left: 4px solid var(--secondary-tone); display: none; }
+    .explanation.show { display: block; animation: fadeIn 0.3s; }
+    @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+    
+    .result-card { text-align: center; padding: 40px; display: none; }
+    .result-score { font-size: 4rem; font-family: 'Playfair Display', serif; color: var(--primary-tone); font-weight: 700; }
+    
+    .btn-cta { background: var(--secondary-tone); color: white; padding: 12px 30px; border-radius: 50px; border: none; font-size: 1rem; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; transition: 0.3s; font-weight: 600; margin-top: 15px; }
+    .btn-cta:hover { background: var(--primary-tone); transform: translateY(-2px); }
 
-        /* Quiz Styles */
-        .quiz-container { text-align: center; padding: 20px; }
-        .option-btn {
-            display: block; width: 100%; padding: 15px; margin-bottom: 10px;
-            border: 2px solid #eee; border-radius: 12px; background: white;
-            cursor: pointer; font-size: 1rem; text-align: left; transition: all 0.2s;
-        }
-        .option-btn:hover { border-color: var(--primary); background: #f8f9ff; }
-        .option-btn.correct { background: #d4edda; border-color: #c3e6cb; color: #155724; }
-        .option-btn.wrong { background: #f8d7da; border-color: #f5c6cb; color: #721c24; }
-
-        .feedback-box {
-            background: #F0F3F4; padding: 15px; border-radius: 10px; margin-top: 15px;
-            text-align: left; display: none; border-left: 4px solid #666;
-        }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Mobile */
-        @media (max-width: 900px) {
-            .main-grid { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
-            .visualizer-panel { height: 400px; border-right: none; border-bottom: 1px solid #eee; }
-            .app-container { height: auto; display: block; }
-        }
-    </style>
+    /* RWD */
+    @media (max-width: 768px) {
+      body { overflow-y: auto; height: auto; }
+      .floating-objects { height: 100vh; position: fixed; }
+      .mindmap-stage { flex-direction: column; height: auto; padding: 50px 20px; }
+      .connections { display: none; }
+      .core-node { margin-bottom: 40px; width: 160px; height: 160px; }
+      .satellite { 
+        position: relative; top: auto !important; left: auto !important; transform: none !important;
+        width: 100%; min-height: 70px; margin-bottom: 12px; flex-direction: row; 
+        justify-content: flex-start; text-align: left; gap: 20px; padding: 15px 25px;
+      }
+      .satellite:hover { transform: translateY(-3px) !important; }
+      .step-badge { position: static; transform: none; margin-right: 0; min-width: 24px; }
+      .modal-content { padding: 25px; width: 95%; max-height: 90vh; }
+      .bilingual-box { flex-direction: column; }
+    }
+  </style>
 </head>
 <body>
 
-<div class="app-container">
-    <header>
-        <div class="brand">
-            <h1>Shirley's Preposition Lab</h1>
-            <span>V3.0 Complete</span>
-        </div>
-        <div style="font-size: 0.9rem; color: #666;">介係詞 & 動詞片語完全攻略</div>
-    </header>
+  <div class="floating-objects" id="floatingBg"></div>
 
-    <div class="main-grid">
-        <section class="visualizer-panel">
-            <h3 style="margin-bottom: 10px; color: var(--primary);">🎥 動態實驗室</h3>
-            <div class="canvas-wrapper" id="canvasContainer">
-                <canvas id="prepCanvas"></canvas>
-            </div>
-            
-            <div class="scene-controls">
-                <button class="scene-btn active" onclick="setScenario('pyramid')">📐 倒三角法則</button>
-                <button class="scene-btn" onclick="setScenario('motion_through')">🚇 Through/Across</button>
-                <button class="scene-btn" onclick="setScenario('surface_in')">📦 In vs On</button>
-                <button class="scene-btn" onclick="setScenario('transport')" style="border-color: var(--phrasal-color); color: var(--phrasal-color);">🚌 Get On vs In</button>
-            </div>
-            <p id="caption" style="margin-top:15px; font-size:0.9rem; color:#666; background:#fff; padding:10px; border-radius:8px;">
-                選擇上方按鈕觀察變化。
-            </p>
-        </section>
+  <div class="mindmap-stage" id="stage">
+    <svg class="connections" id="svgLines"></svg>
 
-        <section class="content-panel">
-            <div class="tabs">
-                <div class="tab active" onclick="switchTab('time_place')">⏳ 時間與地點</div>
-                <div class="tab" onclick="switchTab('motion')">🏃 動態路徑</div>
-                <div class="tab" onclick="switchTab('phrasal')">🧩 動詞片語</div>
-                <div class="tab" onclick="switchTab('quiz')">🧠 綜合測驗</div>
-            </div>
-
-            <div class="content-scroll">
-                
-                <div id="time_place" class="section-content active">
-                    <h2 style="margin-bottom: 15px;">The Pyramid Rule (倒三角法則)</h2>
-                    
-                    <div class="concept-card">
-                        <h3 style="color: #0984e3;">IN (大範圍 / 容器)</h3>
-                        <p>時間：世紀, 年, 季節, 月份, 時段 (in the morning)</p>
-                        <p>地點：國家, 城市, 封閉空間 (in the box, in the car)</p>
-                    </div>
-
-                    <div class="concept-card">
-                        <h3 style="color: #00b894;">ON (特定面 / 日子)</h3>
-                        <p>時間：日期, 星期幾, 特定的節日 (on Christmas Day)</p>
-                        <p>地點：接觸表面, 街道, <strong>大眾運輸 (on the bus)</strong></p>
-                    </div>
-
-                    <div class="concept-card">
-                        <h3 style="color: #d63031;">AT (精確點)</h3>
-                        <p>時間：幾點幾分 (at 5 PM), 此刻 (at the moment)</p>
-                        <p>地點：地圖上的點 (at the station), 門口 (at the door)</p>
-                    </div>
-                </div>
-
-                <div id="motion" class="section-content">
-                    <h2>Motion Prepositions</h2>
-                    <div class="concept-card">
-                        <h3>Through vs Across</h3>
-                        <p><strong>Through:</strong> 穿過立體空間內部 (tunnel, forest)。</p>
-                        <p><strong>Across:</strong> 橫越平面表面 (road, river)。</p>
-                    </div>
-                    <div class="concept-card">
-                        <h3>To vs Towards</h3>
-                        <p><strong>To:</strong> 目的地 (會到達)。</p>
-                        <p><strong>Towards:</strong> 朝向...方向 (不一定到達)。</p>
-                    </div>
-                </div>
-
-                <div id="phrasal" class="section-content">
-                    <a href="https://ducj-creator.github.io/Shirley-Grammar/phrases" target="_blank" class="portal-link">
-                        <div style="display:flex; align-items:center;">
-                            <div class="portal-icon">🎮</div>
-                            <div>
-                                <h3 style="margin:0;">互動式片語練習區</h3>
-                                <p style="margin:0; font-size:0.9rem; opacity:0.9;">點擊前往 Shirley's Phrases 做更深入的卡片練習</p>
-                            </div>
-                        </div>
-                        <div>➔</div>
-                    </a>
-
-                    <h2>Phrasal Verbs (動詞片語)</h2>
-                    <p style="margin-bottom: 20px; color: #666;">動詞 + 介係詞 = 全新的意思！這是英語道地的關鍵。</p>
-
-                    <div class="concept-card phrasal">
-                        <h3>👀 Look (看)</h3>
-                        <div class="tag-row">
-                            <div class="ex-tag"><strong>Look at</strong> 注視</div>
-                            <div class="ex-tag"><strong>Look for</strong> 尋找</div>
-                            <div class="ex-tag"><strong>Look after</strong> 照顧</div>
-                            <div class="ex-tag"><strong>Look up</strong> 查閱(字典)</div>
-                        </div>
-                    </div>
-
-                    <div class="concept-card phrasal">
-                        <h3>🎁 Give (給)</h3>
-                        <div class="tag-row">
-                            <div class="ex-tag"><strong>Give up</strong> 放棄</div>
-                            <div class="ex-tag"><strong>Give in</strong> 屈服</div>
-                            <div class="ex-tag"><strong>Give away</strong> 贈送/洩露</div>
-                            <div class="ex-tag"><strong>Give off</strong> 散發(氣味/光)</div>
-                        </div>
-                    </div>
-
-                    <div class="concept-card phrasal">
-                        <h3>🔌 Turn (轉)</h3>
-                        <div class="tag-row">
-                            <div class="ex-tag"><strong>Turn on</strong> 打開(電源)</div>
-                            <div class="ex-tag"><strong>Turn off</strong> 關掉</div>
-                            <div class="ex-tag"><strong>Turn up</strong> 調大聲/出現</div>
-                            <div class="ex-tag"><strong>Turn down</strong> 拒絕/調小聲</div>
-                        </div>
-                    </div>
-
-                    <div class="concept-card phrasal">
-                        <h3>🚌 Transport (交通)</h3>
-                        <p>這與介係詞邏輯有關：</p>
-                        <div class="tag-row">
-                            <div class="ex-tag"><strong>Get on / off</strong> Bus, Train, Plane (可站立/甲板)</div>
-                            <div class="ex-tag"><strong>Get in / out of</strong> Car, Taxi (需彎腰/容器)</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="quiz" class="section-content">
-                    <div class="quiz-container">
-                        <h3 id="qText" style="margin-bottom: 20px; color: var(--primary-dark);">Question Loading...</h3>
-                        <div id="qOptions"></div>
-                        <div class="feedback-box" id="qFeedback"></div>
-                        <button id="nextBtn" onclick="nextQ()" style="display:none; margin-top:15px; padding:10px 20px; background:var(--primary); color:white; border:none; border-radius:50px; cursor:pointer;">Next Question ➡️</button>
-                    </div>
-                </div>
-
-            </div>
-        </section>
+    <div class="core-node">
+      <div class="core-title">Shirley's<br>Preps.</div>
+      <div class="core-sub">Complete Guide</div>
     </div>
-</div>
 
-<script>
-    // === Canvas Visualizer ===
+    <div class="satellite" data-target="pyramid-modal">
+      <div class="step-badge">1</div>
+      <div>The Pyramid<br>倒三角法則</div>
+    </div>
+    
+    <div class="satellite" data-target="position-modal">
+      <div class="step-badge">2</div>
+      <div>Position<br>空間位置</div>
+    </div>
+    
+    <div class="satellite" data-target="motion-modal">
+      <div class="step-badge">3</div>
+      <div>Motion<br>動態路徑</div>
+    </div>
+    
+    <div class="satellite" data-target="trans-modal">
+      <div class="step-badge">4</div>
+      <div>Transport<br>交通工具</div>
+    </div>
+
+    <div class="satellite visual-node" data-target="visual-modal">
+      <div class="step-badge">5</div>
+      <div>Visual Lab<br>動態實驗室</div>
+    </div>
+
+    <div class="satellite" data-target="phrase-modal">
+      <div class="step-badge">6</div>
+      <div>Phrases<br>動詞片語</div>
+    </div>
+
+    <div class="satellite" data-target="mistake-modal">
+      <div class="step-badge">7</div>
+      <div>Mistakes<br>易錯提醒</div>
+    </div>
+    
+    <div class="satellite quiz-node" data-target="quiz-modal">
+      <div class="step-badge">8</div>
+      <div>Quiz<br>20題挑戰</div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modalOverlay">
+    <button class="close-btn" onclick="closeModal()">✕</button>
+
+    <div id="pyramid-modal" class="modal-content">
+      <h2>1. The Pyramid Rule 倒三角法則</h2>
+      <p>這是記憶時間 (Time) 與地點 (Place) 最強大的規則。想像一個倒三角形：</p>
+      
+      <div class="bilingual-box">
+        <div style="flex:1">
+          <h3 style="color:#2980b9; margin-top:0;">IN (最上面/最寬)</h3>
+          <p><strong>概念：</strong> 大範圍、長時間、容器內部。</p>
+          <ul>
+            <li><strong>Time:</strong> Centuries, Years, Months (in 1995, in July)</li>
+            <li><strong>Place:</strong> Countries, Cities, Rooms (in Taiwan, in the box)</li>
+          </ul>
+        </div>
+        <div style="flex:1">
+          <h3 style="color:#27ae60; margin-top:0;">ON (中間)</h3>
+          <p><strong>概念：</strong> 特定日子、接觸表面。</p>
+          <ul>
+            <li><strong>Time:</strong> Days, Dates (on Sunday, on May 1st)</li>
+            <li><strong>Place:</strong> Streets, Surfaces (on the road, on the table)</li>
+          </ul>
+        </div>
+        <div style="flex:1">
+          <h3 style="color:#c0392b; margin-top:0;">AT (最下面/尖端)</h3>
+          <p><strong>概念：</strong> 精確的時間點、地標。</p>
+          <ul>
+            <li><strong>Time:</strong> Clock time (at 5:00 PM, at noon)</li>
+            <li><strong>Place:</strong> Specific points (at the bus stop, at home)</li>
+          </ul>
+        </div>
+      </div>
+      <div style="text-align:center; margin-top:10px;">
+        <button class="btn-cta" onclick="openVisualLab('pyramid')">🎥 前往實驗室觀看動畫</button>
+      </div>
+    </div>
+
+    <div id="position-modal" class="modal-content">
+      <h2>2. Position Prepositions 空間位置</h2>
+      <div class="table-responsive">
+        <table>
+          <tr><th>Prep.</th><th>Meaning</th><th>Example</th></tr>
+          <tr><td><strong>above / over</strong></td><td>在...上方</td><td>The bird flew <strong>over</strong> the tree.</td></tr>
+          <tr><td><strong>under / below</strong></td><td>在...下方</td><td>The cat is <strong>under</strong> the table.</td></tr>
+          <tr><td><strong>between</strong></td><td>在...之間 (兩者)</td><td>Sitting <strong>between</strong> Mom and Dad.</td></tr>
+          <tr><td><strong>among</strong></td><td>在...之中 (三者以上)</td><td>A house hidden <strong>among</strong> the trees.</td></tr>
+          <tr><td><strong>in front of</strong></td><td>在...前面</td><td>The car is <strong>in front of</strong> the house.</td></tr>
+          <tr><td><strong>behind</strong></td><td>在...後面</td><td>Who is standing <strong>behind</strong> you?</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div id="motion-modal" class="modal-content">
+      <h2>3. Motion Prepositions 動態路徑</h2>
+      <div class="bilingual-box">
+        <div style="flex:1">
+          <h3>Through vs Across</h3>
+          <p><strong>Through:</strong> 穿過立體空間內部 (如隧道、森林)。<br><em>The train went <strong>through</strong> the tunnel.</em></p>
+          <hr style="border:0; border-top:1px solid #eee; margin:10px 0;">
+          <p><strong>Across:</strong> 橫越平面表面 (如馬路、河流)。<br><em>He walked <strong>across</strong> the street.</em></p>
+        </div>
+        <div style="flex:1">
+          <h3>To vs Towards</h3>
+          <p><strong>To:</strong> 目的地 (強調到達)。<br><em>I am going <strong>to</strong> school.</em></p>
+          <hr style="border:0; border-top:1px solid #eee; margin:10px 0;">
+          <p><strong>Towards:</strong> 朝向...方向 (不一定到達)。<br><em>She walked <strong>towards</strong> the door.</em></p>
+        </div>
+      </div>
+      <div style="text-align:center;">
+        <button class="btn-cta" onclick="openVisualLab('motion_through')">🎥 觀看 Through/Across 動畫</button>
+      </div>
+    </div>
+
+    <div id="trans-modal" class="modal-content">
+      <h2>4. Transport: IN or ON?</h2>
+      <div class="bilingual-box">
+        <div style="flex:1">
+          <h3 style="color:#d35400;">ON (Platform)</h3>
+          <p><strong>規則：</strong> 可以站立走動、有甲板的交通工具。</p>
+          <ul>
+            <li>on the bus</li>
+            <li>on the train</li>
+            <li>on the plane</li>
+            <li>on a ship</li>
+            <li>on a bike (騎在上面)</li>
+          </ul>
+        </div>
+        <div style="flex:1">
+          <h3 style="color:#2c3e50;">IN (Container)</h3>
+          <p><strong>規則：</strong> 必須彎腰坐進去、像小容器的。</p>
+          <ul>
+            <li>in a car</li>
+            <li>in a taxi</li>
+            <li>in a helicopter</li>
+            <li>in a boat (小船)</li>
+          </ul>
+        </div>
+      </div>
+      <div style="text-align:center;">
+        <button class="btn-cta" onclick="openVisualLab('transport')">🎥 觀看交通工具演示</button>
+      </div>
+    </div>
+
+    <div id="visual-modal" class="modal-content">
+      <h2>5. Visual Lab 動態實驗室</h2>
+      <p>點擊下方按鈕，觀察介係詞的視覺化邏輯。</p>
+      
+      <div class="scene-controls">
+        <button class="scene-btn active" onclick="setScenario('pyramid')">📐 倒三角法則</button>
+        <button class="scene-btn" onclick="setScenario('motion_through')">🚇 Through vs Across</button>
+        <button class="scene-btn" onclick="setScenario('surface_in')">📦 In vs On (物體)</button>
+        <button class="scene-btn" onclick="setScenario('transport')" style="border-color: #d35400; color: #d35400;">🚌 Bus vs Car</button>
+      </div>
+      
+      <div class="canvas-wrapper" id="canvasContainer">
+        <canvas id="prepCanvas"></canvas>
+      </div>
+      
+      <p id="caption" style="text-align:center; color:#666; background:#f9f9f9; padding:10px; border-radius:8px; font-weight:bold;">
+        正在載入動畫...
+      </p>
+    </div>
+
+    <div id="phrase-modal" class="modal-content">
+      <h2>6. Phrasal Verbs 動詞片語</h2>
+      <p>介係詞改變了動詞的意思。</p>
+      <div class="table-responsive">
+        <table>
+          <tr><th>Verb</th><th>Phrase</th><th>Meaning</th></tr>
+          <tr><td><strong>Look</strong></td><td>look for<br>look after</td><td>尋找<br>照顧</td></tr>
+          <tr><td><strong>Give</strong></td><td>give up<br>give in</td><td>放棄<br>屈服</td></tr>
+          <tr><td><strong>Turn</strong></td><td>turn on/off<br>turn up/down</td><td>開/關<br>調大/小聲</td></tr>
+          <tr><td><strong>Get</strong></td><td>get along<br>get over</td><td>相處<br>克服</td></tr>
+        </table>
+      </div>
+      <a href="https://ducj-creator.github.io/Shirley-Grammar/phrases" target="_blank" class="btn-cta" style="width:100%; justify-content:center;">
+        🧩 前往互動式片語練習區
+      </a>
+    </div>
+
+    <div id="mistake-modal" class="modal-content">
+      <h2>7. Common Mistakes 易錯點</h2>
+      <div class="table-responsive">
+        <table>
+          <tr><th style="color:#c62828">Wrong (X)</th><th style="color:#2e7d32">Right (O)</th><th>Why?</th></tr>
+          <tr><td>on the morning</td><td><strong>in</strong> the morning</td><td>時段用 IN</td></tr>
+          <tr><td>at Christmas</td><td><strong>on</strong> Christmas Day</td><td>特定日子用 ON (at Christmas 指整個假期)</td></tr>
+          <tr><td>arrive to London</td><td>arrive <strong>in</strong> London</td><td>到達大城市用 in, 小地點用 at</td></tr>
+          <tr><td>married with</td><td>married <strong>to</strong></td><td>結婚對象用 to</td></tr>
+          <tr><td>angry at me</td><td>angry <strong>with</strong> me</td><td>對人生氣用 with</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div id="quiz-modal" class="modal-content">
+      <h2>8. Preposition Challenge (20 Qs) 🏆</h2>
+      <p style="margin-bottom:20px; color:#666;">Choose the correct preposition.</p>
+      <div id="quiz-container"></div>
+      <div id="result-area" class="result-card">
+        <div class="result-score" id="score-display">0 / 20</div>
+        <h3>Quiz Completed!</h3>
+        <p id="result-msg"></p>
+        <button onclick="startQuiz()" class="btn-cta">↺ Restart Quiz</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // === 1. Floating Background ===
+    const floatWords = ['In', 'On', 'At', 'To', 'For', 'With', 'By', 'Of', 'From', 'Up', 'Down', 'Over', 'Under'];
+    const floatContainer = document.getElementById('floatingBg');
+
+    function createFloatingIcons() {
+      for(let i=0; i<18; i++) {
+        const el = document.createElement('div');
+        el.classList.add('float-item');
+        el.innerText = floatWords[Math.floor(Math.random() * floatWords.length)];
+        el.style.left = Math.random() * 100 + 'vw';
+        el.style.animationDuration = (25 + Math.random() * 10) + 's';
+        el.style.animationDelay = (Math.random() * 5) + 's';
+        el.style.fontSize = (1.5 + Math.random() * 2) + 'rem';
+        floatContainer.appendChild(el);
+      }
+    }
+    createFloatingIcons();
+
+    // === 2. Mind Map Layout ===
+    function updateLayout() {
+      const satellites = document.querySelectorAll('.satellite');
+      const stage = document.getElementById('stage');
+      const svg = document.getElementById('svgLines');
+      const isMobile = window.innerWidth <= 768;
+
+      while(svg.firstChild) svg.removeChild(svg.firstChild);
+
+      if(isMobile) return; 
+
+      const centerX = stage.offsetWidth / 2;
+      const centerY = stage.offsetHeight / 2;
+      const radius = 280;
+      const total = satellites.length;
+
+      satellites.forEach((node, index) => {
+        const angle = (index / total) * 2 * Math.PI - (Math.PI / 2);
+        const x = centerX + radius * Math.cos(angle);
+        const y = centerY + radius * Math.sin(angle);
+
+        node.style.left = x + 'px';
+        node.style.top = y + 'px';
+        node.style.transform = 'translate(-50%, -50%)';
+
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', centerX);
+        line.setAttribute('y1', centerY);
+        line.setAttribute('x2', x);
+        line.setAttribute('y2', y);
+        line.classList.add('connection-line');
+        svg.appendChild(line);
+      });
+    }
+    window.addEventListener('resize', updateLayout);
+    window.addEventListener('load', updateLayout);
+
+    // === 3. Modal Logic & Canvas Trigger ===
+    const overlay = document.getElementById('modalOverlay');
+    let isCanvasRunning = false;
+
+    document.querySelectorAll('.satellite').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetId = btn.getAttribute('data-target');
+        if(!targetId) return;
+
+        document.querySelectorAll('.modal-content').forEach(c => c.style.display = 'none');
+        document.getElementById(targetId).style.display = 'block';
+        overlay.classList.add('active');
+
+        if(targetId === 'quiz-modal') startQuiz();
+        if(targetId === 'visual-modal') {
+          setTimeout(() => {
+            initCanvas(); 
+            setScenario('pyramid'); 
+          }, 100);
+        }
+      });
+    });
+
+    function openVisualLab(scenarioName) {
+      document.querySelectorAll('.modal-content').forEach(c => c.style.display = 'none');
+      document.getElementById('visual-modal').style.display = 'block';
+      setTimeout(() => {
+        initCanvas();
+        setScenario(scenarioName);
+      }, 100);
+    }
+
+    function closeModal() { 
+      overlay.classList.remove('active'); 
+      isCanvasRunning = false; // Stop animation loop
+    }
+    overlay.addEventListener('click', (e) => { if(e.target === overlay) closeModal(); });
+
+
+    // === 4. CANVAS VISUALIZER LOGIC (Adapted from your file) ===
     const canvas = document.getElementById('prepCanvas');
     const ctx = canvas.getContext('2d');
     let frame = 0;
     let scenario = 'pyramid';
-    
-    function resize() {
-        const p = document.getElementById('canvasContainer');
-        canvas.width = p.clientWidth;
-        canvas.height = p.clientHeight;
+    let animId;
+
+    function initCanvas() {
+      const p = document.getElementById('canvasContainer');
+      canvas.width = p.clientWidth;
+      canvas.height = p.clientHeight;
+      if(!isCanvasRunning) {
+        isCanvasRunning = true;
+        loop();
+      }
     }
-    window.addEventListener('resize', resize);
 
     function drawEmoji(e, x, y, s) {
-        ctx.font = `${s}px Arial`; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(e, x, y);
+      ctx.font = `${s}px Arial`; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(e, x, y);
     }
 
     function loop() {
-        ctx.clearRect(0,0,canvas.width,canvas.height);
-        frame++;
-        const cx = canvas.width/2;
-        const cy = canvas.height/2;
+      if(!isCanvasRunning) return;
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      frame++;
+      const cx = canvas.width/2;
+      const cy = canvas.height/2;
 
-        if(scenario === 'pyramid') {
-            // Pyramid Draw
-            ctx.beginPath(); ctx.moveTo(cx, cy-120); ctx.lineTo(cx-100, cy+80); ctx.lineTo(cx+100, cy+80); ctx.closePath();
-            const g = ctx.createLinearGradient(0, cy-120, 0, cy+80);
-            g.addColorStop(0, '#fab1a0'); g.addColorStop(0.5, '#55efc4'); g.addColorStop(1, '#74b9ff');
-            ctx.fillStyle=g; ctx.fill();
-            
-            ctx.fillStyle="#000"; ctx.font="bold 14px Arial";
-            ctx.fillText("AT (Point)", cx, cy-80);
-            ctx.fillText("ON (Surface)", cx, cy);
-            ctx.fillText("IN (Volume)", cx, cy+60);
+      if(scenario === 'pyramid') {
+        // Pyramid
+        ctx.beginPath(); ctx.moveTo(cx, cy-120); ctx.lineTo(cx-100, cy+80); ctx.lineTo(cx+100, cy+80); ctx.closePath();
+        const g = ctx.createLinearGradient(0, cy-120, 0, cy+80);
+        g.addColorStop(0, '#fab1a0'); g.addColorStop(0.5, '#55efc4'); g.addColorStop(1, '#74b9ff');
+        ctx.fillStyle=g; ctx.fill();
+        
+        ctx.fillStyle="#000"; ctx.font="bold 14px Arial"; ctx.textAlign='center';
+        ctx.fillText("AT (Point)", cx, cy-80);
+        ctx.fillText("ON (Surface)", cx, cy);
+        ctx.fillText("IN (Volume)", cx, cy+60);
 
-            // Floating items
-            const y = cy - 80 + Math.sin(frame/20)*60;
-            drawEmoji("📅", cx+120, y, 30);
-            ctx.fillStyle="#555"; ctx.fillText("Time/Place", cx+120, y+30);
+        const y = cy - 80 + Math.sin(frame/20)*60;
+        drawEmoji("📅", cx+120, y, 30);
+        ctx.fillStyle="#555"; ctx.fillText("Time/Place", cx+120, y+30);
 
-        } else if (scenario === 'transport') {
-            // Get On (Bus) vs Get In (Car)
-            // Car
-            const carX = cx - 100;
-            ctx.fillStyle = "#ff7675"; ctx.fillRect(carX-40, cy, 80, 40); // Body
-            ctx.fillStyle = "#dfe6e9"; ctx.fillRect(carX-30, cy-25, 60, 25); // Top
-            drawEmoji("🚗", carX, cy+20, 20); // Wheels visual filler
-            ctx.fillStyle="#2d3436"; ctx.fillText("IN the car", carX, cy+60);
-            
-            // Bus
-            const busX = cx + 100;
-            ctx.fillStyle = "#0984e3"; ctx.fillRect(busX-50, cy-40, 100, 80);
-            ctx.fillStyle="#fff"; ctx.fillRect(busX-45, cy-30, 90, 30); // Windows
-            ctx.fillStyle="#2d3436"; ctx.fillText("ON the bus", busX, cy+60);
+      } else if (scenario === 'transport') {
+        const carX = cx - 100;
+        ctx.fillStyle = "#ff7675"; ctx.fillRect(carX-40, cy, 80, 40);
+        ctx.fillStyle = "#dfe6e9"; ctx.fillRect(carX-30, cy-25, 60, 25);
+        drawEmoji("🚗", carX, cy+20, 20);
+        ctx.fillStyle="#2d3436"; ctx.fillText("IN the car", carX, cy+60);
+        
+        const busX = cx + 100;
+        ctx.fillStyle = "#0984e3"; ctx.fillRect(busX-50, cy-40, 100, 80);
+        ctx.fillStyle="#fff"; ctx.fillRect(busX-45, cy-30, 90, 30);
+        ctx.fillStyle="#2d3436"; ctx.fillText("ON the bus", busX, cy+60);
 
-            // Animated Person
-            const pX = (frame % 200) < 100 ? carX : busX;
-            const action = (frame % 200) < 100 ? "Get IN" : "Get ON";
-            // Make person crouch for car, stand for bus
-            const emoji = (frame % 200) < 100 ? "🧎" : "🚶";
-            
-            drawEmoji(emoji, pX, cy + 10, 40);
-            ctx.fillStyle = "#00b894"; ctx.font="bold 20px Arial";
-            ctx.fillText(action, cx, cy-100);
+        const pX = (frame % 200) < 100 ? carX : busX;
+        const action = (frame % 200) < 100 ? "Get IN" : "Get ON";
+        const emoji = (frame % 200) < 100 ? "🧎" : "🚶";
+        drawEmoji(emoji, pX, cy + 10, 40);
+        ctx.fillStyle = "#d35400"; ctx.font="bold 20px Arial"; ctx.fillText(action, cx, cy-100);
 
-        } else if (scenario === 'surface_in') {
-             // In Box vs On Table
-             drawEmoji("📦", cx-80, cy, 80);
-             drawEmoji("🐱", cx-80, cy, 40); // Cat IN box
-             ctx.fillStyle="#333"; ctx.fillText("IN the box", cx-80, cy+60);
+      } else if (scenario === 'surface_in') {
+         drawEmoji("📦", cx-80, cy, 80);
+         drawEmoji("🐱", cx-80, cy, 40);
+         ctx.fillStyle="#333"; ctx.fillText("IN the box", cx-80, cy+60);
 
-             // Table
-             ctx.fillStyle="#a29bfe"; ctx.fillRect(cx+40, cy+20, 80, 10);
-             ctx.fillRect(cx+50, cy+30, 10, 30); ctx.fillRect(cx+100, cy+30, 10, 30);
-             drawEmoji("🍎", cx+80, cy, 40); // Apple ON table
-             ctx.fillStyle="#333"; ctx.fillText("ON the table", cx+80, cy+80);
+         ctx.fillStyle="#a29bfe"; ctx.fillRect(cx+40, cy+20, 80, 10);
+         ctx.fillRect(cx+50, cy+30, 10, 30); ctx.fillRect(cx+100, cy+30, 10, 30);
+         drawEmoji("🍎", cx+80, cy, 40);
+         ctx.fillStyle="#333"; ctx.fillText("ON the table", cx+80, cy+80);
 
-        } else if (scenario === 'motion_through') {
-            // Tunnel vs Road
-            ctx.fillStyle="#636e72"; ctx.beginPath(); ctx.arc(cx, cy-50, 40, Math.PI, 0); ctx.fill();
-            const tx = (frame*2)%300 + (cx-150);
-            if(tx > cx-40 && tx < cx+40) ctx.globalAlpha=0.3;
-            drawEmoji("🚂", tx, cy-50, 40);
-            ctx.globalAlpha=1;
-            ctx.fillStyle="#333"; ctx.fillText("THROUGH (Tunnel)", cx, cy-10);
+      } else if (scenario === 'motion_through') {
+        ctx.fillStyle="#636e72"; ctx.beginPath(); ctx.arc(cx, cy-50, 40, Math.PI, 0); ctx.fill();
+        const tx = (frame*2)%300 + (cx-150);
+        if(tx > cx-40 && tx < cx+40) ctx.globalAlpha=0.3;
+        drawEmoji("🚂", tx, cy-50, 40);
+        ctx.globalAlpha=1;
+        ctx.fillStyle="#333"; ctx.fillText("THROUGH (Tunnel)", cx, cy-10);
 
-            // Road
-            ctx.fillStyle="#b2bec3"; ctx.fillRect(cx-100, cy+50, 200, 40);
-            const wx = cx; const wy = cy+30 + (frame%100)/100 * 80;
-            drawEmoji("🚶", wx, wy, 30);
-            ctx.fillStyle="#333"; ctx.fillText("ACROSS (Road)", cx, cy+110);
-        }
-
-        requestAnimationFrame(loop);
+        ctx.fillStyle="#b2bec3"; ctx.fillRect(cx-100, cy+50, 200, 40);
+        const wx = cx; const wy = cy+30 + (frame%100)/100 * 80;
+        drawEmoji("🚶", wx, wy, 30);
+        ctx.fillStyle="#333"; ctx.fillText("ACROSS (Road)", cx, cy+110);
+      }
+      animId = requestAnimationFrame(loop);
     }
 
     function setScenario(s) {
-        scenario = s;
-        frame = 0;
-        document.querySelectorAll('.scene-btn').forEach(b => b.classList.remove('active'));
-        event.target.classList.add('active');
-        
-        const texts = {
-            pyramid: "倒三角法則：上方範圍最大用 IN，中間特定用 ON，下方精確點用 AT。",
-            transport: "交通工具判斷：要彎腰進去像容器的用 IN (Car)；可以站立走動像甲板的用 ON (Bus)。",
-            surface_in: "空間判斷：IN 強調在內部，ON 強調在表面接觸。",
-            motion_through: "動態判斷：Through 是穿過立體內部，Across 是橫越平面表面。"
-        };
-        document.getElementById('caption').innerText = texts[s];
-    }
-    
-    resize();
-    loop();
-
-    // === Tabs ===
-    function switchTab(id) {
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.section-content').forEach(s => s.classList.remove('active'));
-        event.target.classList.add('active');
-        document.getElementById(id).classList.add('active');
+      scenario = s;
+      frame = 0;
+      document.querySelectorAll('.scene-btn').forEach(b => b.classList.remove('active'));
+      const btn = document.querySelector(`.scene-btn[onclick="setScenario('${s}')"]`);
+      if(btn) btn.classList.add('active');
+      
+      const texts = {
+        pyramid: "倒三角法則：上方大範圍用 IN，中間特定用 ON，下方精確點用 AT。",
+        transport: "交通工具：像容器需彎腰用 IN (Car)；像甲板可站立用 ON (Bus)。",
+        surface_in: "空間：IN 在內部，ON 在表面接觸。",
+        motion_through: "動態：Through 穿過內部，Across 橫越表面。"
+      };
+      document.getElementById('caption').innerText = texts[s];
     }
 
-    // === Quiz System (Include Phrasal Verbs) ===
-    const quizData = [
-        { q: "Please turn ___ the lights. It's too dark.", opts: ["in", "on", "up", "over"], ans: 1, why: "Turn on (打開電源)。" },
-        { q: "Don't give ___ ! You can do it!", opts: ["in", "up", "off", "out"], ans: 1, why: "Give up (放棄)。" },
-        { q: "I was born ___ 1995.", opts: ["at", "on", "in", "to"], ans: 2, why: "年份是大範圍時間，使用 IN。" },
-        { q: "He is sitting ___ the bus.", opts: ["in", "at", "on", "by"], ans: 2, why: "公車是大眾運輸工具，可站立，使用 ON。" },
-        { q: "Who is looking ___ the baby?", opts: ["at", "for", "after", "up"], ans: 2, why: "Look after (照顧)。Look at 是注視，Look for 是尋找。" }
+    // === 5. Quiz Logic (20 Qs) ===
+    const quizQuestions = [
+      { q: "I was born _____ 1995.", options: ["in", "on", "at", "to"], correct: 0, expl: "Year is a long period -> IN." },
+      { q: "The meeting is _____ Friday.", options: ["in", "at", "on", "by"], correct: 2, expl: "Specific Day -> ON." },
+      { q: "See you _____ 5:00 PM.", options: ["in", "on", "at", "around"], correct: 2, expl: "Precise time -> AT." },
+      { q: "He is sitting _____ the bus.", options: ["in", "on", "at", "by"], correct: 1, expl: "Public transport (platform) -> ON." },
+      { q: "She got _____ the taxi.", options: ["on", "in", "to", "at"], correct: 1, expl: "Small vehicle (container) -> IN." },
+      { q: "The cat is _____ the table.", options: ["under", "between", "among", "into"], correct: 0, expl: "Position: Under." },
+      { q: "He walked _____ the forest.", options: ["across", "through", "on", "at"], correct: 1, expl: "3D space (forest) -> Through." },
+      { q: "She swam _____ the river.", options: ["through", "across", "in", "above"], correct: 1, expl: "Surface (river) -> Across." },
+      { q: "Look _____ the baby for me.", options: ["at", "for", "after", "up"], correct: 2, expl: "Look after = take care of." },
+      { q: "Please turn _____ the lights.", options: ["in", "on", "at", "over"], correct: 1, expl: "Turn on (switch)." },
+      { q: "I am interested _____ music.", options: ["in", "on", "at", "with"], correct: 0, expl: "interested in." },
+      { q: "She is afraid _____ spiders.", options: ["of", "for", "with", "about"], correct: 0, expl: "afraid of." },
+      { q: "He is good _____ math.", options: ["in", "at", "on", "for"], correct: 1, expl: "good at." },
+      { q: "The picture is _____ the wall.", options: ["in", "on", "at", "above"], correct: 1, expl: "Surface contact -> ON." },
+      { q: "Let's meet _____ the cinema.", options: ["on", "in", "at", "to"], correct: 2, expl: "Specific point/landmark -> AT." },
+      { q: "Don't give _____.", options: ["up", "in", "on", "off"], correct: 0, expl: "Give up = quit." },
+      { q: "He walked _____ the door.", options: ["to", "towards", "at", "on"], correct: 1, expl: "Direction -> Towards (or to)." },
+      { q: "There is a bridge _____ the river.", options: ["above", "over", "on", "in"], correct: 1, expl: "Crossing over something -> Over." },
+      { q: "I agree _____ you.", options: ["to", "with", "on", "at"], correct: 1, expl: "agree with someone." },
+      { q: "The book is _____ the box.", options: ["in", "on", "at", "to"], correct: 0, expl: "Container -> IN." }
     ];
-    let qIdx = 0;
 
-    function loadQ() {
-        if(qIdx >= quizData.length) {
-            document.getElementById('quiz-container').innerHTML = "<h3>測驗結束！🎉</h3>";
-            return;
-        }
-        const d = quizData[qIdx];
-        document.getElementById('qText').innerText = `${qIdx+1}. ${d.q}`;
-        const area = document.getElementById('qOptions');
-        area.innerHTML = '';
-        document.getElementById('qFeedback').style.display = 'none';
-        document.getElementById('nextBtn').style.display = 'none';
+    let currentQ = 0;
+    let score = 0;
 
-        d.opts.forEach((o, i) => {
-            const b = document.createElement('button');
-            b.className = 'option-btn';
-            b.innerText = o;
-            b.onclick = () => check(b, i, d.ans, d.why);
-            area.appendChild(b);
-        });
+    function startQuiz() {
+      currentQ = 0;
+      score = 0;
+      document.getElementById('quiz-container').style.display = 'block';
+      document.getElementById('result-area').style.display = 'none';
+      renderQuestion();
     }
 
-    function check(btn, i, ans, why) {
-        const btns = document.querySelectorAll('.option-btn');
-        btns.forEach(b => b.style.pointerEvents = 'none');
-        
-        const fb = document.getElementById('qFeedback');
-        fb.style.display = 'block';
-        
-        if(i === ans) {
-            btn.classList.add('correct');
-            fb.innerHTML = `✅ 正確！<br>${why}`;
-            fb.style.borderLeftColor = "var(--primary)";
-        } else {
-            btn.classList.add('wrong');
-            btns[ans].classList.add('correct');
-            fb.innerHTML = `❌ 錯誤。<br>${why}`;
-            fb.style.borderLeftColor = "#e74c3c";
-        }
-        document.getElementById('nextBtn').style.display = 'inline-block';
+    function renderQuestion() {
+      if(currentQ >= quizQuestions.length) {
+        showResult();
+        return;
+      }
+      const q = quizQuestions[currentQ];
+      const container = document.getElementById('quiz-container');
+      
+      let html = `
+        <div class="quiz-progress">Question ${currentQ + 1} / ${quizQuestions.length}</div>
+        <div class="quiz-question-box">
+          <div class="quiz-q-text">${q.q.replace('_____', '<span style="border-bottom:2px solid var(--secondary-tone); color:var(--secondary-tone);">?</span>')}</div>
+          <div style="display:grid; gap:10px;">
+            ${q.options.map((opt, idx) => `
+              <button class="quiz-opt" onclick="checkAns(this, ${idx})">${opt}</button>
+            `).join('')}
+          </div>
+          <div class="explanation" id="expl-${currentQ}">${q.expl}</div>
+          <div style="text-align:right; margin-top:15px; display:none;" id="nav-${currentQ}">
+            <button class="btn-cta" onclick="nextQ()">Next →</button>
+          </div>
+        </div>
+      `;
+      container.innerHTML = html;
+    }
+
+    function checkAns(btn, idx) {
+      const q = quizQuestions[currentQ];
+      const parent = btn.parentElement;
+      const allBtns = parent.querySelectorAll('.quiz-opt');
+      allBtns.forEach(b => b.disabled = true);
+      
+      if(idx === q.correct) {
+        btn.classList.add('correct');
+        score++;
+      } else {
+        btn.classList.add('incorrect');
+        allBtns[q.correct].classList.add('correct');
+      }
+      document.getElementById(`expl-${currentQ}`).classList.add('show');
+      document.getElementById(`nav-${currentQ}`).style.display = 'block';
     }
 
     function nextQ() {
-        qIdx++;
-        loadQ();
+      currentQ++;
+      renderQuestion();
     }
-    
-    loadQ();
 
-</script>
+    function showResult() {
+      document.getElementById('quiz-container').style.display = 'none';
+      document.getElementById('result-area').style.display = 'block';
+      document.getElementById('score-display').innerText = `${score} / 20`;
+      
+      let msg = score >= 18 ? "Preposition Master! 🏆" : (score >= 12 ? "Good Job! Keep it up! 💪" : "Keep practicing! 📚");
+      document.getElementById('result-msg').innerText = msg;
+    }
+  </script>
 </body>
 </html>
