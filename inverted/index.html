@@ -3,817 +3,602 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shirley's Inversion Learning Platform | 倒裝句學習平台</title>
+    <title>Shirley's Inversion (Radial Design)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            /* --- Inverted 專屬配色 (深海藍 + 香檳金) --- */
-            --inv-primary: #0c2d48;   /* 深海藍 */
-            --inv-secondary: #205072; /* 藍綠色 */
-            --inv-accent: #d4af37;    /* 香檳金 */
-            --inv-bg: #f0f4f8;        /* 淺藍灰背景 */
-            --text-dark: #2c3e50;
-            --white: #ffffff;
+            /* 配色方案：General of the Deep (深海藍 & 香檳金) */
+            --bg-deep: #f0f4f8;       /* 淺藍灰背景 */
+            --primary: #0c2d48;       /* 深海藍 */
+            --primary-dark: #051929;  /* 午夜藍 */
+            --accent: #d4af37;        /* 香檳金 */
+            
+            --card-bg: rgba(255, 255, 255, 0.98);
+            --shadow-float: 0 10px 40px -10px rgba(12, 45, 72, 0.2);
+            --highlight-bg: #fffcf5;
 
-            /* Quiz Colors */
+            /* 測驗專用色 */
             --correct-bg: #d4edda;
-            --correct-border: #28a745;
             --correct-text: #155724;
             --wrong-bg: #f8d7da;
-            --wrong-border: #dc3545;
             --wrong-text: #721c24;
         }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Lato', 'Microsoft JhengHei', '微軟正黑體', sans-serif;
-        }
-        
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
-            background-color: #f9f7f2;
-            color: var(--text-dark);
-            line-height: 1.7;
+            font-family: 'Lato', 'Microsoft JhengHei', sans-serif;
+            background-color: var(--bg-deep);
+            color: #2c3e50;
+            overflow: hidden; 
+            height: 100vh; width: 100vw;
         }
-        
-        /* Header */
-        header {
-            background: linear-gradient(135deg, #051929, #0c2d48);
+
+        /* --- 1. Radial Mind Map (放射狀首頁) --- */
+        #mindmap-container {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; justify-content: center; align-items: center;
+            z-index: 1;
+        }
+
+        /* 中心節點 */
+        .central-node {
+            width: 200px; height: 200px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
             color: white;
-            padding: 2.5rem 1.5rem;
-            text-align: center;
+            box-shadow: 0 0 50px rgba(12, 45, 72, 0.5);
+            z-index: 10;
             position: relative;
-            box-shadow: 0 4px 20px rgba(12, 45, 72, 0.3);
-        }
-        
-        header::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, transparent, var(--inv-accent), transparent);
-        }
-        
-        h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .subtitle {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            font-size: 1.2rem;
-            color: var(--inv-accent);
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        /* Tabs */
-        .tabs {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 3rem;
-        }
-        
-        .tab {
-            padding: 1rem 2rem;
-            cursor: pointer;
-            border-radius: 50px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            background: white;
-            border: 1px solid #ddd;
-            color: #666;
-        }
-        
-        .tab:hover {
-            border-color: var(--inv-accent);
-            color: var(--inv-primary);
-        }
-        
-        .tab.active {
-            background: var(--inv-primary);
-            color: var(--inv-accent);
-            border-color: var(--inv-primary);
-            box-shadow: 0 5px 15px rgba(12, 45, 72, 0.3);
-        }
-
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.6s ease;
-        }
-        
-        .tab-content.active {
-            display: block;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Elegant Section */
-        .elegant-section {
-            background: white;
-            border-radius: 8px;
-            padding: 3rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 10px 30px rgba(12, 45, 72, 0.08);
-            border-top: 4px solid var(--inv-primary);
-        }
-
-        .section-header {
+            animation: pulse 3s infinite ease-in-out;
             text-align: center;
-            margin-bottom: 2.5rem;
+            border: 5px solid var(--accent);
+            cursor: default;
         }
 
-        .section-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            color: var(--inv-primary);
-            margin-bottom: 0.5rem;
+        .central-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; line-height: 1.2; }
+        .central-sub { font-size: 0.9rem; opacity: 0.9; margin-top: 5px; font-weight: 300; letter-spacing: 1px; color: #e0e0e0; }
+
+        /* 衛星節點 */
+        .satellite {
+            position: absolute;
+            width: 110px; height: 110px;
+            background: white;
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            color: var(--primary);
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-size: 0.8rem; font-weight: 600;
+            z-index: 5;
+            padding: 5px;
+        }
+        
+        .satellite i { font-size: 1.6rem; margin-bottom: 5px; color: var(--accent); }
+        .satellite span { font-size: 0.7rem; opacity: 0.8; display: block; margin-top: 2px; color: #555; }
+
+        .satellite:hover {
+            transform: scale(1.15) !important;
+            background: var(--primary);
+            color: white;
+            border-color: var(--accent);
+            box-shadow: 0 10px 25px rgba(12, 45, 72, 0.3);
+            z-index: 20;
+        }
+        .satellite:hover i { color: var(--accent); }
+        .satellite:hover span { color: rgba(255,255,255,0.9); }
+
+        /* 測驗節點樣式 */
+        .satellite.quiz-node { border-color: var(--accent); }
+        .satellite.quiz-node i { color: var(--primary); }
+        .satellite.quiz-node:hover { background: var(--accent); border-color: var(--primary); }
+        .satellite.quiz-node:hover i { color: var(--primary); }
+
+        /* 連接線 */
+        .connections { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; }
+        .conn-line { stroke: var(--accent); stroke-width: 1.5; stroke-dasharray: 4,4; opacity: 0.5; }
+
+        /* --- 2. Modal (內容卡片) --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(5, 25, 41, 0.4);
+            backdrop-filter: blur(5px);
+            z-index: 100;
+            opacity: 0; visibility: hidden;
+            transition: all 0.4s ease;
+            display: flex; justify-content: center; align-items: center;
         }
 
-        .section-subtitle {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            color: #888;
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+
+        .modal-card {
+            width: 90%; max-width: 1000px; height: 90vh;
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: var(--shadow-float);
+            display: flex; flex-direction: column;
+            overflow: hidden;
+            transform: translateY(30px) scale(0.95);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .rule-block {
-            margin-bottom: 2.5rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid #eee;
-        }
+        .modal-overlay.active .modal-card { transform: translateY(0) scale(1); }
 
-        .rule-block:last-child { border-bottom: none; }
-
-        .rule-title {
-            font-size: 1.2rem;
-            color: var(--inv-primary);
-            font-weight: 700;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary), #1a4b70);
+            color: white;
+            padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 4px solid var(--accent);
         }
+        
+        .modal-title h2 { font-family: 'Playfair Display', serif; font-size: 1.6rem; margin: 0; border: none; padding: 0; color: white; }
+        .modal-close { background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; transition: 0.3s; }
+        .modal-close:hover { transform: rotate(90deg); color: var(--accent); }
 
-        .rule-title i {
-            color: var(--inv-accent);
-            margin-right: 10px;
-            font-size: 1rem;
+        /* 分頁導航 */
+        .modal-tabs {
+            display: flex; background: #fffcf5; overflow-x: auto;
+            border-bottom: 1px solid #efe5d9; flex-shrink: 0;
         }
+        .tab-btn {
+            flex: 1; padding: 1rem; border: none; background: none;
+            color: #555; font-weight: 600; cursor: pointer;
+            transition: 0.3s; min-width: 120px; white-space: nowrap;
+            font-family: 'Lato', sans-serif; font-size: 0.95rem;
+        }
+        .tab-btn:hover { background: #f0f4f8; color: var(--primary); }
+        .tab-btn.active { background: white; color: var(--primary); border-bottom: 3px solid var(--primary); }
+
+        /* 內容樣式 */
+        .modal-body { flex: 1; overflow-y: auto; padding: 2.5rem; scroll-behavior: smooth; line-height: 1.8; }
+        
+        h2 { font-family: 'Playfair Display', serif; color: var(--primary); font-size: 1.8rem; border-bottom: 1px solid rgba(12, 45, 72, 0.2); padding-bottom: 0.8rem; margin-bottom: 1.5rem; }
+        h3 { color: #2c3e50; font-size: 1.3rem; margin: 1.5rem 0 1rem; font-weight: 700; display: flex; align-items: center; }
+        h3 i { color: var(--accent); margin-right: 10px; font-size: 1.1rem; }
 
         .grammar-formula {
-            background: var(--inv-bg);
+            background: #f0f4f8;
             padding: 1rem;
             border-radius: 4px;
             font-family: 'Courier New', monospace;
             font-weight: bold;
-            color: #444;
+            color: var(--primary);
             margin-bottom: 1rem;
-            border-left: 3px solid var(--inv-accent);
+            border-left: 4px solid var(--accent);
         }
 
         .example-list { list-style: none; }
-
         .example-item {
             margin-bottom: 1.5rem;
             padding-left: 1rem;
             position: relative;
-            background: rgba(255, 255, 255, 0.5);
-            border-left: 2px solid #ddd;
-            padding: 10px 15px;
+            background: white;
+            border: 1px solid #eee;
+            border-left: 3px solid #ddd;
+            padding: 15px;
+            border-radius: 0 6px 6px 0;
             transition: all 0.3s;
         }
-        
-        .example-item:hover {
-            border-left-color: var(--inv-accent);
-            background: #fffcf5;
-        }
+        .example-item:hover { border-left-color: var(--accent); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
 
-        .en-sentence {
-            font-size: 1.1rem;
-            color: #2c3e50;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
+        .en-sentence { font-size: 1.1rem; color: #2c3e50; font-weight: 600; margin-bottom: 5px; }
+        .cn-trans { font-size: 0.95rem; color: #7f8c8d; }
+        .highlight-gold { color: var(--primary); font-weight: bold; background-color: rgba(212, 175, 55, 0.2); padding: 0 4px; border-radius: 2px; }
 
-        .highlight-gold {
-            color: var(--inv-primary);
-            font-weight: bold;
-            background-color: rgba(212, 175, 55, 0.15);
-            padding: 0 4px;
-            border-radius: 2px;
-        }
-
-        .cn-trans {
-            font-size: 0.95rem;
-            color: #7f8c8d;
-        }
-
-        /* Audio Button */
-        .audio-btn {
-            background: none;
-            border: none;
-            color: var(--inv-accent);
-            cursor: pointer;
-            margin-left: 8px;
-            font-size: 1.1rem;
-            transition: all 0.2s;
-            vertical-align: middle;
-        }
-        .audio-btn:hover {
-            color: var(--inv-primary);
-            transform: scale(1.15);
-        }
+        .audio-btn { background: none; border: none; color: var(--accent); cursor: pointer; margin-left: 8px; font-size: 1.1rem; transition: all 0.2s; }
+        .audio-btn:hover { color: var(--primary); transform: scale(1.15); }
 
         /* Quiz Styles */
         .quiz-container { max-width: 800px; margin: 0 auto; }
-        .quiz-progress {
-            margin-bottom: 1.5rem;
-            color: #666;
-            font-weight: 700;
-            text-align: right;
-            font-size: 0.9rem;
-        }
-        .quiz-card {
-            background: white;
-            border-radius: 8px;
-            padding: 2.5rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border: 1px solid #eee;
-            animation: fadeIn 0.5s ease;
-        }
-        .quiz-question {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--inv-primary);
-            margin-bottom: 2rem;
-            border-left: 4px solid var(--inv-accent);
-            padding-left: 20px;
-            line-height: 1.6;
-        }
-        .quiz-options { display: grid; gap: 15px; }
-        .quiz-option {
-            padding: 18px 25px;
-            background: white;
-            border: 2px solid #eef2f5;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-weight: 600;
-            color: var(--text-dark);
-            text-align: left;
-            position: relative;
-            font-size: 1.05rem;
-        }
-        .quiz-option:hover:not(.disabled) {
-            border-color: var(--inv-accent);
-            background: #fffcf5;
-            transform: translateX(5px);
-        }
-        .quiz-option.correct {
-            background-color: var(--correct-bg);
-            border-color: var(--correct-border);
-            color: var(--correct-text);
-        }
-        .quiz-option.incorrect {
-            background-color: var(--wrong-bg);
-            border-color: var(--wrong-border);
-            color: var(--wrong-text);
-            opacity: 0.8;
-        }
-        .quiz-option.disabled { cursor: default; opacity: 0.7; pointer-events: none; }
-        .quiz-explanation {
-            margin-top: 25px;
-            padding: 20px;
-            background: rgba(212, 175, 55, 0.1);
-            border-radius: 8px;
-            border-left: 4px solid var(--inv-accent);
-            color: var(--text-dark);
-            display: none;
-            animation: slideDown 0.4s ease;
-        }
-        .quiz-explanation.show { display: block; }
-        .quiz-nav { margin-top: 25px; text-align: right; display: none; }
-        .quiz-nav.show { display: block; }
-        .quiz-result { text-align: center; padding: 3rem; }
-        .score-circle {
-            width: 150px;
-            height: 150px;
-            background: linear-gradient(135deg, var(--inv-primary), var(--inv-secondary));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 2rem;
-            color: white;
-            font-size: 3rem;
-            font-weight: 800;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            border: 4px solid var(--inv-accent);
-        }
-        .btn {
-            background: var(--inv-accent);
-            color: var(--inv-primary);
-            border: none;
-            padding: 0.8rem 2rem;
-            border-radius: 50px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .btn:hover { background: white; transform: translateY(-2px); }
-        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-
-        @media (max-width: 768px) {
-            .section-title { font-size: 1.6rem; }
-            .example-item { margin-bottom: 1rem; }
-        }
+        .quiz-progress { margin-bottom: 1.5rem; color: #666; font-weight: 700; text-align: right; }
+        .quiz-card-q { background: white; border-radius: 8px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #eee; }
+        .quiz-question { font-size: 1.2rem; font-weight: 700; color: var(--primary); margin-bottom: 1.5rem; border-left: 4px solid var(--accent); padding-left: 20px; line-height: 1.6; }
+        .quiz-options { display: grid; gap: 12px; }
+        .quiz-option { padding: 15px 20px; background: white; border: 2px solid #eef2f5; border-radius: 8px; cursor: pointer; transition: 0.2s; font-weight: 600; text-align: left; font-size: 1rem; }
+        .quiz-option:hover:not(.disabled) { border-color: var(--primary); background: #f0f4f8; }
+        .quiz-option.correct { background-color: var(--correct-bg); border-color: #28a745; color: var(--correct-text); }
+        .quiz-option.incorrect { background-color: var(--wrong-bg); border-color: #dc3545; color: var(--wrong-text); opacity: 0.8; }
+        .quiz-option.disabled { cursor: default; pointer-events: none; }
         
-        footer {
-            text-align: center;
-            padding: 2rem;
-            color: #888;
-            border-top: 1px solid #ddd;
-            margin-top: 3rem;
-        }
+        .quiz-explanation { margin-top: 20px; padding: 15px; background: rgba(212, 175, 55, 0.1); border-radius: 8px; border-left: 4px solid var(--accent); display: none; }
+        .next-btn { margin-top: 20px; background: var(--primary); color: white; border: none; padding: 10px 25px; border-radius: 30px; cursor: pointer; display: none; font-weight: bold; box-shadow: 0 4px 10px rgba(12, 45, 72, 0.3); }
+        
+        .score-circle { width: 140px; height: 140px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; color: white; font-size: 3rem; font-weight: 800; box-shadow: 0 10px 30px rgba(12, 45, 72, 0.3); border: 4px solid var(--accent); }
+
+        @keyframes pulse { 0%, 100% { box-shadow: 0 0 50px rgba(12, 45, 72, 0.4); } 50% { box-shadow: 0 0 70px rgba(12, 45, 72, 0.7); } }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>Shirley's Grammar E-Charger</h1>
-        <p class="subtitle">The Art of Inversion · 倒裝句學習平台</p>
-    </header>
-
-    <div class="container">
-        <div class="tabs">
-            <div class="tab active" data-tab="intro">介紹 | Intro</div>
-            <div class="tab" data-tab="negative">否定與Only | Negative & Only</div>
-            <div class="tab" data-tab="place">地方與假設 | Place & If</div>
-            <div class="tab" data-tab="degree">程度與其他 | So/Such & Others</div>
-            <div class="tab" data-tab="quiz">自我檢測 | Quiz</div>
+    <div id="mindmap-container">
+        <svg class="connections" id="lines-svg"></svg>
+        
+        <div class="central-node">
+            <div class="central-title">Shirley's Inversion</div>
+            <div class="central-sub">倒裝句結構</div>
         </div>
 
-        <div id="intro" class="tab-content active">
-            <div class="elegant-section">
-                <div class="section-header">
-                    <h2 class="section-title">Introduction</h2>
-                    <span class="section-subtitle">什麼是倒裝句？</span>
-                </div>
-                <div class="rule-block">
-                    <p>倒裝句 (Inversion) 是指將句子中的<strong>動詞 (Verb)</strong> 或 <strong>助動詞 (Auxiliary)</strong> 移到 <strong>主詞 (Subject)</strong> 之前的句型。</p>
-                    <p>目的：為了<strong>強調 (Emphasis)</strong> 語氣，或為了修辭的生動性。</p>
-                    <div class="grammar-formula">
-                        正常語序：Subject + Verb ...<br>
-                        倒裝語序：Auxiliary / Verb + Subject ...
-                    </div>
-                    <div class="rule-title"><i class="fas fa-lightbulb"></i> 兩大類型</div>
-                    <ul class="example-list">
-                        <li class="example-item">
-                            <div class="en-sentence"><strong>1. 部分倒裝 (Partial Inversion):</strong> 助動詞移至主詞前 (Aux + S + V)</div>
-                            <div class="cn-trans">例如: Never <span class="highlight-gold">have I</span> seen him.</div>
-                        </li>
-                        <li class="example-item">
-                            <div class="en-sentence"><strong>2. 完全倒裝 (Full Inversion):</strong> 整個動詞移至主詞前 (V + S)</div>
-                            <div class="cn-trans">例如: Here <span class="highlight-gold">comes the bus</span>.</div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+        <div class="satellite" onclick="openModal('intro')">
+            <i class="fas fa-book-open"></i>
+            <div>概論<br><span>Intro</span></div>
         </div>
-
-        <div id="negative" class="tab-content">
-            <div class="elegant-section">
-                <div class="section-header">
-                    <h2 class="section-title">Negative Adverbs</h2>
-                    <span class="section-subtitle">否定副詞放句首 (部分倒裝)</span>
-                </div>
-
-                <div class="rule-block">
-                    <div class="rule-title"><i class="fas fa-list-ul"></i> 常用否定詞與例句大全</div>
-                    <p>當以下否定詞位於句首時，句子必須使用<strong>倒裝結構</strong>。</p>
-                    
-                    <ul class="example-list">
-                        <li class="example-item">
-                            <strong>Never (從未)</strong>
-                            <div class="en-sentence"><span class="highlight-gold">Never have I</span> seen such a beautiful sunset. <button class="audio-btn" onclick="speak('Never have I seen such a beautiful sunset.')"><i class="fas fa-volume-up"></i></button></div>
-                            <div class="cn-trans">我從未見過如此美麗的日落。</div>
-                        </li>
-                        <li class="example-item">
-                            <strong>Seldom (很少)</strong>
-                            <div class="en-sentence"><span class="highlight-gold">Seldom does she</span> complain about her job. <button class="audio-btn" onclick="speak('Seldom does she complain about her job.')"><i class="fas fa-volume-up"></i></button></div>
-                            <div class="cn-trans">她很少抱怨她的工作。</div>
-                        </li>
-                        <li class="example-item">
-                            <strong>Rarely (罕見地)</strong>
-                            <div class="en-sentence"><span class="highlight-gold">Rarely do we</span> receive such good service. <button class="audio-btn" onclick="speak('Rarely do we receive such good service.')"><i class="fas fa-volume-up"></i></button></div>
-                            <div class="cn-trans">我們很少受到這麼好的服務。</div>
-                        </li>
-                        <li class="example-item">
-                            <strong>Hardly (幾乎不 / 剛...就)</strong>
-                            <div class="en-sentence"><span class="highlight-gold">Hardly had I</span> arrived when the phone rang. <button class="audio-btn" onclick="speak('Hardly had I arrived when the phone rang.')"><i class="fas fa-volume-up"></i></button></div>
-                            <div class="cn-trans">我剛到達，電話就響了。</div>
-                        </li>
-                        <li class="example-item">
-                            <strong>Scarcely (幾乎不 / 剛...就)</strong>
-                            <div class="en-sentence"><span class="highlight-gold">Scarcely had she</span> entered the room when the lights went out. <button class="audio-btn" onclick="speak('Scarcely had she entered the room when the lights went out.')"><i class="fas fa-volume-up"></i></button></div>
-                            <div class="cn-trans">她剛進房間，燈就滅了。</div>
-                        </li>
-                        <li class="example-item">
-                            <strong>Barely (僅僅 / 剛...就)</strong>
-                            <div class="en-sentence"><span class="highlight-gold">Barely had he</span> finished the exam when the time was up. <button class="audio-btn" onclick="speak('Barely had he finished the exam when the time was up.')"><i class="fas fa-volume-up"></i></button></div>
-                            <div class="cn-trans">他剛考完試，時間就到了。</div>
-                        </li>
-                        <li class="example-item">
-                            <strong>Little (一點也不)</strong>
-                            <div class="en-sentence"><span class="highlight-gold">Little did he</span> know that the surprise party was for him. <button class="audio-btn" onclick="speak('Little did he know that the surprise party was for him.')"><i class="fas fa-volume-up"></i></button></div>
-                            <div class="cn-trans">他一點也不知道這個驚喜派對是為他準備的。</div>
-                        </li>
-                        <li class="example-item">
-                            <strong>Few (很少人/物)</strong>
-                            <div class="en-sentence"><span class="highlight-gold">Few people did</span> I meet at the conference. <button class="audio-btn" onclick="speak('Few people did I meet at the conference.')"><i class="fas fa-volume-up"></i></button></div>
-                            <div class="cn-trans">我在會議上沒見到幾個人。</div>
-                        </li>
-                        <li class="example-item">
-                            <strong>Nowhere (任何地方都不)</strong>
-                            <div class="en-sentence"><span class="highlight-gold">Nowhere will you</span> find a better friend than him. <button class="audio-btn" onclick="speak('Nowhere will you find a better friend than him.')"><i class="fas fa-volume-up"></i></button></div>
-                            <div class="cn-trans">你在任何地方都找不到比他更好的朋友了。</div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="elegant-section">
-                <div class="section-header">
-                    <h2 class="section-title">Only + Adverbial</h2>
-                    <span class="section-subtitle">Only 強調狀語放句首</span>
-                </div>
-                <div class="rule-block">
-                    <div class="grammar-formula">Only + (Time/Prep/Clause) + Aux + S + V...</div>
-                    <ul class="example-list">
-                        <li class="example-item">
-                            <div class="en-sentence"><strong>Only recently</strong> <span class="highlight-gold">did I realize</span> my mistake. <button class="audio-btn" onclick="speak('Only recently did I realize my mistake.')"><i class="fas fa-volume-up"></i></button></div>
-                            <div class="cn-trans">直到最近我才意識到我的錯誤。</div>
-                        </li>
-                        <li class="example-item">
-                            <div class="en-sentence"><strong>Only by working hard</strong> <span class="highlight-gold">can you</span> succeed. <button class="audio-btn" onclick="speak('Only by working hard can you succeed.')"><i class="fas fa-volume-up"></i></button></div>
-                            <div class="cn-trans">只有努力工作，你才能成功。</div>
-                        </li>
-                        <li class="example-item">
-                            <div class="en-sentence"><strong>Only when</strong> you grow up <span class="highlight-gold">will you</span> understand. <button class="audio-btn" onclick="speak('Only when you grow up will you understand.')"><i class="fas fa-volume-up"></i></button></div>
-                            <div class="cn-trans">只有當你長大後，你才會明白。(注意：倒裝發生在主要子句)</div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+        <div class="satellite" onclick="openModal('negative')">
+            <i class="fas fa-ban"></i>
+            <div>否定副詞<br><span>Negative</span></div>
         </div>
-
-        <div id="place" class="tab-content">
-            <div class="elegant-section">
-                <div class="section-header">
-                    <h2 class="section-title">Place & Direction</h2>
-                    <span class="section-subtitle">地方與方向副詞 (完全倒裝)</span>
-                </div>
-                <div class="rule-block">
-                    <p>為了生動描述場景，將<strong>地點副詞</strong>或<strong>地方介系詞片語</strong>移至句首。此時多用<strong>完全倒裝</strong> (V + S)。</p>
-                    <div class="grammar-formula">Place/Direction + Verb + Subject</div>
-                    <ul class="example-list">
-                        <li class="example-item">
-                            <div class="en-sentence"><strong>Here</strong> <span class="highlight-gold">comes the bus</span>. <button class="audio-btn" onclick="speak('Here comes the bus.')"><i class="fas fa-volume-up"></i></button></div>
-                            <div class="cn-trans">公車來了。</div>
-                        </li>
-                        <li class="example-item">
-                            <div class="en-sentence"><strong>Under the tree</strong> <span class="highlight-gold">sat a boy</span>. <button class="audio-btn" onclick="speak('Under the tree sat a boy.')"><i class="fas fa-volume-up"></i></button></div>
-                            <div class="cn-trans">樹下坐著一個男孩。</div>
-                        </li>
-                    </ul>
-                    <div style="background:#fff3cd; padding:1rem; border-radius:4px; margin-top:1rem;">
-                        <strong style="color:#856404;"><i class="fas fa-info-circle"></i> 重要例外：</strong>
-                        <p style="font-size:0.9rem;">如果主詞是<strong>代名詞 (Pronoun)</strong>，則<strong>不倒裝</strong>。</p>
-                        <div class="en-sentence">Here <span style="text-decoration:underline;">it comes</span>. <button class="audio-btn" onclick="speak('Here it comes.')"><i class="fas fa-volume-up"></i></button> (O)</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="elegant-section">
-                <div class="section-header">
-                    <h2 class="section-title">Conditional Sentences</h2>
-                    <span class="section-subtitle">省略 If 的假設語氣</span>
-                </div>
-                <div class="rule-block">
-                    <ul class="example-list">
-                        <li class="example-item">
-                            <div class="grammar-formula" style="margin-bottom:5px; font-size:0.9rem;">Type 1: Were (與現在事實相反)</div>
-                            <div class="en-sentence"><span class="highlight-gold">Were I</span> you, I would accept the offer. <button class="audio-btn" onclick="speak('Were I you, I would accept the offer.')"><i class="fas fa-volume-up"></i></button></div>
-                            <div class="cn-trans">= If I were you...</div>
-                        </li>
-                        <li class="example-item">
-                            <div class="grammar-formula" style="margin-bottom:5px; font-size:0.9rem;">Type 2: Had (與過去事實相反)</div>
-                            <div class="en-sentence"><span class="highlight-gold">Had I known</span> the truth, I would have told you. <button class="audio-btn" onclick="speak('Had I known the truth, I would have told you.')"><i class="fas fa-volume-up"></i></button></div>
-                            <div class="cn-trans">= If I had known the truth...</div>
-                        </li>
-                        <li class="example-item">
-                            <div class="grammar-formula" style="margin-bottom:5px; font-size:0.9rem;">Type 3: Should (萬一)</div>
-                            <div class="en-sentence"><span class="highlight-gold">Should it rain</span>, the picnic will be cancelled. <button class="audio-btn" onclick="speak('Should it rain, the picnic will be cancelled.')"><i class="fas fa-volume-up"></i></button></div>
-                            <div class="cn-trans">= If it should rain...</div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+        <div class="satellite" onclick="openModal('only')">
+            <i class="fas fa-bullseye"></i>
+            <div>Only開頭<br><span>Only</span></div>
         </div>
-
-        <div id="degree" class="tab-content">
-            <div class="elegant-section">
-                <div class="section-header">
-                    <h2 class="section-title">So / Such ... that</h2>
-                    <span class="section-subtitle">程度副詞強調</span>
-                </div>
-                <div class="rule-block">
-                    <ul class="example-list">
-                        <li class="example-item">
-                            <div class="en-sentence"><strong>So fast</strong> <span class="highlight-gold">did he run</span> that no one could catch him. <button class="audio-btn" onclick="speak('So fast did he run that no one could catch him.')"><i class="fas fa-volume-up"></i></button></div>
-                            <div class="cn-trans">他跑得那麼快，沒人能抓到他。</div>
-                        </li>
-                        <li class="example-item">
-                            <div class="en-sentence"><strong>Such</strong> <span class="highlight-gold">was his anger</span> that he lost control. <button class="audio-btn" onclick="speak('Such was his anger that he lost control.')"><i class="fas fa-volume-up"></i></button></div>
-                            <div class="cn-trans">他憤怒到失去了控制。</div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+        <div class="satellite" onclick="openModal('place')">
+            <i class="fas fa-map-marker-alt"></i>
+            <div>地方/方向<br><span>Place</span></div>
         </div>
-
-        <div id="quiz" class="tab-content">
-            <div class="elegant-section">
-                <div class="section-header">
-                    <h2 class="section-title">Inversion Quiz</h2>
-                    <span class="section-subtitle">自我檢測 | Test Your Knowledge</span>
-                </div>
-                <div class="quiz-container">
-                    <div id="quiz-question-container">
-                        </div>
-                </div>
-            </div>
+        <div class="satellite" onclick="openModal('conditional')">
+            <i class="fas fa-code-branch"></i>
+            <div>假設語氣<br><span>If</span></div>
         </div>
-
+        <div class="satellite" onclick="openModal('degree')">
+            <i class="fas fa-tachometer-alt"></i>
+            <div>程度 (So/Such)<br><span>Degree</span></div>
+        </div>
+        <div class="satellite quiz-node" onclick="openModal('quiz')">
+            <i class="fas fa-pencil-alt"></i>
+            <div>自我檢測<br><span>Quiz (20)</span></div>
+        </div>
     </div>
 
-    <footer>
-        <p>© 2025 Shirley's Grammar E-Charger · Premium Edition</p>
-    </footer>
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal-card">
+            <header class="modal-header">
+                <div class="modal-title"><h2>Shirley's Inversion Platform</h2></div>
+                <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+            </header>
+            <nav class="modal-tabs" id="modal-tabs"></nav>
+            <div class="modal-body" id="modal-content"></div>
+        </div>
+    </div>
 
     <script>
-        // Tab Functionality
-        document.querySelectorAll('.tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        // --- 1. CONTENT DATA ---
+        const contentData = {
+            intro: {
+                title: "概論 (Introduction)",
+                html: `
+                <h2>什麼是倒裝句？</h2>
+                <p>倒裝句 (Inversion) 是指將句子中的<strong>動詞 (Verb)</strong> 或 <strong>助動詞 (Auxiliary)</strong> 移到 <strong>主詞 (Subject)</strong> 之前的句型。目的是為了強調語氣或修辭的生動性。</p>
                 
-                tab.classList.add('active');
-                const tabId = tab.getAttribute('data-tab');
-                document.getElementById(tabId).classList.add('active');
+                <div class="grammar-formula">
+                    正常語序：Subject + Verb ...<br>
+                    倒裝語序：Auxiliary / Verb + Subject ...
+                </div>
 
-                if (tabId === 'quiz') {
-                    const container = document.getElementById('quiz-question-container');
-                    if (container.innerHTML.trim() === '') {
-                        initQuiz();
-                    }
-                }
+                <h3><i class="fas fa-layer-group"></i> 兩大類型</h3>
+                <ul class="example-list">
+                    <li class="example-item">
+                        <div class="en-sentence"><strong>1. 部分倒裝 (Partial Inversion)</strong></div>
+                        <p>助動詞移至主詞前 (Aux + S + V)。通常用於否定副詞、Only等。</p>
+                        <div class="en-sentence">Example: Never <span class="highlight-gold">have I</span> seen him.</div>
+                    </li>
+                    <li class="example-item">
+                        <div class="en-sentence"><strong>2. 完全倒裝 (Full Inversion)</strong></div>
+                        <p>整個動詞移至主詞前 (V + S)。通常用於地方副詞。</p>
+                        <div class="en-sentence">Example: Here <span class="highlight-gold">comes the bus</span>.</div>
+                    </li>
+                </ul>`
+            },
+            negative: {
+                title: "否定副詞 (Negative)",
+                html: `
+                <h2>否定副詞放句首 (部分倒裝)</h2>
+                <p>當否定意義的副詞位於句首時，為了加強語氣，句子必須倒裝。</p>
+                <div class="grammar-formula">Negative Adv + Aux + S + V</div>
+
+                <h3><i class="fas fa-list-ul"></i> 常用否定詞</h3>
+                <ul class="example-list">
+                    <li class="example-item">
+                        <div class="en-sentence"><strong>Never:</strong> Never <span class="highlight-gold">have I</span> seen such a beautiful sunset. <button class="audio-btn" onclick="speak('Never have I seen such a beautiful sunset.')"><i class="fas fa-volume-up"></i></button></div>
+                        <div class="cn-trans">我從未見過如此美麗的日落。</div>
+                    </li>
+                    <li class="example-item">
+                        <div class="en-sentence"><strong>Seldom:</strong> Seldom <span class="highlight-gold">does she</span> complain. <button class="audio-btn" onclick="speak('Seldom does she complain.')"><i class="fas fa-volume-up"></i></button></div>
+                        <div class="cn-trans">她很少抱怨。</div>
+                    </li>
+                    <li class="example-item">
+                        <div class="en-sentence"><strong>Hardly:</strong> Hardly <span class="highlight-gold">had I</span> arrived when it rained. <button class="audio-btn" onclick="speak('Hardly had I arrived when it rained.')"><i class="fas fa-volume-up"></i></button></div>
+                        <div class="cn-trans">我剛到達就下雨了。</div>
+                    </li>
+                    <li class="example-item">
+                        <div class="en-sentence"><strong>Little:</strong> Little <span class="highlight-gold">did he</span> know about the surprise. <button class="audio-btn" onclick="speak('Little did he know about the surprise.')"><i class="fas fa-volume-up"></i></button></div>
+                        <div class="cn-trans">他對這個驚喜一點也不知道。</div>
+                    </li>
+                    <li class="example-item">
+                        <div class="en-sentence"><strong>Nowhere:</strong> Nowhere <span class="highlight-gold">will you</span> find a better friend. <button class="audio-btn" onclick="speak('Nowhere will you find a better friend.')"><i class="fas fa-volume-up"></i></button></div>
+                        <div class="cn-trans">你在任何地方都找不到比他更好的朋友。</div>
+                    </li>
+                </ul>`
+            },
+            only: {
+                title: "Only 開頭",
+                html: `
+                <h2>Only + 狀語放句首</h2>
+                <p>當 "Only" 加上副詞、介系詞片語或狀語子句位於句首時，主要子句需倒裝。</p>
+                <div class="grammar-formula">Only + (Time/Prep/Clause) + Aux + S + V</div>
+
+                <ul class="example-list">
+                    <li class="example-item">
+                        <div class="en-sentence"><strong>Only recently</strong> <span class="highlight-gold">did I</span> realize my mistake. <button class="audio-btn" onclick="speak('Only recently did I realize my mistake.')"><i class="fas fa-volume-up"></i></button></div>
+                        <div class="cn-trans">直到最近我才意識到我的錯誤。</div>
+                    </li>
+                    <li class="example-item">
+                        <div class="en-sentence"><strong>Only by working hard</strong> <span class="highlight-gold">can you</span> succeed. <button class="audio-btn" onclick="speak('Only by working hard can you succeed.')"><i class="fas fa-volume-up"></i></button></div>
+                        <div class="cn-trans">只有努力工作，你才能成功。</div>
+                    </li>
+                    <li class="example-item">
+                        <div class="en-sentence"><strong>Only when</strong> you grow up <span class="highlight-gold">will you</span> understand. <button class="audio-btn" onclick="speak('Only when you grow up will you understand.')"><i class="fas fa-volume-up"></i></button></div>
+                        <div class="cn-trans">只有當你長大後，你才會明白。(倒裝在主要子句)</div>
+                    </li>
+                </ul>`
+            },
+            place: {
+                title: "地方/方向 (Place)",
+                html: `
+                <h2>地方與方向副詞 (完全倒裝)</h2>
+                <p>為了生動描述，將地點副詞移至句首，使用完全倒裝 (V + S)。</p>
+                <div class="grammar-formula">Place/Direction + Verb + Subject</div>
+
+                <ul class="example-list">
+                    <li class="example-item">
+                        <div class="en-sentence"><strong>Here</strong> <span class="highlight-gold">comes the bus</span>. <button class="audio-btn" onclick="speak('Here comes the bus.')"><i class="fas fa-volume-up"></i></button></div>
+                        <div class="cn-trans">公車來了。</div>
+                    </li>
+                    <li class="example-item">
+                        <div class="en-sentence"><strong>Under the tree</strong> <span class="highlight-gold">sat a boy</span>. <button class="audio-btn" onclick="speak('Under the tree sat a boy.')"><i class="fas fa-volume-up"></i></button></div>
+                        <div class="cn-trans">樹下坐著一個男孩。</div>
+                    </li>
+                    <li class="example-item">
+                        <div class="en-sentence"><strong>Away</strong> <span class="highlight-gold">flew the birds</span>. <button class="audio-btn" onclick="speak('Away flew the birds.')"><i class="fas fa-volume-up"></i></button></div>
+                        <div class="cn-trans">鳥兒飛走了。</div>
+                    </li>
+                </ul>
+
+                <div style="background:#fff3cd; padding:1rem; border-radius:4px; margin-top:1rem; border:1px solid #ffeeba;">
+                    <strong style="color:#856404;"><i class="fas fa-exclamation-triangle"></i> 重要例外：</strong>
+                    <p style="font-size:0.95rem; color:#856404;">如果主詞是<strong>代名詞 (Pronoun)</strong>，則<strong>不倒裝</strong>。</p>
+                    <div class="en-sentence">Here <span style="text-decoration:underline;">it comes</span>. <button class="audio-btn" onclick="speak('Here it comes.')"><i class="fas fa-volume-up"></i></button> (O)</div>
+                </div>`
+            },
+            conditional: {
+                title: "假設語氣 (If)",
+                html: `
+                <h2>省略 If 的假設語氣</h2>
+                <p>在假設語氣中，省略 If 後，將助動詞 (Were, Had, Should) 移至主詞前。</p>
+
+                <ul class="example-list">
+                    <li class="example-item">
+                        <h3>Type 1: Were (與現在事實相反)</h3>
+                        <div class="en-sentence"><span class="highlight-gold">Were I</span> you, I would go. <button class="audio-btn" onclick="speak('Were I you, I would go.')"><i class="fas fa-volume-up"></i></button></div>
+                        <div class="cn-trans">= If I were you...</div>
+                    </li>
+                    <li class="example-item">
+                        <h3>Type 2: Had (與過去事實相反)</h3>
+                        <div class="en-sentence"><span class="highlight-gold">Had I known</span>, I would have told you. <button class="audio-btn" onclick="speak('Had I known, I would have told you.')"><i class="fas fa-volume-up"></i></button></div>
+                        <div class="cn-trans">= If I had known...</div>
+                    </li>
+                    <li class="example-item">
+                        <h3>Type 3: Should (萬一)</h3>
+                        <div class="en-sentence"><span class="highlight-gold">Should it rain</span>, we will cancel. <button class="audio-btn" onclick="speak('Should it rain, we will cancel.')"><i class="fas fa-volume-up"></i></button></div>
+                        <div class="cn-trans">= If it should rain...</div>
+                    </li>
+                </ul>`
+            },
+            degree: {
+                title: "程度 (So/Such)",
+                html: `
+                <h2>So / Such ... that (程度副詞強調)</h2>
+                <p>將 "So + Adj/Adv" 或 "Such" 移至句首強調程度，句子倒裝。</p>
+
+                <ul class="example-list">
+                    <li class="example-item">
+                        <div class="en-sentence"><strong>So fast</strong> <span class="highlight-gold">did he run</span> that no one could catch him. <button class="audio-btn" onclick="speak('So fast did he run that no one could catch him.')"><i class="fas fa-volume-up"></i></button></div>
+                        <div class="cn-trans">他跑得那麼快，沒人能抓到他。</div>
+                    </li>
+                    <li class="example-item">
+                        <div class="en-sentence"><strong>Such</strong> <span class="highlight-gold">was his anger</span> that he lost control. <button class="audio-btn" onclick="speak('Such was his anger that he lost control.')"><i class="fas fa-volume-up"></i></button></div>
+                        <div class="cn-trans">他憤怒到失去了控制。</div>
+                    </li>
+                </ul>`
+            },
+            quiz: {
+                title: "自我檢測",
+                html: `<div id="quiz-interface" class="quiz-container">
+                    <div class="quiz-progress">Question <span id="current-question-num">1</span> of 20</div>
+                    <div id="quiz-question-container"></div>
+                </div>
+                <div id="quiz-score" class="quiz-result" style="display: none;">
+                    <div class="score-circle" id="score-val">0</div>
+                    <h2>Quiz Completed!</h2>
+                    <p id="score-msg" style="margin:20px 0; font-size:1.1rem; color:#666;"></p>
+                    <button class="next-btn" style="display:inline-block;" onclick="initQuiz()"><i class="fas fa-redo"></i> Restart Quiz</button>
+                </div>`
+            }
+        };
+
+        // --- 2. QUIZ DATA ---
+        const quizQuestions = [
+            { question: "1. Never ______ such a beautiful sight.", options: ["I have seen", "have I seen", "I saw", "saw I"], correct: 1, explanation: "Negative adverb 'Never' requires partial inversion." },
+            { question: "2. Seldom ______ late for work.", options: ["is she", "she is", "does she", "she does"], correct: 0, explanation: "'Seldom' requires inversion. 'Is she' is correct for 'She is late'." },
+            { question: "3. Hardly had I arrived ______ it started to rain.", options: ["than", "when", "then", "after"], correct: 1, explanation: "Structure: 'Hardly... when...'." },
+            { question: "4. Only by practicing ______ you improve.", options: ["can", "you can", "can't", "you will"], correct: 0, explanation: "'Only' + prep phrase requires inversion." },
+            { question: "5. Not only ______ smart, but he is also kind.", options: ["he is", "is he", "does he", "he does"], correct: 1, explanation: "'Not only' requires inversion." },
+            { question: "6. Here ______ the bus!", options: ["comes", "come", "is coming", "does come"], correct: 0, explanation: "Full inversion with noun subject: 'Here comes the bus'." },
+            { question: "7. Here ______.", options: ["comes it", "it comes", "does it come", "is it coming"], correct: 1, explanation: "No inversion with pronoun subject 'it'." },
+            { question: "8. ______ you, I would study harder.", options: ["If I was", "Were I", "Was I", "Am I"], correct: 1, explanation: "Conditional Type 2: 'Were I' = 'If I were'." },
+            { question: "9. ______ I known the truth, I would have told you.", options: ["Have", "Had", "Did", "If"], correct: 1, explanation: "Conditional Type 3: 'Had I known' = 'If I had known'." },
+            { question: "10. ______ it rain tomorrow, we will stay home.", options: ["Should", "If", "Were", "Had"], correct: 0, explanation: "Inversion for 'If it should rain' is 'Should it rain'." },
+            { question: "11. So fast ______ that he won the race.", options: ["he ran", "did he run", "he runs", "does he run"], correct: 1, explanation: "'So + adv' requires inversion." },
+            { question: "12. Under the tree ______ a cat.", options: ["sleeping", "slept", "did sleep", "was sleeping"], correct: 1, explanation: "Full inversion: 'slept a cat'." },
+            { question: "13. Little ______ know about the surprise.", options: ["did he", "he did", "does he", "he does"], correct: 0, explanation: "'Little' (negative) requires inversion." },
+            { question: "14. No sooner had we left ______ it began to snow.", options: ["when", "than", "then", "that"], correct: 1, explanation: "Structure: 'No sooner... than...'." },
+            { question: "15. Nowhere ______ find a better deal.", options: ["you will", "will you", "you can", "can you not"], correct: 1, explanation: "'Nowhere' requires inversion." },
+            { question: "16. Only when you are older ______ understand.", options: ["you will", "will you", "do you", "you do"], correct: 1, explanation: "'Only' + clause requires inversion in main clause." },
+            { question: "17. Such ______ his strength that he lifted the car.", options: ["is", "was", "has", "had"], correct: 1, explanation: "'Such' requires inversion. Past context implies 'was'." },
+            { question: "18. Barely ______ started speaking when he was interrupted.", options: ["he had", "had he", "did he", "he did"], correct: 1, explanation: "'Barely' requires inversion." },
+            { question: "19. On no account ______ this button be pressed.", options: ["should", "you should", "should not", "you must"], correct: 0, explanation: "'On no account' (negative) requires inversion." },
+            { question: "20. Away ______ the birds.", options: ["flew", "did fly", "flown", "flying"], correct: 0, explanation: "Directional adverb 'Away' allows full inversion: 'Away flew the birds'." }
+        ];
+
+        // --- 3. SYSTEM LOGIC ---
+        function layoutSatellites() {
+            const satellites = document.querySelectorAll('.satellite');
+            const svg = document.getElementById('lines-svg');
+            while (svg.firstChild) svg.removeChild(svg.firstChild);
+
+            const radius = 230; 
+            const startAngle = -90; 
+            const total = satellites.length;
+            const cx = window.innerWidth / 2;
+            const cy = window.innerHeight / 2;
+
+            satellites.forEach((sat, i) => {
+                const angle = startAngle + (i * (360 / total));
+                const rad = angle * (Math.PI / 180);
+                const x = Math.cos(rad) * radius;
+                const y = Math.sin(rad) * radius;
+
+                sat.style.left = `calc(50% + ${x}px - 60px)`; 
+                sat.style.top = `calc(50% + ${y}px - 60px)`;
+
+                const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                line.setAttribute("x1", "50%"); line.setAttribute("y1", "50%");
+                line.setAttribute("x2", cx + x); line.setAttribute("y2", cy + y);
+                line.classList.add("conn-line");
+                svg.appendChild(line);
             });
-        });
+        }
+        
+        window.addEventListener('resize', layoutSatellites);
+        window.addEventListener('load', layoutSatellites);
 
-        // Speech Functionality
+        const tabKeys = ['intro', 'negative', 'only', 'place', 'conditional', 'degree', 'quiz'];
+
+        function openModal(activeKey) {
+            const modal = document.getElementById('modal-overlay');
+            const tabsContainer = document.getElementById('modal-tabs');
+            
+            tabsContainer.innerHTML = tabKeys.map(key => {
+                const isQuiz = key === 'quiz';
+                return `<button class="tab-btn ${key === activeKey ? 'active' : ''}" 
+                        onclick="switchTab('${key}', this)">
+                        ${isQuiz ? '<i class="fas fa-pencil-alt"></i> ' : ''}${contentData[key].title}
+                        </button>`;
+            }).join('');
+
+            loadContent(activeKey);
+            modal.classList.add('active');
+        }
+
+        function closeModal() { document.getElementById('modal-overlay').classList.remove('active'); }
+
+        function switchTab(key, btn) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            loadContent(key);
+        }
+
+        function loadContent(key) {
+            const contentDiv = document.getElementById('modal-content');
+            contentDiv.innerHTML = contentData[key].html;
+            if(key === 'quiz') initQuiz();
+        }
+
         function speak(text) {
             if ('speechSynthesis' in window) {
-                speechSynthesis.cancel();
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'en-US';
-                utterance.rate = 0.9;
-                
-                const voices = speechSynthesis.getVoices();
-                const enVoice = voices.find(v => v.lang.includes('en-US') || v.lang.includes('en-GB'));
-                if(enVoice) utterance.voice = enVoice;
-
-                speechSynthesis.speak(utterance);
-            } else {
-                alert("Sorry, your browser doesn't support text-to-speech.");
+                window.speechSynthesis.cancel();
+                const u = new SpeechSynthesisUtterance(text);
+                u.lang = 'en-US'; u.rate = 0.9;
+                window.speechSynthesis.speak(u);
             }
         }
 
         // Quiz Logic
-        const quizQuestions = [
-            {
-                question: "1. Never ______ such a beautiful sight.",
-                options: ["I have seen", "have I seen", "I saw", "saw I"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> Negative adverb 'Never' at the start requires partial inversion (Aux + S + V)."
-            },
-            {
-                question: "2. Seldom ______ late for work.",
-                options: ["is she", "she is", "does she", "she does"],
-                correct: 0,
-                explanation: "<strong>Explanation:</strong> 'Seldom' requires inversion. With 'be' verbs, the verb 'is' moves before 'she'."
-            },
-            {
-                question: "3. Hardly had I arrived ______ it started to rain.",
-                options: ["than", "when", "then", "after"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> The structure is 'Hardly... when...'."
-            },
-            {
-                question: "4. Only by practicing ______ you improve.",
-                options: ["can", "you can", "can't", "you will"],
-                correct: 0,
-                explanation: "<strong>Explanation:</strong> 'Only' + prepositional phrase requires inversion in the main clause."
-            },
-            {
-                question: "5. Not only ______ smart, but he is also kind.",
-                options: ["he is", "is he", "does he", "he does"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> 'Not only' at the start requires inversion."
-            },
-            {
-                question: "6. Here ______ the bus!",
-                options: ["comes", "come", "is coming", "does come"],
-                correct: 0,
-                explanation: "<strong>Explanation:</strong> Place adverb 'Here' triggers full inversion (V + S) with the noun subject 'bus'."
-            },
-            {
-                question: "7. Here ______.",
-                options: ["comes it", "it comes", "does it come", "is it coming"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> With a pronoun subject ('it'), inversion is NOT used after 'Here'."
-            },
-            {
-                question: "8. ______ you, I would study harder.",
-                options: ["If I was", "Were I", "Was I", "Am I"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> Conditional Type 2 inversion: 'If I were' becomes 'Were I'."
-            },
-            {
-                question: "9. ______ I known the truth, I would have told you.",
-                options: ["Have", "Had", "Did", "If"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> Conditional Type 3 inversion: 'If I had known' becomes 'Had I known'."
-            },
-            {
-                question: "10. ______ it rain tomorrow, we will stay home.",
-                options: ["Should", "If", "Were", "Had"],
-                correct: 0,
-                explanation: "<strong>Explanation:</strong> Inversion for 'If it should rain' is 'Should it rain'."
-            },
-            {
-                question: "11. So fast ______ that he won the race.",
-                options: ["he ran", "did he run", "he runs", "does he run"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> 'So + adverb' at the start requires inversion."
-            },
-            {
-                question: "12. Under the tree ______ a cat.",
-                options: ["sleeping", "slept", "did sleep", "was sleeping"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> Prepositional phrase of place allows full inversion: 'slept a cat'."
-            },
-            {
-                question: "13. Little ______ know about the surprise.",
-                options: ["did he", "he did", "does he", "he does"],
-                correct: 0,
-                explanation: "<strong>Explanation:</strong> 'Little' with a negative meaning requires inversion."
-            },
-            {
-                question: "14. No sooner had we left ______ it began to snow.",
-                options: ["when", "than", "then", "that"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> The structure is 'No sooner... than...'."
-            },
-            {
-                question: "15. Nowhere ______ find a better deal.",
-                options: ["you will", "will you", "you can", "can you not"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> 'Nowhere' is a negative adverb, requiring inversion."
-            },
-            {
-                question: "16. Only when you are older ______ understand.",
-                options: ["you will", "will you", "do you", "you do"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> 'Only' + time clause requires inversion in the main clause."
-            },
-            {
-                question: "17. Such ______ his strength that he lifted the car.",
-                options: ["is", "was", "has", "had"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> 'Such' at the start requires inversion. Past tense context implies 'was'."
-            },
-            {
-                question: "18. Barely ______ started speaking when he was interrupted.",
-                options: ["he had", "had he", "did he", "he did"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> 'Barely' requires inversion, typically with past perfect 'had he'."
-            },
-            {
-                question: "19. On no account ______ this button be pressed.",
-                options: ["should", "you should", "should not", "you must"],
-                correct: 0,
-                explanation: "<strong>Explanation:</strong> 'On no account' is a negative phrase requiring inversion."
-            },
-            {
-                question: "20. Away ______ the birds.",
-                options: ["flew", "did fly", "flown", "flying"],
-                correct: 0,
-                explanation: "<strong>Explanation:</strong> Directional adverb 'Away' allows full inversion (V + S)."
-            }
-        ];
-
-        let currentQuestionIndex = 0;
+        let currentQIndex = 0;
         let score = 0;
+        let answered = false;
 
         function initQuiz() {
-            currentQuestionIndex = 0;
-            score = 0;
-            showQuestion(currentQuestionIndex);
+            currentQIndex = 0; score = 0;
+            document.getElementById('quiz-interface').style.display = 'block';
+            document.getElementById('quiz-score').style.display = 'none';
+            showQuestion(0);
         }
 
         function showQuestion(index) {
+            answered = false;
             const container = document.getElementById('quiz-question-container');
-            if (index >= quizQuestions.length) {
-                showResult(container);
-                return;
-            }
             const q = quizQuestions[index];
-            let html = `
-                <div class="quiz-card">
-                    <div class="quiz-progress">Question ${index + 1} / ${quizQuestions.length}</div>
+            
+            container.innerHTML = `
+                <div class="quiz-card-q">
                     <div class="quiz-question">${q.question}</div>
                     <div class="quiz-options">
                         ${q.options.map((opt, i) => `
-                            <div class="quiz-option" onclick="checkAnswer(this, ${i})">${opt}</div>
+                            <div class="quiz-option" onclick="handleAnswer(this, ${i})">${opt}</div>
                         `).join('')}
                     </div>
-                    <div class="quiz-explanation" id="explanation-${index}">
-                        ${q.explanation}
-                    </div>
-                    <div class="quiz-nav" id="nav-${index}">
-                        <button class="btn" onclick="nextQuestion()">Next Question <i class="fas fa-arrow-right"></i></button>
-                    </div>
+                    <div class="quiz-explanation" id="explanation">${q.explanation}</div>
+                    <button class="next-btn" id="next-btn" onclick="nextQ()">Next <i class="fas fa-arrow-right"></i></button>
                 </div>
             `;
-            container.innerHTML = html;
+            document.getElementById('current-question-num').innerText = index + 1;
         }
 
-        window.checkAnswer = function(optionElement, selectedIndex) {
-            const currentQ = quizQuestions[currentQuestionIndex];
-            const explanation = document.getElementById(`explanation-${currentQuestionIndex}`);
-            const nav = document.getElementById(`nav-${currentQuestionIndex}`);
-            const allOptions = optionElement.parentElement.children;
-
-            if (optionElement.classList.contains('disabled')) return;
-
-            for (let i = 0; i < allOptions.length; i++) {
-                allOptions[i].classList.add('disabled');
-            }
-
-            if (selectedIndex === currentQ.correct) {
-                optionElement.classList.add('correct');
+        function handleAnswer(btn, selectedIndex) {
+            if (answered) return;
+            answered = true;
+            const q = quizQuestions[currentQIndex];
+            const allBtns = document.querySelectorAll('.quiz-option');
+            
+            if (selectedIndex === q.correct) {
+                btn.classList.add('correct');
                 score++;
             } else {
-                optionElement.classList.add('incorrect');
-                allOptions[currentQ.correct].classList.add('correct');
+                btn.classList.add('incorrect');
+                allBtns[q.correct].classList.add('correct');
             }
-            explanation.classList.add('show');
-            nav.classList.add('show');
+            
+            allBtns.forEach(b => b.classList.add('disabled'));
+            document.getElementById('explanation').style.display = 'block';
+            document.getElementById('next-btn').style.display = 'inline-block';
         }
 
-        window.nextQuestion = function() {
-            currentQuestionIndex++;
-            showQuestion(currentQuestionIndex);
+        function nextQ() {
+            currentQIndex++;
+            if (currentQIndex < quizQuestions.length) {
+                showQuestion(currentQIndex);
+            } else {
+                showResult();
+            }
         }
 
-        function showResult(container) {
-            container.innerHTML = `
-                <div class="quiz-result">
-                    <div class="score-circle">${score}</div>
-                    <h2>Quiz Completed!</h2>
-                    <p>Your Score: ${score} / ${quizQuestions.length}</p>
-                    <button class="btn" onclick="initQuiz()" style="margin-top: 20px;">
-                        <i class="fas fa-redo"></i> Restart Quiz
-                    </button>
-                </div>
-            `;
+        function showResult() {
+            document.getElementById('quiz-interface').style.display = 'none';
+            const resDiv = document.getElementById('quiz-score');
+            resDiv.style.display = 'block';
+            document.getElementById('score-val').innerText = score;
+            const msg = document.getElementById('score-msg');
+            
+            if (score >= 18) msg.textContent = "Excellent! You are a master of Inversion! 🏆";
+            else if (score >= 12) msg.textContent = "Good job! Keep practicing. 👏";
+            else msg.textContent = "Review the rules and try again! 💪";
         }
     </script>
 </body>
