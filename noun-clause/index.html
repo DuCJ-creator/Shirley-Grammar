@@ -3,1017 +3,427 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shirley's Noun Clauses</title>
-    <!-- 引入 Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
-    <!-- 引入 Font Awesome 圖標 -->
+    <title>Shirley's Noun Clauses (Radial Design)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            /* 配色方案：Classic Academia (經典學院風) */
-            --bg-body: #fdfbf7;       /* 溫暖的米白色 */
-            --bg-card: #ffffff;       /* 純白卡片背景 */
+            /* 您的原始配色與新設計的結合 */
+            --bg-deep: #f0fdfa;       
+            --primary: #2d6a4f;       /* 您原本的優雅綠 */
+            --primary-dark: #1b4332;
+            --accent: #d4a373;        /* 您原本的香檳金 */
+            --warn-bg: #fff7ed;
+            --warn-border: #f97316;
+            --warn-text: #c2410c;
+            --card-bg: rgba(255, 255, 255, 0.98);
+            --shadow-float: 0 10px 40px -10px rgba(27, 67, 50, 0.2);
             
-            --text-main: #2d3748;     /* 深炭灰 */
-            --text-light: #4a5568;    /* 次要文字 */
-            
-            --primary-dark: #1b4332;  /* 深森林綠 */
-            --primary: #2d6a4f;       /* 優雅的綠色 */
-            --accent: #d4a373;        /* 香檳金 */
-            --highlight-bg: #f0fdf4;  /* 淺綠底色 */
-            
-            /* 特別強調色 */
-            --warn-bg: #fff7ed;       /* 警告/重點背景 */
-            --warn-border: #f97316;   /* 橘色邊框 */
-            --warn-text: #c2410c;     /* 深橘文字 */
-
-            /* 測驗專用色 */
+            /* 測驗色 */
             --correct-bg: #dcfce7;
             --correct-text: #166534;
             --wrong-bg: #fee2e2;
             --wrong-text: #991b1b;
-
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             font-family: 'Noto Sans TC', sans-serif;
-            background-color: var(--bg-body);
-            color: var(--text-main);
-            line-height: 1.8;
+            background-color: var(--bg-deep);
+            color: #2d3748;
+            overflow: hidden; 
+            height: 100vh; width: 100vw;
         }
 
-        /* Header */
-        header {
+        /* --- 1. Radial Mind Map (放射狀首頁) --- */
+        #mindmap-container {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; justify-content: center; align-items: center;
+            z-index: 1;
+        }
+
+        .central-node {
+            width: 180px; height: 180px;
             background: var(--primary-dark);
+            border-radius: 50%;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
             color: white;
-            padding: 2.5rem 1rem;
-            text-align: center;
+            box-shadow: 0 0 40px rgba(27, 67, 50, 0.5);
+            z-index: 10;
             position: relative;
-            box-shadow: var(--shadow-md);
+            animation: pulse 3s infinite ease-in-out;
+            text-align: center;
+            border: 4px solid #ccfbf1;
+            cursor: default;
+        }
+
+        .central-title { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; line-height: 1.2; }
+        .central-sub { font-size: 0.85rem; opacity: 0.8; margin-top: 5px; font-weight: 300; }
+
+        .satellite {
+            position: absolute;
+            width: 120px; height: 120px;
+            background: white;
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            color: var(--primary-dark);
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-size: 0.9rem; font-weight: 600;
+            z-index: 5;
         }
         
-        header h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.8rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            letter-spacing: 0.05em;
+        .satellite i { font-size: 1.5rem; margin-bottom: 5px; color: var(--primary); }
+        .satellite span { font-size: 0.75rem; opacity: 0.7; display: block; margin-top: 2px; }
+
+        .satellite:hover {
+            transform: scale(1.15) !important;
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary-dark);
+            box-shadow: 0 10px 25px rgba(27, 67, 50, 0.3);
+            z-index: 20;
+        }
+        .satellite:hover i { color: white; }
+
+        .satellite.quiz-node { border-color: var(--warn-border); color: var(--warn-text); }
+        .satellite.quiz-node i { color: var(--warn-border); }
+        .satellite.quiz-node:hover { background: var(--warn-border); color: white; border-color: #c2410c; }
+        .satellite.quiz-node:hover i { color: white; }
+
+        .connections { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; }
+        .conn-line { stroke: var(--primary); stroke-width: 1.5; stroke-dasharray: 4,4; opacity: 0.3; }
+
+        /* --- 2. Modal (內容卡片) --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(27, 67, 50, 0.3);
+            backdrop-filter: blur(5px);
+            z-index: 100;
+            opacity: 0; visibility: hidden;
+            transition: all 0.4s ease;
+            display: flex; justify-content: center; align-items: center;
         }
 
-        header .subtitle {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.2rem;
-            opacity: 0.9;
-            font-style: italic;
-            color: #d1fae5;
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+
+        .modal-card {
+            width: 90%; max-width: 1000px; height: 90vh;
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: var(--shadow-float);
+            display: flex; flex-direction: column;
+            overflow: hidden;
+            transform: translateY(30px) scale(0.95);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* Container & Tabs */
-        .container {
-            max-width: 1000px;
-            margin: 2rem auto;
-            padding: 0 1.5rem;
-        }
+        .modal-overlay.active .modal-card { transform: translateY(0) scale(1); }
 
-        /* Tabs Navigation */
-        .tabs {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 2rem;
+        .modal-header {
+            background: var(--primary-dark); color: white;
+            padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 3px solid var(--accent);
         }
+        
+        .modal-title h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin: 0; border: none; padding: 0; color: white; }
+        .modal-close { background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; transition: 0.3s; }
+        .modal-close:hover { transform: rotate(90deg); color: var(--accent); }
 
+        /* 分頁導航 */
+        .modal-tabs {
+            display: flex; background: #e6fffa; overflow-x: auto;
+            border-bottom: 1px solid #b2f5ea; flex-shrink: 0;
+        }
         .tab-btn {
-            background: transparent;
-            border: 2px solid var(--primary);
-            color: var(--primary);
-            padding: 0.8rem 1.5rem;
-            border-radius: 30px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            flex: 1; padding: 1rem; border: none; background: none;
+            color: var(--primary-dark); font-weight: 600; cursor: pointer;
+            transition: 0.3s; min-width: 120px; white-space: nowrap;
             font-family: 'Noto Sans TC', sans-serif;
         }
+        .tab-btn:hover { background: #b2f5ea; }
+        .tab-btn.active { background: white; color: var(--warn-border); border-bottom: 3px solid var(--warn-border); }
 
-        .tab-btn:hover {
-            background-color: #e6fffa;
-            transform: translateY(-2px);
-        }
-
-        .tab-btn.active {
-            background-color: var(--primary);
-            color: white;
-            box-shadow: var(--shadow-md);
-        }
-
-        /* Content Sections */
-        .content-section {
-            display: none; /* 預設隱藏 */
-            animation: fadeIn 0.5s ease;
-        }
-
-        .content-section.active {
-            display: block; /* 激活時顯示 */
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Cards */
-        .card {
-            background: var(--bg-card);
-            border-radius: 12px;
-            padding: 2.5rem;
-            margin-bottom: 2rem;
-            box-shadow: var(--shadow-md);
-            border-top: 4px solid var(--primary);
-        }
-
-        /* Headings */
-        h2 {
-            font-family: 'Playfair Display', serif;
-            color: var(--primary-dark);
-            font-size: 1.8rem;
-            border-bottom: 2px solid var(--accent);
-            padding-bottom: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        h3 {
-            color: var(--primary);
-            font-size: 1.4rem;
-            margin: 2rem 0 1rem 0;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-        }
+        /* 內容樣式 (移植自您的原檔) */
+        .modal-body { flex: 1; overflow-y: auto; padding: 2.5rem; scroll-behavior: smooth; line-height: 1.8; }
         
+        h2 { font-family: 'Playfair Display', serif; color: var(--primary-dark); font-size: 1.8rem; border-bottom: 2px solid var(--accent); padding-bottom: 0.5rem; margin-bottom: 1.5rem; }
+        h3 { color: var(--primary); font-size: 1.4rem; margin: 2rem 0 1rem 0; font-weight: 700; display: flex; align-items: center; }
         h3 i { margin-right: 10px; }
-
-        h4 {
-            color: var(--text-main);
-            font-size: 1.1rem;
-            margin: 1.5rem 0 0.8rem 0;
-            font-weight: 600;
-            background-color: var(--highlight-bg);
-            padding: 0.6rem 1rem;
-            border-left: 4px solid var(--primary);
-            border-radius: 0 4px 4px 0;
-        }
+        h4 { color: #2d3748; font-size: 1.1rem; margin: 1.5rem 0 0.8rem 0; font-weight: 600; background-color: #f0fdf4; padding: 0.6rem 1rem; border-left: 4px solid var(--primary); border-radius: 0 4px 4px 0; }
         
-        h5 {
-            color: var(--primary-dark);
-            font-size: 1.05rem;
-            margin: 1.2rem 0 0.5rem 0;
-            border-bottom: 1px dashed #cbd5e1;
-            padding-bottom: 5px;
-            display: inline-block;
-        }
-
-        /* List Styling */
         ul { list-style: none; padding-left: 0.5rem; }
-        li { margin-bottom: 0.8rem; position: relative; padding-left: 1.5rem; }
-        /* Remove default chevron for word lists to make room for custom layout */
-        .word-list li {
-            padding-left: 0;
-            margin-bottom: 1.2rem;
-        }
-        .word-list li::before { content: none; }
-        
-        .structure {
-            font-family: 'Courier New', monospace;
-            background-color: #edf2f7;
-            padding: 4px 8px;
-            border-radius: 4px;
-            color: #c05621;
-            font-weight: 700;
-            font-size: 1.1em;
-            display: inline-block;
-            margin-bottom: 5px;
-            border: 1px solid #e2e8f0;
-        }
+        .word-list li { margin-bottom: 1.2rem; }
+        .structure { font-family: 'Courier New', monospace; background-color: #edf2f7; padding: 4px 8px; border-radius: 4px; color: #c05621; font-weight: 700; margin-bottom: 5px; display: inline-block; border: 1px solid #e2e8f0; }
 
-        /* Example Box Styling */
-        .example-box {
-            background-color: #f8fafc;
-            border-left: 3px solid var(--accent);
-            padding: 1rem 1.2rem;
-            margin: 0.8rem 0 1.2rem 0;
-            border-radius: 0 6px 6px 0;
-            position: relative;
-            transition: background-color 0.2s;
-        }
+        .example-box { background-color: #f8fafc; border-left: 3px solid var(--accent); padding: 1rem 1.2rem; margin: 0.8rem 0 1.2rem 0; border-radius: 0 6px 6px 0; position: relative; }
+        .small-example { background-color: #fff; border: 1px solid #f1f5f9; border-left: 3px solid #cbd5e1; padding: 0.8rem; margin-top: 5px; border-radius: 0 4px 4px 0; position: relative; }
+        .comparison-box { background-color: #fff; border: 1px solid #e2e8f0; border-left: 4px solid #f97316; padding: 1.2rem; margin: 1rem 0; border-radius: 6px; position: relative; }
         
-        .small-example {
-            background-color: #fff;
-            border: 1px solid #f1f5f9;
-            border-left: 3px solid #cbd5e1;
-            padding: 0.8rem;
-            margin-top: 5px;
-            border-radius: 0 4px 4px 0;
-            position: relative;
-        }
-        
-        .small-example:hover {
-            border-left-color: var(--primary);
-            background-color: #f0fdf4;
-        }
-
-        .comparison-box {
-            background-color: #fff;
-            border: 1px solid #e2e8f0;
-            border-left: 4px solid #f97316;
-            padding: 1.2rem;
-            margin: 1rem 0;
-            border-radius: 6px;
-            position: relative;
-        }
-
-        .example-box:hover, .comparison-box:hover {
-            background-color: #f1f5f9;
-        }
-
-        .en-sentence {
-            font-weight: 600;
-            color: #1e293b;
-            font-size: 1.05rem;
-            display: block;
-            margin-bottom: 0.4rem;
-            padding-right: 30px; 
-        }
-        
+        .en-sentence { font-weight: 600; color: #1e293b; font-size: 1.05rem; display: block; margin-bottom: 0.4rem; padding-right: 30px; }
+        .ch-translation { color: #64748b; font-size: 0.95rem; }
         .direct-speech { color: #ef4444; display: block; margin-bottom: 0.3rem; }
         .indirect-speech { color: var(--primary); font-weight: 700; display: block; margin-bottom: 0.3rem; }
-        .ch-translation { color: #64748b; font-size: 0.95rem; display: block; font-weight: 400; }
-
-        /* Audio Button */
-        .speaker-btn {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: none;
-            border: none;
-            color: var(--primary);
-            cursor: pointer;
-            font-size: 1.1rem;
-            opacity: 0.7;
-            transition: all 0.2s;
-        }
         
-        .small-example .speaker-btn {
-            top: 0.8rem;
-            right: 0.5rem;
-        }
+        .speaker-btn { position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: var(--primary); cursor: pointer; font-size: 1.1rem; opacity: 0.7; }
+        .small-example .speaker-btn { top: 0.8rem; right: 0.5rem; }
+        .speaker-btn:hover { opacity: 1; transform: scale(1.1); }
 
-        .speaker-btn:hover { opacity: 1; transform: scale(1.1); color: var(--primary-dark); }
-        .speaker-btn:active { transform: scale(0.95); }
-
-        /* Note Box */
-        .note-box {
-            background-color: #fffbeb;
-            border: 1px solid #fcd34d;
-            border-radius: 8px;
-            padding: 1.2rem;
-            margin: 1.5rem 0;
-            color: #92400e;
-        }
-        
-        .warn-box {
-            background-color: var(--warn-bg);
-            border: 1px solid var(--warn-border);
-            border-radius: 8px;
-            padding: 1.2rem;
-            margin: 1.5rem 0;
-            color: var(--warn-text);
-        }
-        
-        .note-title { font-weight: bold; margin-bottom: 0.5rem; display: flex; align-items: center; }
-        .note-title i { margin-right: 0.5rem; }
-
-        /* Highlight */
-        .highlight-text { background-color: rgba(255, 255, 0, 0.2); padding: 0 2px; border-radius: 2px; }
+        .note-box { background-color: #fffbeb; border: 1px solid #fcd34d; border-radius: 8px; padding: 1.2rem; margin: 1.5rem 0; color: #92400e; }
+        .warn-box { background-color: var(--warn-bg); border: 1px solid var(--warn-border); border-radius: 8px; padding: 1.2rem; margin: 1.5rem 0; color: var(--warn-text); }
+        .highlight-text { background-color: rgba(255, 255, 0, 0.2); padding: 0 2px; }
         .kw { color: var(--primary); font-weight: bold; }
 
-        /* --- QUIZ STYLES --- */
-        .quiz-container {
-            margin-top: 1rem;
-        }
-        
-        .quiz-progress {
-            margin-bottom: 1.5rem;
-            color: var(--text-light);
-            font-weight: 600;
-            text-align: right;
-        }
-        
-        .quiz-question {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-        }
-        
-        .quiz-options {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        
-        .option-btn {
-            padding: 1rem;
-            border: 2px solid #e2e8f0;
-            background: #fff;
-            border-radius: 8px;
-            text-align: left;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-size: 1rem;
-            color: var(--text-main);
-            font-family: inherit;
-        }
-        
-        .option-btn:hover:not(:disabled) {
-            border-color: var(--primary);
-            background-color: #f0fdf4;
-        }
-        
-        .option-btn.correct {
-            background-color: var(--correct-bg);
-            border-color: var(--correct-text);
-            color: var(--correct-text);
-        }
-        
-        .option-btn.wrong {
-            background-color: var(--wrong-bg);
-            border-color: var(--wrong-text);
-            color: var(--wrong-text);
-        }
-        
-        .feedback-area {
-            margin-top: 1.5rem;
-            padding: 1rem;
-            border-radius: 8px;
-            background-color: #f8fafc;
-            border-left: 4px solid var(--accent);
-            display: none;
-        }
-        
-        .feedback-title {
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-        }
-        
-        .next-btn {
-            margin-top: 1.5rem;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 0.8rem 2rem;
-            border-radius: 30px;
-            font-size: 1rem;
-            cursor: pointer;
-            display: none;
-        }
-        
-        .next-btn:hover { background-color: var(--primary-dark); }
-        
-        .score-card {
-            text-align: center;
-            padding: 2rem;
-        }
-        
-        .final-score {
-            font-size: 3rem;
-            color: var(--primary);
-            font-weight: 700;
-            margin: 1rem 0;
-            font-family: 'Playfair Display', serif;
-        }
+        /* Quiz Styles */
+        .quiz-container { margin-top: 1rem; }
+        .quiz-progress { margin-bottom: 1.5rem; color: #4a5568; font-weight: 600; text-align: right; }
+        .quiz-question { font-size: 1.2rem; font-weight: 600; margin-bottom: 1.5rem; line-height: 1.6; }
+        .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+        .option-btn { padding: 1rem; border: 2px solid #e2e8f0; background: #fff; border-radius: 8px; text-align: left; cursor: pointer; font-size: 1rem; color: #2d3748; transition: 0.2s; }
+        .option-btn:hover:not(:disabled) { border-color: var(--primary); background-color: #f0fdf4; }
+        .option-btn.correct { background-color: var(--correct-bg); border-color: var(--correct-text); color: var(--correct-text); }
+        .option-btn.wrong { background-color: var(--wrong-bg); border-color: var(--wrong-text); color: var(--wrong-text); }
+        .feedback-area { margin-top: 1.5rem; padding: 1rem; border-radius: 8px; background-color: #f8fafc; border-left: 4px solid var(--accent); display: none; }
+        .next-btn { margin-top: 1.5rem; background-color: var(--primary); color: white; border: none; padding: 0.8rem 2rem; border-radius: 30px; font-size: 1rem; cursor: pointer; display: none; }
+        .score-card { text-align: center; padding: 2rem; display: none; }
+        .final-score { font-size: 3rem; color: var(--primary); font-weight: 700; margin: 1rem 0; }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            header h1 { font-size: 2rem; }
-            .tabs { gap: 8px; }
-            .tab-btn { padding: 0.6rem 1rem; font-size: 0.9rem; flex: 1 1 auto; }
-            .card { padding: 1.5rem; }
-        }
+        @keyframes pulse { 0%, 100% { box-shadow: 0 0 40px rgba(27, 67, 50, 0.5); } 50% { box-shadow: 0 0 60px rgba(27, 67, 50, 0.8); } }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>Shirley's Noun Clauses</h1>
-        <div class="subtitle">Mastering Advanced English Grammar</div>
-    </header>
-
-    <div class="container">
+    <div id="mindmap-container">
+        <svg class="connections" id="lines-svg"></svg>
         
-        <!-- Tab Navigation -->
-        <div class="tabs">
-            <button class="tab-btn active" onclick="openTab(event, 'intro')">概論與構成</button>
-            <button class="tab-btn" onclick="openTab(event, 'subject')">作主詞 (Subject)</button>
-            <button class="tab-btn" onclick="openTab(event, 'object')">作受詞 (Object)</button>
-            <button class="tab-btn" onclick="openTab(event, 'complement')">作補語 (Complement)</button>
-            <button class="tab-btn" onclick="openTab(event, 'appositive')">作同位語 (Appositive)</button>
-            <button class="tab-btn" onclick="openTab(event, 'quiz')"><i class="fas fa-pencil-alt"></i> 隨堂測驗 (Quiz)</button>
+        <div class="central-node">
+            <div class="central-title">Shirley's Noun<br>Clauses</div>
+            <div class="central-sub">名詞子句</div>
         </div>
 
-        <!-- 1. Introduction -->
-        <div id="intro" class="content-section active">
-            <div class="card">
-                <h2>I. 概論與構成</h2>
-                <p><strong>名詞子句</strong>，即能扮演名詞角色的附屬子句。名詞子句的功能與名詞相同，可以作句子的主詞、受詞、補語及同位語。</p>
-                
-                <h3>名詞子句的構成與例句</h3>
-                
-                <h4>1. 連接詞開頭</h4>
-                <ul class="word-list">
-                    <li>
-                        <span class="structure">that</span>
-                        <div class="small-example">
-                            <span class="en-sentence">It is obvious <span class="kw">that</span> he loves her.</span>
-                            <span class="ch-translation">很明顯<span class="kw">that</span>他愛她。</span>
-                            <button class="speaker-btn" onclick="speakText('It is obvious that he loves her')"><i class="fas fa-volume-up"></i></button>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="structure">if</span>
-                        <div class="small-example">
-                            <span class="en-sentence">I don't know <span class="kw">if</span> she is at home.</span>
-                            <span class="ch-translation">我不知道她<span class="kw">是否</span>在家。</span>
-                            <button class="speaker-btn" onclick="speakText('I don\'t know if she is at home')"><i class="fas fa-volume-up"></i></button>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="structure">whether</span>
-                        <div class="small-example">
-                            <span class="en-sentence">I wonder <span class="kw">whether</span> it will rain tomorrow.</span>
-                            <span class="ch-translation">我想知道明天<span class="kw">是否</span>會下雨。</span>
-                            <button class="speaker-btn" onclick="speakText('I wonder whether it will rain tomorrow')"><i class="fas fa-volume-up"></i></button>
-                        </div>
-                    </li>
-                </ul>
-
-                <h4>2. 疑問詞開頭</h4>
-                <ul class="word-list">
-                    <li>
-                        <span class="structure">when</span>
-                        <div class="small-example">
-                            <span class="en-sentence">I asked him <span class="kw">when</span> the meeting would start.</span>
-                            <span class="ch-translation">我問他會議<span class="kw">何時</span>開始。</span>
-                            <button class="speaker-btn" onclick="speakText('I asked him when the meeting would start')"><i class="fas fa-volume-up"></i></button>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="structure">where</span>
-                        <div class="small-example">
-                            <span class="en-sentence">Do you know <span class="kw">where</span> the library is?</span>
-                            <span class="ch-translation">你知道圖書館<span class="kw">在哪裡</span>嗎？</span>
-                            <button class="speaker-btn" onclick="speakText('Do you know where the library is')"><i class="fas fa-volume-up"></i></button>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="structure">which</span>
-                        <div class="small-example">
-                            <span class="en-sentence">I can't decide <span class="kw">which</span> shoes to buy.</span>
-                            <span class="ch-translation">我無法決定買<span class="kw">哪一雙</span>鞋。</span>
-                            <button class="speaker-btn" onclick="speakText('I can\'t decide which shoes to buy')"><i class="fas fa-volume-up"></i></button>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="structure">who</span>
-                        <div class="small-example">
-                            <span class="en-sentence">Tell me <span class="kw">who</span> your best friend is.</span>
-                            <span class="ch-translation">告訴我<span class="kw">誰</span>是你最好的朋友。</span>
-                            <button class="speaker-btn" onclick="speakText('Tell me who your best friend is')"><i class="fas fa-volume-up"></i></button>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="structure">why</span>
-                        <div class="small-example">
-                            <span class="en-sentence">That is <span class="kw">why</span> I was late.</span>
-                            <span class="ch-translation">那就是<span class="kw">為什麼</span>我遲到了。</span>
-                            <button class="speaker-btn" onclick="speakText('That is why I was late')"><i class="fas fa-volume-up"></i></button>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="structure">what</span>
-                        <div class="small-example">
-                            <span class="en-sentence">I don't understand <span class="kw">what</span> you mean.</span>
-                            <span class="ch-translation">我不明白你<span class="kw">什麼</span>意思。</span>
-                            <button class="speaker-btn" onclick="speakText('I don\'t understand what you mean')"><i class="fas fa-volume-up"></i></button>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="structure">how</span>
-                        <div class="small-example">
-                            <span class="en-sentence">She taught me <span class="kw">how</span> to drive.</span>
-                            <span class="ch-translation">她教我<span class="kw">如何</span>開車。</span>
-                            <button class="speaker-btn" onclick="speakText('She taught me how to drive')"><i class="fas fa-volume-up"></i></button>
-                        </div>
-                    </li>
-                </ul>
-
-                <h4>3. 關係代名詞 (及複合關代) 開頭</h4>
-                <ul class="word-list">
-                    <li>
-                        <span class="structure">which</span>
-                        <div class="small-example">
-                            <span class="en-sentence">Select <span class="kw">which</span> subject you like best.</span>
-                            <span class="ch-translation">選擇你最喜歡<span class="kw">哪一個</span>科目。</span>
-                            <button class="speaker-btn" onclick="speakText('Select which subject you like best')"><i class="fas fa-volume-up"></i></button>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="structure">who</span>
-                        <div class="small-example">
-                            <span class="en-sentence">I know <span class="kw">who</span> is responsible for this.</span>
-                            <span class="ch-translation">我知道<span class="kw">誰</span>對此負責。</span>
-                            <button class="speaker-btn" onclick="speakText('I know who is responsible for this')"><i class="fas fa-volume-up"></i></button>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="structure">whom</span>
-                        <div class="small-example">
-                            <span class="en-sentence">Ask <span class="kw">whom</span> you should contact.</span>
-                            <span class="ch-translation">問問你應該聯繫<span class="kw">誰</span>。</span>
-                            <button class="speaker-btn" onclick="speakText('Ask whom you should contact')"><i class="fas fa-volume-up"></i></button>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="structure">whose</span>
-                        <div class="small-example">
-                            <span class="en-sentence">I'm not sure <span class="kw">whose</span> book this is.</span>
-                            <span class="ch-translation">我不確定這是<span class="kw">誰的</span>書。</span>
-                            <button class="speaker-btn" onclick="speakText('I\'m not sure whose book this is')"><i class="fas fa-volume-up"></i></button>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="structure">that</span>
-                        <div class="small-example">
-                            <span class="en-sentence">The fact <span class="kw">that</span> he succeeded pleased everyone.</span>
-                            <span class="ch-translation">他成功了<span class="kw">這件事(that)</span>讓大家都很高興。(同位語)</span>
-                            <button class="speaker-btn" onclick="speakText('The fact that he succeeded pleased everyone')"><i class="fas fa-volume-up"></i></button>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="structure">whoever</span>
-                        <div class="small-example">
-                            <span class="en-sentence"><span class="kw">Whoever</span> comes first will be served first.</span>
-                            <span class="ch-translation"><span class="kw">無論是誰</span>先來，都會先獲得服務。</span>
-                            <button class="speaker-btn" onclick="speakText('Whoever comes first will be served first')"><i class="fas fa-volume-up"></i></button>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="structure">whomever</span>
-                        <div class="small-example">
-                            <span class="en-sentence">You can invite <span class="kw">whomever</span> you like.</span>
-                            <span class="ch-translation">你可以邀請你喜歡的<span class="kw">任何人</span>。</span>
-                            <button class="speaker-btn" onclick="speakText('You can invite whomever you like')"><i class="fas fa-volume-up"></i></button>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="structure">whichever</span>
-                        <div class="small-example">
-                            <span class="en-sentence">Buy <span class="kw">whichever</span> book interests you.</span>
-                            <span class="ch-translation">買<span class="kw">任何一本</span>你感興趣的書。</span>
-                            <button class="speaker-btn" onclick="speakText('Buy whichever book interests you')"><i class="fas fa-volume-up"></i></button>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="structure">whatever</span>
-                        <div class="small-example">
-                            <span class="en-sentence">I will support <span class="kw">whatever</span> decision you make.</span>
-                            <span class="ch-translation">我會支持你做的<span class="kw">任何</span>決定。</span>
-                            <button class="speaker-btn" onclick="speakText('I will support whatever decision you make')"><i class="fas fa-volume-up"></i></button>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+        <div class="satellite" onclick="openModal('intro')">
+            <i class="fas fa-book-open"></i>
+            <div>概論與構成<br><span>Intro</span></div>
         </div>
+        <div class="satellite" onclick="openModal('subject')">
+            <i class="fas fa-crown"></i>
+            <div>作主詞<br><span>Subject</span></div>
+        </div>
+        <div class="satellite" onclick="openModal('object')">
+            <i class="fas fa-bullseye"></i>
+            <div>作受詞<br><span>Object</span></div>
+        </div>
+        <div class="satellite" onclick="openModal('complement')">
+            <i class="fas fa-puzzle-piece"></i>
+            <div>作補語<br><span>Complement</span></div>
+        </div>
+        <div class="satellite" onclick="openModal('appositive')">
+            <i class="fas fa-equals"></i>
+            <div>作同位語<br><span>Appositive</span></div>
+        </div>
+        <div class="satellite quiz-node" onclick="openModal('quiz')">
+            <i class="fas fa-pencil-alt"></i>
+            <div>隨堂測驗<br><span>Quiz</span></div>
+        </div>
+    </div>
 
-        <!-- 2. Subject -->
-        <div id="subject" class="content-section">
-            <div class="card">
-                <h2>功能一：作主詞 (Subject)</h2>
-                <p>一般用虛構主詞 <strong>it</strong> 放在句首。</p>
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal-card">
+            <header class="modal-header">
+                <div class="modal-title"><h2>Shirley's Noun Clauses</h2></div>
+                <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+            </header>
+            <nav class="modal-tabs" id="modal-tabs"></nav>
+            <div class="modal-body" id="modal-content"></div>
+        </div>
+    </div>
 
-                <h4>1. It is + noun + noun clause</h4>
-                <div class="example-box">
-                    <span class="en-sentence">It is a great pity that many aboriginal languages and cultures are on the verge of extinction.</span>
-                    <span class="ch-translation">許多原住民語言和文化瀕臨滅絕，這真是令人遺憾。</span>
-                    <button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence">It is an unavoidable task that the young generations conserve and promote their cultural heritage.</span>
-                    <span class="ch-translation">年輕一代保存和推廣他們的文化遺產是一項不可避免的任務。</span>
-                    <button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence">It is a wonder that the unique cultural identity of this tribe is intact.</span>
-                    <span class="ch-translation">這個部落獨特的文化認同竟然完好無損，真是一個奇蹟。</span>
-                    <button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button>
-                </div>
-
-                <h4>2. It is + adj. + noun clause</h4>
-                <div class="example-box">
-                    <span class="en-sentence">It is vital that a nation should preserve its cultural heritage.</span>
-                    <span class="ch-translation">一個國家應該保存其文化遺產，這是至關重要的。</span>
-                    <button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence">It is questionable if museums and art galleries should collect and preserve artifacts of all kinds.</span>
-                    <span class="ch-translation">博物館和美術館是否應該收藏和保存各式各樣的文物，這是值得商榷的。</span>
-                    <button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence">It is worthwhile that the government helps create a climate encouraging freedom of thought.</span>
-                    <span class="ch-translation">政府協助創造鼓勵思想自由的氛圍是值得的。</span>
-                    <button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button>
-                </div>
-
-                <h4>3. It is + past participle + noun clause</h4>
-                <div class="example-box">
-                    <span class="en-sentence">It is widely accepted that international tourism has promoted cross-cultural communication.</span>
-                    <span class="ch-translation">國際旅遊促進了跨文化交流，這是被廣泛接受的。</span>
-                    <button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence">It has been proved that TV presents children with distorted reality.</span>
-                    <span class="ch-translation">電視向兒童呈現扭曲的現實，這已經被證實了。</span>
-                    <button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence">It cannot be denied that English is becoming more and more important.</span>
-                    <span class="ch-translation">英語變得越來越重要，這是無法否認的。</span>
-                    <button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button>
-                </div>
-
-                <h4>4. It + 連綴動詞 + noun clause</h4>
-                <div class="example-box">
-                    <span class="en-sentence">It seems that the development of tourism can promote cross-cultural communication.</span>
-                    <span class="ch-translation">旅遊業的發展似乎能促進跨文化交流。</span>
-                    <button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence">It appears that museums and galleries promote the public’s understanding of fine arts.</span>
-                    <span class="ch-translation">博物館和畫廊似乎能促進大眾對美術的理解。</span>
-                    <button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button>
-                </div>
-
-                <div class="note-box">
-                    <div class="note-title"><i class="fas fa-exclamation-circle"></i> 注意：區分強調句 (Cleft Sentences)</div>
-                    <p>強調句（又稱分裂句）用來強調句中特別重要的部份 (人﹑事﹑時﹑地﹑物等)，結構為 <strong>It is/was ... that ...</strong>。</p>
-                    <hr style="border: 0; border-top: 1px solid #fcd34d; margin: 10px 0;">
+    <script>
+        // --- CONTENT DATA (100% 保留您的原始 HTML) ---
+        const contentData = {
+            intro: {
+                title: "概論與構成",
+                html: `
+                    <h2>I. 概論與構成</h2>
+                    <p><strong>名詞子句</strong>，即能扮演名詞角色的附屬子句。名詞子句的功能與名詞相同，可以作句子的主詞、受詞、補語及同位語。</p>
                     
-                    <div class="example-box" style="background:transparent; border:none; padding-left:0;">
-                        <span class="en-sentence">It is TV that can be used to educate and entertain people of all ages.</span>
-                        <span class="ch-translation">正是電視可以用來教育和娛樂各個年齡層的人。(強調TV)</span>
-                        <button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button>
-                    </div>
+                    <h3>名詞子句的構成與例句</h3>
                     
-                    <div class="example-box" style="background:transparent; border:none; padding-left:0;">
-                        <span class="en-sentence">It was Columbus that discovered America in 1492.</span>
-                        <span class="ch-translation">正是哥倫布在 1492 年發現了美洲。(強調Columbus)</span>
-                        <button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button>
-                    </div>
-
-                    <p style="margin-top:10px;"><strong>變化例句：</strong>(原句：Jack broke the record yesterday.)</p>
-                    <ul style="margin-top:5px;">
-                        <li><span class="en-sentence">It was Jack that broke the record yesterday.</span>
-                        <button class="speaker-btn" onclick="speakText('It was Jack that broke the record yesterday')"><i class="fas fa-volume-up"></i></button></li>
-                        
-                        <li><span class="en-sentence">It was the record that Jack broke yesterday.</span>
-                        <button class="speaker-btn" onclick="speakText('It was the record that Jack broke yesterday')"><i class="fas fa-volume-up"></i></button></li>
-                        
-                        <li><span class="en-sentence">It was yesterday that Jack broke the record.</span>
-                        <button class="speaker-btn" onclick="speakText('It was yesterday that Jack broke the record')"><i class="fas fa-volume-up"></i></button></li>
+                    <h4>1. 連接詞開頭</h4>
+                    <ul class="word-list">
+                        <li><span class="structure">that</span><div class="small-example"><span class="en-sentence">It is obvious <span class="kw">that</span> he loves her.</span><span class="ch-translation">很明顯<span class="kw">that</span>他愛她。</span><button class="speaker-btn" onclick="speakText('It is obvious that he loves her')"><i class="fas fa-volume-up"></i></button></div></li>
+                        <li><span class="structure">if</span><div class="small-example"><span class="en-sentence">I don't know <span class="kw">if</span> she is at home.</span><span class="ch-translation">我不知道她<span class="kw">是否</span>在家。</span><button class="speaker-btn" onclick="speakText('I don\\'t know if she is at home')"><i class="fas fa-volume-up"></i></button></div></li>
+                        <li><span class="structure">whether</span><div class="small-example"><span class="en-sentence">I wonder <span class="kw">whether</span> it will rain tomorrow.</span><span class="ch-translation">我想知道明天<span class="kw">是否</span>會下雨。</span><button class="speaker-btn" onclick="speakText('I wonder whether it will rain tomorrow')"><i class="fas fa-volume-up"></i></button></div></li>
                     </ul>
-                </div>
 
-                <h4>其他名詞子句作主詞</h4>
-                <div class="example-box">
-                    <span class="en-sentence">Whether traditions deserve preserving has sparked a heated discussion in society.</span>
-                    <span class="ch-translation">傳統是否值得保存，在社會上引發了激烈的討論。</span>
-                    <button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence">What the man did was not very appropriate.</span>
-                    <span class="ch-translation">那個男人所做的事不太恰當。</span>
-                    <button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence">Where she is original from remains a mystery.</span>
-                    <span class="ch-translation">她最初來自哪裡仍然是個謎。</span>
-                    <button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence">Whoever solves the problem will get promoted.</span>
-                    <span class="ch-translation">無論是誰解決了這個問題，都會獲得晉升。</span>
-                    <button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button>
-                </div>
-            </div>
-        </div>
+                    <h4>2. 疑問詞開頭</h4>
+                    <ul class="word-list">
+                        <li><span class="structure">when</span><div class="small-example"><span class="en-sentence">I asked him <span class="kw">when</span> the meeting would start.</span><span class="ch-translation">我問他會議<span class="kw">何時</span>開始。</span><button class="speaker-btn" onclick="speakText('I asked him when the meeting would start')"><i class="fas fa-volume-up"></i></button></div></li>
+                        <li><span class="structure">where</span><div class="small-example"><span class="en-sentence">Do you know <span class="kw">where</span> the library is?</span><span class="ch-translation">你知道圖書館<span class="kw">在哪裡</span>嗎？</span><button class="speaker-btn" onclick="speakText('Do you know where the library is')"><i class="fas fa-volume-up"></i></button></div></li>
+                        <li><span class="structure">which</span><div class="small-example"><span class="en-sentence">I can't decide <span class="kw">which</span> shoes to buy.</span><span class="ch-translation">我無法決定買<span class="kw">哪一雙</span>鞋。</span><button class="speaker-btn" onclick="speakText('I can\\'t decide which shoes to buy')"><i class="fas fa-volume-up"></i></button></div></li>
+                        <li><span class="structure">who</span><div class="small-example"><span class="en-sentence">Tell me <span class="kw">who</span> your best friend is.</span><span class="ch-translation">告訴我<span class="kw">誰</span>是你最好的朋友。</span><button class="speaker-btn" onclick="speakText('Tell me who your best friend is')"><i class="fas fa-volume-up"></i></button></div></li>
+                        <li><span class="structure">why</span><div class="small-example"><span class="en-sentence">That is <span class="kw">why</span> I was late.</span><span class="ch-translation">那就是<span class="kw">為什麼</span>我遲到了。</span><button class="speaker-btn" onclick="speakText('That is why I was late')"><i class="fas fa-volume-up"></i></button></div></li>
+                        <li><span class="structure">what</span><div class="small-example"><span class="en-sentence">I don't understand <span class="kw">what</span> you mean.</span><span class="ch-translation">我不明白你<span class="kw">什麼</span>意思。</span><button class="speaker-btn" onclick="speakText('I don\\'t understand what you mean')"><i class="fas fa-volume-up"></i></button></div></li>
+                        <li><span class="structure">how</span><div class="small-example"><span class="en-sentence">She taught me <span class="kw">how</span> to drive.</span><span class="ch-translation">她教我<span class="kw">如何</span>開車。</span><button class="speaker-btn" onclick="speakText('She taught me how to drive')"><i class="fas fa-volume-up"></i></button></div></li>
+                    </ul>
 
-        <!-- 3. Object -->
-        <div id="object" class="content-section">
-            <div class="card">
-                <h2>功能二：作受詞 (Object)</h2>
-                
-                <h4>1. 及物動詞的受詞</h4>
-                <div class="example-box">
-                    <span class="en-sentence">Recent research has shown that many minority languages are disappearing.</span>
-                    <span class="ch-translation">最近的研究顯示，許多少數民族語言正在消失。</span>
-                    <button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence">I don't know how she worked out the problem.</span>
-                    <span class="ch-translation">我不知道她是如何解決這個問題的。</span>
-                    <button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence">Many experts doubt whether English should be used as the only global official language.</span>
-                    <span class="ch-translation">許多專家懷疑英語是否應該被用作唯一的全球官方語言。</span>
-                    <button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence">We do not know what will happen to minority languages under the pressure of English globalization.</span>
-                    <span class="ch-translation">我們不知道在英語全球化的壓力下，少數民族語言會發生什麼事。</span>
-                    <button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence">He said that he was sick and would not come to school.</span>
-                    <span class="ch-translation">他說他生病了，不會來學校。</span>
-                    <button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button>
-                </div>
+                    <h4>3. 關係代名詞 (及複合關代) 開頭</h4>
+                    <ul class="word-list">
+                        <li><span class="structure">which</span><div class="small-example"><span class="en-sentence">Select <span class="kw">which</span> subject you like best.</span><span class="ch-translation">選擇你最喜歡<span class="kw">哪一個</span>科目。</span><button class="speaker-btn" onclick="speakText('Select which subject you like best')"><i class="fas fa-volume-up"></i></button></div></li>
+                        <li><span class="structure">who</span><div class="small-example"><span class="en-sentence">I know <span class="kw">who</span> is responsible for this.</span><span class="ch-translation">我知道<span class="kw">誰</span>對此負責。</span><button class="speaker-btn" onclick="speakText('I know who is responsible for this')"><i class="fas fa-volume-up"></i></button></div></li>
+                        <li><span class="structure">whom</span><div class="small-example"><span class="en-sentence">Ask <span class="kw">whom</span> you should contact.</span><span class="ch-translation">問問你應該聯繫<span class="kw">誰</span>。</span><button class="speaker-btn" onclick="speakText('Ask whom you should contact')"><i class="fas fa-volume-up"></i></button></div></li>
+                        <li><span class="structure">whose</span><div class="small-example"><span class="en-sentence">I'm not sure <span class="kw">whose</span> book this is.</span><span class="ch-translation">我不確定這是<span class="kw">誰的</span>書。</span><button class="speaker-btn" onclick="speakText('I\\'m not sure whose book this is')"><i class="fas fa-volume-up"></i></button></div></li>
+                        <li><span class="structure">that</span><div class="small-example"><span class="en-sentence">The fact <span class="kw">that</span> he succeeded pleased everyone.</span><span class="ch-translation">他成功了<span class="kw">這件事(that)</span>讓大家都很高興。(同位語)</span><button class="speaker-btn" onclick="speakText('The fact that he succeeded pleased everyone')"><i class="fas fa-volume-up"></i></button></div></li>
+                        <li><span class="structure">whoever</span><div class="small-example"><span class="en-sentence"><span class="kw">Whoever</span> comes first will be served first.</span><span class="ch-translation"><span class="kw">無論是誰</span>先來，都會先獲得服務。</span><button class="speaker-btn" onclick="speakText('Whoever comes first will be served first')"><i class="fas fa-volume-up"></i></button></div></li>
+                        <li><span class="structure">whomever</span><div class="small-example"><span class="en-sentence">You can invite <span class="kw">whomever</span> you like.</span><span class="ch-translation">你可以邀請你喜歡的<span class="kw">任何人</span>。</span><button class="speaker-btn" onclick="speakText('You can invite whomever you like')"><i class="fas fa-volume-up"></i></button></div></li>
+                        <li><span class="structure">whichever</span><div class="small-example"><span class="en-sentence">Buy <span class="kw">whichever</span> book interests you.</span><span class="ch-translation">買<span class="kw">任何一本</span>你感興趣的書。</span><button class="speaker-btn" onclick="speakText('Buy whichever book interests you')"><i class="fas fa-volume-up"></i></button></div></li>
+                        <li><span class="structure">whatever</span><div class="small-example"><span class="en-sentence">I will support <span class="kw">whatever</span> decision you make.</span><span class="ch-translation">我會支持你做的<span class="kw">任何</span>決定。</span><button class="speaker-btn" onclick="speakText('I will support whatever decision you make')"><i class="fas fa-volume-up"></i></button></div></li>
+                    </ul>`
+            },
+            subject: {
+                title: "作主詞 (Subject)",
+                html: `
+                    <h2>功能一：作主詞 (Subject)</h2>
+                    <p>一般用虛構主詞 <strong>it</strong> 放在句首。</p>
+                    <h4>1. It is + noun + noun clause</h4>
+                    <div class="example-box"><span class="en-sentence">It is a great pity that many aboriginal languages and cultures are on the verge of extinction.</span><span class="ch-translation">許多原住民語言和文化瀕臨滅絕，這真是令人遺憾。</span><button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button></div>
+                    <div class="example-box"><span class="en-sentence">It is an unavoidable task that the young generations conserve and promote their cultural heritage.</span><span class="ch-translation">年輕一代保存和推廣他們的文化遺產是一項不可避免的任務。</span><button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button></div>
+                    <div class="example-box"><span class="en-sentence">It is a wonder that the unique cultural identity of this tribe is intact.</span><span class="ch-translation">這個部落獨特的文化認同竟然完好無損，真是一個奇蹟。</span><button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button></div>
 
-                <!-- NEW SECTION: Reported Speech -->
-                <div class="card" style="margin-top: 2rem; border-top: 4px solid #f97316; background-color: #fffcf8;">
-                    <h3 style="color: #c2410c; margin-top: 0;"><i class="fas fa-quote-right"></i> 進階重點：直接問句 ➔ 間接問句</h3>
-                    <p style="margin-bottom: 1rem;">當名詞子句作為受詞時，最常見的應用就是<strong>間接問句 (Indirect Questions/Reported Speech)</strong>。</p>
+                    <h4>2. It is + adj. + noun clause</h4>
+                    <div class="example-box"><span class="en-sentence">It is vital that a nation should preserve its cultural heritage.</span><span class="ch-translation">一個國家應該保存其文化遺產，這是至關重要的。</span><button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button></div>
+                    <div class="example-box"><span class="en-sentence">It is questionable if museums and art galleries should collect and preserve artifacts of all kinds.</span><span class="ch-translation">博物館和美術館是否應該收藏和保存各式各樣的文物，這是值得商榷的。</span><button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button></div>
+                    <div class="example-box"><span class="en-sentence">It is worthwhile that the government helps create a climate encouraging freedom of thought.</span><span class="ch-translation">政府協助創造鼓勵思想自由的氛圍是值得的。</span><button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button></div>
+
+                    <h4>3. It is + past participle + noun clause</h4>
+                    <div class="example-box"><span class="en-sentence">It is widely accepted that international tourism has promoted cross-cultural communication.</span><span class="ch-translation">國際旅遊促進了跨文化交流，這是被廣泛接受的。</span><button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button></div>
+                    <div class="example-box"><span class="en-sentence">It has been proved that TV presents children with distorted reality.</span><span class="ch-translation">電視向兒童呈現扭曲的現實，這已經被證實了。</span><button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button></div>
+                    <div class="example-box"><span class="en-sentence">It cannot be denied that English is becoming more and more important.</span><span class="ch-translation">英語變得越來越重要，這是無法否認的。</span><button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button></div>
+
+                    <h4>4. It + 連綴動詞 + noun clause</h4>
+                    <div class="example-box"><span class="en-sentence">It seems that the development of tourism can promote cross-cultural communication.</span><span class="ch-translation">旅遊業的發展似乎能促進跨文化交流。</span><button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button></div>
+                    <div class="example-box"><span class="en-sentence">It appears that museums and galleries promote the public’s understanding of fine arts.</span><span class="ch-translation">博物館和畫廊似乎能促進大眾對美術的理解。</span><button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button></div>
+
+                    <div class="note-box">
+                        <div class="note-title"><i class="fas fa-exclamation-circle"></i> 注意：區分強調句 (Cleft Sentences)</div>
+                        <p>強調句（又稱分裂句）用來強調句中特別重要的部份 (人﹑事﹑時﹑地﹑物等)，結構為 <strong>It is/was ... that ...</strong>。</p>
+                        <hr style="border: 0; border-top: 1px solid #fcd34d; margin: 10px 0;">
+                        <div class="example-box" style="background:transparent; border:none; padding-left:0;"><span class="en-sentence">It is TV that can be used to educate and entertain people of all ages.</span><span class="ch-translation">正是電視可以用來教育和娛樂各個年齡層的人。(強調TV)</span><button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button></div>
+                        <div class="example-box" style="background:transparent; border:none; padding-left:0;"><span class="en-sentence">It was Columbus that discovered America in 1492.</span><span class="ch-translation">正是哥倫布在 1492 年發現了美洲。(強調Columbus)</span><button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button></div>
+                        <p style="margin-top:10px;"><strong>變化例句：</strong>(原句：Jack broke the record yesterday.)</p>
+                        <ul style="margin-top:5px;">
+                            <li><span class="en-sentence">It was Jack that broke the record yesterday.</span><button class="speaker-btn" onclick="speakText('It was Jack that broke the record yesterday')"><i class="fas fa-volume-up"></i></button></li>
+                            <li><span class="en-sentence">It was the record that Jack broke yesterday.</span><button class="speaker-btn" onclick="speakText('It was the record that Jack broke yesterday')"><i class="fas fa-volume-up"></i></button></li>
+                            <li><span class="en-sentence">It was yesterday that Jack broke the record.</span><button class="speaker-btn" onclick="speakText('It was yesterday that Jack broke the record')"><i class="fas fa-volume-up"></i></button></li>
+                        </ul>
+                    </div>
+                    <h4>其他名詞子句作主詞</h4>
+                    <div class="example-box"><span class="en-sentence">Whether traditions deserve preserving has sparked a heated discussion in society.</span><span class="ch-translation">傳統是否值得保存，在社會上引發了激烈的討論。</span><button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button></div>
+                    <div class="example-box"><span class="en-sentence">What the man did was not very appropriate.</span><span class="ch-translation">那個男人所做的事不太恰當。</span><button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button></div>
+                    <div class="example-box"><span class="en-sentence">Where she is original from remains a mystery.</span><span class="ch-translation">她最初來自哪裡仍然是個謎。</span><button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button></div>
+                    <div class="example-box"><span class="en-sentence">Whoever solves the problem will get promoted.</span><span class="ch-translation">無論是誰解決了這個問題，都會獲得晉升。</span><button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button></div>`
+            },
+            object: {
+                title: "作受詞 (Object)",
+                html: `
+                    <h2>功能二：作受詞 (Object)</h2>
+                    <h4>1. 及物動詞的受詞</h4>
+                    <div class="example-box"><span class="en-sentence">Recent research has shown that many minority languages are disappearing.</span><span class="ch-translation">最近的研究顯示，許多少數民族語言正在消失。</span><button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button></div>
+                    <div class="example-box"><span class="en-sentence">I don't know how she worked out the problem.</span><span class="ch-translation">我不知道她是如何解決這個問題的。</span><button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button></div>
+                    <div class="example-box"><span class="en-sentence">Many experts doubt whether English should be used as the only global official language.</span><span class="ch-translation">許多專家懷疑英語是否應該被用作唯一的全球官方語言。</span><button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button></div>
+                    <div class="example-box"><span class="en-sentence">We do not know what will happen to minority languages under the pressure of English globalization.</span><span class="ch-translation">我們不知道在英語全球化的壓力下，少數民族語言會發生什麼事。</span><button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button></div>
+                    <div class="example-box"><span class="en-sentence">He said that he was sick and would not come to school.</span><span class="ch-translation">他說他生病了，不會來學校。</span><button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button></div>
+
+                    <div style="margin-top: 2rem; border-top: 4px solid #f97316; background-color: #fffcf8; padding:1.5rem; border-radius:8px;">
+                        <h3 style="color: #c2410c; margin-top: 0;"><i class="fas fa-quote-right"></i> 進階重點：直接問句 ➔ 間接問句</h3>
+                        <div class="warn-box"><div class="note-title"><i class="fas fa-exclamation-triangle"></i> 黃金法則：疑問句變直述句</div><p>在間接問句中，必須將疑問句的語序還原為<strong>「主詞 + 動詞」</strong>的直述句順序，<strong>不可</strong>保留助動詞 (do/does/did)。</p></div>
+                        <h4>(1) WH- 問句 (Wh- Questions)</h4>
+                        <div class="comparison-box"><span class="direct-speech"><i class="fas fa-times-circle"></i> Direct: "Where <span style="text-decoration:underline;">is</span> the station?"</span><span class="indirect-speech"><i class="fas fa-check-circle"></i> Indirect: He asked <span class="highlight-text">where the station <span style="text-decoration:underline;">was</span></span>.</span><span class="ch-translation">他問車站<span style="font-weight:bold;">在哪裡</span>。(注意 be 動詞移到主詞後)</span><button class="speaker-btn" onclick="speakText('He asked where the station was')"><i class="fas fa-volume-up"></i></button></div>
+                        <div class="comparison-box"><span class="direct-speech"><i class="fas fa-times-circle"></i> Direct: "What <span style="text-decoration:underline;">did</span> you buy?"</span><span class="indirect-speech"><i class="fas fa-check-circle"></i> Indirect: She asked me <span class="highlight-text">what I bought</span> (or <em>had bought</em>).</span><span class="ch-translation">她問我<span style="font-weight:bold;">買了什麼</span>。(助動詞 did 消失，動詞變過去式)</span><button class="speaker-btn" onclick="speakText('She asked me what I bought')"><i class="fas fa-volume-up"></i></button></div>
+                        <div class="comparison-box"><span class="direct-speech"><i class="fas fa-times-circle"></i> Direct: "Why <span style="text-decoration:underline;">are</span> you wearing a dinosaur costume?"</span><span class="indirect-speech"><i class="fas fa-check-circle"></i> Indirect: The teacher asked the student <span class="highlight-text">why he was wearing a dinosaur costume</span>.</span><span class="ch-translation">老師問那個學生<span style="font-weight:bold;">為什麼穿著恐龍裝</span>。(直述句語序)</span><button class="speaker-btn" onclick="speakText('The teacher asked the student why he was wearing a dinosaur costume')"><i class="fas fa-volume-up"></i></button></div>
+                        <h4>(2) Yes/No 問句</h4>
+                        <div class="comparison-box"><span class="direct-speech"><i class="fas fa-times-circle"></i> Direct: "<span style="text-decoration:underline;">Do</span> you love me?"</span><span class="indirect-speech"><i class="fas fa-check-circle"></i> Indirect: She wanted to know <span class="highlight-text">if I loved her</span>.</span><span class="ch-translation">她想知道<span style="font-weight:bold;">我是否愛她</span>。(Do 消失，加入 if/whether)</span><button class="speaker-btn" onclick="speakText('She wanted to know if I loved her')"><i class="fas fa-volume-up"></i></button></div>
+                    </div>
+
+                    <h4>2. it 作虛構受詞</h4>
+                    <div class="example-box"><span class="en-sentence">We deem it a great cultural loss that aboriginal tribes give up their cultures.</span><span class="ch-translation">我們認為原住民部落放棄他們的文化是巨大的文化損失。</span><button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button></div>
+                    <div class="example-box"><span class="en-sentence">Many people take it for granted that TV serves as a baby-sitter for young children.</span><span class="ch-translation">許多人理所當然地認為電視可以充當幼兒的保母。</span><button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button></div>
+                    <div class="example-box"><span class="en-sentence">We should make it clear to people that traditional culture should be well preserved.</span><span class="ch-translation">我們應該讓人們清楚明白，傳統文化應該被妥善保存。</span><button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button></div>
                     
-                    <div class="warn-box">
-                        <div class="note-title"><i class="fas fa-exclamation-triangle"></i> 黃金法則：疑問句變直述句</div>
-                        <p>在間接問句中，必須將疑問句的語序還原為<strong>「主詞 + 動詞」</strong>的直述句順序，<strong>不可</strong>保留助動詞 (do/does/did)。</p>
-                    </div>
+                    <div class="note-box"><div class="note-title"><i class="fas fa-lightbulb"></i> 假設語氣動詞</div><p>一些動詞如 <strong>decide, desire, demand, order, suggest, recommend</strong> 等之後的名詞子句，動詞一般用 <strong>(should) + 原形動詞</strong>。</p></div>
+                    <div class="example-box"><span class="en-sentence">Educators suggest that children be exposed to different cultures.</span><span class="ch-translation">教育工作者建議兒童應該接觸不同的文化。</span><button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button></div>
+                    <div class="example-box"><span class="en-sentence">The government demands that people wear helmets when riding motorcycles.</span><span class="ch-translation">政府要求人們騎摩托車時戴安全帽。</span><button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button></div>
+                    <div class="example-box"><span class="en-sentence">Experts recommend that a special day be set aside for people to wear traditional costumes.</span><span class="ch-translation">專家建議應該撥出特別的一天讓人們穿著傳統服裝。</span><button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button></div>
 
-                    <h4>(1) WH- 問句 (Wh- Questions)</h4>
-                    <p style="margin-bottom: 0.5rem;"><strong>結構：Wh-詞 + Subject + Verb</strong></p>
-
-                    <div class="comparison-box">
-                        <span class="direct-speech"><i class="fas fa-times-circle"></i> Direct: "Where <span style="text-decoration:underline;">is</span> the station?"</span>
-                        <span class="indirect-speech"><i class="fas fa-check-circle"></i> Indirect: He asked <span class="highlight-text">where the station <span style="text-decoration:underline;">was</span></span>.</span>
-                        <span class="ch-translation">他問車站<span style="font-weight:bold;">在哪裡</span>。(注意 be 動詞移到主詞後)</span>
-                        <button class="speaker-btn" onclick="speakText('He asked where the station was')"><i class="fas fa-volume-up"></i></button>
-                    </div>
-
-                    <div class="comparison-box">
-                        <span class="direct-speech"><i class="fas fa-times-circle"></i> Direct: "What <span style="text-decoration:underline;">did</span> you buy?"</span>
-                        <span class="indirect-speech"><i class="fas fa-check-circle"></i> Indirect: She asked me <span class="highlight-text">what I bought</span> (or <em>had bought</em>).</span>
-                        <span class="ch-translation">她問我<span style="font-weight:bold;">買了什麼</span>。(助動詞 did 消失，動詞變過去式)</span>
-                        <button class="speaker-btn" onclick="speakText('She asked me what I bought')"><i class="fas fa-volume-up"></i></button>
-                    </div>
-                    
-                    <div class="comparison-box">
-                        <span class="direct-speech"><i class="fas fa-times-circle"></i> Direct: "Why <span style="text-decoration:underline;">are</span> you wearing a dinosaur costume?"</span>
-                        <span class="indirect-speech"><i class="fas fa-check-circle"></i> Indirect: The teacher asked the student <span class="highlight-text">why he was wearing a dinosaur costume</span>.</span>
-                        <span class="ch-translation">老師問那個學生<span style="font-weight:bold;">為什麼穿著恐龍裝</span>。(直述句語序)</span>
-                        <button class="speaker-btn" onclick="speakText('The teacher asked the student why he was wearing a dinosaur costume')"><i class="fas fa-volume-up"></i></button>
-                    </div>
-
-                    <h4>(2) Yes/No 問句</h4>
-                    <p style="margin-bottom: 0.5rem;"><strong>結構：If / Whether + Subject + Verb</strong></p>
-
-                    <div class="comparison-box">
-                        <span class="direct-speech"><i class="fas fa-times-circle"></i> Direct: "<span style="text-decoration:underline;">Do</span> you love me?"</span>
-                        <span class="indirect-speech"><i class="fas fa-check-circle"></i> Indirect: She wanted to know <span class="highlight-text">if I loved her</span>.</span>
-                        <span class="ch-translation">她想知道<span style="font-weight:bold;">我是否愛她</span>。(Do 消失，加入 if/whether)</span>
-                        <button class="speaker-btn" onclick="speakText('She wanted to know if I loved her')"><i class="fas fa-volume-up"></i></button>
-                    </div>
-                </div>
-
-                <h4>2. it 作虛構受詞</h4>
-                <div class="example-box">
-                    <span class="en-sentence">We deem it a great cultural loss that aboriginal tribes give up their cultures.</span>
-                    <span class="ch-translation">我們認為原住民部落放棄他們的文化是巨大的文化損失。</span>
-                    <button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence">Many people take it for granted that TV serves as a baby-sitter for young children.</span>
-                    <span class="ch-translation">許多人理所當然地認為電視可以充當幼兒的保母。</span>
-                    <button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence">We should make it clear to people that traditional culture should be well preserved.</span>
-                    <span class="ch-translation">我們應該讓人們清楚明白，傳統文化應該被妥善保存。</span>
-                    <button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button>
-                </div>
-
-                <div class="note-box">
-                    <div class="note-title"><i class="fas fa-lightbulb"></i> 假設語氣動詞</div>
-                    <p>一些動詞如 <strong>decide, desire, demand, order, suggest, recommend</strong> 等之後的名詞子句，動詞一般用 <strong>(should) + 原形動詞</strong>。</p>
-                </div>
-
-                <div class="example-box">
-                    <span class="en-sentence">Educators suggest that children be exposed to different cultures.</span>
-                    <span class="ch-translation">教育工作者建議兒童應該接觸不同的文化。</span>
-                    <button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence">The government demands that people wear helmets when riding motorcycles.</span>
-                    <span class="ch-translation">政府要求人們騎摩托車時戴安全帽。</span>
-                    <button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence">Experts recommend that a special day be set aside for people to wear traditional costumes.</span>
-                    <span class="ch-translation">專家建議應該撥出特別的一天讓人們穿著傳統服裝。</span>
-                    <button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button>
-                </div>
-
-                <h4>3. 介系詞的受詞</h4>
-                <div class="example-box">
-                    <span class="en-sentence">There arises a heated debate over whether old buildings in urban areas should be demolished for urban expansion.</span>
-                    <span class="ch-translation">關於是否應該為了城市擴張而拆除市區的老舊建築，引起了激烈的辯論。</span>
-                    <button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence">The success of the meeting depends on how many participants will vote for the proposal.</span>
-                    <span class="ch-translation">會議的成功取決於有多少參與者會投票支持該提案。</span>
-                    <button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 4. Complement -->
-        <div id="complement" class="content-section">
-            <div class="card">
-                <h2>功能三：作補語 (Complement)</h2>
-                
-                <h4>1. be + 形容詞 + 名詞子句</h4>
-                <div class="example-box">
-                    <span class="en-sentence">I am convinced that art funding will promote the conservation of traditional arts.</span>
-                    <span class="ch-translation">我深信藝術資助將促進傳統藝術的保存。</span>
-                    <button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence">Many educators are worried that young children are addicted to video games.</span>
-                    <span class="ch-translation">許多教育工作者擔心幼兒沉迷於電子遊戲。</span>
-                    <button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence">The public should be aware that climate change is an urgent issue.</span>
-                    <span class="ch-translation">大眾應該意識到氣候變遷是一個迫切的議題。</span>
-                    <button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence">Jenny was sorry that she lost Mike's bike.</span>
-                    <span class="ch-translation">Jenny 很抱歉她弄丟了 Mike 的腳踏車。</span>
-                    <button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button>
-                </div>
-
-                <h4>2. 放在連綴動詞後的補語</h4>
-                <div class="example-box">
-                    <span class="en-sentence">A new IPhone is what she wants for her birthday gift.</span>
-                    <span class="ch-translation">一支新的 iPhone 是她想要的生日禮物。</span>
-                    <button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence">His major issue is that he is not good at communicating with others.</span>
-                    <span class="ch-translation">他的主要問題是他不擅長與他人溝通。</span>
-                    <button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence">The fact remains that language extinction is a natural evolutionary process.</span>
-                    <span class="ch-translation">事實依然是，語言滅絕是一個自然的演化過程。</span>
-                    <button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 5. Appositive -->
-        <div id="appositive" class="content-section">
-            <div class="card">
-                <h2>功能四：作同位語 (Appositive)</h2>
-                <p>先行詞一般為抽象名詞 (如：<strong>fact, evidence, idea, promise, truth, belief, news, view</strong> 等)，名詞子句對該抽象名詞加以解釋說明或補充。</p>
-                
-                <div class="example-box">
-                    <span class="en-sentence">We came to the decision that we must act at once.</span>
-                    <span class="ch-translation">我們得出結論，必須立即採取行動。</span>
-                    <button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence">The fact that the earth is round is well known.</span>
-                    <span class="ch-translation">地球是圓的這一事實是眾所周知的。</span>
-                    <button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence">She shared with us her belief that she can be a superstar one day.</span>
-                    <span class="ch-translation">她與我們分享了她的信念，即她有一天會成為超級巨星。</span>
-                    <button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button>
-                </div>
-
-                <div class="note-box" style="margin-top: 2rem;">
-                    <div class="note-title"><i class="fas fa-bookmark"></i> 總結 (Summary)</div>
-                    <p>名詞子句即一個附屬子句當名詞來使用。</p>
-                    <p style="margin-top: 10px;">有 <strong>that</strong> 的名詞子句在作<strong>受詞</strong>時，一般可以省略 that。</p>
-                    <p class="en-sentence" style="margin-top:5px; color:#92400e;">I believe (that) I can fly.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- 6. Quiz -->
-        <div id="quiz" class="content-section">
-            <div class="card">
-                <h2>名詞子句大師挑戰</h2>
-                <p>準備好測試你的實力了嗎？這裡有 10 道精選題目，涵蓋了本單元的所有重點！</p>
-                
-                <div id="quiz-interface" class="quiz-container">
+                    <h4>3. 介系詞的受詞</h4>
+                    <div class="example-box"><span class="en-sentence">There arises a heated debate over whether old buildings in urban areas should be demolished for urban expansion.</span><span class="ch-translation">關於是否應該為了城市擴張而拆除市區的老舊建築，引起了激烈的辯論。</span><button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button></div>
+                    <div class="example-box"><span class="en-sentence">The success of the meeting depends on how many participants will vote for the proposal.</span><span class="ch-translation">會議的成功取決於有多少參與者會投票支持該提案。</span><button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button></div>`
+            },
+            complement: {
+                title: "作補語 (Complement)",
+                html: `
+                    <h2>功能三：作補語 (Complement)</h2>
+                    <h4>1. be + 形容詞 + 名詞子句</h4>
+                    <div class="example-box"><span class="en-sentence">I am convinced that art funding will promote the conservation of traditional arts.</span><span class="ch-translation">我深信藝術資助將促進傳統藝術的保存。</span><button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button></div>
+                    <div class="example-box"><span class="en-sentence">Many educators are worried that young children are addicted to video games.</span><span class="ch-translation">許多教育工作者擔心幼兒沉迷於電子遊戲。</span><button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button></div>
+                    <div class="example-box"><span class="en-sentence">The public should be aware that climate change is an urgent issue.</span><span class="ch-translation">大眾應該意識到氣候變遷是一個迫切的議題。</span><button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button></div>
+                    <div class="example-box"><span class="en-sentence">Jenny was sorry that she lost Mike's bike.</span><span class="ch-translation">Jenny 很抱歉她弄丟了 Mike 的腳踏車。</span><button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button></div>
+                    <h4>2. 放在連綴動詞後的補語</h4>
+                    <div class="example-box"><span class="en-sentence">A new IPhone is what she wants for her birthday gift.</span><span class="ch-translation">一支新的 iPhone 是她想要的生日禮物。</span><button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button></div>
+                    <div class="example-box"><span class="en-sentence">His major issue is that he is not good at communicating with others.</span><span class="ch-translation">他的主要問題是他不擅長與他人溝通。</span><button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button></div>
+                    <div class="example-box"><span class="en-sentence">The fact remains that language extinction is a natural evolutionary process.</span><span class="ch-translation">事實依然是，語言滅絕是一個自然的演化過程。</span><button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button></div>`
+            },
+            appositive: {
+                title: "作同位語 (Appositive)",
+                html: `
+                    <h2>功能四：作同位語 (Appositive)</h2>
+                    <p>先行詞一般為抽象名詞 (如：<strong>fact, evidence, idea, promise, truth, belief, news, view</strong> 等)，名詞子句對該抽象名詞加以解釋說明或補充。</p>
+                    <div class="example-box"><span class="en-sentence">We came to the decision that we must act at once.</span><span class="ch-translation">我們得出結論，必須立即採取行動。</span><button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button></div>
+                    <div class="example-box"><span class="en-sentence">The fact that the earth is round is well known.</span><span class="ch-translation">地球是圓的這一事實是眾所周知的。</span><button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button></div>
+                    <div class="example-box"><span class="en-sentence">She shared with us her belief that she can be a superstar one day.</span><span class="ch-translation">她與我們分享了她的信念，即她有一天會成為超級巨星。</span><button class="speaker-btn" onclick="speak(this)"><i class="fas fa-volume-up"></i></button></div>
+                    <div class="note-box" style="margin-top: 2rem;">
+                        <div class="note-title"><i class="fas fa-bookmark"></i> 總結 (Summary)</div>
+                        <p>名詞子句即一個附屬子句當名詞來使用。</p>
+                        <p style="margin-top: 10px;">有 <strong>that</strong> 的名詞子句在作<strong>受詞</strong>時，一般可以省略 that。</p>
+                        <p class="en-sentence" style="margin-top:5px; color:#92400e;">I believe (that) I can fly.</p>
+                    </div>`
+            },
+            quiz: {
+                title: "隨堂測驗 (Quiz)",
+                html: `<div id="quiz-interface" class="quiz-container">
                     <div class="quiz-progress">Question <span id="current-question-num">1</span> of 10</div>
-                    
-                    <div class="quiz-question" id="question-text">
-                        題目加載中...
-                    </div>
-                    
-                    <div class="quiz-options" id="options-container">
-                        <!-- Options generated by JS -->
-                    </div>
-                    
+                    <div class="quiz-question" id="question-text"></div>
+                    <div class="quiz-options" id="options-container"></div>
                     <div class="feedback-area" id="feedback-area">
                         <div class="feedback-title" id="feedback-title"></div>
                         <div id="feedback-text"></div>
-                        <div style="margin-top:10px; font-size:0.9rem; color:#666;">
-                            <i class="fas fa-lightbulb" style="color:#eab308;"></i> 提示：<span id="feedback-hint"></span>
-                        </div>
+                        <div style="margin-top:10px; font-size:0.9rem; color:#666;"><i class="fas fa-lightbulb" style="color:#eab308;"></i> 提示：<span id="feedback-hint"></span></div>
                     </div>
-                    
                     <button class="next-btn" id="next-btn" onclick="nextQuestion()">下一題 (Next)</button>
                 </div>
-
                 <div id="quiz-score" class="score-card" style="display: none;">
                     <h3><i class="fas fa-trophy"></i> 測驗完成！</h3>
                     <p>你的得分是：</p>
                     <div class="final-score"><span id="score-val">0</span> / 10</div>
                     <p id="score-msg"></p>
-                    <button class="tab-btn active" style="margin-top: 1rem;" onclick="restartQuiz()">再試一次 (Restart)</button>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <script>
-        // Tab Functionality
-        function openTab(evt, tabName) {
-            var i, contentSection, tabBtn;
-            contentSection = document.getElementsByClassName("content-section");
-            for (i = 0; i < contentSection.length; i++) {
-                contentSection[i].className = contentSection[i].className.replace(" active", "");
-                contentSection[i].style.display = "none";
+                    <button class="satellite" style="position:static; margin:20px auto; transform:none;" onclick="initQuiz()">再試一次 (Restart)</button>
+                </div>`
             }
-            tabBtn = document.getElementsByClassName("tab-btn");
-            for (i = 0; i < tabBtn.length; i++) {
-                tabBtn[i].className = tabBtn[i].className.replace(" active", "");
-            }
-            document.getElementById(tabName).style.display = "block";
-            setTimeout(() => { document.getElementById(tabName).className += " active"; }, 10);
-            evt.currentTarget.className += " active";
-        }
+        };
 
-        // Text to Speech
-        function speak(element) {
-            const text = element.parentElement.querySelector('.en-sentence').textContent;
-            speakText(text);
-        }
-
-        function speakText(text) {
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'en-US';
-                utterance.rate = 0.9;
-                window.speechSynthesis.speak(utterance);
-            } else {
-                alert("Sorry, your browser doesn't support text-to-speech.");
-            }
-        }
-
-        // --- QUIZ LOGIC ---
+        // --- QUIZ DATA (100% 保留您的題目) ---
         const quizData = [
             {
                 q: "1. 請選出正確的連接詞以完成句子 (名詞子句作主詞)：\nIt is obvious ______ he has not finished his homework yet.",
                 options: ["what", "that", "which", "if"],
-                correct: 1, // Index of correct answer
+                correct: 1, 
                 rationale: "句子是完整敘述句，使用 that 引導名詞子句作為真正的主詞（虛構主詞 It 代替）。What/Which 語意不符，If 語意與 obvious 衝突。",
                 hint: "這個句子是「虛構主詞 It」的句型，後面接的是一個表示「事實」的完整子句。"
             },
@@ -1082,13 +492,90 @@
             }
         ];
 
+        // --- LOGIC ---
+        function layoutSatellites() {
+            const satellites = document.querySelectorAll('.satellite');
+            const svg = document.getElementById('lines-svg');
+            while (svg.firstChild) svg.removeChild(svg.firstChild);
+
+            const radius = 220; 
+            const startAngle = -90; 
+            const total = satellites.length;
+            const cx = window.innerWidth / 2;
+            const cy = window.innerHeight / 2;
+
+            satellites.forEach((sat, i) => {
+                const angle = startAngle + (i * (360 / total));
+                const rad = angle * (Math.PI / 180);
+                const x = Math.cos(rad) * radius;
+                const y = Math.sin(rad) * radius;
+                sat.style.left = `calc(50% + ${x}px - 60px)`;
+                sat.style.top = `calc(50% + ${y}px - 60px)`;
+                
+                const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                line.setAttribute("x1", "50%"); line.setAttribute("y1", "50%");
+                line.setAttribute("x2", cx + x); line.setAttribute("y2", cy + y);
+                line.classList.add("conn-line");
+                svg.appendChild(line);
+            });
+        }
+        
+        window.addEventListener('resize', layoutSatellites);
+        window.addEventListener('load', layoutSatellites);
+
+        // Modal Logic
+        const tabKeys = ['intro', 'subject', 'object', 'complement', 'appositive', 'quiz'];
+
+        function openModal(activeKey) {
+            const modal = document.getElementById('modal-overlay');
+            const tabsContainer = document.getElementById('modal-tabs');
+            
+            tabsContainer.innerHTML = tabKeys.map(key => {
+                const label = contentData[key].title.split(' ')[0]; // 簡化標題作按鈕
+                const isQuiz = key === 'quiz';
+                return `<button class="tab-btn ${key === activeKey ? 'active' : ''}" onclick="switchTab('${key}', this)">${isQuiz ? '<i class="fas fa-pencil-alt"></i> ' : ''}${contentData[key].title}</button>`;
+            }).join('');
+
+            loadContent(activeKey);
+            modal.classList.add('active');
+        }
+
+        function closeModal() { document.getElementById('modal-overlay').classList.remove('active'); }
+
+        function switchTab(key, btn) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            loadContent(key);
+        }
+
+        function loadContent(key) {
+            const contentDiv = document.getElementById('modal-content');
+            contentDiv.innerHTML = contentData[key].html;
+            if(key === 'quiz') initQuiz();
+        }
+
+        // Speech Logic
+        function speak(element) {
+            const text = element.parentElement.querySelector('.en-sentence').textContent;
+            speakText(text);
+        }
+
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const u = new SpeechSynthesisUtterance(text);
+                u.lang = 'en-US'; u.rate = 0.9;
+                window.speechSynthesis.speak(u);
+            }
+        }
+
+        // Quiz Logic
         let currentQIndex = 0;
         let score = 0;
         let answered = false;
 
         function initQuiz() {
-            currentQIndex = 0;
-            score = 0;
+            currentQIndex = 0; score = 0;
             document.getElementById('quiz-interface').style.display = 'block';
             document.getElementById('quiz-score').style.display = 'none';
             loadQuestion();
@@ -1099,11 +586,8 @@
             const data = quizData[currentQIndex];
             document.getElementById('current-question-num').textContent = currentQIndex + 1;
             document.getElementById('question-text').innerText = data.q;
-            
             const optionsDiv = document.getElementById('options-container');
             optionsDiv.innerHTML = '';
-            
-            // Hide feedback and next button
             document.getElementById('feedback-area').style.display = 'none';
             document.getElementById('next-btn').style.display = 'none';
 
@@ -1117,32 +601,22 @@
         }
 
         function checkAnswer(selectedIndex, btnElement) {
-            if (answered) return; // Prevent multiple clicks
+            if (answered) return;
             answered = true;
-            
             const data = quizData[currentQIndex];
             const isCorrect = selectedIndex === data.correct;
-            
             const options = document.getElementsByClassName('option-btn');
             
-            // Mark selected
             if (isCorrect) {
                 btnElement.classList.add('correct');
                 score++;
                 showFeedback(true, data.rationale, data.hint);
             } else {
                 btnElement.classList.add('wrong');
-                // Highlight correct one
                 options[data.correct].classList.add('correct');
                 showFeedback(false, data.rationale, data.hint);
             }
-            
-            // Disable all buttons
-            for(let btn of options) {
-                btn.disabled = true;
-                btn.style.cursor = 'default';
-            }
-
+            for(let btn of options) btn.disabled = true;
             document.getElementById('next-btn').style.display = 'inline-block';
         }
 
@@ -1151,18 +625,10 @@
             const fbTitle = document.getElementById('feedback-title');
             const fbText = document.getElementById('feedback-text');
             const fbHint = document.getElementById('feedback-hint');
-            
             fbArea.style.display = 'block';
             fbArea.style.borderLeftColor = isCorrect ? 'var(--primary)' : '#ef4444';
-            
-            if (isCorrect) {
-                fbTitle.textContent = "🎉 正確 (Correct)!";
-                fbTitle.style.color = 'var(--primary)';
-            } else {
-                fbTitle.textContent = "❌ 錯誤 (Incorrect)";
-                fbTitle.style.color = '#ef4444';
-            }
-            
+            fbTitle.innerHTML = isCorrect ? "<i class='fas fa-check'></i> 正確 (Correct)!" : "<i class='fas fa-times'></i> 錯誤 (Incorrect)";
+            fbTitle.style.color = isCorrect ? 'var(--primary)' : '#ef4444';
             fbText.textContent = text;
             fbHint.textContent = hint;
         }
@@ -1179,29 +645,13 @@
         function showFinalScore() {
             document.getElementById('quiz-interface').style.display = 'none';
             document.getElementById('quiz-score').style.display = 'block';
-            
             document.getElementById('score-val').textContent = score;
             const msg = document.getElementById('score-msg');
-            
-            if (score === 10) {
-                msg.textContent = "太厲害了！你是名詞子句大師！🏆";
-            } else if (score >= 8) {
-                msg.textContent = "很棒！你已經掌握了大部分的觀念！👏";
-            } else if (score >= 5) {
-                msg.textContent = "還不錯，再複習一下會更好喔！📚";
-            } else {
-                msg.textContent = "別灰心，重新閱讀講義，再挑戰一次吧！💪";
-            }
+            if (score === 10) msg.textContent = "太厲害了！你是名詞子句大師！🏆";
+            else if (score >= 8) msg.textContent = "很棒！你已經掌握了大部分的觀念！👏";
+            else if (score >= 5) msg.textContent = "還不錯，再複習一下會更好喔！📚";
+            else msg.textContent = "別灰心，重新閱讀講義，再挑戰一次吧！💪";
         }
-
-        function restartQuiz() {
-            initQuiz();
-        }
-
-        // Initialize on load
-        window.addEventListener('load', () => {
-            initQuiz();
-        });
     </script>
 </body>
 </html>
