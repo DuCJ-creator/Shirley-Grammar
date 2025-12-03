@@ -9,33 +9,16 @@
   
   <style>
     :root {
-      /* --- 古典學術配色 --- */
-      --primary-tone: #3a5a40;       /* 森林深綠 */
-      --secondary-tone: #c9a972;     /* 復古金 */
-      --text-main: #333333;          /* 柔和黑 */
-      --text-light: #666666;         /* 深灰 */
-      --bg-cream: #faf8f2;           /* 溫潤米色背景 */
-      --card-bg: #ffffff;
-      --border-soft: #e8e4d9;
-      --highlight-bg: #f0eadd;       /* 米金螢光筆 */
+      /* --- 核心配色 --- */
+      --primary-tone: #3a5a40; /* 森林深綠 */
+      --secondary-tone: #c9a972; /* 復古金 */
+      --text-main: #333333;
+      --bg-cream: #faf8f2;
+      --highlight-bg: #f0eadd;
       
-      --soft-shadow: 0 6px 20px rgba(58, 90, 64, 0.08);
-      --hover-shadow: 0 10px 30px rgba(58, 90, 64, 0.15);
-      --radius: 12px;
-      
-      /* 功能色 */
-      --tip-bg: #f1f8f1;
-      --tip-border: #3a5a40;
-      --warn-bg: #fff5f5;
-      --warn-border: #a83232;
-      
-      /* Quiz Specific Colors */
-      --correct-bg: #d4edda;
-      --correct-border: #28a745;
-      --correct-text: #155724;
-      --wrong-bg: #f8d7da;
-      --wrong-border: #dc3545;
-      --wrong-text: #721c24;
+      /* --- 尺寸變數 --- */
+      --node-size: 120px; 
+      --center-size: 200px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; outline: none; -webkit-tap-highlight-color: transparent; }
@@ -43,390 +26,385 @@
     body {
       font-family: 'Inter', 'Noto Sans TC', sans-serif;
       background-color: var(--bg-cream);
-      background-image: linear-gradient(to bottom, #faf8f2 0%, #f5f2e9 100%);
       color: var(--text-main);
-      line-height: 1.75;
-      padding: 40px 20px;
-      min-height: 100vh;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      position: relative;
     }
 
-    .container { max-width: 960px; margin: 0 auto; }
-
-    /* === Header === */
-    header { text-align: center; margin-bottom: 50px; }
-
-    h1 {
+    /* === 1. 背景漂浮修飾語 (Floating Words) === */
+    .floating-objects {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .float-item {
+      position: absolute;
+      opacity: 0.1;
       font-family: 'Playfair Display', serif;
-      font-size: 3rem;
-      color: var(--primary-tone);
-      margin-bottom: 15px;
       font-weight: 700;
-      position: relative;
-      display: inline-block;
-    }
-    
-    h1::after {
-      content: ''; display: block; width: 60%; height: 3px;
-      background: var(--secondary-tone); margin: 10px auto 0;
-      border-radius: 2px; opacity: 0.8;
-    }
-    
-    .subtitle {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.2rem;
-      color: var(--text-light);
-      font-style: italic;
-    }
-
-    /* === Cards === */
-    .section-card {
-      background: var(--card-bg);
-      border-radius: var(--radius);
-      padding: 35px;
-      margin-bottom: 35px;
-      box-shadow: var(--soft-shadow);
-      border: 1px solid var(--border-soft);
-      border-top: 4px solid var(--primary-tone);
-      transition: transform 0.3s ease;
-    }
-    .section-card:hover { transform: translateY(-3px); box-shadow: var(--hover-shadow); }
-
-    h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.9rem;
       color: var(--primary-tone);
-      margin-bottom: 25px;
-      display: flex; align-items: center; font-weight: 700;
+      animation: floatUp 25s infinite linear;
+      white-space: nowrap;
     }
-    h2::after {
-      content: ''; flex: 1; height: 1px;
-      background: var(--secondary-tone); margin-left: 20px; opacity: 0.4;
-    }
-
-    h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.35rem;
-      color: var(--primary-tone);
-      margin: 30px 0 15px;
-      font-weight: 600;
-      border-left: 3px solid var(--secondary-tone);
-      padding-left: 12px;
+    @keyframes floatUp {
+      0% { transform: translateY(110vh) rotate(0deg); }
+      100% { transform: translateY(-20vh) rotate(360deg); }
     }
 
-    /* === Bilingual Box === */
-    .bilingual-box {
-      display: flex; gap: 25px;
-      background: #fbfbf9;
-      padding: 28px;
-      border-radius: 8px;
-      border: 1px solid var(--border-soft);
+    /* === 2. Mind Map 舞台 === */
+    .mindmap-stage {
       position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
     }
-    .bi-col { flex: 1; }
-    .bi-label { 
-      font-family: 'Inter', sans-serif;
-      font-size: 0.75rem; font-weight: 700; 
-      color: var(--secondary-tone); 
-      letter-spacing: 1.5px; margin-bottom: 10px; 
-      display: block; text-transform: uppercase;
-    }
-    .highlight {
-      background: var(--highlight-bg);
-      padding: 2px 6px; border-radius: 4px;
-      font-weight: 600; color: var(--primary-tone);
-    }
-    .bi-play {
-      position: absolute; top: 20px; right: 20px;
-      background: var(--secondary-tone); color: white;
-      width: 32px; height: 32px; border-radius: 50%;
-      border: none; cursor: pointer; display: flex;
-      align-items: center; justify-content: center;
-      transition: 0.2s;
-    }
-    .bi-play:hover { transform: scale(1.1); background: var(--primary-tone); }
 
-    /* === Audio List (Example Items) === */
-    .audio-list {
-      display: grid; gap: 12px;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    .connections {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 1;
     }
-    .audio-card {
-      background: #fff; border: 1px solid var(--border-soft);
-      padding: 15px 18px; border-radius: 8px;
-      cursor: pointer; display: flex;
-      align-items: center; justify-content: space-between;
-      transition: all 0.2s ease;
+    .connection-line {
+      stroke: var(--secondary-tone);
+      stroke-width: 2;
+      stroke-dasharray: 6, 6;
+      opacity: 0.4;
     }
-    .audio-card:hover {
-      border-color: var(--secondary-tone);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 10px rgba(201, 169, 114, 0.15);
-      background: #fefcf8;
-    }
-    .audio-text { font-weight: 500; color: var(--text-main); font-size: 0.95rem; }
-    .audio-icon { color: var(--secondary-tone); font-size: 1.1rem; }
 
-    /* === Compound Adjectives Grid === */
-    .compound-grid {
-      display: flex; flex-wrap: wrap; gap: 10px;
-      margin: 15px 0;
+    /* 核心 Core */
+    .core-node {
+      width: var(--center-size);
+      height: var(--center-size);
+      background: var(--primary-tone);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      z-index: 5;
+      box-shadow: 0 0 0 12px rgba(58, 90, 64, 0.08), 0 25px 50px rgba(0,0,0,0.25);
+      animation: corePulse 5s infinite ease-in-out;
+      cursor: default;
     }
-    .compound-tag {
+    .core-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; line-height: 1.1; }
+    .core-sub { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; margin-top: 10px; color: var(--secondary-tone); }
+
+    @keyframes corePulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+      100% { transform: scale(1); }
+    }
+
+    /* 子節點 Satellite */
+    .satellite {
+      position: absolute;
+      width: var(--node-size);
+      height: var(--node-size);
+      border-radius: 50%;
       background: white;
-      border: 1px solid var(--secondary-tone);
-      color: var(--primary-tone);
-      padding: 8px 16px;
-      border-radius: 50px;
-      font-weight: 600;
-      font-size: 0.9rem;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    }
-
-    /* === Table === */
-    .table-responsive {
-      overflow-x: auto;
-      border-radius: 8px;
-      margin: 20px 0;
-      border: 1px solid var(--border-soft);
-    }
-    table { width: 100%; border-collapse: collapse; min-width: 600px; }
-    th {
-      background: #f4f1ea; color: var(--primary-tone);
+      border: 2px solid var(--primary-tone);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      cursor: pointer;
+      z-index: 5;
+      box-shadow: 0 10px 25px rgba(58, 90, 64, 0.1);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
       font-family: 'Playfair Display', serif;
-      font-weight: 700; padding: 16px; text-align: left;
-      border-bottom: 2px solid var(--border-soft);
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--primary-tone);
+      padding: 5px;
     }
-    td {
-      padding: 14px 16px; border-bottom: 1px solid var(--border-soft);
+    
+    .satellite:hover {
+      transform: scale(1.15);
+      background: var(--primary-tone);
+      color: white;
+      border-color: var(--secondary-tone);
+      box-shadow: 0 15px 35px rgba(58, 90, 64, 0.3);
+      z-index: 10;
+    }
+
+    /* 順序編號 Badge */
+    .step-badge {
+      position: absolute;
+      top: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--secondary-tone);
+      color: white;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    .satellite.quiz-node {
+      border-color: var(--secondary-tone);
+      background: #fffcf5;
+    }
+    .satellite.quiz-node .step-badge { background: #d32f2f; }
+
+    /* === 3. Modal 內容區 === */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(250, 248, 242, 0.95);
+      backdrop-filter: blur(5px);
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-overlay.active { opacity: 1; pointer-events: auto; }
+
+    .modal-content {
+      width: 90%;
+      max-width: 900px;
+      max-height: 85vh;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.2);
+      border-top: 6px solid var(--primary-tone);
+      overflow-y: auto;
+      padding: 40px;
+      display: none;
+      animation: slideUp 0.4s ease-out;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 20px; right: 20px;
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      border: none;
+      background: #f4f4f4;
+      font-size: 1.5rem;
       color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.2s;
     }
-    tr:last-child td { border-bottom: none; }
+    .close-btn:hover { background: var(--secondary-tone); color: white; }
 
-    /* === Note Box === */
-    .note-box {
-      padding: 20px; margin: 20px 0;
-      border-radius: 0 8px 8px 0;
-      font-size: 0.95rem; line-height: 1.6;
-    }
-    .note-tip { background: var(--tip-bg); border-left: 4px solid var(--tip-border); color: #2d4632; }
-    .note-warn { background: var(--warn-bg); border-left: 4px solid var(--warn-border); color: #7a2b2b; }
+    /* --- 內部內容樣式 (移植自原檔並優化) --- */
+    h2 { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--primary-tone); margin-bottom: 20px; border-bottom: 2px solid var(--secondary-tone); padding-bottom: 10px; }
+    h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--primary-tone); margin: 30px 0 15px; border-left: 4px solid var(--secondary-tone); padding-left: 12px; }
+    
+    .bilingual-box { display: flex; gap: 20px; background: #fbfbf9; padding: 25px; border-radius: 8px; border: 1px solid #eee; margin-bottom: 20px; position: relative; }
+    .bi-col { flex: 1; }
+    .bi-label { display: block; font-size: 0.75rem; color: var(--secondary-tone); font-weight: 700; text-transform: uppercase; margin-bottom: 5px; }
+    .highlight { background: var(--highlight-bg); padding: 2px 6px; border-radius: 4px; color: var(--primary-tone); font-weight: 600; }
+    .bi-play-btn { background: var(--secondary-tone); color: white; border: none; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; margin-right: 10px; flex-shrink: 0; }
+    .bi-play-btn:hover { background: var(--primary-tone); transform: scale(1.1); }
 
-    /* === CTA Buttons === */
-    .btn-group { display: flex; gap: 15px; margin-top: 20px; flex-wrap: wrap; }
-    .btn-cta {
-      background: var(--primary-tone); color: white;
-      text-decoration: none; padding: 12px 24px;
-      border-radius: 50px; font-weight: 600;
-      transition: 0.3s; flex: 1; text-align: center;
-      min-width: 200px;
-    }
-    .btn-cta:hover { background: #2d4632; transform: translateY(-2px); }
+    /* Table */
+    .table-responsive { overflow-x: auto; margin: 20px 0; border: 1px solid #e8e4d9; border-radius: 8px; }
+    table { width: 100%; border-collapse: collapse; min-width: 500px; }
+    th { background: #f4f1ea; color: var(--primary-tone); padding: 15px; text-align: left; font-family: 'Playfair Display', serif; border-bottom: 2px solid #e8e4d9; }
+    td { padding: 14px; border-bottom: 1px solid #eee; }
+    
+    /* Compound Tags */
+    .compound-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 15px 0; }
+    .compound-tag { background: white; border: 1px solid var(--secondary-tone); color: var(--primary-tone); padding: 6px 14px; border-radius: 50px; font-weight: 600; font-size: 0.9rem; }
 
-    /* === Mistakes Section (Specific) === */
-    .section-card.mistakes { border-top-color: #a83232; }
-    .mistakes th.wrong { color: #a83232; }
-    .mistakes th.right { color: #2e7d32; }
+    /* Audio List */
+    .audio-list { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+    .audio-card { background: #fff; border: 1px solid #e8e4d9; padding: 12px 18px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; transition: all 0.2s; }
+    .audio-card:hover { border-color: var(--secondary-tone); background: #fefcf8; transform: translateY(-2px); }
+    .audio-text { font-size: 0.95rem; font-weight: 500; }
 
-    /* === QUIZ Styles === */
-    .quiz-container {
-        margin-top: 1rem;
-    }
-    .quiz-progress {
-        text-align: right;
-        font-size: 0.9rem;
-        color: var(--secondary-tone);
-        font-weight: 700;
-        margin-bottom: 1rem;
-        font-family: 'Inter', sans-serif;
-    }
-    .question-box {
-        margin-bottom: 2rem;
-        animation: fadeIn 0.5s ease;
-    }
-    .question-text {
-        font-size: 1.2rem;
-        font-weight: 600;
-        margin-bottom: 1.5rem;
-        color: var(--primary-tone);
-        font-family: 'Playfair Display', serif;
-        line-height: 1.6;
-    }
-    .options-grid {
-        display: grid;
-        gap: 12px;
-    }
-    .quiz-option {
-        padding: 16px 20px;
-        background: #fff;
-        border: 2px solid var(--border-soft);
-        border-radius: 8px;
-        cursor: pointer;
-        transition: all 0.2s;
-        font-weight: 500;
-        color: var(--text-main);
-        position: relative;
-    }
-    .quiz-option:hover:not(.disabled) {
-        border-color: var(--secondary-tone);
-        background: #fefcf8;
-    }
-    .quiz-option.correct {
-        background-color: var(--correct-bg);
-        border-color: var(--correct-border);
-        color: var(--correct-text);
-    }
-    .quiz-option.incorrect {
-        background-color: var(--wrong-bg);
-        border-color: var(--wrong-border);
-        color: var(--wrong-text);
-        opacity: 0.7;
-    }
-    .quiz-option.correct::after {
-        content: '\f00c';
-        font-family: "Font Awesome 6 Free";
-        font-weight: 900;
-        position: absolute;
-        right: 15px;
-        top: 50%;
-        transform: translateY(-50%);
-    }
-    .quiz-option.disabled {
-        cursor: default;
-        pointer-events: none;
-    }
+    /* Note Box */
+    .note-box { padding: 20px; margin: 20px 0; border-radius: 0 8px 8px 0; font-size: 0.95rem; line-height: 1.6; }
+    .note-tip { background: #f1f8f1; border-left: 4px solid #3a5a40; color: #2d4632; }
 
-    .explanation {
-        margin-top: 20px;
-        padding: 20px;
-        background: var(--bg-cream);
-        border-left: 4px solid var(--secondary-tone);
-        border-radius: 0 8px 8px 0;
-        display: none;
-        animation: slideDown 0.4s ease;
-    }
-    .explanation.show { display: block; }
+    /* Quiz Styling */
+    .quiz-progress { text-align: right; color: var(--secondary-tone); font-weight: 700; margin-bottom: 15px; }
+    .quiz-question-box { background: #fff; padding: 25px; border-radius: 12px; border: 1px solid #eee; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 20px; }
+    .quiz-q-text { font-size: 1.2rem; font-weight: 600; color: var(--primary-tone); margin-bottom: 20px; font-family: 'Playfair Display', serif; }
+    .quiz-options-grid { display: grid; gap: 10px; }
+    .quiz-opt { padding: 14px 20px; border: 2px solid #f0f0f0; border-radius: 8px; background: white; text-align: left; cursor: pointer; transition: all 0.2s; font-size: 1rem; position: relative; }
+    .quiz-opt:hover { border-color: var(--secondary-tone); background: #fffbf5; }
+    .quiz-opt.correct { background: #e8f5e9; border-color: #4caf50; color: #2e7d32; }
+    .quiz-opt.incorrect { background: #ffebee; border-color: #ef5350; color: #c62828; opacity: 0.7; }
+    .quiz-opt:disabled { cursor: default; }
 
-    .quiz-nav {
-        margin-top: 25px;
-        text-align: right;
-        display: none;
-    }
+    .explanation { margin-top: 20px; padding: 15px; background: #faf8f2; border-left: 4px solid var(--secondary-tone); display: none; border-radius: 4px; }
+    .explanation.show { display: block; animation: slideIn 0.3s ease; }
+    @keyframes slideIn { from {opacity:0; transform:translateY(-5px);} to {opacity:1; transform:translateY(0);} }
+
+    .quiz-nav { margin-top: 20px; text-align: right; display: none; }
     .quiz-nav.show { display: block; }
+    
+    .btn-cta { background: var(--secondary-tone); color: white; padding: 10px 24px; border-radius: 50px; border: none; font-size: 1rem; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; transition: 0.3s; font-weight: 600; }
+    .btn-cta:hover { background: var(--primary-tone); transform: translateY(-2px); }
 
-    .quiz-result {
-        text-align: center;
-        padding: 2rem 0;
-    }
-    .score-display {
-        font-size: 3rem;
-        font-weight: 700;
-        color: var(--secondary-tone);
-        font-family: 'Playfair Display', serif;
-        margin-bottom: 1rem;
-    }
+    .result-card { text-align: center; padding: 40px 20px; display: none; }
+    .result-score { font-size: 3.5rem; font-family: 'Playfair Display', serif; color: var(--primary-tone); font-weight: 700; margin-bottom: 10px; }
 
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes slideDown {
-        from { opacity: 0; transform: translateY(-10px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-
+    /* RWD */
     @media (max-width: 768px) {
+      body { overflow-y: auto; height: auto; }
+      .floating-objects { height: 100vh; position: fixed; }
+      .mindmap-stage { flex-direction: column; height: auto; padding: 50px 20px; }
+      .connections { display: none; }
+      .core-node { margin-bottom: 40px; width: 160px; height: 160px; }
+      .satellite { 
+        position: relative; top: auto !important; left: auto !important; transform: none !important;
+        width: 100%; height: auto; min-height: 70px; border-radius: 12px; padding: 15px 20px;
+        margin-bottom: 12px; flex-direction: row; justify-content: flex-start; text-align: left; gap: 20px;
+      }
+      .satellite:hover { transform: translateY(-3px) !important; }
+      .step-badge { position: static; transform: none; margin-right: 0; min-width: 24px; }
+      .modal-content { padding: 25px; width: 95%; max-height: 90vh; }
       .bilingual-box { flex-direction: column; }
-      .bi-play { position: static; margin-bottom: 10px; }
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <header>
-      <h1>Shirley's Adjectives & Adverbs</h1>
-      <div class="subtitle">形容詞與副詞修飾學</div>
-    </header>
+  <div class="floating-objects" id="floatingBg"></div>
 
-    <div class="section-card">
-      <h2>Definition 定義</h2>
+  <div class="mindmap-stage" id="stage">
+    <svg class="connections" id="svgLines"></svg>
+
+    <div class="core-node">
+      <div class="core-title">Adjectives<br>& Adverbs</div>
+      <div class="core-sub">Shirley's Masterclass</div>
+    </div>
+
+    <div class="satellite" data-target="def-modal">
+      <div class="step-badge">1</div>
+      <div>Definition<br>定義與區別</div>
+    </div>
+    <div class="satellite" data-target="adj-usage-modal">
+      <div class="step-badge">2</div>
+      <div>Adjectives<br>形容詞用法</div>
+    </div>
+    <div class="satellite" data-target="adv-usage-modal">
+      <div class="step-badge">3</div>
+      <div>Adverbs<br>副詞變化</div>
+    </div>
+    <div class="satellite" data-target="comp-modal">
+      <div class="step-badge">4</div>
+      <div>Comparisons<br>比較級</div>
+    </div>
+    <div class="satellite" data-target="confuse-modal">
+      <div class="step-badge">5</div>
+      <div>Confusions<br>易混淆字</div>
+    </div>
+    <div class="satellite" data-target="clause-modal">
+      <div class="step-badge">6</div>
+      <div>Clauses<br>進階子句</div>
+    </div>
+    <div class="satellite" data-target="mistake-modal">
+      <div class="step-badge">7</div>
+      <div>Mistakes<br>常見錯誤</div>
+    </div>
+    <div class="satellite quiz-node" data-target="quiz-modal">
+      <div class="step-badge">8</div>
+      <div>Quiz<br>20題挑戰</div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modalOverlay">
+    <button class="close-btn" onclick="closeModal()">✕</button>
+
+    <div id="def-modal" class="modal-content">
+      <h2>1. Definition 定義</h2>
       <div class="bilingual-box">
-        <button class="bi-play" onclick="speak('Adjectives describe nouns. Adverbs modify verbs, adjectives, or other adverbs.')">🔊</button>
-        <div class="bi-col">
-          <span class="bi-label">Adjectives</span>
-          Describe <strong>nouns</strong> (名詞).<br>
-          <em style="color:var(--text-light)">e.g., a <strong>smart</strong> student.</em>
-        </div>
-        <div class="bi-col">
-          <span class="bi-label">Adverbs</span>
-          Modify <strong>verbs, adjectives, or adverbs</strong>.<br>
-          <em style="color:var(--text-light)">e.g., run <strong>fast</strong>, <strong>very</strong> good.</em>
+        <button class="bi-play-btn" onclick="speak('Adjectives describe nouns. Adverbs modify verbs, adjectives, or other adverbs.')">🔊</button>
+        <div style="flex:1;">
+          <div class="bi-col" style="margin-bottom:15px;">
+            <span class="bi-label">Adjectives (形容詞)</span>
+            Describe <strong>nouns</strong> (名詞).<br>
+            <em style="color:#666">e.g., a <strong>smart</strong> student.</em>
+          </div>
+          <div class="bi-col">
+            <span class="bi-label">Adverbs (副詞)</span>
+            Modify <strong>verbs, adjectives, or adverbs</strong>.<br>
+            <em style="color:#666">e.g., run <strong>fast</strong>, <strong>very</strong> good.</em>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="section-card">
-      <h2>Adjectives 形容詞用法</h2>
-      
-      <h3>1. Position 位置</h3>
+    <div id="adj-usage-modal" class="modal-content">
+      <h2>2. Adjectives Usage 形容詞用法</h2>
+      <h3>Position 位置</h3>
       <div class="audio-list">
         <div class="audio-card" onclick="speak('My father is a successful businessman.')">
-          <span class="audio-text"><strong>Attributive (限定)</strong>: 前位修飾<br><small>a <span class="highlight">successful</span> businessman</small></span>
-          <span class="audio-icon">🔈</span>
+          <span class="audio-text"><strong>Attributive (前位)</strong>: a <span class="highlight">successful</span> businessman</span>
+          <span>🔊</span>
         </div>
         <div class="audio-card" onclick="speak('The meeting is successful.')">
-          <span class="audio-text"><strong>Predicative (敘述)</strong>: 補語位置<br><small>The meeting is <span class="highlight">successful</span></small></span>
-          <span class="audio-icon">🔈</span>
+          <span class="audio-text"><strong>Predicative (後位)</strong>: The meeting is <span class="highlight">successful</span></span>
+          <span>🔊</span>
         </div>
       </div>
-
       <div class="note-box note-tip">
-        <strong>💡 Special Case:</strong><br>
-        以 <strong>a-</strong> 開頭的形容詞通常只作敘述用法 (be動詞後)。<br>
-        <em>e.g., alike, asleep, awake, afraid, alone, ashamed.</em>
+        <strong>💡 A-開頭形容詞:</strong> 只能放 be 動詞後面 (asleep, awake, alone, afraid)。
       </div>
 
-      <h3>2. Compound Adjectives 複合形容詞</h3>
-      <p style="margin-bottom:10px;color:var(--text-light)">使用連字號，整體視為一個形容詞，置於名詞前。</p>
+      <h3>Compound Adjectives 複合形容詞</h3>
       <div class="compound-grid">
         <span class="compound-tag">well-known</span>
         <span class="compound-tag">three-year-old</span>
         <span class="compound-tag">all-night</span>
-        <span class="compound-tag">high-quality</span>
-        <span class="compound-tag">full-time</span>
         <span class="compound-tag">good-looking</span>
       </div>
 
-      <h3>3. The + Adjective</h3>
+      <h3>The + Adjective</h3>
       <div class="audio-list">
         <div class="audio-card" onclick="speak('The rich are not always happy.')">
-          <span class="audio-text"><strong>The rich</strong> = Rich people</span>
-          <span class="audio-icon">🔈</span>
-        </div>
-        <div class="audio-card" onclick="speak('The unknown is scary.')">
-          <span class="audio-text"><strong>The unknown</strong> = Unknown things</span>
-          <span class="audio-icon">🔈</span>
+          <span class="audio-text"><strong>The rich</strong> = Rich people (複數)</span>
+          <span>🔊</span>
         </div>
       </div>
     </div>
 
-    <div class="section-card">
-      <h2>Adverbs 副詞用法</h2>
-      <p>副詞主要由形容詞 + <strong>ly</strong> 構成，但有例外。</p>
-      
+    <div id="adv-usage-modal" class="modal-content">
+      <h2>3. Adverbs 副詞形成</h2>
+      <p>大多數副詞由 Adj + ly 構成，但要注意例外。</p>
       <div class="table-responsive">
-        <table style="min-width:400px">
+        <table>
           <tr><th>Rule</th><th>Examples</th></tr>
-          <tr><td>Adj + ly</td><td>quick → <strong>quickly</strong>, careful → <strong>carefully</strong></td></tr>
-          <tr><td>y → ily</td><td>happy → <strong>happily</strong>, easy → <strong>easily</strong></td></tr>
-          <tr><td>Irregular</td><td>good → <strong>well</strong>, fast → <strong>fast</strong>, hard → <strong>hard</strong></td></tr>
+          <tr><td>Adj + ly</td><td>quick → <strong>quickly</strong></td></tr>
+          <tr><td>y → ily</td><td>happy → <strong>happily</strong></td></tr>
+          <tr><td>Irregular (同形)</td><td>fast → <strong>fast</strong>, hard → <strong>hard</strong></td></tr>
+          <tr><td>Irregular (變形)</td><td>good → <strong>well</strong></td></tr>
         </table>
       </div>
     </div>
 
-    <div class="section-card">
-      <h2>Comparatives & Superlatives</h2>
-      
+    <div id="comp-modal" class="modal-content">
+      <h2>4. Comparatives & Superlatives</h2>
       <div class="table-responsive">
         <table>
           <tr><th>Original</th><th>Comparative</th><th>Superlative</th></tr>
@@ -436,318 +414,259 @@
           <tr><td>bad</td><td>worse</td><td>the worst</td></tr>
         </table>
       </div>
-
       <h3>So vs. Such</h3>
       <div class="audio-list">
-        <div class="audio-card" onclick="speak('The girl is so beautiful.')">
-          <span class="audio-text"><strong>so</strong> + Adj<br><small>The girl is so beautiful.</small></span>
-          <span class="audio-icon">🔈</span>
+        <div class="audio-card" onclick="speak('She is so beautiful.')">
+          <span class="audio-text"><strong>so</strong> + Adj (so beautiful)</span>
+          <span>🔊</span>
         </div>
         <div class="audio-card" onclick="speak('She is such a beautiful girl.')">
-          <span class="audio-text"><strong>such</strong> + a + Adj + Noun<br><small>She is such a beautiful girl.</small></span>
-          <span class="audio-icon">🔈</span>
+          <span class="audio-text"><strong>such</strong> + a + Adj + Noun</span>
+          <span>🔊</span>
         </div>
       </div>
     </div>
 
-    <div class="section-card">
-      <h2>Common Confusions 易混淆詞</h2>
+    <div id="confuse-modal" class="modal-content">
+      <h2>5. Common Confusions 易混淆詞</h2>
       <div class="audio-list">
         <div class="audio-card" onclick="speak('He works hard.')">
-          <span class="audio-text"><strong>hard</strong> (努力地)<br><small>He works hard.</small></span>
-          <span class="audio-icon">🔈</span>
+          <span class="audio-text"><strong>hard</strong> (努力地) - 副詞</span>
+          <span>🔊</span>
         </div>
         <div class="audio-card" onclick="speak('He hardly works.')">
-          <span class="audio-text"><strong>hardly</strong> (幾乎不)<br><small>He hardly works. (由頻率副詞)</small></span>
-          <span class="audio-icon">🔈</span>
+          <span class="audio-text"><strong>hardly</strong> (幾乎不) - 頻率副詞</span>
+          <span>🔊</span>
         </div>
         <div class="audio-card" onclick="speak('late vs lately')">
-          <span class="audio-text"><strong>late</strong> (晚) vs <strong>lately</strong> (最近)</span>
-          <span class="audio-icon">🔈</span>
+          <span class="audio-text"><strong>late</strong> (遲到) vs <strong>lately</strong> (最近)</span>
+          <span>🔊</span>
         </div>
       </div>
     </div>
 
-    <div class="section-card">
-      <h2>Clauses 子句進階學習</h2>
-      <p>當一個形容詞或副詞不足以表達時，我們會使用「子句」。</p>
-      <div class="btn-group">
+    <div id="clause-modal" class="modal-content">
+      <h2>6. Advanced Clauses 子句</h2>
+      <p>當單字不足以表達時，使用子句來修飾。</p>
+      <div style="display:flex; gap:10px; margin-top:20px; flex-wrap:wrap;">
         <a href="https://ducj-creator.github.io/Shirley-Grammar/adjective-clause/" target="_blank" class="btn-cta">
-          📖 形容詞子句 (Adj. Clause)
+          📖 Adjective Clause
         </a>
         <a href="https://ducj-creator.github.io/Shirley-Grammar/adverb-clause/" target="_blank" class="btn-cta">
-          📘 副詞子句 (Adv. Clause)
+          📘 Adverb Clause
         </a>
       </div>
     </div>
 
-    <div class="section-card mistakes">
-      <h2>🚫 Common Mistakes</h2>
+    <div id="mistake-modal" class="modal-content">
+      <h2>7. Common Mistakes 常見錯誤</h2>
       <div class="table-responsive">
         <table>
-          <tr><th class="wrong">Wrong (X)</th><th class="right">Right (O)</th></tr>
-          <tr>
-            <td>She is a well known singer.</td>
-            <td>She is a <strong>well-known</strong> singer.</td>
-          </tr>
-          <tr>
-            <td>Tom works harder than me.</td>
-            <td>Tom works harder than <strong>I (do)</strong>.</td>
-          </tr>
-          <tr>
-            <td>Her dress is prettier than me.</td>
-            <td>Her dress is prettier than <strong>mine</strong>.</td>
-          </tr>
+          <tr><th style="color:#c62828">Wrong (X)</th><th style="color:#2e7d32">Right (O)</th></tr>
+          <tr><td>a well known singer</td><td>a <strong>well-known</strong> singer</td></tr>
+          <tr><td>harder than me</td><td>harder than <strong>I (do)</strong> / <strong>mine</strong> (視文意)</td></tr>
+          <tr><td>She looks beautifully.</td><td>She looks <strong>beautiful</strong>. (連綴動詞用形容詞)</td></tr>
         </table>
       </div>
     </div>
 
-    <div class="section-card" id="quiz-section" style="border-top-color: var(--secondary-tone);">
-        <h2><i class="fas fa-pencil-alt" style="margin-right:12px;"></i> Practice Quiz 測驗</h2>
-        <p style="margin-bottom: 20px; color: var(--text-light);">
-            Test your knowledge with these 20 fill-in-the-blank questions. <br>
-            通過 20 題填空測驗來檢視你的學習成果。
-        </p>
-        
-        <div class="quiz-container" id="quiz-container">
-            </div>
+    <div id="quiz-modal" class="modal-content">
+      <h2>8. Challenge Quiz (20 Qs) 🏆</h2>
+      <p style="margin-bottom:20px; color:#666;">Test your knowledge! Select the best answer.</p>
+      
+      <div id="quiz-container"></div>
+
+      <div id="result-area" class="result-card">
+        <div class="result-score" id="score-display">0 / 20</div>
+        <h3 style="border:none;">Quiz Completed!</h3>
+        <p id="result-msg" style="margin-bottom:20px;"></p>
+        <button onclick="startQuiz()" class="btn-cta">
+          ↺ Restart Quiz
+        </button>
+      </div>
     </div>
 
   </div>
 
   <script>
+    // === 1. Floating Background ===
+    const floatWords = ['Fast', 'Slowly', 'Good', 'Well', 'Hard', 'Hardly', 'Happy', 'Beautiful', 'So', 'Such', 'More', 'Most'];
+    const floatContainer = document.getElementById('floatingBg');
+
+    function createFloatingIcons() {
+      for(let i=0; i<15; i++) {
+        const el = document.createElement('div');
+        el.classList.add('float-item');
+        el.innerText = floatWords[Math.floor(Math.random() * floatWords.length)];
+        el.style.left = Math.random() * 100 + 'vw';
+        el.style.animationDuration = (20 + Math.random() * 15) + 's';
+        el.style.animationDelay = (Math.random() * 5) + 's';
+        el.style.fontSize = (1.2 + Math.random() * 2) + 'rem';
+        floatContainer.appendChild(el);
+      }
+    }
+    createFloatingIcons();
+
+    // === 2. Mind Map Layout ===
+    function updateLayout() {
+      const satellites = document.querySelectorAll('.satellite');
+      const stage = document.getElementById('stage');
+      const svg = document.getElementById('svgLines');
+      const isMobile = window.innerWidth <= 768;
+
+      while(svg.firstChild) svg.removeChild(svg.firstChild);
+
+      if(isMobile) return; 
+
+      const centerX = stage.offsetWidth / 2;
+      const centerY = stage.offsetHeight / 2;
+      const radius = 280;
+      const total = satellites.length;
+
+      satellites.forEach((node, index) => {
+        const angle = (index / total) * 2 * Math.PI - (Math.PI / 2); // Start from top
+        const x = centerX + radius * Math.cos(angle);
+        const y = centerY + radius * Math.sin(angle);
+
+        node.style.left = x + 'px';
+        node.style.top = y + 'px';
+        node.style.transform = 'translate(-50%, -50%)';
+
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', centerX);
+        line.setAttribute('y1', centerY);
+        line.setAttribute('x2', x);
+        line.setAttribute('y2', y);
+        line.classList.add('connection-line');
+        svg.appendChild(line);
+      });
+    }
+    window.addEventListener('resize', updateLayout);
+    window.addEventListener('load', updateLayout);
+
+    // === 3. Modal Logic ===
+    const overlay = document.getElementById('modalOverlay');
+    document.querySelectorAll('.satellite').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetId = btn.getAttribute('data-target');
+        document.querySelectorAll('.modal-content').forEach(c => c.style.display = 'none');
+        document.getElementById(targetId).style.display = 'block';
+        overlay.classList.add('active');
+        if(targetId === 'quiz-modal') startQuiz(); // Start quiz when opened
+      });
+    });
+    function closeModal() { overlay.classList.remove('active'); }
+    overlay.addEventListener('click', (e) => { if(e.target === overlay) closeModal(); });
+
+    // === 4. TTS ===
     function speak(text) {
       if ('speechSynthesis' in window) {
         speechSynthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = 'en-US';
-        utterance.rate = 0.9;
-        
-        const voices = speechSynthesis.getVoices();
-        const enVoice = voices.find(v => v.lang.includes('en-US') || v.lang.includes('en-GB'));
-        if(enVoice) utterance.voice = enVoice;
-
         speechSynthesis.speak(utterance);
-      } else {
-        alert("Sorry, your browser doesn't support text-to-speech.");
       }
     }
 
-    // === QUIZ LOGIC ===
+    // === 5. Quiz Logic (20 Questions with Explanation) ===
     const quizQuestions = [
-        {
-            question: "1. The soup smells _____.",
-            options: ["deliciously", "delicious", "well", "badly"],
-            correct: 1,
-            explanation: "<strong>Explanation:</strong> 'Smell' is a linking verb (連綴動詞) here, so it must be followed by an adjective (delicious), not an adverb."
-        },
-        {
-            question: "2. He drives very _____.",
-            options: ["careful", "carefully", "slow", "good"],
-            correct: 1,
-            explanation: "<strong>Explanation:</strong> We need an adverb to modify the verb 'drives'. 'Carefully' is the adverb form of careful."
-        },
-        {
-            question: "3. This is a _____ walk.",
-            options: ["ten-minutes", "ten minute", "ten-minute", "ten minutes"],
-            correct: 2,
-            explanation: "<strong>Explanation:</strong> In compound adjectives (複合形容詞) before a noun, the noun part is singular and hyphenated: 'ten-minute'."
-        },
-        {
-            question: "4. The rich _____ not always happy.",
-            options: ["is", "are", "be", "does"],
-            correct: 1,
-            explanation: "<strong>Explanation:</strong> 'The rich' means 'rich people' (plural), so we use the plural verb 'are'."
-        },
-        {
-            question: "5. She is _____ a nice person that everyone likes her.",
-            options: ["so", "such", "very", "too"],
-            correct: 1,
-            explanation: "<strong>Explanation:</strong> We use 'such' before a noun phrase (a nice person). 'So' is used before adjectives alone (so nice)."
-        },
-        {
-            question: "6. He studies _____ for the exam.",
-            options: ["hardly", "hard", "hards", "harderly"],
-            correct: 1,
-            explanation: "<strong>Explanation:</strong> 'Hard' implies effort (努力地). 'Hardly' means almost not (幾乎不)."
-        },
-        {
-            question: "7. I haven't seen him _____.",
-            options: ["late", "lately", "latest", "later"],
-            correct: 1,
-            explanation: "<strong>Explanation:</strong> 'Lately' means 'recently' (最近). 'Late' means 'not on time'."
-        },
-        {
-            question: "8. This movie is _____ than the one we saw yesterday.",
-            options: ["exciting", "more exciting", "most exciting", "excited"],
-            correct: 1,
-            explanation: "<strong>Explanation:</strong> We use 'more + adjective' for long adjectives in comparatives. 'Than' indicates comparison."
-        },
-        {
-            question: "9. Of all the students, Tom works _____.",
-            options: ["the hardest", "harder", "most hard", "hardly"],
-            correct: 0,
-            explanation: "<strong>Explanation:</strong> Superlative degree (最高級) is needed here because we are comparing Tom to 'all' students. 'Hardest' is the superlative of 'hard'."
-        },
-        {
-            question: "10. She plays the piano very _____.",
-            options: ["good", "goodly", "well", "nice"],
-            correct: 2,
-            explanation: "<strong>Explanation:</strong> 'Well' is the adverb form of 'good'. It modifies the verb 'plays'."
-        },
-        {
-            question: "11. The baby is _____.",
-            options: ["sleeping", "asleep", "sleep", "asleeping"],
-            correct: 1,
-            explanation: "<strong>Explanation:</strong> 'Asleep' is an adjective often used after be-verbs (predicative use). 'Sleeping' is a participle, but 'asleep' specifically describes the state."
-        },
-        {
-            question: "12. Please be _____ in the library.",
-            options: ["quietly", "quiet", "quietness", "quieter"],
-            correct: 1,
-            explanation: "<strong>Explanation:</strong> After the verb 'be', we use an adjective (quiet) to describe the subject (You)."
-        },
-        {
-            question: "13. Her car is faster than _____.",
-            options: ["me", "mine", "I", "my"],
-            correct: 1,
-            explanation: "<strong>Explanation:</strong> We are comparing 'her car' with 'my car' (mine). Comparing 'her car' with 'me' (a person) is logically incorrect."
-        },
-        {
-            question: "14. It is _____ hot to go outside.",
-            options: ["so", "such", "too", "very"],
-            correct: 2,
-            explanation: "<strong>Explanation:</strong> 'Too... to...' structure means 'excessively... so that one cannot...'. (太...以至於不能...)"
-        },
-        {
-            question: "15. The test was _____ easy.",
-            options: ["surprising", "surprisingly", "surprise", "surprised"],
-            correct: 1,
-            explanation: "<strong>Explanation:</strong> An adverb (Surprisingly) is needed to modify the adjective 'easy'."
-        },
-        {
-            question: "16. He _____ knows anyone at the party.",
-            options: ["hard", "hardly", "harder", "hards"],
-            correct: 1,
-            explanation: "<strong>Explanation:</strong> 'Hardly' means 'almost not' (幾乎不). He almost doesn't know anyone."
-        },
-        {
-            question: "17. That sounds _____.",
-            options: ["great", "greatly", "well", "greatness"],
-            correct: 0,
-            explanation: "<strong>Explanation:</strong> 'Sound' is a linking verb, followed by an adjective (great)."
-        },
-        {
-            question: "18. She is the _____ singer in the group.",
-            options: ["good", "better", "best", "goodest"],
-            correct: 2,
-            explanation: "<strong>Explanation:</strong> 'The best' is the irregular superlative form of 'good'."
-        },
-        {
-            question: "19. The traffic is _____ today than yesterday.",
-            options: ["bad", "badder", "worse", "worst"],
-            correct: 2,
-            explanation: "<strong>Explanation:</strong> 'Worse' is the irregular comparative form of 'bad'."
-        },
-        {
-            question: "20. He looked at me _____.",
-            options: ["angry", "angrily", "anger", "angrier"],
-            correct: 1,
-            explanation: "<strong>Explanation:</strong> Here 'looked' is an action verb (glanced), not a linking verb (appeared). So we use the adverb 'angrily'."
-        }
+        { q: "1. The soup smells _____.", options: ["deliciously", "delicious", "well", "badly"], correct: 1, explanation: "'Smell' is a linking verb here, so it needs an Adjective (delicious)." },
+        { q: "2. He drives very _____.", options: ["careful", "carefully", "slow", "good"], correct: 1, explanation: "Modify verb 'drives' -> need Adverb (carefully)." },
+        { q: "3. This is a _____ walk.", options: ["ten-minutes", "ten minute", "ten-minute", "ten minutes"], correct: 2, explanation: "Compound adjective before noun: singular & hyphenated (ten-minute)." },
+        { q: "4. The rich _____ not always happy.", options: ["is", "are", "be", "does"], correct: 1, explanation: "'The rich' = Rich people (Plural) -> use 'are'." },
+        { q: "5. She is _____ a nice person.", options: ["so", "such", "very", "too"], correct: 1, explanation: "such + a + Adj + Noun." },
+        { q: "6. He studies _____ for the exam.", options: ["hardly", "hard", "hards", "harderly"], correct: 1, explanation: "hard (努力地). hardly (幾乎不)." },
+        { q: "7. I haven't seen him _____.", options: ["late", "lately", "latest", "later"], correct: 1, explanation: "lately = recently (最近)." },
+        { q: "8. This movie is _____ than that one.", options: ["exciting", "more exciting", "most exciting", "excited"], correct: 1, explanation: "Comparative for long adjectives: more + adj." },
+        { q: "9. Of all students, Tom works _____.", options: ["the hardest", "harder", "most hard", "hardly"], correct: 0, explanation: "Comparing with 'all' -> Superlative (the hardest)." },
+        { q: "10. She plays the piano very _____.", options: ["good", "goodly", "well", "nice"], correct: 2, explanation: "Modify verb 'plays' -> Adverb (well)." },
+        { q: "11. The baby is _____.", options: ["sleeping", "asleep", "sleep", "asleeping"], correct: 1, explanation: "asleep is an adjective used after be-verb." },
+        { q: "12. Please be _____.", options: ["quietly", "quiet", "quietness", "quieter"], correct: 1, explanation: "Be + Adjective (quiet)." },
+        { q: "13. Her car is faster than _____.", options: ["me", "mine", "I", "my"], correct: 1, explanation: "Compare car with car -> mine (my car)." },
+        { q: "14. It is _____ hot to go outside.", options: ["so", "such", "too", "very"], correct: 2, explanation: "Too... to... (太...以至於不能...)." },
+        { q: "15. The test was _____ easy.", options: ["surprising", "surprisingly", "surprise", "surprised"], correct: 1, explanation: "Adverb (Surprisingly) modifies Adjective (easy)." },
+        { q: "16. He _____ knows anyone here.", options: ["hard", "hardly", "harder", "hards"], correct: 1, explanation: "Hardly (幾乎不)." },
+        { q: "17. That sounds _____.", options: ["great", "greatly", "well", "greatness"], correct: 0, explanation: "Sound (連綴動詞) + Adjective (great)." },
+        { q: "18. She is the _____ singer.", options: ["good", "better", "best", "goodest"], correct: 2, explanation: "The + Superlative (best)." },
+        { q: "19. The traffic is _____ than yesterday.", options: ["bad", "badder", "worse", "worst"], correct: 2, explanation: "Comparative of bad -> worse." },
+        { q: "20. He looked at me _____.", options: ["angry", "angrily", "anger", "angrier"], correct: 1, explanation: "Look (action verb: glanced) + Adverb (angrily)." }
     ];
 
-    let currentQIndex = 0;
+    let currentQ = 0;
     let score = 0;
 
-    function renderQuiz() {
-        const container = document.getElementById('quiz-container');
-        
-        if (currentQIndex >= quizQuestions.length) {
-            renderResult(container);
-            return;
-        }
-
-        const q = quizQuestions[currentQIndex];
-        
-        container.innerHTML = `
-            <div class="quiz-progress">Question ${currentQIndex + 1} / ${quizQuestions.length}</div>
-            <div class="question-box">
-                <div class="question-text">${q.question}</div>
-                <div class="options-grid">
-                    ${q.options.map((opt, idx) => `
-                        <div class="quiz-option" onclick="checkAnswer(this, ${idx})">${opt}</div>
-                    `).join('')}
-                </div>
-                <div class="explanation" id="explanation">
-                    ${q.explanation}
-                </div>
-                <div class="quiz-nav" id="quiz-nav">
-                    <button class="btn-cta" onclick="nextQuestion()">Next Question <i class="fas fa-arrow-right"></i></button>
-                </div>
-            </div>
-        `;
+    function startQuiz() {
+      currentQ = 0;
+      score = 0;
+      document.getElementById('quiz-container').style.display = 'block';
+      document.getElementById('result-area').style.display = 'none';
+      renderQuestion();
     }
 
-    function checkAnswer(el, idx) {
-        if (el.parentElement.classList.contains('answered')) return;
-        el.parentElement.classList.add('answered');
-        
-        const q = quizQuestions[currentQIndex];
-        const options = document.querySelectorAll('.quiz-option');
-        const expl = document.getElementById('explanation');
-        const nav = document.getElementById('quiz-nav');
-
-        if (idx === q.correct) {
-            el.classList.add('correct');
-            score++;
-        } else {
-            el.classList.add('incorrect');
-            options[q.correct].classList.add('correct');
-        }
-
-        // Disable all options
-        options.forEach(opt => opt.classList.add('disabled'));
-
-        expl.classList.add('show');
-        nav.classList.add('show');
+    function renderQuestion() {
+      if(currentQ >= quizQuestions.length) {
+        showResult();
+        return;
+      }
+      const q = quizQuestions[currentQ];
+      const container = document.getElementById('quiz-container');
+      
+      let html = `
+        <div class="quiz-progress">Question ${currentQ + 1} / ${quizQuestions.length}</div>
+        <div class="quiz-question-box">
+          <div class="quiz-q-text">${q.q.replace('_____', '<span style="border-bottom:2px solid var(--secondary-tone); color:var(--secondary-tone);">?</span>')}</div>
+          <div class="quiz-options-grid">
+            ${q.options.map((opt, idx) => `
+              <button class="quiz-opt" onclick="checkAns(this, ${idx})">${opt}</button>
+            `).join('')}
+          </div>
+          <div class="explanation" id="expl-${currentQ}">${q.explanation}</div>
+          <div class="quiz-nav" id="nav-${currentQ}">
+            <button class="btn-cta" onclick="nextQ()">Next →</button>
+          </div>
+        </div>
+      `;
+      container.innerHTML = html;
     }
 
-    function nextQuestion() {
-        currentQIndex++;
-        renderQuiz();
+    function checkAns(btn, idx) {
+      const q = quizQuestions[currentQ];
+      const parent = btn.parentElement;
+      const allBtns = parent.querySelectorAll('.quiz-opt');
+      
+      // Disable all
+      allBtns.forEach(b => b.disabled = true);
+      
+      if(idx === q.correct) {
+        btn.classList.add('correct');
+        score++;
+      } else {
+        btn.classList.add('incorrect');
+        allBtns[q.correct].classList.add('correct');
+      }
+      
+      document.getElementById(`expl-${currentQ}`).classList.add('show');
+      document.getElementById(`nav-${currentQ}`).classList.add('show');
     }
 
-    function renderResult(container) {
-        let msg = "";
-        if (score === 20) msg = "Perfect! You are a grammar master! 🏆";
-        else if (score >= 16) msg = "Great job! Keep it up! 🌟";
-        else if (score >= 12) msg = "Good effort! Review the notes and try again. 💪";
-        else msg = "Keep practicing! You can do it! 📚";
-
-        container.innerHTML = `
-            <div class="quiz-result">
-                <div class="score-display">${score} / 20</div>
-                <h3 style="border:none; text-align:center;">Quiz Completed!</h3>
-                <p style="font-size:1.1rem; color:var(--text-light); margin-bottom:20px;">${msg}</p>
-                <button class="btn-cta" onclick="restartQuiz()">
-                    <i class="fas fa-redo"></i> Restart Quiz
-                </button>
-            </div>
-        `;
+    function nextQ() {
+      currentQ++;
+      renderQuestion();
     }
 
-    function restartQuiz() {
-        currentQIndex = 0;
-        score = 0;
-        renderQuiz();
+    function showResult() {
+      document.getElementById('quiz-container').style.display = 'none';
+      document.getElementById('result-area').style.display = 'block';
+      document.getElementById('score-display').innerText = `${score} / 20`;
+      
+      let msg = "";
+      if(score === 20) msg = "Perfect! You are a Grammar Master! 🏆";
+      else if(score >= 16) msg = "Excellent job! Keep it up! 🌟";
+      else if(score >= 12) msg = "Good effort! Review the notes again. 💪";
+      else msg = "Keep practicing! You can do it! 📚";
+      
+      document.getElementById('result-msg').innerText = msg;
     }
-
-    // Initialize Quiz on Load
-    document.addEventListener('DOMContentLoaded', () => {
-        renderQuiz();
-    });
-
   </script>
 </body>
 </html>
