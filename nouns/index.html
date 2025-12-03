@@ -3,25 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-  <title>Shirley's Grammar | Nouns Masterclass</title>
+  <title>Shirley's Nouns | Structured Learning</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Inter:wght@400;500;600&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
   
   <style>
     :root {
-      /* --- 雅緻配色定義 --- */
-      --primary-tone: #3a5a40; /* 森林深綠：主標題、強調色 */
-      --secondary-tone: #c9a972; /* 復古金：次要標題、按鈕、亮點 */
-      --text-main: #333333; /* 柔和黑：正文 */
-      --text-light: #666666; /* 深灰：次要文字 */
-      --bg-cream: #faf8f2; /* 溫潤米色背景 */
-      --card-bg: #ffffff; /* 純白卡片背景 */
-      --border-soft: #e8e4d9; /* 柔和邊框 */
-      --highlight-bg: #f0eadd; /* 米金螢光筆 */
+      /* --- 核心配色 --- */
+      --primary-tone: #3a5a40; /* 森林深綠 */
+      --secondary-tone: #c9a972; /* 復古金 */
+      --text-main: #333333;
+      --bg-cream: #faf8f2;
+      --highlight-bg: #f0eadd;
       
-      /* 柔和、自然的陰影 */
-      --soft-shadow: 0 6px 20px rgba(58, 90, 64, 0.08);
-      --hover-shadow: 0 10px 30px rgba(58, 90, 64, 0.15);
-      --radius: 12px;
+      /* --- 尺寸變數 --- */
+      --node-size: 115px; 
+      --center-size: 190px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; outline: none; -webkit-tap-highlight-color: transparent; }
@@ -29,482 +25,688 @@
     body {
       font-family: 'Inter', 'Noto Sans TC', sans-serif;
       background-color: var(--bg-cream);
-      /* 加入極其隱晦的紙張紋理感 */
-      background-image: linear-gradient(to bottom, #faf8f2 0%, #f5f2e9 100%);
       color: var(--text-main);
-      line-height: 1.75;
-      padding: 40px 20px;
-      min-height: 100vh;
-    }
-
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    /* === Header === */
-    header {
-      text-align: center;
-      margin-bottom: 60px;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden; /* 防止主畫面滾動 */
       position: relative;
     }
 
-    h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 3.2rem;
-      color: var(--primary-tone);
-      margin-bottom: 15px;
-      font-weight: 700;
+    /* === 1. 背景漂浮名詞 (Floating Nouns) === */
+    .floating-objects {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .float-item {
+      position: absolute;
+      opacity: 0.12;
+      filter: grayscale(20%);
+      animation: floatUp 18s infinite linear;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(110vh) rotate(0deg); }
+      100% { transform: translateY(-20vh) rotate(360deg); }
+    }
+
+    /* === 2. Mind Map 舞台 (自適應佈局) === */
+    .mindmap-stage {
       position: relative;
-      display: inline-block;
-    }
-    
-    /* 標題下方的裝飾線 */
-    h1::after {
-        content: '';
-        display: block;
-        width: 60%;
-        height: 3px;
-        background: var(--secondary-tone);
-        margin: 10px auto 0;
-        border-radius: 2px;
-        opacity: 0.8;
-    }
-    
-    .subtitle {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.2rem;
-      color: var(--text-light);
-      font-style: italic;
-      letter-spacing: 0.5px;
-    }
-
-    /* === Cards & Sections === */
-    .section-card {
-      background: var(--card-bg);
-      border-radius: var(--radius);
-      padding: 35px;
-      margin-bottom: 35px;
-      box-shadow: var(--soft-shadow);
-      border: 1px solid var(--border-soft);
-      /* 頂部優雅的深綠色裝飾條 */
-      border-top: 4px solid var(--primary-tone);
-      transition: all 0.3s ease;
-    }
-
-    .section-card:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--hover-shadow);
-    }
-
-    h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.9rem;
-      color: var(--primary-tone);
-      margin-bottom: 25px;
+      width: 100%;
+      height: 100%;
       display: flex;
+      justify-content: center;
       align-items: center;
-      font-weight: 700;
+      z-index: 10;
     }
-    
-    /* h2 右側的細裝飾線 */
-    h2::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--secondary-tone);
-      margin-left: 20px;
+
+    /* 連接線 */
+    .connections {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .connection-line {
+      stroke: var(--secondary-tone);
+      stroke-width: 2;
+      stroke-dasharray: 6, 6;
       opacity: 0.4;
     }
 
-    h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.35rem;
-      color: var(--primary-tone); /* 改回深綠色，更穩重 */
-      margin: 30px 0 15px;
-      font-weight: 600;
-      border-left: 3px solid var(--secondary-tone);
-      padding-left: 12px;
-    }
-
-    /* === Bilingual Box === */
-    .bilingual-box {
-      display: flex;
-      gap: 25px;
-      background: #fbfbf9; /* 極淡的灰米色 */
-      padding: 28px;
-      border-radius: 8px;
-      border: 1px solid var(--border-soft);
-    }
-    .bi-col { flex: 1; }
-    .bi-label { 
-      font-family: 'Inter', sans-serif;
-      font-size: 0.75rem; 
-      font-weight: 700; 
-      color: var(--secondary-tone); 
-      letter-spacing: 1.5px; 
-      margin-bottom: 10px; 
-      display: block;
-      text-transform: uppercase;
-    }
-    .highlight {
-      background: var(--highlight-bg);
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-weight: 600;
-      color: var(--primary-tone);
-      box-shadow: inset 0 -2px 0 rgba(201, 169, 114, 0.2); /* 底部微金色 */
-    }
-
-    /* === Tables === */
-    .table-responsive {
-      overflow-x: auto;
-      border-radius: 8px;
-      margin: 20px 0;
-      border: 1px solid var(--border-soft);
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: white;
-      min-width: 500px;
-    }
-    th {
-      background: #f4f1ea; /* 暖灰色表頭 */
-      color: var(--primary-tone);
-      font-family: 'Playfair Display', serif;
-      font-weight: 700;
-      font-size: 0.95rem;
-      letter-spacing: 0.5px;
-      padding: 18px;
-      text-align: left;
-      border-bottom: 2px solid var(--border-soft);
-    }
-    td {
-      padding: 16px 18px;
-      border-bottom: 1px solid var(--border-soft);
-      color: var(--text-main);
-      font-size: 0.98rem;
-    }
-    tr:last-child td { border-bottom: none; }
-    tr:hover td { background: #fafaf8; }
-
-    /* === Interactive Audio Grid === */
-    .audio-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-      gap: 15px;
-      margin: 20px 0;
-    }
-    .audio-card {
-      background: #ffffff;
-      border: 1px solid var(--border-soft);
-      padding: 14px 18px;
-      border-radius: 8px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      transition: all 0.2s ease;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.03);
-    }
-    .audio-card:hover {
-      border-color: var(--secondary-tone);
-      transform: translateY(-2px);
-      box-shadow: 0 5px 12px rgba(201, 169, 114, 0.2);
-      background: #fefcf8;
-    }
-    .audio-card:active { transform: scale(0.98); }
-    .audio-icon { 
-      font-size: 1.1rem; 
-      color: var(--secondary-tone);
-      opacity: 0.8;
-    }
-    .audio-text { font-weight: 600; color: var(--primary-tone); font-size: 0.95rem; }
-    
-    /* === Note & CTA === */
-    .note-box {
-      background: #f4f1ea; /* 暖米色筆記區 */
-      border-left: 4px solid var(--primary-tone);
-      padding: 25px;
-      border-radius: 0 8px 8px 0;
-      margin: 25px 0;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      font-style: italic;
-    }
-    .note-content { flex: 1; min-width: 200px; color: var(--primary-tone); font-size: 1rem; font-family: 'Playfair Display', serif;}
-    
-    .btn-cta {
+    /* 核心 Core */
+    .core-node {
+      width: var(--center-size);
+      height: var(--center-size);
       background: var(--primary-tone);
       color: white;
-      text-decoration: none;
-      padding: 12px 28px;
-      border-radius: 50px;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      z-index: 5;
+      box-shadow: 0 0 0 12px rgba(58, 90, 64, 0.08), 0 25px 50px rgba(0,0,0,0.25);
+      animation: corePulse 5s infinite ease-in-out;
+      cursor: default;
+      position: relative;
+    }
+    .core-title { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 700; line-height: 1; }
+    .core-sub { font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase; margin-top: 10px; color: var(--secondary-tone); }
+
+    @keyframes corePulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+      100% { transform: scale(1); }
+    }
+
+    /* 子節點 Satellite */
+    .satellite {
+      position: absolute;
+      width: var(--node-size);
+      height: var(--node-size);
+      border-radius: 50%;
+      background: white;
+      border: 2px solid var(--primary-tone);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      cursor: pointer;
+      z-index: 5;
+      box-shadow: 0 10px 25px rgba(58, 90, 64, 0.1);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      font-family: 'Playfair Display', serif;
       font-weight: 600;
       font-size: 0.9rem;
-      letter-spacing: 0.5px;
-      box-shadow: 0 4px 12px rgba(58, 90, 64, 0.25);
-      transition: all 0.3s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .btn-cta:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(58, 90, 64, 0.35);
-      background: #2d4632; /* 更深的綠色 */
+      color: var(--primary-tone);
+      padding: 5px;
     }
     
-    /* 另一種風格的按鈕 (金色邊框) */
-    .btn-outline-gold {
-      background: transparent;
-      color: var(--primary-tone);
-      border: 2px solid var(--secondary-tone);
-      box-shadow: none;
-    }
-    .btn-outline-gold:hover {
-        background: var(--secondary-tone);
-        color: white;
-        border-color: var(--secondary-tone);
-        box-shadow: 0 4px 12px rgba(201, 169, 114, 0.3);
+    .satellite:hover {
+      transform: scale(1.15);
+      background: var(--primary-tone);
+      color: white;
+      border-color: var(--secondary-tone);
+      box-shadow: 0 15px 35px rgba(58, 90, 64, 0.3);
+      z-index: 10;
     }
 
-    /* === Mistakes Section (Specific Styling) === */
-    /* 覆蓋原本的粉紅/藍綠色，改用經典的深紅/深綠 */
-    .section-card.mistakes {
-        border-top-color: #a83232; /* 經典深紅 */
+    /* 順序編號 Badge */
+    .step-badge {
+      position: absolute;
+      top: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--secondary-tone);
+      color: white;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
-    .mistakes th.wrong { color: #a83232 !important; }
-    .mistakes th.right { color: #2e7d32 !important; } /* 經典深綠 */
 
+    .satellite.quiz-node {
+      border-color: var(--secondary-tone);
+      background: #fffcf5;
+    }
+    .satellite.quiz-node .step-badge {
+      background: #d32f2f; /* 測驗用紅色強調 */
+    }
 
-    /* === Responsive === */
+    /* === 3. Modal 內容區 (RWD Optimized) === */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(250, 248, 242, 0.92);
+      backdrop-filter: blur(6px);
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-overlay.active { opacity: 1; pointer-events: auto; }
+
+    .modal-content {
+      width: 90%;
+      max-width: 850px;
+      max-height: 85vh;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.2);
+      border-top: 6px solid var(--primary-tone);
+      overflow-y: auto; /* 內容過長自動捲動 */
+      padding: 40px;
+      display: none;
+      animation: slideUp 0.4s ease-out;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 20px; right: 20px;
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      border: none;
+      background: #f4f4f4;
+      font-size: 1.5rem;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .close-btn:hover { background: var(--secondary-tone); color: white; }
+
+    /* 內容樣式 */
+    h2 { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--primary-tone); margin-bottom: 20px; border-bottom: 2px solid var(--secondary-tone); padding-bottom: 10px; }
+    h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--primary-tone); margin: 30px 0 15px; border-left: 4px solid var(--secondary-tone); padding-left: 12px; }
+    
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; background: #fff; min-width: 100%; }
+    .table-responsive { overflow-x: auto; border: 1px solid #e8e4d9; border-radius: 8px; }
+    th { background: #f4f1ea; color: var(--primary-tone); padding: 15px; text-align: left; font-family: 'Playfair Display', serif; white-space: nowrap; }
+    td { padding: 14px; border-bottom: 1px solid #eee; }
+    
+    .bilingual-box { display: flex; gap: 20px; background: #fbfbf9; padding: 25px; border-radius: 8px; border: 1px solid #eee; margin-bottom: 20px; }
+    .bi-col { flex: 1; }
+    .highlight { background: var(--highlight-bg); padding: 2px 6px; border-radius: 4px; color: var(--primary-tone); font-weight: 600; }
+
+    /* Audio */
+    .audio-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 15px; margin: 20px 0; }
+    .audio-card { border: 1px solid #e8e4d9; padding: 12px; border-radius: 8px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s; background: white; }
+    .audio-card:hover { border-color: var(--secondary-tone); background: #fefcf8; transform: translateY(-2px); }
+    .audio-text { font-weight: 600; color: var(--primary-tone); font-size: 0.9rem; }
+
+    /* === Quiz Styles (Enhanced) === */
+    .quiz-question-box { background: #fff; padding: 25px; border-radius: 12px; border: 1px solid #eee; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+    .quiz-q-text { font-weight: 700; font-size: 1.2rem; color: var(--primary-tone); margin-bottom: 15px; font-family: 'Playfair Display', serif; }
+    .quiz-gap { border-bottom: 2px solid var(--secondary-tone); padding: 0 10px; color: var(--secondary-tone); display: inline-block; min-width: 50px; text-align: center; font-weight: bold; }
+    
+    .quiz-opt { display: block; width: 100%; padding: 14px 20px; margin-bottom: 10px; border: 2px solid #f0f0f0; border-radius: 8px; background: white; text-align: left; cursor: pointer; transition: all 0.2s; font-size: 1rem; position: relative; }
+    .quiz-opt:hover { border-color: var(--secondary-tone); background: #fffbf5; }
+    .quiz-opt.correct { background: #e8f5e9; border-color: #4caf50; color: #2e7d32; }
+    .quiz-opt.wrong { background: #ffebee; border-color: #ef5350; color: #c62828; }
+    .quiz-opt:disabled { cursor: default; }
+
+    .quiz-feedback { margin-top: 10px; font-weight: bold; min-height: 24px; }
+    
+    .btn-cta { background: var(--secondary-tone); color: white; padding: 10px 24px; border-radius: 50px; border: none; font-size: 1rem; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; margin-top: 20px; transition: 0.3s; font-weight: 600; }
+    .btn-cta:hover { background: var(--primary-tone); transform: translateY(-2px); }
+
+    /* Result Card Styles */
+    .result-card { text-align: center; padding: 30px; animation: slideUp 0.5s ease-out; }
+    .result-score { font-size: 4rem; font-family: 'Playfair Display', serif; color: var(--primary-tone); margin: 20px 0; font-weight: 700; }
+    .result-msg { font-size: 1.2rem; color: #666; margin-bottom: 30px; line-height: 1.6; }
+    .result-perfect { color: #d32f2f; }
+
+    /* === RWD Mobile Optimization === */
     @media (max-width: 768px) {
-      body { padding: 20px 10px; }
-      h1 { font-size: 2.4rem; }
+      body { overflow-y: auto; height: auto; }
+      .floating-objects { height: 100vh; position: fixed; }
+      
+      /* Mindmap turns into List */
+      .mindmap-stage { flex-direction: column; height: auto; padding: 50px 20px; }
+      .connections { display: none; }
+      .core-node { margin-bottom: 40px; width: 140px; height: 140px; }
+      .core-title { font-size: 1.8rem; }
+      
+      .satellite { 
+        position: relative; 
+        top: auto !important; left: auto !important; 
+        transform: none !important;
+        width: 100%; 
+        height: auto; 
+        min-height: 70px;
+        border-radius: 12px;
+        padding: 15px 20px;
+        margin-bottom: 12px;
+        flex-direction: row; 
+        justify-content: flex-start;
+        text-align: left;
+        gap: 20px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      }
+      .satellite:hover { transform: translateY(-3px) !important; }
+      .step-badge { position: static; transform: none; margin-right: 0; min-width: 24px; }
+      
+      /* Modal fixes */
+      .modal-content { padding: 25px; width: 95%; max-height: 90vh; }
+      .bilingual-box { flex-direction: column; }
       h2 { font-size: 1.6rem; }
-      .section-card { padding: 25px 20px; }
-      .bilingual-box { flex-direction: column; gap: 15px; padding: 20px; }
-      .audio-grid { grid-template-columns: 1fr 1fr; }
-      .note-box { flex-direction: column; align-items: flex-start; }
-      .btn-cta { width: 100%; justify-content: center; }
     }
   </style>
 </head>
 <body>
-  
-  <div class="container">
-    <header>
-      <h1>Shirley's Nouns</h1>
-      <div class="subtitle">Teacher Shirley 名詞全解析</div>
-    </header>
 
-    <div class="section-card">
-      <h2>What is a Noun?</h2>
+  <div class="floating-objects" id="floatingBg"></div>
+
+  <div class="mindmap-stage" id="stage">
+    
+    <svg class="connections" id="svgLines"></svg>
+
+    <div class="core-node">
+      <div class="core-title">Shirley's<br>Nouns</div>
+      <div class="core-sub">Start Here ↓</div>
+    </div>
+
+    <div class="satellite" data-target="def-modal">
+      <div class="step-badge">1</div>
+      <div>Definition<br>定義</div>
+    </div>
+    <div class="satellite" data-target="types-modal">
+      <div class="step-badge">2</div>
+      <div>Types<br>名詞分類</div>
+    </div>
+    <div class="satellite" data-target="count-modal">
+      <div class="step-badge">3</div>
+      <div>Countable<br>可數名詞</div>
+    </div>
+    <div class="satellite" data-target="uncount-modal">
+      <div class="step-badge">4</div>
+      <div>Uncountable<br>不可數</div>
+    </div>
+    <div class="satellite" data-target="poss-modal">
+      <div class="step-badge">5</div>
+      <div>Possessive<br>所有格</div>
+    </div>
+    <div class="satellite" data-target="art-modal">
+      <div class="step-badge">6</div>
+      <div>Articles<br>冠詞</div>
+    </div>
+    <div class="satellite" data-target="clause-modal">
+      <div class="step-badge">7</div>
+      <div>Noun Clauses<br>名詞子句</div>
+    </div>
+    <div class="satellite" data-target="mistake-modal">
+      <div class="step-badge">8</div>
+      <div>Mistakes<br>常見錯誤</div>
+    </div>
+    <div class="satellite quiz-node" data-target="quiz-modal">
+      <div class="step-badge">9</div>
+      <div>Quiz<br>實戰演練</div>
+    </div>
+
+  </div>
+
+  <div class="modal-overlay" id="modalOverlay">
+    <button class="close-btn" onclick="closeModal()">✕</button>
+
+    <div id="def-modal" class="modal-content">
+      <h2>1. What is a Noun?</h2>
       <div class="bilingual-box">
         <div class="bi-col">
-          <span class="bi-label">English Definition</span>
           A <span class="highlight">noun</span> names a <strong>person, place, thing, or idea</strong>.
         </div>
         <div class="bi-col">
-          <span class="bi-label">中文定義</span>
           <span class="highlight">名詞</span>用來命名<strong>人、地方、事物或概念</strong>。
         </div>
       </div>
     </div>
 
-    <div class="section-card">
-      <h2>Types of Nouns 名詞分類</h2>
+    <div id="types-modal" class="modal-content">
+      <h2>2. Types of Nouns 名詞分類</h2>
       <div class="table-responsive">
         <table>
-          <thead>
-            <tr><th width="20%">Type</th><th width="25%">中文</th><th>Examples</th></tr>
-          </thead>
+          <thead><tr><th>Type</th><th>中文</th><th>Examples</th></tr></thead>
           <tbody>
             <tr><td>Common</td><td>普通名詞</td><td>city, teacher, cat</td></tr>
             <tr><td>Proper</td><td>專有名詞</td><td>Taipei, Shirley, Google</td></tr>
-            <tr><td>Concrete</td><td>具體名詞</td><td>star, phone, water</td></tr>
             <tr><td>Abstract</td><td>抽象名詞</td><td>love, time, freedom</td></tr>
             <tr><td>Collective</td><td>集合名詞</td><td>team, family, audience</td></tr>
-            <tr><td>Compound</td><td>複合名詞</td><td>toothpaste, swimming pool</td></tr>
           </tbody>
         </table>
       </div>
     </div>
 
-    <div class="section-card">
-      <h2>Countable & Uncountable</h2>
-      
-      <h3>1. Regular Plurals 規則複數</h3>
-      <div class="table-responsive">
-        <table>
-          <tr><th>Rule</th><th>Example</th></tr>
-          <tr><td>一般 + s</td><td>book → <strong>books</strong></td></tr>
-          <tr><td>sh/ch/x/s/o + es</td><td>box → <strong>boxes</strong>, bus → <strong>buses</strong></td></tr>
-          <tr><td>子音 + y → ies</td><td>city → <strong>cities</strong></td></tr>
-          <tr><td>f/fe → ves</td><td>knife → <strong>knives</strong></td></tr>
-        </table>
-      </div>
-
-      <h3>2. Irregular Plurals 不規則複數</h3>
-      <p style="font-size:0.9rem; margin-bottom:15px; color:var(--text-light); font-style:italic;">
-        請點擊卡片聆聽發音示範 🔊
-      </p>
+    <div id="count-modal" class="modal-content">
+      <h2>3. Countable Nouns & Plurals</h2>
+      <h3>Irregular Plurals 不規則複數</h3>
       <div class="audio-grid">
-        <div class="audio-card" onclick="speak('man men')">
-          <span class="audio-text">man → men</span>
-          <span class="audio-icon">🔈</span>
-        </div>
-        <div class="audio-card" onclick="speak('woman women')">
-          <span class="audio-text">woman → women</span>
-          <span class="audio-icon">🔈</span>
-        </div>
-        <div class="audio-card" onclick="speak('child children')">
-          <span class="audio-text">child → children</span>
-          <span class="audio-icon">🔈</span>
-        </div>
-        <div class="audio-card" onclick="speak('foot feet')">
-          <span class="audio-text">foot → feet</span>
-          <span class="audio-icon">🔈</span>
-        </div>
-        <div class="audio-card" onclick="speak('tooth teeth')">
-          <span class="audio-text">tooth → teeth</span>
-          <span class="audio-icon">🔈</span>
-        </div>
-        <div class="audio-card" onclick="speak('mouse mice')">
-          <span class="audio-text">mouse → mice</span>
-          <span class="audio-icon">🔈</span>
-        </div>
-        <div class="audio-card" onclick="speak('goose geese')">
-          <span class="audio-text">goose → geese</span>
-          <span class="audio-icon">🔈</span>
-        </div>
-        <div class="audio-card" onclick="speak('fish fish')">
-          <span class="audio-text">fish → fish</span>
-          <span class="audio-icon">🔈</span>
-        </div>
+        <div class="audio-card" onclick="speak('man men')"><span class="audio-text">man → men</span><span>🔊</span></div>
+        <div class="audio-card" onclick="speak('woman women')"><span class="audio-text">woman → women</span><span>🔊</span></div>
+        <div class="audio-card" onclick="speak('child children')"><span class="audio-text">child → children</span><span>🔊</span></div>
+        <div class="audio-card" onclick="speak('mouse mice')"><span class="audio-text">mouse → mice</span><span>🔊</span></div>
+        <div class="audio-card" onclick="speak('tooth teeth')"><span class="audio-text">tooth → teeth</span><span>🔊</span></div>
+        <div class="audio-card" onclick="speak('fish fish')"><span class="audio-text">fish → fish</span><span>🔊</span></div>
       </div>
+    </div>
 
-      <div class="note-box">
-        <div class="note-content">
-          <strong>💡 Learning Tip:</strong><br>不規則變化需要多加練習才能熟練掌握。
-        </div>
-        <a href="https://ducj-creator.github.io/Shirley-Grammar/irregular/nouns/" target="_blank" class="btn-cta">
-          前往互動練習平台 →
-        </a>
-      </div>
-
-      <h3>3. Common Uncountable 常見不可數</h3>
+    <div id="uncount-modal" class="modal-content">
+      <h2>4. Uncountable Nouns 不可數名詞</h2>
+      <p>不可數名詞不能加 s，通常不加 a/an。</p>
       <div class="table-responsive">
         <table>
           <tr><th>Category</th><th>Examples</th></tr>
-          <tr><td>Liquid 液體</td><td>water, milk, coffee, oil</td></tr>
-          <tr><td>Material 材料</td><td>wood, metal, gold, sand</td></tr>
-          <tr><td>Food 食物</td><td>rice, bread, cheese, meat</td></tr>
-          <tr><td>Abstract 抽象</td><td>time, love, advice, knowledge</td></tr>
-          <tr><td>Subject 學科</td><td>math, physics, history</td></tr>
+          <tr><td>Liquid</td><td>water, milk, coffee</td></tr>
+          <tr><td>Material</td><td>wood, gold, paper</td></tr>
+          <tr><td>Abstract</td><td>information, advice, knowledge, news</td></tr>
         </table>
       </div>
-      
-      <h3>4. Tricky Nouns 雙重意義名詞</h3>
-      <div class="table-responsive">
-        <table>
-          <thead><tr><th>Uncountable (不可數)</th><th>Countable (可數)</th></tr></thead>
-          <tbody>
-            <tr><td><strong>paper</strong> 紙張</td><td><strong>a paper</strong> 論文/報紙</td></tr>
-            <tr><td><strong>light</strong> 光線</td><td><strong>a light</strong> 電燈</td></tr>
-            <tr><td><strong>time</strong> 時間</td><td><strong>times</strong> 次數</td></tr>
-            <tr><td><strong>work</strong> 工作</td><td><strong>a work</strong> 作品</td></tr>
-            <tr><td><strong>hair</strong> 頭髮(整體)</td><td><strong>a hair</strong> 一根頭髮</td></tr>
-          </tbody>
-        </table>
+      <div class="bilingual-box">
+        <strong>⚠️ 易錯提醒：</strong> News (新聞) 看起來像複數，其實是單數！Information (資訊) 永遠不可數。
       </div>
     </div>
 
-    <div class="section-card">
-      <h2>Possessive Case 所有格</h2>
-      <div class="table-responsive">
-        <table>
-          <tr><th>Structure</th><th>Example</th><th>Note</th></tr>
-          <tr><td>單數 + 's</td><td>John's car</td><td>人名/生物</td></tr>
-          <tr><td>複數(s結尾) + '</td><td>students' books</td><td>不用再加s</td></tr>
-          <tr><td>不規則複數 + 's</td><td>children's toys</td><td>視為單數處理</td></tr>
-          <tr><td><strong>of + Noun</strong></td><td>the roof of the house</td><td>無生命物體常用</td></tr>
-          <tr><td>時間/店名 + 's</td><td>today's news / McDonald's</td><td>慣用法</td></tr>
-        </table>
-      </div>
+    <div id="poss-modal" class="modal-content">
+      <h2>5. Possessive Case 所有格</h2>
+      <ul>
+        <li><strong>'s</strong>: 用於人 (Shirley's bag)</li>
+        <li><strong>of</strong>: 用於無生命 (The legs of the table)</li>
+      </ul>
     </div>
 
-    <div class="section-card">
-      <h2>Articles 冠詞速查</h2>
-      <div class="table-responsive">
-        <table>
-          <tr><th>Art.</th><th>Usage</th><th>Examples</th></tr>
-          <tr><td><strong>a</strong></td><td>+ 單數可數 (子音開頭)</td><td>a book, a university</td></tr>
-          <tr><td><strong>an</strong></td><td>+ 單數可數 (母音開頭)</td><td>an apple, an hour</td></tr>
-          <tr><td><strong>the</strong></td><td>特指 / 獨一無二</td><td>the sun, the book on the table</td></tr>
-          <tr><td><strong>X</strong></td><td>泛指複數 / 專有名詞</td><td>I like dogs. / He is in Taipei.</td></tr>
-        </table>
-      </div>
+    <div id="art-modal" class="modal-content">
+      <h2>6. Articles 冠詞</h2>
+      <p><strong>a/an</strong> (泛指單數), <strong>the</strong> (特指), <strong>無冠詞</strong> (泛指複數/不可數)。</p>
     </div>
 
-    <div class="section-card">
-      <h2>Noun Clauses 名詞子句</h2>
-      <p style="margin-bottom:20px; color:var(--text-main);">名詞子句即是<strong>具有名詞功能的子句</strong>，可在句中擔任主詞、受詞或補語的角色。</p>
-      
-      <div style="background:#fbfbf9; padding:20px; border-radius:8px; margin-bottom:25px; border:1px solid var(--border-soft);">
-        <div style="margin-bottom:12px; font-family: 'Playfair Display', serif; color:var(--primary-tone);">
-          <em>"What he said surprised me."</em>
-        </div>
-        <div style="font-size:0.9rem; color:var(--text-light); margin-bottom:20px;">(作主詞)</div>
-        
-        <div style="margin-bottom:12px; font-family: 'Playfair Display', serif; color:var(--primary-tone);">
-          <em>"I know where she lives."</em>
-        </div>
-        <div style="font-size:0.9rem; color:var(--text-light);">(作受詞)</div>
-      </div>
-
-      <a href="https://ducj-creator.github.io/Shirley-Grammar/noun-clause/" target="_blank" class="btn-cta btn-outline-gold" style="width:100%; justify-content:center;">
-        📘 深入學習名詞子句專題
+    <div id="clause-modal" class="modal-content">
+      <h2>7. Noun Clauses 名詞子句</h2>
+      <p>具名詞功能的子句。 <em>"I know <strong>where she lives</strong>."</em></p>
+      <a href="https://ducj-creator.github.io/Shirley-Grammar/noun-clause/" target="_blank" class="btn-cta" style="background:var(--primary-tone);">
+        📘 深入學習名詞子句
       </a>
     </div>
 
-    <div class="section-card mistakes">
-      <h2>Common Mistakes 常見錯誤</h2>
+    <div id="mistake-modal" class="modal-content">
+      <h2>8. Common Mistakes 常見錯誤</h2>
       <div class="table-responsive">
         <table>
-          <tr><th class="wrong">Wrong (X)</th><th class="right">Right (O)</th><th>Why?</th></tr>
-          <tr><td>I like dog.</td><td>I like dogs.</td><td>可數名詞泛指時用複數</td></tr>
-          <tr><td>many informations</td><td>much information</td><td>information 永遠不可數</td></tr>
-          <tr><td>the news are...</td><td>the news is...</td><td>news 形式像複數但為單數</td></tr>
-          <tr><td>a advice</td><td>some advice</td><td>advice 不可數，不能加 a</td></tr>
+          <tr><th style="color:#c62828">Wrong (X)</th><th style="color:#2e7d32">Right (O)</th><th>Why?</th></tr>
+          <tr><td>I like dog.</td><td>I like dogs.</td><td>泛指用複數</td></tr>
+          <tr><td>many informations</td><td>much information</td><td>不可數</td></tr>
+          <tr><td>a advice</td><td>some advice</td><td>不可數不能加a</td></tr>
         </table>
       </div>
+    </div>
+
+    <div id="quiz-modal" class="modal-content">
+      <h2>9. Nouns Challenge 🏆</h2>
+      <p style="margin-bottom:25px; color:#666;">Fill in the gaps. Try to get 10/10!</p>
+      
+      <div id="quiz-area"></div>
+      
+      <div id="result-area" class="result-card" style="display:none;">
+        <h3>Quiz Completed!</h3>
+        <div class="result-score" id="score-display">0 / 10</div>
+        <div class="result-msg" id="msg-display"></div>
+        <button onclick="renderQuiz()" class="btn-cta">
+          ↺ Retry Quiz
+        </button>
+      </div>
+
     </div>
 
   </div>
 
   <script>
+    // === 1. Floating Nouns Generation ===
+    const nounsIcons = ['🍎', '🚗', '🐶', '📘', '🏠', '☕', '🎓', '💡', '🌳', '🚲', '⏰', '✈️'];
+    const floatContainer = document.getElementById('floatingBg');
+
+    function createFloatingIcons() {
+      for(let i=0; i<15; i++) {
+        const el = document.createElement('div');
+        el.classList.add('float-item');
+        el.innerText = nounsIcons[Math.floor(Math.random() * nounsIcons.length)];
+        el.style.left = Math.random() * 100 + 'vw';
+        el.style.animationDuration = (18 + Math.random() * 15) + 's';
+        el.style.animationDelay = (Math.random() * 5) + 's';
+        el.style.fontSize = (1.5 + Math.random() * 2) + 'rem';
+        floatContainer.appendChild(el);
+      }
+    }
+    createFloatingIcons();
+
+    // === 2. Mind Map Layout (Circular with Numbers) ===
+    function updateLayout() {
+      const satellites = document.querySelectorAll('.satellite');
+      const stage = document.getElementById('stage');
+      const svg = document.getElementById('svgLines');
+      const isMobile = window.innerWidth <= 768;
+
+      while(svg.firstChild) svg.removeChild(svg.firstChild);
+
+      if(isMobile) return; 
+
+      const centerX = stage.offsetWidth / 2;
+      const centerY = stage.offsetHeight / 2;
+      const radius = 270;
+      const total = satellites.length;
+
+      satellites.forEach((node, index) => {
+        // 從 12 點鐘方向開始順時針排列
+        const angle = (index / total) * 2 * Math.PI - (Math.PI / 2);
+        
+        const x = centerX + radius * Math.cos(angle);
+        const y = centerY + radius * Math.sin(angle);
+
+        node.style.left = x + 'px';
+        node.style.top = y + 'px';
+        node.style.transform = 'translate(-50%, -50%)';
+
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', centerX);
+        line.setAttribute('y1', centerY);
+        line.setAttribute('x2', x);
+        line.setAttribute('y2', y);
+        line.classList.add('connection-line');
+        svg.appendChild(line);
+      });
+    }
+    
+    window.addEventListener('resize', updateLayout);
+    window.addEventListener('load', updateLayout);
+
+    // === 3. Modal Logic ===
+    const overlay = document.getElementById('modalOverlay');
+    
+    document.querySelectorAll('.satellite').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetId = btn.getAttribute('data-target');
+        document.querySelectorAll('.modal-content').forEach(c => c.style.display = 'none');
+        document.getElementById(targetId).style.display = 'block';
+        overlay.classList.add('active');
+      });
+    });
+
+    function closeModal() {
+      overlay.classList.remove('active');
+    }
+    overlay.addEventListener('click', (e) => { if(e.target === overlay) closeModal(); });
+
     function speak(text) {
       if ('speechSynthesis' in window) {
         speechSynthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = 'en-US';
-        utterance.rate = 0.9; 
-        
-        const voices = speechSynthesis.getVoices();
-        const enVoice = voices.find(v => v.lang.includes('en-US') || v.lang.includes('en-GB'));
-        if(enVoice) utterance.voice = enVoice;
-
         speechSynthesis.speak(utterance);
-      } else {
-        alert("Sorry, your browser doesn't support text-to-speech.");
       }
     }
+
+    // === 4. QUIZ SYSTEM (10 Questions + Summary) ===
+    
+    let currentScore = 0;
+    let answeredCount = 0;
+
+    const quizData = [
+      {
+        q: "Look at that ______ in the sky!",
+        options: ["birds", "bird", "bird's", "a birds"],
+        ans: 1 // bird
+      },
+      {
+        q: "The ______ are playing happily in the park.",
+        options: ["childs", "childrens", "children", "child"],
+        ans: 2 // children
+      },
+      {
+        q: "I need some ______ about the flight.",
+        options: ["information", "informations", "an information", "pieces of informations"],
+        ans: 0 // information
+      },
+      {
+        q: "Where is ______ car parked?",
+        options: ["John", "Johns", "John's", "Johns'"],
+        ans: 2 // John's
+      },
+      {
+        q: "The news ______ very shocking today.",
+        options: ["are", "were", "is", "have"],
+        ans: 2 // is
+      },
+      {
+        q: "Can you give me ______ advice?",
+        options: ["an", "some", "many", "a"],
+        ans: 1 // some
+      },
+      {
+        q: "There are two ______ on the table.",
+        options: ["watch", "watchs", "watches", "watcher"],
+        ans: 2 // watches
+      },
+      {
+        q: "My family ______ very supportive.",
+        options: ["is", "are", "have", "be"],
+        ans: 0 // is (Collective as a unit)
+      },
+      {
+        q: "Please clean up the fallen ______ in the yard.",
+        options: ["leafs", "leaves", "leafes", "leavs"],
+        ans: 1 // leaves
+      },
+      {
+        q: "Water ______ necessary for life.",
+        options: ["are", "have", "were", "is"],
+        ans: 3 // is
+      }
+    ];
+
+    function renderQuiz() {
+      const container = document.getElementById('quiz-area');
+      const resultArea = document.getElementById('result-area');
+      
+      // Reset state
+      container.innerHTML = ''; 
+      container.style.display = 'block';
+      resultArea.style.display = 'none';
+      currentScore = 0;
+      answeredCount = 0;
+
+      quizData.forEach((item, qIdx) => {
+        const box = document.createElement('div');
+        box.className = 'quiz-question-box';
+
+        // 題目顯示
+        const qText = document.createElement('div');
+        qText.className = 'quiz-q-text';
+        qText.innerHTML = (qIdx+1) + ". " + item.q.replace('______', '<span class="quiz-gap">?</span>');
+        box.appendChild(qText);
+
+        const feedback = document.createElement('div');
+        feedback.className = 'quiz-feedback';
+
+        item.options.forEach((opt, oIdx) => {
+          const btn = document.createElement('button');
+          btn.className = 'quiz-opt';
+          btn.innerText = opt;
+          btn.onclick = function() {
+            checkAnswer(this, box, item, oIdx, feedback, qText);
+          };
+          box.appendChild(btn);
+        });
+
+        box.appendChild(feedback);
+        container.appendChild(box);
+      });
+    }
+
+    function checkAnswer(btn, box, item, selectedIdx, feedback, qTextEl) {
+      // 鎖定該題所有選項
+      const allBtns = box.querySelectorAll('.quiz-opt');
+      allBtns.forEach(b => b.disabled = true);
+      
+      answeredCount++;
+
+      if(selectedIdx === item.ans) {
+        currentScore++;
+        btn.classList.add('correct');
+        feedback.innerHTML = "Correct! 🎉";
+        feedback.style.color = "#2e7d32";
+        
+        // Update Gap text
+        const gap = qTextEl.querySelector('.quiz-gap');
+        gap.innerText = item.options[item.ans];
+        gap.style.color = "#2e7d32";
+        gap.style.borderBottomColor = "#2e7d32";
+      } else {
+        btn.classList.add('wrong');
+        allBtns[item.ans].classList.add('correct'); // Show correct one
+        feedback.innerText = "Oops! Review the rules.";
+        feedback.style.color = "#c62828";
+        
+        const gap = qTextEl.querySelector('.quiz-gap');
+        gap.innerText = item.options[item.ans];
+        gap.style.color = "#c62828";
+      }
+
+      // Check if all answered
+      if(answeredCount === quizData.length) {
+        // Create a button to show results if user is scrolling
+        const showResultBtn = document.createElement('button');
+        showResultBtn.innerText = "See Final Results →";
+        showResultBtn.className = "btn-cta";
+        showResultBtn.style.display = "block";
+        showResultBtn.style.margin = "30px auto";
+        showResultBtn.onclick = showSummary;
+        document.getElementById('quiz-area').appendChild(showResultBtn);
+        
+        // Auto scroll to bottom smoothly
+        setTimeout(() => {
+          showResultBtn.scrollIntoView({behavior: "smooth"});
+        }, 500);
+      }
+    }
+
+    function showSummary() {
+      const container = document.getElementById('quiz-area');
+      const resultArea = document.getElementById('result-area');
+      const scoreDisplay = document.getElementById('score-display');
+      const msgDisplay = document.getElementById('msg-display');
+
+      container.style.display = 'none';
+      resultArea.style.display = 'block';
+      
+      scoreDisplay.innerText = `${currentScore} / ${quizData.length}`;
+      
+      if(currentScore === quizData.length) {
+        msgDisplay.innerHTML = "Perfect Score! 🌟<br>You are a Noun Master!";
+        msgDisplay.classList.add('result-perfect');
+      } else if (currentScore >= 7) {
+        msgDisplay.innerText = "Great job! You have a good understanding.";
+      } else {
+        msgDisplay.innerText = "Keep practicing! Review the notes and try again.";
+      }
+    }
+
+    // Init
+    renderQuiz();
+
   </script>
 </body>
 </html>
