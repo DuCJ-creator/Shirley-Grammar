@@ -3,997 +3,600 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shirley's Exclamation Learning Platform | 感嘆句學習平台</title>
+    <title>Shirley's Exclamations (Radial Design)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            /* --- 全新高級配色方案 (Premium Burgundy & Gold) --- */
+            /* 配色方案：Royal Burgundy (皇家酒紅) & Streamer Gold (流光金) */
+            --bg-deep: #f9f7f2;       /* 暖白背景 */
+            --primary: #800020;       /* 勃根地酒紅 */
+            --primary-dark: #4a0012;  /* 深酒紅 */
+            --accent: #d4af37;        /* 流光金 */
             
-            /* 主色調：勃根地酒紅 (取代亮紅) */
-            --primary: #800020; 
-            
-            /* 次要色：乾燥玫瑰 (取代粉紅) */
-            --secondary: #b35a66; 
-            
-            /* 強調色：流光金 (取代青色/綠色) */
-            --accent: #d4af37; 
-            
-            /* 背景與文字 */
-            --light: #f9f7f2;      /* 暖白背景 */
-            --dark: #2c3e50;       /* 深岩灰文字 */
-            --white: #ffffff;
-            
-            /* 高雅模組專用變數 */
-            --elegant-bg: #fdfbf7;
-            --elegant-text: #2c3e50;
-            --elegant-gold: #d4af37;
-            --elegant-gold-light: #fffcf5;
-            --elegant-shadow: rgba(128, 0, 32, 0.08);
+            --card-bg: rgba(255, 255, 255, 0.98);
+            --shadow-float: 0 10px 40px -10px rgba(128, 0, 32, 0.15);
+            --highlight-bg: #fffcf5;
 
-            /* Quiz Colors */
+            /* 測驗專用色 */
             --correct-bg: #d4edda;
-            --correct-border: #28a745;
             --correct-text: #155724;
             --wrong-bg: #f8d7da;
-            --wrong-border: #dc3545;
             --wrong-text: #721c24;
         }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Lato', 'Microsoft JhengHei', '微軟正黑體', sans-serif;
-        }
-        
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
-            background-color: var(--light);
-            color: var(--dark);
-            line-height: 1.7;
-        }
-        
-        /* Header 優化：酒紅漸層 */
-        header {
-            background: linear-gradient(135deg, #630018, #961e38);
-            color: white;
-            padding: 2rem 1.5rem;
-            text-align: center;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            position: relative;
-        }
-        
-        header::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, transparent, var(--accent), transparent);
-        }
-        
-        h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            letter-spacing: 1px;
-        }
-        
-        .subtitle {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            font-size: 1.2rem;
-            opacity: 0.9;
-            color: var(--accent);
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem 1.5rem;
-        }
-        
-        /* Tabs 優化 */
-        .tabs {
-            display: flex;
-            flex-wrap: wrap;
-            margin-bottom: 2rem;
-            background: var(--white);
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            border: 1px solid rgba(0,0,0,0.05);
-        }
-        
-        .tab {
-            padding: 1.2rem 1.5rem;
-            cursor: pointer;
-            flex: 1;
-            text-align: center;
-            transition: all 0.4s ease;
-            font-weight: 600;
-            color: #666;
-            border-bottom: 3px solid transparent;
-        }
-        
-        .tab:hover {
-            background-color: #fff5f5;
-            color: var(--primary);
-        }
-        
-        .tab.active {
-            background-color: var(--white);
-            color: var(--primary);
-            border-bottom: 3px solid var(--primary);
-        }
-        
-        .tab-content {
-            display: none;
-            background: var(--white);
-            padding: 2.5rem;
-            border-radius: 8px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-            margin-bottom: 2rem;
-            animation: fadeIn 0.6s ease;
-            border: 1px solid rgba(0,0,0,0.03);
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .tab-content.active {
-            display: block;
-        }
-        
-        h2 {
-            font-family: 'Playfair Display', serif;
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.8rem;
-            border-bottom: 1px solid rgba(128, 0, 32, 0.2);
-            font-size: 1.8rem;
-        }
-        
-        h3 {
-            color: #5d4037; /* 暖棕色標題，比純黑柔和 */
-            margin: 1.5rem 0 1rem;
-            font-weight: 700;
-        }
-        
-        /* 卡片優化 */
-        .card {
-            background: #fff;
-            border-radius: 6px;
-            padding: 2rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
-            border: 1px solid #eee;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background-color: var(--accent); /* 金色左邊條 */
-            opacity: 0.5;
-        }
-        
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(128, 0, 32, 0.08);
-        }
-        
-        /* 結構框優化 */
-        .structure-box {
-            background: linear-gradient(to right, #fffcf5, #fff);
-            border: 1px solid var(--accent);
-            border-radius: 6px;
-            padding: 2rem;
-            margin: 2rem 0;
-            text-align: center;
-            position: relative;
-        }
-        
-        .structure-title {
-            color: var(--primary);
-            font-family: 'Playfair Display', serif;
-            font-weight: bold;
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-            letter-spacing: 0.5px;
-        }
-        
-        .structure-content {
-            font-family: 'Courier New', monospace; /* 使用等寬字體強調結構 */
-            font-size: 1.3rem;
-            color: #444;
-            font-weight: 600;
-        }
-        
-        /* 例子與強調 */
-        .example {
-            background-color: #f9f9f9;
-            border-left: none; /* 移除粗邊框 */
-            padding: 1.2rem;
-            margin: 1rem 0;
-            border-radius: 4px;
-            font-style: italic;
-            color: #555;
-            border: 1px solid #eee;
-        }
-        
-        .highlight {
-            color: var(--primary);
-            background-color: transparent;
-            font-weight: bold;
-            border-bottom: 2px solid rgba(212, 175, 55, 0.3); /* 金色底線 */
-            padding: 0 2px;
+            font-family: 'Lato', 'Microsoft JhengHei', sans-serif;
+            background-color: var(--bg-deep);
+            color: #2c3e50;
+            overflow: hidden; 
+            height: 100vh; width: 100vw;
         }
 
-        .qa-pair {
-            display: flex;
-            justify-content: space-between;
-            margin: 15px 0;
-            gap: 20px;
-        }
-        
-        .question, .answer {
-            flex: 1;
-            padding: 1.5rem;
-            border-radius: 6px;
-            text-align: center;
-        }
-        
-        .question {
-            background: #f4f4f4;
-            color: #666;
-        }
-        
-        .answer {
-            background: #fff0f3; /* 極淡的粉色 */
-            color: var(--primary);
-            border: 1px solid rgba(128, 0, 32, 0.1);
-        }
-        
-        .note-box {
-            background-color: #fffcf5;
-            border: 1px solid #ffeeba;
-            color: #856404;
-            padding: 1rem;
-            border-radius: 4px;
-            margin-top: 1rem;
+        /* --- 1. Radial Mind Map (放射狀首頁) --- */
+        #mindmap-container {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; justify-content: center; align-items: center;
+            z-index: 1;
         }
 
-        /* 按鈕優化 */
-        .btn {
-            background: linear-gradient(135deg, var(--accent), #c5a028);
-            color: white;
-            border: none;
-            padding: 0.8rem 2rem;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: bold;
-            letter-spacing: 1px;
-            transition: all 0.3s;
-            box-shadow: 0 4px 10px rgba(212, 175, 55, 0.3);
-        }
-        
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(212, 175, 55, 0.4);
-            background: linear-gradient(135deg, #e6c34e, #d4af37);
-        }
-        
-        /* Audio Button */
-        .audio-btn {
-            background: none;
-            border: none;
-            color: var(--elegant-gold);
-            cursor: pointer;
-            margin-left: 8px;
-            font-size: 1.1rem;
-            transition: all 0.2s;
-            vertical-align: middle;
-        }
-        .audio-btn:hover {
-            color: var(--primary);
-            transform: scale(1.15);
-        }
-        
-        footer {
-            text-align: center;
-            padding: 3rem 1rem;
-            margin-top: 3rem;
-            background-color: #1a1a1a;
-            color: #888;
-            font-size: 0.9rem;
-        }
-
-        /* ---------------------------------------------------- */
-        /* --- ELEGANT MODULE (頂部高級介紹區) --- */
-        /* ---------------------------------------------------- */
-        
-        .elegant-wrapper {
-            background-color: var(--elegant-bg);
-            padding: 3.5rem 2rem;
-            border-radius: 8px;
-            position: relative;
-            margin-bottom: 3rem;
-            border: 1px solid rgba(0,0,0,0.03);
-            text-align: center;
-        }
-
-        .elegant-wrapper::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background-color: var(--primary); /* 使用酒紅線條 */
-        }
-
-        .elegant-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 3rem;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-            border: none;
-        }
-
-        .elegant-subtitle {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            color: #888;
-            margin-bottom: 3.5rem;
-            font-size: 1.3rem;
-            display: block;
-        }
-
-        .elegant-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-
-        .elegant-card {
-            background: #ffffff;
-            border: 1px solid rgba(0,0,0,0.05);
-            padding: 2.5rem 2rem;
-            text-align: center;
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-            position: relative;
-            border-radius: 4px;
-        }
-
-        .elegant-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
-            border-color: var(--elegant-gold);
-        }
-
-        .elegant-icon-box {
-            font-size: 1.8rem;
-            color: var(--white);
-            background: var(--primary); /* 酒紅背景 */
-            width: 60px;
-            height: 60px;
-            line-height: 60px;
+        /* 中心節點 */
+        .central-node {
+            width: 210px; height: 210px;
+            background: var(--primary);
             border-radius: 50%;
-            margin: 0 auto 1.5rem;
-            box-shadow: 0 5px 15px rgba(128, 0, 32, 0.2);
-            transition: all 0.4s ease;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            color: white;
+            box-shadow: 0 0 50px rgba(128, 0, 32, 0.4);
+            z-index: 10;
+            position: relative;
+            animation: pulse 3s infinite ease-in-out;
+            text-align: center;
+            border: 6px solid var(--accent);
+            cursor: default;
         }
 
-        .elegant-card:hover .elegant-icon-box {
-            background: var(--elegant-gold); /* 懸停變金色 */
-            color: #fff;
-            transform: rotateY(180deg);
-        }
+        .central-title { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; line-height: 1.2; }
+        .central-sub { font-size: 0.9rem; opacity: 0.9; margin-top: 5px; font-weight: 300; letter-spacing: 1px; color: #fffcf5; }
 
-        .card-heading {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.4rem;
-            color: var(--elegant-text);
-            margin-bottom: 1rem;
-        }
-
-        .card-text {
-            font-size: 0.95rem;
-            color: #666;
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-        }
-
-        .divider-line {
-            width: 30px;
-            height: 1px;
-            background-color: #ddd;
-            margin: 1.5rem auto;
-            transition: width 0.3s ease;
-        }
-
-        .elegant-card:hover .divider-line {
-            width: 60px;
-            background-color: var(--primary);
-        }
-
-        .detail-list li {
-            list-style: none;
-            text-align: left;
-            margin-bottom: 10px;
-            font-size: 0.9rem;
-            color: #555;
-            display: flex;
-            align-items: flex-start;
+        /* 衛星節點 */
+        .satellite {
+            position: absolute;
+            width: 120px; height: 120px;
+            background: white;
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            color: var(--primary);
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-size: 0.85rem; font-weight: 600;
+            z-index: 5;
+            padding: 5px;
         }
         
-        .detail-list li i {
-            color: var(--elegant-gold);
-            margin-right: 10px;
-            margin-top: 6px;
-            font-size: 0.6rem;
+        .satellite i { font-size: 1.8rem; margin-bottom: 5px; color: var(--accent); }
+        .satellite span { font-size: 0.7rem; opacity: 0.8; display: block; margin-top: 2px; color: #555; }
+
+        .satellite:hover {
+            transform: scale(1.15) !important;
+            background: var(--primary);
+            color: white;
+            border-color: var(--accent);
+            box-shadow: 0 10px 25px rgba(128, 0, 32, 0.3);
+            z-index: 20;
+        }
+        .satellite:hover i { color: var(--accent); }
+        .satellite:hover span { color: rgba(255,255,255,0.9); }
+
+        /* 測驗節點樣式 */
+        .satellite.quiz-node { border-color: var(--accent); }
+        .satellite.quiz-node i { color: var(--primary); }
+        .satellite.quiz-node:hover { background: var(--accent); border-color: var(--primary); }
+        .satellite.quiz-node:hover i { color: var(--primary); }
+
+        /* 連接線 */
+        .connections { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; }
+        .conn-line { stroke: var(--accent); stroke-width: 1.5; stroke-dasharray: 4,4; opacity: 0.5; }
+
+        /* --- 2. Modal (內容卡片) --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(74, 0, 18, 0.4);
+            backdrop-filter: blur(5px);
+            z-index: 100;
+            opacity: 0; visibility: hidden;
+            transition: all 0.4s ease;
+            display: flex; justify-content: center; align-items: center;
         }
 
-        .detail-example {
-            display: block;
-            font-style: italic;
-            color: #999;
-            font-size: 0.85rem;
-            margin-top: 3px;
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+
+        .modal-card {
+            width: 90%; max-width: 1000px; height: 90vh;
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: var(--shadow-float);
+            display: flex; flex-direction: column;
+            overflow: hidden;
+            transform: translateY(30px) scale(0.95);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
+
+        .modal-overlay.active .modal-card { transform: translateY(0) scale(1); }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary), #961e38);
+            color: white;
+            padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 4px solid var(--accent);
+        }
+        
+        .modal-title h2 { font-family: 'Playfair Display', serif; font-size: 1.6rem; margin: 0; border: none; padding: 0; color: white; }
+        .modal-close { background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; transition: 0.3s; }
+        .modal-close:hover { transform: rotate(90deg); color: var(--accent); }
+
+        /* 分頁導航 */
+        .modal-tabs {
+            display: flex; background: #fffcf5; overflow-x: auto;
+            border-bottom: 1px solid #efe5d9; flex-shrink: 0;
+        }
+        .tab-btn {
+            flex: 1; padding: 1rem; border: none; background: none;
+            color: #555; font-weight: 600; cursor: pointer;
+            transition: 0.3s; min-width: 120px; white-space: nowrap;
+            font-family: 'Lato', sans-serif; font-size: 0.95rem;
+        }
+        .tab-btn:hover { background: #fdf2f2; color: var(--primary); }
+        .tab-btn.active { background: white; color: var(--primary); border-bottom: 3px solid var(--primary); }
+
+        /* 內容樣式 (移植自您的原檔) */
+        .modal-body { flex: 1; overflow-y: auto; padding: 2.5rem; scroll-behavior: smooth; line-height: 1.8; }
+        
+        h2 { font-family: 'Playfair Display', serif; color: var(--primary); font-size: 1.8rem; border-bottom: 1px solid rgba(128, 0, 32, 0.2); padding-bottom: 0.8rem; margin-bottom: 1.5rem; }
+        h3 { color: #5d4037; font-size: 1.3rem; margin: 1.5rem 0 1rem; font-weight: 700; }
+        h4 { color: var(--accent); margin-bottom: 10px; font-weight: 700; }
+
+        /* 卡片與例子 */
+        .card { background: #fff; border-radius: 6px; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 2px 10px rgba(0,0,0,0.03); border: 1px solid #eee; position: relative; overflow: hidden; }
+        .card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background-color: var(--accent); opacity: 0.6; }
+        
+        .structure-box { background: linear-gradient(to right, #fffcf5, #fff); border: 1px solid var(--accent); border-radius: 6px; padding: 1.5rem; margin: 1.5rem 0; text-align: center; }
+        .structure-title { color: var(--primary); font-family: 'Playfair Display', serif; font-weight: bold; font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .structure-content { font-family: 'Courier New', monospace; font-size: 1.1rem; color: #444; font-weight: 600; }
+        
+        .example { background-color: #f9f9f9; padding: 1rem; margin: 0.8rem 0; border-radius: 4px; font-style: italic; color: #555; border: 1px solid #eee; }
+        .highlight { color: var(--primary); font-weight: bold; border-bottom: 2px solid rgba(212, 175, 55, 0.3); padding: 0 2px; }
+
+        .qa-pair { display: flex; justify-content: space-between; margin: 15px 0; gap: 20px; }
+        .question { flex: 1; padding: 1.2rem; background: #f4f4f4; border-radius: 6px; text-align: center; color: #666; }
+        .answer { flex: 1; padding: 1.2rem; background: #fff0f3; border-radius: 6px; text-align: center; color: var(--primary); border: 1px solid rgba(128, 0, 32, 0.1); }
+        
+        .note-box { background-color: #fffcf5; border: 1px solid #ffeeba; color: #856404; padding: 1rem; border-radius: 4px; margin-top: 1rem; }
+
+        .audio-btn { background: none; border: none; color: var(--accent); cursor: pointer; margin-left: 8px; font-size: 1.1rem; transition: all 0.2s; vertical-align: middle; }
+        .audio-btn:hover { color: var(--primary); transform: scale(1.15); }
+
+        /* Elegant Wrapper (移植) */
+        .elegant-wrapper { background-color: #fdfbf7; padding: 2.5rem 2rem; border-radius: 8px; position: relative; margin-bottom: 2rem; border: 1px solid rgba(0,0,0,0.03); text-align: center; }
+        .elegant-wrapper::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 80px; height: 3px; background-color: var(--primary); }
+        .elegant-title { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--primary); margin-bottom: 0.5rem; border: none; }
+        .elegant-subtitle { font-family: 'Playfair Display', serif; font-style: italic; color: #888; margin-bottom: 2.5rem; display: block; }
+        
+        .elegant-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+        .elegant-card { background: #fff; border: 1px solid rgba(0,0,0,0.05); padding: 1.5rem; border-radius: 4px; transition: 0.3s; position: relative; }
+        .elegant-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.08); border-color: var(--accent); }
+        
+        .elegant-icon-box { font-size: 1.5rem; color: white; background: var(--primary); width: 50px; height: 50px; line-height: 50px; border-radius: 50%; margin: 0 auto 1rem; box-shadow: 0 5px 15px rgba(128, 0, 32, 0.2); transition: 0.4s; }
+        .elegant-card:hover .elegant-icon-box { background: var(--accent); transform: rotateY(180deg); }
+        
+        .card-heading { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: #2c3e50; margin-bottom: 0.8rem; }
+        .card-text { font-size: 0.9rem; color: #666; margin-bottom: 1rem; line-height: 1.5; }
+        .divider-line { width: 30px; height: 1px; background-color: #ddd; margin: 1rem auto; transition: width 0.3s; }
+        .elegant-card:hover .divider-line { width: 50px; background-color: var(--primary); }
+        
+        .detail-list li { list-style: none; text-align: left; font-size: 0.85rem; color: #555; display: flex; align-items: flex-start; }
+        .detail-list li i { color: var(--accent); margin-right: 8px; margin-top: 5px; font-size: 0.5rem; }
+        .detail-example { display: block; font-style: italic; color: #999; font-size: 0.8rem; margin-top: 3px; }
 
         /* Quiz Styles */
         .quiz-container { max-width: 800px; margin: 0 auto; }
-        .quiz-progress {
-            margin-bottom: 1.5rem;
-            color: #666;
-            font-weight: 700;
-            text-align: right;
-            font-size: 0.9rem;
-        }
-        .quiz-card {
-            background: white;
-            border-radius: 8px;
-            padding: 2.5rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border: 1px solid #eee;
-            animation: fadeIn 0.5s ease;
-        }
-        .quiz-question {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 2rem;
-            border-left: 4px solid var(--elegant-gold);
-            padding-left: 20px;
-            line-height: 1.6;
-        }
-        .quiz-options { display: grid; gap: 15px; }
-        .quiz-option {
-            padding: 18px 25px;
-            background: white;
-            border: 2px solid #eef2f5;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-weight: 600;
-            color: var(--dark);
-            text-align: left;
-            position: relative;
-            font-size: 1.05rem;
-        }
-        .quiz-option:hover:not(.disabled) {
-            border-color: var(--primary);
-            background: #f8fafc;
-            transform: translateX(5px);
-        }
-        .quiz-option.correct {
-            background-color: var(--correct-bg);
-            border-color: var(--correct-border);
-            color: var(--correct-text);
-        }
-        .quiz-option.incorrect {
-            background-color: var(--wrong-bg);
-            border-color: var(--wrong-border);
-            color: var(--wrong-text);
-            opacity: 0.8;
-        }
-        .quiz-option.disabled { cursor: default; opacity: 0.7; pointer-events: none; }
-        .quiz-explanation {
-            margin-top: 25px;
-            padding: 20px;
-            background: rgba(212, 175, 55, 0.1);
-            border-radius: 8px;
-            border-left: 4px solid var(--elegant-gold);
-            color: var(--dark);
-            display: none;
-            animation: slideDown 0.4s ease;
-        }
-        .quiz-explanation.show { display: block; }
-        .quiz-nav { margin-top: 25px; text-align: right; display: none; }
-        .quiz-nav.show { display: block; }
-        .quiz-result { text-align: center; padding: 3rem; }
-        .score-circle {
-            width: 150px;
-            height: 150px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 2rem;
-            color: white;
-            font-size: 3rem;
-            font-weight: 800;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            border: 4px solid rgba(255, 255, 255, 0.2);
-        }
-        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        .quiz-progress { margin-bottom: 1.5rem; color: #666; font-weight: 700; text-align: right; }
+        .quiz-card-q { background: white; border-radius: 8px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #eee; }
+        .quiz-question { font-size: 1.2rem; font-weight: 700; color: var(--primary); margin-bottom: 1.5rem; border-left: 4px solid var(--accent); padding-left: 20px; line-height: 1.6; }
+        .quiz-options { display: grid; gap: 12px; }
+        .quiz-option { padding: 15px 20px; background: white; border: 2px solid #eef2f5; border-radius: 8px; cursor: pointer; transition: 0.2s; font-weight: 600; text-align: left; font-size: 1rem; }
+        .quiz-option:hover:not(.disabled) { border-color: var(--primary); background: #fdf2f2; }
+        .quiz-option.correct { background-color: var(--correct-bg); border-color: #28a745; color: var(--correct-text); }
+        .quiz-option.incorrect { background-color: var(--wrong-bg); border-color: #dc3545; color: var(--wrong-text); opacity: 0.8; }
+        .quiz-option.disabled { cursor: default; pointer-events: none; }
+        
+        .quiz-explanation { margin-top: 20px; padding: 15px; background: rgba(212, 175, 55, 0.1); border-radius: 8px; border-left: 4px solid var(--accent); display: none; }
+        .next-btn { margin-top: 20px; background: linear-gradient(135deg, var(--accent), #c5a028); color: white; border: none; padding: 10px 25px; border-radius: 30px; cursor: pointer; display: none; font-weight: bold; box-shadow: 0 4px 10px rgba(212, 175, 55, 0.3); }
+        
+        .score-circle { width: 140px; height: 140px; background: linear-gradient(135deg, var(--primary), #b35a66); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; color: white; font-size: 3rem; font-weight: 800; box-shadow: 0 10px 30px rgba(128, 0, 32, 0.3); border: 4px solid rgba(255, 255, 255, 0.2); }
+
+        @keyframes pulse { 0%, 100% { box-shadow: 0 0 50px rgba(128, 0, 32, 0.4); } 50% { box-shadow: 0 0 70px rgba(128, 0, 32, 0.7); } }
         
         @media (max-width: 768px) {
-            .elegant-title { font-size: 2.2rem; }
             .qa-pair { flex-direction: column; gap: 10px; }
-            .tabs { flex-direction: column; }
-            .tab { border-bottom: 1px solid #eee; }
-            .tab.active { border-left: 4px solid var(--primary); border-bottom: none; }
+            .elegant-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="header-content">
-            <h1>Shirley's Exclamation Learning Platform</h1>
-            <p class="subtitle">感嘆句學習平台 · The Art of Emotion</p>
-        </div>
-    </header>
-    
-    <div class="container">
-        <div class="tabs">
-            <div class="tab active" data-tab="intro">感嘆句介紹 | Intro</div>
-            <div class="tab" data-tab="how">How 感嘆句 | How</div>
-            <div class="tab" data-tab="what">What 感嘆句 | What</div>
-            <div class="tab" data-tab="so-such">So/Such 加強 | So/Such</div>
-            <div class="tab" data-tab="quiz">自我檢測 | Quiz</div>
-        </div>
-        
-        <div class="tab-content active" id="intro">
-            
-            <div class="elegant-wrapper">
-                <h2 class="elegant-title">The Power of Emotion</h2>
-                <span class="elegant-subtitle">Part II: Exclamation · 感嘆句精華</span>
 
-                <div class="elegant-grid">
-                    <div class="elegant-card">
-                        <div class="elegant-icon-box">
-                            <i class="fas fa-bolt"></i>
-                        </div>
-                        <h3 class="card-heading">Intensity & Manner</h3>
-                        <p class="card-text">
-                            <strong>How</strong> 強調性質或狀態的程度，聚焦於形容詞或副詞帶來的感受。
-                        </p>
-                        <div class="divider-line"></div>
-                        <ul class="detail-list">
-                            <li>
-                                <i class="fas fa-circle"></i> 
-                                <div>
-                                    <strong>Structure:</strong> How + Adj/Adv + S + V!
-                                    <span class="detail-example">"How beautiful she is!" <button class="audio-btn" onclick="speak('How beautiful she is!')"><i class="fas fa-volume-up"></i></button></span>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="elegant-card">
-                        <div class="elegant-icon-box">
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <h3 class="card-heading">Object & Essence</h3>
-                        <p class="card-text">
-                            <strong>What</strong> 強調名詞本身，對人或事物整體發出讚嘆。
-                        </p>
-                        <div class="divider-line"></div>
-                        <ul class="detail-list">
-                            <li>
-                                <i class="fas fa-circle"></i>
-                                <div>
-                                    <strong>Structure:</strong> What + (a/an) + N!
-                                    <span class="detail-example">"What a lovely day!" <button class="audio-btn" onclick="speak('What a lovely day!')"><i class="fas fa-volume-up"></i></button></span>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="elegant-card">
-                        <div class="elegant-icon-box">
-                            <i class="fas fa-heart"></i>
-                        </div>
-                        <h3 class="card-heading">Colloquial Emphasis</h3>
-                        <p class="card-text">
-                            在口語中，<strong>So</strong> 與 <strong>Such</strong> 常被用來替代正式感嘆句，語氣更自然親切。
-                        </p>
-                        <div class="divider-line"></div>
-                        <ul class="detail-list">
-                            <li>
-                                <i class="fas fa-circle"></i>
-                                <div>
-                                    <strong>So/Such:</strong> 如此... / 真是...
-                                    <span class="detail-example">"You are so kind!" <button class="audio-btn" onclick="speak('You are so kind!')"><i class="fas fa-volume-up"></i></button></span>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <h2>感嘆句基礎介紹 | Basic Introduction</h2>
-            
-            <div class="card">
-                <h3>什麼是感嘆句？ | What are Exclamations?</h3>
-                <p>感嘆句是用來表達強烈情感的句子，如驚訝、喜悅、憤怒、讚美等。在英語中，感嘆句通常以感嘆號(!)結尾。</p>
-                <div class="example">
-                    <p><strong>Example:</strong> <span class="highlight">How beautiful the girl is!</span> (這個女孩多麼漂亮啊！) <button class="audio-btn" onclick="speak('How beautiful the girl is!')"><i class="fas fa-volume-up"></i></button></p>
-                    <p><strong>Example:</strong> <span class="highlight">What a beautiful girl she is!</span> (她是一個多麼漂亮的女孩啊！) <button class="audio-btn" onclick="speak('What a beautiful girl she is!')"><i class="fas fa-volume-up"></i></button></p>
-                </div>
-            </div>
-        </div>
+    <div id="mindmap-container">
+        <svg class="connections" id="lines-svg"></svg>
         
-        <div class="tab-content" id="how">
-            <h2>How 感嘆句 | How Exclamations</h2>
-            
-            <div class="card">
-                <h3>結構解析 | Structure Analysis</h3>
-                <p>How 感嘆句的核心在於強調<strong>形容詞 (Adjective)</strong> 或 <strong>副詞 (Adverb)</strong>。</p>
-                
-                <div class="structure-box">
-                    <div class="structure-title">How Pattern</div>
-                    <div class="structure-content">
-                        How + Adj./Adv. + S + V + !
-                    </div>
-                </div>
-                
-                <div class="example">
-                    <p><span class="highlight">How slowly</span> the snail is crawling! (這隻蝸牛爬得多慢啊！) <button class="audio-btn" onclick="speak('How slowly the snail is crawling!')"><i class="fas fa-volume-up"></i></button></p>
-                </div>
-                <div class="example">
-                    <p><span class="highlight">How famous</span> Hemingway was! (海明威是多麼有名啊！) <button class="audio-btn" onclick="speak('How famous Hemingway was!')"><i class="fas fa-volume-up"></i></button></p>
-                </div>
-            </div>
-            
-            <div class="card">
-                <h3>句型轉換 | Conversion</h3>
-                <div class="qa-pair">
-                    <div class="question">
-                        <strong>陳述句 (Declarative)</strong><br>
-                        The girl is <span style="color:var(--primary)">very beautiful</span>. <button class="audio-btn" onclick="speak('The girl is very beautiful.')"><i class="fas fa-volume-up"></i></button>
-                    </div>
-                    <div class="answer">
-                        <strong>感嘆句 (Exclamation)</strong><br>
-                        <span style="color:var(--primary)">How beautiful</span> the girl is! <button class="audio-btn" onclick="speak('How beautiful the girl is!')"><i class="fas fa-volume-up"></i></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="tab-content" id="what">
-            <h2>What 感嘆句 | What Exclamations</h2>
-            
-            <div class="card">
-                <h3>結構解析 | Structure Analysis</h3>
-                <p>What 感嘆句的核心在於強調<strong>名詞 (Noun)</strong>。</p>
-                
-                <div class="structure-box">
-                    <div class="structure-title">What Pattern</div>
-                    <div class="structure-content">
-                        What + (a/an) + Adj. + N + S + V + !
-                    </div>
-                </div>
-                
-                <div class="note-box">
-                    <i class="fas fa-info-circle"></i> <strong>Note:</strong> 當名詞為複數或不可數時，省略 a/an。
-                </div>
-                
-                <div class="example">
-                    <p><span class="highlight">What a beautiful girl</span> she is! (她是個多麼漂亮的女孩！) <button class="audio-btn" onclick="speak('What a beautiful girl she is!')"><i class="fas fa-volume-up"></i></button></p>
-                    <p><span class="highlight">What bad weather</span> it is! (天氣真糟！ *不可數) <button class="audio-btn" onclick="speak('What bad weather it is!')"><i class="fas fa-volume-up"></i></button></p>
-                    <p><span class="highlight">What an interesting movie</span> it was! (那是一部多麼有趣的電影啊！) <button class="audio-btn" onclick="speak('What an interesting movie it was!')"><i class="fas fa-volume-up"></i></button></p>
-                    <p><span class="highlight">What a fast runner</span> he is! (他是個多麼快的跑者啊！) <button class="audio-btn" onclick="speak('What a fast runner he is!')"><i class="fas fa-volume-up"></i></button></p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="tab-content" id="so-such">
-            <h2>So/Such 加強語氣 | So/Such for Emphasis</h2>
-            
-            <div class="card">
-                <h3>口語中的強調 | Colloquial Emphasis</h3>
-                <p>在日常口語中，我們常使用 so 和 such 來代替完整的感嘆句結構。</p>
-                
-                <div class="qa-pair">
-                    <div class="question" style="background: #fffcf5; border:1px solid #d4af37;">
-                        <h4 style="color:#d4af37; margin-bottom:10px;">SO + Adj.</h4>
-                        <p>The girl is <span class="highlight">so</span> beautiful. <button class="audio-btn" onclick="speak('The girl is so beautiful.')"><i class="fas fa-volume-up"></i></button></p>
-                    </div>
-                    <div class="answer" style="background: #fffcf5; border:1px solid #d4af37; color:#444;">
-                        <h4 style="color:#d4af37; margin-bottom:10px;">SUCH + Noun</h4>
-                        <p>She is <span class="highlight">such</span> a beautiful girl! <button class="audio-btn" onclick="speak('She is such a beautiful girl!')"><i class="fas fa-volume-up"></i></button></p>
-                    </div>
-                </div>
-                
-                <div class="example">
-                    <p>He runs <span class="highlight">so</span> fast! (他跑得好快！) <button class="audio-btn" onclick="speak('He runs so fast!')"><i class="fas fa-volume-up"></i></button></p>
-                    <p>He is <span class="highlight">such</span> a fast runner! (他真是個跑得快的跑者！) <button class="audio-btn" onclick="speak('He is such a fast runner!')"><i class="fas fa-volume-up"></i></button></p>
-                </div>
-            </div>
+        <div class="central-node">
+            <div class="central-title">Shirley's Exclamation</div>
+            <div class="central-sub">感嘆句</div>
         </div>
 
-        <div class="tab-content" id="quiz">
-            <h2>自我檢測 | Quiz</h2>
-            <div class="quiz-container">
-                <div id="quiz-question-container">
-                    </div>
-            </div>
+        <div class="satellite" onclick="openModal('intro')">
+            <i class="fas fa-book-open"></i>
+            <div>概論與介紹<br><span>Introduction</span></div>
+        </div>
+        <div class="satellite" onclick="openModal('how')">
+            <i class="fas fa-bolt"></i>
+            <div>How 感嘆句<br><span>How Pattern</span></div>
+        </div>
+        <div class="satellite" onclick="openModal('what')">
+            <i class="fas fa-star"></i>
+            <div>What 感嘆句<br><span>What Pattern</span></div>
+        </div>
+        <div class="satellite" onclick="openModal('so-such')">
+            <i class="fas fa-heart"></i>
+            <div>So/Such<br><span>Emphasis</span></div>
+        </div>
+        <div class="satellite quiz-node" onclick="openModal('quiz')">
+            <i class="fas fa-pencil-alt"></i>
+            <div>自我檢測<br><span>Quiz (20)</span></div>
         </div>
     </div>
-    
-    <footer>
-        <p>Shirley's Exclamation Learning Platform | 感嘆句學習平台</p>
-        <p>© 2025 Shirley's Grammar E-Charger · Designed with elegance</p>
-    </footer>
+
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal-card">
+            <header class="modal-header">
+                <div class="modal-title"><h2>Shirley's Exclamation Platform</h2></div>
+                <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+            </header>
+            <nav class="modal-tabs" id="modal-tabs"></nav>
+            <div class="modal-body" id="modal-content"></div>
+        </div>
+    </div>
 
     <script>
-        // 選項卡切換邏輯
-        document.querySelectorAll('.tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-                
-                tab.classList.add('active');
-                const tabId = tab.getAttribute('data-tab');
-                document.getElementById(tabId).classList.add('active');
+        // --- 1. CONTENT DATA ---
+        const contentData = {
+            intro: {
+                title: "概論與介紹",
+                html: `
+                <div class="elegant-wrapper">
+                    <h2 class="elegant-title">The Power of Emotion</h2>
+                    <span class="elegant-subtitle">Part II: Exclamation · 感嘆句精華</span>
 
-                // 初始化測驗 (如果點擊的是 quiz tab)
-                if (tabId === 'quiz') {
-                    const container = document.getElementById('quiz-question-container');
-                    if (container.innerHTML.trim() === '') {
-                        initQuiz();
-                    }
-                }
+                    <div class="elegant-grid">
+                        <div class="elegant-card">
+                            <div class="elegant-icon-box"><i class="fas fa-bolt"></i></div>
+                            <h3 class="card-heading">Intensity & Manner</h3>
+                            <p class="card-text"><strong>How</strong> 強調性質或狀態的程度，聚焦於形容詞或副詞帶來的感受。</p>
+                            <div class="divider-line"></div>
+                            <ul class="detail-list">
+                                <li><i class="fas fa-circle"></i> <div><strong>Structure:</strong> How + Adj/Adv + S + V!<span class="detail-example">"How beautiful she is!" <button class="audio-btn" onclick="speak('How beautiful she is!')"><i class="fas fa-volume-up"></i></button></span></div></li>
+                            </ul>
+                        </div>
+
+                        <div class="elegant-card">
+                            <div class="elegant-icon-box"><i class="fas fa-star"></i></div>
+                            <h3 class="card-heading">Object & Essence</h3>
+                            <p class="card-text"><strong>What</strong> 強調名詞本身，對人或事物整體發出讚嘆。</p>
+                            <div class="divider-line"></div>
+                            <ul class="detail-list">
+                                <li><i class="fas fa-circle"></i> <div><strong>Structure:</strong> What + (a/an) + N!<span class="detail-example">"What a lovely day!" <button class="audio-btn" onclick="speak('What a lovely day!')"><i class="fas fa-volume-up"></i></button></span></div></li>
+                            </ul>
+                        </div>
+
+                        <div class="elegant-card">
+                            <div class="elegant-icon-box"><i class="fas fa-heart"></i></div>
+                            <h3 class="card-heading">Colloquial Emphasis</h3>
+                            <p class="card-text">在口語中，<strong>So</strong> 與 <strong>Such</strong> 常被用來替代正式感嘆句，語氣更自然親切。</p>
+                            <div class="divider-line"></div>
+                            <ul class="detail-list">
+                                <li><i class="fas fa-circle"></i> <div><strong>So/Such:</strong> 如此... / 真是...<span class="detail-example">"You are so kind!" <button class="audio-btn" onclick="speak('You are so kind!')"><i class="fas fa-volume-up"></i></button></span></div></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <h2>感嘆句基礎介紹 | Basic Introduction</h2>
+                <div class="card">
+                    <h3>什麼是感嘆句？ | What are Exclamations?</h3>
+                    <p>感嘆句是用來表達強烈情感的句子，如驚訝、喜悅、憤怒、讚美等。在英語中，感嘆句通常以感嘆號(!)結尾。</p>
+                    <div class="example">
+                        <p><strong>Example:</strong> <span class="highlight">How beautiful the girl is!</span> (這個女孩多麼漂亮啊！) <button class="audio-btn" onclick="speak('How beautiful the girl is!')"><i class="fas fa-volume-up"></i></button></p>
+                        <p><strong>Example:</strong> <span class="highlight">What a beautiful girl she is!</span> (她是一個多麼漂亮的女孩啊！) <button class="audio-btn" onclick="speak('What a beautiful girl she is!')"><i class="fas fa-volume-up"></i></button></p>
+                    </div>
+                </div>`
+            },
+            how: {
+                title: "How 感嘆句",
+                html: `
+                <h2>How 感嘆句 | How Exclamations</h2>
+                
+                <div class="card">
+                    <h3>結構解析 | Structure Analysis</h3>
+                    <p>How 感嘆句的核心在於強調<strong>形容詞 (Adjective)</strong> 或 <strong>副詞 (Adverb)</strong>。</p>
+                    
+                    <div class="structure-box">
+                        <div class="structure-title">How Pattern</div>
+                        <div class="structure-content">How + Adj./Adv. + S + V + !</div>
+                    </div>
+                    
+                    <div class="example">
+                        <p><span class="highlight">How slowly</span> the snail is crawling! (這隻蝸牛爬得多慢啊！) <button class="audio-btn" onclick="speak('How slowly the snail is crawling!')"><i class="fas fa-volume-up"></i></button></p>
+                    </div>
+                    <div class="example">
+                        <p><span class="highlight">How famous</span> Hemingway was! (海明威是多麼有名啊！) <button class="audio-btn" onclick="speak('How famous Hemingway was!')"><i class="fas fa-volume-up"></i></button></p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3>句型轉換 | Conversion</h3>
+                    <div class="qa-pair">
+                        <div class="question">
+                            <strong>陳述句 (Declarative)</strong><br>
+                            The girl is <span style="color:var(--primary)">very beautiful</span>. <button class="audio-btn" onclick="speak('The girl is very beautiful.')"><i class="fas fa-volume-up"></i></button>
+                        </div>
+                        <div class="answer">
+                            <strong>感嘆句 (Exclamation)</strong><br>
+                            <span style="color:var(--primary)">How beautiful</span> the girl is! <button class="audio-btn" onclick="speak('How beautiful the girl is!')"><i class="fas fa-volume-up"></i></button>
+                        </div>
+                    </div>
+                </div>`
+            },
+            what: {
+                title: "What 感嘆句",
+                html: `
+                <h2>What 感嘆句 | What Exclamations</h2>
+                
+                <div class="card">
+                    <h3>結構解析 | Structure Analysis</h3>
+                    <p>What 感嘆句的核心在於強調<strong>名詞 (Noun)</strong>。</p>
+                    
+                    <div class="structure-box">
+                        <div class="structure-title">What Pattern</div>
+                        <div class="structure-content">What + (a/an) + Adj. + N + S + V + !</div>
+                    </div>
+                    
+                    <div class="note-box">
+                        <i class="fas fa-info-circle"></i> <strong>Note:</strong> 當名詞為複數或不可數時，省略 a/an。
+                    </div>
+                    
+                    <div class="example">
+                        <p><span class="highlight">What a beautiful girl</span> she is! (她是個多麼漂亮的女孩！) <button class="audio-btn" onclick="speak('What a beautiful girl she is!')"><i class="fas fa-volume-up"></i></button></p>
+                        <p><span class="highlight">What bad weather</span> it is! (天氣真糟！ *不可數) <button class="audio-btn" onclick="speak('What bad weather it is!')"><i class="fas fa-volume-up"></i></button></p>
+                        <p><span class="highlight">What an interesting movie</span> it was! (那是一部多麼有趣的電影啊！) <button class="audio-btn" onclick="speak('What an interesting movie it was!')"><i class="fas fa-volume-up"></i></button></p>
+                        <p><span class="highlight">What a fast runner</span> he is! (他是個多麼快的跑者啊！) <button class="audio-btn" onclick="speak('What a fast runner he is!')"><i class="fas fa-volume-up"></i></button></p>
+                    </div>
+                </div>`
+            },
+            'so-such': {
+                title: "So/Such",
+                html: `
+                <h2>So/Such 加強語氣 | Emphasis</h2>
+                
+                <div class="card">
+                    <h3>口語中的強調 | Colloquial Emphasis</h3>
+                    <p>在日常口語中，我們常使用 so 和 such 來代替完整的感嘆句結構。</p>
+                    
+                    <div class="qa-pair">
+                        <div class="question" style="background: #fffcf5; border:1px solid var(--accent);">
+                            <h4>SO + Adj.</h4>
+                            <p>The girl is <span class="highlight">so</span> beautiful. <button class="audio-btn" onclick="speak('The girl is so beautiful.')"><i class="fas fa-volume-up"></i></button></p>
+                        </div>
+                        <div class="answer" style="background: #fffcf5; border:1px solid var(--accent); color:#444;">
+                            <h4>SUCH + Noun</h4>
+                            <p>She is <span class="highlight">such</span> a beautiful girl! <button class="audio-btn" onclick="speak('She is such a beautiful girl!')"><i class="fas fa-volume-up"></i></button></p>
+                        </div>
+                    </div>
+                    
+                    <div class="example">
+                        <p>He runs <span class="highlight">so</span> fast! (他跑得好快！) <button class="audio-btn" onclick="speak('He runs so fast!')"><i class="fas fa-volume-up"></i></button></p>
+                        <p>He is <span class="highlight">such</span> a fast runner! (他真是個跑得快的跑者！) <button class="audio-btn" onclick="speak('He is such a fast runner!')"><i class="fas fa-volume-up"></i></button></p>
+                    </div>
+                </div>`
+            },
+            quiz: {
+                title: "自我檢測",
+                html: `<div id="quiz-interface" class="quiz-container">
+                    <div class="quiz-progress">Question <span id="current-question-num">1</span> of 20</div>
+                    <div id="quiz-question-container"></div>
+                </div>
+                <div id="quiz-score" class="quiz-result" style="display: none;">
+                    <div class="score-circle" id="score-val">0</div>
+                    <h2>Quiz Completed!</h2>
+                    <p id="score-msg" style="margin:20px 0; font-size:1.1rem; color:#666;"></p>
+                    <button class="next-btn" style="display:inline-block;" onclick="initQuiz()"><i class="fas fa-redo"></i> Restart Quiz</button>
+                </div>`
+            }
+        };
+
+        // --- 2. QUIZ DATA ---
+        const quizQuestions = [
+            { question: "1. ______ a beautiful day it is!", options: ["How", "What", "So", "Such"], correct: 1, explanation: "<strong>Explanation:</strong> Structure: What + (a) + Adj + Noun + S + V." },
+            { question: "2. ______ beautiful the day is!", options: ["How", "What", "So", "Such"], correct: 0, explanation: "<strong>Explanation:</strong> Structure: How + Adj + S + V." },
+            { question: "3. ______ clever boy he is!", options: ["What a", "What", "How", "How a"], correct: 0, explanation: "<strong>Explanation:</strong> 'Boy' is a singular countable noun, so 'What a'." },
+            { question: "4. ______ fast he runs!", options: ["What", "How", "So", "Such"], correct: 1, explanation: "<strong>Explanation:</strong> 'Fast' is an adverb modifying 'runs', so 'How'." },
+            { question: "5. ______ strange news this is!", options: ["What a", "What", "How", "How a"], correct: 1, explanation: "<strong>Explanation:</strong> 'News' is uncountable, so 'What' without 'a'." },
+            { question: "6. She is ______ a nice person!", options: ["so", "such", "how", "what"], correct: 1, explanation: "<strong>Explanation:</strong> 'Such' is used before 'a/an + Adjective + Noun'." },
+            { question: "7. You are ______ kind!", options: ["so", "such", "what", "how"], correct: 0, explanation: "<strong>Explanation:</strong> 'So' is used before an adjective without a noun." },
+            { question: "8. ______ expensive car you have!", options: ["What a", "What an", "How", "So"], correct: 1, explanation: "<strong>Explanation:</strong> 'Expensive' starts with a vowel sound, so 'What an'." },
+            { question: "9. ______ lovely flowers these are!", options: ["What a", "What", "How", "So"], correct: 1, explanation: "<strong>Explanation:</strong> 'Flowers' is plural, so 'What' without 'a'." },
+            { question: "10. ______ well she sings!", options: ["What", "How", "Such", "What a"], correct: 1, explanation: "<strong>Explanation:</strong> 'Well' is an adverb, so 'How'." },
+            { question: "11. Look ______ dirty your hands are!", options: ["what", "how", "so", "such"], correct: 1, explanation: "<strong>Explanation:</strong> How + Adj (dirty) + S + V." },
+            { question: "12. ______ a mess!", options: ["How", "What", "So", "Such"], correct: 1, explanation: "<strong>Explanation:</strong> 'What a mess!' is a common exclamation." },
+            { question: "13. The weather is ______ bad!", options: ["so", "such", "what", "how"], correct: 0, explanation: "<strong>Explanation:</strong> 'So' modifies the adjective 'bad'." },
+            { question: "14. It is ______ bad weather!", options: ["so", "such", "how", "what"], correct: 1, explanation: "<strong>Explanation:</strong> 'Such' modifies the noun phrase 'bad weather'." },
+            { question: "15. ______ delicious food!", options: ["What a", "What", "How", "How a"], correct: 1, explanation: "<strong>Explanation:</strong> 'Food' is uncountable, so 'What'." },
+            { question: "16. ______ tired I am!", options: ["What", "How", "What a", "Such"], correct: 1, explanation: "<strong>Explanation:</strong> How + Adj (tired) + S + V." },
+            { question: "17. ______ an exciting game it was!", options: ["How", "What", "So", "Such"], correct: 1, explanation: "<strong>Explanation:</strong> 'What' with noun phrase 'an exciting game'." },
+            { question: "18. ______ they have grown!", options: ["What", "How", "So", "Such"], correct: 1, explanation: "<strong>Explanation:</strong> How + S + V (degree of action)." },
+            { question: "19. ______ cold it is today!", options: ["What", "How", "What a", "Such"], correct: 1, explanation: "<strong>Explanation:</strong> How + Adj (cold) + S + V." },
+            { question: "20. He is ______ a genius!", options: ["so", "such", "how", "what"], correct: 1, explanation: "<strong>Explanation:</strong> 'Such' emphasizes the noun 'genius'." }
+        ];
+
+        // --- 3. SYSTEM LOGIC ---
+        function layoutSatellites() {
+            const satellites = document.querySelectorAll('.satellite');
+            const svg = document.getElementById('lines-svg');
+            while (svg.firstChild) svg.removeChild(svg.firstChild);
+
+            const radius = 220; 
+            const startAngle = -90; 
+            const total = satellites.length;
+            const cx = window.innerWidth / 2;
+            const cy = window.innerHeight / 2;
+
+            satellites.forEach((sat, i) => {
+                const angle = startAngle + (i * (360 / total));
+                const rad = angle * (Math.PI / 180);
+                const x = Math.cos(rad) * radius;
+                const y = Math.sin(rad) * radius;
+
+                sat.style.left = `calc(50% + ${x}px - 65px)`; 
+                sat.style.top = `calc(50% + ${y}px - 65px)`;
+
+                const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                line.setAttribute("x1", "50%"); line.setAttribute("y1", "50%");
+                line.setAttribute("x2", cx + x); line.setAttribute("y2", cy + y);
+                line.classList.add("conn-line");
+                svg.appendChild(line);
             });
-        });
+        }
         
-        // 語音播放功能
+        window.addEventListener('resize', layoutSatellites);
+        window.addEventListener('load', layoutSatellites);
+
+        const tabKeys = ['intro', 'how', 'what', 'so-such', 'quiz'];
+
+        function openModal(activeKey) {
+            const modal = document.getElementById('modal-overlay');
+            const tabsContainer = document.getElementById('modal-tabs');
+            
+            tabsContainer.innerHTML = tabKeys.map(key => {
+                const isQuiz = key === 'quiz';
+                return `<button class="tab-btn ${key === activeKey ? 'active' : ''}" 
+                        onclick="switchTab('${key}', this)">
+                        ${isQuiz ? '<i class="fas fa-pencil-alt"></i> ' : ''}${contentData[key].title}
+                        </button>`;
+            }).join('');
+
+            loadContent(activeKey);
+            modal.classList.add('active');
+        }
+
+        function closeModal() { document.getElementById('modal-overlay').classList.remove('active'); }
+
+        function switchTab(key, btn) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            loadContent(key);
+        }
+
+        function loadContent(key) {
+            const contentDiv = document.getElementById('modal-content');
+            contentDiv.innerHTML = contentData[key].html;
+            if(key === 'quiz') initQuiz();
+        }
+
         function speak(text) {
             if ('speechSynthesis' in window) {
-                speechSynthesis.cancel();
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'en-US';
-                utterance.rate = 0.9;
-                
-                const voices = speechSynthesis.getVoices();
-                const enVoice = voices.find(v => v.lang.includes('en-US') || v.lang.includes('en-GB'));
-                if(enVoice) utterance.voice = enVoice;
-
-                speechSynthesis.speak(utterance);
-            } else {
-                alert("Sorry, your browser doesn't support text-to-speech.");
+                window.speechSynthesis.cancel();
+                const u = new SpeechSynthesisUtterance(text);
+                u.lang = 'en-US'; u.rate = 0.9;
+                window.speechSynthesis.speak(u);
             }
         }
 
         // Quiz Logic
-        const quizQuestions = [
-            {
-                question: "1. ______ a beautiful day it is!",
-                options: ["How", "What", "So", "Such"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> Structure: What + (a) + Adj + Noun + S + V. 'Day' is a noun."
-            },
-            {
-                question: "2. ______ beautiful the day is!",
-                options: ["How", "What", "So", "Such"],
-                correct: 0,
-                explanation: "<strong>Explanation:</strong> Structure: How + Adj + S + V. 'Beautiful' is an adjective."
-            },
-            {
-                question: "3. ______ clever boy he is!",
-                options: ["What a", "What", "How", "How a"],
-                correct: 0,
-                explanation: "<strong>Explanation:</strong> 'Boy' is a singular countable noun, so we need 'What a'."
-            },
-            {
-                question: "4. ______ fast he runs!",
-                options: ["What", "How", "So", "Such"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> 'Fast' is an adverb modifying 'runs', so we use 'How'."
-            },
-            {
-                question: "5. ______ strange news this is!",
-                options: ["What a", "What", "How", "How a"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> 'News' is uncountable, so we use 'What' without 'a'."
-            },
-            {
-                question: "6. She is ______ a nice person!",
-                options: ["so", "such", "how", "what"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> 'Such' is used before 'a/an + Adjective + Noun'."
-            },
-            {
-                question: "7. You are ______ kind!",
-                options: ["so", "such", "what", "how"],
-                correct: 0,
-                explanation: "<strong>Explanation:</strong> 'So' is used before an adjective without a noun."
-            },
-            {
-                question: "8. ______ expensive car you have!",
-                options: ["What a", "What an", "How", "So"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> 'Expensive' starts with a vowel sound, so we use 'What an'."
-            },
-            {
-                question: "9. ______ lovely flowers these are!",
-                options: ["What a", "What", "How", "So"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> 'Flowers' is plural, so we use 'What' without 'a/an'."
-            },
-            {
-                question: "10. ______ well she sings!",
-                options: ["What", "How", "Such", "What a"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> 'Well' is an adverb, so we use 'How'."
-            },
-            {
-                question: "11. Look ______ dirty your hands are!",
-                options: ["what", "how", "so", "such"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> How + Adj (dirty) + S + V."
-            },
-            {
-                question: "12. ______ a mess!",
-                options: ["How", "What", "So", "Such"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> 'What a mess!' is a common exclamation with a noun phrase."
-            },
-            {
-                question: "13. The weather is ______ bad!",
-                options: ["so", "such", "what", "how"],
-                correct: 0,
-                explanation: "<strong>Explanation:</strong> 'So' modifies the adjective 'bad'."
-            },
-            {
-                question: "14. It is ______ bad weather!",
-                options: ["so", "such", "how", "what"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> 'Such' modifies the noun phrase 'bad weather'."
-            },
-            {
-                question: "15. ______ delicious food!",
-                options: ["What a", "What", "How", "How a"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> 'Food' is uncountable, so 'What' is used without 'a'."
-            },
-            {
-                question: "16. ______ tired I am!",
-                options: ["What", "How", "What a", "Such"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> How + Adj (tired) + S + V."
-            },
-            {
-                question: "17. ______ an exciting game it was!",
-                options: ["How", "What", "So", "Such"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> 'What' is used with the noun phrase 'an exciting game'."
-            },
-            {
-                question: "18. ______ they have grown!",
-                options: ["What", "How", "So", "Such"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> How + S + V (to express degree of action/change). 'How they have grown!'"
-            },
-            {
-                question: "19. ______ cold it is today!",
-                options: ["What", "How", "What a", "Such"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> How + Adj (cold) + S + V."
-            },
-            {
-                question: "20. He is ______ a genius!",
-                options: ["so", "such", "how", "what"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> 'Such' emphasizes the noun 'genius'."
-            }
-        ];
-
-        let currentQuestionIndex = 0;
+        let currentQIndex = 0;
         let score = 0;
+        let answered = false;
 
         function initQuiz() {
-            currentQuestionIndex = 0;
-            score = 0;
-            showQuestion(currentQuestionIndex);
+            currentQIndex = 0; score = 0;
+            document.getElementById('quiz-interface').style.display = 'block';
+            document.getElementById('quiz-score').style.display = 'none';
+            showQuestion(0);
         }
 
         function showQuestion(index) {
+            answered = false;
             const container = document.getElementById('quiz-question-container');
-            if (index >= quizQuestions.length) {
-                showResult(container);
-                return;
-            }
             const q = quizQuestions[index];
-            let html = `
-                <div class="quiz-card">
-                    <div class="quiz-progress">Question ${index + 1} / ${quizQuestions.length}</div>
+            
+            container.innerHTML = `
+                <div class="quiz-card-q">
                     <div class="quiz-question">${q.question}</div>
                     <div class="quiz-options">
                         ${q.options.map((opt, i) => `
-                            <div class="quiz-option" onclick="checkAnswer(this, ${i})">${opt}</div>
+                            <div class="quiz-option" onclick="handleAnswer(this, ${i})">${opt}</div>
                         `).join('')}
                     </div>
-                    <div class="quiz-explanation" id="explanation-${index}">
-                        ${q.explanation}
-                    </div>
-                    <div class="quiz-nav" id="nav-${index}">
-                        <button class="btn" onclick="nextQuestion()">Next Question <i class="fas fa-arrow-right"></i></button>
-                    </div>
+                    <div class="quiz-explanation" id="explanation">${q.explanation}</div>
+                    <button class="next-btn" id="next-btn" onclick="nextQ()">Next <i class="fas fa-arrow-right"></i></button>
                 </div>
             `;
-            container.innerHTML = html;
+            document.getElementById('current-question-num').innerText = index + 1;
         }
 
-        window.checkAnswer = function(optionElement, selectedIndex) {
-            const currentQ = quizQuestions[currentQuestionIndex];
-            const explanation = document.getElementById(`explanation-${currentQuestionIndex}`);
-            const nav = document.getElementById(`nav-${currentQuestionIndex}`);
-            const allOptions = optionElement.parentElement.children;
-
-            if (optionElement.classList.contains('disabled')) return;
-
-            // Disable all options
-            for (let i = 0; i < allOptions.length; i++) {
-                allOptions[i].classList.add('disabled');
-            }
-
-            if (selectedIndex === currentQ.correct) {
-                optionElement.classList.add('correct');
+        function handleAnswer(btn, selectedIndex) {
+            if (answered) return;
+            answered = true;
+            const q = quizQuestions[currentQIndex];
+            const allBtns = document.querySelectorAll('.quiz-option');
+            
+            if (selectedIndex === q.correct) {
+                btn.classList.add('correct');
                 score++;
             } else {
-                optionElement.classList.add('incorrect');
-                allOptions[currentQ.correct].classList.add('correct');
+                btn.classList.add('incorrect');
+                allBtns[q.correct].classList.add('correct');
             }
-            explanation.classList.add('show');
-            nav.classList.add('show');
+            
+            allBtns.forEach(b => b.classList.add('disabled'));
+            document.getElementById('explanation').style.display = 'block';
+            document.getElementById('next-btn').style.display = 'inline-block';
         }
 
-        window.nextQuestion = function() {
-            currentQuestionIndex++;
-            showQuestion(currentQuestionIndex);
+        function nextQ() {
+            currentQIndex++;
+            if (currentQIndex < quizQuestions.length) {
+                showQuestion(currentQIndex);
+            } else {
+                showResult();
+            }
         }
 
-        function showResult(container) {
-            container.innerHTML = `
-                <div class="card quiz-result">
-                    <div class="score-circle">${score}</div>
-                    <h2>Quiz Completed!</h2>
-                    <p>Your Score: ${score} / ${quizQuestions.length}</p>
-                    <p>${score >= 18 ? "Excellent! You mastered Exclamations!" : score >= 12 ? "Good job! Keep practicing." : "Review the lessons and try again!"}</p>
-                    <button class="btn" onclick="initQuiz()" style="margin-top: 20px;">
-                        <i class="fas fa-redo"></i> Restart Quiz
-                    </button>
-                </div>
-            `;
+        function showResult() {
+            document.getElementById('quiz-interface').style.display = 'none';
+            const resDiv = document.getElementById('quiz-score');
+            resDiv.style.display = 'block';
+            document.getElementById('score-val').innerText = score;
+            const msg = document.getElementById('score-msg');
+            
+            if (score >= 18) msg.textContent = "Excellent! You mastered Exclamations! 🏆";
+            else if (score >= 12) msg.textContent = "Good job! Keep practicing. 👏";
+            else msg.textContent = "Review the lessons and try again! 💪";
         }
     </script>
 </body>
