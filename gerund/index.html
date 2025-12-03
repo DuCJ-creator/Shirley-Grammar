@@ -1,1113 +1,610 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shirley's Gerund Learning Platform | 動名詞學習平台</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Nunito:wght@400;600;700;800&display=swap');
-        :root {
-            /* 高雅配色系統：深海藍、墨綠搭配流金點綴 */
-            --primary-dark: #0F2027;  /* 深邃背景 */
-            --primary-mid: #203A43;   /* 中間調 */
-            --primary-accent: #2C5364; /* 亮部 */
-            --gold-accent: #FFD700;   /* 高雅金 */
-            --gold-dark: #B8860B;     /* 深金 */
-            --accent: #FFD700; 
-            --dynamic-gradient: linear-gradient(135deg, #2C5364 0%, #203A43 50%, #0F2027 100%);
-            --gold-gradient: linear-gradient(45deg, #B8860B, #FFD700, #B8860B);
-            --bg-body: #f4f7f9;       
-            --bg-card: rgba(255, 255, 255, 0.95);
-            --text-main: #1a1a1a;
-            --text-light: #5a6a7a;
-            --text-on-dark: #ffffff;
-            --shadow-soft: 0 10px 30px -10px rgba(0,0,0,0.1);
-            --shadow-glow: 0 5px 15px rgba(255, 215, 0, 0.3);
-            --radius-lg: 24px;
-            --radius-md: 16px;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Shirley's Grammar | Gerunds</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Inter:wght@400;500;600&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      /* --- 動名詞專屬配色 (Purple & Teal) --- */
+      --primary-tone: #4a148c; /* 皇家深紫 */
+      --secondary-tone: #00b894; /* 活力青/綠松石 */
+      --text-main: #2d3436;
+      --bg-cool: #f3e5f5; /* 淡紫氛圍背景 */
+      --highlight-bg: #e0f2f1; /* 青色螢光筆底 */
+      
+      /* --- 尺寸變數 --- */
+      --node-size: 115px; 
+      --center-size: 200px;
+    }
 
-            /* Quiz Colors */
-            --correct-bg: #d4edda;
-            --correct-border: #28a745;
-            --correct-text: #155724;
-            --wrong-bg: #f8d7da;
-            --wrong-border: #dc3545;
-            --wrong-text: #721c24;
-        }
-        
-        /* 動態背景動畫 */
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Nunito', 'Noto Sans TC', '微軟正黑體', sans-serif;
-        }
-        
-        body {
-            background: linear-gradient(-45deg, #f4f7f9, #eef2f5, #e0eaf0, #f4f7f9);
-            background-size: 400% 400%;
-            animation: gradientBG 20s ease infinite;
-            color: var(--text-main);
-            line-height: 1.75;
-        }
-        
-        /* Header: 深邃質感 */
-        header {
-            background: var(--dynamic-gradient);
-            color: var(--text-on-dark);
-            padding: 4rem 1.5rem 5rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(15, 32, 39, 0.3);
-        }
-        header::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            opacity: 0.5;
-        }
-        .header-content {
-            position: relative;
-            z-index: 1;
-        }
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            font-weight: 800;
-            letter-spacing: -1px;
-            background: linear-gradient(to right, #ffffff, #cce0ee);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        .subtitle {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            font-weight: 600;
-            color: var(--gold-accent);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            display: inline-block;
-            padding: 0.5rem 1.5rem;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50px;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 215, 0, 0.2);
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem 4rem;
-            position: relative;
-            z-index: 10;
-        }
-        
-        /* Tabs */
-        .tabs {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 12px;
-            margin: -3.5rem auto 3rem;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(15px);
-            border-radius: 60px;
-            box-shadow: var(--shadow-soft);
-            border: 1px solid rgba(255,255,255,0.4);
-            max-width: fit-content;
-        }
-        .tab {
-            padding: 0.9rem 1.8rem;
-            cursor: pointer;
-            text-align: center;
-            transition: all 0.4s ease;
-            font-weight: 700;
-            color: var(--text-light);
-            border-radius: 50px;
-            position: relative;
-            overflow: hidden;
-            font-size: 1rem;
-            flex: 0 1 auto;
-        }
-        .tab::before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 15%;
-            width: 70%;
-            height: 3px;
-            background: var(--gold-accent);
-            transform: scaleX(0);
-            transition: transform 0.4s ease;
-            border-radius: 10px;
-        }
-        .tab:hover { color: var(--primary-dark); background: rgba(255,255,255,0.8); }
-        .tab.active { color: var(--primary-dark); background: white; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        .tab.active::before { transform: scaleX(1); box-shadow: 0 0 10px var(--gold-accent); }
-        
-        .tab-content { display: none; animation: slideUpFade 0.7s cubic-bezier(0.25, 1, 0.5, 1); }
-        @keyframes slideUpFade { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        .tab-content.active { display: block; }
-        
-        h2 {
-            color: var(--primary-dark);
-            margin-bottom: 2.5rem;
-            font-size: 2rem;
-            font-weight: 800;
-            text-align: center;
-            position: relative;
-            padding-bottom: 1rem;
-        }
-        h2::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            height: 4px;
-            width: 60px;
-            background: var(--gold-gradient);
-            border-radius: 2px;
-        }
-        h3 {
-            color: var(--primary-mid);
-            margin: 0 0 1.2rem;
-            font-size: 1.4rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-        }
-        h3::before {
-            content: '';
-            display: inline-block;
-            width: 8px;
-            height: 24px;
-            background: var(--gold-accent);
-            margin-right: 12px;
-            border-radius: 4px;
-        }
-        
-        /* Card Styles */
-        .card {
-            background: var(--bg-card);
-            border-radius: var(--radius-lg);
-            padding: 2.5rem;
-            margin-bottom: 2.5rem;
-            box-shadow: var(--shadow-soft);
-            border: 1px solid rgba(255,255,255,0.8);
-            transition: all 0.3s ease;
-            position: relative;
-            z-index: 5;
-        }
-        .card:hover {
-            transform: translateY(-7px);
-            box-shadow: 0 15px 40px -10px rgba(0,0,0,0.15);
-            border-color: rgba(255, 215, 0, 0.3);
-        }
-        
-        /* Table Styles */
-        table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            background: white;
-            min-width: 600px;
-            margin: 1.5rem 0;
-            border-radius: var(--radius-md);
-            overflow: hidden;
-            box-shadow: var(--shadow-soft);
-        }
-        th, td { padding: 18px 24px; text-align: left; border-bottom: 1px solid #eef2f5; }
-        th {
-            background: var(--primary-mid);
-            color: white;
-            font-weight: 700;
-            font-size: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-bottom: 3px solid var(--gold-accent);
-        }
-        tr:nth-child(even) { background-color: #fcfdfd; }
-        tr:hover td { background-color: #f0f4f8; }
-        
-        /* Example Box */
-        .example {
-            background: linear-gradient(to right, #fffcf0, #fff);
-            border-left: 5px solid var(--gold-accent);
-            padding: 1.5rem 2rem;
-            margin: 1.5rem 0;
-            border-radius: 0 var(--radius-md) var(--radius-md) 0;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
-            color: var(--text-main);
-            position: relative;
-            z-index: 1;
-        }
-        .highlight {
-            color: var(--primary-dark);
-            background: transparent;
-            padding: 2px 6px;
-            font-weight: 700;
-            background: linear-gradient(120deg, transparent 0%, transparent 6px, var(--gold-accent) 6px, var(--gold-accent) 100%);
-            background-size: 100% 10px;
-            background-repeat: no-repeat;
-            background-position: bottom;
-            border-radius: 0;
-        }
-        
-        /* Audio Button */
-        .audio-btn {
-            background: none;
-            border: none;
-            color: var(--gold-dark);
-            cursor: pointer;
-            margin-left: 10px;
-            font-size: 1.1rem;
-            transition: all 0.2s;
-            vertical-align: middle;
-        }
-        .audio-btn:hover {
-            color: var(--primary-accent);
-            transform: scale(1.15);
-        }
+    * { box-sizing: border-box; margin: 0; padding: 0; outline: none; -webkit-tap-highlight-color: transparent; }
 
-        /* Flip Card Styles for Gerunds */
-        .gerund-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-            gap: 15px;
-            margin: 2rem 0;
-            position: relative;
-            z-index: 10;
-        }
-        .flip-card {
-            perspective: 1000px;
-            height: 100%;
-            cursor: pointer;
-            position: relative;
-            z-index: 20;
-        }
-        .flip-card-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            transition: transform 0.6s;
-            transform-style: preserve-3d;
-        }
-        .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
-        .flip-card-front, .flip-card-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            border-radius: 50px;
-        }
-        .gerund-item {
-            background: var(--primary-mid);
-            color: white;
-            padding: 15px;
-            border-radius: 50px;
-            text-align: center;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            border: 1px solid transparent;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 80px;
-        }
-        .gerund-item:hover {
-            transform: translateY(-5px);
-            background: var(--primary-dark);
-            border-color: var(--gold-accent);
-            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.2);
-        }
-        .flip-card-back {
-            background: white;
-            transform: rotateY(180deg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            border: 1px solid rgba(255,215,0,0.3);
-            position: relative;
-            z-index: 30;
-        }
-        .flip-card-back .example {
-            background: none;
-            border-left: none;
-            padding: 0;
-            margin: 0;
-            text-align: center;
-            color: var(--text-main);
-            font-size: 0.95rem;
-            box-shadow: none;
-        }
-        .flip-card-back .example strong {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--primary-mid);
-        }
-        .flip-card-back .example p { margin: 0.3rem 0; }
+    body {
+      font-family: 'Inter', 'Noto Sans TC', sans-serif;
+      background-color: var(--bg-cool);
+      color: var(--text-main);
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      position: relative;
+    }
 
-        /* Usage Diagram Styling */
-        .usage-diagram { text-align: center; margin: 3rem 0; }
-        .diagram-container { display: flex; justify-content: center; margin: 1.5rem 0; }
-        .diagram {
-            width: 100%;
-            max-width: 600px;
-            height: 320px;
-            background: var(--primary-mid);
-            border-radius: var(--radius-md);
-            position: relative;
-            overflow: hidden;
-            border: 2px solid var(--primary-accent);
-            box-shadow: inset 0 0 30px rgba(0,0,0,0.3);
-        }
-        .diagram::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-image: 
-                linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
-            background-size: 20px 20px;
-            opacity: 0.5;
-        }
-        .diagram-item {
-            position: absolute;
-            padding: 12px;
-            background: rgba(255,255,255,0.95);
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            text-align: center;
-            width: 140px;
-            font-weight: 700;
-            color: var(--primary-dark);
-            border-top: 4px solid var(--gold-accent);
-            transition: transform 0.3s;
-        }
-        .diagram-item:hover { transform: scale(1.1); z-index: 10; }
+    /* === 1. 背景漂浮單字 (Floating Gerunds) === */
+    .floating-objects {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 0; overflow: hidden;
+    }
+    .float-item {
+      position: absolute; opacity: 0.08;
+      font-family: 'Playfair Display', serif; font-weight: 700;
+      color: var(--primary-tone);
+      animation: floatUp 30s infinite linear;
+      white-space: nowrap;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(110vh) rotate(0deg); }
+      100% { transform: translateY(-20vh) rotate(360deg); }
+    }
 
-        /* Quiz Styles */
-        .quiz-container { max-width: 800px; margin: 0 auto; }
-        .quiz-progress {
-            margin-bottom: 1.5rem;
-            color: var(--text-light);
-            font-weight: 700;
-            text-align: right;
-            font-size: 0.9rem;
-        }
-        .quiz-card {
-            background: var(--bg-card);
-            border-radius: var(--radius-lg);
-            padding: 2.5rem;
-            margin-bottom: 2rem;
-            box-shadow: var(--shadow-soft);
-            border: 1px solid rgba(255,255,255,0.8);
-            animation: fadeIn 0.5s ease;
-        }
-        .quiz-question {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--primary-mid);
-            margin-bottom: 2rem;
-            border-left: 4px solid var(--gold-accent);
-            padding-left: 20px;
-            line-height: 1.6;
-        }
-        .quiz-options { display: grid; gap: 15px; }
-        .quiz-option {
-            padding: 18px 25px;
-            background: white;
-            border: 2px solid #eef2f5;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-weight: 600;
-            color: var(--text-main);
-            text-align: left;
-            position: relative;
-            font-size: 1.05rem;
-        }
-        .quiz-option:hover:not(.disabled) {
-            border-color: var(--primary-accent);
-            background: #f8fafc;
-            transform: translateX(5px);
-        }
-        .quiz-option.correct {
-            background-color: var(--correct-bg);
-            border-color: var(--correct-border);
-            color: var(--correct-text);
-        }
-        .quiz-option.incorrect {
-            background-color: var(--wrong-bg);
-            border-color: var(--wrong-border);
-            color: var(--wrong-text);
-            opacity: 0.8;
-        }
-        .quiz-option.disabled { cursor: default; opacity: 0.7; pointer-events: none; }
-        .quiz-explanation {
-            margin-top: 25px;
-            padding: 20px;
-            background: rgba(255, 215, 0, 0.1);
-            border-radius: 12px;
-            border-left: 4px solid var(--gold-dark);
-            color: var(--text-main);
-            display: none;
-            animation: slideDown 0.4s ease;
-        }
-        .quiz-explanation.show { display: block; }
-        .quiz-nav { margin-top: 25px; text-align: right; display: none; }
-        .quiz-nav.show { display: block; }
-        .quiz-result { text-align: center; padding: 3rem; }
-        .score-circle {
-            width: 150px;
-            height: 150px;
-            background: var(--dynamic-gradient);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 2rem;
-            color: var(--gold-accent);
-            font-size: 3rem;
-            font-weight: 800;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            border: 4px solid rgba(255, 255, 255, 0.2);
-        }
-        .btn {
-            background: var(--dynamic-gradient);
-            color: white;
-            border: none;
-            padding: 12px 32px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 700;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            box-shadow: 0 4px 15px rgba(32, 58, 67, 0.3);
-        }
-        .btn:hover { transform: translateY(-3px); }
-        
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+    /* === 2. Mind Map 舞台 === */
+    .mindmap-stage {
+      position: relative; width: 100%; height: 100%;
+      display: flex; justify-content: center; align-items: center;
+      z-index: 10;
+    }
+    .connections {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 1;
+    }
+    .connection-line {
+      stroke: var(--secondary-tone); stroke-width: 2;
+      stroke-dasharray: 6, 6; opacity: 0.5;
+    }
 
-        footer {
-            text-align: center;
-            padding: 4rem 2rem;
-            margin-top: 5rem;
-            background: var(--primary-dark);
-            color: rgba(255,255,255,0.6);
-            border-radius: 0;
-            position: relative;
-        }
-        footer::before {
-             content: '';
-             position: absolute;
-             top: 0; left: 0; width: 100%; height: 4px;
-             background: var(--gold-gradient);
-        }
-        @media (max-width: 768px) {
-            header { padding: 3rem 1rem 4rem; }
-            h1 { font-size: 2rem; }
-            .tabs { margin-top: -2rem; width: 95%; flex-direction: row; overflow-x: auto; justify-content: flex-start; }
-            .tab { flex: 0 0 auto; padding: 0.7rem 1.2rem; min-width: auto; }
-            .gerund-list { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
-            table { display: block; overflow-x: auto; }
-            .diagram { height: auto; padding-bottom: 2rem; display: flex; flex-direction: column; align-items: center; background: transparent; border: none; box-shadow: none; }
-            .diagram::before { display: none; }
-            .diagram-item { position: relative; top: auto !important; left: auto !important; right: auto !important; bottom: auto !important; margin: 10px 0; width: 80%; }
-        }
-    </style>
+    /* 核心 Core */
+    .core-node {
+      width: var(--center-size); height: var(--center-size);
+      background: var(--primary-tone); color: white;
+      border-radius: 50%;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      text-align: center; z-index: 5;
+      box-shadow: 0 0 0 12px rgba(74, 20, 140, 0.08), 0 25px 50px rgba(0,0,0,0.25);
+      animation: corePulse 5s infinite ease-in-out; cursor: default;
+    }
+    .core-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; line-height: 1.1; }
+    .core-sub { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; margin-top: 8px; color: var(--secondary-tone); }
+
+    @keyframes corePulse {
+      0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); }
+    }
+
+    /* 子節點 Satellite */
+    .satellite {
+      position: absolute; width: var(--node-size); height: var(--node-size);
+      border-radius: 50%; background: white;
+      border: 2px solid var(--primary-tone);
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      text-align: center; cursor: pointer; z-index: 5;
+      box-shadow: 0 10px 25px rgba(74, 20, 140, 0.1);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      font-family: 'Playfair Display', serif; font-weight: 600;
+      font-size: 0.85rem; color: var(--primary-tone); padding: 5px;
+    }
+    .satellite:hover {
+      transform: scale(1.15); background: var(--primary-tone);
+      color: white; border-color: var(--secondary-tone);
+      box-shadow: 0 15px 35px rgba(74, 20, 140, 0.3); z-index: 10;
+    }
+
+    .step-badge {
+      position: absolute; top: -5px; left: 50%; transform: translateX(-50%);
+      background: var(--secondary-tone); color: white;
+      font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 700;
+      width: 24px; height: 24px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      border: 2px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    .satellite.quiz-node { border-color: var(--secondary-tone); background: #e0f2f1; }
+    .satellite.quiz-node .step-badge { background: #d32f2f; }
+
+    /* === 3. Modal 內容區 === */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(243, 229, 245, 0.95); backdrop-filter: blur(5px);
+      z-index: 100; opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease;
+      display: flex; justify-content: center; align-items: center;
+    }
+    .modal-overlay.active { opacity: 1; pointer-events: auto; }
+
+    .modal-content {
+      width: 90%; max-width: 950px; max-height: 85vh;
+      background: white; border-radius: 16px;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.2);
+      border-top: 6px solid var(--primary-tone);
+      overflow-y: auto; padding: 40px;
+      display: none; animation: slideUp 0.4s ease-out;
+    }
+    @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+    .close-btn {
+      position: absolute; top: 20px; right: 20px;
+      width: 40px; height: 40px; border-radius: 50%; border: none;
+      background: #f4f4f4; color: var(--text-main); font-size: 1.5rem;
+      cursor: pointer; transition: all 0.2s; z-index: 20;
+    }
+    .close-btn:hover { background: var(--secondary-tone); color: white; }
+
+    /* 內容排版 */
+    h2 { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--primary-tone); margin-bottom: 20px; border-bottom: 2px solid var(--secondary-tone); padding-bottom: 10px; }
+    h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--primary-tone); margin: 30px 0 15px; border-left: 4px solid var(--secondary-tone); padding-left: 12px; }
+    
+    .bilingual-box { display: flex; gap: 20px; background: #fafafa; padding: 25px; border-radius: 8px; border: 1px solid #eee; margin-bottom: 20px; }
+    .highlight { background: var(--highlight-bg); padding: 2px 6px; border-radius: 4px; color: var(--primary-tone); font-weight: 600; }
+    
+    /* Table */
+    .table-responsive { overflow-x: auto; margin: 20px 0; border: 1px solid #e0e0e0; border-radius: 8px; }
+    table { width: 100%; border-collapse: collapse; min-width: 600px; }
+    th { background: #e0f2f1; color: var(--primary-tone); padding: 15px; text-align: left; font-family: 'Playfair Display', serif; border-bottom: 2px solid #b2dfdb; white-space: nowrap; }
+    td { padding: 14px; border-bottom: 1px solid #eee; }
+    tr:nth-child(even) { background-color: #fbfbfb; }
+
+    /* Note Box */
+    .note-box { padding: 20px; margin: 20px 0; border-radius: 0 8px 8px 0; line-height: 1.6; }
+    .note-tip { background: #f3e5f5; border-left: 4px solid var(--primary-tone); color: #4a148c; }
+    .note-warn { background: #fff5f5; border-left: 4px solid #c53030; color: #742a2a; }
+
+    /* Audio Button */
+    .audio-btn { background: var(--secondary-tone); color: white; border: none; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; margin-left: 10px; transition: 0.2s; font-size: 0.8rem; }
+    .audio-btn:hover { background: var(--primary-tone); transform: scale(1.1); }
+
+    /* Flip Cards (Interactive) */
+    .flip-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; margin: 20px 0; }
+    .flip-card { background: white; border: 1px solid #e0e0e0; border-radius: 8px; padding: 15px; text-align: center; cursor: pointer; transition: 0.3s; position: relative; height: 100px; display: flex; align-items: center; justify-content: center; perspective: 1000px; }
+    .flip-card:hover { border-color: var(--secondary-tone); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+    .flip-text { font-weight: bold; color: var(--primary-tone); font-size: 1.1rem; }
+    .flip-sub { font-size: 0.85rem; color: #666; margin-top: 5px; }
+
+    /* Quiz Styling */
+    .quiz-progress { text-align: right; color: var(--secondary-tone); font-weight: 700; margin-bottom: 15px; }
+    .quiz-question-box { background: #fff; padding: 25px; border-radius: 12px; border: 1px solid #eee; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 20px; }
+    .quiz-q-text { font-size: 1.2rem; font-weight: 600; color: var(--primary-tone); margin-bottom: 20px; }
+    .quiz-opt { display: block; width: 100%; padding: 15px 20px; margin-bottom: 10px; border: 2px solid #f0f0f0; border-radius: 8px; background: white; text-align: left; cursor: pointer; transition: all 0.2s; font-size: 1rem; }
+    .quiz-opt:hover:not(:disabled) { border-color: var(--secondary-tone); background: #e0f2f1; }
+    .quiz-opt.correct { background: #e8f5e9; border-color: #4caf50; color: #2e7d32; }
+    .quiz-opt.incorrect { background: #ffebee; border-color: #ef5350; color: #c62828; }
+    
+    .explanation { margin-top: 20px; padding: 15px; background: #faf8f2; border-left: 4px solid var(--secondary-tone); display: none; }
+    .explanation.show { display: block; animation: fadeIn 0.3s; }
+    @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+    
+    .result-card { text-align: center; padding: 40px; display: none; }
+    .result-score { font-size: 4rem; font-family: 'Playfair Display', serif; color: var(--primary-tone); font-weight: 700; }
+    
+    .btn-cta { background: var(--secondary-tone); color: white; padding: 12px 30px; border-radius: 50px; border: none; font-size: 1rem; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; transition: 0.3s; font-weight: 600; margin-top: 15px; }
+    .btn-cta:hover { background: var(--primary-tone); transform: translateY(-2px); }
+
+    /* RWD */
+    @media (max-width: 768px) {
+      body { overflow-y: auto; height: auto; }
+      .floating-objects { height: 100vh; position: fixed; }
+      .mindmap-stage { flex-direction: column; height: auto; padding: 50px 20px; }
+      .connections { display: none; }
+      .core-node { margin-bottom: 40px; width: 160px; height: 160px; }
+      .satellite { 
+        position: relative; top: auto !important; left: auto !important; transform: none !important;
+        width: 100%; min-height: 70px; margin-bottom: 12px; flex-direction: row; 
+        justify-content: flex-start; text-align: left; gap: 20px; padding: 15px 25px;
+      }
+      .satellite:hover { transform: translateY(-3px) !important; }
+      .step-badge { position: static; transform: none; margin-right: 0; min-width: 24px; }
+      .modal-content { padding: 25px; width: 95%; max-height: 90vh; }
+      .bilingual-box { flex-direction: column; }
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <div class="header-content">
-            <h1>Shirley's Gerund Learning Platform</h1>
-            <p class="subtitle">動名詞學習平台</p>
-        </div>
-    </header>
-    <div class="container">
-        <div class="tabs">
-            <div class="tab active" data-tab="intro">動名詞介紹 | Gerund Introduction</div>
-            <div class="tab" data-tab="subject">作主詞 | As Subject</div>
-            <div class="tab" data-tab="object">作受詞 | As Object</div>
-            <div class="tab" data-tab="preposition">介系詞受詞 | After Prepositions</div>
-            <div class="tab" data-tab="complement">作補語 | As Complement</div>
-            <div class="tab" data-tab="modifier">作限定詞 | As Modifier</div>
-            <div class="tab" data-tab="quiz">自我檢測 | Quiz</div>
-        </div>
-        
-        <div class="tab-content active" id="intro">
-            <h2>動名詞介紹 | Gerund Introduction</h2>
-            <div class="card">
-                <h3>什麼是動名詞？ | What is a Gerund?</h3>
-                <p>動名詞由動詞加-ing構成，在句子中扮演名詞的角色，具有名詞的功能。</p>
-                <p>A gerund is formed by adding -ing to a verb and functions as a noun in a sentence.</p>
-                <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="highlight">Swimming</span> is good exercise. | 游泳是很好的運動。 <button class="audio-btn" onclick="speak('Swimming is good exercise.')"><i class="fas fa-volume-up"></i></button></p>
-                    <p><strong>例子 Example:</strong> I enjoy <span class="highlight">reading</span>. | 我喜歡閱讀。 <button class="audio-btn" onclick="speak('I enjoy reading.')"><i class="fas fa-volume-up"></i></button></p>
-                </div>
-            </div>
-            <div class="card">
-                <h3>動名詞的形式 | Gerund Forms</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>動詞 Verb</th>
-                            <th>動名詞 Gerund</th>
-                            <th>例子 Example</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>work</td>
-                            <td>working</td>
-                            <td>Working from home is common now. <button class="audio-btn" onclick="speak('Working from home is common now.')"><i class="fas fa-volume-up"></i></button></td>
-                        </tr>
-                        <tr>
-                            <td>read</td>
-                            <td>reading</td>
-                            <td>Reading helps you learn new things. <button class="audio-btn" onclick="speak('Reading helps you learn new things.')"><i class="fas fa-volume-up"></i></button></td>
-                        </tr>
-                        <tr>
-                            <td>swim</td>
-                            <td>swimming</td>
-                            <td>Swimming is my favorite sport. <button class="audio-btn" onclick="speak('Swimming is my favorite sport.')"><i class="fas fa-volume-up"></i></button></td>
-                        </tr>
-                        <tr>
-                            <td>study</td>
-                            <td>studying</td>
-                            <td>Studying English requires practice. <button class="audio-btn" onclick="speak('Studying English requires practice.')"><i class="fas fa-volume-up"></i></button></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="card">
-                <h3>動名詞的用法 | Uses of Gerunds</h3>
-                <p>動名詞在句子中可以擔任多種角色：</p>
-                <p>Gerunds can serve various roles in a sentence:</p>
-                <div class="usage-diagram">
-                    <div class="diagram-container">
-                        <div class="diagram">
-                            <div class="diagram-item" style="top: 20px; left: 50px;">主詞<br>Subject</div>
-                            <div class="diagram-item" style="top: 20px; right: 50px;">受詞<br>Object</div>
-                            <div class="diagram-item" style="top: 120px; left: 150px;">介系詞受詞<br>After Prepositions</div>
-                            <div class="diagram-item" style="top: 120px; right: 150px;">補語<br>Complement</div>
-                            <div class="diagram-item" style="bottom: 20px; left: 230px;">限定詞<br>Modifier</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="tab-content" id="subject">
-            <h2>作主詞 | As Subject</h2>
-            <div class="card">
-                <h3>動名詞作主詞 | Gerunds as Subjects</h3>
-                <p>動名詞可以在句子中擔任主詞的角色。</p>
-                <p>Gerunds can function as the subject of a sentence.</p>
-                <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="highlight">Working from home</span> isolates employees from the corporate culture.</p>
-                    <p>在家工作使員工與企業文化隔絕。 <button class="audio-btn" onclick="speak('Working from home isolates employees from the corporate culture.')"><i class="fas fa-volume-up"></i></button></p>
-                </div>
-                <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="highlight">Reading extensively</span> helps you learn vocabulary and grammar.</p>
-                    <p>廣泛閱讀有助於你學習詞彙和語法。 <button class="audio-btn" onclick="speak('Reading extensively helps you learn vocabulary and grammar.')"><i class="fas fa-volume-up"></i></button></p>
-                </div>
-            </div>
-            <div class="card">
-                <h3>特殊句型：It 為虛構主詞 | Special Pattern: It as Dummy Subject</h3>
-                <p>當動名詞作主詞時，可以使用 It 作為形式主詞，將真正的動名詞主詞放在句末。</p>
-                <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="highlight">It is simply a waste of time playing video games.</span> <button class="audio-btn" onclick="speak('It is simply a waste of time playing video games.')"><i class="fas fa-volume-up"></i></button></p>
-                    <p>玩電子遊戲簡直是浪費時間。</p>
-                </div>
-                <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="highlight">It's no use crying after you fail a test.</span> <button class="audio-btn" onclick="speak('It is no use crying after you fail a test.')"><i class="fas fa-volume-up"></i></button></p>
-                    <p>考試失敗後哭泣是沒有用的。</p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="tab-content" id="object">
-            <h2>作受詞 | As Object</h2>
-            <div class="card">
-                <h3>動名詞作動詞的受詞 | Gerunds as Objects of Verbs</h3>
-                <p>某些動詞後面必須接動名詞作受詞，需要在平時記憶和積累。</p>
-                <div class="gerund-list">
-                    <div class="flip-card" data-verb="admit">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front"><div class="gerund-item">admit<br>承認</div></div>
-                            <div class="flip-card-back">
-                                <div class="example">
-                                    <p><strong>Example:</strong> She admitted <span class="highlight">stealing</span> the money. <button class="audio-btn" onclick="speak('She admitted stealing the money.')"><i class="fas fa-volume-up"></i></button></p>
-                                    <p>她承認偷了錢。</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flip-card" data-verb="avoid">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front"><div class="gerund-item">avoid<br>避免</div></div>
-                            <div class="flip-card-back">
-                                <div class="example">
-                                    <p><strong>Example:</strong> You should avoid <span class="highlight">eating</span> too much sugar. <button class="audio-btn" onclick="speak('You should avoid eating too much sugar.')"><i class="fas fa-volume-up"></i></button></p>
-                                    <p>你應該避免吃太多糖。</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flip-card" data-verb="enjoy">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front"><div class="gerund-item">enjoy<br>享受</div></div>
-                            <div class="flip-card-back">
-                                <div class="example">
-                                    <p><strong>Example:</strong> I enjoy <span class="highlight">reading</span> novels. <button class="audio-btn" onclick="speak('I enjoy reading novels.')"><i class="fas fa-volume-up"></i></button></p>
-                                    <p>我喜歡讀小說。</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flip-card" data-verb="mind">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front"><div class="gerund-item">mind<br>介意</div></div>
-                            <div class="flip-card-back">
-                                <div class="example">
-                                    <p><strong>Example:</strong> Do you mind <span class="highlight">opening</span> the window? <button class="audio-btn" onclick="speak('Do you mind opening the window?')"><i class="fas fa-volume-up"></i></button></p>
-                                    <p>你介意開窗嗎？</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flip-card" data-verb="finish">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front"><div class="gerund-item">finish<br>完成</div></div>
-                            <div class="flip-card-back">
-                                <div class="example">
-                                    <p><strong>Example:</strong> Have you finished <span class="highlight">writing</span> your report? <button class="audio-btn" onclick="speak('Have you finished writing your report?')"><i class="fas fa-volume-up"></i></button></p>
-                                    <p>你寫完報告了嗎？</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flip-card" data-verb="suggest">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front"><div class="gerund-item">suggest<br>建議</div></div>
-                            <div class="flip-card-back">
-                                <div class="example">
-                                    <p><strong>Example:</strong> I suggest <span class="highlight">going</span> to the beach. <button class="audio-btn" onclick="speak('I suggest going to the beach.')"><i class="fas fa-volume-up"></i></button></p>
-                                    <p>我建議去海灘。</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flip-card" data-verb="risk">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front"><div class="gerund-item">risk<br>冒險</div></div>
-                            <div class="flip-card-back">
-                                <div class="example">
-                                    <p><strong>Example:</strong> He risked <span class="highlight">losing</span> his job. <button class="audio-btn" onclick="speak('He risked losing his job.')"><i class="fas fa-volume-up"></i></button></p>
-                                    <p>他冒著丟掉工作的風險。</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flip-card" data-verb="quit">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front"><div class="gerund-item">quit<br>放棄</div></div>
-                            <div class="flip-card-back">
-                                <div class="example">
-                                    <p><strong>Example:</strong> She quit <span class="highlight">smoking</span>. <button class="audio-btn" onclick="speak('She quit smoking.')"><i class="fas fa-volume-up"></i></button></p>
-                                    <p>她戒菸了。</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="example">
-                    <p><strong>例子 Example:</strong> Educators <span class="highlight">advise sending</span> children to schools instead of keeping them at home. <button class="audio-btn" onclick="speak('Educators advise sending children to schools instead of keeping them at home.')"><i class="fas fa-volume-up"></i></button></p>
-                    <p>教育工作者建議送孩子上學而不是把他們留在家裡。</p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="tab-content" id="preposition">
-            <h2>介系詞受詞 | After Prepositions</h2>
-            <div class="card">
-                <h3>動名詞作介系詞的受詞 | Gerunds as Objects of Prepositions</h3>
-                <p>動名詞經常出現在介系詞後面，作為介系詞的受詞。</p>
-                <div class="example">
-                    <p><strong>例子 Example:</strong> I am <span class="highlight">looking forward to attending</span> the party. <button class="audio-btn" onclick="speak('I am looking forward to attending the party.')"><i class="fas fa-volume-up"></i></button></p>
-                    <p>我期待參加派對。</p>
-                    <p><em>注意: 這裡的 "to" 是介系詞，不是不定詞符號</em></p>
-                </div>
-                <div class="example">
-                    <p><strong>例子 Example:</strong> Many workers are <span class="highlight">opposed to increasing</span> taxes. <button class="audio-btn" onclick="speak('Many workers are opposed to increasing taxes.')"><i class="fas fa-volume-up"></i></button></p>
-                    <p>許多工人反對增加稅收。</p>
-                </div>
-                <div class="example">
-                    <p><strong>例子 Example:</strong> He is good at <span class="highlight">playing</span> tennis. <button class="audio-btn" onclick="speak('He is good at playing tennis.')"><i class="fas fa-volume-up"></i></button></p>
-                    <p>他擅長打網球。</p>
-                </div>
-            </div>
-            <div class="card">
-                <h3>常見接動名詞的介系詞片語 | Common Prepositional Phrases</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>片語 Phrase</th>
-                            <th>意思 Meaning</th>
-                            <th>例子 Example</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>look forward to</td>
-                            <td>期待</td>
-                            <td>I look forward to seeing you. <button class="audio-btn" onclick="speak('I look forward to seeing you.')"><i class="fas fa-volume-up"></i></button></td>
-                        </tr>
-                        <tr>
-                            <td>be opposed to</td>
-                            <td>反對</td>
-                            <td>He is opposed to changing the plan. <button class="audio-btn" onclick="speak('He is opposed to changing the plan.')"><i class="fas fa-volume-up"></i></button></td>
-                        </tr>
-                        <tr>
-                            <td>be committed to</td>
-                            <td>致力於</td>
-                            <td>She is committed to improving her skills. <button class="audio-btn" onclick="speak('She is committed to improving her skills.')"><i class="fas fa-volume-up"></i></button></td>
-                        </tr>
-                        <tr>
-                            <td>be used to</td>
-                            <td>習慣於</td>
-                            <td>I am used to working late. <button class="audio-btn" onclick="speak('I am used to working late.')"><i class="fas fa-volume-up"></i></button></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        
-        <div class="tab-content" id="complement">
-            <h2>作補語 | As Complement</h2>
-            <div class="card">
-                <h3>動名詞作連綴動詞後的補語 | Gerunds as Complements</h3>
-                <p>動名詞可以在連綴動詞（如be動詞）後作主詞補語。</p>
-                <div class="example">
-                    <p><strong>例子 Example:</strong> The top task of many companies is <span class="highlight">offering high salaries</span>. <button class="audio-btn" onclick="speak('The top task of many companies is offering high salaries.')"><i class="fas fa-volume-up"></i></button></p>
-                    <p>許多公司的首要任務是提供高薪。</p>
-                </div>
-                <div class="example">
-                    <p><strong>例子 Example:</strong> My hobby is <span class="highlight">collecting stamps</span>. <button class="audio-btn" onclick="speak('My hobby is collecting stamps.')"><i class="fas fa-volume-up"></i></button></p>
-                    <p>我的愛好是集郵。</p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="tab-content" id="modifier">
-            <h2>作限定詞 | As Modifier</h2>
-            <div class="card">
-                <h3>動名詞作名詞前的限定詞 | Gerunds as Modifiers</h3>
-                <p>動名詞可以放在名詞前，作為限定詞使用，表示功能或用途。</p>
-                <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="highlight">swimming</span> pool <button class="audio-btn" onclick="speak('swimming pool')"><i class="fas fa-volume-up"></i></button></p>
-                    <p>游泳池</p>
-                </div>
-                <div class="example">
-                    <p><strong>例子 Example:</strong> <span class="highlight">working</span> experience <button class="audio-btn" onclick="speak('working experience')"><i class="fas fa-volume-up"></i></button></p>
-                    <p>工作經驗</p>
-                </div>
-            </div>
-            <div class="card">
-                <h3>常見的動名詞限定詞組合 | Common Combinations</h3>
-                <div class="gerund-list">
-                    <div class="gerund-item">reading room</div>
-                    <div class="gerund-item">sleeping bag</div>
-                    <div class="gerund-item">waiting room</div>
-                    <div class="gerund-item">parking lot</div>
-                    <div class="gerund-item">shopping mall</div>
-                    <div class="gerund-item">cooking class</div>
-                </div>
-            </div>
-        </div>
 
-        <div class="tab-content" id="quiz">
-            <h2>自我檢測 | Quiz</h2>
-            <div class="quiz-container">
-                <div id="quiz-question-container">
-                    </div>
-            </div>
-        </div>
+  <div class="floating-objects" id="floatingBg"></div>
+
+  <div class="mindmap-stage" id="stage">
+    <svg class="connections" id="svgLines"></svg>
+
+    <div class="core-node">
+      <div class="core-title">Shirley's<br>Gerunds</div>
+      <div class="core-sub">Non-finite Series 2</div>
+    </div>
+
+    <div class="satellite" data-target="def-modal">
+      <div class="step-badge">1</div>
+      <div>Definition<br>定義與形式</div>
     </div>
     
-    <footer>
-        <p>Shirley's Gerund Learning Platform | 動名詞學習平台</p>
-        <p>© 2025 Shirley's Grammar E-Charger</p>
-    </footer>
+    <div class="satellite" data-target="roles-modal">
+      <div class="step-badge">2</div>
+      <div>Roles<br>句中角色</div>
+    </div>
     
-    <script>
-        // 選項卡功能
-        document.querySelectorAll('.tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-                tab.classList.add('active');
-                const tabId = tab.getAttribute('data-tab');
-                document.getElementById(tabId).classList.add('active');
-            });
-        });
+    <div class="satellite" data-target="prep-modal">
+      <div class="step-badge">3</div>
+      <div>Preposition<br>介係詞後</div>
+    </div>
+    
+    <div class="satellite" data-target="verbs-modal">
+      <div class="step-badge">4</div>
+      <div>Key Verbs<br>必接動名詞</div>
+    </div>
 
-        // 翻轉卡功能
-        document.querySelectorAll('.flip-card').forEach(card => {
-            card.addEventListener('click', () => {
-                card.classList.toggle('flipped');
-            });
-        });
+    <div class="satellite" data-target="change-modal">
+      <div class="step-badge">5</div>
+      <div>Change<br>意思改變</div>
+    </div>
 
-        // 語音播放功能
-        function speak(text) {
-            if ('speechSynthesis' in window) {
-                speechSynthesis.cancel();
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'en-US';
-                utterance.rate = 0.9;
-                
-                const voices = speechSynthesis.getVoices();
-                const enVoice = voices.find(v => v.lang.includes('en-US') || v.lang.includes('en-GB'));
-                if(enVoice) utterance.voice = enVoice;
+    <div class="satellite" data-target="activities-modal">
+      <div class="step-badge">6</div>
+      <div>Activities<br>休閒活動</div>
+    </div>
 
-                speechSynthesis.speak(utterance);
-            } else {
-                alert("Sorry, your browser doesn't support text-to-speech.");
-            }
-        }
+    <div class="satellite" data-target="idiom-modal">
+      <div class="step-badge">7</div>
+      <div>Idioms<br>慣用語</div>
+    </div>
+    
+    <div class="satellite quiz-node" data-target="quiz-modal">
+      <div class="step-badge">8</div>
+      <div>Quiz<br>20題挑戰</div>
+    </div>
+  </div>
 
-        // Quiz Logic
-        const quizQuestions = [
-            {
-                question: "1. ______ (Read) extensively helps broaden your horizons.",
-                options: ["Read", "Reading", "To read", "Reads"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> 'Reading' acts as the subject of the sentence (Gerund as Subject)."
-            },
-            {
-                question: "2. I really enjoy ______ (play) tennis with my friends.",
-                options: ["play", "to play", "playing", "played"],
-                correct: 2,
-                explanation: "<strong>Explanation:</strong> The verb 'enjoy' is always followed by a gerund."
-            },
-            {
-                question: "3. Would you mind ______ (open) the window?",
-                options: ["opening", "to open", "open", "opened"],
-                correct: 0,
-                explanation: "<strong>Explanation:</strong> The verb 'mind' is followed by a gerund."
-            },
-            {
-                question: "4. He is good at ______ (cook) Italian food.",
-                options: ["cook", "cooking", "to cook", "cooked"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> A gerund is used after a preposition ('at')."
-            },
-            {
-                question: "5. I look forward to ______ (see) you soon.",
-                options: ["see", "seeing", "saw", "seen"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> In 'look forward to', 'to' is a preposition, so it must be followed by a gerund."
-            },
-            {
-                question: "6. He quit ______ (smoke) for the sake of his health.",
-                options: ["smoking", "to smoke", "smoke", "smoked"],
-                correct: 0,
-                explanation: "<strong>Explanation:</strong> 'Quit' means to stop an action, followed by a gerund."
-            },
-            {
-                question: "7. I need a ______ (sleep) bag for the camping trip.",
-                options: ["sleep", "sleeping", "to sleep", "slept"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> 'Sleeping' acts as a modifier for the noun 'bag' (Gerund as Modifier)."
-            },
-            {
-                question: "8. Have you finished ______ (eat) your dinner?",
-                options: ["eat", "eating", "to eat", "ate"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> The verb 'finish' is followed by a gerund."
-            },
-            {
-                question: "9. It is no use ______ (cry) over spilled milk.",
-                options: ["cry", "to cry", "crying", "cried"],
-                correct: 2,
-                explanation: "<strong>Explanation:</strong> The phrase 'It is no use' is always followed by a gerund."
-            },
-            {
-                question: "10. She avoided ______ (answer) my question.",
-                options: ["answering", "to answer", "answer", "answered"],
-                correct: 0,
-                explanation: "<strong>Explanation:</strong> The verb 'avoid' is followed by a gerund."
-            },
-            {
-                question: "11. Her job is ______ (sell) luxury cars.",
-                options: ["sell", "to sell", "selling", "sold"],
-                correct: 2,
-                explanation: "<strong>Explanation:</strong> 'Selling' functions as a subject complement after the linking verb 'is'."
-            },
-            {
-                question: "12. Let's go ______ (shop) this weekend!",
-                options: ["shop", "shopping", "to shop", "shopped"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> 'Go + V-ing' is a common structure for activities."
-            },
-            {
-                question: "13. He practices ______ (speak) English every day.",
-                options: ["speak", "speaking", "to speak", "spoke"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> The verb 'practice' is followed by a gerund."
-            },
-            {
-                question: "14. She is afraid of ______ (fly).",
-                options: ["fly", "flying", "to fly", "flew"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> A gerund is used after the preposition 'of'."
-            },
-            {
-                question: "15. He suggested ______ (go) to the park.",
-                options: ["go", "to go", "going", "went"],
-                correct: 2,
-                explanation: "<strong>Explanation:</strong> 'Suggest' is followed by a gerund (or a that-clause), never an infinitive."
-            },
-            {
-                question: "16. She kept ______ (talk) during the movie.",
-                options: ["talking", "to talk", "talk", "talked"],
-                correct: 0,
-                explanation: "<strong>Explanation:</strong> 'Keep' (meaning continue) is followed by a gerund."
-            },
-            {
-                question: "17. He left without ______ (say) goodbye.",
-                options: ["saying", "to say", "say", "said"],
-                correct: 0,
-                explanation: "<strong>Explanation:</strong> A gerund is used after the preposition 'without'."
-            },
-            {
-                question: "18. Paris is worth ______ (visit).",
-                options: ["visit", "to visit", "visiting", "visited"],
-                correct: 2,
-                explanation: "<strong>Explanation:</strong> The adjective 'worth' is followed by a gerund."
-            },
-            {
-                question: "19. The suspect denied ______ (steal) the jewelry.",
-                options: ["steal", "stealing", "to steal", "stolen"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> 'Deny' is followed by a gerund."
-            },
-            {
-                question: "20. Have you considered ______ (move) to a new house?",
-                options: ["move", "moving", "to move", "moved"],
-                correct: 1,
-                explanation: "<strong>Explanation:</strong> 'Consider' is followed by a gerund."
-            }
-        ];
+  <div class="modal-overlay" id="modalOverlay">
+    <button class="close-btn" onclick="closeModal()">✕</button>
 
-        let currentQuestionIndex = 0;
-        let score = 0;
+    <div id="def-modal" class="modal-content">
+      <h2>1. Definition 定義與形式</h2>
+      <div class="bilingual-box">
+        <div style="flex:1">
+          <p>動名詞 (Gerund) 是由動詞加上 <strong>-ing</strong> 形成。</p>
+          <h3 style="text-align:center; color:var(--primary-tone); margin:20px 0;">Verb + ing = Noun</h3>
+          <p>它的性質是名詞，表示「已知的事實」、「經驗」或「活動」。</p>
+        </div>
+      </div>
+      <div class="note-box note-tip">
+        <strong>比較：</strong> 不定詞 (to V) 常用於未來/目的；動名詞 (V-ing) 常用於經驗/事實。
+      </div>
+    </div>
 
-        function initQuiz() {
-            currentQuestionIndex = 0;
-            score = 0;
-            showQuestion(currentQuestionIndex);
-        }
+    <div id="roles-modal" class="modal-content">
+      <h2>2. Roles 句中角色</h2>
+      <p>動名詞就像普通名詞一樣，可以在句中擔任各種角色。</p>
+      
+      <div class="table-responsive">
+        <table>
+          <tr><th>Role</th><th>Example</th><th>Translation</th></tr>
+          <tr>
+            <td><strong>Subject (主詞)</strong></td>
+            <td><span class="highlight">Swimming</span> is fun.<button class="audio-btn" onclick="speak('Swimming is fun.')">🔊</button></td>
+            <td>游泳很好玩 (視為單數)</td>
+          </tr>
+          <tr>
+            <td><strong>Object (受詞)</strong></td>
+            <td>I enjoy <span class="highlight">reading</span>.<button class="audio-btn" onclick="speak('I enjoy reading.')">🔊</button></td>
+            <td>我享受閱讀</td>
+          </tr>
+          <tr>
+            <td><strong>Complement (補語)</strong></td>
+            <td>My hobby is <span class="highlight">cooking</span>.<button class="audio-btn" onclick="speak('My hobby is cooking.')">🔊</button></td>
+            <td>我的嗜好是烹飪</td>
+          </tr>
+        </table>
+      </div>
+    </div>
 
-        function showQuestion(index) {
-            const container = document.getElementById('quiz-question-container');
-            if (index >= quizQuestions.length) {
-                showResult(container);
-                return;
-            }
-            const q = quizQuestions[index];
-            let html = `
-                <div class="quiz-card">
-                    <div class="quiz-progress">Question ${index + 1} / ${quizQuestions.length}</div>
-                    <div class="quiz-question">${q.question}</div>
-                    <div class="quiz-options">
-                        ${q.options.map((opt, i) => `
-                            <div class="quiz-option" onclick="checkAnswer(this, ${i})">${opt}</div>
-                        `).join('')}
-                    </div>
-                    <div class="quiz-explanation" id="explanation-${index}">
-                        ${q.explanation}
-                    </div>
-                    <div class="quiz-nav" id="nav-${index}">
-                        <button class="btn" onclick="nextQuestion()">Next Question <i class="fas fa-arrow-right"></i></button>
-                    </div>
-                </div>
-            `;
-            container.innerHTML = html;
-        }
+    <div id="prep-modal" class="modal-content">
+      <h2>3. After Prepositions 介係詞後</h2>
+      <div class="note-box note-warn">
+        <strong>⚠️ 黃金法則：</strong> 介係詞 (in, on, at, for, of, about, with...) 後面如果遇到動詞，<strong>一定要用 V-ing</strong>。
+      </div>
 
-        window.checkAnswer = function(optionElement, selectedIndex) {
-            const currentQ = quizQuestions[currentQuestionIndex];
-            const explanation = document.getElementById(`explanation-${currentQuestionIndex}`);
-            const nav = document.getElementById(`nav-${currentQuestionIndex}`);
-            const allOptions = optionElement.parentElement.children;
+      <div class="table-responsive">
+        <table>
+          <tr><th>Phrase</th><th>Example</th></tr>
+          <tr><td>good <strong>at</strong></td><td>He is good at <span class="highlight">drawing</span>.</td></tr>
+          <tr><td>interested <strong>in</strong></td><td>I am interested in <span class="highlight">learning</span> art.</td></tr>
+          <tr><td>thank you <strong>for</strong></td><td>Thank you for <span class="highlight">coming</span>.</td></tr>
+          <tr><td>afraid <strong>of</strong></td><td>She is afraid of <span class="highlight">flying</span>.</td></tr>
+        </table>
+      </div>
 
-            if (optionElement.classList.contains('disabled')) return;
+      <h3>💡 Tricky Preposition: "To"</h3>
+      <p>有時候 "to" 是介係詞，不是不定詞的一部分，這時後面要接 V-ing！</p>
+      <ul>
+        <li><strong>look forward to</strong> (期待) + <span class="highlight">seeing</span> you.</li>
+        <li><strong>used to</strong> (習慣於) + <span class="highlight">living</span> here. (be used to)</li>
+      </ul>
+    </div>
 
-            // Disable all options
-            for (let i = 0; i < allOptions.length; i++) {
-                allOptions[i].classList.add('disabled');
-            }
+    <div id="verbs-modal" class="modal-content">
+      <h2>4. Key Verbs 必接動名詞</h2>
+      <p>這些動詞後面只能接 V-ing，不能接 to V。</p>
+      
+      <div class="flip-grid">
+        <div class="flip-card">
+          <div><div class="flip-text">enjoy</div><div class="flip-sub">享受</div></div>
+        </div>
+        <div class="flip-card">
+          <div><div class="flip-text">finish</div><div class="flip-sub">完成</div></div>
+        </div>
+        <div class="flip-card">
+          <div><div class="flip-text">avoid</div><div class="flip-sub">避免</div></div>
+        </div>
+        <div class="flip-card">
+          <div><div class="flip-text">mind</div><div class="flip-sub">介意</div></div>
+        </div>
+        <div class="flip-card">
+          <div><div class="flip-text">practice</div><div class="flip-sub">練習</div></div>
+        </div>
+        <div class="flip-card">
+          <div><div class="flip-text">keep</div><div class="flip-sub">保持/繼續</div></div>
+        </div>
+        <div class="flip-card">
+          <div><div class="flip-text">quit</div><div class="flip-sub">戒除/放棄</div></div>
+        </div>
+        <div class="flip-card">
+          <div><div class="flip-text">suggest</div><div class="flip-sub">建議</div></div>
+        </div>
+      </div>
+      <p style="text-align:center; color:#666; font-size:0.9rem;">(滑鼠懸停或點擊卡片可強化記憶)</p>
+    </div>
 
-            if (selectedIndex === currentQ.correct) {
-                optionElement.classList.add('correct');
-                score++;
-            } else {
-                optionElement.classList.add('incorrect');
-                allOptions[currentQ.correct].classList.add('correct');
-            }
-            explanation.classList.add('show');
-            nav.classList.add('show');
-        }
+    <div id="change-modal" class="modal-content">
+      <h2>5. Change in Meaning 意思改變</h2>
+      <p>有些動詞接 to V 或 V-ing 意思完全不同。</p>
+      
+      <div class="table-responsive">
+        <table>
+          <tr><th>Verb</th><th>+ V-ing (Gerund)</th><th>+ to V (Infinitive)</th></tr>
+          <tr>
+            <td><strong>Stop</strong></td>
+            <td>停止正在做的事<br><em>Stop <span class="highlight">smoking</span></em> (戒菸)</td>
+            <td>停下來去做另一件事<br><em>Stop <span class="highlight">to smoke</span></em> (停下來去抽菸)</td>
+          </tr>
+          <tr>
+            <td><strong>Remember</strong></td>
+            <td>記得做過的事 (回憶)<br><em>I remember <span class="highlight">locking</span> the door.</em></td>
+            <td>記得要去做的事 (提醒)<br><em>Remember <span class="highlight">to lock</span> the door.</em></td>
+          </tr>
+          <tr>
+            <td><strong>Forget</strong></td>
+            <td>忘記做過的事<br><em>I forgot <span class="highlight">meeting</span> him.</em></td>
+            <td>忘記要去做的事<br><em>Don't forget <span class="highlight">to meet</span> him.</em></td>
+          </tr>
+          <tr>
+            <td><strong>Try</strong></td>
+            <td>試試看 (方法)<br><em>Try <span class="highlight">eating</span> less.</em></td>
+            <td>努力/企圖 (目的)<br><em>Try <span class="highlight">to move</span> the rock.</em></td>
+          </tr>
+        </table>
+      </div>
+    </div>
 
-        window.nextQuestion = function() {
-            currentQuestionIndex++;
-            showQuestion(currentQuestionIndex);
-        }
+    <div id="activities-modal" class="modal-content">
+      <h2>6. Go + V-ing 休閒活動</h2>
+      <p>英語中許多戶外活動或休閒娛樂，習慣用 <strong>Go + V-ing</strong> 表示。</p>
+      
+      <div class="flip-grid">
+        <div class="flip-card">Go <strong>shopping</strong></div>
+        <div class="flip-card">Go <strong>swimming</strong></div>
+        <div class="flip-card">Go <strong>fishing</strong></div>
+        <div class="flip-card">Go <strong>camping</strong></div>
+        <div class="flip-card">Go <strong>hiking</strong></div>
+        <div class="flip-card">Go <strong>jogging</strong></div>
+      </div>
+    </div>
 
-        function showResult(container) {
-            container.innerHTML = `
-                <div class="card quiz-result">
-                    <div class="score-circle">${score}</div>
-                    <h2>Quiz Completed!</h2>
-                    <p>Your Score: ${score} / ${quizQuestions.length}</p>
-                    <p>${score >= 18 ? "Excellent! You mastered Gerunds!" : score >= 12 ? "Good job! Keep practicing." : "Review the lessons and try again!"}</p>
-                    <button class="btn" onclick="initQuiz()" style="margin-top: 20px;">
-                        <i class="fas fa-redo"></i> Restart Quiz
-                    </button>
-                </div>
-            `;
-        }
+    <div id="idiom-modal" class="modal-content">
+      <h2>7. Common Idioms 慣用語</h2>
+      <div class="bilingual-box">
+        <ul>
+          <li>It is no use <span class="highlight">crying</span> over spilt milk. (做...沒用)</li>
+          <li>The book is worth <span class="highlight">reading</span>. (值得做...)</li>
+          <li>I am busy <span class="highlight">studying</span>. (忙於做...)</li>
+          <li>Can't help <span class="highlight">laughing</span>. (忍不住...)</li>
+          <li>Spend time/money <span class="highlight">playing</span> games. (花費...)</li>
+        </ul>
+      </div>
+    </div>
 
-        // Initialize quiz when tab is clicked
-        document.querySelector('.tab[data-tab="quiz"]').addEventListener('click', () => {
-             const container = document.getElementById('quiz-question-container');
-             if (container.innerHTML.trim() === '') {
-                 initQuiz();
-             }
-        });
-    </script>
+    <div id="quiz-modal" class="modal-content">
+      <h2>8. Gerund Challenge (20 Qs) 🏆</h2>
+      <p style="margin-bottom:20px; color:#666;">Test your knowledge of Gerunds!</p>
+      <div id="quiz-container"></div>
+      <div id="result-area" class="result-card">
+        <div class="result-score" id="score-display">0 / 20</div>
+        <h3>Quiz Completed!</h3>
+        <p id="result-msg"></p>
+        <button onclick="startQuiz()" class="btn-cta">↺ Restart Quiz</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // === 1. Floating Background ===
+    const floatWords = ['Swimming', 'Reading', 'Eating', 'Going', 'Playing', 'Sleeping', 'Running', 'Cooking', 'Dancing', 'Learning'];
+    const floatContainer = document.getElementById('floatingBg');
+
+    function createFloatingIcons() {
+      for(let i=0; i<15; i++) {
+        const el = document.createElement('div');
+        el.classList.add('float-item');
+        el.innerText = floatWords[Math.floor(Math.random() * floatWords.length)];
+        el.style.left = Math.random() * 100 + 'vw';
+        el.style.animationDuration = (25 + Math.random() * 10) + 's';
+        el.style.animationDelay = (Math.random() * 5) + 's';
+        el.style.fontSize = (1.5 + Math.random() * 2) + 'rem';
+        floatContainer.appendChild(el);
+      }
+    }
+    createFloatingIcons();
+
+    // === 2. Mind Map Layout ===
+    function updateLayout() {
+      const satellites = document.querySelectorAll('.satellite');
+      const stage = document.getElementById('stage');
+      const svg = document.getElementById('svgLines');
+      const isMobile = window.innerWidth <= 768;
+
+      while(svg.firstChild) svg.removeChild(svg.firstChild);
+
+      if(isMobile) return; 
+
+      const centerX = stage.offsetWidth / 2;
+      const centerY = stage.offsetHeight / 2;
+      const radius = 280;
+      const total = satellites.length;
+
+      satellites.forEach((node, index) => {
+        const angle = (index / total) * 2 * Math.PI - (Math.PI / 2);
+        const x = centerX + radius * Math.cos(angle);
+        const y = centerY + radius * Math.sin(angle);
+
+        node.style.left = x + 'px';
+        node.style.top = y + 'px';
+        node.style.transform = 'translate(-50%, -50%)';
+
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', centerX);
+        line.setAttribute('y1', centerY);
+        line.setAttribute('x2', x);
+        line.setAttribute('y2', y);
+        line.classList.add('connection-line');
+        svg.appendChild(line);
+      });
+    }
+    window.addEventListener('resize', updateLayout);
+    window.addEventListener('load', updateLayout);
+
+    // === 3. Modal Logic ===
+    const overlay = document.getElementById('modalOverlay');
+    document.querySelectorAll('.satellite').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetId = btn.getAttribute('data-target');
+        if(!targetId) return;
+
+        document.querySelectorAll('.modal-content').forEach(c => c.style.display = 'none');
+        document.getElementById(targetId).style.display = 'block';
+        overlay.classList.add('active');
+        if(targetId === 'quiz-modal') startQuiz();
+      });
+    });
+    function closeModal() { overlay.classList.remove('active'); }
+    overlay.addEventListener('click', (e) => { if(e.target === overlay) closeModal(); });
+
+    function speak(text) {
+      if ('speechSynthesis' in window) {
+        speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        speechSynthesis.speak(utterance);
+      }
+    }
+
+    // === 4. Quiz Logic (20 Qs) ===
+    const quizQuestions = [
+      { q: "I enjoy _____ movies.", options: ["watch", "watching", "to watch", "watched"], correct: 1, expl: "Enjoy + V-ing (Gerund)." },
+      { q: "She is good at _____.", options: ["cook", "to cook", "cooking", "cooked"], correct: 2, expl: "Preposition (at) + V-ing." },
+      { q: "Would you mind _____ the window?", options: ["open", "to open", "opening", "opened"], correct: 2, expl: "Mind + V-ing." },
+      { q: "He stopped _____ because it was bad for his health.", options: ["smoking", "to smoke", "smoke", "smoked"], correct: 0, expl: "Stop + V-ing (quit an action)." },
+      { q: "We look forward to _____ you.", options: ["see", "seeing", "saw", "seen"], correct: 1, expl: "Look forward to + V-ing ('to' is a preposition here)." },
+      { q: "_____ is my favorite hobby.", options: ["Read", "Reading", "Reads", "To read"], correct: 1, expl: "Gerund as Subject (more common for hobbies)." },
+      { q: "I avoided _____ to him.", options: ["talk", "to talk", "talking", "talked"], correct: 2, expl: "Avoid + V-ing." },
+      { q: "Please keep _____.", options: ["try", "trying", "to try", "tried"], correct: 1, expl: "Keep + V-ing." },
+      { q: "It is no use _____ about it.", options: ["worry", "to worry", "worrying", "worried"], correct: 2, expl: "It is no use + V-ing." },
+      { q: "He quit _____ last year.", options: ["work", "working", "to work", "worked"], correct: 1, expl: "Quit + V-ing." },
+      { q: "I am interested in _____ English.", options: ["learn", "learning", "to learn", "learned"], correct: 1, expl: "Preposition (in) + V-ing." },
+      { q: "Thank you for _____ me.", options: ["help", "helping", "to help", "helped"], correct: 1, expl: "Preposition (for) + V-ing." },
+      { q: "She suggested _____ to the beach.", options: ["go", "going", "to go", "went"], correct: 1, expl: "Suggest + V-ing." },
+      { q: "I remember _____ the door. I have the key.", options: ["lock", "to lock", "locking", "locked"], correct: 2, expl: "Remember doing (memory of past action)." },
+      { q: "Please remember _____ the door when you leave.", options: ["lock", "to lock", "locking", "locked"], correct: 1, expl: "Remember to do (future task)." },
+      { q: "Let's go _____.", options: ["shop", "shopping", "to shop", "shopped"], correct: 1, expl: "Go + V-ing (Activity)." },
+      { q: "The movie is worth _____.", options: ["watch", "watching", "to watch", "watched"], correct: 1, expl: "Worth + V-ing." },
+      { q: "He finished _____ his homework.", options: ["do", "to do", "doing", "done"], correct: 2, expl: "Finish + V-ing." },
+      { q: "I practice _____ the piano every day.", options: ["play", "playing", "to play", "played"], correct: 1, expl: "Practice + V-ing." },
+      { q: "Don't give up _____.", options: ["try", "trying", "to try", "tried"], correct: 1, expl: "Give up (preposition 'up') + V-ing." }
+    ];
+
+    let currentQ = 0;
+    let score = 0;
+
+    function startQuiz() {
+      currentQ = 0;
+      score = 0;
+      document.getElementById('quiz-container').style.display = 'block';
+      document.getElementById('result-area').style.display = 'none';
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      if(currentQ >= quizQuestions.length) {
+        showResult();
+        return;
+      }
+      const q = quizQuestions[currentQ];
+      const container = document.getElementById('quiz-container');
+      
+      let html = `
+        <div class="quiz-progress">Question ${currentQ + 1} / ${quizQuestions.length}</div>
+        <div class="quiz-question-box">
+          <div class="quiz-q-text">${q.q.replace('_____', '<span style="border-bottom:2px solid var(--secondary-tone); color:var(--secondary-tone);">?</span>')}</div>
+          <div style="display:grid; gap:10px;">
+            ${q.options.map((opt, idx) => `
+              <button class="quiz-opt" onclick="checkAns(this, ${idx})">${opt}</button>
+            `).join('')}
+          </div>
+          <div class="explanation" id="expl-${currentQ}">${q.expl}</div>
+          <div style="text-align:right; margin-top:15px; display:none;" id="nav-${currentQ}">
+            <button class="btn-cta" onclick="nextQ()">Next →</button>
+          </div>
+        </div>
+      `;
+      container.innerHTML = html;
+    }
+
+    function checkAns(btn, idx) {
+      const q = quizQuestions[currentQ];
+      const parent = btn.parentElement;
+      const allBtns = parent.querySelectorAll('.quiz-opt');
+      allBtns.forEach(b => b.disabled = true);
+      
+      if(idx === q.correct) {
+        btn.classList.add('correct');
+        score++;
+      } else {
+        btn.classList.add('incorrect');
+        allBtns[q.correct].classList.add('correct');
+      }
+      document.getElementById(`expl-${currentQ}`).classList.add('show');
+      document.getElementById(`nav-${currentQ}`).style.display = 'block';
+    }
+
+    function nextQ() {
+      currentQ++;
+      renderQuestion();
+    }
+
+    function showResult() {
+      document.getElementById('quiz-container').style.display = 'none';
+      document.getElementById('result-area').style.display = 'block';
+      document.getElementById('score-display').innerText = `${score} / 20`;
+      
+      let msg = score >= 18 ? "Gerund Master! 🏆" : (score >= 12 ? "Good Job! Keep practicing! 💪" : "Review the rules and try again! 📚");
+      document.getElementById('result-msg').innerText = msg;
+    }
+  </script>
 </body>
 </html>
