@@ -3,895 +3,551 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shirley's Adverb Clauses</title>
-    <!-- 引入 Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
-    <!-- 引入 Font Awesome 圖標 -->
+    <title>Shirley's Adverb Clauses (Radial Design)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            /* 配色方案：Oceanic Sapphire (深邃藍寶石) */
-            --bg-body: #f0f9ff;       /* 極淺天藍背景 */
-            --bg-card: #ffffff;       
-            
-            --text-main: #0c4a6e;     /* 深海藍文字 */
-            --text-light: #0369a1;    /* 次要文字 */
-            
-            --primary-dark: #075985;  /* 深藍寶石 */
+            /* 配色方案：Oceanic Sapphire (深邃藍寶石) - 保留原檔色調 */
+            --bg-deep: #f0f9ff;       /* 極淺天藍 */
             --primary: #0ea5e9;       /* 明亮天藍 */
+            --primary-dark: #0369a1;  /* 深海藍 */
             --accent: #f59e0b;        /* 琥珀金 (強調色) */
-            --highlight-bg: #e0f2fe;  /* 淺藍底色 */
             
+            --card-bg: rgba(255, 255, 255, 0.98);
+            --shadow-float: 0 10px 40px -10px rgba(3, 105, 161, 0.2);
+            --highlight-bg: #e0f2fe;
+
             /* 測驗專用色 */
             --correct-bg: #dcfce7;
             --correct-text: #166534;
             --wrong-bg: #fee2e2;
             --wrong-text: #991b1b;
-
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             font-family: 'Noto Sans TC', sans-serif;
-            background-color: var(--bg-body);
-            color: var(--text-main);
-            line-height: 1.8;
+            background-color: var(--bg-deep);
+            color: #0c4a6e; /* 深藍文字 */
+            overflow: hidden; 
+            height: 100vh; width: 100vw;
         }
 
-        /* Header */
-        header {
-            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+        /* --- 1. Radial Mind Map (放射狀首頁) --- */
+        #mindmap-container {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; justify-content: center; align-items: center;
+            z-index: 1;
+        }
+
+        /* 中心節點 */
+        .central-node {
+            width: 190px; height: 190px;
+            background: var(--primary-dark);
+            border-radius: 50%;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
             color: white;
-            padding: 2.5rem 1rem;
-            text-align: center;
+            box-shadow: 0 0 40px rgba(3, 105, 161, 0.5);
+            z-index: 10;
             position: relative;
-            box-shadow: var(--shadow-md);
-        }
-        
-        header h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.8rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            letter-spacing: 0.05em;
+            animation: pulse 3s infinite ease-in-out;
+            text-align: center;
+            border: 4px solid #bae6fd;
+            cursor: default;
         }
 
-        header .subtitle {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.2rem;
-            opacity: 0.9;
-            font-style: italic;
-            color: #bae6fd;
-        }
+        .central-title { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; line-height: 1.2; }
+        .central-sub { font-size: 0.85rem; opacity: 0.8; margin-top: 5px; font-weight: 300; letter-spacing: 1px; }
 
-        /* Container */
-        .container {
-            max-width: 1000px;
-            margin: 2rem auto;
-            padding: 0 1.5rem;
-        }
-
-        /* Tabs Navigation */
-        .tabs {
-            display: flex;
-            flex-wrap: wrap; 
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 2rem;
-        }
-
-        .tab-btn {
+        /* 衛星節點 */
+        .satellite {
+            position: absolute;
+            width: 100px; height: 100px; /* 稍微縮小以容納更多節點 */
             background: white;
             border: 2px solid var(--primary);
-            color: var(--primary);
-            padding: 0.6rem 1.2rem;
-            border-radius: 30px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Noto Sans TC', sans-serif;
-            margin-bottom: 5px; 
-            flex: 0 0 auto;
-        }
-
-        .tab-btn:hover {
-            background-color: #e0f2fe;
-            transform: translateY(-2px);
-        }
-
-        .tab-btn.active {
-            background-color: var(--primary);
-            color: white;
-            box-shadow: var(--shadow-md);
-        }
-
-        /* Content Sections */
-        .content-section {
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .content-section.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Cards */
-        .card {
-            background: var(--bg-card);
-            border-radius: 12px;
-            padding: 2.5rem;
-            margin-bottom: 2rem;
-            box-shadow: var(--shadow-md);
-            border-top: 4px solid var(--primary);
-        }
-
-        h2 {
-            font-family: 'Playfair Display', serif;
+            border-radius: 50%;
             color: var(--primary-dark);
-            font-size: 1.8rem;
-            border-bottom: 2px solid var(--accent);
-            padding-bottom: 0.5rem;
-            margin-bottom: 1.5rem;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-size: 0.8rem; font-weight: 600;
+            z-index: 5;
+            padding: 2px;
+        }
+        
+        .satellite i { font-size: 1.4rem; margin-bottom: 3px; color: var(--primary); }
+        .satellite span { font-size: 0.65rem; opacity: 0.7; display: block; margin-top: 2px; }
+
+        .satellite:hover {
+            transform: scale(1.15) !important;
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary-dark);
+            box-shadow: 0 10px 25px rgba(14, 165, 233, 0.4);
+            z-index: 20;
+        }
+        .satellite:hover i { color: white; }
+
+        /* 測驗節點樣式 */
+        .satellite.quiz-node { border-color: var(--accent); color: #b45309; }
+        .satellite.quiz-node i { color: var(--accent); }
+        .satellite.quiz-node:hover { background: var(--accent); color: white; border-color: #92400e; }
+        .satellite.quiz-node:hover i { color: white; }
+
+        /* 連接線 */
+        .connections { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; }
+        .conn-line { stroke: var(--primary); stroke-width: 1.5; stroke-dasharray: 4,4; opacity: 0.3; }
+
+        /* --- 2. Modal (內容卡片) --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(3, 105, 161, 0.3);
+            backdrop-filter: blur(5px);
+            z-index: 100;
+            opacity: 0; visibility: hidden;
+            transition: all 0.4s ease;
+            display: flex; justify-content: center; align-items: center;
         }
 
-        h3 {
-            color: var(--primary);
-            font-size: 1.4rem;
-            margin: 1.5rem 0 1rem 0;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+
+        .modal-card {
+            width: 90%; max-width: 1100px; height: 90vh;
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: var(--shadow-float);
+            display: flex; flex-direction: column;
+            overflow: hidden;
+            transform: translateY(30px) scale(0.95);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        h4 {
-            color: var(--text-main);
-            font-size: 1.1rem;
-            margin: 1.5rem 0 0.8rem 0;
-            font-weight: 600;
-            background-color: var(--highlight-bg);
-            padding: 0.6rem 1rem;
-            border-left: 4px solid var(--primary);
-            border-radius: 0 4px 4px 0;
-        }
+        .modal-overlay.active .modal-card { transform: translateY(0) scale(1); }
 
-        /* List Styling */
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            color: white;
+            padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 3px solid var(--accent);
+        }
+        
+        .modal-title h2 { font-family: 'Playfair Display', serif; font-size: 1.6rem; margin: 0; border: none; padding: 0; color: white; }
+        .modal-close { background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; transition: 0.3s; }
+        .modal-close:hover { transform: rotate(90deg); color: var(--accent); }
+
+        /* 分頁導航 */
+        .modal-tabs {
+            display: flex; background: #e0f2fe; overflow-x: auto;
+            border-bottom: 1px solid #bae6fd; flex-shrink: 0;
+            padding: 0 5px;
+        }
+        .tab-btn {
+            flex: 0 0 auto; padding: 1rem; border: none; background: none;
+            color: var(--primary-dark); font-weight: 600; cursor: pointer;
+            transition: 0.3s; min-width: 100px; white-space: nowrap;
+            font-family: 'Noto Sans TC', sans-serif;
+            font-size: 0.9rem;
+        }
+        .tab-btn:hover { background: #bae6fd; }
+        .tab-btn.active { background: white; color: var(--primary); border-bottom: 3px solid var(--primary); }
+
+        /* 內容樣式 (移植自您的原檔) */
+        .modal-body { flex: 1; overflow-y: auto; padding: 2.5rem; scroll-behavior: smooth; line-height: 1.8; }
+        
+        h2 { font-family: 'Playfair Display', serif; color: var(--primary-dark); font-size: 1.8rem; border-bottom: 2px solid var(--accent); padding-bottom: 0.5rem; margin-bottom: 1.5rem; }
+        h3 { color: var(--primary); font-size: 1.4rem; margin: 2rem 0 1rem 0; font-weight: 700; display: flex; align-items: center; }
+        h3 i { margin-right: 10px; }
+        h4 { color: #0c4a6e; font-size: 1.1rem; margin: 1.5rem 0 0.8rem 0; font-weight: 600; background-color: var(--highlight-bg); padding: 0.6rem 1rem; border-left: 4px solid var(--primary); border-radius: 0 4px 4px 0; }
+        
         ul { list-style: none; padding-left: 0.5rem; }
-        .word-list li { padding-left: 0; margin-bottom: 1.2rem; }
-        
-        .structure {
-            font-family: 'Courier New', monospace;
-            background-color: #e0f2fe;
-            padding: 4px 8px;
-            border-radius: 4px;
-            color: #0369a1;
-            font-weight: 700;
-            font-size: 1.1em;
-            display: inline-block;
-            margin-bottom: 5px;
-            border: 1px solid #bae6fd;
-        }
+        .word-list li { margin-bottom: 1.5rem; }
+        .structure { font-family: 'Courier New', monospace; background-color: #e0f2fe; padding: 4px 8px; border-radius: 4px; color: #0369a1; font-weight: 700; font-size: 1.1em; display: inline-block; margin-bottom: 5px; border: 1px solid #bae6fd; }
 
-        /* Example Box */
-        .example-box {
-            background-color: #f0f9ff;
-            border-left: 3px solid var(--accent);
-            padding: 1rem 1.2rem;
-            margin: 0.8rem 0 1.2rem 0;
-            border-radius: 0 6px 6px 0;
-            position: relative;
-            transition: background-color 0.2s;
-        }
+        /* 例句樣式 */
+        .example-box { background-color: #f0f9ff; border-left: 3px solid var(--accent); padding: 1rem 1.2rem; margin: 0.8rem 0 1.2rem 0; border-radius: 0 6px 6px 0; position: relative; transition: background-color 0.2s; }
+        .example-box:hover { background-color: #e0f2fe; }
         
-        .small-example {
-            background-color: #fff;
-            border: 1px solid #e0f2fe;
-            border-left: 3px solid #7dd3fc;
-            padding: 0.8rem;
-            margin-top: 5px;
-            border-radius: 0 4px 4px 0;
-            position: relative;
-        }
-
-        .en-sentence {
-            font-weight: 600;
-            color: #0c4a6e;
-            font-size: 1.05rem;
-            display: block;
-            margin-bottom: 0.4rem;
-            padding-right: 30px; 
-        }
+        .small-example { background-color: #fff; border: 1px solid #e0f2fe; border-left: 3px solid #7dd3fc; padding: 0.8rem; margin-top: 5px; border-radius: 0 4px 4px 0; position: relative; }
         
-        .ch-translation { color: #52525b; font-size: 0.95rem; display: block; font-weight: 400; }
+        .en-sentence { font-weight: 600; color: #0c4a6e; font-size: 1.05rem; display: block; margin-bottom: 0.4rem; padding-right: 30px; }
+        .ch-translation { color: #52525b; font-size: 0.95rem; }
+        
+        .speaker-btn { position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: var(--primary); cursor: pointer; font-size: 1.1rem; opacity: 0.7; }
+        .speaker-btn:hover { opacity: 1; transform: scale(1.1); color: var(--primary-dark); }
+        .small-example .speaker-btn { top: 0.8rem; right: 0.5rem; }
         
         .kw { color: var(--primary); font-weight: bold; }
 
-        /* Audio Button */
-        .speaker-btn {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: none;
-            border: none;
-            color: var(--primary);
-            cursor: pointer;
-            font-size: 1.1rem;
-            opacity: 0.7;
-            transition: all 0.2s;
-        }
+        .note-box { background-color: #fffbeb; border: 1px solid #fcd34d; border-radius: 8px; padding: 1.2rem; margin: 1.5rem 0; color: #92400e; }
         
-        .small-example .speaker-btn { top: 0.8rem; right: 0.5rem; }
-        .speaker-btn:hover { opacity: 1; transform: scale(1.1); color: var(--primary-dark); }
-
-        /* Note Box */
-        .note-box {
-            background-color: #fffbeb;
-            border: 1px solid #fcd34d;
-            border-radius: 8px;
-            padding: 1.2rem;
-            margin: 1.5rem 0;
-            color: #92400e;
-        }
+        .comparison-box { background-color: #fff; border: 1px solid #e2e8f0; border-left: 4px solid #f97316; padding: 1.2rem; margin: 1rem 0; border-radius: 6px; position: relative; }
 
         /* Quiz Styles */
         .quiz-container { margin-top: 1rem; }
-        .quiz-progress { margin-bottom: 1.5rem; color: var(--text-light); font-weight: 600; text-align: right; }
+        .quiz-progress { margin-bottom: 1.5rem; color: #0369a1; font-weight: 600; text-align: right; }
         .quiz-question { font-size: 1.2rem; font-weight: 600; margin-bottom: 1.5rem; line-height: 1.6; }
         .quiz-options { display: flex; flex-direction: column; gap: 10px; }
         
-        .option-btn {
-            padding: 1rem;
-            border: 2px solid #e2e8f0;
-            background: #fff;
-            border-radius: 8px;
-            text-align: left;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-size: 1rem;
-            color: var(--text-main);
-            font-family: inherit;
-        }
-        
+        .option-btn { padding: 1rem; border: 2px solid #e2e8f0; background: #fff; border-radius: 8px; text-align: left; cursor: pointer; font-size: 1rem; color: #0c4a6e; transition: 0.2s; font-family: inherit; }
         .option-btn:hover:not(:disabled) { border-color: var(--primary); background-color: #e0f2fe; }
         .option-btn.correct { background-color: var(--correct-bg); border-color: var(--correct-text); color: var(--correct-text); }
         .option-btn.wrong { background-color: var(--wrong-bg); border-color: var(--wrong-text); color: var(--wrong-text); }
         
-        .feedback-area {
-            margin-top: 1.5rem; padding: 1rem; border-radius: 8px;
-            background-color: #f8fafc; border-left: 4px solid var(--accent); display: none;
-        }
-        
-        .next-btn {
-            margin-top: 1.5rem; background-color: var(--primary); color: white; border: none;
-            padding: 0.8rem 2rem; border-radius: 30px; font-size: 1rem; cursor: pointer; display: none;
-        }
-        .next-btn:hover { background-color: var(--primary-dark); }
-        
-        .score-card { text-align: center; padding: 2rem; }
+        .feedback-area { margin-top: 1.5rem; padding: 1rem; border-radius: 8px; background-color: #f8fafc; border-left: 4px solid var(--accent); display: none; }
+        .next-btn { margin-top: 1.5rem; background-color: var(--primary); color: white; border: none; padding: 0.8rem 2rem; border-radius: 30px; font-size: 1rem; cursor: pointer; display: none; }
+        .score-card { text-align: center; padding: 2rem; display: none; }
         .final-score { font-size: 3rem; color: var(--primary); font-weight: 700; margin: 1rem 0; font-family: 'Playfair Display', serif; }
 
-        @media (max-width: 768px) {
-            header h1 { font-size: 2rem; }
-            .card { padding: 1.5rem; }
-        }
+        @keyframes pulse { 0%, 100% { box-shadow: 0 0 40px rgba(3, 105, 161, 0.5); } 50% { box-shadow: 0 0 60px rgba(3, 105, 161, 0.8); } }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>Shirley's Adverb Clauses</h1>
-        <div class="subtitle">Mastering Advanced English Grammar</div>
-    </header>
-
-    <div class="container">
+    <div id="mindmap-container">
+        <svg class="connections" id="lines-svg"></svg>
         
-        <!-- Tab Navigation -->
-        <div class="tabs">
-            <button class="tab-btn active" onclick="openTab(event, 'intro')">概論 (Overview)</button>
-            <button class="tab-btn" onclick="openTab(event, 'time')">1. 時間 (Time)</button>
-            <button class="tab-btn" onclick="openTab(event, 'place')">2. 地點 (Place)</button>
-            <button class="tab-btn" onclick="openTab(event, 'reason')">3. 原因 (Reason)</button>
-            <button class="tab-btn" onclick="openTab(event, 'result')">4. 結果 (Result)</button>
-            <button class="tab-btn" onclick="openTab(event, 'purpose')">5. 目的 (Purpose)</button>
-            <button class="tab-btn" onclick="openTab(event, 'concession')">6. 讓步 (Concession)</button>
-            <button class="tab-btn" onclick="openTab(event, 'condition')">7. 條件 (Condition)</button>
-            <button class="tab-btn" onclick="openTab(event, 'manner')">8. 方式 (Manner)</button>
-            <button class="tab-btn" onclick="openTab(event, 'comparison')">9. 比較 (Comparison)</button>
-            <button class="tab-btn" onclick="openTab(event, 'reduction')">子句簡化 (Reduction)</button>
-            <button class="tab-btn" onclick="openTab(event, 'quiz')"><i class="fas fa-pencil-alt"></i> 隨堂測驗 (20題)</button>
+        <div class="central-node">
+            <div class="central-title">Shirley's Adverb<br>Clauses</div>
+            <div class="central-sub">副詞子句</div>
         </div>
 
-        <!-- 1. Intro (Overview) -->
-        <div id="intro" class="content-section active">
-            <div class="card">
+        <div class="satellite" onclick="openModal('intro')">
+            <i class="fas fa-book"></i>
+            <div>概論<br><span>Overview</span></div>
+        </div>
+        <div class="satellite" onclick="openModal('time')">
+            <i class="fas fa-clock"></i>
+            <div>時間<br><span>Time</span></div>
+        </div>
+        <div class="satellite" onclick="openModal('place')">
+            <i class="fas fa-map-marker-alt"></i>
+            <div>地點<br><span>Place</span></div>
+        </div>
+        <div class="satellite" onclick="openModal('reason')">
+            <i class="fas fa-question-circle"></i>
+            <div>原因<br><span>Reason</span></div>
+        </div>
+        <div class="satellite" onclick="openModal('result')">
+            <i class="fas fa-poll"></i>
+            <div>結果<br><span>Result</span></div>
+        </div>
+        <div class="satellite" onclick="openModal('purpose')">
+            <i class="fas fa-bullseye"></i>
+            <div>目的<br><span>Purpose</span></div>
+        </div>
+        <div class="satellite" onclick="openModal('concession')">
+            <i class="fas fa-exchange-alt"></i>
+            <div>讓步<br><span>Concession</span></div>
+        </div>
+        <div class="satellite" onclick="openModal('condition')">
+            <i class="fas fa-project-diagram"></i>
+            <div>條件<br><span>Condition</span></div>
+        </div>
+        <div class="satellite" onclick="openModal('manner')">
+            <i class="fas fa-theater-masks"></i>
+            <div>方式<br><span>Manner</span></div>
+        </div>
+        <div class="satellite" onclick="openModal('comparison')">
+            <i class="fas fa-balance-scale"></i>
+            <div>比較<br><span>Compare</span></div>
+        </div>
+        <div class="satellite" onclick="openModal('reduction')">
+            <i class="fas fa-compress-arrows-alt"></i>
+            <div>簡化<br><span>Reduction</span></div>
+        </div>
+        <div class="satellite quiz-node" onclick="openModal('quiz')">
+            <i class="fas fa-pencil-alt"></i>
+            <div>測驗<br><span>Quiz(20)</span></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal-card">
+            <header class="modal-header">
+                <div class="modal-title"><h2>Shirley's Adverb Clauses</h2></div>
+                <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+            </header>
+            <nav class="modal-tabs" id="modal-tabs"></nav>
+            <div class="modal-body" id="modal-content"></div>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. CONTENT DATA (100% 原內容保留) ---
+        // 內容直接提取自您提供的 index.html
+        const contentData = {
+            intro: {
+                title: "概論",
+                html: `
                 <h2>I. 概論：九大副詞子句種類</h2>
                 <p>副詞子句置於主句前時，子句後需要加逗號。置於主句後時，通常不加逗號。副詞子句共有以下九種分類。</p>
-                
                 <ul class="word-list">
-                    <li>
-                        <span class="structure">1. 時間 (Time)</span>
-                        <div class="small-example">
-                            <span class="en-sentence"><span class="kw">When</span> the doorbell rang, I was taking a shower.</span>
-                            <span class="ch-translation">當門鈴響時，我正在洗澡。</span>
-                            <button class="speaker-btn" onclick="speakText('When the doorbell rang, I was taking a shower')"><i class="fas fa-volume-up"></i></button>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="structure">2. 地點 (Place)</span>
-                        <div class="small-example">
-                            <span class="en-sentence"><span class="kw">Where</span> there is smoke, there is fire.</span>
-                            <span class="ch-translation">無風不起浪 (凡有煙處必有火)。</span>
-                            <button class="speaker-btn" onclick="speakText('Where there is smoke, there is fire')"><i class="fas fa-volume-up"></i></button>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="structure">3. 原因 (Reason)</span>
-                        <div class="small-example">
-                            <span class="en-sentence">She was late <span class="kw">because</span> she had missed the train.</span>
-                            <span class="ch-translation">她遲到了，因為她錯過了火車。</span>
-                            <button class="speaker-btn" onclick="speakText('She was late because she had missed the train')"><i class="fas fa-volume-up"></i></button>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="structure">4. 結果 (Result)</span>
-                        <div class="small-example">
-                            <span class="en-sentence">His business is <span class="kw">so</span> successful <span class="kw">that</span> he has decided to open another store.</span>
-                            <span class="ch-translation">他的生意如此成功，以致於他決定再開一家店。</span>
-                            <button class="speaker-btn" onclick="speakText('His business is so successful that he has decided to open another store')"><i class="fas fa-volume-up"></i></button>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="structure">5. 目的 (Purpose)</span>
-                        <div class="small-example">
-                            <span class="en-sentence">He studies hard <span class="kw">so that</span> he can get a scholarship.</span>
-                            <span class="ch-translation">他努力讀書是為了能獲得獎學金。</span>
-                            <button class="speaker-btn" onclick="speakText('He studies hard so that he can get a scholarship')"><i class="fas fa-volume-up"></i></button>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="structure">6. 讓步/對比 (Concession)</span>
-                        <div class="small-example">
-                            <span class="en-sentence"><span class="kw">Although</span> the exam was difficult, I did it well.</span>
-                            <span class="ch-translation">儘管考試很難，我還是考得不錯。</span>
-                            <button class="speaker-btn" onclick="speakText('Although the exam was difficult, I did it well')"><i class="fas fa-volume-up"></i></button>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="structure">7. 條件 (Condition)</span>
-                        <div class="small-example">
-                            <span class="en-sentence"><span class="kw">If</span> it rains tomorrow, the game will be postponed.</span>
-                            <span class="ch-translation">如果明天下雨，比賽將會延期。</span>
-                            <button class="speaker-btn" onclick="speakText('If it rains tomorrow, the game will be postponed')"><i class="fas fa-volume-up"></i></button>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="structure">8. 方式 (Manner)</span>
-                        <div class="small-example">
-                            <span class="en-sentence">When in Rome, do <span class="kw">as</span> the Roman do.</span>
-                            <span class="ch-translation">入境隨俗 (在羅馬就照羅馬人的方式做)。</span>
-                            <button class="speaker-btn" onclick="speakText('When in Rome, do as the Roman do')"><i class="fas fa-volume-up"></i></button>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="structure">9. 比較 (Comparison)</span>
-                        <div class="small-example">
-                            <span class="en-sentence">The more we know about the wildlife, <span class="kw">the better</span> we will live in the future.</span>
-                            <span class="ch-translation">我們對野生動物了解越多，未來的日子就會過得越好。</span>
-                            <button class="speaker-btn" onclick="speakText('The more we know about the wildlife, the better we will live in the future')"><i class="fas fa-volume-up"></i></button>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- 2. Time -->
-        <div id="time" class="content-section">
-            <div class="card">
+                    <li><span class="structure">1. 時間 (Time)</span><div class="small-example"><span class="en-sentence"><span class="kw">When</span> the doorbell rang, I was taking a shower.</span><span class="ch-translation">當門鈴響時，我正在洗澡。</span><button class="speaker-btn" onclick="speakText('When the doorbell rang, I was taking a shower')"><i class="fas fa-volume-up"></i></button></div></li>
+                    <li><span class="structure">2. 地點 (Place)</span><div class="small-example"><span class="en-sentence"><span class="kw">Where</span> there is smoke, there is fire.</span><span class="ch-translation">無風不起浪 (凡有煙處必有火)。</span><button class="speaker-btn" onclick="speakText('Where there is smoke, there is fire')"><i class="fas fa-volume-up"></i></button></div></li>
+                    <li><span class="structure">3. 原因 (Reason)</span><div class="small-example"><span class="en-sentence">She was late <span class="kw">because</span> she had missed the train.</span><span class="ch-translation">她遲到了，因為她錯過了火車。</span><button class="speaker-btn" onclick="speakText('She was late because she had missed the train')"><i class="fas fa-volume-up"></i></button></div></li>
+                    <li><span class="structure">4. 結果 (Result)</span><div class="small-example"><span class="en-sentence">His business is <span class="kw">so</span> successful <span class="kw">that</span> he has decided to open another store.</span><span class="ch-translation">他的生意如此成功，以致於他決定再開一家店。</span><button class="speaker-btn" onclick="speakText('His business is so successful that he has decided to open another store')"><i class="fas fa-volume-up"></i></button></div></li>
+                    <li><span class="structure">5. 目的 (Purpose)</span><div class="small-example"><span class="en-sentence">He studies hard <span class="kw">so that</span> he can get a scholarship.</span><span class="ch-translation">他努力讀書是為了能獲得獎學金。</span><button class="speaker-btn" onclick="speakText('He studies hard so that he can get a scholarship')"><i class="fas fa-volume-up"></i></button></div></li>
+                    <li><span class="structure">6. 讓步/對比 (Concession)</span><div class="small-example"><span class="en-sentence"><span class="kw">Although</span> the exam was difficult, I did it well.</span><span class="ch-translation">儘管考試很難，我還是考得不錯。</span><button class="speaker-btn" onclick="speakText('Although the exam was difficult, I did it well')"><i class="fas fa-volume-up"></i></button></div></li>
+                    <li><span class="structure">7. 條件 (Condition)</span><div class="small-example"><span class="en-sentence"><span class="kw">If</span> it rains tomorrow, the game will be postponed.</span><span class="ch-translation">如果明天下雨，比賽將會延期。</span><button class="speaker-btn" onclick="speakText('If it rains tomorrow, the game will be postponed')"><i class="fas fa-volume-up"></i></button></div></li>
+                    <li><span class="structure">8. 方式 (Manner)</span><div class="small-example"><span class="en-sentence">When in Rome, do <span class="kw">as</span> the Roman do.</span><span class="ch-translation">入境隨俗 (在羅馬就照羅馬人的方式做)。</span><button class="speaker-btn" onclick="speakText('When in Rome, do as the Roman do')"><i class="fas fa-volume-up"></i></button></div></li>
+                    <li><span class="structure">9. 比較 (Comparison)</span><div class="small-example"><span class="en-sentence">The more we know about the wildlife, <span class="kw">the better</span> we will live in the future.</span><span class="ch-translation">我們對野生動物了解越多，未來的日子就會過得越好。</span><button class="speaker-btn" onclick="speakText('The more we know about the wildlife, the better we will live in the future')"><i class="fas fa-volume-up"></i></button></div></li>
+                </ul>`
+            },
+            time: {
+                title: "1. 時間",
+                html: `
                 <h2>1. 時間副詞子句 (Time)</h2>
-                <div class="note-box">
-                    <strong>連接詞：</strong> when, whenever, as, while, before, after, since, till, until, the minute/moment/second/instant, every time, the day, as soon as, no sooner...than, hardly...when, scarcely...when
-                </div>
-                
-                <div class="example-box">
-                    <span class="en-sentence"><span class="kw">When</span> the doorbell rang, I was taking a shower.</span>
-                    <span class="ch-translation">當門鈴響時，我正在洗澡。</span>
-                    <button class="speaker-btn" onclick="speakText('When the doorbell rang, I was taking a shower')"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence"><span class="kw">Whenever</span> I feel tired of studying, I start to play a video game.</span>
-                    <span class="ch-translation">每當我讀書讀累了，我就開始玩電動。</span>
-                    <button class="speaker-btn" onclick="speakText('Whenever I feel tired of studying, I start to play a video game')"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence"><span class="kw">As</span> the natural environment shrinks in the face of human expansion, wild animals are left homeless.</span>
-                    <span class="ch-translation">隨著自然環境在人類擴張下面臨縮減，野生動物變得無家可歸。</span>
-                    <button class="speaker-btn" onclick="speakText('As the natural environment shrinks in the face of human expansion, wild animals are left homeless')"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence"><span class="kw">While</span> I was enjoying my dinner, my brother came home.</span>
-                    <span class="ch-translation">當我正在享用晚餐時，我哥哥回來了。</span>
-                    <button class="speaker-btn" onclick="speakText('While I was enjoying my dinner, my brother came home')"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence">We should take steps to conserve endangered animals <span class="kw">before</span> it is too late.</span>
-                    <span class="ch-translation">我們應該在為時已晚之前，採取措施保護瀕危動物。</span>
-                    <button class="speaker-btn" onclick="speakText('We should take steps to conserve endangered animals before it is too late')"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence">It has been more than ten years <span class="kw">since</span> our family moved to this city.</span>
-                    <span class="ch-translation">自從我們家搬到這座城市已經十多年了。</span>
-                    <button class="speaker-btn" onclick="speakText('It has been more than ten years since our family moved to this city')"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence">We violate an animal’s rights <span class="kw">the minute/the moment</span> we catch it for entertainment.</span>
-                    <span class="ch-translation">我們為了娛樂捕捉動物的那一刻，就侵犯了動物的權利。</span>
-                    <button class="speaker-btn" onclick="speakText('We violate an animal’s rights the minute we catch it for entertainment')"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence"><span class="kw">As soon as</span> the food web is broken, the whole ecosystem could be forever changed.</span>
-                    <span class="ch-translation">一旦食物網被破壞，整個生態系統可能會永遠改變。</span>
-                    <button class="speaker-btn" onclick="speakText('As soon as the food web is broken, the whole ecosystem could be forever changed')"><i class="fas fa-volume-up"></i></button>
-                </div>
-                
+                <div class="note-box"><strong>連接詞：</strong> when, whenever, as, while, before, after, since, till, until, the minute/moment/second/instant, every time, the day, as soon as, no sooner...than, hardly...when, scarcely...when</div>
+                <div class="example-box"><span class="en-sentence"><span class="kw">When</span> the doorbell rang, I was taking a shower.</span><span class="ch-translation">當門鈴響時，我正在洗澡。</span><button class="speaker-btn" onclick="speakText('When the doorbell rang, I was taking a shower')"><i class="fas fa-volume-up"></i></button></div>
+                <div class="example-box"><span class="en-sentence"><span class="kw">Whenever</span> I feel tired of studying, I start to play a video game.</span><span class="ch-translation">每當我讀書讀累了，我就開始玩電動。</span><button class="speaker-btn" onclick="speakText('Whenever I feel tired of studying, I start to play a video game')"><i class="fas fa-volume-up"></i></button></div>
+                <div class="example-box"><span class="en-sentence"><span class="kw">As</span> the natural environment shrinks in the face of human expansion, wild animals are left homeless.</span><span class="ch-translation">隨著自然環境在人類擴張下面臨縮減，野生動物變得無家可歸。</span><button class="speaker-btn" onclick="speakText('As the natural environment shrinks in the face of human expansion, wild animals are left homeless')"><i class="fas fa-volume-up"></i></button></div>
+                <div class="example-box"><span class="en-sentence"><span class="kw">While</span> I was enjoying my dinner, my brother came home.</span><span class="ch-translation">當我正在享用晚餐時，我哥哥回來了。</span><button class="speaker-btn" onclick="speakText('While I was enjoying my dinner, my brother came home')"><i class="fas fa-volume-up"></i></button></div>
+                <div class="example-box"><span class="en-sentence">We should take steps to conserve endangered animals <span class="kw">before</span> it is too late.</span><span class="ch-translation">我們應該在為時已晚之前，採取措施保護瀕危動物。</span><button class="speaker-btn" onclick="speakText('We should take steps to conserve endangered animals before it is too late')"><i class="fas fa-volume-up"></i></button></div>
+                <div class="example-box"><span class="en-sentence">It has been more than ten years <span class="kw">since</span> our family moved to this city.</span><span class="ch-translation">自從我們家搬到這座城市已經十多年了。</span><button class="speaker-btn" onclick="speakText('It has been more than ten years since our family moved to this city')"><i class="fas fa-volume-up"></i></button></div>
+                <div class="example-box"><span class="en-sentence">We violate an animal’s rights <span class="kw">the minute/the moment</span> we catch it for entertainment.</span><span class="ch-translation">我們為了娛樂捕捉動物的那一刻，就侵犯了動物的權利。</span><button class="speaker-btn" onclick="speakText('We violate an animal’s rights the minute we catch it for entertainment')"><i class="fas fa-volume-up"></i></button></div>
+                <div class="example-box"><span class="en-sentence"><span class="kw">As soon as</span> the food web is broken, the whole ecosystem could be forever changed.</span><span class="ch-translation">一旦食物網被破壞，整個生態系統可能會永遠改變。</span><button class="speaker-btn" onclick="speakText('As soon as the food web is broken, the whole ecosystem could be forever changed')"><i class="fas fa-volume-up"></i></button></div>
                 <h4 style="margin-top:20px;">特殊句型：一...就...</h4>
-                <div class="example-box">
-                    <span class="en-sentence">We had <span class="kw">no sooner</span> started cooking <span class="kw">than</span> there was a power cut.</span>
-                    <span class="ch-translation">我們剛開始煮飯就停電了。</span>
-                    <br><span style="color:#666; font-size:0.9rem;">(倒裝句：No sooner had we started cooking than there was a power cut.)</span>
-                    <button class="speaker-btn" onclick="speakText('We had no sooner started cooking than there was a power cut')"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence">We had <span class="kw">hardly/scarcely</span> started cooking <span class="kw">when</span> there was a power cut.</span>
-                    <span class="ch-translation">我們才剛開始煮飯就停電了。</span>
-                    <br><span style="color:#666; font-size:0.9rem;">(倒裝句：Hardly/Scarcely had we started cooking when there was a power cut.)</span>
-                    <button class="speaker-btn" onclick="speakText('We had hardly started cooking when there was a power cut')"><i class="fas fa-volume-up"></i></button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 3. Place -->
-        <div id="place" class="content-section">
-            <div class="card">
+                <div class="example-box"><span class="en-sentence">We had <span class="kw">no sooner</span> started cooking <span class="kw">than</span> there was a power cut.</span><span class="ch-translation">我們剛開始煮飯就停電了。</span><br><span style="color:#666; font-size:0.9rem;">(倒裝句：No sooner had we started cooking than there was a power cut.)</span><button class="speaker-btn" onclick="speakText('We had no sooner started cooking than there was a power cut')"><i class="fas fa-volume-up"></i></button></div>
+                <div class="example-box"><span class="en-sentence">We had <span class="kw">hardly/scarcely</span> started cooking <span class="kw">when</span> there was a power cut.</span><span class="ch-translation">我們才剛開始煮飯就停電了。</span><br><span style="color:#666; font-size:0.9rem;">(倒裝句：Hardly/Scarcely had we started cooking when there was a power cut.)</span><button class="speaker-btn" onclick="speakText('We had hardly started cooking when there was a power cut')"><i class="fas fa-volume-up"></i></button></div>`
+            },
+            place: {
+                title: "2. 地點",
+                html: `
                 <h2>2. 地點副詞子句 (Place)</h2>
-                <div class="note-box">
-                    <strong>連接詞：</strong> where, wherever, anywhere, everywhere
-                </div>
-                
-                <div class="example-box">
-                    <span class="en-sentence"><span class="kw">Where</span> there is smoke, there is fire.</span>
-                    <span class="ch-translation">無風不起浪 (凡有煙處必有火)。</span>
-                    <button class="speaker-btn" onclick="speakText('Where there is smoke, there is fire')"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence">Her son follows her around <span class="kw">wherever</span> she goes.</span>
-                    <span class="ch-translation">無論她去哪裡，她的兒子都跟著她。</span>
-                    <button class="speaker-btn" onclick="speakText('Her son follows her around wherever she goes')"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence">You can find warm-hearted people <span class="kw">everywhere/anywhere</span> you go.</span>
-                    <span class="ch-translation">無論你走到哪裡，都能找到熱心的人。</span>
-                    <button class="speaker-btn" onclick="speakText('You can find warm-hearted people everywhere you go')"><i class="fas fa-volume-up"></i></button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 4. Reason -->
-        <div id="reason" class="content-section">
-            <div class="card">
+                <div class="note-box"><strong>連接詞：</strong> where, wherever, anywhere, everywhere</div>
+                <div class="example-box"><span class="en-sentence"><span class="kw">Where</span> there is smoke, there is fire.</span><span class="ch-translation">無風不起浪 (凡有煙處必有火)。</span><button class="speaker-btn" onclick="speakText('Where there is smoke, there is fire')"><i class="fas fa-volume-up"></i></button></div>
+                <div class="example-box"><span class="en-sentence">Her son follows her around <span class="kw">wherever</span> she goes.</span><span class="ch-translation">無論她去哪裡，她的兒子都跟著她。</span><button class="speaker-btn" onclick="speakText('Her son follows her around wherever she goes')"><i class="fas fa-volume-up"></i></button></div>
+                <div class="example-box"><span class="en-sentence">You can find warm-hearted people <span class="kw">everywhere/anywhere</span> you go.</span><span class="ch-translation">無論你走到哪裡，都能找到熱心的人。</span><button class="speaker-btn" onclick="speakText('You can find warm-hearted people everywhere you go')"><i class="fas fa-volume-up"></i></button></div>`
+            },
+            reason: {
+                title: "3. 原因",
+                html: `
                 <h2>3. 原因副詞子句 (Reason)</h2>
-                <div class="note-box">
-                    <strong>連接詞：</strong> because, since, as, now that, considering that, seeing that, given that
-                </div>
-                
-                <div class="example-box">
-                    <span class="en-sentence">She was late <span class="kw">because</span> she had missed the train.</span>
-                    <span class="ch-translation">她遲到了，因為她錯過了火車。</span>
-                    <button class="speaker-btn" onclick="speakText('She was late because she had missed the train')"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence"><span class="kw">Since</span> you don’t feel well, you can take a rest at home.</span>
-                    <span class="ch-translation">既然你不舒服，你可以在家休息。(Since 表示雙方共知的理由)</span>
-                    <button class="speaker-btn" onclick="speakText('Since you don’t feel well, you can take a rest at home')"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence"><span class="kw">As</span> he is the only child in the three-generation family, he has always been taken good care of.</span>
-                    <span class="ch-translation">由於他是這個三代同堂家庭中的獨生子，他一直受到很好的照顧。</span>
-                    <button class="speaker-btn" onclick="speakText('As he is the only child in the three-generation family, he has always been taken good care of')"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence"><span class="kw">Now that</span> you are a grown-up, you should be aware of your responsibilities.</span>
-                    <span class="ch-translation">既然你已經成年了，你應該意識到你的責任。</span>
-                    <button class="speaker-btn" onclick="speakText('Now that you are a grown-up, you should be aware of your responsibilities')"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence">The school requires that all freshmen live on campus, <span class="kw">considering that</span> this will help them study more effectively.</span>
-                    <span class="ch-translation">學校要求所有大一新生住校，考慮到這將幫助他們更有效地學習。</span>
-                    <button class="speaker-btn" onclick="speakText('The school requires that all freshmen live on campus, considering that this will help them study more effectively')"><i class="fas fa-volume-up"></i></button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 5. Result -->
-        <div id="result" class="content-section">
-            <div class="card">
+                <div class="note-box"><strong>連接詞：</strong> because, since, as, now that, considering that, seeing that, given that</div>
+                <div class="example-box"><span class="en-sentence">She was late <span class="kw">because</span> she had missed the train.</span><span class="ch-translation">她遲到了，因為她錯過了火車。</span><button class="speaker-btn" onclick="speakText('She was late because she had missed the train')"><i class="fas fa-volume-up"></i></button></div>
+                <div class="example-box"><span class="en-sentence"><span class="kw">Since</span> you don’t feel well, you can take a rest at home.</span><span class="ch-translation">既然你不舒服，你可以在家休息。(Since 表示雙方共知的理由)</span><button class="speaker-btn" onclick="speakText('Since you don’t feel well, you can take a rest at home')"><i class="fas fa-volume-up"></i></button></div>
+                <div class="example-box"><span class="en-sentence"><span class="kw">As</span> he is the only child in the three-generation family, he has always been taken good care of.</span><span class="ch-translation">由於他是這個三代同堂家庭中的獨生子，他一直受到很好的照顧。</span><button class="speaker-btn" onclick="speakText('As he is the only child in the three-generation family, he has always been taken good care of')"><i class="fas fa-volume-up"></i></button></div>
+                <div class="example-box"><span class="en-sentence"><span class="kw">Now that</span> you are a grown-up, you should be aware of your responsibilities.</span><span class="ch-translation">既然你已經成年了，你應該意識到你的責任。</span><button class="speaker-btn" onclick="speakText('Now that you are a grown-up, you should be aware of your responsibilities')"><i class="fas fa-volume-up"></i></button></div>
+                <div class="example-box"><span class="en-sentence">The school requires that all freshmen live on campus, <span class="kw">considering that</span> this will help them study more effectively.</span><span class="ch-translation">學校要求所有大一新生住校，考慮到這將幫助他們更有效地學習。</span><button class="speaker-btn" onclick="speakText('The school requires that all freshmen live on campus, considering that this will help them study more effectively')"><i class="fas fa-volume-up"></i></button></div>`
+            },
+            result: {
+                title: "4. 結果",
+                html: `
                 <h2>4. 結果副詞子句 (Result)</h2>
-                <div class="note-box">
-                    <strong>連接詞：</strong> so...that, such...that
-                </div>
-                
-                <div class="example-box">
-                    <span class="en-sentence">His business is <span class="kw">so</span> successful (<span class="kw">such</span> a success) <span class="kw">that</span> he has decided to open another store.</span>
-                    <span class="ch-translation">他的生意如此成功，以致於他決定再開一家店。</span>
-                    <button class="speaker-btn" onclick="speakText('His business is so successful that he has decided to open another store')"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence">There were <span class="kw">so</span> many restaurants in the area <span class="kw">that</span> we could not make up our mind what to eat.</span>
-                    <span class="ch-translation">這一帶有太多餐廳了，以致於我們無法決定吃什麼。</span>
-                    <button class="speaker-btn" onclick="speakText('There were so many restaurants in the area that we could not make up our mind what to eat')"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence">She has saved <span class="kw">so</span> little money <span class="kw">that</span> she has to give up her travel plan.</span>
-                    <span class="ch-translation">她存的錢太少了，以致於她必須放棄她的旅遊計畫。</span>
-                    <button class="speaker-btn" onclick="speakText('She has saved so little money that she has to give up her travel plan')"><i class="fas fa-volume-up"></i></button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 6. Purpose -->
-        <div id="purpose" class="content-section">
-            <div class="card">
+                <div class="note-box"><strong>連接詞：</strong> so...that, such...that</div>
+                <div class="example-box"><span class="en-sentence">His business is <span class="kw">so</span> successful (<span class="kw">such</span> a success) <span class="kw">that</span> he has decided to open another store.</span><span class="ch-translation">他的生意如此成功，以致於他決定再開一家店。</span><button class="speaker-btn" onclick="speakText('His business is so successful that he has decided to open another store')"><i class="fas fa-volume-up"></i></button></div>
+                <div class="example-box"><span class="en-sentence">There were <span class="kw">so</span> many restaurants in the area <span class="kw">that</span> we could not make up our mind what to eat.</span><span class="ch-translation">這一帶有太多餐廳了，以致於我們無法決定吃什麼。</span><button class="speaker-btn" onclick="speakText('There were so many restaurants in the area that we could not make up our mind what to eat')"><i class="fas fa-volume-up"></i></button></div>
+                <div class="example-box"><span class="en-sentence">She has saved <span class="kw">so</span> little money <span class="kw">that</span> she has to give up her travel plan.</span><span class="ch-translation">她存的錢太少了，以致於她必須放棄她的旅遊計畫。</span><button class="speaker-btn" onclick="speakText('She has saved so little money that she has to give up her travel plan')"><i class="fas fa-volume-up"></i></button></div>`
+            },
+            purpose: {
+                title: "5. 目的",
+                html: `
                 <h2>5. 目的副詞子句 (Purpose)</h2>
-                <div class="note-box">
-                    <strong>連接詞：</strong> so that, in order that, lest, in case, for fear that (以防/唯恐), in the hope that
-                </div>
-                
-                <div class="example-box">
-                    <span class="en-sentence">The new manager extended the employees' working hours <span class="kw">so that / in order that</span> he could make more money.</span>
-                    <span class="ch-translation">新經理延長了員工的工作時間，以便他能賺更多錢。(in order that 較正式)</span>
-                    <button class="speaker-btn" onclick="speakText('The new manager extended the employees\' working hours so that he could make more money')"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence">Deforestation must be prevented <span class="kw">for fear that</span> creatures and plants in forests lost their natural habitats.</span>
-                    <span class="ch-translation">必須防止森林砍伐，以免（唯恐）森林中的生物和植物失去牠們的自然棲息地。</span>
-                    <button class="speaker-btn" onclick="speakText('Deforestation must be prevented for fear that creatures and plants in forests lost their natural habitats')"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence">Take your umbrella with you <span class="kw">in case</span> it may/should rain.</span>
-                    <span class="ch-translation">帶著雨傘，以防萬一下雨。</span>
-                    <button class="speaker-btn" onclick="speakText('Take your umbrella with you in case it may rain')"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence">All animal experiments should be closely monitored <span class="kw">in the hope that</span> animal suffering might be reduced.</span>
-                    <span class="ch-translation">所有的動物實驗都應該被密切監控，希望能減少動物的痛苦。</span>
-                    <button class="speaker-btn" onclick="speakText('All animal experiments should be closely monitored in the hope that animal suffering might be reduced')"><i class="fas fa-volume-up"></i></button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 7. Concession -->
-        <div id="concession" class="content-section">
-            <div class="card">
+                <div class="note-box"><strong>連接詞：</strong> so that, in order that, lest, in case, for fear that (以防/唯恐), in the hope that</div>
+                <div class="example-box"><span class="en-sentence">The new manager extended the employees' working hours <span class="kw">so that / in order that</span> he could make more money.</span><span class="ch-translation">新經理延長了員工的工作時間，以便他能賺更多錢。(in order that 較正式)</span><button class="speaker-btn" onclick="speakText('The new manager extended the employees\\' working hours so that he could make more money')"><i class="fas fa-volume-up"></i></button></div>
+                <div class="example-box"><span class="en-sentence">Deforestation must be prevented <span class="kw">for fear that</span> creatures and plants in forests lost their natural habitats.</span><span class="ch-translation">必須防止森林砍伐，以免（唯恐）森林中的生物和植物失去牠們的自然棲息地。</span><button class="speaker-btn" onclick="speakText('Deforestation must be prevented for fear that creatures and plants in forests lost their natural habitats')"><i class="fas fa-volume-up"></i></button></div>
+                <div class="example-box"><span class="en-sentence">Take your umbrella with you <span class="kw">in case</span> it may/should rain.</span><span class="ch-translation">帶著雨傘，以防萬一下雨。</span><button class="speaker-btn" onclick="speakText('Take your umbrella with you in case it may rain')"><i class="fas fa-volume-up"></i></button></div>
+                <div class="example-box"><span class="en-sentence">All animal experiments should be closely monitored <span class="kw">in the hope that</span> animal suffering might be reduced.</span><span class="ch-translation">所有的動物實驗都應該被密切監控，希望能減少動物的痛苦。</span><button class="speaker-btn" onclick="speakText('All animal experiments should be closely monitored in the hope that animal suffering might be reduced')"><i class="fas fa-volume-up"></i></button></div>`
+            },
+            concession: {
+                title: "6. 讓步",
+                html: `
                 <h2>6. 讓步/對比副詞子句 (Concession)</h2>
-                <div class="note-box">
-                    <strong>連接詞：</strong> though/although, even though, even if, no matter..., in spite of the fact that, while, whatever, whoever, however, whichever
-                </div>
-                
-                <div class="example-box">
-                    <span class="en-sentence"><span class="kw">Though/Although</span> the exam was difficult, I did it well.</span>
-                    <span class="ch-translation">儘管考試很難，我還是考得不錯。</span>
-                    <button class="speaker-btn" onclick="speakText('Although the exam was difficult, I did it well')"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence"><span class="kw">Even though</span> the exam was easy, I failed.</span>
-                    <span class="ch-translation">儘管考試很簡單，我還是不及格。</span>
-                    <button class="speaker-btn" onclick="speakText('Even though the exam was easy, I failed')"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence"><span class="kw">While</span> I believe it is true, I cannot prove it.</span>
-                    <span class="ch-translation">雖然我相信這是真的，但我無法證明。(While 語氣較輕)</span>
-                    <button class="speaker-btn" onclick="speakText('While I believe it is true, I cannot prove it')"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence"><span class="kw">Even if</span> you have insurance, you will still have to pay a lot yourself.</span>
-                    <span class="ch-translation">就算(即使)你有保險，你還是得自己付很多錢。</span>
-                    <button class="speaker-btn" onclick="speakText('Even if you have insurance, you will still have to pay a lot yourself')"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence"><span class="kw">Whatever / No matter what</span> he does, he always tries his best.</span>
-                    <span class="ch-translation">無論他做什麼，他總是盡力而為。</span>
-                    <button class="speaker-btn" onclick="speakText('No matter what he does, he always tries his best')"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence"><span class="kw">However / No matter how</span> tired I am, I can hold on.</span>
-                    <span class="ch-translation">無論我多累，我都能堅持下去。</span>
-                    <button class="speaker-btn" onclick="speakText('No matter how tired I am, I can hold on')"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence"><span class="kw">Whoever</span> you are, you have to obey the rules.</span>
-                    <span class="ch-translation">無論你是誰，你都必須遵守規則。</span>
-                    <button class="speaker-btn" onclick="speakText('Whoever you are, you have to obey the rules')"><i class="fas fa-volume-up"></i></button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 8. Condition -->
-        <div id="condition" class="content-section">
-            <div class="card">
+                <div class="note-box"><strong>連接詞：</strong> though/although, even though, even if, no matter..., in spite of the fact that, while, whatever, whoever, however, whichever</div>
+                <div class="example-box"><span class="en-sentence"><span class="kw">Though/Although</span> the exam was difficult, I did it well.</span><span class="ch-translation">儘管考試很難，我還是考得不錯。</span><button class="speaker-btn" onclick="speakText('Although the exam was difficult, I did it well')"><i class="fas fa-volume-up"></i></button></div>
+                <div class="example-box"><span class="en-sentence"><span class="kw">Even though</span> the exam was easy, I failed.</span><span class="ch-translation">儘管考試很簡單，我還是不及格。</span><button class="speaker-btn" onclick="speakText('Even though the exam was easy, I failed')"><i class="fas fa-volume-up"></i></button></div>
+                <div class="example-box"><span class="en-sentence"><span class="kw">While</span> I believe it is true, I cannot prove it.</span><span class="ch-translation">雖然我相信這是真的，但我無法證明。(While 語氣較輕)</span><button class="speaker-btn" onclick="speakText('While I believe it is true, I cannot prove it')"><i class="fas fa-volume-up"></i></button></div>
+                <div class="example-box"><span class="en-sentence"><span class="kw">Even if</span> you have insurance, you will still have to pay a lot yourself.</span><span class="ch-translation">就算(即使)你有保險，你還是得自己付很多錢。</span><button class="speaker-btn" onclick="speakText('Even if you have insurance, you will still have to pay a lot yourself')"><i class="fas fa-volume-up"></i></button></div>
+                <div class="example-box"><span class="en-sentence"><span class="kw">Whatever / No matter what</span> he does, he always tries his best.</span><span class="ch-translation">無論他做什麼，他總是盡力而為。</span><button class="speaker-btn" onclick="speakText('No matter what he does, he always tries his best')"><i class="fas fa-volume-up"></i></button></div>
+                <div class="example-box"><span class="en-sentence"><span class="kw">However / No matter how</span> tired I am, I can hold on.</span><span class="ch-translation">無論我多累，我都能堅持下去。</span><button class="speaker-btn" onclick="speakText('No matter how tired I am, I can hold on')"><i class="fas fa-volume-up"></i></button></div>
+                <div class="example-box"><span class="en-sentence"><span class="kw">Whoever</span> you are, you have to obey the rules.</span><span class="ch-translation">無論你是誰，你都必須遵守規則。</span><button class="speaker-btn" onclick="speakText('Whoever you are, you have to obey the rules')"><i class="fas fa-volume-up"></i></button></div>`
+            },
+            condition: {
+                title: "7. 條件",
+                html: `
                 <h2>7. 條件副詞子句 (Condition)</h2>
-                <div class="note-box">
-                    <strong>連接詞：</strong> if, unless, as/so long as, only if, providing/provided that, suppose that, in case that, on condition that
-                </div>
-                
-                <div class="example-box">
-                    <span class="en-sentence"><span class="kw">If</span> it rains tomorrow, the game will be postponed.</span>
-                    <span class="ch-translation">如果明天下雨，比賽將會延期。</span>
-                    <button class="speaker-btn" onclick="speakText('If it rains tomorrow, the game will be postponed')"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence">You'll miss the bus <span class="kw">unless</span> you hurry up.</span>
-                    <span class="ch-translation">除非你快點，否則你會錯過公車。</span>
-                    <button class="speaker-btn" onclick="speakText('You\'ll miss the bus unless you hurry up')"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence"><span class="kw">In case that</span> there is a fire emergency, you should have your house insured.</span>
-                    <span class="ch-translation">萬一發生火災緊急情況，你應該給你的房子投保。</span>
-                    <button class="speaker-btn" onclick="speakText('In case that there is a fire emergency, you should have your house insured')"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence">My parents allow me to play video games <span class="kw">as long as / on (the) condition that</span> I finish my homework first.</span>
-                    <span class="ch-translation">只要我先做完作業，我父母就允許我玩電動。</span>
-                    <button class="speaker-btn" onclick="speakText('My parents allow me to play video games as long as I finish my homework first')"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence"><span class="kw">Provided that</span> the animals kept in the zoo do not suffer, there seems little reason why zoos should be condemned.</span>
-                    <span class="ch-translation">假如動物園裡的動物沒有受苦，似乎沒有理由譴責動物園。</span>
-                    <button class="speaker-btn" onclick="speakText('Provided that the animals kept in the zoo do not suffer, there seems little reason why zoos should be condemned')"><i class="fas fa-volume-up"></i></button>
-                </div>
-                
-                <p style="margin-top:10px; font-size:0.9rem; color:#666;">* 條件句的另一個重要特點是「假設語氣」。具體請看第四模塊之「假設語氣」。</p>
-            </div>
-        </div>
-
-        <!-- 9. Manner -->
-        <div id="manner" class="content-section">
-            <div class="card">
+                <div class="note-box"><strong>連接詞：</strong> if, unless, as/so long as, only if, providing/provided that, suppose that, in case that, on condition that</div>
+                <div class="example-box"><span class="en-sentence"><span class="kw">If</span> it rains tomorrow, the game will be postponed.</span><span class="ch-translation">如果明天下雨，比賽將會延期。</span><button class="speaker-btn" onclick="speakText('If it rains tomorrow, the game will be postponed')"><i class="fas fa-volume-up"></i></button></div>
+                <div class="example-box"><span class="en-sentence">You'll miss the bus <span class="kw">unless</span> you hurry up.</span><span class="ch-translation">除非你快點，否則你會錯過公車。</span><button class="speaker-btn" onclick="speakText('You\\'ll miss the bus unless you hurry up')"><i class="fas fa-volume-up"></i></button></div>
+                <div class="example-box"><span class="en-sentence"><span class="kw">In case that</span> there is a fire emergency, you should have your house insured.</span><span class="ch-translation">萬一發生火災緊急情況，你應該給你的房子投保。</span><button class="speaker-btn" onclick="speakText('In case that there is a fire emergency, you should have your house insured')"><i class="fas fa-volume-up"></i></button></div>
+                <div class="example-box"><span class="en-sentence">My parents allow me to play video games <span class="kw">as long as / on (the) condition that</span> I finish my homework first.</span><span class="ch-translation">只要我先做完作業，我父母就允許我玩電動。</span><button class="speaker-btn" onclick="speakText('My parents allow me to play video games as long as I finish my homework first')"><i class="fas fa-volume-up"></i></button></div>
+                <div class="example-box"><span class="en-sentence"><span class="kw">Provided that</span> the animals kept in the zoo do not suffer, there seems little reason why zoos should be condemned.</span><span class="ch-translation">假如動物園裡的動物沒有受苦，似乎沒有理由譴責動物園。</span><button class="speaker-btn" onclick="speakText('Provided that the animals kept in the zoo do not suffer, there seems little reason why zoos should be condemned')"><i class="fas fa-volume-up"></i></button></div>
+                <p style="margin-top:10px; font-size:0.9rem; color:#666;">* 條件句的另一個重要特點是「假設語氣」。具體請看第四模塊之「假設語氣」。</p>`
+            },
+            manner: {
+                title: "8. 方式",
+                html: `
                 <h2>8. 方式/情狀副詞子句 (Manner)</h2>
-                <div class="note-box">
-                    <strong>連接詞：</strong> as, as if, as though, how, the way
-                </div>
-                
-                <div class="example-box">
-                    <span class="en-sentence">When in Rome, do <span class="kw">as</span> the Roman do.</span>
-                    <span class="ch-translation">入境隨俗 (在羅馬就照羅馬人的方式做)。</span>
-                    <button class="speaker-btn" onclick="speakText('When in Rome, do as the Roman do')"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence">Dog lovers treat their dogs <span class="kw">the way</span> they may treat their children.</span>
-                    <span class="ch-translation">愛狗人士對待狗狗的方式，就像對待他們的孩子一樣。</span>
-                    <button class="speaker-btn" onclick="speakText('Dog lovers treat their dogs the way they may treat their children')"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence">Some pet lovers, however, show indifference to their family members <span class="kw">as if (as though)</span> the members were inferior to the pets.</span>
-                    <span class="ch-translation">然而，有些寵物愛好者對家人表現得漠不關心，彷彿家人比不上寵物一樣。</span>
-                    <button class="speaker-btn" onclick="speakText('Some pet lovers show indifference to their family members as if the members were inferior to the pets')"><i class="fas fa-volume-up"></i></button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 10. Comparison -->
-        <div id="comparison" class="content-section">
-            <div class="card">
+                <div class="note-box"><strong>連接詞：</strong> as, as if, as though, how, the way</div>
+                <div class="example-box"><span class="en-sentence">When in Rome, do <span class="kw">as</span> the Roman do.</span><span class="ch-translation">入境隨俗 (在羅馬就照羅馬人的方式做)。</span><button class="speaker-btn" onclick="speakText('When in Rome, do as the Roman do')"><i class="fas fa-volume-up"></i></button></div>
+                <div class="example-box"><span class="en-sentence">Dog lovers treat their dogs <span class="kw">the way</span> they may treat their children.</span><span class="ch-translation">愛狗人士對待狗狗的方式，就像對待他們的孩子一樣。</span><button class="speaker-btn" onclick="speakText('Dog lovers treat their dogs the way they may treat their children')"><i class="fas fa-volume-up"></i></button></div>
+                <div class="example-box"><span class="en-sentence">Some pet lovers, however, show indifference to their family members <span class="kw">as if (as though)</span> the members were inferior to the pets.</span><span class="ch-translation">然而，有些寵物愛好者對家人表現得漠不關心，彷彿家人比不上寵物一樣。</span><button class="speaker-btn" onclick="speakText('Some pet lovers show indifference to their family members as if the members were inferior to the pets')"><i class="fas fa-volume-up"></i></button></div>`
+            },
+            comparison: {
+                title: "9. 比較",
+                html: `
                 <h2>9. 比較副詞子句 (Comparison)</h2>
-                <div class="note-box">
-                    <strong>連接詞：</strong> as, than, the more...the more; as...as, not so...as; no...more than
-                </div>
-                
-                <div class="example-box">
-                    <span class="en-sentence"><span class="kw">The more</span> we know about the wildlife, <span class="kw">the better</span> we will live in the future.</span>
-                    <span class="ch-translation">我們對野生動物了解越多，未來的日子就會過得越好。</span>
-                    <button class="speaker-btn" onclick="speakText('The more we know about the wildlife, the better we will live in the future')"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence">Animals have a right to life just <span class="kw">as</span> humans have a right to life.</span>
-                    <span class="ch-translation">動物有生存權，就像人類有生存權一樣。</span>
-                    <button class="speaker-btn" onclick="speakText('Animals have a right to life just as humans have a right to life')"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence">People do not love animals <span class="kw">as much as</span> they claim.</span>
-                    <span class="ch-translation">人們並不像他們聲稱的那樣愛動物。</span>
-                    <button class="speaker-btn" onclick="speakText('People do not love animals as much as they claim')"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-box">
-                    <span class="en-sentence">No one can run faster <span class="kw">than</span> Jacky does.</span>
-                    <span class="ch-translation">沒有人跑得比 Jacky 快。</span>
-                    <button class="speaker-btn" onclick="speakText('No one can run faster than Jacky does')"><i class="fas fa-volume-up"></i></button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 11. Reduction -->
-        <div id="reduction" class="content-section">
-            <div class="card">
+                <div class="note-box"><strong>連接詞：</strong> as, than, the more...the more; as...as, not so...as; no...more than</div>
+                <div class="example-box"><span class="en-sentence"><span class="kw">The more</span> we know about the wildlife, <span class="kw">the better</span> we will live in the future.</span><span class="ch-translation">我們對野生動物了解越多，未來的日子就會過得越好。</span><button class="speaker-btn" onclick="speakText('The more we know about the wildlife, the better we will live in the future')"><i class="fas fa-volume-up"></i></button></div>
+                <div class="example-box"><span class="en-sentence">Animals have a right to life just <span class="kw">as</span> humans have a right to life.</span><span class="ch-translation">動物有生存權，就像人類有生存權一樣。</span><button class="speaker-btn" onclick="speakText('Animals have a right to life just as humans have a right to life')"><i class="fas fa-volume-up"></i></button></div>
+                <div class="example-box"><span class="en-sentence">People do not love animals <span class="kw">as much as</span> they claim.</span><span class="ch-translation">人們並不像他們聲稱的那樣愛動物。</span><button class="speaker-btn" onclick="speakText('People do not love animals as much as they claim')"><i class="fas fa-volume-up"></i></button></div>
+                <div class="example-box"><span class="en-sentence">No one can run faster <span class="kw">than</span> Jacky does.</span><span class="ch-translation">沒有人跑得比 Jacky 快。</span><button class="speaker-btn" onclick="speakText('No one can run faster than Jacky does')"><i class="fas fa-volume-up"></i></button></div>`
+            },
+            reduction: {
+                title: "簡化",
+                html: `
                 <h2>子句簡化：獨立分詞構句</h2>
                 <p>表示時間、條件、方式、伴隨狀況等的副詞子句，結合「非限定動詞」，可以被改成一種叫「獨立分詞構句」的描述性短語 (不是句子)。這通常發生在<strong>主句和子句的主詞不同</strong>時。</p>
-
-                <div class="comparison-box">
-                    <span class="en-sentence">When the meeting was over, all of the members went home.</span>
-                    <i class="fas fa-arrow-down" style="color:var(--accent); margin:5px 0;"></i>
-                    <span class="en-sentence"><span class="kw">The meeting being over</span>, all of the members went home.</span>
-                    <span class="ch-translation">會議結束，所有的成員都回家了。</span>
-                    <button class="speaker-btn" onclick="speakText('The meeting being over, all of the members went home')"><i class="fas fa-volume-up"></i></button>
-                </div>
-
-                <div class="comparison-box">
-                    <span class="en-sentence">When her work was done, she took a nap.</span>
-                    <i class="fas fa-arrow-down" style="color:var(--accent); margin:5px 0;"></i>
-                    <span class="en-sentence"><span class="kw">Her work done</span>, she took a nap.</span>
-                    <span class="ch-translation">工作做完了，她小睡了一下。(being 可省略)</span>
-                    <button class="speaker-btn" onclick="speakText('Her work done, she took a nap')"><i class="fas fa-volume-up"></i></button>
-                </div>
-
-                <div class="comparison-box">
-                    <span class="en-sentence">If time permits, I can give you a ride home.</span>
-                    <i class="fas fa-arrow-down" style="color:var(--accent); margin:5px 0;"></i>
-                    <span class="en-sentence"><span class="kw">Time permitting</span>, I can give you a ride home.</span>
-                    <span class="ch-translation">時間允許的話，我可以送你回家。</span>
-                    <button class="speaker-btn" onclick="speakText('Time permitting, I can give you a ride home')"><i class="fas fa-volume-up"></i></button>
-                </div>
-
-                <div class="comparison-box">
-                    <span class="en-sentence">Because there was a power cut, I had to go to bed early.</span>
-                    <i class="fas fa-arrow-down" style="color:var(--accent); margin:5px 0;"></i>
-                    <span class="en-sentence"><span class="kw">There being a power cut</span>, I had to go to bed early.</span>
-                    <span class="ch-translation">停電了，我只好早睡。</span>
-                    <button class="speaker-btn" onclick="speakText('There being a power cut, I had to go to bed early')"><i class="fas fa-volume-up"></i></button>
-                </div>
-                
-                <div class="comparison-box">
-                    <span class="en-sentence">Because the last bus was gone, we had to walk home.</span>
-                    <i class="fas fa-arrow-down" style="color:var(--accent); margin:5px 0;"></i>
-                    <span class="en-sentence"><span class="kw">The last bus gone</span>, we had to walk home.</span>
-                    <span class="ch-translation">最後一班巴士走了，我們只能走路回家。</span>
-                    <button class="speaker-btn" onclick="speakText('The last bus gone, we had to walk home')"><i class="fas fa-volume-up"></i></button>
-                </div>
-
-                <div class="comparison-box">
-                    <span class="en-sentence">If nobody comes tomorrow, we will cancel the meeting.</span>
-                    <i class="fas fa-arrow-down" style="color:var(--accent); margin:5px 0;"></i>
-                    <span class="en-sentence"><span class="kw">Nobody to come tomorrow</span>, we will cancel the meeting.</span>
-                    <span class="ch-translation">如果明天沒有人來，我們就取消會議。</span>
-                    <button class="speaker-btn" onclick="speakText('Nobody to come tomorrow, we will cancel the meeting')"><i class="fas fa-volume-up"></i></button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 12. Quiz -->
-        <div id="quiz" class="content-section">
-            <div class="card">
-                <h2>副詞子句終極挑戰 (20題)</h2>
-                <p>涵蓋所有九種副詞子句與簡化用法，請仔細作答！</p>
-                
-                <div id="quiz-interface" class="quiz-container">
+                <div class="comparison-box"><span class="en-sentence">When the meeting was over, all of the members went home.</span><i class="fas fa-arrow-down" style="color:var(--accent); margin:5px 0;"></i><span class="en-sentence"><span class="kw">The meeting being over</span>, all of the members went home.</span><span class="ch-translation">會議結束，所有的成員都回家了。</span><button class="speaker-btn" onclick="speakText('The meeting being over, all of the members went home')"><i class="fas fa-volume-up"></i></button></div>
+                <div class="comparison-box"><span class="en-sentence">When her work was done, she took a nap.</span><i class="fas fa-arrow-down" style="color:var(--accent); margin:5px 0;"></i><span class="en-sentence"><span class="kw">Her work done</span>, she took a nap.</span><span class="ch-translation">工作做完了，她小睡了一下。(being 可省略)</span><button class="speaker-btn" onclick="speakText('Her work done, she took a nap')"><i class="fas fa-volume-up"></i></button></div>
+                <div class="comparison-box"><span class="en-sentence">If time permits, I can give you a ride home.</span><i class="fas fa-arrow-down" style="color:var(--accent); margin:5px 0;"></i><span class="en-sentence"><span class="kw">Time permitting</span>, I can give you a ride home.</span><span class="ch-translation">時間允許的話，我可以送你回家。</span><button class="speaker-btn" onclick="speakText('Time permitting, I can give you a ride home')"><i class="fas fa-volume-up"></i></button></div>
+                <div class="comparison-box"><span class="en-sentence">Because there was a power cut, I had to go to bed early.</span><i class="fas fa-arrow-down" style="color:var(--accent); margin:5px 0;"></i><span class="en-sentence"><span class="kw">There being a power cut</span>, I had to go to bed early.</span><span class="ch-translation">停電了，我只好早睡。</span><button class="speaker-btn" onclick="speakText('There being a power cut, I had to go to bed early')"><i class="fas fa-volume-up"></i></button></div>
+                <div class="comparison-box"><span class="en-sentence">Because the last bus was gone, we had to walk home.</span><i class="fas fa-arrow-down" style="color:var(--accent); margin:5px 0;"></i><span class="en-sentence"><span class="kw">The last bus gone</span>, we had to walk home.</span><span class="ch-translation">最後一班巴士走了，我們只能走路回家。</span><button class="speaker-btn" onclick="speakText('The last bus gone, we had to walk home')"><i class="fas fa-volume-up"></i></button></div>
+                <div class="comparison-box"><span class="en-sentence">If nobody comes tomorrow, we will cancel the meeting.</span><i class="fas fa-arrow-down" style="color:var(--accent); margin:5px 0;"></i><span class="en-sentence"><span class="kw">Nobody to come tomorrow</span>, we will cancel the meeting.</span><span class="ch-translation">如果明天沒有人來，我們就取消會議。</span><button class="speaker-btn" onclick="speakText('Nobody to come tomorrow, we will cancel the meeting')"><i class="fas fa-volume-up"></i></button></div>`
+            },
+            quiz: {
+                title: "測驗",
+                html: `<div id="quiz-interface" class="quiz-container">
                     <div class="quiz-progress">Question <span id="current-question-num">1</span> of 20</div>
-                    
-                    <div class="quiz-question" id="question-text">題目加載中...</div>
-                    
+                    <div class="quiz-question" id="question-text"></div>
                     <div class="quiz-options" id="options-container"></div>
-                    
                     <div class="feedback-area" id="feedback-area">
                         <div class="feedback-title" id="feedback-title"></div>
                         <div id="feedback-text"></div>
-                        <div style="margin-top:10px; font-size:0.9rem; color:#666;">
-                            <i class="fas fa-lightbulb" style="color:#eab308;"></i> 提示：<span id="feedback-hint"></span>
-                        </div>
+                        <div style="margin-top:10px; font-size:0.9rem; color:#666;"><i class="fas fa-lightbulb" style="color:#eab308;"></i> 提示：<span id="feedback-hint"></span></div>
                     </div>
-                    
                     <button class="next-btn" id="next-btn" onclick="nextQuestion()">下一題 (Next)</button>
                 </div>
-
                 <div id="quiz-score" class="score-card" style="display: none;">
                     <h3><i class="fas fa-trophy"></i> 測驗完成！</h3>
                     <p>你的得分是：</p>
                     <div class="final-score"><span id="score-val">0</span> / 20</div>
                     <p id="score-msg"></p>
-                    <button class="tab-btn active" style="margin-top: 1rem;" onclick="restartQuiz()">再試一次 (Restart)</button>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <script>
-        // Tab Logic
-        function openTab(evt, tabName) {
-            var i, contentSection, tabBtn;
-            contentSection = document.getElementsByClassName("content-section");
-            for (i = 0; i < contentSection.length; i++) {
-                contentSection[i].className = contentSection[i].className.replace(" active", "");
-                contentSection[i].style.display = "none";
+                    <button class="satellite" style="position:static; margin:20px auto; transform:none;" onclick="initQuiz()">再試一次 (Restart)</button>
+                </div>`
             }
-            tabBtn = document.getElementsByClassName("tab-btn");
-            for (i = 0; i < tabBtn.length; i++) {
-                tabBtn[i].className = tabBtn[i].className.replace(" active", "");
-            }
-            document.getElementById(tabName).style.display = "block";
-            setTimeout(() => { document.getElementById(tabName).className += " active"; }, 10);
-            evt.currentTarget.className += " active";
-        }
+        };
 
-        // TTS Logic
-        function speak(element) {
-            const text = element.parentElement.querySelector('.en-sentence').textContent;
-            speakText(text);
-        }
-
-        function speakText(text) {
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'en-US';
-                utterance.rate = 0.9;
-                window.speechSynthesis.speak(utterance);
-            } else {
-                alert("Sorry, your browser doesn't support text-to-speech.");
-            }
-        }
-
-        // Quiz Logic - 20 Questions
+        // --- 2. QUIZ DATA (100% 原內容保留，共20題) ---
         const quizData = [
-            // Time
             { q: "1. _____ the teacher entered the room, the students stood up.", options: ["When", "Where", "Because", "Although"], correct: 0, rationale: "表示「當...的時候」，引導時間副詞子句。", hint: "事情發生的「時間點」。" },
             { q: "2. My phone rang _____ I was taking a shower.", options: ["while", "since", "unless", "if"], correct: 0, rationale: "表示「當...正在進行時」，強調持續性，常用 while。", hint: "洗澡是一個持續的動作。" },
-            // Place
             { q: "3. You can camp _____ you like.", options: ["where", "when", "because", "if"], correct: 0, rationale: "修飾地點，表示「在...的地方」。", hint: "跟位置有關。" },
-            // Reason
             { q: "4. _____ she was sick, she didn't go to work.", options: ["Because", "Although", "Before", "So that"], correct: 0, rationale: "表示原因，因為生病所以沒去工作。", hint: "解釋為什麼沒去工作。" },
             { q: "5. _____ we have some extra time, let's have some coffee.", options: ["Since", "Unless", "Although", "So"], correct: 0, rationale: "Since 在此表示「既然」，引導已知的原因。", hint: "既然有時間，就..." },
-            // Condition
             { q: "6. _____ you promise to be careful, you can borrow my car.", options: ["If", "Unless", "Although", "Because"], correct: 0, rationale: "表示條件，「如果你答應...」。", hint: "借車的條件。" },
             { q: "7. You won't succeed _____ you work hard.", options: ["unless", "if", "because", "as"], correct: 0, rationale: "Unless 意為「除非」，等於 If not。", hint: "除非你努力，否則不會成功。" },
-            // Contrast (Concession)
             { q: "8. _____ it was cold, we went swimming.", options: ["Although", "Because", "If", "Since"], correct: 0, rationale: "表示讓步/轉折，「雖然」很冷，但還是去游泳。", hint: "雖然..." },
             { q: "9. I like apples, _____ my brother prefers oranges.", options: ["while", "because", "if", "since"], correct: 0, rationale: "While 在此表示「對比/然而」。", hint: "我喜歡這個，而他喜歡那個。" },
-            // Purpose
             { q: "10. She woke up early _____ she could catch the first train.", options: ["so that", "because", "although", "unless"], correct: 0, rationale: "So that 表示「為了、以便」，引導目的副詞子句。", hint: "早起的目的是什麼？" },
-            // Result
             { q: "11. The box was _____ heavy _____ I couldn't lift it.", options: ["so...that", "such...that", "too...to", "enough...to"], correct: 0, rationale: "So + adj + that ... 表示「如此...以致於...」。", hint: "太重了，所以搬不動。" },
-            // Manner
             { q: "12. He talks _____ he were the boss.", options: ["as if", "even though", "because", "so that"], correct: 0, rationale: "As if 表示「彷彿、好像」，常接假設語氣。", hint: "好像他是老闆一樣。" },
-            // Comparison
             { q: "13. He runs _____ his brother.", options: ["faster than", "fast than", "as faster as", "more fast"], correct: 0, rationale: "比較級 + than，faster than。", hint: "比他哥哥快。" },
-            // Reduction
             { q: "14. (簡化) _____ the news, she started to cry.", options: ["Hearing", "Heard", "To hear", "She heard"], correct: 0, rationale: "主動聽到消息，簡化為 V-ing (Hearing)。", hint: "聽到消息後哭了 (主動)。" },
             { q: "15. (簡化) _____ in simple English, the book is easy to read.", options: ["Written", "Writing", "Wrote", "To write"], correct: 0, rationale: "書是被寫的，被動語態簡化為 V-pp (Written)。", hint: "書本是被寫出來的。" },
-            // Preposition vs Conjunction
             { q: "16. We stayed home _____ the rain.", options: ["because of", "because", "although", "since"], correct: 0, rationale: "The rain 是名詞片語，必須用介系詞 because of。", hint: "後面接的是名詞，不是句子。" },
             { q: "17. _____ the heavy traffic, we arrived on time.", options: ["In spite of", "Although", "Even though", "Because"], correct: 0, rationale: "The heavy traffic 是名詞，需用介系詞 In spite of (儘管)。", hint: "儘管交通繁忙 (名詞)。" },
-            // Time Sequence
             { q: "18. By the time we arrived, the movie _____ already _____.", options: ["had...started", "has...started", "will...start", "starts"], correct: 0, rationale: "By the time 接過去式，主句通常用過去完成式 (had + pp)。", hint: "在我們到達之前已經發生了。" },
-            // Specific Condition
             { q: "19. You can go out _____ you come back before midnight.", options: ["as long as", "unless", "although", "so that"], correct: 0, rationale: "As long as 表示「只要」，引導條件。", hint: "只要你在午夜前回來。" },
-            // Logic check
             { q: "20. _____ he is very rich, he never gives money to charity.", options: ["Even though", "Since", "If", "So that"], correct: 0, rationale: "語意轉折，「即使」很有錢，卻不捐款。", hint: "雖然有錢，但是..." }
         ];
 
+        // --- 3. SYSTEM LOGIC ---
+
+        // 3.1 放射狀排列 (Radial Layout)
+        function layoutSatellites() {
+            const satellites = document.querySelectorAll('.satellite');
+            const svg = document.getElementById('lines-svg');
+            while (svg.firstChild) svg.removeChild(svg.firstChild);
+
+            // 調整半徑以容納 12 個節點
+            const radius = 260; 
+            const startAngle = -90; 
+            const total = satellites.length;
+            const cx = window.innerWidth / 2;
+            const cy = window.innerHeight / 2;
+
+            satellites.forEach((sat, i) => {
+                const angle = startAngle + (i * (360 / total));
+                const rad = angle * (Math.PI / 180);
+                const x = Math.cos(rad) * radius;
+                const y = Math.sin(rad) * radius;
+
+                // 設定衛星位置 (50px 是 half width)
+                sat.style.left = `calc(50% + ${x}px - 50px)`; 
+                sat.style.top = `calc(50% + ${y}px - 50px)`;
+
+                // 繪製連接線
+                const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                line.setAttribute("x1", "50%");
+                line.setAttribute("y1", "50%");
+                line.setAttribute("x2", cx + x);
+                line.setAttribute("y2", cy + y);
+                line.classList.add("conn-line");
+                svg.appendChild(line);
+            });
+        }
+        
+        window.addEventListener('resize', layoutSatellites);
+        window.addEventListener('load', layoutSatellites);
+
+        // 3.2 Modal 與 Tab 邏輯
+        const tabKeys = ['intro', 'time', 'place', 'reason', 'result', 'purpose', 'concession', 'condition', 'manner', 'comparison', 'reduction', 'quiz'];
+
+        function openModal(activeKey) {
+            const modal = document.getElementById('modal-overlay');
+            const tabsContainer = document.getElementById('modal-tabs');
+            
+            tabsContainer.innerHTML = tabKeys.map(key => {
+                const isQuiz = key === 'quiz';
+                return `<button class="tab-btn ${key === activeKey ? 'active' : ''}" 
+                        onclick="switchTab('${key}', this)">
+                        ${isQuiz ? '<i class="fas fa-pencil-alt"></i> ' : ''}${contentData[key].title}
+                        </button>`;
+            }).join('');
+
+            loadContent(activeKey);
+            modal.classList.add('active');
+        }
+
+        function closeModal() { document.getElementById('modal-overlay').classList.remove('active'); }
+
+        function switchTab(key, btn) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            loadContent(key);
+        }
+
+        function loadContent(key) {
+            const contentDiv = document.getElementById('modal-content');
+            contentDiv.innerHTML = contentData[key].html;
+            if(key === 'quiz') initQuiz();
+        }
+
+        // 3.3 語音合成邏輯 (Text-to-Speech)
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const u = new SpeechSynthesisUtterance(text);
+                u.lang = 'en-US'; u.rate = 0.9;
+                window.speechSynthesis.speak(u);
+            }
+        }
+
+        // 3.4 測驗邏輯
         let currentQIndex = 0;
         let score = 0;
         let answered = false;
 
         function initQuiz() {
-            currentQIndex = 0;
-            score = 0;
+            currentQIndex = 0; score = 0;
             document.getElementById('quiz-interface').style.display = 'block';
             document.getElementById('quiz-score').style.display = 'none';
             loadQuestion();
@@ -905,7 +561,6 @@
             
             const optionsDiv = document.getElementById('options-container');
             optionsDiv.innerHTML = '';
-            
             document.getElementById('feedback-area').style.display = 'none';
             document.getElementById('next-btn').style.display = 'none';
 
@@ -921,46 +576,31 @@
         function checkAnswer(selectedIndex, btnElement) {
             if (answered) return;
             answered = true;
-            
             const data = quizData[currentQIndex];
             const isCorrect = selectedIndex === data.correct;
             const options = document.getElementsByClassName('option-btn');
-            
+            const fbTitle = document.getElementById('feedback-title');
+
             if (isCorrect) {
                 btnElement.classList.add('correct');
                 score++;
-                showFeedback(true, data.rationale, data.hint);
+                fbTitle.innerHTML = "<i class='fas fa-check'></i> 正確 (Correct)!";
+                fbTitle.style.color = "var(--correct-text)";
+                document.getElementById('feedback-area').style.borderLeftColor = "var(--correct-text)";
             } else {
                 btnElement.classList.add('wrong');
                 options[data.correct].classList.add('correct');
-                showFeedback(false, data.rationale, data.hint);
+                fbTitle.innerHTML = "<i class='fas fa-times'></i> 錯誤 (Incorrect)";
+                fbTitle.style.color = "var(--wrong-text)";
+                document.getElementById('feedback-area').style.borderLeftColor = "var(--wrong-text)";
             }
             
-            for(let btn of options) {
-                btn.disabled = true;
-                btn.style.cursor = 'default';
-            }
-            document.getElementById('next-btn').style.display = 'inline-block';
-        }
+            document.getElementById('feedback-text').innerText = data.rationale;
+            document.getElementById('feedback-hint').innerText = data.hint;
+            document.getElementById('feedback-area').style.display = 'block';
 
-        function showFeedback(isCorrect, text, hint) {
-            const fbArea = document.getElementById('feedback-area');
-            const fbTitle = document.getElementById('feedback-title');
-            const fbText = document.getElementById('feedback-text');
-            const fbHint = document.getElementById('feedback-hint');
-            
-            fbArea.style.display = 'block';
-            fbArea.style.borderLeftColor = isCorrect ? 'var(--primary)' : '#ef4444';
-            
-            if (isCorrect) {
-                fbTitle.textContent = "🎉 正確 (Correct)!";
-                fbTitle.style.color = 'var(--primary)';
-            } else {
-                fbTitle.textContent = "❌ 錯誤 (Incorrect)";
-                fbTitle.style.color = '#ef4444';
-            }
-            fbText.textContent = text;
-            fbHint.textContent = hint;
+            for(let btn of options) btn.disabled = true;
+            document.getElementById('next-btn').style.display = 'inline-block';
         }
 
         function nextQuestion() {
@@ -983,10 +623,6 @@
             else if (score >= 12) msg.textContent = "還不錯，再複習一下會更好！📚";
             else msg.textContent = "別灰心，重新閱讀講義，再挑戰一次吧！💪";
         }
-
-        function restartQuiz() { initQuiz(); }
-
-        window.addEventListener('load', () => { initQuiz(); });
     </script>
 </body>
 </html>
