@@ -445,7 +445,7 @@
 
         <div class="search-wrap">
           <div class="search-icon">🔍</div>
-          <input id="search-input" type="text" placeholder="Type to search phrases or meanings..." />
+          <input id="search-input" type="text" placeholder="Type to search global phrases..." />
           <div class="hint" id="search-hint">Range: A</div>
         </div>
       </div>
@@ -467,7 +467,7 @@
   </div>
 
 <script>
-  /* * 邏輯保持不變，僅配合新的 class 名稱與 UI 結構
+  /* * Updated for Global Search Functionality
    */
   const CSV_CANDIDATES = [
     "https://ducj-creator.github.io/Shirley-Grammar/phrases.csv",
@@ -476,7 +476,7 @@
     "https://raw.githubusercontent.com/DuCJ-creator/Shirley-Grammar/main/prepositions/phrases.csv"
   ];
 
-  const STORAGE_KEY = "shirley_phrases_favorites_v2"; // Key updated for new style
+  const STORAGE_KEY = "shirley_phrases_favorites_v2";
 
   let phrases = [];
   let currentLetter = "A";
@@ -586,6 +586,8 @@
     favBtn.innerHTML = "★ Favorites";
     favBtn.onclick = () => {
       currentMode = "fav";
+      // Clear search when switching categories
+      document.getElementById("search-input").value = ""; 
       setActiveButtons();
       renderAll();
     };
@@ -599,6 +601,8 @@
       btn.onclick = () => {
         currentMode = "alpha";
         currentLetter = letter;
+        // Clear search when switching letters
+        document.getElementById("search-input").value = ""; 
         setActiveButtons();
         renderAll();
       };
@@ -621,27 +625,43 @@
   function setHint(){
     const hint = document.getElementById("search-hint");
     hint.textContent = currentMode==="fav" ? "Scope: Favorites" : `Scope: ${currentLetter}`;
+    hint.style.color = "var(--text-sub)";
+    hint.style.fontWeight = "normal";
   }
 
   function bindSearch(){
     document.getElementById("search-input").addEventListener("input", renderAll);
   }
 
+  /**
+   * KEY UPDATE: Global Search Logic
+   * If search text exists, ignore categories and search EVERYTHING.
+   */
   function getCurrentPool(){
     const q = document.getElementById("search-input").value.trim().toLowerCase();
-    let pool = [];
-    if(currentMode==="fav"){
-      pool = phrases.filter(p => favorites.has(p.phrase));
-    }else{
-      pool = phrases.filter(p => (p.phrase[0]||"").toUpperCase() === currentLetter);
-    }
+    
+    // 1. GLOBAL SEARCH MODE (If input is not empty)
     if(q){
-      pool = pool.filter(p =>
+      // Visual feedback that we are searching everything
+      const hint = document.getElementById("search-hint");
+      hint.textContent = "Scope: Global Search";
+      hint.style.color = "var(--primary)";
+      hint.style.fontWeight = "bold";
+
+      return phrases.filter(p =>
         p.phrase.toLowerCase().includes(q) ||
         (p.meaning||"").toLowerCase().includes(q)
       );
     }
-    return pool;
+
+    // 2. CATEGORY MODE (If input is empty)
+    setHint(); // Reset hint to "Scope: A" or "Scope: Favorites"
+
+    if(currentMode==="fav"){
+      return phrases.filter(p => favorites.has(p.phrase));
+    }else{
+      return phrases.filter(p => (p.phrase[0]||"").toUpperCase() === currentLetter);
+    }
   }
 
   function renderAll(){
@@ -656,7 +676,14 @@
     const listEl = document.getElementById("phrase-list");
     listEl.innerHTML = "";
     if(!pool.length){
-      listEl.innerHTML = `<div class="empty">${currentMode==="fav" ? "No favorites yet. Go add some stars! ⭐" : "No phrases found in this section."}</div>`;
+      // Custom empty message based on context
+      const isSearch = document.getElementById("search-input").value.trim().length > 0;
+      let msg = "";
+      if (isSearch) msg = "No global results found for this search.";
+      else if (currentMode==="fav") msg = "No favorites yet. Go add some stars! ⭐";
+      else msg = "No phrases found in this section.";
+      
+      listEl.innerHTML = `<div class="empty">${msg}</div>`;
       return;
     }
     // Stagger animation delay
@@ -679,7 +706,9 @@
       e.stopPropagation();
       toggleFavorite(p.phrase);
       star.classList.toggle("active");
-      if(currentMode==="fav") renderAll();
+      // Only re-render if we are in Favorites mode AND not searching
+      const isSearch = document.getElementById("search-input").value.trim().length > 0;
+      if(currentMode==="fav" && !isSearch) renderAll();
     };
 
     const header = document.createElement("div");
@@ -727,7 +756,9 @@
     const grid = document.getElementById("card-grid");
     grid.innerHTML = "";
     if(!pool.length){
-      grid.innerHTML = `<div class="empty">${currentMode==="fav" ? "No favorites to review." : "No phrases here."}</div>`;
+       const isSearch = document.getElementById("search-input").value.trim().length > 0;
+       let msg = isSearch ? "No matches." : (currentMode==="fav" ? "No favorites to review." : "No phrases here.");
+       grid.innerHTML = `<div class="empty">${msg}</div>`;
       return;
     }
     pool.forEach((p, index)=>{
