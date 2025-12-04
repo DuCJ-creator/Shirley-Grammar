@@ -2,734 +2,818 @@
 <html lang="zh-TW">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>不規則名詞互動學習平台</title>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Irregular Nouns | Master Class</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 
   <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-
-    :root{
-      --primary:#16a085;
-      --primary-dark:#0e6f5f;
-      --accent:#f39c12;
-      --bg:#f4f7f6;
-      --card:#ffffff;
-      --muted:#6b7d84;
-      --line:#e6eceb;
+    :root {
+      /* 配色：翡翠綠 + 深海藍 (區別於片語頁面的藍紫色) */
+      --primary: #10b981;
+      --primary-dark: #059669;
+      --primary-gradient: linear-gradient(135deg, #10b981, #047857);
+      --accent: #f59e0b;
+      --text-main: #1e293b;
+      --text-sub: #64748b;
+      --bg-color: #f0fdf4;
+      --glass-bg: rgba(255, 255, 255, 0.85);
+      --glass-border: rgba(255, 255, 255, 0.8);
+      --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 10px 25px -5px rgba(16, 185, 129, 0.15);
+      --radius: 16px;
+      --danger: #ef4444;
+      --success: #10b981;
     }
 
-    body{
-      font-family:'Noto Sans TC',sans-serif;
-      color:#223;
-      background: linear-gradient(135deg, #f2fbf8 0%, #d8efe9 100%);
-      min-height:100vh;
-      padding:10px;
-      line-height:1.5;
+    * { box-sizing: border-box; margin: 0; padding: 0; outline: none; -webkit-tap-highlight-color: transparent; }
+
+    body {
+      font-family: 'Inter', 'Noto Sans TC', sans-serif;
+      background-color: var(--bg-color);
+      /* 更加柔和的綠色系動態背景 */
+      background-image: 
+        radial-gradient(at 0% 0%, hsla(152, 40%, 90%, 1) 0, transparent 50%), 
+        radial-gradient(at 100% 100%, hsla(180, 40%, 90%, 1) 0, transparent 50%);
+      background-size: 100% 100vh;
+      background-attachment: fixed;
+      color: var(--text-main);
+      min-height: 100vh;
+      padding: 20px 10px;
     }
 
-    .container{max-width:1100px;margin:0 auto}
+    .container { max-width: 1000px; margin: 0 auto; }
 
-    header{
-      text-align:center;
-      margin-bottom:10px;
-      padding:10px 12px;
-      background:rgba(255,255,255,.95);
-      border-radius:8px;
-      box-shadow:0 2px 6px rgba(0,0,0,.06);
+    /* === Header === */
+    header {
+      text-align: center;
+      margin-bottom: 24px;
+      padding: 20px 0;
+      animation: fadeInDown 0.8s ease;
     }
-    h1{
-      font-size:1.35rem;
-      color:#0a3d34;
-      margin-bottom:4px;
-      font-weight:700;
+    
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+      color: #064e3b;
     }
-    .description{
-      font-size:.9rem;color:var(--muted)
-    }
-
-    .mode-selector{
-      display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin:8px 0 10px;
-    }
-    .mode-btn{
-      padding:6px 12px;
-      background:var(--primary);
-      color:#fff;border:0;border-radius:16px;
-      cursor:pointer;font-size:.9rem;font-weight:600;
-      transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.12);
-    }
-    .mode-btn:hover{transform:translateY(-1px)}
-    .mode-btn.active{background:var(--primary-dark)}
-
-    .content-area{
-      background:var(--card);
-      border-radius:8px;
-      padding:10px;
-      box-shadow:0 3px 10px rgba(0,0,0,.08);
-      min-height:360px;
+    
+    .description {
+      font-size: 0.95rem;
+      color: var(--text-sub);
+      font-weight: 500;
     }
 
-    .section{display:none}
-    .section.active{display:block}
-
-    .section h2{
-      font-size:1.15rem;margin-bottom:4px;color:#0a3d34;
-    }
-    .section p{
-      font-size:.9rem;color:var(--muted);margin-bottom:8px;
-    }
-
-    .filter-options{
-      display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 8px;
-    }
-    .filter-btn{
-      padding:5px 10px;background:#eef3f2;border:0;border-radius:12px;
-      cursor:pointer;font-size:.85rem;transition:.2s;color:#244;
-      white-space:nowrap;
-    }
-    .filter-btn.active{
-      background:var(--primary);color:#fff;
+    /* === Main Panel === */
+    .content-area {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow-md);
+      min-height: 60vh;
+      transition: all 0.3s ease;
     }
 
-    .noun-list{
-      display:grid;
-      grid-template-columns:repeat(auto-fill,minmax(140px,1fr));
-      gap:6px;
-      margin-bottom:8px;
-    }
-    .noun-item{
-      padding:8px;background:#f8fbfa;border-radius:6px;cursor:pointer;text-align:center;
-      border-left:3px solid var(--primary);
-      transition:.2s;min-height:52px;display:flex;flex-direction:column;justify-content:center;
-    }
-    .noun-item:hover{background:#eef7f5;transform:translateY(-1px)}
-    .noun-item small{color:var(--muted);font-size:.8rem;margin-top:2px}
-
-    .noun-card{
-      background:#fff;border-radius:8px;padding:10px;margin-top:6px;
-      border-left:4px solid var(--primary);
-      box-shadow:0 1px 4px rgba(0,0,0,.08);
-    }
-    .noun-header{
-      display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;gap:8px;
-    }
-    .noun-header h3{font-size:1.1rem}
-    .noun-category{
-      padding:2px 8px;border-radius:10px;color:#fff;font-size:.75rem;font-weight:700;
-      background:var(--accent);flex-shrink:0;
+    /* === Controls === */
+    .controls-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 24px;
     }
 
-    .noun-forms{
-      display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-      gap:6px;margin-bottom:6px;
+    /* Mode Switcher */
+    .mode-bar {
+      display: flex;
+      background: #e2e8f0;
+      padding: 4px;
+      border-radius: 12px;
+      width: fit-content;
+      margin: 0 auto;
     }
-    .noun-form{
-      padding:6px;background:#f7faf9;border-radius:6px;
+    
+    .mode-btn {
+      border: none;
+      background: transparent;
+      padding: 8px 20px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-sub);
+      cursor: pointer;
+      transition: all 0.3s ease;
     }
-    .noun-form h4{font-size:.8rem;color:var(--muted);margin-bottom:2px}
-    .noun-form p{font-weight:700;font-size:.95rem;color:#0e2f2a;display:flex;align-items:center;gap:6px}
-
-    .mask{
-      display:inline-block;padding:2px 6px;border-radius:4px;background:#e9f3f1;color:#1b3b35;
-      font-weight:700;letter-spacing:.5px;
-    }
-
-    .pronunciation-btn{
-      background:none;border:none;color:var(--primary);cursor:pointer;font-size:.95rem;
-    }
-
-    .examples{margin-top:6px}
-    .example-toggle{
-      background:var(--primary);color:#fff;border:0;padding:5px 10px;border-radius:6px;
-      cursor:pointer;font-size:.8rem;
-    }
-    .example{
-      margin-top:6px;padding:6px;background:#f7faf9;border-radius:6px;font-size:.85rem;font-style:italic;
-      display:flex;justify-content:space-between;gap:8px;align-items:flex-start;
-    }
-    .example strong{font-style:normal}
-
-    .review-row{
-      display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:4px;
-    }
-    .review-input{
-      padding:6px 8px;border:1px solid #cfd9d6;border-radius:6px;font-size:.95rem;min-width:140px;
-    }
-    .review-btn{
-      padding:6px 10px;border:0;border-radius:6px;cursor:pointer;font-size:.85rem;font-weight:600;
-      background:#e9f3f1;color:#0f3a33;
-    }
-    .review-btn.primary{background:var(--primary);color:#fff}
-    .review-feedback{font-size:.85rem;margin-top:4px;font-weight:700}
-    .ok{color:#1e7f4b}
-    .bad{color:#c0392b}
-
-    .quiz-start{padding:8px;text-align:center}
-    .quiz-container{padding:4px}
-    .quiz-grid{display:grid;grid-template-columns:1fr;gap:6px;margin-top:6px}
-    .quiz-item{
-      border:1px solid var(--line);border-radius:8px;padding:8px;background:#fbfdfc;
-      display:grid;grid-template-columns:1fr auto;gap:6px;align-items:center;
-    }
-    .quiz-q{font-size:.95rem;font-weight:700;color:#113a33}
-    .quiz-q small{display:block;font-weight:500;color:var(--muted);margin-top:2px}
-    .quiz-input{
-      padding:6px 8px;border:1px solid #cfd9d6;border-radius:6px;font-size:.95rem;width:140px;
-    }
-    .quiz-submit{
-      padding:8px 14px;background:var(--primary);color:#fff;border:0;border-radius:8px;
-      cursor:pointer;font-size:.95rem;font-weight:700;margin-top:8px;
+    
+    .mode-btn.active {
+      background: white;
+      color: var(--primary-dark);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
 
-    .quiz-result{margin-top:8px;padding:10px;background:#f7faf9;border-radius:8px}
-    .result-score{font-size:1.4rem;font-weight:800;color:#0b2d27;margin:6px 0}
-    .result-details{margin-top:8px}
-    .result-item{padding:6px;border-bottom:1px dashed var(--line);font-size:.9rem}
-    .result-item.correct{background:#e7f7ef}
-    .result-item.incorrect{background:#fdebec}
+    /* Search Bar */
+    .search-wrap {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .search-wrap input {
+      width: 100%;
+      padding: 14px 14px 14px 48px;
+      border-radius: 14px;
+      border: 2px solid transparent;
+      background: white;
+      font-size: 1rem;
+      color: var(--text-main);
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+    }
+    
+    .search-wrap input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
+    }
+    
+    .search-icon {
+      position: absolute;
+      left: 16px; top: 50%; transform: translateY(-50%);
+      font-size: 1.1rem; opacity: 0.5;
+    }
+    
+    .hint {
+      position: absolute; right: 16px; top: 50%; transform: translateY(-50%);
+      font-size: 0.75rem; color: var(--text-sub);
+      background: #f1f5f9; padding: 3px 8px; border-radius: 6px;
+      pointer-events: none; transition: 0.3s;
+    }
+    .hint.active { background: var(--primary); color: white; }
 
-    .hidden{display:none}
+    /* Category Chips */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      padding-bottom: 16px;
+      border-bottom: 1px dashed #cbd5e1;
+      margin-bottom: 20px;
+    }
+    
+    .filter-btn {
+      padding: 6px 14px;
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-sub);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .filter-btn:hover { border-color: var(--primary); color: var(--primary); }
+    .filter-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+      box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+    }
 
-    @media (min-width: 900px){ .quiz-grid{grid-template-columns:1fr 1fr} }
-    @media (max-width: 600px){
-      .noun-list{grid-template-columns:repeat(auto-fill,minmax(120px,1fr))}
-      .quiz-item{grid-template-columns:1fr}
-      .quiz-input{width:100%}
+    /* === Content Sections === */
+    .section { display: none; animation: fadeIn 0.4s ease; }
+    .section.active { display: block; }
+
+    /* Noun List Grid */
+    .noun-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    /* Noun Card */
+    .noun-card {
+      background: white;
+      border-radius: 14px;
+      padding: 16px;
+      border: 1px solid #f1f5f9;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+    
+    .noun-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(16, 185, 129, 0.3);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .card-title { font-weight: 800; font-size: 1.1rem; color: var(--text-main); }
+    .card-sub { font-size: 0.9rem; color: var(--text-sub); }
+    .badge {
+      font-size: 0.7rem; padding: 2px 8px; border-radius: 10px;
+      background: #ecfdf5; color: var(--primary-dark); font-weight: 700;
+    }
+
+    /* Study/Review Rows */
+    .word-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      background: #f8fafc;
+      padding: 8px 12px;
+      border-radius: 8px;
+    }
+    
+    .label { font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; font-weight: 700; width: 40px; }
+    .word-content { font-size: 1rem; font-weight: 600; color: #334155; flex-grow: 1; display: flex; align-items: center; gap: 8px; }
+    
+    .audio-btn {
+      background: none; border: none; cursor: pointer; font-size: 1rem; opacity: 0.6; transition: 0.2s;
+    }
+    .audio-btn:hover { opacity: 1; transform: scale(1.1); }
+
+    /* Review Specifics */
+    .review-input {
+      width: 100%;
+      padding: 6px 10px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      transition: 0.2s;
+    }
+    .review-input:focus { border-color: var(--primary); box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.1); }
+    
+    .action-row {
+      display: flex; gap: 8px; margin-top: 8px;
+    }
+    
+    .btn-action {
+      flex: 1; padding: 6px; border-radius: 6px; border: none; font-size: 0.85rem; font-weight: 600; cursor: pointer;
+    }
+    .btn-check { background: var(--primary); color: white; }
+    .btn-show { background: #f1f5f9; color: var(--text-sub); }
+
+    .feedback-msg { font-size: 0.85rem; margin-top: 6px; font-weight: 700; min-height: 1.2em; }
+    .feedback-msg.correct { color: var(--success); }
+    .feedback-msg.wrong { color: var(--danger); }
+
+    /* Examples */
+    .example-box {
+      margin-top: 12px; padding-top: 8px; border-top: 1px dashed #e2e8f0;
+    }
+    .ex-toggle {
+      font-size: 0.8rem; color: var(--primary); cursor: pointer; background: none; border: none; font-weight: 600;
+    }
+    .ex-content { display: none; margin-top: 8px; font-size: 0.85rem; color: #475569; line-height: 1.4; }
+    .ex-line { margin-bottom: 4px; display: flex; justify-content: space-between; }
+
+    /* Quiz Mode */
+    .quiz-start-card { text-align: center; padding: 40px 20px; }
+    .quiz-btn-lg {
+      background: var(--primary-gradient); color: white; border: none;
+      padding: 12px 32px; border-radius: 50px; font-size: 1.1rem; font-weight: 700;
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4); cursor: pointer; transition: 0.3s;
+    }
+    .quiz-btn-lg:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5); }
+    
+    .quiz-question { background: white; padding: 16px; border-radius: 12px; margin-bottom: 12px; border: 1px solid #e2e8f0; }
+    .q-header { display: flex; justify-content: space-between; margin-bottom: 8px; }
+    .q-main { font-size: 1.1rem; font-weight: 700; }
+    .score-board { font-size: 2rem; font-weight: 800; color: var(--primary); text-align: center; margin: 20px 0; }
+
+    /* Utilities */
+    .empty { text-align: center; padding: 40px; color: var(--text-sub); grid-column: 1 / -1; }
+    .hidden { display: none !important; }
+
+    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    @media (max-width: 600px) {
+      .mode-bar { width: 100%; display: grid; grid-template-columns: 1fr 1fr 1fr; }
+      .mode-btn { padding: 8px 4px; font-size: 0.8rem; text-align: center; }
+      .noun-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
-
 <body>
-  <div class="container">
-    <header>
-      <h1>Shirley's Irregular Nouns Learning Platform</h1>
-      <p class="description">不規則名詞互動學習平台：學習、複習與測驗名詞單複數（含發音與例句）</p>
-    </header>
 
-    <div class="mode-selector">
-      <button class="mode-btn active" data-mode="learn">Study Mode 學習模式</button>
-      <button class="mode-btn" data-mode="review">Review Mode 複習模式</button>
-      <button class="mode-btn" data-mode="quiz">Quiz Mode 測驗模式</button>
+<div class="container">
+  <header>
+    <h1>Shirley's Irregular Nouns</h1>
+    <div class="description">Master Singular & Plural Forms</div>
+  </header>
+
+  <div class="content-area">
+    
+    <div class="controls-wrapper">
+      <div class="mode-bar">
+        <button class="mode-btn active" data-mode="learn">📚 Learn</button>
+        <button class="mode-btn" data-mode="review">✏️ Review</button>
+        <button class="mode-btn" data-mode="quiz">🏆 Quiz</button>
+      </div>
+
+      <div class="search-wrap" id="search-container">
+        <div class="search-icon">🔍</div>
+        <input id="search-input" type="text" placeholder="Search nouns (e.g. mouse, leaf, child)..." />
+        <div class="hint" id="search-hint">Scope: All</div>
+      </div>
+
+      <div class="filter-bar" id="category-filters">
+        </div>
     </div>
 
-    <div class="content-area">
-      <div class="section active" id="learn-section">
-        <h2>學習不規則名詞</h2>
-        <p>點擊名詞查看細節；🔊可播放發音</p>
-        <div class="filter-options" id="learn-filters"></div>
-        <div class="noun-list" id="learn-noun-list"></div>
-        <div id="learn-noun-detail"></div>
-      </div>
-
-      <div class="section" id="review-section">
-        <h2>複習不規則名詞</h2>
-        <p>Plural 先遮住，請先自己寫，再翻答案</p>
-        <div class="filter-options" id="review-filters"></div>
-        <div class="noun-list" id="review-noun-list"></div>
-        <div id="review-noun-detail"></div>
-      </div>
-
-      <div class="section" id="quiz-section">
-        <h2>不規則名詞測驗</h2>
-
-        <div class="quiz-start" id="quiz-start">
-          <p>測驗說明：請寫出所給名詞的<strong>複數形式</strong></p>
-          <p>系統將隨機挑選 10 題，每題 10 分，滿分 100 分</p>
-          <button class="quiz-submit" id="start-quiz-btn">開始測驗</button>
-        </div>
-
-        <div class="quiz-container hidden" id="quiz-container">
-          <div id="quiz-hint" class="quiz-q"></div>
-          <div class="quiz-grid" id="quiz-grid"></div>
-          <button class="quiz-submit" id="submit-quiz-btn">一次提交答案</button>
-          <div class="quiz-result hidden" id="quiz-result"></div>
-        </div>
+    <div id="learn-section" class="section active">
+      <div id="learn-grid" class="noun-grid">
+        <div class="empty">Loading Data...</div>
       </div>
     </div>
+
+    <div id="review-section" class="section">
+      <div class="empty" style="margin-bottom:10px; font-size:0.9rem; background:transparent; padding:0;">
+        💡 Tip: Type the Plural form and press Enter.
+      </div>
+      <div id="review-grid" class="noun-grid"></div>
+    </div>
+
+    <div id="quiz-section" class="section">
+      <div id="quiz-start" class="quiz-start-card">
+        <h2 style="margin-bottom:16px;">Ready to test yourself?</h2>
+        <p style="color:var(--text-sub); margin-bottom:24px;">10 Random questions from the entire database.</p>
+        <button class="quiz-btn-lg" id="btn-start-quiz">Start Quiz</button>
+      </div>
+      
+      <div id="quiz-game" class="hidden">
+        <div id="quiz-list"></div>
+        <button class="quiz-btn-lg" id="btn-submit-quiz" style="width:100%; margin-top:20px;">Submit All Answers</button>
+      </div>
+
+      <div id="quiz-result" class="hidden"></div>
+    </div>
+
   </div>
+</div>
 
 <script>
-const CSV_URL = "https://ducj-creator.github.io/Shirley-Grammar/irregular/nouns.csv";
-let nouns = [];
-let categoriesMap = new Map();
-
-function parseCSV(text){
-  const rows = [];
-  let i=0, field="", row=[], inQuotes=false;
-  while(i < text.length){
-    const c = text[i];
-    if(inQuotes){
-      if(c === '"' && text[i+1] === '"'){ field+='"'; i+=2; continue; }
-      if(c === '"'){ inQuotes=false; i++; continue; }
-      field += c; i++; continue;
-    }else{
-      if(c === '"'){ inQuotes=true; i++; continue; }
-      if(c === ","){ row.push(field); field=""; i++; continue; }
-      if(c === "\n"){
-        row.push(field); field="";
-        if(row.some(v => v.trim() !== "")) rows.push(row);
-        row=[]; i++; continue;
-      }
-      if(c === "\r"){ i++; continue; }
-      field += c; i++; continue;
-    }
-  }
-  row.push(field);
-  if(row.some(v => v.trim() !== "")) rows.push(row);
-  return rows;
-}
-
-function findCol(headers, candidates){
-  const lower = headers.map(h=>h.toLowerCase().replace(/\uFEFF/g,"").trim());
-  for(const cand of candidates){
-    const c = cand.toLowerCase();
-    const idx = lower.findIndex(h=>h.includes(c));
-    if(idx !== -1) return idx;
-  }
-  return -1;
-}
-
-async function loadNouns(){
-  const res = await fetch(CSV_URL, {cache:"no-store"});
-  if(!res.ok) throw new Error("CSV 讀取失敗：" + res.status);
-  const text = await res.text();
-  const table = parseCSV(text);
-  if(table.length < 2) throw new Error("CSV 內容空白或格式不符");
-
-  const headers = table[0].map(h=>h.replace(/\uFEFF/g,"").trim());
-  const idxCategory = findCol(headers, ["category", "分類"]);
-  const idxSingular = findCol(headers, ["singular", "單數"]);
-  const idxTC = findCol(headers, ["traditional chinese", "中文", "chinese"]);
-  const idxSingSent = findCol(headers, ["singular sentence", "單數例句"]);
-  const idxPlural = findCol(headers, ["plural", "複數"]);
-  const idxPluralSent = findCol(headers, ["plural sentence", "複數例句"]);
-
-  if([idxCategory, idxSingular, idxTC, idxPlural].some(i=>i===-1)){
-    throw new Error("CSV 欄位名稱找不到，請確認 header");
-  }
-
-  nouns = table.slice(1).map(r=>{
-    const categoryRaw = (r[idxCategory] || "").replace(/\uFEFF/g,"").trim();
-    const numMatch = categoryRaw.match(/\d+/);
-    const categoryNum = (numMatch ? numMatch[0] : categoryRaw).trim();
-
-    if(categoryNum && !categoriesMap.has(categoryNum)){
-      categoriesMap.set(categoryNum, categoryRaw || ("類別 " + categoryNum));
-    }
-
-    return {
-      categoryNum: String(categoryNum || "other"),
-      categoryLabel: categoryRaw || ("類別 " + categoryNum),
-      singular: (r[idxSingular]||"").trim(),
-      singular_chinese: (r[idxTC]||"").trim(),
-      singular_sentence: (r[idxSingSent]||"").trim(),
-      plural: (r[idxPlural]||"").trim(),
-      plural_sentence: (r[idxPluralSent]||"").trim(),
-    };
-  }).filter(n=>n.singular && n.plural);
-}
-
-document.addEventListener("DOMContentLoaded", async () => {
-  bindModeSwitch();
-
-  try{
-    await loadNouns();
-    buildFilters();
-    initLearnMode();
-  }catch(err){
-    showLoadError(err.message);
-  }
-
-  document.getElementById("start-quiz-btn").addEventListener("click", startQuiz);
-  document.getElementById("submit-quiz-btn").addEventListener("click", submitQuiz);
-});
-
-function showLoadError(msg){
-  const area = document.querySelector(".content-area");
-  area.innerHTML = `
-    <div style="padding:12px;color:#b3261e;font-weight:700;">
-      讀取 CSV 失敗：${msg}<br/>
-      請確認 CSV 網址可開啟，或稍後再試。
-    </div>
-  `;
-}
-
-function bindModeSwitch(){
-  const modeButtons = document.querySelectorAll(".mode-btn");
-  const sections = document.querySelectorAll(".section");
-
-  modeButtons.forEach(btn=>{
-    btn.addEventListener("click", ()=>{
-      const mode = btn.dataset.mode;
-
-      modeButtons.forEach(b=>b.classList.remove("active"));
-      btn.classList.add("active");
-
-      sections.forEach(s=>s.classList.remove("active"));
-      document.getElementById(`${mode}-section`).classList.add("active");
-
-      if(mode==="learn") initLearnMode();
-      if(mode==="review") initReviewMode();
-      if(mode==="quiz") initQuizMode();
-    });
-  });
-}
-
-/* ======= FILTERS ======= */
-function buildFilters(){
-  const learnFilters = document.getElementById("learn-filters");
-  const reviewFilters = document.getElementById("review-filters");
-  const orderedNums = Array.from(categoriesMap.keys()).sort((a,b)=>Number(a)-Number(b));
-
-  const makeBtn = (num,label,container,mode)=>{
-    const b=document.createElement("button");
-    b.className="filter-btn";
-    b.dataset.category=String(num);
-    b.textContent=label;
-    b.addEventListener("click", ()=>{
-      container.querySelectorAll(".filter-btn").forEach(x=>x.classList.remove("active"));
-      b.classList.add("active");
-      applyFilter(mode, String(num));
-    });
-    return b;
+  /* CONFIG & STATE */
+  const CSV_URL = "https://ducj-creator.github.io/Shirley-Grammar/irregular/nouns.csv";
+  
+  let allNouns = [];
+  let categories = new Map();
+  let appState = {
+    mode: 'learn',     // learn, review, quiz
+    category: 'all',   // all, 1, 2, 3...
+    search: '',        // text input
   };
 
-  learnFilters.innerHTML="";
-  reviewFilters.innerHTML="";
-
-  const allBtnL = document.createElement("button");
-  allBtnL.className="filter-btn active";
-  allBtnL.dataset.category="all"; allBtnL.textContent="全部";
-  allBtnL.addEventListener("click", ()=>{
-    learnFilters.querySelectorAll(".filter-btn").forEach(x=>x.classList.remove("active"));
-    allBtnL.classList.add("active");
-    applyFilter("learn","all");
+  /* INITIALIZATION */
+  document.addEventListener("DOMContentLoaded", async () => {
+    bindControls();
+    await fetchData();
+    renderCategories();
+    renderMainView(); // Initial Render
   });
-  learnFilters.appendChild(allBtnL);
 
-  const allBtnR = document.createElement("button");
-  allBtnR.className="filter-btn active";
-  allBtnR.dataset.category="all"; allBtnR.textContent="全部";
-  allBtnR.addEventListener("click", ()=>{
-    reviewFilters.querySelectorAll(".filter-btn").forEach(x=>x.classList.remove("active"));
-    allBtnR.classList.add("active");
-    applyFilter("review","all");
-  });
-  reviewFilters.appendChild(allBtnR);
-
-  orderedNums.forEach(num=>{
-    const label = categoriesMap.get(num) || ("類別 " + num);
-    learnFilters.appendChild(makeBtn(num,label,learnFilters,"learn"));
-    reviewFilters.appendChild(makeBtn(num,label,reviewFilters,"review"));
-  });
-}
-
-/* ⭐ 修正重點：改用 display 來確保每次都有效 */
-function applyFilter(mode, category){
-  const list = document.getElementById(`${mode}-noun-list`);
-  list.querySelectorAll(".noun-item").forEach(item=>{
-    const c = String(item.dataset.category || "");
-    if(category==="all" || c===String(category)){
-      item.style.display = "flex";
-    }else{
-      item.style.display = "none";
+  /* 1. DATA FETCHING */
+  async function fetchData() {
+    try {
+      const res = await fetch(CSV_URL, {cache:"no-store"});
+      if(!res.ok) throw new Error("HTTP "+res.status);
+      const text = await res.text();
+      parseCSV(text);
+    } catch (err) {
+      document.querySelector('.content-area').innerHTML = `<div class="empty" style="color:var(--danger)">Error loading data: ${err.message}</div>`;
     }
-  });
-}
-
-/* ======= LEARN ======= */
-function initLearnMode(){
-  const nounList = document.getElementById("learn-noun-list");
-  nounList.innerHTML="";
-  document.getElementById("learn-noun-detail").innerHTML="";
-
-  nouns.forEach(noun=>{
-    const item=document.createElement("div");
-    item.className="noun-item";
-    item.dataset.category=String(noun.categoryNum);
-    item.innerHTML=`<div>${noun.singular}</div><small>${noun.singular_chinese}</small>`;
-    item.addEventListener("click", ()=>showNounDetail("learn", noun));
-    nounList.appendChild(item);
-  });
-
-  const active = document.querySelector("#learn-filters .filter-btn.active")?.dataset.category || "all";
-  applyFilter("learn", active);
-}
-
-function showNounDetail(mode, noun){
-  const detail=document.getElementById(`${mode}-noun-detail`);
-
-  if(mode==="learn"){
-    detail.innerHTML = makeLearnCard(noun);
-    bindCardEvents(detail);
-    return;
   }
-  if(mode==="review"){
-    detail.innerHTML = makeReviewCard(noun);
-    bindCardEvents(detail);
-    bindReviewEvents(detail, noun);
-    return;
+
+  function parseCSV(text) {
+    const rows = text.trim().split(/\r?\n/).filter(Boolean);
+    if(rows.length < 2) return;
+    
+    // Simple CSV parser assuming standard headers
+    const headers = rows[0].split(',').map(h => h.trim().toLowerCase().replace(/^\uFEFF/, ''));
+    
+    // Find indexes safely
+    const idx = {
+      cat: headers.findIndex(h => h.includes('category') || h.includes('分類')),
+      sing: headers.findIndex(h => h.includes('singular') || h.includes('單數')),
+      pl: headers.findIndex(h => h.includes('plural') || h.includes('複數')),
+      zh: headers.findIndex(h => h.includes('chinese') || h.includes('中文')),
+      s_sent: headers.findIndex(h => h.includes('singular sentence')),
+      p_sent: headers.findIndex(h => h.includes('plural sentence'))
+    };
+
+    allNouns = [];
+    categories.clear();
+
+    for(let i=1; i<rows.length; i++) {
+      // Handle commas inside quotes roughly if needed, keeping simple here for performance
+      // For this specific dataset, standard split usually works unless commas in sentences.
+      // Let's use a slightly smarter split for quotes.
+      const cols = splitCSV(rows[i]);
+      
+      const sing = (cols[idx.sing]||"").trim();
+      const pl = (cols[idx.pl]||"").trim();
+      if(!sing || !pl) continue;
+
+      const catRaw = (cols[idx.cat]||"Other").trim();
+      // Extract number if exists "Category 1" -> "1"
+      let catKey = catRaw.match(/\d+/) ? catRaw.match(/\d+/)[0] : catRaw;
+      
+      if(!categories.has(catKey)) categories.set(catKey, catRaw);
+
+      allNouns.push({
+        id: i,
+        category: catKey,
+        catLabel: catRaw,
+        singular: sing,
+        plural: pl,
+        chinese: (cols[idx.zh]||"").trim(),
+        s_sent: (cols[idx.s_sent]||"").trim(),
+        p_sent: (cols[idx.p_sent]||"").trim()
+      });
+    }
   }
-}
 
-function makeLearnCard(noun){
-  return `
-  <div class="noun-card">
-    <div class="noun-header">
-      <h3>${noun.singular} - ${noun.singular_chinese}</h3>
-      <span class="noun-category">${noun.categoryLabel}</span>
-    </div>
+  function splitCSV(str) {
+    const res = [];
+    let cur = ''; let inQ = false;
+    for(let c of str){
+      if(c==='"'){ inQ=!inQ; }
+      else if(c===',' && !inQ){ res.push(cur); cur=''; }
+      else { cur+=c; }
+    }
+    res.push(cur);
+    return res;
+  }
 
-    <div class="noun-forms">
-      <div class="noun-form">
-        <h4>單數 (Singular)</h4>
-        <p>${noun.singular}
-          <button class="pronunciation-btn" data-word="${noun.singular}">🔊</button>
-        </p>
-      </div>
-      <div class="noun-form">
-        <h4>複數 (Plural)</h4>
-        <p>${noun.plural}
-          <button class="pronunciation-btn" data-word="${noun.plural}">🔊</button>
-        </p>
-      </div>
-    </div>
+  /* 2. CONTROLLER LOGIC */
+  function bindControls() {
+    // Mode Switch
+    document.querySelectorAll('.mode-btn').forEach(btn => {
+      btn.onclick = () => {
+        document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        appState.mode = btn.dataset.mode;
+        
+        // Hide/Show Search based on mode (Hide search in Quiz)
+        const searchUI = document.getElementById('search-container');
+        const filterUI = document.getElementById('category-filters');
+        
+        if(appState.mode === 'quiz') {
+            searchUI.classList.add('hidden');
+            filterUI.classList.add('hidden');
+        } else {
+            searchUI.classList.remove('hidden');
+            filterUI.classList.remove('hidden');
+        }
 
-    <div class="examples">
-      <button class="example-toggle">顯示例句</button>
-      <div class="example-content" style="display:none;">
-        <div class="example">
-          <div><strong>單數例句:</strong> ${noun.singular_sentence || "—"}</div>
-          <button class="pronunciation-btn" data-sentence="${noun.singular_sentence}">🔊</button>
-        </div>
-        <div class="example">
-          <div><strong>複數例句:</strong> ${noun.plural_sentence || "—"}</div>
-          <button class="pronunciation-btn" data-sentence="${noun.plural_sentence}">🔊</button>
-        </div>
-      </div>
-    </div>
-  </div>`;
-}
+        switchSection(appState.mode);
+        if(appState.mode !== 'quiz') renderMainView();
+      };
+    });
 
-/* ======= REVIEW ======= */
-function initReviewMode(){
-  const nounList = document.getElementById("review-noun-list");
-  nounList.innerHTML="";
-  document.getElementById("review-noun-detail").innerHTML="";
+    // Search Input - The Core "Global Search" Feature
+    const input = document.getElementById('search-input');
+    input.oninput = (e) => {
+      appState.search = e.target.value.trim().toLowerCase();
+      updateHint();
+      renderMainView();
+    };
 
-  nouns.forEach(noun=>{
-    const item=document.createElement("div");
-    item.className="noun-item";
-    item.dataset.category=String(noun.categoryNum);
-    item.innerHTML=`<div>${noun.singular}</div><small>${noun.singular_chinese}</small>`;
-    item.addEventListener("click", ()=>showNounDetail("review", noun));
-    nounList.appendChild(item);
-  });
+    // Quiz Buttons
+    document.getElementById('btn-start-quiz').onclick = startQuiz;
+    document.getElementById('btn-submit-quiz').onclick = submitQuiz;
+  }
 
-  const active = document.querySelector("#review-filters .filter-btn.active")?.dataset.category || "all";
-  applyFilter("review", active);
-}
+  function updateHint() {
+    const hint = document.getElementById('search-hint');
+    if(appState.search) {
+      hint.textContent = "Mode: Global Search";
+      hint.classList.add('active');
+      // Dim category buttons to indicate they are inactive
+      document.getElementById('category-filters').style.opacity = '0.5';
+    } else {
+      hint.textContent = appState.category === 'all' ? "Scope: All Categories" : `Scope: Category ${appState.category}`;
+      hint.classList.remove('active');
+      document.getElementById('category-filters').style.opacity = '1';
+    }
+  }
 
-function makeReviewCard(noun){
-  return `
-  <div class="noun-card">
-    <div class="noun-header">
-      <h3>${noun.singular} - ${noun.singular_chinese}</h3>
-      <span class="noun-category">${noun.categoryLabel}</span>
-    </div>
+  function renderCategories() {
+    const container = document.getElementById('category-filters');
+    container.innerHTML = '';
+    
+    // Add "All"
+    const allBtn = document.createElement('button');
+    allBtn.className = 'filter-btn active';
+    allBtn.textContent = 'All';
+    allBtn.onclick = () => setCategory('all', allBtn);
+    container.appendChild(allBtn);
 
-    <div class="noun-forms">
-      <div class="noun-form">
-        <h4>單數 (Singular)</h4>
-        <p>${noun.singular}
-          <button class="pronunciation-btn" data-word="${noun.singular}">🔊</button>
-        </p>
-      </div>
+    // Sort categories numerically
+    const keys = Array.from(categories.keys()).sort((a,b) => parseInt(a)-parseInt(b));
+    
+    keys.forEach(k => {
+      const btn = document.createElement('button');
+      btn.className = 'filter-btn';
+      btn.textContent = categories.get(k); // e.g. "Category 1"
+      btn.onclick = () => setCategory(k, btn);
+      container.appendChild(btn);
+    });
+  }
 
-      <div class="noun-form">
-        <h4>複數 (Plural) 先自己寫</h4>
-        <p>
-          <span class="mask" id="plural-mask">••••••</span>
-          <button class="pronunciation-btn hidden" id="plural-audio" data-word="${noun.plural}">🔊</button>
-        </p>
+  function setCategory(cat, btnElement) {
+    appState.category = cat;
+    // Update visual state
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btnElement.classList.add('active');
+    
+    // Clear search if category is clicked (User wants to see category, not search results)
+    document.getElementById('search-input').value = '';
+    appState.search = '';
+    updateHint();
+    
+    renderMainView();
+  }
 
-        <div class="review-row">
-          <input class="review-input" id="plural-input" placeholder="輸入你的複數答案"/>
-          <button class="review-btn primary" id="check-btn">檢查</button>
-          <button class="review-btn" id="toggle-btn">顯示答案</button>
-        </div>
-        <div class="review-feedback" id="review-feedback"></div>
-      </div>
-    </div>
+  function getFilteredData() {
+    // 1. If searching, SEARCH EVERYTHING (Global)
+    if(appState.search) {
+      const q = appState.search;
+      return allNouns.filter(n => 
+        n.singular.toLowerCase().includes(q) ||
+        n.plural.toLowerCase().includes(q) ||
+        n.chinese.includes(q)
+      );
+    }
+    
+    // 2. If no search, filter by Category
+    if(appState.category === 'all') return allNouns;
+    return allNouns.filter(n => n.category == appState.category);
+  }
 
-    <div class="examples">
-      <button class="example-toggle">顯示例句</button>
-      <div class="example-content" style="display:none;">
-        <div class="example">
-          <div><strong>單數例句:</strong> ${noun.singular_sentence || "—"}</div>
-          <button class="pronunciation-btn" data-sentence="${noun.singular_sentence}">🔊</button>
-        </div>
-        <div class="example">
-          <div><strong>複數例句:</strong> ${noun.plural_sentence || "—"}</div>
-          <button class="pronunciation-btn" data-sentence="${noun.plural_sentence}">🔊</button>
-        </div>
-      </div>
-    </div>
-  </div>`;
-}
+  function switchSection(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.getElementById(id+'-section').classList.add('active');
+  }
 
-function bindReviewEvents(detail, noun){
-  const input = detail.querySelector("#plural-input");
-  const mask = detail.querySelector("#plural-mask");
-  const toggle = detail.querySelector("#toggle-btn");
-  const check = detail.querySelector("#check-btn");
-  const feedback = detail.querySelector("#review-feedback");
-  const pluralAudio = detail.querySelector("#plural-audio");
+  /* 3. RENDERING CARDS */
+  function renderMainView() {
+    const data = getFilteredData();
+    const container = document.getElementById(appState.mode === 'learn' ? 'learn-grid' : 'review-grid');
+    container.innerHTML = '';
 
-  let revealed = false;
-
-  check.addEventListener("click", ()=>{
-    const user = (input.value||"").trim().toLowerCase();
-    if(!user){
-      feedback.textContent="請先輸入答案";
-      feedback.className="review-feedback bad";
+    if(data.length === 0) {
+      container.innerHTML = `<div class="empty">No nouns found matching your criteria.</div>`;
       return;
     }
-    const ok = user === noun.plural.toLowerCase();
-    feedback.textContent = ok ? "✓ 正確！" : `✗ 再想想～（可按「顯示答案」）`;
-    feedback.className = "review-feedback " + (ok ? "ok" : "bad");
-  });
 
-  toggle.addEventListener("click", ()=>{
-    revealed = !revealed;
-    if(revealed){
-      mask.textContent = noun.plural;
-      pluralAudio.classList.remove("hidden");
-      toggle.textContent="隱藏答案";
-    }else{
-      mask.textContent="••••••";
-      pluralAudio.classList.add("hidden");
-      toggle.textContent="顯示答案";
-      feedback.textContent="";
+    data.forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'noun-card';
+      
+      if(appState.mode === 'learn') {
+        card.innerHTML = buildLearnCard(item);
+      } else {
+        card.innerHTML = buildReviewCard(item);
+      }
+      container.appendChild(card);
+      
+      // Bind Review specific events after appending
+      if(appState.mode === 'review') bindReviewCard(card, item);
+      
+      // Bind common events (Audio, Toggle)
+      bindCommonEvents(card);
+    });
+  }
+
+  function buildLearnCard(item) {
+    return `
+      <div class="card-header">
+        <div>
+          <div class="card-title">${item.singular}</div>
+          <div class="card-sub">${item.chinese}</div>
+        </div>
+        <span class="badge">${item.catLabel}</span>
+      </div>
+      
+      <div class="word-row">
+        <span class="label">SING</span>
+        <div class="word-content">${item.singular}</div>
+        <button class="audio-btn" data-text="${item.singular}">🔊</button>
+      </div>
+      
+      <div class="word-row" style="background:#ecfdf5; border:1px solid #d1fae5;">
+        <span class="label" style="color:#059669">PL</span>
+        <div class="word-content" style="color:#047857">${item.plural}</div>
+        <button class="audio-btn" data-text="${item.plural}">🔊</button>
+      </div>
+
+      ${buildExamples(item)}
+    `;
+  }
+
+  function buildReviewCard(item) {
+    return `
+      <div class="card-header">
+        <div>
+          <div class="card-title">${item.singular}</div>
+          <div class="card-sub">${item.chinese}</div>
+        </div>
+        <span class="badge">${item.catLabel}</span>
+      </div>
+      
+      <div class="word-row">
+        <span class="label">SING</span>
+        <div class="word-content">${item.singular}</div>
+      </div>
+      
+      <div style="margin-top:10px;">
+        <input type="text" class="review-input" placeholder="Type Plural here..." autocomplete="off">
+        <div class="feedback-msg"></div>
+        <div class="action-row">
+          <button class="btn-action btn-check">Check</button>
+          <button class="btn-action btn-show">Show Answer</button>
+        </div>
+      </div>
+
+      ${buildExamples(item)}
+    `;
+  }
+
+  function buildExamples(item) {
+    if(!item.s_sent && !item.p_sent) return '';
+    return `
+      <div class="example-box">
+        <button class="ex-toggle">Show Examples ▼</button>
+        <div class="ex-content">
+          ${item.s_sent ? `<div class="ex-line"><span>S: ${item.s_sent}</span><button class="audio-btn" data-text="${item.s_sent}">🔊</button></div>` : ''}
+          ${item.p_sent ? `<div class="ex-line"><span>P: ${item.p_sent}</span><button class="audio-btn" data-text="${item.p_sent}">🔊</button></div>` : ''}
+        </div>
+      </div>
+    `;
+  }
+
+  /* 4. INTERACTIONS */
+  function bindCommonEvents(card) {
+    // Audio
+    card.querySelectorAll('.audio-btn').forEach(btn => {
+      btn.onclick = (e) => {
+        e.stopPropagation(); // prevent other clicks
+        speak(btn.dataset.text);
+      };
+    });
+
+    // Toggle Example
+    const toggle = card.querySelector('.ex-toggle');
+    if(toggle) {
+      toggle.onclick = () => {
+        const content = card.querySelector('.ex-content');
+        if(content.style.display === 'block') {
+          content.style.display = 'none';
+          toggle.textContent = 'Show Examples ▼';
+        } else {
+          content.style.display = 'block';
+          toggle.textContent = 'Hide Examples ▲';
+        }
+      };
     }
-  });
-}
-
-/* ======= QUIZ ======= */
-let quizNouns=[], quizAnswers=[];
-
-function initQuizMode(){
-  document.getElementById("quiz-start").classList.remove("hidden");
-  document.getElementById("quiz-container").classList.add("hidden");
-  document.getElementById("quiz-result").classList.add("hidden");
-  document.getElementById("quiz-grid").innerHTML="";
-  document.getElementById("quiz-hint").innerHTML="";
-}
-
-function startQuiz(){
-  quizNouns = [...nouns].sort(()=>Math.random()-0.5).slice(0,10);
-  quizAnswers = new Array(quizNouns.length).fill("");
-
-  document.getElementById("quiz-start").classList.add("hidden");
-  document.getElementById("quiz-container").classList.remove("hidden");
-  document.getElementById("quiz-result").classList.add("hidden");
-
-  document.getElementById("quiz-hint").innerHTML = `題型提示：寫出<strong>複數 (Plural)</strong>`;
-
-  const grid = document.getElementById("quiz-grid");
-  grid.innerHTML="";
-
-  quizNouns.forEach((noun,i)=>{
-    const item=document.createElement("div");
-    item.className="quiz-item";
-    item.innerHTML=`
-      <div class="quiz-q">
-        ${i+1}. ${noun.singular}
-        <small>中文：${noun.singular_chinese || "—"}</small>
-      </div>
-      <input class="quiz-input" data-idx="${i}" placeholder="Plural"/>
-    `;
-    grid.appendChild(item);
-  });
-}
-
-function submitQuiz(){
-  const inputs = document.querySelectorAll(".quiz-input");
-  inputs.forEach(inp=>{
-    const idx = Number(inp.dataset.idx);
-    quizAnswers[idx] = (inp.value||"").trim().toLowerCase();
-  });
-
-  const hasEmpty = quizAnswers.some(a=>!a);
-  if(hasEmpty && !confirm("有題目未作答，仍要提交嗎？")) return;
-
-  showQuizResult();
-}
-
-function showQuizResult(){
-  const resultDiv = document.getElementById("quiz-result");
-  resultDiv.classList.remove("hidden");
-
-  let score=0, detailHTML="";
-
-  quizNouns.forEach((noun,i)=>{
-    const user = quizAnswers[i] || "";
-    const ok = user === noun.plural.toLowerCase();
-    if(ok) score += 10;
-
-    detailHTML += `
-      <div class="result-item ${ok?'correct':'incorrect'}">
-        <strong>${i+1}. ${noun.singular}</strong>（${noun.singular_chinese || "—"}）<br/>
-        你的答案：${user || "（空白）"}<br/>
-        正確答案：${noun.plural}<br/>
-        ${ok ? "✓ 正確" : "✗ 錯誤"}
-      </div>
-    `;
-  });
-
-  resultDiv.innerHTML = `
-    <h3>測驗結果</h3>
-    <div class="result-score">${score} / 100</div>
-    <p>${score>=60 ? "恭喜！表現不錯！" : "需要更多練習，加油！"}</p>
-    <div class="result-details">${detailHTML}</div>
-    <button class="quiz-submit" onclick="initQuizMode()">重新測驗</button>
-  `;
-}
-
-/* ======= CARD COMMON ======= */
-function bindCardEvents(container){
-  container.querySelectorAll(".pronunciation-btn").forEach(btn=>{
-    btn.addEventListener("click", ()=>{
-      const w = btn.dataset.word;
-      const s = btn.dataset.sentence;
-      playAudio(w || s);
-    });
-  });
-
-  const toggle = container.querySelector(".example-toggle");
-  const content = container.querySelector(".example-content");
-  if(toggle && content){
-    toggle.addEventListener("click", ()=>{
-      const show = content.style.display === "none";
-      content.style.display = show ? "block":"none";
-      toggle.textContent = show ? "隱藏例句":"顯示例句";
-    });
   }
-}
 
-/* ======= SPEECH ======= */
-function playAudio(text){
-  if(!text) return;
-  if("speechSynthesis" in window){
-    const u=new SpeechSynthesisUtterance(text);
-    u.lang="en-US";
-    u.rate=0.85;
+  function bindReviewCard(card, item) {
+    const input = card.querySelector('input');
+    const checkBtn = card.querySelector('.btn-check');
+    const showBtn = card.querySelector('.btn-show');
+    const feedback = card.querySelector('.feedback-msg');
+
+    const checkAnswer = () => {
+      const val = input.value.trim().toLowerCase();
+      if(!val) return;
+      if(val === item.plural.toLowerCase()) {
+        feedback.textContent = "✨ Correct! Good job.";
+        feedback.className = "feedback-msg correct";
+        input.style.borderColor = "var(--success)";
+      } else {
+        feedback.textContent = "Incorrect. Try again!";
+        feedback.className = "feedback-msg wrong";
+        input.style.borderColor = "var(--danger)";
+      }
+    };
+
+    checkBtn.onclick = checkAnswer;
+    input.onkeypress = (e) => { if(e.key === 'Enter') checkAnswer(); };
+
+    showBtn.onclick = () => {
+      input.value = item.plural;
+      feedback.textContent = "Answer revealed.";
+      feedback.className = "feedback-msg";
+      input.style.borderColor = "#cbd5e1";
+      speak(item.plural); // Auto pronounce on reveal
+    };
+  }
+
+  function speak(text) {
+    if(!window.speechSynthesis) return;
     window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'en-US';
+    u.rate = 0.9;
     window.speechSynthesis.speak(u);
-  }else{
-    alert("瀏覽器不支援語音合成");
   }
-}
+
+  /* 5. QUIZ LOGIC */
+  let currentQuiz = [];
+  let quizAnswers = {};
+
+  function startQuiz() {
+    if(allNouns.length < 10) return alert("Loading data...");
+    // Random 10
+    currentQuiz = [...allNouns].sort(() => 0.5 - Math.random()).slice(0, 10);
+    quizAnswers = {};
+    
+    document.getElementById('quiz-start').classList.add('hidden');
+    document.getElementById('quiz-game').classList.remove('hidden');
+    document.getElementById('quiz-result').classList.add('hidden');
+    
+    const list = document.getElementById('quiz-list');
+    list.innerHTML = '';
+
+    currentQuiz.forEach((item, idx) => {
+      const qEl = document.createElement('div');
+      qEl.className = 'quiz-question';
+      qEl.innerHTML = `
+        <div class="q-header">
+          <span class="q-main">${idx+1}. ${item.singular}</span>
+          <span class="badge" style="background:#f1f5f9; color:#64748b">Singular</span>
+        </div>
+        <div style="margin-bottom:8px; font-size:0.9rem; color:#64748b">${item.chinese}</div>
+        <input type="text" class="review-input q-input" data-id="${item.id}" placeholder="Type Plural form..." autocomplete="off">
+      `;
+      list.appendChild(qEl);
+    });
+  }
+
+  function submitQuiz() {
+    let score = 0;
+    const inputs = document.querySelectorAll('.q-input');
+    
+    // Check blank
+    let blank = false;
+    inputs.forEach(inp => { if(!inp.value.trim()) blank = true; });
+    if(blank && !confirm("Some answers are empty. Submit anyway?")) return;
+
+    let detailsHtml = '';
+
+    currentQuiz.forEach((item, idx) => {
+      // Find input for this item
+      const inp = document.querySelector(`.q-input[data-id="${item.id}"]`);
+      const val = inp.value.trim().toLowerCase();
+      const isCorrect = val === item.plural.toLowerCase();
+      if(isCorrect) score += 10;
+
+      detailsHtml += `
+        <div class="word-row" style="background: ${isCorrect ? '#ecfdf5' : '#fef2f2'}; border:1px solid ${isCorrect ? '#d1fae5' : '#fee2e2'}; margin-top:8px;">
+          <div style="width:100%">
+            <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+              <strong>${idx+1}. ${item.singular}</strong>
+              <span style="font-weight:bold; color:${isCorrect?'var(--success)':'var(--danger)'}">${isCorrect ? 'Correct' : 'Wrong'}</span>
+            </div>
+            <div style="font-size:0.9rem; color:#64748b;">
+              Your answer: <b>${val||"(Empty)"}</b> <br>
+              Correct answer: <b style="color:var(--text-main)">${item.plural}</b>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+
+    const resultSection = document.getElementById('quiz-result');
+    resultSection.innerHTML = `
+      <div class="score-board">Score: ${score} / 100</div>
+      ${score === 100 ? '<p style="text-align:center; color:var(--success); font-weight:bold;">Perfect! 🎉</p>' : ''}
+      <div style="margin-top:20px;">${detailsHtml}</div>
+      <button class="quiz-btn-lg" onclick="startQuiz()" style="width:100%; margin-top:24px;">Try Again</button>
+    `;
+
+    document.getElementById('quiz-game').classList.add('hidden');
+    resultSection.classList.remove('hidden');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
 </script>
 </body>
 </html>
