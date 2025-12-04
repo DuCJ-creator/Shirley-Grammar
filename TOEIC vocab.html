@@ -11,6 +11,7 @@
 
   <style>
     :root {
+      /* 維持原本的高級配色 */
       --primary: #6C63FF;
       --primary-light: #8A85FF;
       --secondary: #FF6584;
@@ -25,6 +26,7 @@
       --border-radius: 16px;
       --shadow: 0 8px 20px rgba(0,0,0,0.08);
       --transition: all 0.25s ease;
+      --glass: rgba(255, 255, 255, 0.9);
     }
 
     *{ margin:0; padding:0; box-sizing:border-box; }
@@ -40,42 +42,102 @@
     }
     .container{ max-width:1200px; margin:0 auto; }
 
+    /* Header 改為支援搜尋欄的佈局 */
     header{
-      background:rgba(255,255,255,0.96);
+      background: rgba(255,255,255,0.85);
       border-radius:var(--border-radius);
       box-shadow:var(--shadow);
-      padding:18px 18px;
-      display:flex; justify-content:space-between; align-items:center; gap:12px;
-      position:sticky; top:10px; z-index:10;
-      backdrop-filter: blur(6px);
+      padding:18px 24px;
+      margin-bottom: 20px;
+      display:flex; flex-direction: column; gap:16px;
+      position:sticky; top:10px; z-index:50;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.6);
     }
+
+    .header-top {
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+    }
+
     .title-block h1{
-      color:var(--primary); font-size:1.9rem; font-weight:800; letter-spacing:.3px;
+      color:var(--primary); font-size:1.8rem; font-weight:800; letter-spacing:.3px;
+      text-shadow: 0 2px 10px rgba(108,99,255,0.15);
     }
-    .title-block p{ color:var(--gray); font-size:1rem; margin-top:2px; }
+    .title-block p{ color:var(--gray); font-size:0.95rem; margin-top:2px; }
 
     .header-actions{
       display:flex; gap:10px; align-items:center; flex-wrap:wrap;
     }
 
+    /* === SEARCH BAR STYLES (NEW) === */
+    .search-row {
+      width: 100%;
+      position: relative;
+    }
+    .search-input {
+      width: 100%;
+      padding: 12px 16px 12px 48px;
+      border-radius: 12px;
+      border: 2px solid transparent;
+      background: #f0f2f5;
+      font-size: 1rem;
+      color: var(--dark);
+      transition: var(--transition);
+      font-family: inherit;
+    }
+    .search-input:focus {
+      background: #fff;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(108, 99, 255, 0.15);
+      outline: none;
+    }
+    .search-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gray);
+      pointer-events: none;
+    }
+    .search-hint {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.8rem;
+      color: #fff;
+      background: var(--primary);
+      padding: 2px 8px;
+      border-radius: 6px;
+      opacity: 0;
+      transition: var(--transition);
+      pointer-events: none;
+    }
+    .search-input:not(:placeholder-shown) + .search-icon + .search-hint {
+      opacity: 1;
+    }
+
+    /* Buttons */
     .btn{
-      padding:9px 14px; background:#fff; border:2px solid var(--primary);
-      color:var(--primary); border-radius:999px; font-weight:700;
-      cursor:pointer; transition:var(--transition); display:flex; align-items:center; gap:6px;
-      box-shadow:0 2px 0 rgba(108,99,255,0.08);
-      font-size:.95rem;
+      padding:8px 16px; background:#fff; border:1px solid #e0e0e0;
+      color:var(--gray); border-radius:999px; font-weight:600;
+      cursor:pointer; transition:var(--transition); display:flex; align-items:center; gap:8px;
+      font-size:.9rem;
     }
     .btn:hover{
-      background:var(--primary-light); color:#fff; transform:translateY(-2px);
-      box-shadow:0 12px 22px rgba(108,99,255,0.25);
+      background: #f8f9fa; transform:translateY(-2px); color: var(--primary);
+      border-color: var(--primary-light);
     }
-    .btn.active{ background:var(--primary); color:#fff; }
+    .btn.active{ 
+      background:var(--primary); color:#fff; border-color:var(--primary); 
+      box-shadow: 0 4px 12px rgba(108, 99, 255, 0.3);
+    }
     .btn.secondary{
-      border-color:transparent; background:rgba(255,101,132,0.12); color:#c73b57;
+      background: rgba(255, 101, 132, 0.1); color: var(--secondary); border:none;
     }
-    .btn.secondary:hover{
-      background:var(--secondary); color:#fff;
-      box-shadow:0 12px 22px rgba(255,101,132,0.25);
+    .btn.secondary:hover {
+      background: var(--secondary); color: white;
     }
 
     .loading{
@@ -84,265 +146,299 @@
     .loading i{ font-size:2rem; display:block; margin-bottom:10px; }
 
     /* ====== LAYER 1 Home ====== */
-    #home-view{ margin-top:16px; }
+    #home-view{ margin-top:10px; }
     .chapters-grid{
-      display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
-      gap:14px;
+      display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+      gap:20px;
     }
     .chapter-card{
-      background:linear-gradient(145deg,#ffffff 0%, #f6f7ff 70%, #fff 100%);
-      border:1px solid #eef0ff;
+      background: #ffffff;
+      border:1px solid rgba(255,255,255,0.8);
       border-radius:18px;
-      padding:16px 16px 14px;
-      box-shadow:var(--shadow);
+      padding:20px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.02), 0 10px 15px rgba(0,0,0,0.03);
       cursor:pointer; transition:var(--transition);
       position:relative; overflow:hidden;
-      min-height:130px;
+      min-height:140px;
       display:flex; flex-direction:column; justify-content:space-between;
     }
-    .chapter-card::after{
-      content:""; position:absolute; right:-40px; top:-40px;
-      width:120px; height:120px; border-radius:50%;
-      background:radial-gradient(circle at center, rgba(54,209,220,0.22), transparent 65%);
+    .chapter-card::before {
+      content:''; position: absolute; top:0; left:0; width:6px; height:100%;
+      background: var(--primary-light); opacity: 0.5;
     }
     .chapter-card:hover{
-      transform:translateY(-4px);
-      box-shadow:0 16px 32px rgba(0,0,0,0.12);
-      border-color:#dfe2ff;
+      transform:translateY(-5px);
+      box-shadow: 0 15px 30px rgba(108, 99, 255, 0.15);
+      border-color: var(--primary-light);
     }
     .chapter-card h3{
-      font-size:1.05rem; line-height:1.4; color:#27293b; font-weight:700;
+      font-size:1.1rem; line-height:1.4; color:#27293b; font-weight:700; margin-bottom: 4px;
     }
     .chapter-card .emoji{
-      font-size:1.9rem; margin-bottom:6px;
+      font-size:2rem; margin-bottom:12px; display: inline-block;
     }
     .chapter-meta{
-      display:flex; justify-content:space-between; align-items:center; margin-top:8px;
-      color:var(--gray); font-size:.9rem;
+      display:flex; justify-content:space-between; align-items:center; margin-top:12px;
+      color:var(--gray); font-size:.85rem;
     }
     .chip{
-      background:rgba(108,99,255,0.12); color:var(--primary);
-      padding:3px 8px; border-radius:999px; font-weight:700; font-size:.82rem;
+      background: #f0f2f5; color: var(--dark);
+      padding:4px 10px; border-radius:8px; font-weight:600; font-size:.8rem;
       display:inline-flex; align-items:center; gap:4px;
     }
 
-    /* ====== LAYER 2 Category view ====== */
-    #category-view{ margin-top:16px; display:none; }
+    /* ====== LAYER 2 Category/Search view ====== */
+    #category-view{ margin-top:10px; display:none; }
     #category-view.active{ display:block; }
 
     .category-header{
       display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;
-      margin-bottom:12px;
+      margin-bottom:16px;
     }
     .category-title{
-      font-size:1.45rem; font-weight:800; color:#24263a;
-      display:flex; gap:8px; align-items:center;
+      font-size:1.4rem; font-weight:800; color:#24263a;
+      display:flex; gap:10px; align-items:center;
     }
 
     .subchips{
       display:flex; flex-wrap:wrap; gap:8px;
-      background:rgba(255,255,255,0.9); padding:10px; border-radius:14px;
-      box-shadow:var(--shadow);
+      background: #fff; padding:12px; border-radius:16px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(0,0,0,0.05);
     }
     .subchip{
-      padding:6px 10px; border-radius:999px; background:var(--gray-light);
-      cursor:pointer; transition:var(--transition); font-size:.9rem; font-weight:700;
-      display:flex; align-items:center; gap:6px; border:1px solid transparent;
+      padding:6px 14px; border-radius:999px; background:var(--gray-light);
+      cursor:pointer; transition:var(--transition); font-size:.9rem; font-weight:600;
+      display:flex; align-items:center; gap:6px; color: var(--gray);
     }
-    .subchip:hover{ background:var(--primary-light); color:#fff; transform:translateY(-1px); }
-    .subchip.active{ background:var(--primary); color:#fff; }
+    .subchip:hover{ background:#e2e6ea; color:var(--dark); }
+    .subchip.active{ background:var(--primary); color:#fff; box-shadow: 0 4px 10px rgba(108,99,255,0.3); }
 
     .word-bank{
       background:#fff; border-radius:16px; box-shadow:var(--shadow);
-      padding:12px; margin-bottom:12px;
+      padding:16px; margin-bottom:20px;
+      border: 1px solid rgba(0,0,0,0.05);
     }
     .word-bank-header{
-      display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;
+      display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;
+      border-bottom: 1px solid #f0f0f0; padding-bottom: 8px;
     }
     .word-bank-title{
-      font-weight:800; color:#2c2f44; display:flex; align-items:center; gap:8px;
+      font-weight:700; color:#2c2f44; display:flex; align-items:center; gap:8px; font-size: 1.05rem;
     }
-    .word-bank-count{ color:var(--gray); font-size:.95rem; }
+    .word-bank-count{ color:var(--gray); font-size:.9rem; background: #f0f0f0; padding: 2px 8px; border-radius: 4px;}
 
     .word-bank-list{
-      display:grid; grid-template-columns:repeat(auto-fill,minmax(170px,1fr));
-      gap:8px; max-height:210px; overflow:auto; padding-right:4px;
+      display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+      gap:10px; max-height:240px; overflow-y:auto; padding-right:4px;
     }
+    /* Custom Scrollbar */
+    .word-bank-list::-webkit-scrollbar { width: 6px; }
+    .word-bank-list::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+
     .bank-item{
-      background:#fff; border:1px solid #f0f2ff; border-radius:12px;
-      padding:8px 10px; transition:var(--transition);
+      background: #fcfcfc; border:1px solid #eef0f5; border-radius:10px;
+      padding:10px 12px; transition:var(--transition);
       display:flex; flex-direction:column; gap:2px;
-      cursor:pointer;
+      cursor:pointer; position: relative;
     }
     .bank-item:hover{
       transform:translateY(-2px);
-      box-shadow:0 8px 14px rgba(0,0,0,0.06);
-      border-color:#e0e4ff;
+      box-shadow:0 4px 12px rgba(0,0,0,0.05);
+      border-color:var(--primary-light);
+      background: #fff;
     }
-    .bank-word{ font-weight:800; color:#1f2133; }
-    .bank-pos{ font-size:.85rem; color:var(--gray); }
+    .bank-item.active-item {
+      border-color: var(--primary);
+      background: #f4f3ff;
+    }
+    .bank-word{ font-weight:700; color:#1f2133; font-size: 0.95rem; }
+    .bank-pos{ font-size:.8rem; color:var(--gray); }
 
     /* ===== Study / Review shared card ===== */
-    .study-area, .review-area, .quiz-area{ display:none; }
+    .study-area, .review-area, .quiz-area{ display:none; animation: fadeIn 0.4s ease; }
     .study-area.active, .review-area.active, .quiz-area.active{ display:block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
     .singlecard-container{
-      display:flex; flex-direction:column; align-items:center; gap:12px;
-      padding:8px 0 2px;
+      display:flex; flex-direction:column; align-items:center; gap:16px;
+      padding:10px 0;
     }
     .word-card{
-      width:100%; max-width:540px; height:320px; perspective:1000px;
-      cursor:pointer;
+      width:100%; max-width:580px; height:340px; perspective:1000px;
+      cursor:pointer; position: relative;
     }
     .card-inner{
       position:relative; width:100%; height:100%; text-align:center;
-      transition:transform .6s; transform-style:preserve-3d;
+      transition:transform .6s cubic-bezier(0.175, 0.885, 0.32, 1.275); transform-style:preserve-3d;
     }
     .word-card.flipped .card-inner{ transform:rotateY(180deg); }
     .card-front,.card-back{
       position:absolute; width:100%; height:100%; backface-visibility:hidden;
       display:flex; flex-direction:column; justify-content:center; align-items:center;
-      padding:26px; border-radius:16px; box-shadow:var(--shadow);
+      padding:30px; border-radius:24px; box-shadow:var(--shadow);
     }
     .card-front{
-      background:linear-gradient(135deg,var(--primary) 0%,var(--primary-light) 100%);
+      background:linear-gradient(135deg, #6C63FF 0%, #4834d4 100%);
       color:#fff;
     }
+    .card-front::after {
+        content: ''; position: absolute; top:0; left:0; right:0; bottom:0;
+        background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjIiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=');
+        opacity: 0.3;
+    }
+
     .card-back{
       background:#fff; color:var(--dark); transform:rotateY(180deg);
+      border: 1px solid rgba(0,0,0,0.05);
     }
-    .word{ font-size:2.5rem; font-weight:900; margin-bottom:6px; }
-    .pos{ font-size:1.1rem; font-style:italic; margin-bottom:10px; opacity:.95; }
-    .meaning{ font-size:1.55rem; font-weight:700; margin-bottom:12px; }
-    .example{ font-size:1.1rem; font-style:italic; color:var(--gray); margin-bottom:6px; }
-    .example-translation{ color:var(--gray); font-size:1rem; }
+    
+    .word{ font-size:2.4rem; font-weight:800; margin-bottom:4px; letter-spacing: -0.5px; z-index: 2;}
+    .pos{ font-size:1rem; font-style:italic; margin-bottom:12px; opacity:0.8; font-weight: 500; z-index: 2;}
+    .meaning{ font-size:1.6rem; font-weight:700; margin-bottom:16px; color: #6C63FF; }
+    .example-box {
+      background: #f8f9fa; padding: 12px; border-radius: 12px; width: 100%; text-align: left;
+    }
+    .example{ font-size:1rem; font-style:italic; color:#495057; margin-bottom:6px; line-height: 1.4; }
+    .example-translation{ color:#868e96; font-size:0.9rem; }
 
     .tts-row{
-      display:flex; gap:10px; align-items:center; margin-top:10px; flex-wrap:wrap;
-      color:rgba(255,255,255,0.95);
+      display:flex; gap:12px; align-items:center; margin-top:16px; flex-wrap:wrap;
+      z-index: 2;
     }
-    .card-back .tts-row{ color:var(--gray); justify-content:center; }
+    .card-front .tts-row { color: rgba(255,255,255,0.9); }
+    .card-back .tts-row{ justify-content:center; }
 
     .tts-btn{
-      background:none; border:none; color:inherit; font-size:1.45rem;
-      cursor:pointer; transition:var(--transition);
+      background:rgba(255,255,255,0.2); border:none; color:inherit; 
+      width: 40px; height: 40px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size:1.2rem; cursor:pointer; transition:var(--transition);
     }
-    .tts-btn:hover{ color:var(--accent); transform:scale(1.1); }
+    .card-back .tts-btn { background: #e9ecef; color: var(--primary); }
+    .tts-btn:hover{ transform:scale(1.1); background: rgba(255,255,255,0.3); }
+    .card-back .tts-btn:hover { background: var(--primary); color: white; }
 
     .card-controls{
-      display:flex; gap:10px; margin-top:2px; flex-wrap:wrap; justify-content:center;
+      display:flex; gap:12px; margin-top:8px; flex-wrap:wrap; justify-content:center;
     }
     .nav-btn{
-      padding:9px 16px;
-      background:var(--primary); color:#fff; border:none; border-radius:999px;
+      padding:10px 20px;
+      background:#fff; color:var(--dark); border:1px solid #dcdde1; border-radius:999px;
       cursor:pointer; transition:var(--transition);
-      font-weight:800; display:flex; align-items:center; gap:6px;
+      font-weight:700; display:flex; align-items:center; gap:8px;
     }
-    .nav-btn:hover{ background:var(--primary-light); transform:translateY(-2px); }
+    .nav-btn:hover{ background:var(--gray-light); transform:translateY(-2px); border-color: #b2bec3; }
+    .nav-btn.primary-action { background: var(--primary); color: white; border-color: var(--primary); }
+    .nav-btn.primary-action:hover { background: var(--primary-light); }
     .nav-btn:disabled{
-      background:var(--gray-light); color:var(--gray); cursor:not-allowed; transform:none;
+      opacity: 0.5; cursor:not-allowed; transform:none;
     }
 
     /* ===== Review extras ===== */
     .review-stats{
-      width:100%; max-width:540px;
+      width:100%; max-width:580px;
       background:#fff; border-radius:14px; box-shadow:var(--shadow);
-      padding:10px 12px; display:flex; justify-content:space-between; align-items:center; gap:8px;
+      padding:12px 20px; display:flex; justify-content:space-between; align-items:center; gap:8px;
       flex-wrap:wrap;
-      font-weight:800; color:#2c2f44;
+      font-weight:700; color:#2c2f44;
     }
-    .review-rate{
-      color:var(--primary);
-    }
-    .review-actions{
-      display:flex; gap:8px; flex-wrap:wrap; justify-content:center;
-    }
+    .review-rate{ color:var(--success); font-weight: 800; }
+    .review-actions{ display:flex; gap:12px; flex-wrap:wrap; justify-content:center; width: 100%; margin-top: 10px; }
     .know-btn{
-      border:none; background:rgba(40,167,69,.12); color:#1f7a35;
+      border:none; background:#d4edda; color:#155724; padding: 12px 30px; border-radius: 12px; font-size: 1rem;
     }
     .unsure-btn{
-      border:none; background:rgba(255,193,7,.16); color:#a07400;
+      border:none; background:#fff3cd; color:#856404; padding: 12px 30px; border-radius: 12px; font-size: 1rem;
     }
-    .know-btn:hover{ background:rgba(40,167,69,.28); color:#0f5e25; }
-    .unsure-btn:hover{ background:rgba(255,193,7,.35); color:#7e5a00; }
+    .know-btn:hover{ background:#c3e6cb; transform: translateY(-2px); }
+    .unsure-btn:hover{ background:#ffeeba; transform: translateY(-2px); }
 
     /* ===== Quiz ===== */
     .quiz-settings{
       background:#fff; border-radius:16px; box-shadow:var(--shadow);
-      padding:14px; margin-bottom:12px;
+      padding:24px; margin-bottom:12px; max-width: 600px; margin: 0 auto;
     }
-    .setting-group{ margin-bottom:10px; }
+    .setting-group{ margin-bottom:16px; }
     .setting-label{
-      font-weight:800; color:#2c2f44; display:block; margin-bottom:6px;
+      font-weight:700; color:#2c2f44; display:block; margin-bottom:8px; font-size: 0.95rem;
     }
     .setting-select{
-      width:100%; padding:9px; border-radius:10px; border:1px solid #d9dce6;
-      font-family:"Poppins",sans-serif;
+      width:100%; padding:12px; border-radius:12px; border:1px solid #d9dce6;
+      font-family:"Poppins",sans-serif; font-size: 1rem;
+      background: #f8f9fa;
     }
     .start-btn{
-      width:100%; text-align:center; padding:11px; border:none; border-radius:999px;
-      background:var(--success); color:#fff; font-weight:900; cursor:pointer;
-      transition:var(--transition);
+      width:100%; text-align:center; padding:14px; border:none; border-radius:12px;
+      background:linear-gradient(135deg, #28A745 0%, #218838 100%); 
+      color:#fff; font-weight:700; cursor:pointer; font-size: 1.1rem;
+      transition:var(--transition); margin-top: 10px;
+      box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
     }
-    .start-btn:hover{ background:#218838; transform:translateY(-2px); }
+    .start-btn:hover{ transform:translateY(-2px); box-shadow: 0 8px 16px rgba(40, 167, 69, 0.4); }
 
     .quiz-wrap{
       background:#fff; border-radius:16px; box-shadow:var(--shadow);
-      padding:14px; display:none;
+      padding:20px; display:none; max-width: 700px; margin: 0 auto;
     }
     .quiz-wrap.active{ display:block; }
 
     .quiz-progress{
-      display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:8px;
-      font-size:.95rem; color:#2c2f44; font-weight:700;
+      display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:12px;
+      font-size:.9rem; color:var(--gray); font-weight:600;
     }
     .progress-bar{
-      height:8px; background:var(--gray-light); border-radius:999px; flex-grow:1; overflow:hidden;
-      margin:0 8px;
+      height:8px; background:#e9ecef; border-radius:999px; flex-grow:1; overflow:hidden;
+      margin:0 10px;
     }
     .progress-fill{
-      height:100%; width:0%; background:var(--primary); transition:width .25s ease;
+      height:100%; width:0%; background:var(--primary); transition:width .3s ease;
+      border-radius: 999px;
     }
 
     .quiz-question{
-      padding:14px; border-radius:14px; background:#fbfbff; border:1px dashed #e6e8ff;
+      padding:20px; border-radius:16px; background:#f8f9fa; border:1px solid #e9ecef;
     }
     .question-text{
-      font-size:1.18rem; font-weight:800; margin-bottom:10px;
+      font-size:1.3rem; font-weight:800; margin-bottom:20px; color: var(--dark);
     }
     .options-container{
-      display:grid; grid-template-columns:1fr 1fr; gap:10px;
+      display:grid; grid-template-columns:1fr 1fr; gap:12px;
     }
     .option{
-      background:var(--gray-light); border-radius:10px; padding:10px;
-      cursor:pointer; transition:var(--transition); font-weight:700; user-select:none;
+      background:#fff; border-radius:12px; padding:16px;
+      cursor:pointer; transition:var(--transition); font-weight:600; user-select:none;
+      border: 2px solid transparent; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      color: #495057;
     }
-    .option:hover{ background:var(--primary-light); color:#fff; transform:translateY(-1px); }
-    .option.selected{ background:var(--primary); color:#fff; }
+    .option:hover{ border-color:var(--primary-light); color:var(--primary); transform:translateY(-2px); }
+    .option.selected{ background:var(--primary); color:#fff; border-color:var(--primary); }
 
     .quiz-result{
       background:#fff; border-radius:16px; box-shadow:var(--shadow);
-      padding:18px;
+      padding:24px; text-align: center;
     }
-    .wrong-list{ margin-top:10px; display:grid; gap:8px; }
+    .wrong-list{ margin-top:20px; display:grid; gap:10px; text-align: left; }
     .wrong-item{
-      background:var(--gray-light); padding:10px 12px; border-radius:12px;
+      background:#fff0f3; padding:12px 16px; border-radius:12px; border-left: 4px solid var(--secondary);
     }
-    .wrong-item .w-word{ font-weight:900; color:var(--primary); margin-bottom:4px; }
+    .wrong-item .w-word{ font-weight:800; color:var(--dark); margin-bottom:4px; font-size: 1.1rem; }
 
     .hidden{ display:none; }
 
     /* ===== RWD ===== */
     @media (max-width: 900px){
-      header{ flex-direction:column; align-items:flex-start; }
-      .header-actions{ width:100%; justify-content:flex-start; }
+      header{ padding: 16px; }
+      .header-top { justify-content: center; text-align: center; }
+      .header-actions{ width:100%; justify-content:center; }
       .options-container{ grid-template-columns:1fr; }
     }
     @media (max-width: 600px){
       .chapters-grid{ grid-template-columns:1fr; }
       .word-bank-list{ grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); }
-      .word{ font-size:2.1rem; }
-      .word-card{ height:300px; }
+      .word{ font-size:2rem; }
+      .word-card{ height:380px; }
+      .card-front, .card-back { padding: 20px; }
     }
   </style>
 </head>
@@ -351,25 +447,33 @@
 <div class="container">
 
   <header>
-    <div class="title-block">
-      <h1>Shirley's TOEIC Essential Vocab</h1>
-      <p>Study · Review · Quiz in one place</p>
+    <div class="header-top">
+      <div class="title-block">
+        <h1>TOEIC Vocab Master</h1>
+        <p>Your Ultimate Learning Companion</p>
+      </div>
+
+      <div class="header-actions">
+        <button class="btn secondary" id="back-home-btn" style="display:none;">
+          <i class="fa-solid fa-arrow-left"></i> Back
+        </button>
+
+        <button class="btn active" data-mode="study">
+          <i class="fa-solid fa-book-open"></i> Study
+        </button>
+        <button class="btn" data-mode="review">
+          <i class="fa-solid fa-arrows-rotate"></i> Review
+        </button>
+        <button class="btn" data-mode="quiz">
+          <i class="fa-solid fa-list-check"></i> Quiz
+        </button>
+      </div>
     </div>
 
-    <div class="header-actions">
-      <button class="btn secondary" id="back-home-btn">
-        <i class="fa-solid fa-house"></i> Categories
-      </button>
-
-      <button class="btn active" data-mode="study">
-        <i class="fa-solid fa-book-open"></i> Study
-      </button>
-      <button class="btn" data-mode="review">
-        <i class="fa-solid fa-arrows-rotate"></i> Review
-      </button>
-      <button class="btn" data-mode="quiz">
-        <i class="fa-solid fa-list-check"></i> Quiz
-      </button>
+    <div class="search-row">
+      <input type="text" class="search-input" id="search-input" placeholder="Search any word (English or Chinese)...">
+      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+      <div class="search-hint" id="search-hint">Searching Global Database...</div>
     </div>
   </header>
 
@@ -378,28 +482,24 @@
     Loading vocabulary data...
   </div>
 
-  <!-- ===== LAYER 1: HOME ===== -->
   <section id="home-view" class="hidden">
     <div class="chapters-grid" id="chapters-grid"></div>
   </section>
 
-  <!-- ===== LAYER 2: CATEGORY ===== -->
   <section id="category-view">
     <div class="category-header">
       <div class="category-title" id="category-title">Category</div>
       <div class="subchips" id="subchips"></div>
     </div>
 
-    <!-- word bank overview -->
     <div class="word-bank">
       <div class="word-bank-header">
-        <div class="word-bank-title"><i class="fa-solid fa-layer-group"></i> Word Overview</div>
-        <div class="word-bank-count" id="bank-count"></div>
+        <div class="word-bank-title"><i class="fa-solid fa-layer-group"></i> Word List</div>
+        <div class="word-bank-count" id="bank-count">0</div>
       </div>
       <div class="word-bank-list" id="bank-list"></div>
     </div>
 
-    <!-- STUDY -->
     <div class="study-area active" id="study-area">
       <div class="singlecard-container">
         <div class="word-card" id="study-card">
@@ -410,17 +510,16 @@
         </div>
         <div class="card-controls">
           <button class="nav-btn" id="study-prev-btn"><i class="fa-solid fa-chevron-left"></i> Prev</button>
-          <button class="nav-btn" id="study-flip-btn"><i class="fa-solid fa-right-left"></i> Flip</button>
+          <button class="nav-btn primary-action" id="study-flip-btn"><i class="fa-solid fa-repeat"></i> Flip</button>
           <button class="nav-btn" id="study-next-btn">Next <i class="fa-solid fa-chevron-right"></i></button>
         </div>
       </div>
     </div>
 
-    <!-- REVIEW (單卡) -->
     <div class="review-area" id="review-area">
       <div class="singlecard-container">
         <div class="review-stats">
-          <div>Known Rate: <span class="review-rate" id="review-rate">0%</span></div>
+          <div>Retention: <span class="review-rate" id="review-rate">0%</span></div>
           <div id="review-count">0 / 0 marked</div>
         </div>
 
@@ -432,58 +531,60 @@
         </div>
 
         <div class="review-actions">
-          <button class="btn know-btn" id="know-btn">✅ 知道</button>
-          <button class="btn unsure-btn" id="unsure-btn">🤔 不確定</button>
+          <button class="know-btn" id="know-btn"><i class="fa-solid fa-check"></i> I Know This</button>
+          <button class="unsure-btn" id="unsure-btn"><i class="fa-solid fa-question"></i> Not Sure</button>
         </div>
 
         <div class="card-controls">
           <button class="nav-btn" id="review-prev-btn"><i class="fa-solid fa-chevron-left"></i> Prev</button>
-          <button class="nav-btn" id="review-flip-btn"><i class="fa-solid fa-right-left"></i> Flip</button>
+          <button class="nav-btn primary-action" id="review-flip-btn"><i class="fa-solid fa-repeat"></i> Flip</button>
           <button class="nav-btn" id="review-next-btn">Next <i class="fa-solid fa-chevron-right"></i></button>
         </div>
       </div>
     </div>
 
-    <!-- QUIZ -->
     <div class="quiz-area" id="quiz-area">
       <div class="quiz-settings" id="quiz-settings">
+        <h2 style="text-align:center; margin-bottom:20px; color:var(--primary);">Quiz Settings</h2>
+        
         <div class="setting-group">
           <label class="setting-label">Quiz Mode</label>
           <select class="setting-select" id="quiz-mode-select">
-            <option value="mix-all">Mix All Chapters</option>
-            <option value="mix-chapter">Mix Selected Chapter</option>
-            <option value="precise">Precise (Chapter & Subchapter)</option>
-            <option value="unsure">Unsure List (from Review)</option>
+            <option value="mix-all">🔥 Mix All Chapters</option>
+            <option value="mix-chapter">📂 Specific Chapter</option>
+            <option value="precise">🎯 Chapter & Subchapter</option>
+            <option value="unsure">🧠 Review 'Not Sure' Words</option>
           </select>
         </div>
 
         <div class="setting-group" id="quiz-chapter-setting">
-          <label class="setting-label">Chapter</label>
+          <label class="setting-label">Select Chapter</label>
           <select class="setting-select" id="quiz-chapter-select"></select>
         </div>
 
         <div class="setting-group hidden" id="quiz-sub-setting">
-          <label class="setting-label">Subchapter</label>
+          <label class="setting-label">Select Subchapter</label>
           <select class="setting-select" id="quiz-subchapter-select"></select>
         </div>
 
         <div class="setting-group">
-          <label class="setting-label">Number of Questions</label>
+          <label class="setting-label">Question Count</label>
           <select class="setting-select" id="quiz-count-select">
             <option value="10">10 Questions</option>
             <option value="20">20 Questions</option>
-            <option value="all">All Questions</option>
+            <option value="50">50 Questions</option>
+            <option value="all">All Available</option>
           </select>
         </div>
 
-        <button class="start-btn" id="start-quiz-btn">Start Quiz</button>
+        <button class="start-btn" id="start-quiz-btn">Start Challenge</button>
       </div>
 
       <div class="quiz-wrap" id="quiz-wrap">
         <div class="quiz-progress">
           <span id="progress-text">1 / 10</span>
           <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
-          <span id="answered-text">Answered: 0/0</span>
+          <span id="answered-text">0/0</span>
         </div>
 
         <div class="quiz-question">
@@ -499,29 +600,8 @@
 
 <script>
   // ================= CSV URL =================
+  // 使用您原本的 CSV 來源
   const CSV_URL = 'https://raw.githubusercontent.com/ducj-creator/Shirley-Grammar/main/TOEIC%20vocab.csv';
-
-  // ================= DEMO DATA (備援) =================
-  const DEMO_DATA = {
-    chapters: [
-      {
-        id: "Chapter 1",
-        title: "行政與組織運作 / Administration & Organizational Operations",
-        subchapters: [
-          {id:"辦公室與日常行政 / Office & Routine Administration", title:"辦公室與日常行政 / Office & Routine Administration"}
-        ],
-        words: [
-          {
-            chapter:"行政與組織運作 / Administration & Organizational Operations",
-            subchapter:"辦公室與日常行政 / Office & Routine Administration",
-            word:"appointment", pos:"n.", meaning:"約會;約定",
-            example:"I'd like to make an appointment with the HR manager to discuss my transfer.",
-            exampleTranslation:"我想和人資經理約個時間，討論我的調職事宜。"
-          }
-        ]
-      }
-    ]
-  };
 
   // ================= DOM =================
   const loadingEl = document.getElementById('loading');
@@ -537,6 +617,8 @@
 
   const modeBtns = document.querySelectorAll('.header-actions .btn[data-mode]');
   const backHomeBtn = document.getElementById('back-home-btn');
+  const searchInput = document.getElementById('search-input');
+  const searchHint = document.getElementById('search-hint');
 
   const studyArea = document.getElementById('study-area');
   const reviewArea = document.getElementById('review-area');
@@ -577,30 +659,24 @@
 
   // ================= STATE =================
   let vocabularyData = null;
+  let allWordsFlat = []; // 為了搜尋功能，建立一個扁平化的單字列表
+
   let currentChapter = null;
   let currentSubchapter = 'ALL';
   let currentMode = 'study';
+  
+  let isSearchMode = false; // 是否處於搜尋模式
 
-  let currentWords = [];
+  let currentWords = []; // 目前正在學習/複習的單字列表 (可能是某章節，也可能是搜尋結果)
   let currentWordIndex = 0;
 
   // Review tracking
   const reviewStatsByChapter = new Map(); 
-  // key: chapterId -> { known:Set, unsure:Set }
-  function getReviewStats(chapterId){
-    if(!reviewStatsByChapter.has(chapterId)){
-      reviewStatsByChapter.set(chapterId,{
-        known:new Set(),
-        unsure:new Set()
-      });
-    }
-    return reviewStatsByChapter.get(chapterId);
-  }
-
-  // global unsure list for quiz (across chapters)
   const globalUnsureKeys = new Set();
+  // We'll use a special key "SEARCH_RESULTS" for stats in search mode, though stats are usually per-chapter.
+  // In search mode, marking words will update their respective chapter stats.
 
-  // quiz
+  // Quiz State
   let quizQuestionsData = [];
   let quizAnswers = [];
   let quizIndex = 0;
@@ -609,10 +685,17 @@
   // ================= INIT =================
   async function init(){
     try {
-      vocabularyData = await loadCSVData();
+      const results = await loadCSVData();
+      vocabularyData = results;
+      // Build flat list for search
+      allWordsFlat = [];
+      vocabularyData.chapters.forEach(ch => {
+        ch.words.forEach(w => allWordsFlat.push(w));
+      });
     } catch (e){
-      console.warn('CSV failed, use demo', e);
-      vocabularyData = DEMO_DATA;
+      console.error('Error loading data', e);
+      loadingEl.textContent = "Failed to load data. Please check connection.";
+      return;
     }
 
     renderHome();
@@ -630,9 +713,7 @@
         complete:(results)=>{
           if(results.errors?.length) return reject(results.errors[0]);
           if(!results.data?.length) return reject('empty csv');
-          const processed = processCSVData(results.data);
-          if(!processed.chapters.length) return reject('no valid rows');
-          resolve(processed);
+          resolve(processCSVData(results.data));
         },
         error:reject
       });
@@ -691,6 +772,8 @@
 
   // ================= UI RENDER =================
   function renderHome(){
+    isSearchMode = false;
+    searchInput.value = ''; // Clear search
     chaptersGrid.innerHTML = '';
 
     vocabularyData.chapters.forEach(ch=>{
@@ -703,8 +786,8 @@
           <h3>${ch.title}</h3>
         </div>
         <div class="chapter-meta">
-          <span class="chip"><i class="fa-solid fa-book"></i> ${ch.words.length} words</span>
-          <span><i class="fa-regular fa-folder-open"></i> ${ch.subchapters.length} sub</span>
+          <span class="chip"><i class="fa-solid fa-book"></i> ${ch.words.length}</span>
+          <span class="chip"><i class="fa-regular fa-folder-open"></i> ${ch.subchapters.length}</span>
         </div>
       `;
       card.addEventListener('click', ()=> enterCategory(ch.id));
@@ -713,34 +796,85 @@
 
     homeView.classList.remove('hidden');
     categoryView.classList.remove('active');
-    currentChapter = null;
+    backHomeBtn.style.display = 'none';
   }
 
   function enterCategory(chapterId){
     currentChapter = vocabularyData.chapters.find(c=>c.id===chapterId);
     if(!currentChapter) return;
-
+    
+    isSearchMode = false;
     currentSubchapter = 'ALL';
+    
+    // UI Update
     categoryTitle.innerHTML = `${getChapterEmoji(currentChapter.title)} ${currentChapter.title}`;
+    subchipsEl.style.display = 'flex';
+    backHomeBtn.style.display = 'flex';
 
     renderSubchips();
-    loadWordsForCategory();
+    loadWordsForCategory(); // Loads words from chapter
     renderWordBank();
 
     renderStudyCard();
-    renderReviewCard();        // ✅ 單卡 Review
-    updateReviewStatsUI();     // ✅ 統計
+    renderReviewCard();
+    updateReviewStatsUI();
 
     homeView.classList.add('hidden');
     categoryView.classList.add('active');
 
-    switchMode(currentMode);
+    // If we are in quiz mode, we might want to stay in quiz settings, but usually entering a category defaults to study
+    if(currentMode === 'quiz') switchMode('study'); // Default to study when entering
+    else switchMode(currentMode);
+  }
+
+  // === SEARCH FUNCTIONALITY ===
+  function handleSearch(e) {
+    const query = e.target.value.trim().toLowerCase();
+    
+    if (query.length === 0) {
+      if(isSearchMode) renderHome(); // Exit search mode if empty
+      return;
+    }
+
+    isSearchMode = true;
+    
+    // Filter ALL words
+    const results = allWordsFlat.filter(w => 
+      w.word.toLowerCase().includes(query) || 
+      (w.meaning && w.meaning.includes(query))
+    );
+
+    // Switch View to Category View (reused for search results)
+    homeView.classList.add('hidden');
+    categoryView.classList.add('active');
+    backHomeBtn.style.display = 'flex';
+
+    // Update Header for Search Context
+    categoryTitle.innerHTML = `<span style="color:var(--primary)"><i class="fa-solid fa-magnifying-glass"></i> Search: "${e.target.value}"</span>`;
+    subchipsEl.style.display = 'none'; // Hide subchapters in search mode
+
+    // Update Data
+    currentWords = results;
+    currentWordIndex = 0;
+
+    renderWordBank();
+    if(currentWords.length > 0) {
+        renderStudyCard();
+        renderReviewCard();
+    } else {
+        // Handle empty results
+        studyCard.querySelector('.card-front').innerHTML = '<div style="color:#ccc">No matches found.</div>';
+    }
+    
+    // In search mode, review stats are tricky, maybe just hide or show "Global" ?
+    // For now, let's just reset stats UI to empty or handle gracefully
+    reviewRateEl.textContent = "-";
+    reviewCountEl.textContent = "Search Mode";
   }
 
   function renderSubchips(){
     subchipsEl.innerHTML = '';
-
-    const allChip = makeSubchip('ALL','All', currentChapter.words.length, true);
+    const allChip = makeSubchip('ALL','All Words', currentChapter.words.length, true);
     subchipsEl.appendChild(allChip);
 
     currentChapter.subchapters.forEach(sub=>{
@@ -754,7 +888,7 @@
     const chip = document.createElement('div');
     chip.className = `subchip ${active?'active':''}`;
     chip.dataset.subId = id;
-    chip.innerHTML = `${label} <span class="chip" style="background:rgba(0,0,0,0.06); color:inherit">${count}</span>`;
+    chip.innerHTML = `${label} <span style="opacity:0.7; font-size:0.8em; margin-left:4px;">(${count})</span>`;
     chip.addEventListener('click', ()=>{
       document.querySelectorAll('.subchip').forEach(c=>c.classList.remove('active'));
       chip.classList.add('active');
@@ -762,7 +896,6 @@
       loadWordsForCategory();
       renderWordBank();
 
-      // reset index to start of filtered list
       currentWordIndex = 0;
       if(currentMode==='study') renderStudyCard();
       if(currentMode==='review') renderReviewCard();
@@ -781,23 +914,35 @@
 
   function renderWordBank(){
     bankListEl.innerHTML = '';
-    bankCountEl.textContent = `${currentWords.length} words`;
+    bankCountEl.textContent = `${currentWords.length}`;
+
+    if(currentWords.length === 0){
+        bankListEl.innerHTML = `<div style="grid-column:1/-1; text-align:center; color:var(--gray); padding:20px;">No words found.</div>`;
+        return;
+    }
 
     currentWords.forEach((w, idx)=>{
       const item = document.createElement('div');
       item.className = 'bank-item';
+      if(idx === currentWordIndex) item.classList.add('active-item');
+      
       item.innerHTML = `
         <div class="bank-word">${w.word}</div>
-        <div class="bank-pos">${w.pos||''}</div>
+        <div class="bank-pos">${w.meaning}</div> 
       `;
+      // Show meaning in bank for easier searching visual
+      
       item.addEventListener('click', ()=>{
         currentWordIndex = idx;
+        // Highlight active
+        document.querySelectorAll('.bank-item').forEach(b=>b.classList.remove('active-item'));
+        item.classList.add('active-item');
+
         if(currentMode==='study'){
           renderStudyCard();
-          studyArea.scrollIntoView({behavior:'smooth', block:'center'});
+          // studyArea.scrollIntoView({behavior:'smooth', block:'center'});
         } else if(currentMode==='review'){
           renderReviewCard();
-          reviewArea.scrollIntoView({behavior:'smooth', block:'center'});
         }
       });
       bankListEl.appendChild(item);
@@ -811,27 +956,32 @@
     const front = studyCard.querySelector('.card-front');
     const back = studyCard.querySelector('.card-back');
 
+    // Update active state in list
+    document.querySelectorAll('.bank-item').forEach((b,i)=>{
+        if(i===currentWordIndex) b.classList.add('active-item');
+        else b.classList.remove('active-item');
+    });
+
     front.innerHTML = `
       <div class="word">${w.word}</div>
       <div class="pos">${w.pos||''}</div>
-      <div class="meaning">${w.meaning||''}</div>
+      <div class="meaning" style="color:#fff; opacity:0; height:0; overflow:hidden;">${w.meaning}</div>
       <div class="tts-row">
-        <button class="tts-btn" title="Pronounce word"><i class="fas fa-volume-up"></i></button>
-        <span>${w.pronunciation||'/.../'}</span>
+        <button class="tts-btn" title="Pronounce word"><i class="fas fa-volume-high"></i></button>
       </div>
-      <div style="margin-top:10px; font-size:.9rem; opacity:.9;">Tap card to see examples</div>
+      <div style="position:absolute; bottom:20px; font-size:.9rem; opacity:.7;">Tap to Flip</div>
     `;
 
     back.innerHTML = `
-      <div class="word">${w.word}</div>
-      <div class="pos">${w.pos||''}</div>
-      <div class="example">${w.example||'No example available'}</div>
-      <div class="example-translation">${w.exampleTranslation||'無可用例句'}</div>
-      <div class="tts-row">
-        <button class="tts-btn" title="Pronounce example"><i class="fas fa-volume-up"></i></button>
-        <span>Example TTS</span>
+      <div class="word" style="font-size:1.8rem; color:var(--primary)">${w.word}</div>
+      <div class="meaning">${w.meaning||''}</div>
+      <div class="example-box">
+          <div class="example">${w.example||'No example available'}</div>
+          <div class="example-translation">${w.exampleTranslation||''}</div>
       </div>
-      <div style="margin-top:10px; font-size:.9rem; color:var(--gray);">Tap card to go back</div>
+      <div class="tts-row">
+        <button class="tts-btn" title="Pronounce example"><i class="fas fa-volume-high"></i></button>
+      </div>
     `;
 
     studyCard.classList.remove('flipped');
@@ -852,7 +1002,17 @@
 
   // ================= REVIEW (單卡) =================
   function currentWordKey(w){
-    return `${w.chapter}|||${w.subchapter||''}|||${w.word}`; // stable unique
+    return `${w.chapter}|||${w.subchapter||''}|||${w.word}`; 
+  }
+
+  function getReviewStats(chapterId){
+    if(!reviewStatsByChapter.has(chapterId)){
+      reviewStatsByChapter.set(chapterId,{
+        known:new Set(),
+        unsure:new Set()
+      });
+    }
+    return reviewStatsByChapter.get(chapterId);
   }
 
   function renderReviewCard(){
@@ -865,23 +1025,21 @@
       <div class="word">${w.word}</div>
       <div class="pos">${w.pos||''}</div>
       <div class="tts-row">
-        <button class="tts-btn" title="Pronounce word"><i class="fas fa-volume-up"></i></button>
-        <span>${w.pronunciation||'/.../'}</span>
+        <button class="tts-btn" title="Pronounce word"><i class="fas fa-volume-high"></i></button>
       </div>
-      <div style="margin-top:10px; font-size:.9rem; opacity:.9;">Tap card to check meaning</div>
+      <div style="position:absolute; bottom:20px; font-size:.9rem; opacity:.7;">Tap to Check Meaning</div>
     `;
 
     back.innerHTML = `
-      <div class="word">${w.word}</div>
-      <div class="pos">${w.pos||''}</div>
-      <div class="meaning">${w.meaning||''}</div>
-      <div class="example">${w.example||'No example available'}</div>
-      <div class="example-translation">${w.exampleTranslation||'無可用例句'}</div>
-      <div class="tts-row">
-        <button class="tts-btn" title="Pronounce example"><i class="fas fa-volume-up"></i></button>
-        <span>Example TTS</span>
+      <div class="meaning" style="font-size:2rem;">${w.meaning||''}</div>
+      <div class="word" style="font-size:1.2rem; color:var(--gray); margin-bottom:10px;">${w.word}</div>
+      <div class="example-box">
+          <div class="example">${w.example||''}</div>
+          <div class="example-translation">${w.exampleTranslation||''}</div>
       </div>
-      <div style="margin-top:8px; font-size:.9rem; color:var(--gray);">Tap card to go back</div>
+      <div class="tts-row">
+        <button class="tts-btn" title="Pronounce"><i class="fas fa-volume-high"></i></button>
+      </div>
     `;
 
     reviewCard.classList.remove('flipped');
@@ -901,18 +1059,20 @@
   function reviewNext(){ if(currentWordIndex<currentWords.length-1){ currentWordIndex++; renderReviewCard(); } }
 
   function markKnow(){
-    if(!currentChapter || !currentWords.length) return;
+    if(!currentWords.length) return;
     const w=currentWords[currentWordIndex];
+    // In search mode, find which chapter this word belongs to
+    const chId = w.chapter; 
+    const stats=getReviewStats(chId);
     const key=currentWordKey(w);
-    const stats=getReviewStats(currentChapter.id);
 
     stats.known.add(key);
     stats.unsure.delete(key);
     globalUnsureKeys.delete(key);
 
     flashButton(knowBtn);
-    updateReviewStatsUI();
-    // 自動下一題（Review 更流暢）
+    if(!isSearchMode) updateReviewStatsUI(); 
+    
     if(currentWordIndex < currentWords.length-1){
       currentWordIndex++;
       renderReviewCard();
@@ -920,17 +1080,19 @@
   }
 
   function markUnsure(){
-    if(!currentChapter || !currentWords.length) return;
+    if(!currentWords.length) return;
     const w=currentWords[currentWordIndex];
+    const chId = w.chapter; 
+    const stats=getReviewStats(chId);
     const key=currentWordKey(w);
-    const stats=getReviewStats(currentChapter.id);
 
     stats.unsure.add(key);
     stats.known.delete(key);
     globalUnsureKeys.add(key);
 
     flashButton(unsureBtn);
-    updateReviewStatsUI();
+    if(!isSearchMode) updateReviewStatsUI();
+
     if(currentWordIndex < currentWords.length-1){
       currentWordIndex++;
       renderReviewCard();
@@ -938,7 +1100,7 @@
   }
 
   function updateReviewStatsUI(){
-    if(!currentChapter) return;
+    if(isSearchMode || !currentChapter) return;
     const stats=getReviewStats(currentChapter.id);
     const knownCount=stats.known.size;
     const unsureCount=stats.unsure.size;
@@ -950,9 +1112,8 @@
   }
 
   function flashButton(btn){
-    const old=btn.style.transform;
-    btn.style.transform='scale(1.06)';
-    setTimeout(()=>btn.style.transform=old||'',150);
+    btn.style.transform='scale(1.1)';
+    setTimeout(()=>btn.style.transform='scale(1)',150);
   }
 
   // ================= QUIZ =================
@@ -973,19 +1134,17 @@
 
   function handleQuizModeChange(){
     const mode=quizModeSelect.value;
+    const show = (el) => el.classList.remove('hidden');
+    const hide = (el) => el.classList.add('hidden');
 
     if(mode==='precise'){
-      quizSubSetting.classList.remove('hidden');
-      quizChapterSetting.classList.remove('hidden');
+      show(quizSubSetting); show(quizChapterSetting);
     }else if(mode==='mix-chapter'){
-      quizSubSetting.classList.add('hidden');
-      quizChapterSetting.classList.remove('hidden');
+      hide(quizSubSetting); show(quizChapterSetting);
     }else if(mode==='unsure'){
-      quizSubSetting.classList.add('hidden');
-      quizChapterSetting.classList.add('hidden');
+      hide(quizSubSetting); hide(quizChapterSetting);
     }else{
-      quizSubSetting.classList.add('hidden');
-      quizChapterSetting.classList.remove('hidden');
+      hide(quizSubSetting); hide(quizChapterSetting);
     }
   }
 
@@ -1015,13 +1174,12 @@
     let pool=[];
 
     if(mode==='unsure'){
-      // ✅ Use global unsure list
       pool = getUnsureWordsObjects();
       if(pool.length<4){
-        alert('Unsure list is too small. Please mark more words as unsure in Review (need at least 4).');
+        alert('Unsure list is too small. Please mark more words as "Not Sure" in Review mode.');
         return;
       }
-    } else if(mode==='mix-all' || chapterId==='all'){
+    } else if(mode==='mix-all' || (mode==='mix-chapter' && chapterId==='all')){
       vocabularyData.chapters.forEach(ch=>pool.push(...ch.words));
     } else if(mode==='mix-chapter'){
       const ch=vocabularyData.chapters.find(c=>c.id===chapterId);
@@ -1031,9 +1189,10 @@
       if(ch) pool=ch.words.filter(w=>w.subchapter===subId);
     }
 
+    // Filter invalid
     pool = pool.filter(w=>w.word && w.meaning);
     if(pool.length<4){
-      alert('Not enough words to generate quiz (need at least 4).');
+      alert('Not enough words found in this category to generate a quiz (need at least 4).');
       return;
     }
 
@@ -1058,6 +1217,9 @@
 
     renderQuizQuestion();
     updateQuizUI();
+    
+    // Auto scroll
+    quizWrap.scrollIntoView({behavior:'smooth'});
   }
 
   function getUnsureWordsObjects(){
@@ -1072,15 +1234,21 @@
   }
 
   function buildOptions(target, pool){
+    // Distinct meanings
     const distractors = pool
-      .filter(w=>w.word!==target.word && w.meaning)
+      .filter(w=>w.meaning !== target.meaning) // Ensure meaning is different, not just word
       .map(w=>({meaning:w.meaning}))
-      .filter((v,idx,arr)=>arr.findIndex(x=>x.meaning===v.meaning)===idx);
+      .filter((v,idx,arr)=>arr.findIndex(x=>x.meaning===v.meaning)===idx); // Unique meanings
 
     const picked=[];
     while(picked.length<3 && distractors.length){
       const r=Math.floor(Math.random()*distractors.length);
       picked.push(distractors.splice(r,1)[0]);
+    }
+
+    // If not enough unique distractors, fill with dummies (rare case)
+    while(picked.length < 3) {
+        picked.push({meaning: "Other meaning " + (picked.length+1)});
     }
 
     return shuffle([{meaning:target.meaning}, ...picked]);
@@ -1090,28 +1258,32 @@
     const q=quizQuestionsData[quizIndex];
     const w=q.wordObj;
 
-    questionText.innerHTML = `Meaning of <strong>${w.word}</strong> ${w.pos?`(${w.pos})`:''} ?`;
+    questionText.innerHTML = `Meaning of <strong style="color:var(--primary)">${w.word}</strong> ?`;
 
     optionsContainer.innerHTML='';
     q.options.forEach((opt, idx)=>{
       const div=document.createElement('div');
       div.className='option';
       div.dataset.index=idx;
-      div.textContent=`${String.fromCharCode(65+idx)}. ${opt.meaning}`;
+      div.innerHTML=`<span style="opacity:0.6; margin-right:8px;">${String.fromCharCode(65+idx)}.</span> ${opt.meaning}`;
 
       div.addEventListener('click', ()=>{
         if(quizFinished) return;
         quizAnswers[quizIndex].selectedIndex=idx;
-        updateQuizUI();
+        
+        // Visual feedback
+        document.querySelectorAll('.option').forEach(o=>o.classList.remove('selected'));
+        div.classList.add('selected');
 
-        // 回答後自動下一題
-        if(quizIndex < quizQuestionsData.length-1){
-          quizIndex++;
-          renderQuizQuestion();
-          updateQuizUI();
-        } else {
-          submitQuiz();
-        }
+        setTimeout(()=>{
+            if(quizIndex < quizQuestionsData.length-1){
+              quizIndex++;
+              renderQuizQuestion();
+              updateQuizUI();
+            } else {
+              submitQuiz();
+            }
+        }, 300);
       });
 
       optionsContainer.appendChild(div);
@@ -1120,12 +1292,6 @@
 
   function submitQuiz(){
     const total=quizQuestionsData.length;
-    const answered=quizAnswers.filter(a=>a.selectedIndex!==null).length;
-    if(answered<total){
-      alert('Please answer all questions.');
-      return;
-    }
-
     quizFinished=true;
 
     let score=0;
@@ -1133,10 +1299,13 @@
     quizQuestionsData.forEach((q,i)=>{
       const sel=quizAnswers[i].selectedIndex;
       if(sel===q.correctIndex) score++;
-      else wrongs.push({
-        idx:i+1, word:q.wordObj.word, pos:q.wordObj.pos,
-        meaning:q.wordObj.meaning, your:q.options[sel].meaning
-      });
+      else {
+          const yourAns = sel!==null ? q.options[sel].meaning : "No Answer";
+          wrongs.push({
+            idx:i+1, word:q.wordObj.word,
+            meaning:q.wordObj.meaning, your:yourAns
+          });
+      }
     });
 
     showQuizResult(score,total,wrongs);
@@ -1145,32 +1314,38 @@
   function showQuizResult(score,total,wrongs){
     quizWrap.innerHTML=`
       <div class="quiz-result">
-        <h2 style="color:var(--primary); margin-bottom:6px;">🎉 Quiz Finished!</h2>
-        <p style="font-size:1.1rem; margin-bottom:6px;">
-          Score: <strong>${score} / ${total}</strong>
-        </p>
-        <p style="color:var(--gray); margin-bottom:10px;">
-          Accuracy: ${(score/total*100).toFixed(1)}%
+        <h2 style="color:var(--primary); margin-bottom:10px;">🎉 Quiz Completed!</h2>
+        <div style="font-size:3rem; font-weight:800; color:var(--dark); margin:10px 0;">
+            ${score} <span style="font-size:1.5rem; color:var(--gray); font-weight:500;">/ ${total}</span>
+        </div>
+        <div style="width:100%; height:8px; background:#eee; border-radius:999px; margin:10px auto; max-width:300px; overflow:hidden;">
+            <div style="width:${(score/total)*100}%; background:var(--success); height:100%;"></div>
+        </div>
+        
+        <p style="color:var(--gray); margin-bottom:20px;">
+          Accuracy: ${(score/total*100).toFixed(0)}%
         </p>
 
         ${wrongs.length===0 ? `
-          <p style="color:var(--success); font-weight:900;">Perfect! 🎯</p>
+          <div style="padding:20px; background:#d4edda; color:#155724; border-radius:12px; margin-bottom:20px;">
+            Perfect Score! You are a master! 🏆
+          </div>
         ` : `
-          <h3>Wrong Answers</h3>
+          <h3 style="text-align:left; margin-bottom:10px;">Review Mistakes</h3>
           <div class="wrong-list">
             ${wrongs.map(w=>`
               <div class="wrong-item">
-                <div class="w-word">${w.idx}. ${w.word} ${w.pos?`(${w.pos})`:''}</div>
-                <div>✅ Correct: ${w.meaning}</div>
-                <div>❌ Your answer: ${w.your}</div>
+                <div class="w-word">${w.word}</div>
+                <div style="color:var(--success); font-size:0.9rem;">✅ Correct: ${w.meaning}</div>
+                <div style="color:var(--danger); font-size:0.9rem;">❌ Yours: ${w.your}</div>
               </div>
             `).join('')}
           </div>
         `}
 
-        <div style="display:flex; gap:8px; margin-top:12px; flex-wrap:wrap;">
-          <button class="btn" id="restart-quiz-btn"><i class="fa-solid fa-rotate-right"></i> Restart</button>
-          <button class="btn secondary" id="back-quiz-settings-btn"><i class="fa-solid fa-sliders"></i> Settings</button>
+        <div style="display:flex; gap:12px; margin-top:24px; flex-wrap:wrap; justify-content:center;">
+          <button class="nav-btn primary-action" id="restart-quiz-btn"><i class="fa-solid fa-rotate-right"></i> Try Again</button>
+          <button class="nav-btn" id="back-quiz-settings-btn"><i class="fa-solid fa-gear"></i> Settings</button>
         </div>
       </div>
     `;
@@ -1192,7 +1367,7 @@
       <div class="quiz-progress">
         <span id="progress-text">1 / 10</span>
         <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
-        <span id="answered-text">Answered: 0/0</span>
+        <span id="answered-text">0/0</span>
       </div>
 
       <div class="quiz-question">
@@ -1212,9 +1387,9 @@
     const total=quizQuestionsData.length;
     const answered=quizAnswers.filter(a=>a.selectedIndex!==null).length;
 
-    progressText.textContent=`${quizIndex+1} / ${total}`;
-    answeredText.textContent=`Answered: ${answered}/${total}`;
-    progressFill.style.width=`${(answered/total)*100}%`;
+    progressText.textContent=`Question ${quizIndex+1} / ${total}`;
+    answeredText.textContent=`${answered} Answered`;
+    progressFill.style.width=`${((quizIndex)/total)*100}%`;
   }
 
   // ================= MODE / NAV =================
@@ -1229,12 +1404,12 @@
 
     if(mode==='study'){
       studyArea.classList.add('active');
-      if(currentChapter) renderStudyCard();
+      if(currentWords.length) renderStudyCard();
     } else if(mode==='review'){
       reviewArea.classList.add('active');
-      if(currentChapter){
+      if(currentWords.length){
         renderReviewCard();
-        updateReviewStatsUI();
+        if(!isSearchMode) updateReviewStatsUI();
       }
     } else {
       quizArea.classList.add('active');
@@ -1253,6 +1428,7 @@
     });
 
     backHomeBtn.addEventListener('click', renderHome);
+    searchInput.addEventListener('input', handleSearch);
 
     // study interactions
     studyCard.addEventListener('click', ()=> studyCard.classList.toggle('flipped'));
@@ -1276,9 +1452,10 @@
 
   function speak(text){
     if(!('speechSynthesis' in window)) return;
+    window.speechSynthesis.cancel();
     const u=new SpeechSynthesisUtterance(text);
     u.lang='en-US'; u.rate=0.85;
-    speechSynthesis.speak(u);
+    window.speechSynthesis.speak(u);
   }
 
   function shuffle(arr){
@@ -1292,12 +1469,13 @@
 
   function getChapterEmoji(title){
     const t=title.toLowerCase();
-    if(t.includes('administration')||t.includes('行政')) return '🗂️';
-    if(t.includes('finance')||t.includes('財務')||t.includes('budget')) return '💰';
-    if(t.includes('marketing')||t.includes('行銷')) return '📣';
-    if(t.includes('meeting')||t.includes('會議')) return '🧑‍💼';
+    if(t.includes('admin')||t.includes('行政')) return '🗂️';
+    if(t.includes('financ')||t.includes('財務')||t.includes('budget')) return '💰';
+    if(t.includes('market')||t.includes('行銷')) return '📣';
+    if(t.includes('meet')||t.includes('會議')) return '🤝';
     if(t.includes('travel')||t.includes('旅行')) return '✈️';
     if(t.includes('office')||t.includes('辦公室')) return '🏢';
+    if(t.includes('hr')||t.includes('人事')||t.includes('person')) return '👥';
     return '📘';
   }
 
