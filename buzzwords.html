@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Shirley's Buzzwords | Trendy English</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      /* Buzzwords 風格：調整為「極光紫/數位藍」漸層，體現流行與現代感 */
+      --primary: #4361ee;
+      --primary-gradient: linear-gradient(135deg, #4361ee, #3a0ca3);
+      --accent: #f72585; /* 保持強調色一致 */
+      --text-main: #2b2d42;
+      --text-sub: #6c757d;
+      --bg-color: #f8f9fa;
+      --glass-bg: rgba(255, 255, 255, 0.85);
+      --glass-border: rgba(255, 255, 255, 0.7);
+      --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+      --shadow-md: 0 10px 25px -5px rgba(67, 97, 238, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; outline: none; -webkit-tap-highlight-color: transparent; }
+
+    body {
+      font-family: 'Inter', 'Noto Sans TC', sans-serif;
+      background-color: #edf2f4;
+      /* 背景調整為紫色系極光氛圍 */
+      background-image: 
+        radial-gradient(at 10% 10%, hsla(250,80%,60%,0.15) 0, transparent 50%), 
+        radial-gradient(at 90% 0%, hsla(300,60%,60%,0.15) 0, transparent 50%), 
+        radial-gradient(at 50% 100%, hsla(200,60%,70%,0.15) 0, transparent 50%);
+      background-size: 100% 100vh;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      color: var(--text-main);
+      min-height: 100vh;
+      padding: 20px 10px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    /* === Header === */
+    header {
+      text-align: center;
+      margin-bottom: 24px;
+      padding: 20px 0;
+      animation: fadeInDown 0.8s ease;
+    }
+    
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 2px 15px rgba(67, 97, 238, 0.2);
+    }
+    
+    .description {
+      font-size: 0.95rem;
+      color: var(--text-sub);
+      font-weight: 500;
+    }
+
+    /* === Main Glass Panel === */
+    .content-area {
+      background: var(--glass-bg);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow-md);
+      min-height: 60vh;
+      transition: transform 0.3s ease;
+    }
+
+    /* === Controls === */
+    .controls-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .mode-bar {
+      display: flex;
+      background: #e9ecef;
+      padding: 4px;
+      border-radius: 14px;
+      width: fit-content;
+      margin: 0 auto;
+    }
+    
+    .mode-btn {
+      border: none;
+      background: transparent;
+      padding: 10px 24px;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-sub);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .mode-btn.active {
+      background: white;
+      color: var(--primary);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    .search-wrap {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .search-wrap input {
+      width: 100%;
+      padding: 16px 16px 16px 50px;
+      border-radius: 16px;
+      border: 2px solid transparent;
+      background: white;
+      font-size: 1rem;
+      color: var(--text-main);
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+    }
+    
+    .search-wrap input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(67, 97, 238, 0.15);
+    }
+    
+    .search-icon {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.2rem;
+      opacity: 0.5;
+    }
+    
+    .hint {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.8rem;
+      color: var(--text-sub);
+      background: #f1f3f5;
+      padding: 4px 10px;
+      border-radius: 8px;
+      pointer-events: none;
+    }
+
+    /* === A-Z Navigation === */
+    .alpha-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    
+    .alpha-btn {
+      width: 38px;
+      height: 38px;
+      border: 1px solid transparent;
+      border-radius: 10px;
+      background: white;
+      color: var(--text-main);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+    
+    .alpha-btn:hover { transform: translateY(-2px); color: var(--primary); }
+    
+    .alpha-btn.active {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 4px 12px rgba(67, 97, 238, 0.4);
+    }
+    
+    .alpha-btn.fav {
+      width: auto; padding: 0 16px; background: #fff0f3; color: #d00000;
+    }
+    .alpha-btn.fav.active {
+      background: var(--accent); color: white;
+      box-shadow: 0 4px 12px rgba(247, 37, 133, 0.4);
+    }
+
+    /* === Lists & Cards === */
+    .list-container, .grid-container { display: grid; gap: 16px; }
+    .list-container { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+    .grid-container { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+
+    /* === Study Item (List) === */
+    .study-item {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      cursor: pointer;
+      position: relative;
+      border: 1px solid transparent;
+      transition: all 0.25s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      animation: fadeInUp 0.5s ease backwards;
+    }
+    
+    .study-item:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(67, 97, 238, 0.2);
+    }
+    
+    .item-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; padding-right: 25px;}
+    .item-title-wrap { display: flex; align-items: center; gap: 8px; }
+    .item-title { font-size: 1.2rem; font-weight: 700; color: var(--text-main); line-height: 1.3; }
+    .item-sub { font-size: 0.95rem; color: var(--text-sub); font-weight: 500; }
+
+    /* Audio Button Style */
+    .audio-btn {
+      background: #eef2ff;
+      border: none;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      color: var(--primary);
+      transition: all 0.2s;
+    }
+    .audio-btn:hover { background: var(--primary); color: white; transform: scale(1.1); }
+    .audio-btn:active { transform: scale(0.9); }
+
+    .star {
+      position: absolute; top: 18px; right: 18px;
+      font-size: 1.3rem; color: #e0e0e0; transition: 0.2s; z-index: 2;
+    }
+    .star:hover { transform: scale(1.1); }
+    .star.active { color: #ffbe0b; filter: drop-shadow(0 0 4px #ffbe0b); }
+
+    /* Expanded Detail */
+    .detail {
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px dashed #dee2e6;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      animation: slideDown 0.3s ease;
+    }
+    
+    .badge {
+      display: inline-block; font-size: 0.7rem; font-weight: 800;
+      padding: 3px 8px; border-radius: 6px; margin-right: 8px; vertical-align: middle;
+      text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .badge.en { background: #e0e7ff; color: #3a0ca3; } /* English */
+    .badge.cn { background: #f8f9fa; color: #495057; border: 1px solid #e9ecef;} /* Chinese */
+
+    /* === Review Flip Cards === */
+    .flip-card {
+      perspective: 1200px;
+      height: 260px; /* Slightly taller for sentences */
+      cursor: pointer;
+      animation: fadeInUp 0.5s ease backwards;
+    }
+    
+    .flip-inner {
+      width: 100%; height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 18px;
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .flip-card.flipped .flip-inner { transform: rotateY(180deg); box-shadow: var(--shadow-md); }
+    
+    .flip-face {
+      position: absolute; inset: 0;
+      backface-visibility: hidden;
+      border-radius: 18px;
+      padding: 24px;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      text-align: center;
+      border: 1px solid rgba(0,0,0,0.05);
+      background: white;
+    }
+    
+    .flip-front::after {
+      content: ''; position: absolute; top: 20px; left: 20px; bottom: 20px; width: 4px;
+      background: var(--primary); border-radius: 4px;
+    }
+    
+    .flip-back {
+      background: #f8f9fa;
+      transform: rotateY(180deg);
+      border: 1px solid #e9ecef;
+    }
+    .flip-back::after {
+      content: ''; position: absolute; top: 20px; right: 20px; bottom: 20px; width: 4px;
+      background: var(--accent); border-radius: 4px;
+    }
+
+    .card-title-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .card-title { font-size: 1.5rem; font-weight: 800; color: var(--text-main); }
+    .card-hint { position: absolute; bottom: 16px; font-size: 0.7rem; color: #adb5bd; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
+    
+    .card-def-cn { font-size: 1.1rem; font-weight: 600; color: #495057; margin-bottom: 15px; }
+    .card-sent-en { font-size: 0.95rem; color: var(--text-main); line-height: 1.4; margin-bottom: 8px; font-style: italic; }
+    .card-sent-cn { font-size: 0.85rem; color: var(--text-sub); }
+
+    /* === Utilities === */
+    .empty { grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: var(--text-sub); font-size: 1.1rem; }
+    .footer-note { margin-top: 30px; font-size: 0.8rem; color: var(--text-sub); text-align: center; opacity: 0.7; }
+    
+    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes slideDown { from { opacity: 0; height: 0; transform: translateY(-10px); } to { opacity: 1; height: auto; transform: translateY(0); } }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 1.8rem; }
+      .container { width: 100%; padding: 0; }
+      .content-area { border-radius: 24px 24px 0 0; min-height: 85vh; padding: 20px; }
+      .mode-bar { width: 100%; display: grid; grid-template-columns: 1fr 1fr; }
+      .mode-btn { text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>Shirley's Buzzwords</h1>
+      <div class="description">Master Trendy English Expressions</div>
+    </header>
+
+    <div class="content-area">
+      
+      <div class="controls-wrapper">
+        <div class="mode-bar">
+          <button class="mode-btn active" data-mode="study">📚 List View</button>
+          <button class="mode-btn" data-mode="review">🧠 Flashcards</button>
+        </div>
+
+        <div class="search-wrap">
+          <div class="search-icon">🔍</div>
+          <input id="search-input" type="text" placeholder="Search buzzwords..." />
+          <div class="hint" id="search-hint">A</div>
+        </div>
+      </div>
+
+      <div class="alpha-bar" id="alpha-bar"></div>
+
+      <div id="study-section">
+        <div class="list-container" id="list-container">
+          <div class="empty">Loading Data...</div>
+        </div>
+      </div>
+
+      <div id="review-section" style="display:none;">
+        <div class="grid-container" id="grid-container"></div>
+      </div>
+
+      <div class="footer-note" id="footer-note"></div>
+    </div>
+  </div>
+
+<script>
+  // Buzzwords CSV URL
+  const CSV_URL = "https://ducj-creator.github.io/Shirley-Grammar/buzzwords.csv";
+  
+  // Unique storage key for Buzzwords favorites
+  const STORAGE_KEY = "shirley_buzzwords_favs_v1";
+
+  let dataStore = [];
+  let currentLetter = "A";
+  let currentFilter = "alpha"; // alpha, fav, search
+  let viewMode = "study";   
+  let favorites = new Set(JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"));
+
+  document.addEventListener("DOMContentLoaded", async () => {
+    initUI();
+    await loadData();
+    render();
+  });
+
+  function initUI(){
+    // Render A-Z Buttons
+    const bar = document.getElementById("alpha-bar");
+    const favBtn = createAlphaBtn("★ Favorites", "fav", true);
+    bar.appendChild(favBtn);
+
+    // Some buzzwords might start with symbols (like -core), put them in a catch-all if needed, 
+    // but for now stick to standard A-Z. Special chars often sort to top or bottom.
+    // Let's add a "Sym" or "#" button if needed, but the screenshot shows "-coded" which might be under C or special.
+    // For simplicity, we use A-Z. Items starting with non-letters will appear under "All" or similar if we implemented it,
+    // but here we filter by first char. 
+    // *Modification*: Add a "#" button for non-alpha chars (like -core).
+    const hashBtn = createAlphaBtn("#", "alpha");
+    bar.appendChild(hashBtn);
+
+    for(let c=65; c<=90; c++){
+      const l = String.fromCharCode(c);
+      bar.appendChild(createAlphaBtn(l, "alpha"));
+    }
+
+    // Search Listener
+    document.getElementById("search-input").addEventListener("input", (e) => {
+      const val = e.target.value.trim();
+      if(val){
+        currentFilter = "search";
+        updateHint("Global Search");
+      } else {
+        currentFilter = document.querySelector(".alpha-btn.active.fav") ? "fav" : "alpha";
+        updateHint(currentFilter === "fav" ? "Favorites" : currentLetter);
+      }
+      render();
+    });
+
+    // Mode Switcher
+    document.querySelectorAll(".mode-btn").forEach(btn => {
+      btn.onclick = () => {
+        document.querySelectorAll(".mode-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        viewMode = btn.dataset.mode;
+        
+        const content = document.querySelector('.content-area');
+        content.style.opacity = '0.6';
+        setTimeout(() => {
+          document.getElementById("study-section").style.display = viewMode === "study" ? "block" : "none";
+          document.getElementById("review-section").style.display = viewMode === "review" ? "block" : "none";
+          render();
+          content.style.opacity = '1';
+        }, 150);
+      };
+    });
+  }
+
+  function createAlphaBtn(text, type, isFav = false){
+    const btn = document.createElement("button");
+    btn.className = `alpha-btn ${isFav ? 'fav' : ''} ${type === 'alpha' && text === 'A' ? 'active' : ''}`;
+    btn.textContent = text;
+    btn.onclick = () => {
+      document.getElementById("search-input").value = "";
+      document.querySelectorAll(".alpha-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      
+      currentFilter = type;
+      if(type === "alpha") currentLetter = text;
+      
+      updateHint(type === "fav" ? "Favorites" : text);
+      render();
+    };
+    return btn;
+  }
+
+  function updateHint(text){
+    const h = document.getElementById("search-hint");
+    h.textContent = text;
+    h.style.color = text === "Global Search" ? "var(--primary)" : "var(--text-sub)";
+  }
+
+  async function loadData(){
+    try {
+      const res = await fetch(CSV_URL);
+      if(!res.ok) throw new Error("Network error");
+      const text = await res.text();
+      dataStore = parseCSV(text);
+      document.getElementById("footer-note").textContent = `${dataStore.length} buzzwords loaded`;
+    } catch(e) {
+      console.error(e);
+      document.getElementById("list-container").innerHTML = `<div class="empty">⚠️ Failed to load CSV. Check URL or connection.</div>`;
+    }
+  }
+
+  /**
+   * Parse based on the provided screenshot columns:
+   * phrase/word | meaning (Chinese) | english sentence | chinese sentence
+   */
+  function parseCSV(csvText){
+    const rows = csvText.trim().split(/\r?\n/).filter(Boolean);
+    if(!rows.length) return [];
+    
+    // Parse headers to find indices (case-insensitive)
+    const headers = splitCSV(rows[0]).map(h => h.toLowerCase().trim());
+    
+    // Map headers based on screenshot description
+    const idx = {
+      word: headers.findIndex(h => h.includes("phrase") || h.includes("word")),
+      cn_def: headers.findIndex(h => h === "meaning"), // In screenshot, "meaning" holds Chinese definition
+      en_sent: headers.findIndex(h => h.includes("english")),
+      cn_sent: headers.findIndex(h => h.includes("chinese") && h.includes("sentence"))
+    };
+
+    const result = [];
+    for(let i=1; i<rows.length; i++){
+      const cols = splitCSV(rows[i]);
+      const word = (cols[idx.word] || "").trim();
+      if(!word) continue;
+
+      result.push({
+        word: word,
+        cn_meaning: (cols[idx.cn_def] || "").trim(),
+        en_sentence: (cols[idx.en_sent] || "").trim(),
+        cn_sentence: (cols[idx.cn_sent] || "").trim()
+      });
+    }
+    // Sort logic handled in getFilteredData or assumed roughly sorted
+    return result.sort((a,b) => a.word.localeCompare(b.word));
+  }
+
+  // Standard CSV splitter
+  function splitCSV(line){
+    const res = [];
+    let cur = "", inQ = false;
+    for(let i=0; i<line.length; i++){
+      const char = line[i];
+      if(char === '"'){
+        if(inQ && line[i+1] === '"'){ cur += '"'; i++; }
+        else inQ = !inQ;
+      } else if(char === ',' && !inQ){
+        res.push(cur); cur = "";
+      } else {
+        cur += char;
+      }
+    }
+    res.push(cur);
+    return res;
+  }
+
+  function getFilteredData(){
+    const q = document.getElementById("search-input").value.trim().toLowerCase();
+    
+    if(currentFilter === "search" && q){
+      return dataStore.filter(d => 
+        d.word.toLowerCase().includes(q) || 
+        d.cn_meaning.includes(q)
+      );
+    }
+    
+    if(currentFilter === "fav"){
+      return dataStore.filter(d => favorites.has(d.word));
+    }
+    
+    // Alpha filter
+    return dataStore.filter(d => {
+      let firstChar = (d.word[0] || "").toUpperCase();
+      // Handle special chars (like -core, -ish) by checking if it's a letter
+      if (!/[A-Z]/.test(firstChar)) {
+          // If first char is hyphen, try second char, else grouping under '#'
+          if(firstChar === '-' && d.word.length > 1) {
+             // Optional: Categorize '-core' under 'C'. Let's strip non-alpha for sorting.
+             const clean = d.word.replace(/^[^a-zA-Z]+/, "").toUpperCase();
+             firstChar = clean[0] || "#";
+          } else {
+             firstChar = "#";
+          }
+      }
+      return firstChar === currentLetter;
+    });
+  }
+
+  // Text to Speech Function
+  function speak(text, e){
+    if(e) e.stopPropagation(); // Prevent card flip or expand
+    window.speechSynthesis.cancel();
+    
+    // Clean text for speech (remove leading hyphens like in "-core")
+    const speakText = text.startsWith("-") ? text.substring(1) : text;
+    
+    const u = new SpeechSynthesisUtterance(speakText);
+    u.lang = 'en-US';
+    u.rate = 0.9;
+    window.speechSynthesis.speak(u);
+  }
+
+  function render(){
+    const data = getFilteredData();
+    if(viewMode === "study") renderList(data);
+    else renderCards(data);
+  }
+
+  /* === Study List Renderer === */
+  function renderList(data){
+    const el = document.getElementById("list-container");
+    el.innerHTML = "";
+    
+    if(!data.length){
+      el.innerHTML = `<div class="empty">${getEmptyMsg()}</div>`;
+      return;
+    }
+
+    data.forEach((item, i) => {
+      const div = document.createElement("div");
+      div.className = "study-item";
+      div.style.animationDelay = `${Math.min(i*0.03, 0.5)}s`;
+      div.dataset.expanded = "0";
+
+      const isFav = favorites.has(item.word);
+      
+      div.innerHTML = `
+        <div class="star ${isFav ? 'active' : ''}">★</div>
+        <div class="item-header">
+          <div class="item-title-wrap">
+            <div class="item-title">${escapeHTML(item.word)}</div>
+            <button class="audio-btn" onclick="speak('${escapeHTML(item.word.replace(/'/g, "\\'"))}', event)">🔊</button>
+          </div>
+        </div>
+        <div class="item-sub">${escapeHTML(item.cn_meaning)}</div>
+      `;
+
+      // Click to Expand
+      div.onclick = (e) => {
+        if(e.target.classList.contains("star") || e.target.classList.contains("audio-btn")) return;
+
+        if(div.dataset.expanded === "1"){
+          div.querySelector(".detail")?.remove();
+          div.dataset.expanded = "0";
+        } else {
+          const detail = document.createElement("div");
+          detail.className = "detail";
+          detail.innerHTML = `
+            <div style="margin-bottom:8px;">
+              <span class="badge en">Example</span>
+              <span style="color:#495057; font-style:italic">"${escapeHTML(item.en_sentence)}"</span>
+            </div>
+            <div>
+               <span class="badge cn">Translation</span>
+               <span style="color:#6c757d;">${escapeHTML(item.cn_sentence)}</span>
+            </div>
+          `;
+          div.appendChild(detail);
+          div.dataset.expanded = "1";
+        }
+      };
+
+      // Star Logic
+      div.querySelector(".star").onclick = (e) => {
+        e.stopPropagation();
+        toggleFav(item.word);
+        render();
+      };
+
+      el.appendChild(div);
+    });
+  }
+
+  /* === Flashcard Renderer === */
+  function renderCards(data){
+    const el = document.getElementById("grid-container");
+    el.innerHTML = "";
+    
+    if(!data.length){
+      el.innerHTML = `<div class="empty">${getEmptyMsg()}</div>`;
+      return;
+    }
+
+    data.forEach((item, i) => {
+      const card = document.createElement("div");
+      card.className = "flip-card";
+      card.style.animationDelay = `${Math.min(i*0.05, 0.5)}s`;
+      
+      card.innerHTML = `
+        <div class="flip-inner">
+          <div class="flip-face flip-front">
+            <div class="card-title-row">
+                <div class="card-title">${escapeHTML(item.word)}</div>
+                <button class="audio-btn" onclick="speak('${escapeHTML(item.word.replace(/'/g, "\\'"))}', event)">🔊</button>
+            </div>
+            <div class="card-hint">Tap to Flip</div>
+          </div>
+          <div class="flip-face flip-back">
+            <div class="card-def-cn">${escapeHTML(item.cn_meaning)}</div>
+            <div class="card-sent-en">"${escapeHTML(item.en_sentence)}"</div>
+            <div class="card-sent-cn">${escapeHTML(item.cn_sentence)}</div>
+            <div class="card-hint" style="color:var(--accent)">Tap to Back</div>
+          </div>
+        </div>
+      `;
+      
+      card.onclick = (e) => {
+        if(e.target.classList.contains("audio-btn")) return;
+        card.classList.toggle("flipped");
+      }
+      el.appendChild(card);
+    });
+  }
+
+  function getEmptyMsg(){
+    if(currentFilter === "search") return "No matches found.";
+    if(currentFilter === "fav") return "No favorites yet. Star some buzzwords in study mode! ⭐";
+    return `No buzzwords starting with ${currentLetter}.`;
+  }
+
+  function toggleFav(key){
+    if(favorites.has(key)) favorites.delete(key);
+    else favorites.add(key);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify([...favorites]));
+  }
+
+  function escapeHTML(str){
+    if(!str) return "";
+    return str.replace(/[&<>"']/g, function(m) {
+      return {'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'}[m];
+    });
+  }
+</script>
+</body>
+</html>
