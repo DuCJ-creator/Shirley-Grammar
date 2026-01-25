@@ -401,10 +401,12 @@
   });
 
   /* 1. DATA FETCHING */
-  async function fetchData() {
-    try {
-      const res = await fetch(CSV_URL);
-      if(!res.ok) throw new Error("Connection Failed");
+async function fetchData() {
+  try {
+    // 加上 "?t=" + Date.now() 強制瀏覽器每次都抓取最新版本
+    const res = await fetch(CSV_URL + "?t=" + Date.now()); 
+    
+    if(!res.ok) throw new Error("Connection Failed");
       const text = await res.text();
       allVerbs = parseCSV(text);
       
