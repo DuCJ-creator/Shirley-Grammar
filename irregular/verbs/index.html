@@ -3,62 +3,87 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Shirley's Irregular Verbs | Final System</title>
+  <title>Shirley's Irregular Verbs</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+
   <style>
     :root {
-      --primary: #3b82f6; --text-main: #1e293b; --text-sub: #64748b;
-      --bg-color: #eff6ff; --radius: 16px;
+      --primary: #3b82f6;
+      --primary-dark: #1d4ed8;
+      --primary-gradient: linear-gradient(135deg, #3b82f6, #2563eb);
+      --text-main: #1e293b;
+      --text-sub: #64748b;
+      --bg-color: #eff6ff;
+      --glass-bg: rgba(255, 255, 255, 0.85);
+      --glass-border: rgba(255, 255, 255, 0.8);
+      --radius: 16px;
       --tag-aaa: #f59e0b; --tag-aba: #8b5cf6; --tag-abb: #10b981; --tag-abc: #ef4444;
     }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Inter', 'Noto Sans TC', sans-serif; background: var(--bg-color); padding: 20px 10px; color: var(--text-main); }
-    .container { max-width: 900px; margin: 0 auto; }
-    .content-area { background: white; border-radius: var(--radius); padding: 24px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); min-height: 80vh; }
+    body { font-family: 'Inter', 'Noto Sans TC', sans-serif; background: var(--bg-color); color: var(--text-main); }
+
+    /* --- 您的專屬標題區塊 --- */
+    .hero-section {
+      background: var(--primary-gradient);
+      padding: 60px 20px 80px;
+      text-align: center;
+      color: white;
+      clip-path: ellipse(150% 100% at 50% 0%);
+      margin-bottom: -40px;
+    }
+    .hero-section h1 { font-weight: 800; font-size: 2.8rem; letter-spacing: -1px; margin-bottom: 10px; }
+    .hero-section p { font-weight: 500; opacity: 0.95; font-size: 1.25rem; max-width: 600px; margin: 0 auto; line-height: 1.6; }
+
+    .container { max-width: 900px; margin: 0 auto; padding: 0 15px 50px; position: relative; z-index: 10; }
     
+    /* 玻璃質感控制面板 */
+    .control-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius);
+      padding: 25px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+      margin-bottom: 25px;
+    }
+
     /* 模式切換 */
-    .mode-bar { display: flex; background: #e2e8f0; padding: 4px; border-radius: 12px; width: fit-content; margin: 0 auto 20px; }
-    .mode-btn { border: none; background: transparent; padding: 10px 20px; border-radius: 10px; font-weight: 700; color: var(--text-sub); cursor: pointer; }
-    .mode-btn.active { background: white; color: var(--primary); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-    
-    /* 搜尋與分類 */
-    .control-panel { margin-bottom: 25px; }
-    .search-input { width: 100%; padding: 12px; border-radius: 12px; border: 1.5px solid #cbd5e1; margin-bottom: 15px; font-size: 1rem; outline: none; }
-    .filter-bar { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
-    .filter-btn { padding: 6px 14px; background: white; border: 1px solid #e2e8f0; border-radius: 20px; font-size: 0.85rem; cursor: pointer; font-weight: 600; color: var(--text-sub); }
+    .nav-bar { display: flex; background: #f1f5f9; padding: 4px; border-radius: 12px; width: fit-content; margin: 0 auto 20px; }
+    .nav-btn { border: none; background: transparent; padding: 10px 22px; border-radius: 10px; font-weight: 700; color: var(--text-sub); cursor: pointer; transition: 0.2s; }
+    .nav-btn.active { background: white; color: var(--primary); box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+
+    .search-box { width: 100%; padding: 14px; border-radius: 12px; border: 2px solid #e2e8f0; margin-bottom: 15px; font-size: 1rem; outline: none; transition: 0.3s; }
+    .search-box:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1); background: white; }
+
+    .filter-group { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+    .filter-btn { padding: 8px 16px; background: white; border: 1.5px solid #e2e8f0; border-radius: 20px; font-size: 0.85rem; cursor: pointer; font-weight: 700; color: var(--text-sub); transition: 0.2s; }
     .filter-btn.active { background: var(--text-main); color: white; border-color: var(--text-main); }
 
-    /* 卡片設計 */
-    .verb-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
-    .verb-card { background: white; border-radius: 14px; padding: 20px; border: 1px solid #f1f5f9; position: relative; }
-    .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
-    .card-title { font-size: 1.3rem; font-weight: 800; }
-    .type-badge { font-size: 0.7rem; padding: 2px 8px; border-radius: 6px; color: white; font-weight: 800; }
-    
-    .forms-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 12px; }
-    .form-box { background: #f8fafc; padding: 10px 5px; border-radius: 10px; text-align: center; border: 1px solid #f1f5f9; }
-    .form-label { font-size: 0.6rem; color: #94a3b8; font-weight: 800; display: block; margin-bottom: 4px; }
-    .form-word { font-weight: 700; color: var(--text-main); }
+    /* 卡片與網格 */
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px; }
+    .card { background: white; border-radius: var(--radius); padding: 22px; border: 1px solid #f1f5f9; position: relative; }
+    .card-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
+    .card-title { font-size: 1.4rem; font-weight: 800; color: #0f172a; }
+    .type-tag { font-size: 0.7rem; padding: 3px 10px; border-radius: 6px; color: white; font-weight: 800; text-transform: uppercase; }
 
-    /* Review 模式 */
-    .review-input { width: 100%; padding: 8px; border-radius: 8px; border: 2px solid #e2e8f0; text-align: center; font-size: 0.9rem; margin-top: 5px; outline: none; }
-    .btn-review-check { width: 100%; padding: 10px; background: var(--primary); color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+    .v-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 15px; }
+    .v-box { background: #f8fafc; padding: 12px 5px; border-radius: 10px; text-align: center; border: 1px solid #f1f5f9; }
+    .v-label { font-size: 0.65rem; color: #94a3b8; font-weight: 800; display: block; margin-bottom: 5px; }
+    .v-word { font-weight: 700; color: var(--text-main); font-size: 1.05rem; }
 
-    /* Quiz 區域 (嚴格隔離答案) */
-    .quiz-item { background: white; border: 2px solid #e2e8f0; padding: 25px; border-radius: 15px; margin-bottom: 20px; }
-    .quiz-q-text { font-weight: 800; color: var(--primary); margin-bottom: 15px; font-size: 1.1rem; }
-    .quiz-sentence { font-size: 1.1rem; color: #334155; padding: 15px; background: #f1f5f9; border-radius: 10px; border-left: 5px solid var(--primary); margin-bottom: 15px; line-height: 1.6; }
-    .q-input { width: 100%; padding: 14px; border-radius: 10px; border: 2px solid #cbd5e1; text-align: center; font-size: 1.1rem; outline: none; }
-    .q-input:focus { border-color: var(--primary); }
+    /* Quiz 測驗樣式 */
+    .quiz-card { background: white; border: 2px solid #e2e8f0; padding: 25px; border-radius: 18px; margin-bottom: 22px; }
+    .quiz-sentence { font-size: 1.15rem; color: #1e293b; padding: 18px; background: #f8fafc; border-radius: 12px; border-left: 6px solid var(--primary); margin-bottom: 18px; line-height: 1.6; }
+    .quiz-input { width: 100%; padding: 15px; border-radius: 12px; border: 2.5px solid #e2e8f0; text-align: center; font-size: 1.1rem; outline: none; transition: 0.2s; }
+    .quiz-input:focus { border-color: var(--primary); }
 
-    .feedback-box { margin-top: 15px; padding: 12px; border-radius: 8px; font-weight: bold; display: none; }
-    .fb-correct { background: #ecfdf5; color: #059669; display: block; }
-    .fb-wrong { background: #fef2f2; color: #dc2626; display: block; }
+    .feedback-msg { margin-top: 15px; padding: 12px; border-radius: 10px; font-weight: 800; display: none; }
+    .fb-ok { background: #ecfdf5; color: #059669; display: block; border: 1px solid #10b981; }
+    .fb-no { background: #fef2f2; color: #dc2626; display: block; border: 1px solid #ef4444; }
 
-    .note-box { background: #fff7ed; color: #9a3412; padding: 10px; border-radius: 8px; font-size: 0.85rem; margin-top: 10px; border-left: 4px solid #f59e0b; }
-    .ex-toggle { font-size: 0.8rem; color: var(--primary); cursor: pointer; background: none; border: none; font-weight: 700; margin-top: 10px; }
-    .ex-content { display: none; margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 10px; font-size: 0.9rem; color: #475569; }
-
+    .ex-panel { display: none; margin-top: 12px; padding: 15px; background: #f8fafc; border-radius: 12px; font-size: 0.95rem; color: #475569; border: 1px solid #f1f5f9; }
     .hidden { display: none !important; }
     .type-AAA { background: var(--tag-aaa); } .type-ABA { background: var(--tag-aba); }
     .type-ABB { background: var(--tag-abb); } .type-ABC { background: var(--tag-abc); }
@@ -66,17 +91,22 @@
 </head>
 <body>
 
+<div class="hero-section">
+  <h1>Shirley's Irregular Verbs</h1>
+  <p>Master the 3 Forms: V1, V2, V3</p>
+</div>
+
 <div class="container">
-  <div class="content-area">
-    <div class="mode-bar">
-      <button class="mode-btn active" data-mode="learn">📚 Study</button>
-      <button class="mode-btn" data-mode="review">✏️ Review</button>
-      <button class="mode-btn" data-mode="quiz">🏆 Quiz</button>
+  <div class="control-card">
+    <div class="nav-bar">
+      <button class="nav-btn active" data-mode="learn">📚 Study</button>
+      <button class="nav-btn" data-mode="review">✏️ Review</button>
+      <button class="nav-btn" data-mode="quiz">🏆 Quiz</button>
     </div>
 
-    <div id="control-panel" class="control-panel">
-      <input type="text" id="search-input" class="search-input" placeholder="搜尋單字或意思...">
-      <div class="filter-bar">
+    <div id="filter-section">
+      <input type="text" id="search" class="search-box" placeholder="搜尋單字或中文意思...">
+      <div class="filter-group">
         <button class="filter-btn active" data-filter="all">All</button>
         <button class="filter-btn" data-filter="AAA">AAA</button>
         <button class="filter-btn" data-filter="ABA">ABA</button>
@@ -84,227 +114,205 @@
         <button class="filter-btn" data-filter="ABC">ABC</button>
       </div>
     </div>
+  </div>
 
-    <div id="main-grid" class="verb-grid"></div>
+  <div id="main-list" class="grid"></div>
 
-    <div id="quiz-section" class="hidden">
-      <div style="text-align:center; margin-bottom:25px; display: flex; justify-content: center; gap: 10px;">
-        <button id="q1-btn" style="padding:12px 20px; cursor:pointer; border-radius:10px; border:2px solid var(--primary); background:white; font-weight:bold; color:var(--primary);">Quiz 1: 三態填空</button>
-        <button id="q2-btn" style="padding:12px 20px; cursor:pointer; border-radius:10px; border:2px solid var(--primary); background:white; font-weight:bold; color:var(--primary);">Quiz 2: 句子填空</button>
-      </div>
-      <div id="quiz-container"></div>
-      <div id="quiz-controls" class="hidden">
-        <button id="submit-quiz" style="width:100%; padding:18px; background:var(--primary); color:white; border:none; border-radius:12px; font-weight:bold; cursor:pointer; margin-top:20px; font-size:1.1rem;">Submit All Answers</button>
-      </div>
+  <div id="quiz-area" class="hidden">
+    <div style="text-align:center; margin-bottom:30px; display:flex; justify-content:center; gap:12px;">
+      <button id="q1-load" style="padding:12px 24px; cursor:pointer; border-radius:12px; border:2.5px solid var(--primary); background:white; font-weight:bold; color:var(--primary);">Quiz 1: 三態訓練</button>
+      <button id="q2-load" style="padding:12px 24px; cursor:pointer; border-radius:12px; border:2.5px solid var(--primary); background:white; font-weight:bold; color:var(--primary);">Quiz 2: 句子填空</button>
+    </div>
+    <div id="quiz-items-container"></div>
+    <div id="quiz-submit-box" class="hidden">
+      <button id="btn-submit-all" style="width:100%; padding:20px; background:var(--primary-gradient); color:white; border:none; border-radius:14px; font-weight:bold; cursor:pointer; margin-top:20px; font-size:1.1rem; box-shadow: 0 4px 10px rgba(59,130,246,0.3);">Submit All Answers</button>
     </div>
   </div>
 </div>
 
 <script>
-  const VERBS_CSV = "https://ducj-creator.github.io/Shirley-Grammar/irregular/verbs.csv";
-  const QUIZ_CSV = "https://ducj-creator.github.io/Shirley-Grammar/irregular/verbs%20quiz.csv";
+  const URL_VERBS = "https://ducj-creator.github.io/Shirley-Grammar/irregular/verbs.csv";
+  const URL_QUIZ = "https://ducj-creator.github.io/Shirley-Grammar/irregular/verbs%20quiz.csv";
 
   let verbs = [];
-  let quizPool = [];
-  let state = { mode: 'learn', filter: 'all', search: '', activeQuiz: [] };
+  let quizzes = [];
+  let state = { mode: 'learn', filter: 'all', search: '', activeQuiz: [], activeType: '' };
 
-  async function init() {
-    const [vRes, qRes] = await Promise.all([
-      fetch(VERBS_CSV + "?t=" + Date.now()).then(r => r.text()),
-      fetch(QUIZ_CSV + "?t=" + Date.now()).then(r => r.text())
+  async function startApp() {
+    const [vText, qText] = await Promise.all([
+      fetch(URL_VERBS + "?t=" + Date.now()).then(r => r.text()),
+      fetch(URL_QUIZ + "?t=" + Date.now()).then(r => r.text())
     ]);
-    verbs = parseVerbs(vRes);
-    quizPool = parseQuizCSV(qRes);
-    renderMain();
-    bindEvents();
+    verbs = parseVerbs(vText);
+    quizzes = parseQuizzes(qText);
+    render();
+    initEvents();
   }
 
   function parseVerbs(csv) {
-    const lines = csv.trim().split(/\r?\n/).filter(Boolean);
-    return lines.slice(1).map(line => {
+    const lines = csv.trim().split(/\r?\n/).filter(Boolean).slice(1);
+    return lines.map(line => {
       const c = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
       return {
-        type: (c[0]||"").match(/AAA|ABA|ABB|ABC/)?.[0] || "ABC",
-        v1: (c[1]||"").trim(), meaning: (c[2]||"").trim(),
+        type: (c[0]||"ABC").trim(), v1: (c[1]||"").trim(), meaning: (c[2]||"").trim(),
         ex1: (c[3]||"").trim(), v2: (c[4]||"").trim(), ex2: (c[5]||"").trim(),
         v3: (c[6]||"").trim(), ex3: (c[7]||"").trim(), note: (c[8]||"").trim()
       };
-    }).filter(v => v.v1);
+    });
   }
 
-  function parseQuizCSV(csv) {
-    // 嚴格對應兩欄 CSV: Index 0=題目, Index 1=答案
-    const lines = csv.trim().split(/\r?\n/).filter(Boolean);
-    return lines.slice(1).map(line => {
+  function parseQuizzes(csv) {
+    // 兩欄式：Index 0 題目, Index 1 答案 (僅存於記憶體，不顯示)
+    const lines = csv.trim().split(/\r?\n/).filter(Boolean).slice(1);
+    return lines.map(line => {
       const c = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-      return { qText: (c[0]||"").trim(), answer: (c[1]||"").trim() };
-    }).filter(q => q.qText);
+      return { question: (c[0]||"").trim(), answer: (c[1]||"").trim() };
+    });
   }
 
-  function renderMain() {
-    const grid = document.getElementById('main-grid');
-    const ctrl = document.getElementById('control-panel');
-    const quizArea = document.getElementById('quiz-section');
+  function render() {
+    const list = document.getElementById('main-list');
+    const qArea = document.getElementById('quiz-area');
+    const filterSec = document.getElementById('filter-section');
 
     if (state.mode === 'quiz') {
-      grid.classList.add('hidden'); ctrl.classList.add('hidden');
-      quizArea.classList.remove('hidden'); return;
+      list.classList.add('hidden'); filterSec.classList.add('hidden');
+      qArea.classList.remove('hidden'); return;
     }
 
-    grid.classList.remove('hidden'); ctrl.classList.remove('hidden');
-    quizArea.classList.add('hidden');
+    list.classList.remove('hidden'); filterSec.classList.remove('hidden');
+    qArea.classList.add('hidden');
 
     const filtered = verbs.filter(v => {
-      const matchType = (state.filter === 'all' || v.type === state.filter);
-      const matchSearch = v.v1.toLowerCase().includes(state.search) || v.meaning.includes(state.search);
-      return matchType && matchSearch;
+      const matchT = (state.filter === 'all' || v.type === state.filter);
+      const matchS = v.v1.toLowerCase().includes(state.search) || v.meaning.includes(state.search);
+      return matchT && matchS;
     });
 
-    grid.innerHTML = filtered.map(v => state.mode === 'learn' ? buildLearnCard(v) : buildReviewCard(v)).join('');
+    list.innerHTML = filtered.map(v => state.mode === 'learn' ? buildStudy(v) : buildReview(v)).join('');
   }
 
-  function buildLearnCard(v) {
+  function buildStudy(v) {
     return `
-      <div class="verb-card">
-        <div class="card-header">
+      <div class="card">
+        <div class="card-head">
           <div><div class="card-title">${v.v1}</div><div style="color:var(--text-sub);">${v.meaning}</div></div>
-          <span class="type-badge type-${v.type}">${v.type}</span>
+          <span class="type-tag type-${v.type}">${v.type}</span>
         </div>
-        <div class="forms-row">
-          <div class="form-box"><span class="form-label">V1</span><div class="form-word">${v.v1}</div></div>
-          <div class="form-box"><span class="form-label">V2</span><div class="form-word">${v.v2}</div></div>
-          <div class="form-box"><span class="form-label">V3</span><div class="form-word">${v.v3}</div></div>
+        <div class="v-row">
+          <div class="v-box"><span class="v-label">V1</span><div class="v-word">${v.v1}</div></div>
+          <div class="v-box"><span class="v-label">V2</span><div class="v-word">${v.v2}</div></div>
+          <div class="v-box"><span class="v-label">V3</span><div class="v-word">${v.v3}</div></div>
         </div>
-        ${v.note ? `<div class="note-box">💡 ${v.note}</div>` : ''}
-        <button class="ex-toggle" onclick="toggleEx(this)">Show Examples ▼</button>
-        <div class="ex-content"><b>V1:</b> ${v.ex1}<br><b>V2:</b> ${v.ex2}<br><b>V3:</b> ${v.ex3}</div>
+        ${v.note ? `<div style="background:#fff7ed;color:#9a3412;padding:10px;border-radius:8px;font-size:0.85rem;margin-top:10px;border-left:4px solid #f59e0b">💡 ${v.note}</div>` : ''}
+        <button style="font-size:0.8rem;color:var(--primary);background:none;border:none;font-weight:700;margin-top:10px;cursor:pointer" onclick="this.nextElementSibling.style.display=(this.nextElementSibling.style.display==='block'?'none':'block')">Show Examples ▼</button>
+        <div class="ex-panel"><b>V1:</b> ${v.ex1}<br><b>V2:</b> ${v.ex2}<br><b>V3:</b> ${v.ex3}</div>
       </div>`;
   }
 
-  function buildReviewCard(v) {
+  function buildReview(v) {
     return `
-      <div class="verb-card">
-        <div class="card-header">
+      <div class="card">
+        <div class="card-head">
           <div><div class="card-title">${v.v1}</div><div style="color:var(--text-sub);">${v.meaning}</div></div>
-          <span class="type-badge type-${v.type}">${v.type}</span>
+          <span class="type-tag type-${v.type}">${v.type}</span>
         </div>
-        <div class="forms-row">
-          <div class="form-box"><span class="form-label">V1</span><div class="form-word">${v.v1}</div></div>
-          <div class="form-box"><span class="form-label">V2</span><input class="review-input r-v2" placeholder="?"></div>
-          <div class="form-box"><span class="form-label">V3</span><input class="review-input r-v3" placeholder="?"></div>
+        <div class="v-row">
+          <div class="v-box"><span class="v-label">V1</span><div class="v-word">${v.v1}</div></div>
+          <div class="v-box"><span class="v-label">V2</span><input class="quiz-input" style="padding:5px; font-size:0.9rem;" id="r2-${v.v1}" placeholder="?"></div>
+          <div class="v-box"><span class="v-label">V3</span><input class="quiz-input" style="padding:5px; font-size:0.9rem;" id="r3-${v.v1}" placeholder="?"></div>
         </div>
-        <button class="btn-review-check" onclick="checkReview(this, '${v.v2}', '${v.v3}')">Check</button>
+        <button class="nav-btn" style="width:100%; border:1px solid var(--primary); margin-top:5px;" onclick="checkReviewWord('${v.v1}', '${v.v2}', '${v.v3}')">Check</button>
       </div>`;
   }
 
   function startQuiz(type) {
-    const container = document.getElementById('quiz-container');
-    const controls = document.getElementById('quiz-controls');
-    state.quizType = type;
-    
-    // 隨機選 10 題
-    const pool = type === 'q1' ? [...verbs] : [...quizPool];
+    state.activeType = type;
+    const container = document.getElementById('quiz-items-container');
+    const pool = type === 'q1' ? [...verbs] : [...quizzes];
     state.activeQuiz = pool.sort(() => 0.5 - Math.random()).slice(0, 10);
 
     container.innerHTML = state.activeQuiz.map((item, i) => {
-      // Quiz 1: 三態填空 | Quiz 2: 句子填空 (CSV 兩欄版)
       const qTitle = type === 'q1' ? `${item.v1} (${item.meaning})` : `Question ${i+1}`;
-      const qSentence = type === 'q1' ? '' : `<div class="quiz-sentence">${item.qText.replace('_____', '________')}</div>`;
-      
+      const qBody = type === 'q1' ? '' : `<div class="quiz-sentence">${item.question.replace('_____', '________')}</div>`;
       return `
-        <div class="quiz-item">
-          <div class="quiz-q-text">${qTitle}</div>
-          ${qSentence}
+        <div class="quiz-card">
+          <div style="font-weight:800; color:var(--primary); margin-bottom:12px;">${qTitle}</div>
+          ${qBody}
           <div style="display:flex; gap:10px;">
             ${type === 'q1' ? 
-              `<input class="q-input u-v2" placeholder="V2"> <input class="q-input u-v3" placeholder="V3">` : 
-              `<input class="q-input u-ans" placeholder="填寫正確動詞...">`
+              `<input class="quiz-input u-v2" placeholder="V2"> <input class="quiz-input u-v3" placeholder="V3">` : 
+              `<input class="quiz-input u-ans" placeholder="Type answer here...">`
             }
           </div>
-          <div class="feedback-box"></div>
+          <div class="feedback-msg"></div>
         </div>`;
     }).join('');
 
-    controls.classList.remove('hidden');
+    document.getElementById('quiz-submit-box').classList.remove('hidden');
     window.scrollTo({top: 0, behavior: 'smooth'});
   }
 
-  function submitQuiz() {
-    const items = document.querySelectorAll('.quiz-item');
+  function submitAll() {
+    const cards = document.querySelectorAll('.quiz-card');
     let score = 0;
-
-    items.forEach((div, i) => {
+    cards.forEach((card, i) => {
       const data = state.activeQuiz[i];
-      const fb = div.querySelector('.feedback-box');
-      let isCorrect = false;
-      let correctAns = "";
+      const fb = card.querySelector('.feedback-msg');
+      let ok = false; let ans = "";
 
-      if (state.quizType === 'q1') {
-        const uv2 = div.querySelector('.u-v2').value.trim().toLowerCase();
-        const uv3 = div.querySelector('.u-v3').value.trim().toLowerCase();
-        isCorrect = (uv2 === data.v2.toLowerCase() && uv3 === data.v3.toLowerCase());
-        correctAns = `${data.v2} / ${data.v3}`;
+      if (state.activeType === 'q1') {
+        const uv2 = card.querySelector('.u-v2').value.trim().toLowerCase();
+        const uv3 = card.querySelector('.u-v3').value.trim().toLowerCase();
+        ok = (uv2 === data.v2.toLowerCase() && uv3 === data.v3.toLowerCase());
+        ans = `${data.v2} / ${data.v3}`;
       } else {
-        const uans = div.querySelector('.u-ans').value.trim().toLowerCase();
-        isCorrect = (uans === data.answer.toLowerCase());
-        correctAns = data.answer;
+        const uans = card.querySelector('.u-ans').value.trim().toLowerCase();
+        ok = (uans === data.answer.toLowerCase());
+        ans = data.answer;
       }
 
-      if (isCorrect) score += 10;
-      fb.className = `feedback-box ${isCorrect ? 'fb-correct' : 'fb-wrong'}`;
-      fb.innerHTML = isCorrect ? '✓ Correct!' : `✗ Answer: ${correctAns}`;
-      div.style.borderColor = isCorrect ? '#10b981' : '#ef4444';
-      div.querySelectorAll('input').forEach(inp => inp.disabled = true);
+      if (ok) score += 10;
+      fb.className = `feedback-msg ${ok ? 'fb-ok' : 'fb-no'}`;
+      fb.innerHTML = ok ? '✓ Correct!' : `✗ Answer: ${ans}`;
+      card.querySelectorAll('input').forEach(inp => inp.disabled = true);
     });
-
-    alert(`Quiz Finished! Score: ${score}/100`);
-    document.getElementById('quiz-controls').classList.add('hidden');
+    alert(`Score: ${score} / 100`);
+    document.getElementById('quiz-submit-box').classList.add('hidden');
   }
 
-  function bindEvents() {
-    document.querySelectorAll('.mode-btn').forEach(btn => {
+  window.checkReviewWord = (id, v2, v3) => {
+    const i2 = document.getElementById('r2-'+id);
+    const i3 = document.getElementById('r3-'+id);
+    i2.style.borderColor = i2.value.trim().toLowerCase() === v2.toLowerCase() ? '#10b981' : '#ef4444';
+    i3.style.borderColor = i3.value.trim().toLowerCase() === v3.toLowerCase() ? '#10b981' : '#ef4444';
+  };
+
+  function initEvents() {
+    document.querySelectorAll('.nav-btn').forEach(btn => {
       btn.onclick = () => {
-        document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+        if(!btn.dataset.mode) return;
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         state.mode = btn.dataset.mode;
-        renderMain();
+        render();
       };
     });
-    document.getElementById('search-input').oninput = (e) => {
-      state.search = e.target.value.toLowerCase();
-      renderMain();
-    };
+    document.getElementById('search').oninput = (e) => { state.search = e.target.value.toLowerCase(); render(); };
     document.querySelectorAll('.filter-btn').forEach(btn => {
       btn.onclick = () => {
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         state.filter = btn.dataset.filter;
-        renderMain();
+        render();
       };
     });
-    document.getElementById('q1-btn').onclick = () => startQuiz('q1');
-    document.getElementById('q2-btn').onclick = () => startQuiz('q2');
-    document.getElementById('submit-quiz').onclick = submitQuiz;
+    document.getElementById('q1-load').onclick = () => startQuiz('q1');
+    document.getElementById('q2-load').onclick = () => startQuiz('q2');
+    document.getElementById('btn-submit-all').onclick = submitAll;
   }
 
-  window.checkReview = (btn, v2, v3) => {
-    const card = btn.closest('.verb-card');
-    const i2 = card.querySelector('.r-v2');
-    const i3 = card.querySelector('.r-v3');
-    const ok2 = i2.value.trim().toLowerCase() === v2.toLowerCase();
-    const ok3 = i3.value.trim().toLowerCase() === v3.toLowerCase();
-    i2.style.borderColor = ok2 ? '#10b981' : '#ef4444';
-    i3.style.borderColor = ok3 ? '#10b981' : '#ef4444';
-  };
-
-  window.toggleEx = (btn) => {
-    const content = btn.nextElementSibling;
-    const isHidden = content.style.display === 'none' || content.style.display === '';
-    content.style.display = isHidden ? 'block' : 'none';
-    btn.innerText = isHidden ? 'Hide Examples ▲' : 'Show Examples ▼';
-  };
-
-  init();
+  startApp();
 </script>
 </body>
 </html>
