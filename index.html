@@ -482,7 +482,7 @@
 
 <div class="hero-section">
   <h1>Shirley's <span>Grammar</span> Orchard</h1>
-  <p>點擊黃金果，收穫文法知識 ✦ Click a lemon to explore grammar</p>
+  <p>點擊黃金檸檬果，收穫文法知識庫 ✦ Click a lemon to explore grammar</p>
 </div>
 
 <div class="tree-container">
@@ -1283,9 +1283,13 @@ function startRace(id) {
 }
 
 function parseQuiz(text) {
-    // Strip all answer-indicator characters from option text
-    const MARKERS = /[●⚫✓✔✗✘\[\]]/g;
-    const CORRECT_MARK = /[●⚫✓✔]/;
+    // The txt format is exactly:
+    //   ◯ Option text  [✖]     <- wrong answer
+    //   ◉ Option text  [✔]     <- correct answer  (◉ = U+25C9 filled circle)
+    //
+    // Strategy:
+    //   1. Detect correct by checking for ◉ at the START of the line (before any stripping)
+    //   2. Then remove ALL marker characters so nothing shows to the student
 
     return text.split(/\n\s*\n/).map(block => {
         const lines = block.split('\n').map(l => l.trim()).filter(l => l.length > 0);
@@ -1295,10 +1299,16 @@ function parseQuiz(text) {
         const opts = [];
         let correct = 0;
 
-        lines.slice(1).forEach((line, i) => {
-            if (CORRECT_MARK.test(line)) correct = i;
-            // Remove all marker symbols, then trim
-            const clean = line.replace(MARKERS, '').replace(/^[A-Da-d][\.\)]\s*/, '').trim();
+        lines.slice(1).forEach((rawLine, i) => {
+            // ◉ (U+25C9) at the start = this is the correct option
+            if (rawLine.startsWith('\u25C9')) correct = i;
+
+            const clean = rawLine
+                .replace(/^[\u25C9\u25EF\u25CB\u25CF\u25CE]\s*/, '') // strip leading circle bullets ◉◯○●◎
+                .replace(/\s*\[[\u2714\u2716\u2713\u2717\u2718]\]\s*$/, '') // strip trailing [✔] [✖] [✓] [✗] [✘]
+                .replace(/[\u2714\u2716\u2713\u2717\u2718\u25C9\u25EF\u25CB\u25CF\u25CE]/g, '') // strip any remaining marks
+                .trim();
+
             if (clean.length > 0) opts.push(clean);
         });
 
