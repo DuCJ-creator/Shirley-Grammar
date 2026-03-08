@@ -14,7 +14,7 @@
       --text-main: #1e293b;
       --text-sub: #64748b;
       --bg-color: #eff6ff;
-      --glass-bg: rgba(255, 255, 255, 0.85);
+      --glass-bg: rgba(255, 255, 255, 0.9);
       --glass-border: rgba(255, 255, 255, 0.8);
       --radius: 16px;
       --tag-aaa: #f59e0b; --tag-aba: #8b5cf6; --tag-abb: #10b981; --tag-abc: #ef4444;
@@ -23,7 +23,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Inter', 'Noto Sans TC', sans-serif; background: var(--bg-color); color: var(--text-main); }
 
-    /* --- 標題區塊 --- */
+    /* 標題區塊 */
     .hero-section {
       background: var(--primary-gradient);
       padding: 60px 20px 80px;
@@ -33,14 +33,13 @@
       margin-bottom: -40px;
     }
     .hero-section h1 { font-weight: 800; font-size: 2.8rem; letter-spacing: -1px; margin-bottom: 10px; }
-    .hero-section p { font-weight: 500; opacity: 0.95; font-size: 1.25rem; max-width: 600px; margin: 0 auto; line-height: 1.6; }
+    .hero-section p { font-weight: 500; opacity: 0.95; font-size: 1.25rem; }
 
     .container { max-width: 900px; margin: 0 auto; padding: 0 15px 50px; position: relative; z-index: 10; }
     
     .control-card {
       background: var(--glass-bg);
       backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
       border: 1px solid var(--glass-border);
       border-radius: var(--radius);
       padding: 25px;
@@ -52,28 +51,27 @@
     .nav-btn { border: none; background: transparent; padding: 10px 22px; border-radius: 10px; font-weight: 700; color: var(--text-sub); cursor: pointer; transition: 0.2s; }
     .nav-btn.active { background: white; color: var(--primary); box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
 
-    .search-box { width: 100%; padding: 14px; border-radius: 12px; border: 2px solid #e2e8f0; margin-bottom: 15px; font-size: 1rem; outline: none; transition: 0.3s; }
-    .search-box:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1); background: white; }
+    .search-box { width: 100%; padding: 14px; border-radius: 12px; border: 2px solid #e2e8f0; margin-bottom: 15px; font-size: 1rem; outline: none; }
+    .search-box:focus { border-color: var(--primary); background: white; }
 
     .filter-group { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
-    .filter-btn { padding: 8px 16px; background: white; border: 1.5px solid #e2e8f0; border-radius: 20px; font-size: 0.85rem; cursor: pointer; font-weight: 700; color: var(--text-sub); transition: 0.2s; }
+    .filter-btn { padding: 8px 16px; background: white; border: 1.5px solid #e2e8f0; border-radius: 20px; font-size: 0.85rem; cursor: pointer; font-weight: 700; color: var(--text-sub); }
     .filter-btn.active { background: var(--text-main); color: white; border-color: var(--text-main); }
 
-    /* 網格與卡片 */
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px; }
-    .card { background: white; border-radius: var(--radius); padding: 22px; border: 1px solid #f1f5f9; position: relative; }
+    .card { background: white; border-radius: var(--radius); padding: 22px; border: 1px solid #f1f5f9; }
     .card-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
     .card-title { font-size: 1.4rem; font-weight: 800; color: #0f172a; }
-    .type-tag { font-size: 0.7rem; padding: 3px 10px; border-radius: 6px; color: white; font-weight: 800; text-transform: uppercase; }
+    .type-tag { font-size: 0.7rem; padding: 3px 10px; border-radius: 6px; color: white; font-weight: 800; }
 
     .v-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 15px; }
     .v-box { background: #f8fafc; padding: 12px 5px; border-radius: 10px; text-align: center; border: 1px solid #f1f5f9; }
     .v-label { font-size: 0.65rem; color: #94a3b8; font-weight: 800; display: block; margin-bottom: 5px; }
     .v-word { font-weight: 700; color: var(--text-main); font-size: 1.05rem; }
 
-    .ex-panel { display: none; margin-top: 12px; padding: 15px; background: #f8fafc; border-radius: 12px; font-size: 0.95rem; color: #475569; border: 1px solid #f1f5f9; }
+    .ex-panel { display: none; margin-top: 12px; padding: 15px; background: #f8fafc; border-radius: 12px; font-size: 0.95rem; border: 1px solid #f1f5f9; }
 
-    /* Quiz 樣式 */
+    /* Quiz */
     .quiz-card { background: white; border: 2px solid #e2e8f0; padding: 25px; border-radius: 18px; margin-bottom: 22px; }
     .quiz-sentence { font-size: 1.15rem; color: #1e293b; padding: 18px; background: #f8fafc; border-radius: 12px; border-left: 6px solid var(--primary); margin-bottom: 18px; line-height: 1.6; }
     .quiz-input { width: 100%; padding: 15px; border-radius: 12px; border: 2.5px solid #e2e8f0; text-align: center; font-size: 1.1rem; outline: none; }
@@ -117,12 +115,12 @@
 
   <div id="quiz-area" class="hidden">
     <div style="text-align:center; margin-bottom:30px; display:flex; justify-content:center; gap:12px;">
-      <button id="q1-load" style="padding:12px 24px; cursor:pointer; border-radius:12px; border:2.5px solid var(--primary); background:white; font-weight:bold; color:var(--primary);">Quiz 1: 三態訓練</button>
-      <button id="q2-load" style="padding:12px 24px; cursor:pointer; border-radius:12px; border:2.5px solid var(--primary); background:white; font-weight:bold; color:var(--primary);">Quiz 2: 句子填空</button>
+      <button id="q1-load" style="padding:12px 24px; cursor:pointer; border-radius:12px; border:2.5px solid var(--primary); background:white; font-weight:bold; color:var(--primary);">Quiz 1: 三態</button>
+      <button id="q2-load" style="padding:12px 24px; cursor:pointer; border-radius:12px; border:2.5px solid var(--primary); background:white; font-weight:bold; color:var(--primary);">Quiz 2: 句子</button>
     </div>
     <div id="quiz-items-container"></div>
     <div id="quiz-submit-box" class="hidden">
-      <button id="btn-submit-all" style="width:100%; padding:20px; background:var(--primary-gradient); color:white; border:none; border-radius:14px; font-weight:bold; cursor:pointer; margin-top:20px; font-size:1.1rem; box-shadow: 0 4px 10px rgba(59,130,246,0.3);">Submit All Answers</button>
+      <button id="btn-submit-all" style="width:100%; padding:20px; background:var(--primary-gradient); color:white; border:none; border-radius:14px; font-weight:bold; cursor:pointer; margin-top:20px;">Submit All Answers</button>
     </div>
   </div>
 </div>
@@ -136,28 +134,25 @@
   let state = { mode: 'learn', filter: 'all', search: '', activeQuiz: [], activeType: '' };
 
   async function startApp() {
-    try {
-      const [vText, qText] = await Promise.all([
-        fetch(URL_VERBS + "?t=" + Date.now()).then(r => r.text()),
-        fetch(URL_QUIZ + "?t=" + Date.now()).then(r => r.text())
-      ]);
-      verbs = parseVerbs(vText);
-      quizzes = parseQuizzes(qText);
-      render();
-      initEvents();
-    } catch (e) { console.error("Loading Error", e); }
+    const [vText, qText] = await Promise.all([
+      fetch(URL_VERBS + "?t=" + Date.now()).then(r => r.text()),
+      fetch(URL_QUIZ + "?t=" + Date.now()).then(r => r.text())
+    ]);
+    verbs = parseVerbs(vText);
+    quizzes = parseQuizzes(qText);
+    render();
+    initEvents();
   }
 
   function parseVerbs(csv) {
     const lines = csv.trim().split(/\r?\n/).filter(Boolean).slice(1);
     return lines.map(line => {
-      const c = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+      const c = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(item => item.trim().replace(/^"|"$/g, ''));
       return {
-        // 確保 Type 是乾淨的字串，用於後續過濾比對
-        type: (c[0]||"ABC").trim().toUpperCase(), 
-        v1: (c[1]||"").trim(), meaning: (c[2]||"").trim(),
-        ex1: (c[3]||"").trim(), v2: (c[4]||"").trim(), ex2: (c[5]||"").trim(),
-        v3: (c[6]||"").trim(), ex3: (c[7]||"").trim(), note: (c[8]||"").trim()
+        type: c[0] || "ABC",
+        v1: c[1] || "", meaning: c[2] || "",
+        ex1: c[3] || "", v2: c[4] || "", ex2: c[5] || "",
+        v3: c[6] || "", ex3: c[7] || "", note: c[8] || ""
       };
     }).filter(v => v.v1);
   }
@@ -165,8 +160,8 @@
   function parseQuizzes(csv) {
     const lines = csv.trim().split(/\r?\n/).filter(Boolean).slice(1);
     return lines.map(line => {
-      const c = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-      return { question: (c[0]||"").trim(), answer: (c[1]||"").trim() };
+      const c = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(item => item.trim().replace(/^"|"$/g, ''));
+      return { question: c[0] || "", answer: c[1] || "" };
     });
   }
 
@@ -183,18 +178,14 @@
     list.classList.remove('hidden'); filterSec.classList.remove('hidden');
     qArea.classList.add('hidden');
 
-    // 關鍵修正：確保過濾邏輯能精準匹配 Type
     const filtered = verbs.filter(v => {
-      const isAll = state.filter.toLowerCase() === 'all';
-      // 比對單字的 type 是否等於點選的 filter
-      const matchT = isAll || v.type === state.filter.toUpperCase();
+      // 核心修正：使用 toUpperCase 並 trim 以確保分類匹配
+      const matchT = (state.filter === 'all' || v.type.toUpperCase() === state.filter.toUpperCase());
       const matchS = v.v1.toLowerCase().includes(state.search) || v.meaning.includes(state.search);
       return matchT && matchS;
     });
 
-    list.innerHTML = filtered.length > 0 
-      ? filtered.map(v => state.mode === 'learn' ? buildStudy(v) : buildReview(v)).join('')
-      : `<div style="text-align:center; grid-column: 1/-1; padding: 40px; color: var(--text-sub);">No verbs found.</div>`;
+    list.innerHTML = filtered.map(v => state.mode === 'learn' ? buildStudy(v) : buildReview(v)).join('');
   }
 
   function buildStudy(v) {
@@ -209,8 +200,8 @@
           <div class="v-box"><span class="v-label">V2</span><div class="v-word">${v.v2}</div></div>
           <div class="v-box"><span class="v-label">V3</span><div class="v-word">${v.v3}</div></div>
         </div>
-        ${v.note ? `<div style="background:#fff7ed;color:#9a3412;padding:10px;border-radius:8px;font-size:0.85rem;margin-top:10px;border-left:4px solid #f59e0b">💡 ${v.note}</div>` : ''}
-        <button style="font-size:0.8rem;color:var(--primary);background:none;border:none;font-weight:700;margin-top:10px;cursor:pointer" onclick="this.nextElementSibling.style.display=(this.nextElementSibling.style.display==='block'?'none':'block')">Show Examples ▼</button>
+        ${v.note ? `<div style="background:#fff7ed;color:#9a3412;padding:10px;border-radius:8px;font-size:0.85rem;margin-top:10px;">💡 ${v.note}</div>` : ''}
+        <button style="font-size:0.8rem;color:var(--primary);background:none;border:none;font-weight:700;margin-top:10px;cursor:pointer" onclick="toggleEx(this)">Show Examples ▼</button>
         <div class="ex-panel"><b>V1:</b> ${v.ex1}<br><b>V2:</b> ${v.ex2}<br><b>V3:</b> ${v.ex3}</div>
       </div>`;
   }
@@ -289,10 +280,15 @@
   window.checkReviewWord = (id, v2, v3) => {
     const i2 = document.getElementById('r2-'+id);
     const i3 = document.getElementById('r3-'+id);
-    const ok2 = i2.value.trim().toLowerCase() === v2.toLowerCase();
-    const ok3 = i3.value.trim().toLowerCase() === v3.toLowerCase();
-    i2.style.borderColor = ok2 ? '#10b981' : '#ef4444';
-    i3.style.borderColor = ok3 ? '#10b981' : '#ef4444';
+    i2.style.borderColor = i2.value.trim().toLowerCase() === v2.toLowerCase() ? '#10b981' : '#ef4444';
+    i3.style.borderColor = i3.value.trim().toLowerCase() === v3.toLowerCase() ? '#10b981' : '#ef4444';
+  };
+
+  window.toggleEx = (btn) => {
+    const p = btn.nextElementSibling;
+    const isH = p.style.display === 'none' || p.style.display === '';
+    p.style.display = isH ? 'block' : 'none';
+    btn.innerText = isH ? 'Hide Examples ▲' : 'Show Examples ▼';
   };
 
   function initEvents() {
