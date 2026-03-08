@@ -9,13 +9,10 @@
   <style>
     :root {
       --primary: #3b82f6;
-      --primary-dark: #1d4ed8;
       --primary-gradient: linear-gradient(135deg, #3b82f6, #2563eb);
       --text-main: #1e293b;
       --text-sub: #64748b;
       --bg-color: #eff6ff;
-      --glass-bg: rgba(255, 255, 255, 0.9);
-      --glass-border: rgba(255, 255, 255, 0.8);
       --radius: 16px;
       --tag-aaa: #f59e0b; --tag-aba: #8b5cf6; --tag-abb: #10b981; --tag-abc: #ef4444;
     }
@@ -23,7 +20,6 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Inter', 'Noto Sans TC', sans-serif; background: var(--bg-color); color: var(--text-main); }
 
-    /* 標題區塊 */
     .hero-section {
       background: var(--primary-gradient);
       padding: 60px 20px 80px;
@@ -38,38 +34,36 @@
     .container { max-width: 900px; margin: 0 auto; padding: 0 15px 50px; position: relative; z-index: 10; }
     
     .control-card {
-      background: var(--glass-bg);
+      background: rgba(255, 255, 255, 0.9);
       backdrop-filter: blur(10px);
-      border: 1px solid var(--glass-border);
       border-radius: var(--radius);
       padding: 25px;
       box-shadow: 0 10px 25px rgba(0,0,0,0.05);
       margin-bottom: 25px;
+      text-align: center;
     }
 
-    .nav-bar { display: flex; background: #f1f5f9; padding: 4px; border-radius: 12px; width: fit-content; margin: 0 auto 20px; }
+    .nav-bar { display: inline-flex; background: #f1f5f9; padding: 4px; border-radius: 12px; margin-bottom: 20px; }
     .nav-btn { border: none; background: transparent; padding: 10px 22px; border-radius: 10px; font-weight: 700; color: var(--text-sub); cursor: pointer; transition: 0.2s; }
     .nav-btn.active { background: white; color: var(--primary); box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
 
     .search-box { width: 100%; padding: 14px; border-radius: 12px; border: 2px solid #e2e8f0; margin-bottom: 15px; font-size: 1rem; outline: none; }
-    .search-box:focus { border-color: var(--primary); background: white; }
-
     .filter-group { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
-    .filter-btn { padding: 8px 16px; background: white; border: 1.5px solid #e2e8f0; border-radius: 20px; font-size: 0.85rem; cursor: pointer; font-weight: 700; color: var(--text-sub); }
-    .filter-btn.active { background: var(--text-main); color: white; border-color: var(--text-main); }
+    .filter-btn { padding: 8px 18px; background: white; border: 1.5px solid #e2e8f0; border-radius: 20px; font-size: 0.9rem; cursor: pointer; font-weight: 700; color: var(--text-sub); }
+    .filter-btn.active { background: #1e293b; color: white; border-color: #1e293b; }
 
-    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px; }
-    .card { background: white; border-radius: var(--radius); padding: 22px; border: 1px solid #f1f5f9; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
+    .card { background: white; border-radius: var(--radius); padding: 22px; border: 1px solid #f1f5f9; position: relative; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
     .card-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
     .card-title { font-size: 1.4rem; font-weight: 800; color: #0f172a; }
-    .type-tag { font-size: 0.7rem; padding: 3px 10px; border-radius: 6px; color: white; font-weight: 800; }
+    .type-tag { font-size: 0.75rem; padding: 4px 10px; border-radius: 6px; color: white; font-weight: 800; }
 
     .v-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 15px; }
-    .v-box { background: #f8fafc; padding: 12px 5px; border-radius: 10px; text-align: center; border: 1px solid #f1f5f9; }
-    .v-label { font-size: 0.65rem; color: #94a3b8; font-weight: 800; display: block; margin-bottom: 5px; }
-    .v-word { font-weight: 700; color: var(--text-main); font-size: 1.05rem; }
+    .v-box { background: #f8fafc; padding: 12px 5px; border-radius: 10px; text-align: center; }
+    .v-label { font-size: 0.7rem; color: #94a3b8; font-weight: 800; display: block; margin-bottom: 4px; }
+    .v-word { font-weight: 700; color: var(--text-main); font-size: 1.1rem; }
 
-    .ex-panel { display: none; margin-top: 12px; padding: 15px; background: #f8fafc; border-radius: 12px; font-size: 0.95rem; border: 1px solid #f1f5f9; }
+    .ex-panel { display: none; margin-top: 12px; padding: 15px; background: #f8fafc; border-radius: 12px; font-size: 0.95rem; border: 1px solid #f1f5f9; line-height: 1.6; }
 
     /* Quiz */
     .quiz-card { background: white; border: 2px solid #e2e8f0; padding: 25px; border-radius: 18px; margin-bottom: 22px; }
@@ -114,13 +108,13 @@
   <div id="main-list" class="grid"></div>
 
   <div id="quiz-area" class="hidden">
-    <div style="text-align:center; margin-bottom:30px; display:flex; justify-content:center; gap:12px;">
-      <button id="q1-load" style="padding:12px 24px; cursor:pointer; border-radius:12px; border:2.5px solid var(--primary); background:white; font-weight:bold; color:var(--primary);">Quiz 1: 三態</button>
-      <button id="q2-load" style="padding:12px 24px; cursor:pointer; border-radius:12px; border:2.5px solid var(--primary); background:white; font-weight:bold; color:var(--primary);">Quiz 2: 句子</button>
+    <div style="display:flex; justify-content:center; gap:12px; margin-bottom:30px;">
+      <button id="q1-load" style="padding:12px 24px; cursor:pointer; border-radius:12px; border:2px solid var(--primary); background:white; font-weight:bold; color:var(--primary);">Quiz 1: 三態訓練</button>
+      <button id="q2-load" style="padding:12px 24px; cursor:pointer; border-radius:12px; border:2px solid var(--primary); background:white; font-weight:bold; color:var(--primary);">Quiz 2: 句子填空</button>
     </div>
     <div id="quiz-items-container"></div>
     <div id="quiz-submit-box" class="hidden">
-      <button id="btn-submit-all" style="width:100%; padding:20px; background:var(--primary-gradient); color:white; border:none; border-radius:14px; font-weight:bold; cursor:pointer; margin-top:20px;">Submit All Answers</button>
+      <button id="btn-submit-all" style="width:100%; padding:20px; background:var(--primary-gradient); color:white; border:none; border-radius:14px; font-weight:bold; cursor:pointer; margin-top:20px; font-size:1.1rem;">Submit All Answers</button>
     </div>
   </div>
 </div>
@@ -148,8 +142,14 @@
     const lines = csv.trim().split(/\r?\n/).filter(Boolean).slice(1);
     return lines.map(line => {
       const c = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(item => item.trim().replace(/^"|"$/g, ''));
+      
+      // 關鍵優化：從 "AAA (三態同型)" 中提取 "AAA"
+      let rawType = c[0] || "ABC";
+      let cleanType = rawType.split('(')[0].trim().toUpperCase(); 
+      if(!["AAA","ABA","ABB","ABC"].includes(cleanType)) cleanType = "ABC";
+
       return {
-        type: c[0] || "ABC",
+        type: cleanType,
         v1: c[1] || "", meaning: c[2] || "",
         ex1: c[3] || "", v2: c[4] || "", ex2: c[5] || "",
         v3: c[6] || "", ex3: c[7] || "", note: c[8] || ""
@@ -179,13 +179,17 @@
     qArea.classList.add('hidden');
 
     const filtered = verbs.filter(v => {
-      // 核心修正：使用 toUpperCase 並 trim 以確保分類匹配
-      const matchT = (state.filter === 'all' || v.type.toUpperCase() === state.filter.toUpperCase());
-      const matchS = v.v1.toLowerCase().includes(state.search) || v.meaning.includes(state.search);
+      const matchT = (state.filter === 'all' || v.type === state.filter.toUpperCase());
+      const matchS = v.v1.toLowerCase().includes(state.search) || 
+                     v.meaning.toLowerCase().includes(state.search);
       return matchT && matchS;
     });
 
-    list.innerHTML = filtered.map(v => state.mode === 'learn' ? buildStudy(v) : buildReview(v)).join('');
+    if(filtered.length === 0) {
+      list.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:50px; color:var(--text-sub);">No verbs found.</div>`;
+    } else {
+      list.innerHTML = filtered.map(v => state.mode === 'learn' ? buildStudy(v) : buildReview(v)).join('');
+    }
   }
 
   function buildStudy(v) {
@@ -200,8 +204,8 @@
           <div class="v-box"><span class="v-label">V2</span><div class="v-word">${v.v2}</div></div>
           <div class="v-box"><span class="v-label">V3</span><div class="v-word">${v.v3}</div></div>
         </div>
-        ${v.note ? `<div style="background:#fff7ed;color:#9a3412;padding:10px;border-radius:8px;font-size:0.85rem;margin-top:10px;">💡 ${v.note}</div>` : ''}
-        <button style="font-size:0.8rem;color:var(--primary);background:none;border:none;font-weight:700;margin-top:10px;cursor:pointer" onclick="toggleEx(this)">Show Examples ▼</button>
+        ${v.note ? `<div style="background:#fff7ed;color:#9a3412;padding:10px;border-radius:8px;font-size:0.85rem;margin-bottom:10px;">💡 ${v.note}</div>` : ''}
+        <button style="font-size:0.8rem;color:var(--primary);background:none;border:none;font-weight:700;cursor:pointer" onclick="toggleEx(this)">Show Examples ▼</button>
         <div class="ex-panel"><b>V1:</b> ${v.ex1}<br><b>V2:</b> ${v.ex2}<br><b>V3:</b> ${v.ex3}</div>
       </div>`;
   }
@@ -218,7 +222,7 @@
           <div class="v-box"><span class="v-label">V2</span><input class="quiz-input" style="padding:5px; font-size:0.9rem;" id="r2-${v.v1}" placeholder="?"></div>
           <div class="v-box"><span class="v-label">V3</span><input class="quiz-input" style="padding:5px; font-size:0.9rem;" id="r3-${v.v1}" placeholder="?"></div>
         </div>
-        <button class="nav-btn" style="width:100%; border:1px solid var(--primary); margin-top:5px;" onclick="checkReviewWord('${v.v1}', '${v.v2}', '${v.v3}')">Check</button>
+        <button class="nav-btn" style="width:100%; border:1px solid var(--primary); color:var(--primary);" onclick="checkReviewWord('${v.v1}', '${v.v2}', '${v.v3}')">Check</button>
       </div>`;
   }
 
@@ -238,7 +242,7 @@
           <div style="display:flex; gap:10px;">
             ${type === 'q1' ? 
               `<input class="quiz-input u-v2" placeholder="V2"> <input class="quiz-input u-v3" placeholder="V3">` : 
-              `<input class="quiz-input u-ans" placeholder="填寫答案...">`
+              `<input class="quiz-input u-ans" placeholder="Type answer here...">`
             }
           </div>
           <div class="feedback-msg"></div>
@@ -280,8 +284,10 @@
   window.checkReviewWord = (id, v2, v3) => {
     const i2 = document.getElementById('r2-'+id);
     const i3 = document.getElementById('r3-'+id);
-    i2.style.borderColor = i2.value.trim().toLowerCase() === v2.toLowerCase() ? '#10b981' : '#ef4444';
-    i3.style.borderColor = i3.value.trim().toLowerCase() === v3.toLowerCase() ? '#10b981' : '#ef4444';
+    const ok2 = i2.value.trim().toLowerCase() === v2.toLowerCase();
+    const ok3 = i3.value.trim().toLowerCase() === v3.toLowerCase();
+    i2.style.borderColor = ok2 ? '#10b981' : '#ef4444';
+    i3.style.borderColor = ok3 ? '#10b981' : '#ef4444';
   };
 
   window.toggleEx = (btn) => {
