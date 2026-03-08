@@ -25,9 +25,11 @@
             align-items: center;
             min-height: 100vh;
             overflow-x: hidden;
-            background: linear-gradient(180deg,
-                #aad4ee 0%, #c8e8f5 18%,
-                #d8f0d4 42%, #e8f5e0 62%, #eff7ea 100%);
+            background: 
+                linear-gradient(180deg, transparent 0%, transparent 72%, #3a7a10 72%, #2e6008 100%),
+                linear-gradient(180deg,
+                    #aad4ee 0%, #c8e8f5 18%,
+                    #d8f0d4 42%, #e8f5e0 62%, #eff7ea 100%);
         }
 
         /* ── SKY LAYER ── */
@@ -72,12 +74,14 @@
 
         /* ── GROUND ── */
         #ground-strip {
-            position: fixed;
-            bottom: 0; left: 0;
-            width: 100%; height: 120px;
+            position: relative;
+            width: 100%;
+            height: 110px;
             background: radial-gradient(ellipse at 50% 110%, #6aaa26 0%, #4a8a16 45%, #2e5e08 100%);
-            border-radius: 55% 55% 0 0 / 35% 35% 0 0;
-            z-index: 0;
+            border-radius: 55% 55% 0 0 / 40% 40% 0 0;
+            z-index: 5;
+            margin-top: -80px;
+            flex-shrink: 0;
         }
 
         header {
@@ -131,8 +135,6 @@
             filter: drop-shadow(0 0 13px rgba(255,215,0,0.95)) brightness(1.14);
             transform: scale(1.13);
         }
-        .lemon-group:hover .lemon-label-bg  { opacity: 1; }
-        .lemon-group:hover .lemon-label-text { opacity: 1; }
         .sparkle .lemon-fruit { animation: lemon-pop 0.62s ease-out forwards; }
         @keyframes lemon-pop {
             0%  { filter:brightness(1); transform:scale(1); }
@@ -140,9 +142,9 @@
             70% { transform:scale(0.93) rotate(3deg); }
             100%{ filter:brightness(1); transform:scale(1) rotate(0); }
         }
-        .lemon-label-bg   { opacity: 0; transition: opacity 0.18s; }
-        .lemon-label-text { opacity: 0; transition: opacity 0.18s;
-            font-size: 10px; font-weight: 700; fill: #3a2800; text-anchor: middle;
+        .lemon-label-bg   { opacity: 1; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.18)); }
+        .lemon-label-text { opacity: 1;
+            font-size: 10.5px; font-weight: 800; fill: #3a2800; text-anchor: middle;
             font-family: 'Quicksand', sans-serif; }
 
         .trunk-node { cursor: pointer; }
@@ -153,7 +155,8 @@
         /* Market */
         .market-section {
             width: 100%; max-width: 1000px;
-            text-align: center; margin: 4px 0 80px 0;
+            text-align: center; margin: 0 0 0 0;
+            padding: 24px 1rem 60px;
             position: relative; z-index: 10;
         }
         .market-btn {
@@ -474,8 +477,6 @@
 
 </div><!-- #sky-layer -->
 
-<div id="ground-strip"></div>
-
 <header>
   <a href="https://ducj-creator.github.io/Teacher-Shirley/study-tools/index.html" class="back-btn">← Return to Base</a>
 </header>
@@ -536,6 +537,23 @@
   <radialGradient id="fBr" cx="38%" cy="30%" r="55%">
     <stop offset="0%"  stop-color="#84d488"/><stop offset="55%" stop-color="#48a84c"/><stop offset="100%" stop-color="#1e6a22"/>
   </radialGradient>
+
+  <!-- Leaf organic edge: turbulence displacement on FILLED shapes only (safe — no stroke distortion) -->
+  <!-- Strong warp for canopy blob edges — makes them look like real leaf masses -->
+  <filter id="fOrg" x="-18%" y="-18%" width="136%" height="136%">
+    <feTurbulence type="turbulence" baseFrequency="0.028 0.034" numOctaves="5" seed="42" result="warp"/>
+    <feDisplacementMap in="SourceGraphic" in2="warp" scale="18" xChannelSelector="R" yChannelSelector="G" result="warped"/>
+    <!-- Add surface grain on top -->
+    <feTurbulence type="fractalNoise" baseFrequency="0.22" numOctaves="3" seed="9" result="grain"/>
+    <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0.04  0 0 0 0 0  0 0 0 0.18 0" in="grain" result="grainDim"/>
+    <feComposite in="grainDim" in2="warped" operator="in" result="grainMasked"/>
+    <feMerge><feMergeNode in="warped"/><feMergeNode in="grainMasked"/></feMerge>
+  </filter>
+  <!-- Lighter warp for surface highlight clusters -->
+  <filter id="fOrgSm" x="-12%" y="-12%" width="124%" height="124%">
+    <feTurbulence type="turbulence" baseFrequency="0.038 0.044" numOctaves="4" seed="17" result="warp"/>
+    <feDisplacementMap in="SourceGraphic" in2="warp" scale="12" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
   <!-- Leaf surface: waxy grain + slight displacement for organic edge -->
   <filter id="lfT" x="-5%" y="-5%" width="110%" height="110%">
     <feTurbulence type="fractalNoise" baseFrequency="0.16" numOctaves="4" seed="3" result="ln"/>
@@ -684,77 +702,154 @@
 <path d="M600,362 Q648,336 698,306" fill="none" stroke="#2e1608" stroke-width="0.8" stroke-linecap="round" opacity="0.30"/>
 <path d="M755,258 Q796,240 836,218" fill="none" stroke="#2e1608" stroke-width="0.7" stroke-linecap="round" opacity="0.28"/>
 
-<!-- ════ CANOPY FOLIAGE ════ -->
+<!-- ════ CANOPY FOLIAGE — organic leaf masses ════
+     Strategy: many overlapping filled ellipses at different sizes/positions,
+     with feTurbulence+feDisplacementMap (fOrg) applied to FILLED shapes only
+     (safe — displacement only distorts fill, not strokes).
+     Multiple green tones + depth shadows give 3D canopy volume.          -->
 
-<!-- Shadow layer -->
-<g opacity="0.60" filter="url(#lfT)">
-  <ellipse cx="500" cy="156" rx="120" ry="110" fill="url(#fDk)"/>
-  <ellipse cx="391" cy="193" rx="106" ry="97"  fill="url(#fDk)"/>
-  <ellipse cx="615" cy="191" rx="104" ry="96"  fill="url(#fDk)"/>
-  <ellipse cx="316" cy="253" rx="92"  ry="85"  fill="url(#fDk)"/>
-  <ellipse cx="701" cy="249" rx="92"  ry="85"  fill="url(#fDk)"/>
-  <ellipse cx="205" cy="306" rx="80"  ry="72"  fill="url(#fDk)"/>
-  <ellipse cx="153" cy="417" rx="70"  ry="62"  fill="url(#fDk)"/>
-  <ellipse cx="169" cy="518" rx="76"  ry="68"  fill="url(#fDk)"/>
-  <ellipse cx="249" cy="565" rx="70"  ry="62"  fill="url(#fDk)"/>
-  <ellipse cx="814" cy="299" rx="78"  ry="70"  fill="url(#fDk)"/>
-  <ellipse cx="876" cy="399" rx="70"  ry="62"  fill="url(#fDk)"/>
-  <ellipse cx="908" cy="489" rx="74"  ry="66"  fill="url(#fDk)"/>
-  <ellipse cx="840" cy="531" rx="66"  ry="58"  fill="url(#fDk)"/>
+<!-- ── DEPTH SHADOW: darkest layer, gives the illusion of interior depth ── -->
+<g filter="url(#fOrg)" opacity="0.72">
+  <!-- Crown centre depth -->
+  <ellipse cx="500" cy="160" rx="148" ry="132" fill="#0d4010"/>
+  <ellipse cx="394" cy="200" rx="122" ry="108" fill="#0d4010"/>
+  <ellipse cx="614" cy="198" rx="120" ry="106" fill="#0d4010"/>
+  <ellipse cx="318" cy="262" rx="104" ry="92"  fill="#0d4010"/>
+  <ellipse cx="696" cy="258" rx="104" ry="92"  fill="#0d4010"/>
+  <ellipse cx="446" cy="148" rx="108" ry="94"  fill="#0d4010"/>
+  <ellipse cx="560" cy="145" rx="108" ry="94"  fill="#0d4010"/>
+  <!-- Left arm depth -->
+  <ellipse cx="214" cy="308" rx="90"  ry="78"  fill="#0a3a0c"/>
+  <ellipse cx="157" cy="418" rx="80"  ry="70"  fill="#0a3a0c"/>
+  <ellipse cx="176" cy="524" rx="86"  ry="75"  fill="#0a3a0c"/>
+  <ellipse cx="256" cy="572" rx="80"  ry="70"  fill="#0a3a0c"/>
+  <!-- Right arm depth -->
+  <ellipse cx="826" cy="306" rx="88"  ry="76"  fill="#0a3a0c"/>
+  <ellipse cx="884" cy="406" rx="80"  ry="70"  fill="#0a3a0c"/>
+  <ellipse cx="916" cy="494" rx="84"  ry="72"  fill="#0a3a0c"/>
+  <ellipse cx="848" cy="538" rx="76"  ry="66"  fill="#0a3a0c"/>
 </g>
 
-<!-- Mid layer -->
-<g opacity="0.84" filter="url(#lfT)">
-  <ellipse cx="500" cy="143" rx="114" ry="104" fill="url(#fMd)"/>
-  <ellipse cx="397" cy="179" rx="100" ry="91"  fill="url(#fMd)"/>
-  <ellipse cx="611" cy="177" rx="99"  ry="90"  fill="url(#fMd)"/>
-  <ellipse cx="323" cy="239" rx="87"  ry="79"  fill="url(#fMd)"/>
-  <ellipse cx="693" cy="236" rx="87"  ry="79"  fill="url(#fMd)"/>
-  <ellipse cx="443" cy="137" rx="90"  ry="81"  fill="url(#fMd)"/>
-  <ellipse cx="565" cy="135" rx="90"  ry="81"  fill="url(#fMd)"/>
-  <ellipse cx="219" cy="293" rx="76"  ry="68"  fill="url(#fMd)"/>
-  <ellipse cx="164" cy="404" rx="66"  ry="58"  fill="url(#fMd)"/>
-  <ellipse cx="181" cy="506" rx="72"  ry="63"  fill="url(#fMd)"/>
-  <ellipse cx="257" cy="555" rx="67"  ry="59"  fill="url(#fMd)"/>
-  <ellipse cx="823" cy="286" rx="74"  ry="65"  fill="url(#fMd)"/>
-  <ellipse cx="882" cy="385" rx="66"  ry="58"  fill="url(#fMd)"/>
-  <ellipse cx="914" cy="475" rx="70"  ry="61"  fill="url(#fMd)"/>
-  <ellipse cx="846" cy="519" rx="63"  ry="55"  fill="url(#fMd)"/>
+<!-- ── MAIN MID LAYER: primary leaf-cluster colour ── -->
+<g filter="url(#fOrg)" opacity="0.95">
+  <!-- Crown — many overlapping clusters at staggered sizes -->
+  <ellipse cx="500" cy="148" rx="138" ry="122" fill="#2a7a2e"/>
+  <ellipse cx="500" cy="132" rx="118" ry="104" fill="#2e8232"/>
+  <ellipse cx="390" cy="188" rx="114" ry="100" fill="#266a2a"/>
+  <ellipse cx="618" cy="185" rx="112" ry="98"  fill="#2a7230"/>
+  <ellipse cx="322" cy="248" rx="98"  ry="86"  fill="#246028"/>
+  <ellipse cx="692" cy="244" rx="98"  ry="86"  fill="#2a6e2e"/>
+  <ellipse cx="446" cy="140" rx="102" ry="88"  fill="#2e7832"/>
+  <ellipse cx="558" cy="137" rx="102" ry="88"  fill="#287030"/>
+  <ellipse cx="370" cy="170" rx="82"  ry="72"  fill="#246228"/>
+  <ellipse cx="642" cy="168" rx="82"  ry="72"  fill="#2a6e2e"/>
+  <ellipse cx="500" cy="108" rx="90"  ry="78"  fill="#2e8232"/>
+  <ellipse cx="460" cy="100" rx="76"  ry="66"  fill="#347a38"/>
+  <ellipse cx="544" cy="98"  rx="76"  ry="66"  fill="#307236"/>
+  <!-- Small cluster bumps on crown edges for jagged silhouette -->
+  <ellipse cx="500" cy="80"  rx="62"  ry="54"  fill="#2a7830"/>
+  <ellipse cx="432" cy="92"  rx="54"  ry="46"  fill="#246228"/>
+  <ellipse cx="570" cy="90"  rx="54"  ry="46"  fill="#287232"/>
+  <ellipse cx="360" cy="138" rx="60"  ry="52"  fill="#246028"/>
+  <ellipse cx="648" cy="136" rx="60"  ry="52"  fill="#266a2a"/>
+  <!-- Left arm clusters -->
+  <ellipse cx="218" cy="296" rx="84"  ry="72"  fill="#266028"/>
+  <ellipse cx="162" cy="407" rx="74"  ry="64"  fill="#246228"/>
+  <ellipse cx="178" cy="512" rx="80"  ry="68"  fill="#2a6e2e"/>
+  <ellipse cx="258" cy="558" rx="74"  ry="64"  fill="#246028"/>
+  <ellipse cx="145" cy="340" rx="66"  ry="56"  fill="#1e5822"/>
+  <ellipse cx="128" cy="452" rx="62"  ry="54"  fill="#1e5a22"/>
+  <ellipse cx="140" cy="560" rx="66"  ry="56"  fill="#1e5822"/>
+  <!-- Right arm clusters -->
+  <ellipse cx="824" cy="292" rx="82"  ry="70"  fill="#2a6e2e"/>
+  <ellipse cx="880" cy="394" rx="74"  ry="64"  fill="#267030"/>
+  <ellipse cx="912" cy="482" rx="78"  ry="66"  fill="#2a6e2e"/>
+  <ellipse cx="844" cy="526" rx="70"  ry="60"  fill="#246228"/>
+  <ellipse cx="940" cy="332" rx="66"  ry="56"  fill="#205a24"/>
+  <ellipse cx="950" cy="440" rx="62"  ry="52"  fill="#1e5822"/>
+  <ellipse cx="940" cy="545" rx="64"  ry="54"  fill="#1e5822"/>
 </g>
 
-<!-- Light layer -->
-<g opacity="0.78" filter="url(#lfT)">
-  <ellipse cx="499" cy="129" rx="100" ry="91"  fill="url(#fLt)"/>
-  <ellipse cx="409" cy="163" rx="90"  ry="81"  fill="url(#fLt)"/>
-  <ellipse cx="601" cy="161" rx="90"  ry="81"  fill="url(#fLt)"/>
-  <ellipse cx="335" cy="221" rx="80"  ry="73"  fill="url(#fLt)"/>
-  <ellipse cx="677" cy="218" rx="80"  ry="73"  fill="url(#fLt)"/>
-  <ellipse cx="456" cy="113" rx="80"  ry="72"  fill="url(#fLt)"/>
-  <ellipse cx="549" cy="111" rx="80"  ry="72"  fill="url(#fLt)"/>
-  <ellipse cx="367" cy="166" rx="67"  ry="59"  fill="url(#fLt)"/>
-  <ellipse cx="645" cy="164" rx="67"  ry="59"  fill="url(#fLt)"/>
-  <ellipse cx="501" cy="95"  rx="74"  ry="66"  fill="url(#fLt)"/>
-  <ellipse cx="233" cy="279" rx="66"  ry="58"  fill="url(#fLt)"/>
-  <ellipse cx="176" cy="391" rx="60"  ry="53"  fill="url(#fLt)"/>
-  <ellipse cx="195" cy="493" rx="64"  ry="56"  fill="url(#fLt)"/>
-  <ellipse cx="832" cy="273" rx="64"  ry="56"  fill="url(#fLt)"/>
-  <ellipse cx="887" cy="372" rx="60"  ry="53"  fill="url(#fLt)"/>
-  <ellipse cx="920" cy="461" rx="62"  ry="54"  fill="url(#fLt)"/>
+<!-- ── LIGHTER MID: brings out cluster separation and volume ── -->
+<g filter="url(#fOrg)" opacity="0.82">
+  <ellipse cx="500" cy="135" rx="122" ry="108" fill="#3a9040"/>
+  <ellipse cx="396" cy="172" rx="106" ry="92"  fill="#368a3c"/>
+  <ellipse cx="612" cy="170" rx="104" ry="90"  fill="#3a8e40"/>
+  <ellipse cx="328" cy="232" rx="90"  ry="78"  fill="#327a38"/>
+  <ellipse cx="686" cy="228" rx="90"  ry="78"  fill="#3a9040"/>
+  <ellipse cx="452" cy="126" rx="92"  ry="80"  fill="#3e9444"/>
+  <ellipse cx="554" cy="124" rx="92"  ry="80"  fill="#388e3e"/>
+  <ellipse cx="500" cy="96"  rx="78"  ry="68"  fill="#3e9844"/>
+  <ellipse cx="374" cy="155" rx="70"  ry="60"  fill="#347838"/>
+  <ellipse cx="636" cy="153" rx="70"  ry="60"  fill="#388a3e"/>
+  <!-- Left -->
+  <ellipse cx="225" cy="280" rx="74"  ry="64"  fill="#3a8a40"/>
+  <ellipse cx="170" cy="391" rx="66"  ry="58"  fill="#367e3c"/>
+  <ellipse cx="186" cy="497" rx="70"  ry="60"  fill="#3a8840"/>
+  <ellipse cx="264" cy="543" rx="66"  ry="58"  fill="#347838"/>
+  <!-- Right -->
+  <ellipse cx="830" cy="278" rx="72"  ry="62"  fill="#388a3e"/>
+  <ellipse cx="886" cy="380" rx="66"  ry="58"  fill="#3a8e42"/>
+  <ellipse cx="917" cy="468" rx="68"  ry="60"  fill="#368838"/>
+  <ellipse cx="850" cy="513" rx="62"  ry="54"  fill="#327a38"/>
 </g>
 
-<!-- Bright highlight top -->
-<g opacity="0.66" filter="url(#lfT)">
-  <ellipse cx="498" cy="113" rx="86"  ry="77"  fill="url(#fBr)"/>
-  <ellipse cx="419" cy="145" rx="77"  ry="69"  fill="url(#fBr)"/>
-  <ellipse cx="593" cy="143" rx="77"  ry="69"  fill="url(#fBr)"/>
-  <ellipse cx="349" cy="201" rx="70"  ry="63"  fill="url(#fBr)"/>
-  <ellipse cx="663" cy="198" rx="70"  ry="63"  fill="url(#fBr)"/>
-  <ellipse cx="465" cy="99"  rx="70"  ry="62"  fill="url(#fBr)"/>
-  <ellipse cx="543" cy="97"  rx="70"  ry="62"  fill="url(#fBr)"/>
-  <ellipse cx="245" cy="265" rx="57"  ry="50"  fill="url(#fBr)"/>
-  <ellipse cx="189" cy="377" rx="52"  ry="45"  fill="url(#fBr)"/>
-  <ellipse cx="842" cy="261" rx="55"  ry="48"  fill="url(#fBr)"/>
-  <ellipse cx="894" cy="359" rx="50"  ry="43"  fill="url(#fBr)"/>
+<!-- ── SURFACE HIGHLIGHTS: sun-lit tops of each cluster ── -->
+<g filter="url(#fOrgSm)" opacity="0.78">
+  <!-- Crown sun-top -->
+  <ellipse cx="500" cy="118" rx="106" ry="92"  fill="#54b458"/>
+  <ellipse cx="500" cy="98"  rx="86"  ry="74"  fill="#64c268"/>
+  <ellipse cx="500" cy="78"  rx="64"  ry="54"  fill="#72cc76"/>
+  <ellipse cx="404" cy="152" rx="92"  ry="80"  fill="#50aa54"/>
+  <ellipse cx="604" cy="150" rx="92"  ry="80"  fill="#54ae58"/>
+  <ellipse cx="338" cy="212" rx="80"  ry="68"  fill="#4ea452"/>
+  <ellipse cx="672" cy="209" rx="80"  ry="68"  fill="#54aa58"/>
+  <ellipse cx="460" cy="108" rx="78"  ry="66"  fill="#5cba60"/>
+  <ellipse cx="546" cy="106" rx="78"  ry="66"  fill="#58b45c"/>
+  <ellipse cx="380" cy="142" rx="60"  ry="52"  fill="#4ea052"/>
+  <ellipse cx="628" cy="140" rx="60"  ry="52"  fill="#52a456"/>
+  <!-- Bright crown peak -->
+  <ellipse cx="500" cy="62"  rx="50"  ry="42"  fill="#80d884" opacity="0.9"/>
+  <ellipse cx="470" cy="78"  rx="38"  ry="32"  fill="#8edc92" opacity="0.7"/>
+  <ellipse cx="532" cy="76"  rx="38"  ry="32"  fill="#84d888" opacity="0.7"/>
+  <!-- Left arm highlights -->
+  <ellipse cx="232" cy="264" rx="64"  ry="54"  fill="#54b058"/>
+  <ellipse cx="176" cy="374" rx="58"  ry="50"  fill="#50aa54"/>
+  <ellipse cx="194" cy="480" rx="62"  ry="52"  fill="#54ae58"/>
+  <ellipse cx="270" cy="527" rx="58"  ry="50"  fill="#4ea452"/>
+  <!-- Right arm highlights -->
+  <ellipse cx="836" cy="260" rx="62"  ry="52"  fill="#54b058"/>
+  <ellipse cx="891" cy="364" rx="58"  ry="50"  fill="#54b25a"/>
+  <ellipse cx="922" cy="454" rx="60"  ry="52"  fill="#50ac54"/>
+  <ellipse cx="854" cy="500" rx="56"  ry="48"  fill="#4ea452"/>
+</g>
+
+<!-- ── INDIVIDUAL LEAF TIPS: poke out from edges for natural silhouette ── -->
+<g fill="#3a8c3e" opacity="0.88">
+  <!-- Crown top -->
+  <path d="M476,56 Q472,38 482,24 Q492,40 486,58Z"/>
+  <path d="M494,48 Q492,28 504,16 Q514,30 508,50Z"/>
+  <path d="M516,50 Q518,30 528,20 Q536,34 528,52Z"/>
+  <path d="M540,58 Q544,40 554,32 Q558,48 550,64Z"/>
+  <path d="M456,68 Q450,50 460,38 Q470,52 464,70Z"/>
+  <path d="M422,88 Q414,70 424,58 Q436,72 430,92Z"/>
+  <path d="M580,84 Q590,66 600,76 Q594,92 584,98Z"/>
+  <path d="M352,162 Q342,146 354,134 Q364,148 358,166Z"/>
+  <path d="M654,158 Q666,142 674,154 Q668,170 658,168Z"/>
+  <!-- Left arm -->
+  <path d="M130,352 Q118,336 128,322 Q140,336 136,354Z"/>
+  <path d="M108,428 Q96,412 106,400 Q118,414 114,432Z"/>
+  <path d="M114,516 Q102,500 112,488 Q124,502 120,520Z"/>
+  <path d="M138,598 Q126,582 138,570 Q148,584 144,602Z"/>
+  <!-- Right arm -->
+  <path d="M952,346 Q964,330 956,318 Q944,334 948,350Z"/>
+  <path d="M966,425 Q978,410 970,398 Q958,412 962,430Z"/>
+  <path d="M960,510 Q972,496 964,484 Q952,498 956,514Z"/>
+  <path d="M946,590 Q958,576 950,564 Q938,578 942,596Z"/>
+  <!-- Yellow-green tips for variety -->
+  <path d="M500,42 Q498,26 506,16 Q514,28 510,44Z" fill="#5ab85e"/>
+  <path d="M486,52 Q482,36 490,26 Q500,38 496,54Z" fill="#4eb052"/>
+  <path d="M514,52 Q516,36 524,28 Q530,40 524,56Z" fill="#52b456"/>
 </g>
 
 <!-- ════ TWIG LEAF CLUSTERS ════
@@ -1148,8 +1243,150 @@
 
 </g><!-- end .tree-body -->
 
+<!-- ════ GROUND FLOWERS ════
+     Positioned along the bottom of the SVG (y ~890–970) in the grass zone.
+     Daisies: white petals around yellow centre.
+     Dandelions: fluffy seed-head on tall thin stem.
+     Grass blades interspersed for realism.                    -->
+
+<!-- ── GROUND FLOWERS & GRASS ── -->
+<defs>
+  <!-- Daisy: stem grows UP from (0,0), flower head at top.
+       Use translate(x,y) where y is the ground line. -->
+  <g id="daisy-lg">
+    <!-- Stem -->
+    <line x1="0" y1="0" x2="-1" y2="-36" stroke="#4a8c18" stroke-width="2" stroke-linecap="round"/>
+    <!-- Leaf -->
+    <path d="M-1,-20 Q-10,-25 -13,-18 Q-7,-13 -1,-20Z" fill="#4a8c18"/>
+    <!-- 8 petals, each is a thin ellipse rotated around the flower centre (0,-40) -->
+    <g transform="translate(0,-40)">
+      <ellipse rx="4" ry="9" fill="white" stroke="#e8e8e8" stroke-width="0.5" transform="rotate(0)   translate(0,-6)"/>
+      <ellipse rx="4" ry="9" fill="white" stroke="#e8e8e8" stroke-width="0.5" transform="rotate(45)  translate(0,-6)"/>
+      <ellipse rx="4" ry="9" fill="white" stroke="#e8e8e8" stroke-width="0.5" transform="rotate(90)  translate(0,-6)"/>
+      <ellipse rx="4" ry="9" fill="white" stroke="#e8e8e8" stroke-width="0.5" transform="rotate(135) translate(0,-6)"/>
+      <ellipse rx="4" ry="9" fill="white" stroke="#e8e8e8" stroke-width="0.5" transform="rotate(180) translate(0,-6)"/>
+      <ellipse rx="4" ry="9" fill="white" stroke="#e8e8e8" stroke-width="0.5" transform="rotate(225) translate(0,-6)"/>
+      <ellipse rx="4" ry="9" fill="white" stroke="#e8e8e8" stroke-width="0.5" transform="rotate(270) translate(0,-6)"/>
+      <ellipse rx="4" ry="9" fill="white" stroke="#e8e8e8" stroke-width="0.5" transform="rotate(315) translate(0,-6)"/>
+      <!-- Yellow centre -->
+      <circle r="6.5" fill="#f5c400"/>
+      <circle r="4.5" fill="#e0a800"/>
+      <circle cx="-1.5" cy="-1" r="1" fill="#b88000" opacity="0.5"/>
+      <circle cx="1.2" cy="1.2" r="0.9" fill="#b88000" opacity="0.5"/>
+      <circle cx="0" cy="-1.8" r="0.9" fill="#b88000" opacity="0.5"/>
+    </g>
+  </g>
+
+  <g id="daisy-sm">
+    <line x1="0" y1="0" x2="1" y2="-26" stroke="#5a9a22" stroke-width="1.6" stroke-linecap="round"/>
+    <path d="M1,-14 Q8,-18 9,-13 Q4,-9 1,-14Z" fill="#5a9a22"/>
+    <g transform="translate(0,-29)">
+      <ellipse rx="3" ry="7" fill="white" stroke="#e0e0e0" stroke-width="0.4" transform="rotate(0)   translate(0,-4.5)"/>
+      <ellipse rx="3" ry="7" fill="white" stroke="#e0e0e0" stroke-width="0.4" transform="rotate(60)  translate(0,-4.5)"/>
+      <ellipse rx="3" ry="7" fill="white" stroke="#e0e0e0" stroke-width="0.4" transform="rotate(120) translate(0,-4.5)"/>
+      <ellipse rx="3" ry="7" fill="white" stroke="#e0e0e0" stroke-width="0.4" transform="rotate(180) translate(0,-4.5)"/>
+      <ellipse rx="3" ry="7" fill="white" stroke="#e0e0e0" stroke-width="0.4" transform="rotate(240) translate(0,-4.5)"/>
+      <ellipse rx="3" ry="7" fill="white" stroke="#e0e0e0" stroke-width="0.4" transform="rotate(300) translate(0,-4.5)"/>
+      <circle r="4.8" fill="#f5c400"/>
+      <circle r="3.2" fill="#e0a800"/>
+    </g>
+  </g>
+
+  <!-- Dandelion seed-head -->
+  <g id="dandelion">
+    <path d="M0,0 Q2,-22 0,-46" fill="none" stroke="#5a8c1a" stroke-width="1.8" stroke-linecap="round"/>
+    <path d="M0,-24 Q-9,-28 -11,-21 Q-5,-16 0,-24Z" fill="#5a9a22"/>
+    <!-- Centre -->
+    <circle cx="0" cy="-48" r="2.2" fill="#d4b840"/>
+    <!-- 16 radiating seed-rays with fluffy tips -->
+    <g stroke="#9ab030" stroke-width="0.8" stroke-linecap="round">
+      <line x1="0" y1="-48" x2="0"    y2="-62"/><circle cx="0"    cy="-63.5" r="2" fill="rgba(255,255,255,0.95)"/>
+      <line x1="0" y1="-48" x2="5.4"  y2="-61"/><circle cx="5.9"  cy="-62.5" r="2" fill="rgba(255,255,255,0.93)"/>
+      <line x1="0" y1="-48" x2="9.9"  y2="-57"/><circle cx="10.8" cy="-58.5" r="2" fill="rgba(255,255,255,0.91)"/>
+      <line x1="0" y1="-48" x2="12.8" y2="-51"/><circle cx="13.9" cy="-52"   r="2" fill="rgba(255,255,255,0.91)"/>
+      <line x1="0" y1="-48" x2="14"   y2="-43"/><circle cx="15.2" cy="-43.5" r="2" fill="rgba(255,255,255,0.90)"/>
+      <line x1="0" y1="-48" x2="12.8" y2="-36"/><circle cx="13.9" cy="-35"   r="2" fill="rgba(255,255,255,0.90)"/>
+      <line x1="0" y1="-48" x2="9.9"  y2="-32"/><circle cx="10.8" cy="-31"   r="2" fill="rgba(255,255,255,0.90)"/>
+      <line x1="0" y1="-48" x2="5.4"  y2="-30"/><circle cx="5.9"  cy="-29"   r="2" fill="rgba(255,255,255,0.91)"/>
+      <line x1="0" y1="-48" x2="0"    y2="-30"/><circle cx="0"    cy="-28.5" r="2" fill="rgba(255,255,255,0.91)"/>
+      <line x1="0" y1="-48" x2="-5.4" y2="-30"/><circle cx="-5.9" cy="-29"   r="2" fill="rgba(255,255,255,0.91)"/>
+      <line x1="0" y1="-48" x2="-9.9" y2="-32"/><circle cx="-10.8" cy="-31"  r="2" fill="rgba(255,255,255,0.90)"/>
+      <line x1="0" y1="-48" x2="-12.8" y2="-36"/><circle cx="-13.9" cy="-35" r="2" fill="rgba(255,255,255,0.90)"/>
+      <line x1="0" y1="-48" x2="-14"  y2="-43"/><circle cx="-15.2" cy="-43.5" r="2" fill="rgba(255,255,255,0.90)"/>
+      <line x1="0" y1="-48" x2="-12.8" y2="-51"/><circle cx="-13.9" cy="-52" r="2" fill="rgba(255,255,255,0.91)"/>
+      <line x1="0" y1="-48" x2="-9.9" y2="-57"/><circle cx="-10.8" cy="-58.5" r="2" fill="rgba(255,255,255,0.91)"/>
+      <line x1="0" y1="-48" x2="-5.4" y2="-61"/><circle cx="-5.9" cy="-62.5" r="2" fill="rgba(255,255,255,0.93)"/>
+    </g>
+  </g>
+
+  <!-- Dandelion yellow bud (not yet opened) -->
+  <g id="dand-bud">
+    <path d="M0,0 Q1,-16 0,-30" fill="none" stroke="#5a8c1a" stroke-width="1.5" stroke-linecap="round"/>
+    <ellipse cx="0" cy="-33" rx="3.5" ry="6" fill="#d4b030"/>
+    <path d="M0,-39 Q-3,-33 0,-30 Q3,-33 0,-39Z" fill="#7ab820" opacity="0.9"/>
+    <path d="M0,-39 Q4,-35 3,-31 Q1,-30 0,-39Z" fill="#5a9820" opacity="0.8"/>
+  </g>
+
+  <!-- Grass blade set (3 blades, use translate to position) -->
+  <g id="grass3">
+    <path d="M-4,0 Q-5,-14 -8,-24" fill="none" stroke="#4a8a18" stroke-width="2.2" stroke-linecap="round"/>
+    <path d="M0,0 Q0,-18 1,-30" fill="none" stroke="#5a9a22" stroke-width="2" stroke-linecap="round"/>
+    <path d="M5,0 Q6,-14 9,-22" fill="none" stroke="#4a8218" stroke-width="1.8" stroke-linecap="round"/>
+  </g>
+</defs>
+
+<!-- Grass along ground -->
+<use href="#grass3" transform="translate(80,940)"/>
+<use href="#grass3" transform="translate(148,940) scale(0.9)"/>
+<use href="#grass3" transform="translate(215,940) scale(1.1)"/>
+<use href="#grass3" transform="translate(285,940)"/>
+<use href="#grass3" transform="translate(355,940) scale(0.85)"/>
+<use href="#grass3" transform="translate(680,940) scale(0.9)"/>
+<use href="#grass3" transform="translate(750,940)"/>
+<use href="#grass3" transform="translate(820,940) scale(1.05)"/>
+<use href="#grass3" transform="translate(890,940) scale(0.9)"/>
+<use href="#grass3" transform="translate(960,940)"/>
+<use href="#grass3" transform="translate(420,940) scale(0.8)" opacity="0.7"/>
+<use href="#grass3" transform="translate(620,940) scale(0.8)" opacity="0.7"/>
+
+<!-- DAISIES — left side -->
+<use href="#daisy-lg" transform="translate(112,940)"/>
+<use href="#daisy-sm" transform="translate(131,942) rotate(-8,131,942)"/>
+<use href="#daisy-lg" transform="translate(172,940) scale(0.88) rotate(6)"/>
+<use href="#daisy-sm" transform="translate(248,942) rotate(-5,248,942)"/>
+<use href="#daisy-lg" transform="translate(318,940) scale(0.92) rotate(-8)"/>
+<use href="#daisy-sm" transform="translate(336,943) rotate(7,336,943)"/>
+
+<!-- DAISIES — right side -->
+<use href="#daisy-lg" transform="translate(792,940) scale(0.94) rotate(-6)"/>
+<use href="#daisy-sm" transform="translate(812,943) rotate(9,812,943)"/>
+<use href="#daisy-lg" transform="translate(868,940) rotate(5)"/>
+<use href="#daisy-sm" transform="translate(888,943) rotate(-4,888,943)"/>
+<use href="#daisy-lg" transform="translate(948,940) scale(0.9) rotate(7)"/>
+<use href="#daisy-sm" transform="translate(968,943) rotate(-6,968,943)"/>
+
+<!-- DANDELIONS — left side -->
+<use href="#dandelion"  transform="translate(152,940) rotate(5,152,940)"/>
+<use href="#dand-bud"   transform="translate(166,942) rotate(-4,166,942)"/>
+<use href="#dandelion"  transform="translate(276,938) scale(0.88) rotate(-6)"/>
+<use href="#dand-bud"   transform="translate(290,942) rotate(8,290,942)"/>
+
+<!-- DANDELIONS — right side -->
+<use href="#dandelion"  transform="translate(836,938) rotate(-5,836,938)"/>
+<use href="#dand-bud"   transform="translate(850,942) rotate(6,850,942)"/>
+<use href="#dandelion"  transform="translate(920,940) scale(0.9) rotate(4)"/>
+<use href="#dand-bud"   transform="translate(934,942) rotate(-7,934,942)"/>
+
+<!-- Small flowers near trunk base -->
+<use href="#daisy-sm"   transform="translate(436,942) scale(0.78) rotate(-10)" opacity="0.85"/>
+<use href="#dand-bud"   transform="translate(464,942) scale(0.82) rotate(5,464,942)" opacity="0.85"/>
+<use href="#daisy-sm"   transform="translate(628,942) scale(0.78) rotate(8)" opacity="0.85"/>
+<use href="#dand-bud"   transform="translate(652,942) scale(0.82) rotate(-6,652,942)" opacity="0.85"/>
+
 </svg>
-</div>
+</div><!-- .tree-container -->
+
+<div id="ground-strip"></div>
 
 <!-- Market -->
 <div class="market-section">
