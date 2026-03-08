@@ -23,7 +23,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Inter', 'Noto Sans TC', sans-serif; background: var(--bg-color); color: var(--text-main); }
 
-    /* --- 您的專屬標題區塊 --- */
+    /* --- 標題區塊 --- */
     .hero-section {
       background: var(--primary-gradient);
       padding: 60px 20px 80px;
@@ -37,7 +37,6 @@
 
     .container { max-width: 900px; margin: 0 auto; padding: 0 15px 50px; position: relative; z-index: 10; }
     
-    /* 玻璃質感控制面板 */
     .control-card {
       background: var(--glass-bg);
       backdrop-filter: blur(10px);
@@ -49,7 +48,6 @@
       margin-bottom: 25px;
     }
 
-    /* 模式切換 */
     .nav-bar { display: flex; background: #f1f5f9; padding: 4px; border-radius: 12px; width: fit-content; margin: 0 auto 20px; }
     .nav-btn { border: none; background: transparent; padding: 10px 22px; border-radius: 10px; font-weight: 700; color: var(--text-sub); cursor: pointer; transition: 0.2s; }
     .nav-btn.active { background: white; color: var(--primary); box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
@@ -61,7 +59,7 @@
     .filter-btn { padding: 8px 16px; background: white; border: 1.5px solid #e2e8f0; border-radius: 20px; font-size: 0.85rem; cursor: pointer; font-weight: 700; color: var(--text-sub); transition: 0.2s; }
     .filter-btn.active { background: var(--text-main); color: white; border-color: var(--text-main); }
 
-    /* 卡片與網格 */
+    /* 網格與卡片 */
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px; }
     .card { background: white; border-radius: var(--radius); padding: 22px; border: 1px solid #f1f5f9; position: relative; }
     .card-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
@@ -73,17 +71,16 @@
     .v-label { font-size: 0.65rem; color: #94a3b8; font-weight: 800; display: block; margin-bottom: 5px; }
     .v-word { font-weight: 700; color: var(--text-main); font-size: 1.05rem; }
 
-    /* Quiz 測驗樣式 */
+    .ex-panel { display: none; margin-top: 12px; padding: 15px; background: #f8fafc; border-radius: 12px; font-size: 0.95rem; color: #475569; border: 1px solid #f1f5f9; }
+
+    /* Quiz 樣式 */
     .quiz-card { background: white; border: 2px solid #e2e8f0; padding: 25px; border-radius: 18px; margin-bottom: 22px; }
     .quiz-sentence { font-size: 1.15rem; color: #1e293b; padding: 18px; background: #f8fafc; border-radius: 12px; border-left: 6px solid var(--primary); margin-bottom: 18px; line-height: 1.6; }
-    .quiz-input { width: 100%; padding: 15px; border-radius: 12px; border: 2.5px solid #e2e8f0; text-align: center; font-size: 1.1rem; outline: none; transition: 0.2s; }
-    .quiz-input:focus { border-color: var(--primary); }
-
+    .quiz-input { width: 100%; padding: 15px; border-radius: 12px; border: 2.5px solid #e2e8f0; text-align: center; font-size: 1.1rem; outline: none; }
     .feedback-msg { margin-top: 15px; padding: 12px; border-radius: 10px; font-weight: 800; display: none; }
     .fb-ok { background: #ecfdf5; color: #059669; display: block; border: 1px solid #10b981; }
     .fb-no { background: #fef2f2; color: #dc2626; display: block; border: 1px solid #ef4444; }
 
-    .ex-panel { display: none; margin-top: 12px; padding: 15px; background: #f8fafc; border-radius: 12px; font-size: 0.95rem; color: #475569; border: 1px solid #f1f5f9; }
     .hidden { display: none !important; }
     .type-AAA { background: var(--tag-aaa); } .type-ABA { background: var(--tag-aba); }
     .type-ABB { background: var(--tag-abb); } .type-ABC { background: var(--tag-abc); }
@@ -139,14 +136,16 @@
   let state = { mode: 'learn', filter: 'all', search: '', activeQuiz: [], activeType: '' };
 
   async function startApp() {
-    const [vText, qText] = await Promise.all([
-      fetch(URL_VERBS + "?t=" + Date.now()).then(r => r.text()),
-      fetch(URL_QUIZ + "?t=" + Date.now()).then(r => r.text())
-    ]);
-    verbs = parseVerbs(vText);
-    quizzes = parseQuizzes(qText);
-    render();
-    initEvents();
+    try {
+      const [vText, qText] = await Promise.all([
+        fetch(URL_VERBS + "?t=" + Date.now()).then(r => r.text()),
+        fetch(URL_QUIZ + "?t=" + Date.now()).then(r => r.text())
+      ]);
+      verbs = parseVerbs(vText);
+      quizzes = parseQuizzes(qText);
+      render();
+      initEvents();
+    } catch (e) { console.error("Loading Error", e); }
   }
 
   function parseVerbs(csv) {
@@ -154,15 +153,16 @@
     return lines.map(line => {
       const c = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
       return {
-        type: (c[0]||"ABC").trim(), v1: (c[1]||"").trim(), meaning: (c[2]||"").trim(),
+        // 確保 Type 是乾淨的字串，用於後續過濾比對
+        type: (c[0]||"ABC").trim().toUpperCase(), 
+        v1: (c[1]||"").trim(), meaning: (c[2]||"").trim(),
         ex1: (c[3]||"").trim(), v2: (c[4]||"").trim(), ex2: (c[5]||"").trim(),
         v3: (c[6]||"").trim(), ex3: (c[7]||"").trim(), note: (c[8]||"").trim()
       };
-    });
+    }).filter(v => v.v1);
   }
 
   function parseQuizzes(csv) {
-    // 兩欄式：Index 0 題目, Index 1 答案 (僅存於記憶體，不顯示)
     const lines = csv.trim().split(/\r?\n/).filter(Boolean).slice(1);
     return lines.map(line => {
       const c = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
@@ -183,13 +183,18 @@
     list.classList.remove('hidden'); filterSec.classList.remove('hidden');
     qArea.classList.add('hidden');
 
+    // 關鍵修正：確保過濾邏輯能精準匹配 Type
     const filtered = verbs.filter(v => {
-      const matchT = (state.filter === 'all' || v.type === state.filter);
+      const isAll = state.filter.toLowerCase() === 'all';
+      // 比對單字的 type 是否等於點選的 filter
+      const matchT = isAll || v.type === state.filter.toUpperCase();
       const matchS = v.v1.toLowerCase().includes(state.search) || v.meaning.includes(state.search);
       return matchT && matchS;
     });
 
-    list.innerHTML = filtered.map(v => state.mode === 'learn' ? buildStudy(v) : buildReview(v)).join('');
+    list.innerHTML = filtered.length > 0 
+      ? filtered.map(v => state.mode === 'learn' ? buildStudy(v) : buildReview(v)).join('')
+      : `<div style="text-align:center; grid-column: 1/-1; padding: 40px; color: var(--text-sub);">No verbs found.</div>`;
   }
 
   function buildStudy(v) {
@@ -242,7 +247,7 @@
           <div style="display:flex; gap:10px;">
             ${type === 'q1' ? 
               `<input class="quiz-input u-v2" placeholder="V2"> <input class="quiz-input u-v3" placeholder="V3">` : 
-              `<input class="quiz-input u-ans" placeholder="Type answer here...">`
+              `<input class="quiz-input u-ans" placeholder="填寫答案...">`
             }
           </div>
           <div class="feedback-msg"></div>
@@ -284,8 +289,10 @@
   window.checkReviewWord = (id, v2, v3) => {
     const i2 = document.getElementById('r2-'+id);
     const i3 = document.getElementById('r3-'+id);
-    i2.style.borderColor = i2.value.trim().toLowerCase() === v2.toLowerCase() ? '#10b981' : '#ef4444';
-    i3.style.borderColor = i3.value.trim().toLowerCase() === v3.toLowerCase() ? '#10b981' : '#ef4444';
+    const ok2 = i2.value.trim().toLowerCase() === v2.toLowerCase();
+    const ok3 = i3.value.trim().toLowerCase() === v3.toLowerCase();
+    i2.style.borderColor = ok2 ? '#10b981' : '#ef4444';
+    i3.style.borderColor = ok3 ? '#10b981' : '#ef4444';
   };
 
   function initEvents() {
