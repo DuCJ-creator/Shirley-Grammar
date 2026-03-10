@@ -541,28 +541,19 @@
   <!-- Leaf organic edge: turbulence displacement on FILLED shapes only (safe — no stroke distortion) -->
   <!-- Strong warp for canopy blob edges — makes them look like real leaf masses -->
   <filter id="fOrg" x="-18%" y="-18%" width="136%" height="136%">
-    <feTurbulence type="turbulence" baseFrequency="0.028 0.034" numOctaves="5" seed="42" result="warp"/>
-    <feDisplacementMap in="SourceGraphic" in2="warp" scale="18" xChannelSelector="R" yChannelSelector="G" result="warped"/>
-    <!-- Add surface grain on top -->
-    <feTurbulence type="fractalNoise" baseFrequency="0.22" numOctaves="3" seed="9" result="grain"/>
-    <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0.04  0 0 0 0 0  0 0 0 0.18 0" in="grain" result="grainDim"/>
-    <feComposite in="grainDim" in2="warped" operator="in" result="grainMasked"/>
-    <feMerge><feMergeNode in="warped"/><feMergeNode in="grainMasked"/></feMerge>
+    <feTurbulence type="turbulence" baseFrequency="0.028 0.034" numOctaves="2" seed="42" result="warp"/>
+    <feDisplacementMap in="SourceGraphic" in2="warp" scale="14" xChannelSelector="R" yChannelSelector="G"/>
   </filter>
   <!-- Lighter warp for surface highlight clusters -->
   <filter id="fOrgSm" x="-12%" y="-12%" width="124%" height="124%">
-    <feTurbulence type="turbulence" baseFrequency="0.038 0.044" numOctaves="4" seed="17" result="warp"/>
-    <feDisplacementMap in="SourceGraphic" in2="warp" scale="12" xChannelSelector="R" yChannelSelector="G"/>
+    <feTurbulence type="turbulence" baseFrequency="0.038 0.044" numOctaves="2" seed="17" result="warp"/>
+    <feDisplacementMap in="SourceGraphic" in2="warp" scale="10" xChannelSelector="R" yChannelSelector="G"/>
   </filter>
-  <!-- Leaf surface: waxy grain + slight displacement for organic edge -->
-  <filter id="lfT" x="-5%" y="-5%" width="110%" height="110%">
-    <feTurbulence type="fractalNoise" baseFrequency="0.16" numOctaves="4" seed="3" result="ln"/>
-    <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0.05  0 0 0 0 0  0 0 0 0.26 0" in="ln" result="lt"/>
-    <feComposite in="lt" in2="SourceGraphic" operator="in" result="tx"/>
-    <feTurbulence type="fractalNoise" baseFrequency="0.08" numOctaves="2" seed="7" result="en"/>
-    <feDisplacementMap in="SourceGraphic" in2="en" scale="2.2" result="ed"/>
-    <feComposite in="ed" in2="SourceGraphic" operator="in" result="soft"/>
-    <feMerge><feMergeNode in="soft"/><feMergeNode in="tx"/></feMerge>
+  <!-- Leaf surface: waxy grain only — NO displacement (displacement on animated elements = GPU burn) -->
+  <filter id="lfT" x="-2%" y="-2%" width="104%" height="104%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.18" numOctaves="2" seed="3" result="ln"/>
+    <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0.04  0 0 0 0 0  0 0 0 0.18 0" in="ln" result="lt"/>
+    <feComposite in="lt" in2="SourceGraphic" operator="in"/>
   </filter>
 
   <!-- Ground shadow -->
@@ -601,24 +592,82 @@
 <path d="M580,899 Q578,895 574,898" fill="none" stroke="#2e1608" stroke-width="1.5" stroke-linecap="round" opacity="0.45"/>
 <path d="M640,912 Q638,908 633,911" fill="none" stroke="#2e1608" stroke-width="1.3" stroke-linecap="round" opacity="0.4"/>
 
-<!-- ════ TRUNK ════ -->
-<!-- 1. Wide dark shadow silhouette (left edge) -->
-<path d="M468,864 Q458,640 464,400 Q470,270 482,212" fill="none" stroke="#180a02" stroke-width="64" stroke-linecap="round" opacity="0.55"/>
-<!-- 2. Main trunk body — warm mid-brown -->
-<path d="M500,864 Q494,640 496,400 Q497,270 500,212" fill="none" stroke="#6b3f1a" stroke-width="56" stroke-linecap="round"/>
-<!-- 3. Left shadow strip -->
-<path d="M474,862 Q466,640 470,400 Q474,274 482,214" fill="none" stroke="#2e1608" stroke-width="18" stroke-linecap="round" opacity="0.55"/>
-<!-- 4. Right shadow strip -->
-<path d="M526,862 Q534,640 530,400 Q526,274 518,214" fill="none" stroke="#2e1608" stroke-width="18" stroke-linecap="round" opacity="0.55"/>
-<!-- 5. Mid-tone layer -->
-<path d="M500,864 Q494,640 496,400 Q497,270 500,212" fill="none" stroke="#5c3a1e" stroke-width="40" stroke-linecap="round"/>
-<!-- 6. Highlight ridge — lighter warm stripe -->
-<path d="M496,862 Q494,640 495,400 Q496,274 497,222" fill="none" stroke="#8a5a2a" stroke-width="10" stroke-linecap="round" opacity="0.45"/>
-<!-- 7. Subtle left ambient light -->
-<path d="M486,856 Q482,640 484,400 Q486,280 488,222" fill="none" stroke="#7a4c22" stroke-width="6" stroke-linecap="round" opacity="0.3"/>
 
-<!-- ── BARK TEXTURE: longitudinal grain lines ── -->
-<!-- These run vertically, slightly wavy, mimicking real bark fibres -->
+<!-- ════ CANOPY FOLIAGE — drawn before trunk+branches so wood appears on top ════ -->
+
+<!-- Layer 1 — deep shadow interior -->
+<g opacity="0.80">
+  <path d="M358,310 Q318,260 330,188 Q344,108 420,72 Q496,36 578,56 Q658,76 686,148 Q714,212 680,278 Q728,230 776,262 Q832,304 812,374 Q856,324 902,356 Q952,398 930,464 Q966,492 972,550 Q978,614 930,652 Q892,682 842,665 Q814,706 770,718 Q718,730 678,704 Q640,748 578,754 Q516,760 470,720 Q414,744 366,720 Q304,694 280,642 Q228,666 182,638 Q126,602 148,530 Q110,510 102,456 Q86,388 152,346 Q128,292 168,252 Q204,216 260,226 Q290,172 352,162 Q406,150 432,196 Q390,240 358,310Z" fill="#0e420f"/>
+  <path d="M200,310 Q154,276 140,316 Q90,356 96,418 Q54,444 50,506 Q44,572 102,606 Q84,652 122,682 Q168,714 218,690 Q246,728 298,718 Q352,708 368,652 Q418,664 452,628 Q488,590 468,536 Q506,510 496,454 Q484,396 430,376 Q422,322 380,298 Q340,272 302,292Z" fill="#0a380c"/>
+  <path d="M800,308 Q848,274 898,302 Q950,334 950,392 Q996,420 998,484 Q1002,550 950,582 Q968,632 934,664 Q888,698 836,676 Q806,714 754,712 Q694,710 678,654 Q630,664 590,628 Q554,592 572,538 Q528,514 538,456 Q548,398 604,374 Q612,316 656,294 Q700,268 748,286Z" fill="#0a380c"/>
+</g>
+<!-- Layer 2 — main mid-green body -->
+<g opacity="0.96">
+  <path d="M374,296 Q332,244 346,172 Q362,96 444,62 Q524,28 604,50 Q680,70 706,144 Q732,210 694,274 Q744,222 794,256 Q848,298 826,370 Q870,318 918,350 Q966,392 942,462 Q976,490 982,546 Q988,610 938,648 Q900,678 848,660 Q820,700 774,714 Q720,728 680,702 Q642,748 578,754 Q514,760 468,720 Q410,744 362,720 Q298,694 276,640 Q222,664 178,636 Q122,600 144,528 Q106,508 98,454 Q82,386 150,342 Q126,288 166,248 Q202,212 260,222 Q288,168 352,158 Q408,148 434,196Z" fill="#247026"/>
+  <path d="M448,88 Q440,52 460,32 Q480,14 506,22 Q530,32 534,62 Q514,38 490,42 Q468,46 448,88Z" fill="#1e6420"/>
+  <path d="M504,66 Q498,34 520,16 Q542,0 566,12 Q586,24 582,56 Q560,30 536,34 Q516,40 504,66Z" fill="#1e6822"/>
+  <path d="M378,128 Q360,98 376,68 Q394,40 428,48 Q450,56 448,84 Q428,62 404,68 Q384,76 378,128Z" fill="#1c6020"/>
+  <path d="M618,120 Q638,90 628,62 Q616,36 586,44 Q564,54 566,84 Q582,58 604,64 Q624,72 618,120Z" fill="#1c6220"/>
+  <path d="M208,298 Q162,268 138,308 Q86,348 94,412 Q50,438 48,502 Q42,570 100,604 Q82,652 120,682 Q166,714 218,688 Q246,726 298,716 Q354,706 370,650 Q420,662 454,626 Q490,588 470,532 Q508,508 498,452 Q486,394 432,374 Q424,318 382,296 Q342,272 304,290Z" fill="#237024"/>
+  <path d="M792,296 Q840,264 892,292 Q946,326 946,386 Q994,414 996,478 Q1000,546 946,580 Q966,630 930,664 Q882,698 830,676 Q800,716 748,712 Q686,708 670,650 Q622,660 582,626 Q546,590 564,534 Q518,510 530,452 Q542,394 600,370 Q608,312 654,290 Q700,264 748,282Z" fill="#237026"/>
+</g>
+<!-- Layer 3 — lighter mid -->
+<g opacity="0.78">
+  <path d="M394,278 Q354,228 368,160 Q384,88 460,58 Q534,28 610,52 Q682,74 706,146 Q728,208 690,268 Q738,218 786,250 Q836,292 814,362 Q856,312 902,344 Q946,386 920,456 Q952,482 956,538 Q960,600 912,638 Q876,666 826,650 Q800,688 756,702 Q704,716 666,692 Q630,736 570,742 Q510,748 466,710 Q410,732 364,710 Q302,686 280,634 Q228,656 186,630 Q132,596 152,526 Q116,508 110,454 Q96,388 162,344 Q140,290 178,252 Q214,218 268,226 Q296,174 356,164 Q410,154 436,198Z" fill="#348a38"/>
+  <path d="M116,360 Q84,332 94,298 Q108,266 144,272 Q120,292 118,334Z" fill="#2e7a32"/>
+  <path d="M86,450 Q58,422 68,388 Q84,358 116,364 Q92,384 90,428Z" fill="#2e7a32"/>
+  <path d="M100,548 Q72,520 82,486 Q98,456 130,462 Q106,482 104,526Z" fill="#2e7832"/>
+  <path d="M958,352 Q986,324 972,292 Q958,264 926,272 Q950,290 950,334Z" fill="#2e7a32"/>
+  <path d="M978,444 Q1006,416 990,382 Q976,354 944,362 Q968,380 968,424Z" fill="#2e7a32"/>
+  <path d="M966,540 Q992,514 978,480 Q964,452 932,460 Q956,478 956,522Z" fill="#2e7832"/>
+</g>
+<!-- Layer 4 — sun-hit highlights -->
+<g opacity="0.70">
+  <path d="M412,264 Q376,216 390,152 Q406,84 476,58 Q546,32 616,56 Q680,78 700,148 Q718,208 682,262 Q724,216 764,246 Q806,284 786,348 Q824,302 862,332 Q900,368 878,434 Q906,456 908,508 Q910,562 868,596 Q836,620 792,608 Q768,642 734,654 Q690,664 656,642 Q622,682 566,688 Q510,694 468,658 Q416,676 374,656 Q316,634 296,584 Q250,602 212,578 Q162,548 178,482 Q148,464 142,414 Q128,352 190,314 Q170,264 206,228 Q240,196 292,204 Q318,156 374,148 Q424,140 448,182Z" fill="#4aa44e"/>
+  <path d="M454,210 Q432,172 446,124 Q460,78 498,66 Q536,54 562,86 Q582,112 566,158 Q584,132 608,154 Q628,174 614,210 Q580,178 540,172 Q500,168 454,210Z" fill="#68c26c" opacity="0.88"/>
+  <path d="M148,352 Q122,326 134,294 Q148,264 178,270 Q158,290 156,330Z" fill="#4aa04e"/>
+  <path d="M116,444 Q92,418 102,386 Q116,358 146,364 Q124,382 122,424Z" fill="#4aa04e"/>
+  <path d="M130,542 Q106,516 118,484 Q132,456 162,462 Q140,480 138,522Z" fill="#48a04c"/>
+  <path d="M944,348 Q968,322 954,292 Q940,264 910,272 Q932,290 932,330Z" fill="#4aa04e"/>
+  <path d="M972,440 Q996,414 980,382 Q966,356 936,364 Q958,380 958,420Z" fill="#4aa04e"/>
+  <path d="M960,536 Q984,510 970,480 Q956,452 926,460 Q948,476 948,518Z" fill="#48a04c"/>
+</g>
+<!-- Layer 5 — leaf tip silhouette -->
+<g opacity="0.90">
+  <path d="M470,54 Q464,36 474,22 Q486,36 480,56Z" fill="#2e8030"/>
+  <path d="M490,46 Q487,26 498,14 Q510,28 504,48Z" fill="#2a7a2c"/>
+  <path d="M510,44 Q509,24 520,14 Q530,26 524,46Z" fill="#32863a"/>
+  <path d="M530,50 Q530,30 542,22 Q550,36 542,54Z" fill="#2a7c2e"/>
+  <path d="M550,60 Q552,42 562,32 Q568,48 560,66Z" fill="#2e8232"/>
+  <path d="M452,66 Q444,48 454,36 Q466,50 460,70Z" fill="#267628"/>
+  <path d="M432,80 Q420,62 432,50 Q444,64 440,84Z" fill="#267228"/>
+  <path d="M572,78 Q582,60 594,70 Q588,86 576,90Z" fill="#2e8030"/>
+  <path d="M348,162 Q336,144 350,132 Q362,146 356,166Z" fill="#267228"/>
+  <path d="M654,158 Q666,140 676,150 Q668,166 656,168Z" fill="#287830"/>
+  <path d="M340,180 Q326,162 340,150 Q352,164 346,182Z" fill="#246a26"/>
+  <path d="M670,176 Q682,158 692,168 Q684,184 672,184Z" fill="#267228"/>
+  <path d="M106,356 Q94,340 106,326 Q118,340 114,358Z" fill="#267228"/>
+  <path d="M82,432 Q70,416 82,402 Q94,416 90,434Z" fill="#246c28"/>
+  <path d="M86,516 Q74,500 86,486 Q98,500 94,518Z" fill="#267228"/>
+  <path d="M112,600 Q100,584 114,570 Q126,584 120,602Z" fill="#246a26"/>
+  <path d="M958,348 Q970,332 960,320 Q948,336 952,352Z" fill="#267228"/>
+  <path d="M972,428 Q984,412 974,400 Q962,414 966,432Z" fill="#246c28"/>
+  <path d="M966,514 Q978,498 968,486 Q956,500 960,516Z" fill="#267228"/>
+  <path d="M952,598 Q964,582 954,568 Q942,582 946,600Z" fill="#246a26"/>
+  <path d="M496,40 Q494,22 504,12 Q514,24 508,42Z" fill="#5ab85e"/>
+  <path d="M478,50 Q474,32 484,22 Q494,34 488,52Z" fill="#4cac50"/>
+  <path d="M520,48 Q520,30 530,20 Q538,32 532,50Z" fill="#54b458"/>
+</g>
+
+<!-- ════ TRUNK (barely sways) ════ -->
+<g class="trunk-sway">
+<path d="M468,864 Q458,640 464,400 Q470,270 482,212" fill="none" stroke="#180a02" stroke-width="64" stroke-linecap="round" opacity="0.55"/>
+<path d="M500,864 Q494,640 496,400 Q497,270 500,212" fill="none" stroke="#6b3f1a" stroke-width="56" stroke-linecap="round"/>
+<path d="M474,862 Q466,640 470,400 Q474,274 482,214" fill="none" stroke="#2e1608" stroke-width="18" stroke-linecap="round" opacity="0.55"/>
+<path d="M526,862 Q534,640 530,400 Q526,274 518,214" fill="none" stroke="#2e1608" stroke-width="18" stroke-linecap="round" opacity="0.55"/>
+<path d="M500,864 Q494,640 496,400 Q497,270 500,212" fill="none" stroke="#5c3a1e" stroke-width="40" stroke-linecap="round"/>
+<path d="M496,862 Q494,640 495,400 Q496,274 497,222" fill="none" stroke="#8a5a2a" stroke-width="10" stroke-linecap="round" opacity="0.45"/>
+<path d="M486,856 Q482,640 484,400 Q486,280 488,222" fill="none" stroke="#7a4c22" stroke-width="6" stroke-linecap="round" opacity="0.3"/>
 <path d="M483,850 Q481,760 482,680 Q483,600 484,520 Q485,440 486,360 Q487,300 488,240" fill="none" stroke="#2e1608" stroke-width="1.3" stroke-linecap="round" opacity="0.55"/>
 <path d="M489,848 Q487,758 488,676 Q489,594 490,512 Q491,430 492,352 Q493,292 494,232" fill="none" stroke="#2e1608" stroke-width="1.1" stroke-linecap="round" opacity="0.48"/>
 <path d="M495,848 Q494,756 494,674 Q494,590 494,508 Q494,428 494,350 Q494,290 494,230" fill="none" stroke="#3a1e0a" stroke-width="1.0" stroke-linecap="round" opacity="0.40"/>
@@ -627,8 +676,6 @@
 <path d="M516,846 Q518,754 517,672 Q515,586 513,502 Q511,424 510,348 Q509,290 508,232" fill="none" stroke="#2e1608" stroke-width="1.3" stroke-linecap="round" opacity="0.52"/>
 <path d="M521,844 Q523,750 522,668 Q520,582 518,498" fill="none" stroke="#180a02" stroke-width="1.0" stroke-linecap="round" opacity="0.35"/>
 <path d="M478,840 Q476,748 477,666 Q478,582 480,500" fill="none" stroke="#180a02" stroke-width="1.0" stroke-linecap="round" opacity="0.35"/>
-
-<!-- ── BARK FISSURES (horizontal/diagonal cracks) ── -->
 <path d="M479,804 Q487,796 498,800 Q508,806 517,800 Q520,810 508,816 Q496,820 485,814 Z" fill="#180a02" opacity="0.38"/>
 <path d="M482,748 Q490,741 502,744 Q513,750 519,744 Q522,753 511,758 Q498,762 487,756 Z" fill="#180a02" opacity="0.35"/>
 <path d="M478,690 Q488,681 504,684 Q518,688 524,682 Q527,693 514,699 Q499,703 484,697 Z" fill="#180a02" opacity="0.32"/>
@@ -636,221 +683,29 @@
 <path d="M484,574 Q492,568 505,571 Q516,576 519,570 Q521,579 510,583 Q498,587 487,582 Z" fill="#180a02" opacity="0.28"/>
 <path d="M486,518 Q493,513 504,516 Q514,520 517,515 Q519,523 509,527 Q498,530 488,525 Z" fill="#180a02" opacity="0.26"/>
 <path d="M488,464 Q494,460 504,462 Q512,466 515,461 Q517,469 507,472 Q497,475 489,470 Z" fill="#180a02" opacity="0.24"/>
-<path d="M490,412 Q496,408 504,410 Q511,413 513,409 Q515,416 506,419 Q497,422 491,417 Z" fill="#180a02" opacity="0.22"/>
-<!-- Smaller secondary cracks -->
-<path d="M485,776 Q490,772 497,774 Q502,778 498,782 Q492,784 487,780 Z" fill="#2e1608" opacity="0.30"/>
+<path d="M490,412 Q495,408 503,410 Q510,413 512,408 Q514,415 505,418 Q496,421 491,416 Z" fill="#180a02" opacity="0.22"/>
+<path d="M492,362 Q497,359 504,361 Q510,364 511,360 Q513,366 504,369 Q495,372 492,367 Z" fill="#180a02" opacity="0.20"/>
+<path d="M489,846 Q494,838 504,840 Q513,844 516,838 Q518,846 507,850 Q496,853 490,848 Z" fill="#180a02" opacity="0.28"/>
 <path d="M506,758 Q511,754 517,756 Q521,760 517,764 Q512,766 507,762 Z" fill="#2e1608" opacity="0.28"/>
 <path d="M483,718 Q488,714 494,716 Q498,720 494,724 Q489,726 484,722 Z" fill="#2e1608" opacity="0.28"/>
 <path d="M509,702 Q514,698 519,700 Q523,703 519,707 Q514,709 510,705 Z" fill="#2e1608" opacity="0.26"/>
-
-<!-- ── LICHEN / MOSS ── -->
 <ellipse cx="476" cy="724" rx="9" ry="4"   fill="#3a6a1e" opacity="0.30" transform="rotate(-9,476,724)"/>
 <ellipse cx="518" cy="760" rx="7" ry="3"   fill="#3a6a1e" opacity="0.24" transform="rotate(13,518,760)"/>
 <ellipse cx="484" cy="644" rx="8" ry="3.5" fill="#4a7a22" opacity="0.22" transform="rotate(-5,484,644)"/>
 <ellipse cx="512" cy="596" rx="6" ry="2.5" fill="#3a6a1e" opacity="0.20" transform="rotate(8,512,596)"/>
+</g><!-- end trunk-sway -->
 
-<!-- ════ BRANCHES (all sway together) ════ -->
-<g class="tree-body">
-
-<!-- Branch I: Left lower — Parts of Speech -->
-<path d="M486,660 Q410,647 330,616 Q232,578 123,538"
-      fill="none" stroke="#6b3f1a" stroke-width="24" stroke-linecap="round"/>
-<path d="M486,660 Q410,647 330,616 Q232,578 123,538"
-      fill="none" stroke="#2e1608" stroke-width="26" stroke-linecap="round" opacity="0.22"/>
+<!-- ════ BRANCH I — Left lower (Parts of Speech) ════ -->
+<g class="bI-sway">
+<path d="M486,660 Q410,647 330,616 Q232,578 123,538" fill="none" stroke="#6b3f1a" stroke-width="24" stroke-linecap="round"/>
+<path d="M486,660 Q410,647 330,616 Q232,578 123,538" fill="none" stroke="#2e1608" stroke-width="26" stroke-linecap="round" opacity="0.22"/>
 <path d="M326,617 Q286,593 252,562" fill="none" stroke="#5c3a1e" stroke-width="13" stroke-linecap="round"/>
 <path d="M226,582 Q193,565 170,544" fill="none" stroke="#5c3a1e" stroke-width="10" stroke-linecap="round"/>
 <path d="M164,541 Q146,525 130,505" fill="none" stroke="#4a2c10" stroke-width="8"  stroke-linecap="round"/>
 <path d="M336,618 Q312,584 304,553" fill="none" stroke="#5c3a1e" stroke-width="11" stroke-linecap="round"/>
 <path d="M273,574 Q252,555 243,529" fill="none" stroke="#4a2c10" stroke-width="9"  stroke-linecap="round"/>
-<!-- Branch I bark lines -->
 <path d="M400,650 Q360,636 320,620" fill="none" stroke="#2e1608" stroke-width="1.0" stroke-linecap="round" opacity="0.40"/>
 <path d="M260,586 Q230,574 200,560" fill="none" stroke="#2e1608" stroke-width="0.9" stroke-linecap="round" opacity="0.35"/>
-
-<!-- Branch II: Left upper — Non-Finite -->
-<path d="M488,492 Q414,460 342,398 Q282,338 222,266"
-      fill="none" stroke="#6b3f1a" stroke-width="20" stroke-linecap="round"/>
-<path d="M488,492 Q414,460 342,398 Q282,338 222,266"
-      fill="none" stroke="#2e1608" stroke-width="22" stroke-linecap="round" opacity="0.20"/>
-<path d="M344,400 Q312,372 292,342" fill="none" stroke="#5c3a1e" stroke-width="11" stroke-linecap="round"/>
-<path d="M273,352 Q247,324 234,294" fill="none" stroke="#5c3a1e" stroke-width="9"  stroke-linecap="round"/>
-<path d="M226,268 Q208,246 198,220" fill="none" stroke="#4a2c10" stroke-width="7"  stroke-linecap="round"/>
-<!-- Branch II bark lines -->
-<path d="M420,468 Q370,440 320,405" fill="none" stroke="#2e1608" stroke-width="0.9" stroke-linecap="round" opacity="0.35"/>
-<path d="M300,358 Q272,336 250,308" fill="none" stroke="#2e1608" stroke-width="0.8" stroke-linecap="round" opacity="0.30"/>
-
-<!-- Branch III: Right lower — Clauses -->
-<path d="M514,580 Q586,557 686,526 Q796,496 906,466"
-      fill="none" stroke="#6b3f1a" stroke-width="22" stroke-linecap="round"/>
-<path d="M514,580 Q586,557 686,526 Q796,496 906,466"
-      fill="none" stroke="#2e1608" stroke-width="24" stroke-linecap="round" opacity="0.20"/>
-<path d="M682,528 Q720,503 750,473" fill="none" stroke="#5c3a1e" stroke-width="12" stroke-linecap="round"/>
-<path d="M793,498 Q822,473 846,447" fill="none" stroke="#5c3a1e" stroke-width="10" stroke-linecap="round"/>
-<path d="M906,468 Q924,447 936,420" fill="none" stroke="#4a2c10" stroke-width="8"  stroke-linecap="round"/>
-<!-- Branch III bark lines -->
-<path d="M600,556 Q650,540 700,526" fill="none" stroke="#2e1608" stroke-width="0.9" stroke-linecap="round" opacity="0.35"/>
-<path d="M750,508 Q790,492 830,476" fill="none" stroke="#2e1608" stroke-width="0.8" stroke-linecap="round" opacity="0.30"/>
-
-<!-- Branch IV: Right upper — Special -->
-<path d="M511,400 Q592,357 700,296 Q793,242 863,182"
-      fill="none" stroke="#6b3f1a" stroke-width="18" stroke-linecap="round"/>
-<path d="M511,400 Q592,357 700,296 Q793,242 863,182"
-      fill="none" stroke="#2e1608" stroke-width="20" stroke-linecap="round" opacity="0.18"/>
-<path d="M698,298 Q728,272 754,244" fill="none" stroke="#5c3a1e" stroke-width="10" stroke-linecap="round"/>
-<path d="M798,245 Q824,220 846,194" fill="none" stroke="#4a2c10" stroke-width="8"  stroke-linecap="round"/>
-<path d="M862,184 Q880,162 892,138" fill="none" stroke="#3a2008" stroke-width="6"  stroke-linecap="round"/>
-<!-- Branch IV bark lines -->
-<path d="M600,362 Q648,336 698,306" fill="none" stroke="#2e1608" stroke-width="0.8" stroke-linecap="round" opacity="0.30"/>
-<path d="M755,258 Q796,240 836,218" fill="none" stroke="#2e1608" stroke-width="0.7" stroke-linecap="round" opacity="0.28"/>
-
-<!-- ════ CANOPY FOLIAGE — organic leaf masses ════
-     Strategy: many overlapping filled ellipses at different sizes/positions,
-     with feTurbulence+feDisplacementMap (fOrg) applied to FILLED shapes only
-     (safe — displacement only distorts fill, not strokes).
-     Multiple green tones + depth shadows give 3D canopy volume.          -->
-
-<!-- ── DEPTH SHADOW: darkest layer, gives the illusion of interior depth ── -->
-<g filter="url(#fOrg)" opacity="0.72">
-  <!-- Crown centre depth -->
-  <ellipse cx="500" cy="160" rx="148" ry="132" fill="#0d4010"/>
-  <ellipse cx="394" cy="200" rx="122" ry="108" fill="#0d4010"/>
-  <ellipse cx="614" cy="198" rx="120" ry="106" fill="#0d4010"/>
-  <ellipse cx="318" cy="262" rx="104" ry="92"  fill="#0d4010"/>
-  <ellipse cx="696" cy="258" rx="104" ry="92"  fill="#0d4010"/>
-  <ellipse cx="446" cy="148" rx="108" ry="94"  fill="#0d4010"/>
-  <ellipse cx="560" cy="145" rx="108" ry="94"  fill="#0d4010"/>
-  <!-- Left arm depth -->
-  <ellipse cx="214" cy="308" rx="90"  ry="78"  fill="#0a3a0c"/>
-  <ellipse cx="157" cy="418" rx="80"  ry="70"  fill="#0a3a0c"/>
-  <ellipse cx="176" cy="524" rx="86"  ry="75"  fill="#0a3a0c"/>
-  <ellipse cx="256" cy="572" rx="80"  ry="70"  fill="#0a3a0c"/>
-  <!-- Right arm depth -->
-  <ellipse cx="826" cy="306" rx="88"  ry="76"  fill="#0a3a0c"/>
-  <ellipse cx="884" cy="406" rx="80"  ry="70"  fill="#0a3a0c"/>
-  <ellipse cx="916" cy="494" rx="84"  ry="72"  fill="#0a3a0c"/>
-  <ellipse cx="848" cy="538" rx="76"  ry="66"  fill="#0a3a0c"/>
-</g>
-
-<!-- ── MAIN MID LAYER: primary leaf-cluster colour ── -->
-<g filter="url(#fOrg)" opacity="0.95">
-  <!-- Crown — many overlapping clusters at staggered sizes -->
-  <ellipse cx="500" cy="148" rx="138" ry="122" fill="#2a7a2e"/>
-  <ellipse cx="500" cy="132" rx="118" ry="104" fill="#2e8232"/>
-  <ellipse cx="390" cy="188" rx="114" ry="100" fill="#266a2a"/>
-  <ellipse cx="618" cy="185" rx="112" ry="98"  fill="#2a7230"/>
-  <ellipse cx="322" cy="248" rx="98"  ry="86"  fill="#246028"/>
-  <ellipse cx="692" cy="244" rx="98"  ry="86"  fill="#2a6e2e"/>
-  <ellipse cx="446" cy="140" rx="102" ry="88"  fill="#2e7832"/>
-  <ellipse cx="558" cy="137" rx="102" ry="88"  fill="#287030"/>
-  <ellipse cx="370" cy="170" rx="82"  ry="72"  fill="#246228"/>
-  <ellipse cx="642" cy="168" rx="82"  ry="72"  fill="#2a6e2e"/>
-  <ellipse cx="500" cy="108" rx="90"  ry="78"  fill="#2e8232"/>
-  <ellipse cx="460" cy="100" rx="76"  ry="66"  fill="#347a38"/>
-  <ellipse cx="544" cy="98"  rx="76"  ry="66"  fill="#307236"/>
-  <!-- Small cluster bumps on crown edges for jagged silhouette -->
-  <ellipse cx="500" cy="80"  rx="62"  ry="54"  fill="#2a7830"/>
-  <ellipse cx="432" cy="92"  rx="54"  ry="46"  fill="#246228"/>
-  <ellipse cx="570" cy="90"  rx="54"  ry="46"  fill="#287232"/>
-  <ellipse cx="360" cy="138" rx="60"  ry="52"  fill="#246028"/>
-  <ellipse cx="648" cy="136" rx="60"  ry="52"  fill="#266a2a"/>
-  <!-- Left arm clusters -->
-  <ellipse cx="218" cy="296" rx="84"  ry="72"  fill="#266028"/>
-  <ellipse cx="162" cy="407" rx="74"  ry="64"  fill="#246228"/>
-  <ellipse cx="178" cy="512" rx="80"  ry="68"  fill="#2a6e2e"/>
-  <ellipse cx="258" cy="558" rx="74"  ry="64"  fill="#246028"/>
-  <ellipse cx="145" cy="340" rx="66"  ry="56"  fill="#1e5822"/>
-  <ellipse cx="128" cy="452" rx="62"  ry="54"  fill="#1e5a22"/>
-  <ellipse cx="140" cy="560" rx="66"  ry="56"  fill="#1e5822"/>
-  <!-- Right arm clusters -->
-  <ellipse cx="824" cy="292" rx="82"  ry="70"  fill="#2a6e2e"/>
-  <ellipse cx="880" cy="394" rx="74"  ry="64"  fill="#267030"/>
-  <ellipse cx="912" cy="482" rx="78"  ry="66"  fill="#2a6e2e"/>
-  <ellipse cx="844" cy="526" rx="70"  ry="60"  fill="#246228"/>
-  <ellipse cx="940" cy="332" rx="66"  ry="56"  fill="#205a24"/>
-  <ellipse cx="950" cy="440" rx="62"  ry="52"  fill="#1e5822"/>
-  <ellipse cx="940" cy="545" rx="64"  ry="54"  fill="#1e5822"/>
-</g>
-
-<!-- ── LIGHTER MID: brings out cluster separation and volume ── -->
-<g filter="url(#fOrg)" opacity="0.82">
-  <ellipse cx="500" cy="135" rx="122" ry="108" fill="#3a9040"/>
-  <ellipse cx="396" cy="172" rx="106" ry="92"  fill="#368a3c"/>
-  <ellipse cx="612" cy="170" rx="104" ry="90"  fill="#3a8e40"/>
-  <ellipse cx="328" cy="232" rx="90"  ry="78"  fill="#327a38"/>
-  <ellipse cx="686" cy="228" rx="90"  ry="78"  fill="#3a9040"/>
-  <ellipse cx="452" cy="126" rx="92"  ry="80"  fill="#3e9444"/>
-  <ellipse cx="554" cy="124" rx="92"  ry="80"  fill="#388e3e"/>
-  <ellipse cx="500" cy="96"  rx="78"  ry="68"  fill="#3e9844"/>
-  <ellipse cx="374" cy="155" rx="70"  ry="60"  fill="#347838"/>
-  <ellipse cx="636" cy="153" rx="70"  ry="60"  fill="#388a3e"/>
-  <!-- Left -->
-  <ellipse cx="225" cy="280" rx="74"  ry="64"  fill="#3a8a40"/>
-  <ellipse cx="170" cy="391" rx="66"  ry="58"  fill="#367e3c"/>
-  <ellipse cx="186" cy="497" rx="70"  ry="60"  fill="#3a8840"/>
-  <ellipse cx="264" cy="543" rx="66"  ry="58"  fill="#347838"/>
-  <!-- Right -->
-  <ellipse cx="830" cy="278" rx="72"  ry="62"  fill="#388a3e"/>
-  <ellipse cx="886" cy="380" rx="66"  ry="58"  fill="#3a8e42"/>
-  <ellipse cx="917" cy="468" rx="68"  ry="60"  fill="#368838"/>
-  <ellipse cx="850" cy="513" rx="62"  ry="54"  fill="#327a38"/>
-</g>
-
-<!-- ── SURFACE HIGHLIGHTS: sun-lit tops of each cluster ── -->
-<g filter="url(#fOrgSm)" opacity="0.78">
-  <!-- Crown sun-top -->
-  <ellipse cx="500" cy="118" rx="106" ry="92"  fill="#54b458"/>
-  <ellipse cx="500" cy="98"  rx="86"  ry="74"  fill="#64c268"/>
-  <ellipse cx="500" cy="78"  rx="64"  ry="54"  fill="#72cc76"/>
-  <ellipse cx="404" cy="152" rx="92"  ry="80"  fill="#50aa54"/>
-  <ellipse cx="604" cy="150" rx="92"  ry="80"  fill="#54ae58"/>
-  <ellipse cx="338" cy="212" rx="80"  ry="68"  fill="#4ea452"/>
-  <ellipse cx="672" cy="209" rx="80"  ry="68"  fill="#54aa58"/>
-  <ellipse cx="460" cy="108" rx="78"  ry="66"  fill="#5cba60"/>
-  <ellipse cx="546" cy="106" rx="78"  ry="66"  fill="#58b45c"/>
-  <ellipse cx="380" cy="142" rx="60"  ry="52"  fill="#4ea052"/>
-  <ellipse cx="628" cy="140" rx="60"  ry="52"  fill="#52a456"/>
-  <!-- Bright crown peak -->
-  <ellipse cx="500" cy="62"  rx="50"  ry="42"  fill="#80d884" opacity="0.9"/>
-  <ellipse cx="470" cy="78"  rx="38"  ry="32"  fill="#8edc92" opacity="0.7"/>
-  <ellipse cx="532" cy="76"  rx="38"  ry="32"  fill="#84d888" opacity="0.7"/>
-  <!-- Left arm highlights -->
-  <ellipse cx="232" cy="264" rx="64"  ry="54"  fill="#54b058"/>
-  <ellipse cx="176" cy="374" rx="58"  ry="50"  fill="#50aa54"/>
-  <ellipse cx="194" cy="480" rx="62"  ry="52"  fill="#54ae58"/>
-  <ellipse cx="270" cy="527" rx="58"  ry="50"  fill="#4ea452"/>
-  <!-- Right arm highlights -->
-  <ellipse cx="836" cy="260" rx="62"  ry="52"  fill="#54b058"/>
-  <ellipse cx="891" cy="364" rx="58"  ry="50"  fill="#54b25a"/>
-  <ellipse cx="922" cy="454" rx="60"  ry="52"  fill="#50ac54"/>
-  <ellipse cx="854" cy="500" rx="56"  ry="48"  fill="#4ea452"/>
-</g>
-
-<!-- ── INDIVIDUAL LEAF TIPS: poke out from edges for natural silhouette ── -->
-<g fill="#3a8c3e" opacity="0.88">
-  <!-- Crown top -->
-  <path d="M476,56 Q472,38 482,24 Q492,40 486,58Z"/>
-  <path d="M494,48 Q492,28 504,16 Q514,30 508,50Z"/>
-  <path d="M516,50 Q518,30 528,20 Q536,34 528,52Z"/>
-  <path d="M540,58 Q544,40 554,32 Q558,48 550,64Z"/>
-  <path d="M456,68 Q450,50 460,38 Q470,52 464,70Z"/>
-  <path d="M422,88 Q414,70 424,58 Q436,72 430,92Z"/>
-  <path d="M580,84 Q590,66 600,76 Q594,92 584,98Z"/>
-  <path d="M352,162 Q342,146 354,134 Q364,148 358,166Z"/>
-  <path d="M654,158 Q666,142 674,154 Q668,170 658,168Z"/>
-  <!-- Left arm -->
-  <path d="M130,352 Q118,336 128,322 Q140,336 136,354Z"/>
-  <path d="M108,428 Q96,412 106,400 Q118,414 114,432Z"/>
-  <path d="M114,516 Q102,500 112,488 Q124,502 120,520Z"/>
-  <path d="M138,598 Q126,582 138,570 Q148,584 144,602Z"/>
-  <!-- Right arm -->
-  <path d="M952,346 Q964,330 956,318 Q944,334 948,350Z"/>
-  <path d="M966,425 Q978,410 970,398 Q958,412 962,430Z"/>
-  <path d="M960,510 Q972,496 964,484 Q952,498 956,514Z"/>
-  <path d="M946,590 Q958,576 950,564 Q938,578 942,596Z"/>
-  <!-- Yellow-green tips for variety -->
-  <path d="M500,42 Q498,26 506,16 Q514,28 510,44Z" fill="#5ab85e"/>
-  <path d="M486,52 Q482,36 490,26 Q500,38 496,54Z" fill="#4eb052"/>
-  <path d="M514,52 Q516,36 524,28 Q530,40 524,56Z" fill="#52b456"/>
-</g>
 
 <!-- ════ TWIG LEAF CLUSTERS ════
      Each cluster sits at a branch endpoint.
@@ -858,17 +713,77 @@
      all sprouting from the twig attachment at (0,0).          -->
 
 <style>
-  @keyframes sw1 { 0%,100%{transform:rotate(-3deg)} 50%{transform:rotate(5deg)} }
-  @keyframes sw2 { 0%,100%{transform:rotate(3deg)}  50%{transform:rotate(-5deg)} }
-  .tree-body { animation: tSw 9s ease-in-out infinite; transform-origin:500px 880px; }
-  @keyframes tSw { 0%,100%{transform:rotate(0)} 30%{transform:rotate(0.7deg)} 70%{transform:rotate(-0.5deg)} }
+  /* ── NATURAL TREE SWAY ──
+     Real trees: trunk barely moves, branches flex more, twigs flutter most.
+     Each branch has its own speed/phase so they never move in unison.
+     All use transform: rotate() which the GPU handles cheaply (no repaint).   */
+
+  /* Trunk: almost imperceptible lean */
+  .trunk-sway {
+    animation: trunkSway 14s ease-in-out infinite;
+    transform-origin: 500px 870px;
+  }
+  @keyframes trunkSway {
+    0%,100% { transform: rotate(0deg); }
+    35%     { transform: rotate(0.4deg); }
+    70%     { transform: rotate(-0.3deg); }
+  }
+
+  /* Branch I (left lower) — swings down-left, slow */
+  .bI-sway {
+    animation: bISway 11s ease-in-out infinite;
+    transform-origin: 486px 660px;
+  }
+  @keyframes bISway {
+    0%,100% { transform: rotate(0deg); }
+    40%     { transform: rotate(1.8deg); }
+    75%     { transform: rotate(-1.2deg); }
+  }
+
+  /* Branch II (left upper) — lighter, faster */
+  .bII-sway {
+    animation: bIISway 8.5s ease-in-out infinite 1.4s;
+    transform-origin: 488px 492px;
+  }
+  @keyframes bIISway {
+    0%,100% { transform: rotate(0deg); }
+    38%     { transform: rotate(2.4deg); }
+    72%     { transform: rotate(-1.8deg); }
+  }
+
+  /* Branch III (right lower) — out of phase with left */
+  .bIII-sway {
+    animation: bIIISway 12s ease-in-out infinite 2.1s;
+    transform-origin: 514px 580px;
+  }
+  @keyframes bIIISway {
+    0%,100% { transform: rotate(0deg); }
+    42%     { transform: rotate(-1.6deg); }
+    78%     { transform: rotate(1.0deg); }
+  }
+
+  /* Branch IV (right upper) — faster, more flutter */
+  .bIV-sway {
+    animation: bIVSway 7.8s ease-in-out infinite 0.7s;
+    transform-origin: 511px 400px;
+  }
+  @keyframes bIVSway {
+    0%,100% { transform: rotate(0deg); }
+    36%     { transform: rotate(-2.2deg); }
+    68%     { transform: rotate(1.6deg); }
+  }
+
+  /* Twig leaf clusters — small fast flutter, each independently */
+  @keyframes sw1 { 0%,100%{transform:rotate(-4deg)} 50%{transform:rotate(6deg)} }
+  @keyframes sw2 { 0%,100%{transform:rotate(4deg)}  50%{transform:rotate(-6deg)} }
+  @keyframes sw3 { 0%,100%{transform:rotate(-2deg)} 50%{transform:rotate(8deg)} }
 </style>
 
 <!-- Leaf helper: translate to twig tip, leaves grow UPWARD from (0,0).
      Stem-to-leaf connection is explicit via the 'M0,0' start.  -->
 
 <!-- Branch I tips -->
-<g transform="translate(123,522)" filter="url(#lfT)">
+<g transform="translate(123,522)">
   <g style="animation:sw1 4.2s ease-in-out infinite;transform-origin:0 0">
     <path d="M0,0 Q-16,-28 -6,-50 Q6,-26 0,0Z" fill="#3a8c3e" stroke="#1a5a1e" stroke-width="0.35"/>
     <path d="M0,0 Q14,-25 22,-46 Q4,-23 0,0Z"  fill="#4ea052" stroke="#1a5a1e" stroke-width="0.35"/>
@@ -877,7 +792,7 @@
     <line x1="0" y1="0" x2="14" y2="-42" stroke="#155018" stroke-width="0.7" opacity="0.55"/>
   </g>
 </g>
-<g transform="translate(169,530)" filter="url(#lfT)">
+<g transform="translate(169,530)">
   <g style="animation:sw2 5.2s ease-in-out infinite 0.5s;transform-origin:0 0">
     <path d="M0,0 Q-14,-26 -5,-48 Q7,-24 0,0Z"  fill="#4c9c50" stroke="#1a5a1e" stroke-width="0.35"/>
     <path d="M0,0 Q12,-23 20,-43 Q3,-21 0,0Z"   fill="#3a8c3e" stroke="#1a5a1e" stroke-width="0.35"/>
@@ -885,21 +800,21 @@
     <line x1="0" y1="0" x2="-2" y2="-44" stroke="#155018" stroke-width="0.7" opacity="0.5"/>
   </g>
 </g>
-<g transform="translate(252,547)" filter="url(#lfT)">
+<g transform="translate(252,547)">
   <g style="animation:sw1 4.9s ease-in-out infinite 1.1s;transform-origin:0 0">
     <path d="M0,0 Q-13,-24 -4,-44 Q6,-22 0,0Z"  fill="#3e8c42" stroke="#1a5a1e" stroke-width="0.35"/>
     <path d="M0,0 Q11,-22 18,-40 Q3,-20 0,0Z"   fill="#50a256" stroke="#1a5a1e" stroke-width="0.35"/>
     <path d="M0,0 Q-22,-8 -34,-18 Q-14,-6 0,0Z" fill="#3e8c42" stroke="#1a5a1e" stroke-width="0.35"/>
   </g>
 </g>
-<g transform="translate(303,539)" filter="url(#lfT)">
+<g transform="translate(303,539)">
   <g style="animation:sw2 6.1s ease-in-out infinite 0.8s;transform-origin:0 0">
     <path d="M0,0 Q-12,-22 -4,-42 Q6,-20 0,0Z"  fill="#468a46" stroke="#1a5a1e" stroke-width="0.35"/>
     <path d="M0,0 Q10,-20 17,-38 Q3,-18 0,0Z"   fill="#5aac5e" stroke="#1a5a1e" stroke-width="0.35"/>
     <path d="M0,0 Q-20,-9 -30,-20 Q-12,-6 0,0Z" fill="#468a46" stroke="#1a5a1e" stroke-width="0.35"/>
   </g>
 </g>
-<g transform="translate(242,514)" filter="url(#lfT)">
+<g transform="translate(242,514)">
   <g style="animation:sw1 5.4s ease-in-out infinite 2.1s;transform-origin:0 0">
     <path d="M0,0 Q-11,-21 -3,-39 Q5,-19 0,0Z"  fill="#3e8e42" stroke="#1a5a1e" stroke-width="0.35"/>
     <path d="M0,0 Q10,-19 16,-36 Q3,-17 0,0Z"   fill="#4a9a4e" stroke="#1a5a1e" stroke-width="0.35"/>
@@ -907,8 +822,19 @@
   </g>
 </g>
 
-<!-- Branch II tips -->
-<g transform="translate(198,205)" filter="url(#lfT)">
+<!-- Branch II tips — left upper Non-Finite -->
+</g><!-- end bI-sway -->
+
+<!-- ════ BRANCH II — Left upper (Non-Finite) ════ -->
+<g class="bII-sway">
+<path d="M488,492 Q414,460 342,398 Q282,338 222,266" fill="none" stroke="#6b3f1a" stroke-width="20" stroke-linecap="round"/>
+<path d="M488,492 Q414,460 342,398 Q282,338 222,266" fill="none" stroke="#2e1608" stroke-width="22" stroke-linecap="round" opacity="0.20"/>
+<path d="M344,400 Q312,372 292,342" fill="none" stroke="#5c3a1e" stroke-width="11" stroke-linecap="round"/>
+<path d="M273,352 Q247,324 234,294" fill="none" stroke="#5c3a1e" stroke-width="9"  stroke-linecap="round"/>
+<path d="M226,268 Q208,246 198,220" fill="none" stroke="#4a2c10" stroke-width="7"  stroke-linecap="round"/>
+<path d="M420,468 Q370,440 320,405" fill="none" stroke="#2e1608" stroke-width="0.9" stroke-linecap="round" opacity="0.35"/>
+<path d="M300,358 Q272,336 250,308" fill="none" stroke="#2e1608" stroke-width="0.8" stroke-linecap="round" opacity="0.30"/>
+<g transform="translate(198,205)">
   <g style="animation:sw1 5.6s ease-in-out infinite 1.3s;transform-origin:0 0">
     <path d="M0,0 Q-14,-26 -5,-46 Q6,-24 0,0Z"  fill="#3a8e3e" stroke="#1a5a1e" stroke-width="0.35"/>
     <path d="M0,0 Q13,-24 20,-44 Q4,-22 0,0Z"   fill="#4a9c4e" stroke="#1a5a1e" stroke-width="0.35"/>
@@ -916,14 +842,14 @@
     <line x1="0" y1="0" x2="-2" y2="-42" stroke="#155018" stroke-width="0.7" opacity="0.5"/>
   </g>
 </g>
-<g transform="translate(234,278)" filter="url(#lfT)">
+<g transform="translate(234,278)">
   <g style="animation:sw2 4.5s ease-in-out infinite 2.2s;transform-origin:0 0">
     <path d="M0,0 Q-12,-23 -4,-42 Q6,-21 0,0Z"  fill="#52a258" stroke="#1a5a1e" stroke-width="0.35"/>
     <path d="M0,0 Q11,-21 18,-39 Q3,-19 0,0Z"   fill="#3e8c42" stroke="#1a5a1e" stroke-width="0.35"/>
     <path d="M0,0 Q21,-10 33,-23 Q13,-7 0,0Z"   fill="#52a258" stroke="#1a5a1e" stroke-width="0.35"/>
   </g>
 </g>
-<g transform="translate(292,326)" filter="url(#lfT)">
+<g transform="translate(292,326)">
   <g style="animation:sw1 6.3s ease-in-out infinite 0.7s;transform-origin:0 0">
     <path d="M0,0 Q-12,-22 -4,-40 Q5,-20 0,0Z"  fill="#3e8e44" stroke="#1a5a1e" stroke-width="0.35"/>
     <path d="M0,0 Q10,-20 17,-37 Q3,-18 0,0Z"   fill="#4e9e54" stroke="#1a5a1e" stroke-width="0.35"/>
@@ -931,8 +857,19 @@
   </g>
 </g>
 
-<!-- Branch III tips -->
-<g transform="translate(936,404)" filter="url(#lfT)">
+<!-- Branch III tips — right lower Clauses -->
+</g><!-- end bII-sway -->
+
+<!-- ════ BRANCH III — Right lower (Clauses) ════ -->
+<g class="bIII-sway">
+<path d="M514,580 Q586,557 686,526 Q796,496 906,466" fill="none" stroke="#6b3f1a" stroke-width="22" stroke-linecap="round"/>
+<path d="M514,580 Q586,557 686,526 Q796,496 906,466" fill="none" stroke="#2e1608" stroke-width="24" stroke-linecap="round" opacity="0.20"/>
+<path d="M682,528 Q720,503 750,473" fill="none" stroke="#5c3a1e" stroke-width="12" stroke-linecap="round"/>
+<path d="M793,498 Q822,473 846,447" fill="none" stroke="#5c3a1e" stroke-width="10" stroke-linecap="round"/>
+<path d="M906,468 Q924,447 936,420" fill="none" stroke="#4a2c10" stroke-width="8"  stroke-linecap="round"/>
+<path d="M600,556 Q650,540 700,526" fill="none" stroke="#2e1608" stroke-width="0.9" stroke-linecap="round" opacity="0.35"/>
+<path d="M750,508 Q790,492 830,476" fill="none" stroke="#2e1608" stroke-width="0.8" stroke-linecap="round" opacity="0.30"/>
+<g transform="translate(936,404)">
   <g style="animation:sw2 4.7s ease-in-out infinite 0.6s;transform-origin:0 0">
     <path d="M0,0 Q14,-26 5,-48 Q-7,-24 0,0Z"   fill="#3a8c3e" stroke="#1a5a1e" stroke-width="0.35"/>
     <path d="M0,0 Q-13,-23 -21,-42 Q-4,-21 0,0Z" fill="#4c9c50" stroke="#1a5a1e" stroke-width="0.35"/>
@@ -940,14 +877,14 @@
     <line x1="0" y1="0" x2="2" y2="-44" stroke="#155018" stroke-width="0.7" opacity="0.5"/>
   </g>
 </g>
-<g transform="translate(750,457)" filter="url(#lfT)">
+<g transform="translate(750,457)">
   <g style="animation:sw1 5.4s ease-in-out infinite 1.5s;transform-origin:0 0">
     <path d="M0,0 Q12,-24 4,-44 Q-7,-22 0,0Z"   fill="#4a9c4e" stroke="#1a5a1e" stroke-width="0.35"/>
     <path d="M0,0 Q-11,-22 -19,-40 Q-4,-20 0,0Z" fill="#3a8a3e" stroke="#1a5a1e" stroke-width="0.35"/>
     <path d="M0,0 Q22,-10 33,-22 Q13,-7 0,0Z"   fill="#4a9c4e" stroke="#1a5a1e" stroke-width="0.35"/>
   </g>
 </g>
-<g transform="translate(846,431)" filter="url(#lfT)">
+<g transform="translate(846,431)">
   <g style="animation:sw2 5s ease-in-out infinite 1.9s;transform-origin:0 0">
     <path d="M0,0 Q12,-22 4,-42 Q-6,-20 0,0Z"   fill="#3e8c44" stroke="#1a5a1e" stroke-width="0.35"/>
     <path d="M0,0 Q-10,-20 -17,-37 Q-3,-18 0,0Z" fill="#52a658" stroke="#1a5a1e" stroke-width="0.35"/>
@@ -955,8 +892,19 @@
   </g>
 </g>
 
-<!-- Branch IV tips -->
-<g transform="translate(892,122)" filter="url(#lfT)">
+<!-- Branch IV tips — right upper Special -->
+</g><!-- end bIII-sway -->
+
+<!-- ════ BRANCH IV — Right upper (Special) ════ -->
+<g class="bIV-sway">
+<path d="M511,400 Q592,357 700,296 Q793,242 863,182" fill="none" stroke="#6b3f1a" stroke-width="18" stroke-linecap="round"/>
+<path d="M511,400 Q592,357 700,296 Q793,242 863,182" fill="none" stroke="#2e1608" stroke-width="20" stroke-linecap="round" opacity="0.18"/>
+<path d="M698,298 Q728,272 754,244" fill="none" stroke="#5c3a1e" stroke-width="10" stroke-linecap="round"/>
+<path d="M798,245 Q824,220 846,194" fill="none" stroke="#4a2c10" stroke-width="8"  stroke-linecap="round"/>
+<path d="M862,184 Q880,162 892,138" fill="none" stroke="#3a2008" stroke-width="6"  stroke-linecap="round"/>
+<path d="M600,362 Q648,336 698,306" fill="none" stroke="#2e1608" stroke-width="0.8" stroke-linecap="round" opacity="0.30"/>
+<path d="M755,258 Q796,240 836,218" fill="none" stroke="#2e1608" stroke-width="0.7" stroke-linecap="round" opacity="0.28"/>
+<g transform="translate(892,122)">
   <g style="animation:sw1 5.1s ease-in-out infinite 0.4s;transform-origin:0 0">
     <path d="M0,0 Q12,-24 4,-45 Q-7,-22 0,0Z"   fill="#3a8c3e" stroke="#1a5a1e" stroke-width="0.35"/>
     <path d="M0,0 Q-11,-22 -19,-42 Q-3,-20 0,0Z" fill="#4c9e50" stroke="#1a5a1e" stroke-width="0.35"/>
@@ -964,14 +912,14 @@
     <line x1="0" y1="0" x2="2" y2="-42" stroke="#155018" stroke-width="0.7" opacity="0.5"/>
   </g>
 </g>
-<g transform="translate(754,228)" filter="url(#lfT)">
+<g transform="translate(754,228)">
   <g style="animation:sw2 6.5s ease-in-out infinite 2.4s;transform-origin:0 0">
     <path d="M0,0 Q11,-22 4,-41 Q-6,-20 0,0Z"   fill="#4a9e4e" stroke="#1a5a1e" stroke-width="0.35"/>
     <path d="M0,0 Q-10,-20 -17,-37 Q-3,-18 0,0Z" fill="#3a8c3e" stroke="#1a5a1e" stroke-width="0.35"/>
     <path d="M0,0 Q20,-10 29,-22 Q11,-7 0,0Z"   fill="#4a9e4e" stroke="#1a5a1e" stroke-width="0.35"/>
   </g>
 </g>
-<g transform="translate(846,178)" filter="url(#lfT)">
+<g transform="translate(846,178)">
   <g style="animation:sw1 4.8s ease-in-out infinite 1.7s;transform-origin:0 0">
     <path d="M0,0 Q11,-21 4,-40 Q-6,-19 0,0Z"   fill="#3e8e44" stroke="#1a5a1e" stroke-width="0.35"/>
     <path d="M0,0 Q-10,-19 -16,-35 Q-3,-17 0,0Z" fill="#52a458" stroke="#1a5a1e" stroke-width="0.35"/>
@@ -979,8 +927,11 @@
   </g>
 </g>
 
-<!-- Crown top twig -->
-<g transform="translate(500,68)" filter="url(#lfT)">
+</g><!-- end bIV-sway -->
+
+<!-- Crown top twig — on trunk-sway -->
+<g class="trunk-sway">
+<g transform="translate(500,68)">
   <g style="animation:sw1 4s ease-in-out infinite;transform-origin:0 0">
     <path d="M0,0 Q-9,-22 -3,-40 Q5,-20 0,0Z"  fill="#5abc5e" stroke="#1a5a1e" stroke-width="0.3"/>
     <path d="M0,0 Q8,-20 13,-36 Q2,-18 0,0Z"   fill="#4aae4e" stroke="#1a5a1e" stroke-width="0.3"/>
@@ -988,6 +939,7 @@
     <path d="M0,0 Q17,-7 26,-17 Q8,-4 0,0Z"    fill="#4aae4e" stroke="#1a5a1e" stroke-width="0.3"/>
   </g>
 </g>
+</g><!-- end trunk-sway crown top -->
 
 <!-- ════ BRANCH LABELS ════ -->
 <rect x="55"  y="488" width="200" height="28" rx="8" fill="rgba(255,255,255,0.80)"/>
@@ -1030,8 +982,8 @@
 <g class="lemon-group" onclick="sparkle(this,'nouns')" transform="translate(115,504)">
   <line x1="0" y1="0" x2="0" y2="-12" stroke="#3a6a1e" stroke-width="1.6"/>
   <g style="animation:sw2 4s ease-in-out infinite;transform-origin:0 -12px">
-    <path d="M0,-12 Q-14,-30 -4,-46 Q5,-28 0,-12Z" fill="#3e8c42" filter="url(#lfT)"/>
-    <path d="M0,-12 Q12,-28 20,-44 Q3,-26 0,-12Z"  fill="#4ea052" filter="url(#lfT)"/>
+    <path d="M0,-12 Q-14,-30 -4,-46 Q5,-28 0,-12Z" fill="#3e8c42"/>
+    <path d="M0,-12 Q12,-28 20,-44 Q3,-26 0,-12Z"  fill="#4ea052"/>
     <line x1="0" y1="-12" x2="-3" y2="-42" stroke="#1a5018" stroke-width="0.65" opacity="0.5"/>
   </g>
   <ellipse class="lemon-fruit" cx="0" cy="14" rx="20" ry="15" fill="url(#lG)" stroke="#a07800" stroke-width="1.2" filter="url(#peel)"/>
@@ -1044,8 +996,8 @@
 <g class="lemon-group" onclick="sparkle(this,'pronouns')" transform="translate(165,511)">
   <line x1="0" y1="0" x2="0" y2="-12" stroke="#3a6a1e" stroke-width="1.6"/>
   <g style="animation:sw1 5s ease-in-out infinite 0.6s;transform-origin:0 -12px">
-    <path d="M0,-12 Q-13,-28 -4,-44 Q6,-26 0,-12Z" fill="#46924a" filter="url(#lfT)"/>
-    <path d="M0,-12 Q11,-26 19,-42 Q3,-24 0,-12Z"  fill="#3a8a3e" filter="url(#lfT)"/>
+    <path d="M0,-12 Q-13,-28 -4,-44 Q6,-26 0,-12Z" fill="#46924a"/>
+    <path d="M0,-12 Q11,-26 19,-42 Q3,-24 0,-12Z"  fill="#3a8a3e"/>
   </g>
   <ellipse class="lemon-fruit" cx="0" cy="14" rx="20" ry="15" fill="url(#lG)" stroke="#a07800" stroke-width="1.2" filter="url(#peel)"/>
   <ellipse cx="-5" cy="9" rx="9" ry="5.5" fill="url(#lS)" opacity="0.78"/>
@@ -1057,8 +1009,8 @@
 <g class="lemon-group" onclick="sparkle(this,'verbs')" transform="translate(249,530)">
   <line x1="0" y1="0" x2="0" y2="-12" stroke="#3a6a1e" stroke-width="1.6"/>
   <g style="animation:sw2 4.7s ease-in-out infinite 1.2s;transform-origin:0 -12px">
-    <path d="M0,-12 Q-12,-27 -4,-42 Q5,-25 0,-12Z" fill="#3e9042" filter="url(#lfT)"/>
-    <path d="M0,-12 Q11,-25 18,-40 Q3,-23 0,-12Z"  fill="#4ea452" filter="url(#lfT)"/>
+    <path d="M0,-12 Q-12,-27 -4,-42 Q5,-25 0,-12Z" fill="#3e9042"/>
+    <path d="M0,-12 Q11,-25 18,-40 Q3,-23 0,-12Z"  fill="#4ea452"/>
   </g>
   <ellipse class="lemon-fruit" cx="0" cy="14" rx="20" ry="15" fill="url(#lG)" stroke="#a07800" stroke-width="1.2" filter="url(#peel)"/>
   <ellipse cx="-5" cy="9" rx="9" ry="5.5" fill="url(#lS)" opacity="0.78"/>
@@ -1070,8 +1022,8 @@
 <g class="lemon-group" onclick="sparkle(this,'adjectives-adverbs')" transform="translate(299,521)">
   <line x1="0" y1="0" x2="0" y2="-12" stroke="#3a6a1e" stroke-width="1.6"/>
   <g style="animation:sw1 5.8s ease-in-out infinite 0.9s;transform-origin:0 -12px">
-    <path d="M0,-12 Q-11,-25 -4,-40 Q5,-23 0,-12Z" fill="#428e46" filter="url(#lfT)"/>
-    <path d="M0,-12 Q10,-23 17,-38 Q3,-21 0,-12Z"  fill="#52a056" filter="url(#lfT)"/>
+    <path d="M0,-12 Q-11,-25 -4,-40 Q5,-23 0,-12Z" fill="#428e46"/>
+    <path d="M0,-12 Q10,-23 17,-38 Q3,-21 0,-12Z"  fill="#52a056"/>
   </g>
   <ellipse class="lemon-fruit" cx="0" cy="14" rx="20" ry="15" fill="url(#lG)" stroke="#a07800" stroke-width="1.2" filter="url(#peel)"/>
   <ellipse cx="-5" cy="9" rx="9" ry="5.5" fill="url(#lS)" opacity="0.78"/>
@@ -1083,8 +1035,8 @@
 <g class="lemon-group" onclick="sparkle(this,'prepositions')" transform="translate(240,498)">
   <line x1="0" y1="0" x2="0" y2="-12" stroke="#3a6a1e" stroke-width="1.6"/>
   <g style="animation:sw2 6s ease-in-out infinite 2.3s;transform-origin:0 -12px">
-    <path d="M0,-12 Q-11,-24 -3,-39 Q5,-22 0,-12Z" fill="#3a8c3e" filter="url(#lfT)"/>
-    <path d="M0,-12 Q10,-22 16,-37 Q3,-20 0,-12Z"  fill="#4a9a4e" filter="url(#lfT)"/>
+    <path d="M0,-12 Q-11,-24 -3,-39 Q5,-22 0,-12Z" fill="#3a8c3e"/>
+    <path d="M0,-12 Q10,-22 16,-37 Q3,-20 0,-12Z"  fill="#4a9a4e"/>
   </g>
   <ellipse class="lemon-fruit" cx="0" cy="14" rx="20" ry="15" fill="url(#lG)" stroke="#a07800" stroke-width="1.2" filter="url(#peel)"/>
   <ellipse cx="-5" cy="9" rx="9" ry="5.5" fill="url(#lS)" opacity="0.78"/>
@@ -1098,8 +1050,8 @@
 <g class="lemon-group" onclick="sparkle(this,'infinitive')" transform="translate(194,185)">
   <line x1="0" y1="0" x2="0" y2="-12" stroke="#3a6a1e" stroke-width="1.6"/>
   <g style="animation:sw1 5.5s ease-in-out infinite 1.4s;transform-origin:0 -12px">
-    <path d="M0,-12 Q-12,-28 -4,-44 Q5,-26 0,-12Z" fill="#3e8c42" filter="url(#lfT)"/>
-    <path d="M0,-12 Q11,-26 18,-42 Q3,-24 0,-12Z"  fill="#4ea452" filter="url(#lfT)"/>
+    <path d="M0,-12 Q-12,-28 -4,-44 Q5,-26 0,-12Z" fill="#3e8c42"/>
+    <path d="M0,-12 Q11,-26 18,-42 Q3,-24 0,-12Z"  fill="#4ea452"/>
   </g>
   <ellipse class="lemon-fruit" cx="0" cy="14" rx="20" ry="15" fill="url(#lG)" stroke="#a07800" stroke-width="1.2" filter="url(#peel)"/>
   <ellipse cx="-5" cy="9" rx="9" ry="5.5" fill="url(#lS)" opacity="0.78"/>
@@ -1111,8 +1063,8 @@
 <g class="lemon-group" onclick="sparkle(this,'gerund')" transform="translate(230,261)">
   <line x1="0" y1="0" x2="0" y2="-12" stroke="#3a6a1e" stroke-width="1.6"/>
   <g style="animation:sw2 4.4s ease-in-out infinite 2.1s;transform-origin:0 -12px">
-    <path d="M0,-12 Q-11,-26 -4,-41 Q5,-24 0,-12Z" fill="#428e46" filter="url(#lfT)"/>
-    <path d="M0,-12 Q10,-24 16,-39 Q3,-22 0,-12Z"  fill="#3a8a3e" filter="url(#lfT)"/>
+    <path d="M0,-12 Q-11,-26 -4,-41 Q5,-24 0,-12Z" fill="#428e46"/>
+    <path d="M0,-12 Q10,-24 16,-39 Q3,-22 0,-12Z"  fill="#3a8a3e"/>
   </g>
   <ellipse class="lemon-fruit" cx="0" cy="14" rx="20" ry="15" fill="url(#lG)" stroke="#a07800" stroke-width="1.2" filter="url(#peel)"/>
   <ellipse cx="-5" cy="9" rx="9" ry="5.5" fill="url(#lS)" opacity="0.78"/>
@@ -1124,8 +1076,8 @@
 <g class="lemon-group" onclick="sparkle(this,'present-participle')" transform="translate(288,308)">
   <line x1="0" y1="0" x2="0" y2="-12" stroke="#3a6a1e" stroke-width="1.6"/>
   <g style="animation:sw1 6.2s ease-in-out infinite 0.8s;transform-origin:0 -12px">
-    <path d="M0,-12 Q-11,-24 -3,-39 Q5,-22 0,-12Z" fill="#3e9042" filter="url(#lfT)"/>
-    <path d="M0,-12 Q10,-22 16,-37 Q3,-20 0,-12Z"  fill="#4ea050" filter="url(#lfT)"/>
+    <path d="M0,-12 Q-11,-24 -3,-39 Q5,-22 0,-12Z" fill="#3e9042"/>
+    <path d="M0,-12 Q10,-22 16,-37 Q3,-20 0,-12Z"  fill="#4ea050"/>
   </g>
   <ellipse class="lemon-fruit" cx="0" cy="14" rx="20" ry="15" fill="url(#lG)" stroke="#a07800" stroke-width="1.2" filter="url(#peel)"/>
   <ellipse cx="-5" cy="9" rx="9" ry="5.5" fill="url(#lS)" opacity="0.78"/>
@@ -1137,8 +1089,8 @@
 <g class="lemon-group" onclick="sparkle(this,'past-participle')" transform="translate(340,365)">
   <line x1="0" y1="0" x2="0" y2="-12" stroke="#3a6a1e" stroke-width="1.6"/>
   <g style="animation:sw2 5.3s ease-in-out infinite 1.6s;transform-origin:0 -12px">
-    <path d="M0,-12 Q-10,-23 -4,-38 Q5,-21 0,-12Z" fill="#3a8c3e" filter="url(#lfT)"/>
-    <path d="M0,-12 Q9,-21 15,-36 Q3,-19 0,-12Z"   fill="#50a054" filter="url(#lfT)"/>
+    <path d="M0,-12 Q-10,-23 -4,-38 Q5,-21 0,-12Z" fill="#3a8c3e"/>
+    <path d="M0,-12 Q9,-21 15,-36 Q3,-19 0,-12Z"   fill="#50a054"/>
   </g>
   <ellipse class="lemon-fruit" cx="0" cy="14" rx="20" ry="15" fill="url(#lG)" stroke="#a07800" stroke-width="1.2" filter="url(#peel)"/>
   <ellipse cx="-5" cy="9" rx="9" ry="5.5" fill="url(#lS)" opacity="0.78"/>
@@ -1152,8 +1104,8 @@
 <g class="lemon-group" onclick="sparkle(this,'noun-clause')" transform="translate(932,385)">
   <line x1="0" y1="0" x2="0" y2="-12" stroke="#3a6a1e" stroke-width="1.6"/>
   <g style="animation:sw1 4.8s ease-in-out infinite 0.5s;transform-origin:0 -12px">
-    <path d="M0,-12 Q-12,-27 -4,-43 Q5,-25 0,-12Z" fill="#3e8c42" filter="url(#lfT)"/>
-    <path d="M0,-12 Q11,-25 18,-41 Q3,-23 0,-12Z"  fill="#4a9a4e" filter="url(#lfT)"/>
+    <path d="M0,-12 Q-12,-27 -4,-43 Q5,-25 0,-12Z" fill="#3e8c42"/>
+    <path d="M0,-12 Q11,-25 18,-41 Q3,-23 0,-12Z"  fill="#4a9a4e"/>
   </g>
   <ellipse class="lemon-fruit" cx="0" cy="14" rx="20" ry="15" fill="url(#lG)" stroke="#a07800" stroke-width="1.2" filter="url(#peel)"/>
   <ellipse cx="-5" cy="9" rx="9" ry="5.5" fill="url(#lS)" opacity="0.78"/>
@@ -1165,8 +1117,8 @@
 <g class="lemon-group" onclick="sparkle(this,'adjective-clause')" transform="translate(842,414)">
   <line x1="0" y1="0" x2="0" y2="-12" stroke="#3a6a1e" stroke-width="1.6"/>
   <g style="animation:sw2 5.1s ease-in-out infinite 1.3s;transform-origin:0 -12px">
-    <path d="M0,-12 Q-11,-26 -4,-41 Q5,-24 0,-12Z" fill="#428e46" filter="url(#lfT)"/>
-    <path d="M0,-12 Q10,-24 16,-39 Q3,-22 0,-12Z"  fill="#3a8a3e" filter="url(#lfT)"/>
+    <path d="M0,-12 Q-11,-26 -4,-41 Q5,-24 0,-12Z" fill="#428e46"/>
+    <path d="M0,-12 Q10,-24 16,-39 Q3,-22 0,-12Z"  fill="#3a8a3e"/>
   </g>
   <ellipse class="lemon-fruit" cx="0" cy="14" rx="20" ry="15" fill="url(#lG)" stroke="#a07800" stroke-width="1.2" filter="url(#peel)"/>
   <ellipse cx="-5" cy="9" rx="9" ry="5.5" fill="url(#lS)" opacity="0.78"/>
@@ -1178,8 +1130,8 @@
 <g class="lemon-group" onclick="sparkle(this,'adverb-clause')" transform="translate(746,440)">
   <line x1="0" y1="0" x2="0" y2="-12" stroke="#3a6a1e" stroke-width="1.6"/>
   <g style="animation:sw1 5.7s ease-in-out infinite 2s;transform-origin:0 -12px">
-    <path d="M0,-12 Q-11,-24 -4,-39 Q5,-22 0,-12Z" fill="#3e8c42" filter="url(#lfT)"/>
-    <path d="M0,-12 Q10,-22 15,-37 Q3,-20 0,-12Z"  fill="#50a054" filter="url(#lfT)"/>
+    <path d="M0,-12 Q-11,-24 -4,-39 Q5,-22 0,-12Z" fill="#3e8c42"/>
+    <path d="M0,-12 Q10,-22 15,-37 Q3,-20 0,-12Z"  fill="#50a054"/>
   </g>
   <ellipse class="lemon-fruit" cx="0" cy="14" rx="20" ry="15" fill="url(#lG)" stroke="#a07800" stroke-width="1.2" filter="url(#peel)"/>
   <ellipse cx="-5" cy="9" rx="9" ry="5.5" fill="url(#lS)" opacity="0.78"/>
@@ -1193,8 +1145,8 @@
 <g class="lemon-group" onclick="sparkle(this,'questions')" transform="translate(888,104)">
   <line x1="0" y1="0" x2="0" y2="-12" stroke="#3a6a1e" stroke-width="1.6"/>
   <g style="animation:sw2 4.9s ease-in-out infinite 0.4s;transform-origin:0 -12px">
-    <path d="M0,-12 Q-12,-26 -4,-42 Q5,-24 0,-12Z" fill="#3a8c3e" filter="url(#lfT)"/>
-    <path d="M0,-12 Q11,-24 17,-40 Q3,-22 0,-12Z"  fill="#4a9c4e" filter="url(#lfT)"/>
+    <path d="M0,-12 Q-12,-26 -4,-42 Q5,-24 0,-12Z" fill="#3a8c3e"/>
+    <path d="M0,-12 Q11,-24 17,-40 Q3,-22 0,-12Z"  fill="#4a9c4e"/>
   </g>
   <ellipse class="lemon-fruit" cx="0" cy="14" rx="20" ry="15" fill="url(#lG)" stroke="#a07800" stroke-width="1.2" filter="url(#peel)"/>
   <ellipse cx="-5" cy="9" rx="9" ry="5.5" fill="url(#lS)" opacity="0.78"/>
@@ -1206,8 +1158,8 @@
 <g class="lemon-group" onclick="sparkle(this,'exclamations')" transform="translate(842,160)">
   <line x1="0" y1="0" x2="0" y2="-12" stroke="#3a6a1e" stroke-width="1.6"/>
   <g style="animation:sw1 5.2s ease-in-out infinite 1.8s;transform-origin:0 -12px">
-    <path d="M0,-12 Q-10,-23 -3,-38 Q5,-21 0,-12Z" fill="#428e46" filter="url(#lfT)"/>
-    <path d="M0,-12 Q9,-21 15,-36 Q3,-19 0,-12Z"   fill="#3a8a3e" filter="url(#lfT)"/>
+    <path d="M0,-12 Q-10,-23 -3,-38 Q5,-21 0,-12Z" fill="#428e46"/>
+    <path d="M0,-12 Q9,-21 15,-36 Q3,-19 0,-12Z"   fill="#3a8a3e"/>
   </g>
   <ellipse class="lemon-fruit" cx="0" cy="14" rx="20" ry="15" fill="url(#lG)" stroke="#a07800" stroke-width="1.2" filter="url(#peel)"/>
   <ellipse cx="-5" cy="9" rx="9" ry="5.5" fill="url(#lS)" opacity="0.78"/>
@@ -1219,8 +1171,8 @@
 <g class="lemon-group" onclick="sparkle(this,'inverted')" transform="translate(750,210)">
   <line x1="0" y1="0" x2="0" y2="-12" stroke="#3a6a1e" stroke-width="1.6"/>
   <g style="animation:sw2 6.4s ease-in-out infinite 2.5s;transform-origin:0 -12px">
-    <path d="M0,-12 Q-10,-22 -4,-36 Q5,-20 0,-12Z" fill="#3e9042" filter="url(#lfT)"/>
-    <path d="M0,-12 Q9,-20 14,-34 Q3,-18 0,-12Z"   fill="#4ea050" filter="url(#lfT)"/>
+    <path d="M0,-12 Q-10,-22 -4,-36 Q5,-20 0,-12Z" fill="#3e9042"/>
+    <path d="M0,-12 Q9,-20 14,-34 Q3,-18 0,-12Z"   fill="#4ea050"/>
   </g>
   <ellipse class="lemon-fruit" cx="0" cy="14" rx="20" ry="15" fill="url(#lG)" stroke="#a07800" stroke-width="1.2" filter="url(#peel)"/>
   <ellipse cx="-5" cy="9" rx="9" ry="5.5" fill="url(#lS)" opacity="0.78"/>
@@ -1232,16 +1184,14 @@
 <g class="lemon-group" onclick="sparkle(this,'subjunctive')" transform="translate(592,328)">
   <line x1="0" y1="0" x2="0" y2="-12" stroke="#3a6a1e" stroke-width="1.6"/>
   <g style="animation:sw1 5s ease-in-out infinite 1s;transform-origin:0 -12px">
-    <path d="M0,-12 Q-10,-22 -4,-36 Q5,-20 0,-12Z" fill="#3a8c3e" filter="url(#lfT)"/>
-    <path d="M0,-12 Q9,-20 15,-34 Q3,-18 0,-12Z"   fill="#52a456" filter="url(#lfT)"/>
+    <path d="M0,-12 Q-10,-22 -4,-36 Q5,-20 0,-12Z" fill="#3a8c3e"/>
+    <path d="M0,-12 Q9,-20 15,-34 Q3,-18 0,-12Z"   fill="#52a456"/>
   </g>
   <ellipse class="lemon-fruit" cx="0" cy="14" rx="20" ry="15" fill="url(#lG)" stroke="#a07800" stroke-width="1.2" filter="url(#peel)"/>
   <ellipse cx="-5" cy="9" rx="9" ry="5.5" fill="url(#lS)" opacity="0.78"/>
   <rect class="lemon-label-bg" x="-30" y="33" width="60" height="15" rx="6" fill="rgba(255,255,255,0.92)"/>
   <text class="lemon-label-text" y="43">Subj. 假設語氣</text>
 </g>
-
-</g><!-- end .tree-body -->
 
 <!-- ════ GROUND FLOWERS ════
      Positioned along the bottom of the SVG (y ~890–970) in the grass zone.
