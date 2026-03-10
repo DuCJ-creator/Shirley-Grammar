@@ -2,603 +2,738 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Level 2 Compound Sentences - Cinematic Lesson</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Level 2: Compound Sentences</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;500;700&family=Poppins:wght@300;600;800&display=swap');
-
         :root {
-            --bg-color: #f4f7f6;
-            --accent-blue: #5d9cec;
-            --accent-green: #a0d468;
-            --accent-red: #ed5565;
-            --accent-yellow: #ffce54;
-            --accent-purple: #ac92ec;
-            --accent-teal: #4fc1e9;
-            --accent-orange: #fc6e51;
-            --text-dark: #434a54;
-            --text-light: #ffffff;
-            --box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            --bg: #1A1F2E;
+            --stage: #222840;
+            --card: #2D3454;
+            --border: rgba(255,255,255,0.08);
+            --text: #EEF0FF;
+            --sub: #8B91B8;
+            --dim: #5A6080;
+
+            /* FANBOYS colors */
+            --c-for:  #FF6B6B;
+            --c-and:  #5BC4F5;
+            --c-nor:  #A0A8CC;
+            --c-but:  #FF9F5B;
+            --c-or:   #FFD166;
+            --c-yet:  #C9B1FF;
+            --c-so:   #6EE7B7;
+            --c-semi: #94A3B8;
+
+            --font-en: 'Nunito', sans-serif;
+            --font-cn: 'Noto Sans TC', sans-serif;
         }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
         body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #2c3e50; /* Dark outer background for cinema feel */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Poppins', 'Noto Sans TC', sans-serif;
+            width: 100%; height: 100%;
+            background: #0F1117;
+            display: flex; justify-content: center; align-items: center;
+            font-family: var(--font-en);
             overflow: hidden;
         }
 
-        /* The Stage - 16:9 Aspect Ratio */
+        /* ─── Stage (16:9) ───────────────────────── */
         #stage {
-            width: 100%;
-            max-width: 1280px;
-            aspect-ratio: 16/9;
-            background: var(--bg-color);
+            width: min(100vw, calc(100vh * 16/9));
+            height: min(100vh, calc(100vw * 9/16));
+            background: var(--stage);
             position: relative;
             overflow: hidden;
-            border-radius: 8px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            border-radius: 12px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.6);
         }
 
-        /* Background Decor */
-        .bg-shape {
-            position: absolute;
+        /* ─── Ambient bg ─────────────────────────── */
+        .ambient {
+            position: absolute; inset: 0; z-index: 0; pointer-events: none;
+        }
+        .amb-circle {
+            position: absolute; border-radius: 50%;
+            filter: blur(80px); opacity: 0.18;
+            transition: background 1.5s ease;
+        }
+        #amb1 { width: 50%; height: 80%; top: -20%; left: -10%; background: #5BC4F5; }
+        #amb2 { width: 40%; height: 70%; bottom: -20%; right: -5%; background: #C9B1FF; }
+
+        /* ─── Top Bar ────────────────────────────── */
+        .top-bar {
+            position: absolute; top: 0; left: 0; right: 0;
+            z-index: 50;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: clamp(10px, 2%, 18px) clamp(14px, 3%, 28px);
+        }
+
+        .step-counter {
+            font-size: clamp(0.6rem, 1.2vw, 0.85rem);
+            font-weight: 700;
+            color: var(--sub);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .top-controls { display: flex; gap: 10px; }
+
+        .ctrl-btn {
+            width: clamp(32px, 4vw, 44px);
+            height: clamp(32px, 4vw, 44px);
             border-radius: 50%;
-            opacity: 0.1;
-            z-index: 0;
-            animation: float 20s infinite linear;
+            border: 1.5px solid var(--border);
+            background: rgba(255,255,255,0.06);
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            font-size: clamp(0.85rem, 1.5vw, 1.1rem);
+            transition: all 0.2s;
+            color: var(--text);
         }
+        .ctrl-btn:hover { background: rgba(255,255,255,0.12); transform: scale(1.1); }
 
-        @keyframes float {
-            0% { transform: translate(0, 0) rotate(0deg); }
-            50% { transform: translate(50px, 50px) rotate(180deg); }
-            100% { transform: translate(0, 0) rotate(360deg); }
+        /* ─── Pause Banner ───────────────────────── */
+        #pauseBanner {
+            position: absolute; top: 0; left: 0; right: 0;
+            z-index: 80;
+            display: flex; align-items: center; justify-content: space-between; gap: 12px;
+            padding: clamp(8px, 1.5%, 14px) clamp(14px, 3%, 28px);
+            background: rgba(10, 12, 20, 0.92);
+            backdrop-filter: blur(6px);
+            border-bottom: 1px solid var(--border);
+            opacity: 0; pointer-events: none;
+            transform: translateY(-100%);
+            transition: opacity 0.3s, transform 0.35s cubic-bezier(0.4,0,0.2,1);
         }
+        #pauseBanner.active { opacity: 1; pointer-events: all; transform: translateY(0); }
 
-        /* Main Content Area */
-        #content-layer {
+        .pause-left { display: flex; align-items: center; gap: 10px; }
+        .pause-icon-text { font-size: clamp(1rem, 2vw, 1.3rem); }
+        .pause-label {
+            font-size: clamp(0.8rem, 1.4vw, 1rem);
+            font-weight: 800; color: var(--text);
+        }
+        .pause-hint {
+            font-size: clamp(0.65rem, 1.1vw, 0.8rem);
+            color: var(--sub);
+        }
+        .resume-btn {
+            padding: clamp(5px, 0.8%, 8px) clamp(14px, 2.5%, 20px);
+            background: var(--c-and);
+            color: #0F1117;
+            border: none; border-radius: 20px;
+            font-family: var(--font-en);
+            font-size: clamp(0.75rem, 1.3vw, 0.9rem);
+            font-weight: 800;
+            cursor: pointer; white-space: nowrap;
+            transition: transform 0.15s, opacity 0.15s;
+        }
+        .resume-btn:hover { transform: scale(1.05); }
+
+        /* Dim content when paused */
+        #stage.paused #main-area,
+        #stage.paused #subtitle-area { filter: brightness(0.6); transition: filter 0.3s; }
+
+        /* ─── Main Content Area ──────────────────── */
+        #main-area {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 80%; /* Leave space for subtitles */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            top: 12%; left: 0; right: 0; bottom: 22%;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
             z-index: 10;
+            gap: clamp(12px, 2.5%, 28px);
         }
 
-        /* Subtitle Area */
-        #subtitle-container {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 20%;
-            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 20;
-            padding-bottom: 20px;
+        /* ─── Title Group ────────────────────────── */
+        #title-group {
             text-align: center;
+            opacity: 0; transform: translateY(-16px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        #title-group.show { opacity: 1; transform: translateY(0); }
+
+        .main-title {
+            font-size: clamp(2rem, 5.5vw, 4.5rem);
+            font-weight: 900; color: var(--text);
+            letter-spacing: -1px; line-height: 1;
+        }
+        .main-title span { color: var(--c-and); }
+
+        .level-badge {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 4px 14px;
+            border: 1.5px solid var(--border);
+            border-radius: 20px;
+            font-size: clamp(0.7rem, 1.2vw, 0.9rem);
+            font-weight: 700; color: var(--sub);
+            letter-spacing: 2px; text-transform: uppercase;
         }
 
-        .sub-en {
-            color: #fff;
-            font-size: 1.8rem;
-            font-weight: 600;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-            margin-bottom: 5px;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.5s ease;
-        }
-
-        .sub-tc {
-            color: #ddd;
-            font-size: 1.4rem;
-            font-weight: 300;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.5s ease 0.1s;
-        }
-
-        .sub-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Sentence Blocks */
-        .sentence-wrapper {
-            display: flex;
+        /* ─── FANBOYS Row ────────────────────────── */
+        #fanboys-row {
+            display: none;
+            gap: clamp(8px, 1.5vw, 18px);
             align-items: center;
-            justify-content: center;
-            gap: 20px;
+        }
+
+        .fb-letter {
+            font-size: clamp(1.4rem, 3.5vw, 2.8rem);
+            font-weight: 900;
+            color: var(--dim);
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            line-height: 1;
+        }
+        .fb-letter.active {
+            transform: scale(1.25);
+        }
+        .fb-letter.fb-f.active { color: var(--c-for); text-shadow: 0 0 20px var(--c-for); }
+        .fb-letter.fb-a.active { color: var(--c-and); text-shadow: 0 0 20px var(--c-and); }
+        .fb-letter.fb-n.active { color: var(--c-nor); text-shadow: 0 0 20px var(--c-nor); }
+        .fb-letter.fb-b.active { color: var(--c-but); text-shadow: 0 0 20px var(--c-but); }
+        .fb-letter.fb-o.active { color: var(--c-or);  text-shadow: 0 0 20px var(--c-or);  }
+        .fb-letter.fb-y.active { color: var(--c-yet); text-shadow: 0 0 20px var(--c-yet); }
+        .fb-letter.fb-s.active { color: var(--c-so);  text-shadow: 0 0 20px var(--c-so);  }
+
+        .fb-word {
+            font-size: clamp(0.55rem, 1vw, 0.75rem);
+            font-weight: 700; text-align: center;
+            letter-spacing: 0.5px;
+            opacity: 0; margin-top: 4px;
+            transition: opacity 0.3s 0.2s;
+            text-transform: uppercase;
+        }
+        .fb-item { display: flex; flex-direction: column; align-items: center; }
+        .fb-item .fb-letter.active + .fb-word { opacity: 1; }
+
+        /* ─── Sentence Area ──────────────────────── */
+        #sentence-area {
+            display: none;
+            align-items: center; justify-content: center;
+            gap: clamp(8px, 1.5vw, 20px);
             width: 90%;
             opacity: 0;
             transition: opacity 0.5s;
         }
 
         .clause {
-            background: white;
-            padding: 20px 30px;
-            border-radius: 15px;
-            box-shadow: var(--box-shadow);
-            font-size: 1.5rem;
-            color: var(--text-dark);
-            position: relative;
-            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-            transform: scale(0.9);
-            opacity: 0;
-            min-width: 200px;
+            background: var(--card);
+            border: 1.5px solid var(--border);
+            padding: clamp(10px, 1.8%, 18px) clamp(14px, 2.5%, 28px);
+            border-radius: 14px;
+            font-size: clamp(0.85rem, 2vw, 1.45rem);
+            font-weight: 700; color: var(--text);
             text-align: center;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+            opacity: 0; transform: scale(0.88) translateY(10px);
+            transition: all 0.55s cubic-bezier(0.34, 1.4, 0.64, 1);
+            min-width: clamp(120px, 22vw, 230px);
+            flex: 1; max-flex: 1;
+        }
+        .clause.show { opacity: 1; transform: scale(1) translateY(0); }
+
+        /* Connector */
+        .connector {
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            gap: 4px; flex-shrink: 0;
         }
 
-        .clause.show {
-            transform: scale(1);
-            opacity: 1;
+        .comma {
+            font-size: clamp(1.4rem, 3vw, 2.2rem);
+            font-weight: 900; color: var(--sub);
+            line-height: 1;
+            opacity: 0; transition: opacity 0.3s;
         }
 
-        /* Connector Elements */
-        .connector-zone {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 100px;
-            position: relative;
-        }
-
-        .punctuation {
-            font-size: 3rem;
-            font-weight: bold;
-            color: var(--text-dark);
-            opacity: 0;
-            transition: all 0.3s;
-        }
-
-        .conjunction-bubble {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: var(--accent-blue);
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: 800;
-            font-size: 1.2rem;
-            box-shadow: 0 5px 15px rgba(93, 156, 236, 0.4);
+        .conj-bubble {
+            padding: clamp(6px, 1%, 10px) clamp(10px, 1.8%, 18px);
+            border-radius: 30px;
+            color: #0F1117;
+            font-size: clamp(0.75rem, 1.6vw, 1.1rem);
+            font-weight: 900;
+            letter-spacing: 1px; text-transform: uppercase;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
             transform: scale(0);
             transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            margin-top: 5px;
-            text-transform: uppercase;
+            white-space: nowrap;
+        }
+        .conj-bubble.show { transform: scale(1); }
+
+        .conj-bubble.c-for  { background: var(--c-for);  }
+        .conj-bubble.c-and  { background: var(--c-and);  }
+        .conj-bubble.c-nor  { background: var(--c-nor); color: #fff; }
+        .conj-bubble.c-but  { background: var(--c-but);  }
+        .conj-bubble.c-or   { background: var(--c-or);   }
+        .conj-bubble.c-yet  { background: var(--c-yet);  }
+        .conj-bubble.c-so   { background: var(--c-so);   }
+        .conj-bubble.c-semi { background: var(--c-semi); color: #fff; font-size: clamp(1rem, 2vw, 1.4rem); }
+
+        /* ─── Meaning Tag ────────────────────────── */
+        #meaning-tag {
+            font-size: clamp(0.65rem, 1.2vw, 0.9rem);
+            font-weight: 600; color: var(--sub);
+            background: rgba(255,255,255,0.06);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 4px 14px;
+            opacity: 0; transform: translateY(6px);
+            transition: opacity 0.4s 0.3s, transform 0.4s 0.3s;
+            white-space: nowrap;
+        }
+        #meaning-tag.show { opacity: 1; transform: translateY(0); }
+
+        /* ─── Subtitle Area ──────────────────────── */
+        #subtitle-area {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            height: 22%;
+            z-index: 20;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            padding: 0 5% 2%;
+            gap: 5px;
+            background: linear-gradient(to top, rgba(10,12,20,0.95) 60%, transparent);
         }
 
-        .conjunction-bubble.pop {
-            transform: scale(1);
+        .sub-en {
+            font-size: clamp(0.9rem, 2.2vw, 1.55rem);
+            font-weight: 700; color: #fff;
+            text-align: center; line-height: 1.3;
+            opacity: 0; transform: translateY(8px);
+            transition: opacity 0.45s, transform 0.45s;
+        }
+        .sub-tc {
+            font-family: var(--font-cn);
+            font-size: clamp(0.75rem, 1.6vw, 1.15rem);
+            font-weight: 400; color: var(--sub);
+            text-align: center; line-height: 1.4;
+            opacity: 0; transform: translateY(8px);
+            transition: opacity 0.45s 0.1s, transform 0.45s 0.1s;
+        }
+        .sub-en.show, .sub-tc.show { opacity: 1; transform: translateY(0); }
+
+        /* ─── Progress Rail ──────────────────────── */
+        .progress-rail {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            height: 3px; background: rgba(255,255,255,0.06); z-index: 30;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--c-and), var(--c-yet));
+            width: 0%; transition: width 0.15s linear;
         }
 
-        /* Title Elements */
-        .main-title {
-            font-size: 4rem;
-            font-weight: 800;
-            color: var(--text-dark);
-            margin-bottom: 20px;
-            letter-spacing: -2px;
-            opacity: 0;
-            transform: translateY(-20px);
-            transition: all 0.8s ease;
+        /* ─── Decorative scanline ────────────────── */
+        .scanline {
+            position: absolute; inset: 0; z-index: 1; pointer-events: none;
+            background: repeating-linear-gradient(
+                to bottom,
+                transparent 0px,
+                transparent 3px,
+                rgba(0,0,0,0.04) 3px,
+                rgba(0,0,0,0.04) 4px
+            );
         }
-
-        .sub-title {
-            font-size: 2rem;
-            color: #888;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.8s ease 0.2s;
-        }
-
-        /* FANBOYS List */
-        .fanboys-list {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-
-        .fb-letter {
-            font-size: 2rem;
-            font-weight: 800;
-            color: #ccc;
-            transition: all 0.3s;
-        }
-        .fb-letter.active {
-            color: var(--accent-blue);
-            transform: scale(1.2);
-        }
-
-        /* Progress Bar */
-        #progress-bar {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            height: 5px;
-            background: var(--accent-orange);
-            width: 0%;
-            z-index: 30;
-            transition: width 0.2s linear;
-        }
-
-        /* Helper Classes for Colors */
-        .c-for { background-color: var(--accent-red); box-shadow: 0 5px 15px rgba(237, 85, 101, 0.4); }
-        .c-and { background-color: var(--accent-blue); box-shadow: 0 5px 15px rgba(93, 156, 236, 0.4); }
-        .c-nor { background-color: var(--text-dark); box-shadow: 0 5px 15px rgba(67, 74, 84, 0.4); }
-        .c-but { background-color: var(--accent-orange); box-shadow: 0 5px 15px rgba(252, 110, 81, 0.4); }
-        .c-or { background-color: var(--accent-yellow); color: #555; box-shadow: 0 5px 15px rgba(255, 206, 84, 0.4); }
-        .c-yet { background-color: var(--accent-purple); box-shadow: 0 5px 15px rgba(172, 146, 236, 0.4); }
-        .c-so { background-color: var(--accent-green); box-shadow: 0 5px 15px rgba(160, 212, 104, 0.4); }
-        .c-semi { background-color: #656d78; border-radius: 10px; width: auto; padding: 0 20px; }
-
     </style>
 </head>
 <body>
+<div id="stage">
+    <!-- Ambient glow -->
+    <div class="ambient">
+        <div class="amb-circle" id="amb1"></div>
+        <div class="amb-circle" id="amb2"></div>
+    </div>
+    <div class="scanline"></div>
 
-    <div id="stage">
-        <!-- Background shapes -->
-        <div class="bg-shape" style="width: 300px; height: 300px; background: #e6e9ed; top: -50px; left: -50px;"></div>
-        <div class="bg-shape" style="width: 200px; height: 200px; background: #e6e9ed; bottom: 50px; right: -50px; animation-delay: -5s;"></div>
-        <div class="bg-shape" style="width: 150px; height: 150px; background: #dae1e7; top: 20%; right: 20%; animation-delay: -10s;"></div>
-
-        <!-- Content Layer -->
-        <div id="content-layer">
-            <div id="title-group" style="display: none; text-align: center;">
-                <div class="main-title">Compound Sentences</div>
-                <div class="sub-title">Level 2 Grammar</div>
-            </div>
-
-            <div id="fanboys-display" class="fanboys-list" style="display: none;">
-                <div class="fb-letter" id="fb-f">F</div>
-                <div class="fb-letter" id="fb-a">A</div>
-                <div class="fb-letter" id="fb-n">N</div>
-                <div class="fb-letter" id="fb-b">B</div>
-                <div class="fb-letter" id="fb-o">O</div>
-                <div class="fb-letter" id="fb-y">Y</div>
-                <div class="fb-letter" id="fb-s">S</div>
-            </div>
-
-            <div id="sentence-area" class="sentence-wrapper" style="display: none;">
-                <div class="clause" id="clause1">I drank some water</div>
-                
-                <div class="connector-zone">
-                    <div class="punctuation" id="comma">,</div>
-                    <div class="conjunction-bubble" id="conjunction">FOR</div>
-                </div>
-
-                <div class="clause" id="clause2">I was thirsty</div>
-            </div>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="step-counter" id="stepCounter">Intro</div>
+        <div class="top-controls">
+            <div class="ctrl-btn" id="pauseBtn" title="Pause">⏸️</div>
+            <div class="ctrl-btn" id="musicBtn" title="Sound">🔇</div>
         </div>
-
-        <!-- Subtitles -->
-        <div id="subtitle-container">
-            <div class="sub-en" id="sub-en"></div>
-            <div class="sub-tc" id="sub-tc"></div>
-        </div>
-
-        <!-- Progress Bar -->
-        <div id="progress-bar"></div>
     </div>
 
-    <script>
-        // DOM Elements
-        const els = {
-            titleGroup: document.getElementById('title-group'),
-            mainTitle: document.querySelector('.main-title'),
-            subTitle: document.querySelector('.sub-title'),
-            fanboysDisplay: document.getElementById('fanboys-display'),
-            sentenceArea: document.getElementById('sentence-area'),
-            clause1: document.getElementById('clause1'),
-            clause2: document.getElementById('clause2'),
-            comma: document.getElementById('comma'),
-            conjunction: document.getElementById('conjunction'),
-            subEn: document.getElementById('sub-en'),
-            subTc: document.getElementById('sub-tc'),
-            progressBar: document.getElementById('progress-bar'),
-            fbLetters: {
-                f: document.getElementById('fb-f'),
-                a: document.getElementById('fb-a'),
-                n: document.getElementById('fb-n'),
-                b: document.getElementById('fb-b'),
-                o: document.getElementById('fb-o'),
-                y: document.getElementById('fb-y'),
-                s: document.getElementById('fb-s'),
-            }
-        };
+    <!-- Pause Banner -->
+    <div id="pauseBanner">
+        <div class="pause-left">
+            <span class="pause-icon-text">⏸️</span>
+            <div>
+                <div class="pause-label">Paused</div>
+                <div class="pause-hint">Content stays visible — take your time</div>
+            </div>
+        </div>
+        <button class="resume-btn" onclick="togglePause()">▶ Resume</button>
+    </div>
 
-        // Helper functions for animation
-        function showSubtitles(en, tc) {
-            els.subEn.classList.remove('sub-visible');
-            els.subTc.classList.remove('sub-visible');
-            
-            setTimeout(() => {
-                els.subEn.textContent = en;
-                els.subTc.textContent = tc;
-                els.subEn.classList.add('sub-visible');
-                els.subTc.classList.add('sub-visible');
-            }, 500);
-        }
+    <!-- Main Area -->
+    <div id="main-area">
+        <!-- Title -->
+        <div id="title-group">
+            <div class="main-title">Compound<br><span>Sentences</span></div>
+            <div class="level-badge">Level 2 Grammar</div>
+        </div>
 
-        function hideSubtitles() {
-            els.subEn.classList.remove('sub-visible');
-            els.subTc.classList.remove('sub-visible');
-        }
+        <!-- FANBOYS Row -->
+        <div id="fanboys-row">
+            <div class="fb-item"><div class="fb-letter fb-f" id="fb-f">F</div><div class="fb-word" style="color:var(--c-for)">for</div></div>
+            <div class="fb-item"><div class="fb-letter fb-a" id="fb-a">A</div><div class="fb-word" style="color:var(--c-and)">and</div></div>
+            <div class="fb-item"><div class="fb-letter fb-n" id="fb-n">N</div><div class="fb-word" style="color:var(--c-nor)">nor</div></div>
+            <div class="fb-item"><div class="fb-letter fb-b" id="fb-b">B</div><div class="fb-word" style="color:var(--c-but)">but</div></div>
+            <div class="fb-item"><div class="fb-letter fb-o" id="fb-o">O</div><div class="fb-word" style="color:var(--c-or)">or</div></div>
+            <div class="fb-item"><div class="fb-letter fb-y" id="fb-y">Y</div><div class="fb-word" style="color:var(--c-yet)">yet</div></div>
+            <div class="fb-item"><div class="fb-letter fb-s" id="fb-s">S</div><div class="fb-word" style="color:var(--c-so)">so</div></div>
+        </div>
 
-        function resetLetters() {
-            Object.values(els.fbLetters).forEach(el => el.classList.remove('active'));
-        }
+        <!-- Sentence Area -->
+        <div id="sentence-area">
+            <div class="clause" id="clause1">Complete Sentence</div>
+            <div class="connector">
+                <div class="comma" id="comma">,</div>
+                <div class="conj-bubble" id="conjBubble">AND</div>
+            </div>
+            <div class="clause" id="clause2">Complete Sentence</div>
+        </div>
 
-        function highlightLetter(char) {
-            resetLetters();
-            if(char && els.fbLetters[char.toLowerCase()]) {
-                els.fbLetters[char.toLowerCase()].classList.add('active');
-            }
-        }
+        <!-- Meaning tag -->
+        <div id="meaning-tag"></div>
+    </div>
 
-        function setSentence(c1, c2, conn, type) {
-            // Reset
-            els.clause1.classList.remove('show');
-            els.clause2.classList.remove('show');
-            els.comma.style.opacity = '0';
-            els.conjunction.classList.remove('pop');
-            
-            // Clean classes
-            els.conjunction.className = 'conjunction-bubble'; 
+    <!-- Subtitles -->
+    <div id="subtitle-area">
+        <div class="sub-en" id="subEn"></div>
+        <div class="sub-tc" id="subTc"></div>
+    </div>
 
-            setTimeout(() => {
-                els.clause1.textContent = c1;
-                els.clause2.textContent = c2;
-                els.conjunction.textContent = conn;
-                
-                if (type) els.conjunction.classList.add('c-' + type);
+    <!-- Progress -->
+    <div class="progress-rail"><div class="progress-fill" id="progressFill"></div></div>
+</div>
 
-                // Animate In
-                els.clause1.classList.add('show');
-                
-                setTimeout(() => {
-                    if(conn !== ';') els.comma.style.opacity = '1'; // Show comma if not semicolon
-                    els.conjunction.classList.add('pop');
-                }, 600);
+<script>
+/* ══════════════════════════════════════════════
+   AUDIO
+══════════════════════════════════════════════ */
+const Audio = (() => {
+    let ctx = null, muted = true, bgmTimer = null;
+    function c() { if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)(); return ctx; }
+    function tone(f, type, dur, vol, delay = 0) {
+        if (muted) return;
+        const ac = c(), osc = ac.createOscillator(), g = ac.createGain();
+        const t = ac.currentTime + delay;
+        osc.type = type; osc.frequency.setValueAtTime(f, t);
+        g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(0.001, t + dur);
+        osc.connect(g); g.connect(ac.destination); osc.start(t); osc.stop(t + dur);
+    }
+    return {
+        get muted() { return muted; },
+        toggle() {
+            if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
+            muted = !muted;
+            if (!muted) { ctx.resume(); this.bgm(); } else { ctx.suspend(); clearInterval(bgmTimer); }
+            return muted;
+        },
+        pop()     { tone(420 + Math.random()*120, 'triangle', 0.1, 0.04); },
+        chord()   { tone(392,'sine',1.0,0.04); tone(493.88,'sine',1.0,0.04,0.06); tone(587.33,'sine',1.0,0.04,0.12); },
+        fanboy()  { tone(660,'square',0.12,0.04); },
+        success() { tone(523.25,'sine',0.2,0.05); tone(659.25,'sine',0.35,0.05,0.15); tone(783.99,'sine',0.5,0.05,0.3); },
+        bgm() {
+            clearInterval(bgmTimer);
+            const notes = [196,246.94,293.66,369.99,293.66,246.94]; let i = 0;
+            bgmTimer = setInterval(() => { if (!muted) tone(notes[i=(i+1)%notes.length],'sine',1.6,0.01); }, 700);
+        },
+        suspend() { if (ctx) ctx.suspend(); clearInterval(bgmTimer); },
+        resume()  { if (!muted && ctx) { ctx.resume(); this.bgm(); } }
+    };
+})();
 
-                setTimeout(() => {
-                    els.clause2.classList.add('show');
-                }, 1200);
+/* ══════════════════════════════════════════════
+   PAUSE SYSTEM
+══════════════════════════════════════════════ */
+let isPaused = false, pauseResolve = null, pausePromise = null;
 
-            }, 600);
-        }
+function togglePause() {
+    isPaused = !isPaused;
+    const banner = document.getElementById('pauseBanner');
+    const stageEl = document.getElementById('stage');
+    const btn = document.getElementById('pauseBtn');
+    if (isPaused) {
+        banner.classList.add('active');
+        stageEl.classList.add('paused');
+        btn.innerHTML = '▶️';
+        Audio.suspend();
+        pausePromise = new Promise(r => { pauseResolve = r; });
+    } else {
+        banner.classList.remove('active');
+        stageEl.classList.remove('paused');
+        btn.innerHTML = '⏸️';
+        Audio.resume();
+        if (pauseResolve) { pauseResolve(); pauseResolve = null; }
+    }
+}
 
-        // Timeline Sequence
-        // Each step: duration (ms), action (function)
-        const timeline = [
-            // 1. Intro Title
-            {
-                duration: 4000,
-                action: () => {
-                    els.titleGroup.style.display = 'block';
-                    setTimeout(() => {
-                        els.mainTitle.style.opacity = '1';
-                        els.mainTitle.style.transform = 'translateY(0)';
-                    }, 100);
-                    setTimeout(() => {
-                        els.subTitle.style.opacity = '1';
-                        els.subTitle.style.transform = 'translateY(0)';
-                    }, 800);
-                    showSubtitles("Welcome to Level 2 Grammar.", "歡迎來到第二級文法。");
-                }
-            },
-            // 2. What is it?
-            {
-                duration: 5000,
-                action: () => {
-                    showSubtitles("A Compound Sentence joins two independent clauses.", "合句將兩個獨立的子句連接在一起。");
-                }
-            },
-            // 3. The Formula
-            {
-                duration: 5000,
-                action: () => {
-                    els.titleGroup.style.opacity = '0'; // Fade out title
-                    setTimeout(() => els.titleGroup.style.display = 'none', 800);
-                    
-                    els.sentenceArea.style.display = 'flex';
-                    els.sentenceArea.style.opacity = '1';
-                    
-                    els.clause1.textContent = "Complete Sentence";
-                    els.clause2.textContent = "Complete Sentence";
-                    els.conjunction.textContent = "+";
-                    els.comma.textContent = ",";
-                    
-                    els.clause1.classList.add('show');
-                    setTimeout(() => els.clause2.classList.add('show'), 500);
-                    setTimeout(() => els.conjunction.classList.add('pop'), 1000);
-                    
-                    showSubtitles("We need a comma and a conjunction to glue them.", "我們需要一個逗號和一個連接詞把它們黏起來。");
-                }
-            },
-            // 4. FANBOYS Intro
-            {
-                duration: 4000,
-                action: () => {
-                    els.sentenceArea.style.opacity = '0'; // Hide sentences briefly
-                    els.fanboysDisplay.style.display = 'flex';
-                    showSubtitles("We call these connectors: FANBOYS.", "我們稱這些連接詞為：FANBOYS。");
-                }
-            },
-            // 5. For
-            {
-                duration: 6000,
-                action: () => {
-                    els.sentenceArea.style.opacity = '1';
-                    highlightLetter('f');
-                    setSentence("I drank some water", "I was thirsty", "for", "for");
-                    showSubtitles("I drank some water, for I was thirsty.", "我喝了點水，因我很渴。(for = because)");
-                }
-            },
-            // 6. And
-            {
-                duration: 6000,
-                action: () => {
-                    highlightLetter('a');
-                    setSentence("He bought a pen", "he bought a book", "and", "and");
-                    showSubtitles("He bought a pen, and he bought a book.", "他買了一支筆，而且他買了一本書。");
-                }
-            },
-            // 7. Nor
-            {
-                duration: 7000,
-                action: () => {
-                    highlightLetter('n');
-                    setSentence("He doesn't like apples", "does he like oranges", "nor", "nor");
-                    showSubtitles("He doesn't like apples, nor does he like oranges.", "他不喜歡蘋果，也不喜歡柳橙。(注意倒裝)");
-                }
-            },
-            // 8. But
-            {
-                duration: 6000,
-                action: () => {
-                    highlightLetter('b');
-                    setSentence("I wanted to go", "it started raining", "but", "but");
-                    showSubtitles("I wanted to go, but it started raining.", "我想去，可是開始下雨了。");
-                }
-            },
-            // 9. Or
-            {
-                duration: 6000,
-                action: () => {
-                    highlightLetter('o');
-                    setSentence("We can go to the park", "we can stay home", "or", "or");
-                    showSubtitles("We can go to the park, or we can stay home.", "我們可以去公園，或者我們可以待在家。");
-                }
-            },
-            // 10. Yet
-            {
-                duration: 6000,
-                action: () => {
-                    highlightLetter('y');
-                    setSentence("It was cold", "he wore a t-shirt", "yet", "yet");
-                    showSubtitles("It was cold, yet he wore a t-shirt.", "天氣很冷，然而他穿著T恤。(Unexpected contrast)");
-                }
-            },
-            // 11. So
-            {
-                duration: 6000,
-                action: () => {
-                    highlightLetter('s');
-                    setSentence("I was tired", "I went to bed", "so", "so");
-                    showSubtitles("I was tired, so I went to bed.", "我很累，所以我去睡覺了。");
-                }
-            },
-            // 12. Semicolon Intro
-            {
-                duration: 5000,
-                action: () => {
-                    resetLetters();
-                    els.fanboysDisplay.style.opacity = '0'; // Fade out fanboys
-                    
-                    // Prepare stage for semicolon
-                    els.clause1.classList.remove('show');
-                    els.clause2.classList.remove('show');
-                    els.conjunction.classList.remove('pop');
-                    els.comma.style.opacity = '0';
+async function sleep(ms) {
+    const deadline = Date.now() + ms;
+    while (Date.now() < deadline) {
+        if (isPaused) await pausePromise;
+        const left = deadline - Date.now();
+        if (left <= 0) break;
+        await new Promise(r => setTimeout(r, Math.min(80, left)));
+    }
+}
 
-                    showSubtitles("There is another way: The Semicolon.", "還有另一種方法：分號 (;)。");
-                }
-            },
-            // 13. Semicolon Example
-            {
-                duration: 6000,
-                action: () => {
-                    // Visual hack: Hide comma, make bubble look like nothing or just text
-                    els.comma.style.display = 'none'; // Remove comma completely
-                    
-                    els.clause1.textContent = "I love ice cream";
-                    els.clause2.textContent = "it is delicious";
-                    els.conjunction.textContent = ";";
-                    els.conjunction.className = "conjunction-bubble c-semi"; // Special style
-                    
-                    els.clause1.classList.add('show');
-                    setTimeout(() => els.conjunction.classList.add('pop'), 600);
-                    setTimeout(() => els.clause2.classList.add('show'), 1200);
+/* ══════════════════════════════════════════════
+   UI HELPERS
+══════════════════════════════════════════════ */
+const $ = id => document.getElementById(id);
 
-                    showSubtitles("I love ice cream; it is delicious.", "我愛冰淇淋；它很美味。(Strong connection)");
-                }
-            },
-            // 14. Outro
-            {
-                duration: 5000,
-                action: () => {
-                    els.sentenceArea.style.opacity = '0';
-                    els.titleGroup.style.display = 'block';
-                    els.titleGroup.style.opacity = '0'; // Prepare fade in
-                    
-                    setTimeout(() => {
-                        els.mainTitle.textContent = "Great Job!";
-                        els.subTitle.textContent = "You mastered Compound Sentences.";
-                        els.mainTitle.style.opacity = '1';
-                        els.subTitle.style.opacity = '1';
-                    }, 500);
-                    
-                    showSubtitles("Thanks for watching.", "謝謝觀看。");
-                }
-            }
-        ];
+// Ambient color change
+function setAmbient(c1, c2) {
+    document.getElementById('amb1').style.background = c1;
+    document.getElementById('amb2').style.background = c2;
+}
 
-        // Player Engine
-        let currentStep = 0;
-        let totalDuration = timeline.reduce((acc, item) => acc + item.duration, 0);
-        let elapsed = 0;
+function setSubs(en, tc) {
+    const en_ = $('subEn'), tc_ = $('subTc');
+    en_.classList.remove('show'); tc_.classList.remove('show');
+    setTimeout(() => {
+        en_.textContent = en; tc_.textContent = tc;
+        en_.classList.add('show'); tc_.classList.add('show');
+    }, 350);
+}
 
-        function playTimeline() {
-            if (currentStep >= timeline.length) return;
+function hideSubs() { $('subEn').classList.remove('show'); $('subTc').classList.remove('show'); }
 
-            const step = timeline[currentStep];
-            step.action();
+function setStep(label) { $('stepCounter').textContent = label; }
 
-            // Recursion for next step
-            setTimeout(() => {
-                currentStep++;
-                playTimeline();
-            }, step.duration);
-        }
+function resetFanboys() {
+    document.querySelectorAll('.fb-letter').forEach(el => el.classList.remove('active'));
+}
 
-        // Progress Bar Updater
-        function updateProgress() {
-            const interval = 100; // update every 100ms
-            const timer = setInterval(() => {
-                elapsed += interval;
-                const percent = Math.min((elapsed / totalDuration) * 100, 100);
-                els.progressBar.style.width = percent + '%';
-                
-                if (elapsed >= totalDuration) clearInterval(timer);
-            }, interval);
-        }
+function highlightFanboy(letter) {
+    resetFanboys();
+    const el = document.querySelector(`.fb-${letter}`);
+    if (el) { el.classList.add('active'); Audio.fanboy(); }
+}
 
-        // Start
-        window.onload = () => {
-            setTimeout(() => {
-                playTimeline();
-                updateProgress();
-            }, 500); // Small buffer before start
-        };
+function setMeaning(text) {
+    const el = $('meaning-tag');
+    el.classList.remove('show');
+    if (text) {
+        setTimeout(() => { el.textContent = text; el.classList.add('show'); }, 400);
+    }
+}
 
-    </script>
+async function setSentence(c1, c2, conj, colorClass, showComma = true) {
+    // Reset
+    $('clause1').classList.remove('show');
+    $('clause2').classList.remove('show');
+    $('comma').style.opacity = '0';
+    const bubble = $('conjBubble');
+    bubble.classList.remove('show');
+    bubble.className = 'conj-bubble';
+
+    await sleep(500);
+
+    $('clause1').textContent = c1;
+    $('clause2').textContent = c2;
+    bubble.textContent = conj;
+    if (colorClass) bubble.classList.add(colorClass);
+
+    $('clause1').classList.add('show');
+    Audio.pop();
+
+    await sleep(550);
+    if (showComma) $('comma').style.opacity = '1';
+    bubble.classList.add('show');
+
+    await sleep(550);
+    $('clause2').classList.add('show');
+    Audio.pop();
+}
+
+/* ══════════════════════════════════════════════
+   TIMELINE
+══════════════════════════════════════════════ */
+const TIMELINE = [
+    // 0 — Intro title
+    { dur: 4500, label: 'Intro', amb: ['#5BC4F5','#C9B1FF'], fn: async () => {
+        const tg = $('title-group');
+        tg.style.display = 'block';
+        await sleep(100);
+        tg.classList.add('show');
+        Audio.chord();
+        setSubs("Welcome to Level 2 Grammar.", "歡迎來到第二級文法。");
+    }},
+    // 1 — Definition
+    { dur: 5000, label: 'What is it?', amb: ['#5BC4F5','#6EE7B7'], fn: async () => {
+        setSubs("A Compound Sentence joins two independent clauses.", "合句將兩個獨立的子句連接在一起。");
+    }},
+    // 2 — Formula
+    { dur: 5500, label: 'The Formula', amb: ['#FFD166','#5BC4F5'], fn: async () => {
+        $('title-group').classList.remove('show');
+        await sleep(600);
+        $('title-group').style.display = 'none';
+
+        const sa = $('sentence-area');
+        sa.style.display = 'flex'; sa.style.opacity = '1';
+        $('fanboys-row').style.display = 'flex';
+
+        $('clause1').textContent = 'Clause 1';
+        $('clause2').textContent = 'Clause 2';
+        $('conjBubble').textContent = '+CONJ';
+        $('conjBubble').className = 'conj-bubble c-and';
+        $('clause1').classList.add('show');
+        await sleep(400);
+        $('comma').style.opacity = '1';
+        $('conjBubble').classList.add('show');
+        Audio.pop();
+        await sleep(500);
+        $('clause2').classList.add('show');
+        Audio.pop();
+
+        setSubs("Use a comma + conjunction to join them.", "用逗號加連接詞把它們連起來。");
+    }},
+    // 3 — FANBOYS
+    { dur: 4000, label: 'FANBOYS', amb: ['#FF6B6B','#FFD166'], fn: async () => {
+        $('sentence-area').style.opacity = '0';
+        setSubs("The conjunctions are called: FANBOYS.", "這些連接詞統稱為 FANBOYS。");
+        Audio.chord();
+    }},
+    // 4 — FOR
+    { dur: 6500, label: 'F — for', amb: ['#FF6B6B','#FF9F5B'], fn: async () => {
+        $('sentence-area').style.opacity = '1';
+        highlightFanboy('f');
+        await setSentence("I drank some water", "I was thirsty", "for", "c-for");
+        setMeaning("for = because / giving a reason");
+        setSubs("I drank some water, for I was thirsty.", "我喝了點水，因為我很渴。");
+    }},
+    // 5 — AND
+    { dur: 6000, label: 'A — and', amb: ['#5BC4F5','#6EE7B7'], fn: async () => {
+        setMeaning('');
+        highlightFanboy('a');
+        await setSentence("He bought a pen", "he bought a book", "and", "c-and");
+        setMeaning("and = adding information");
+        setSubs("He bought a pen, and he bought a book.", "他買了一支筆，而且買了一本書。");
+    }},
+    // 6 — NOR
+    { dur: 7000, label: 'N — nor', amb: ['#94A3B8','#5BC4F5'], fn: async () => {
+        setMeaning('');
+        highlightFanboy('n');
+        await setSentence("He doesn't like apples", "does he like oranges", "nor", "c-nor");
+        setMeaning("nor = and not / negative addition  ⚠️ inverted word order");
+        setSubs("He doesn't like apples, nor does he like oranges.", "他不喜歡蘋果，也不喜歡柳橙。(注意倒裝)");
+    }},
+    // 7 — BUT
+    { dur: 6000, label: 'B — but', amb: ['#FF9F5B','#FF6B6B'], fn: async () => {
+        setMeaning('');
+        highlightFanboy('b');
+        await setSentence("I wanted to go", "it started raining", "but", "c-but");
+        setMeaning("but = contrast / opposite result");
+        setSubs("I wanted to go, but it started raining.", "我想去，可是開始下雨了。");
+    }},
+    // 8 — OR
+    { dur: 6000, label: 'O — or', amb: ['#FFD166','#FF9F5B'], fn: async () => {
+        setMeaning('');
+        highlightFanboy('o');
+        await setSentence("We can go to the park", "we can stay home", "or", "c-or");
+        setMeaning("or = offering an alternative / choice");
+        setSubs("We can go to the park, or we can stay home.", "我們可以去公園，或者待在家。");
+    }},
+    // 9 — YET
+    { dur: 6500, label: 'Y — yet', amb: ['#C9B1FF','#5BC4F5'], fn: async () => {
+        setMeaning('');
+        highlightFanboy('y');
+        await setSentence("It was cold", "he wore a t-shirt", "yet", "c-yet");
+        setMeaning("yet = unexpected contrast (stronger than but)");
+        setSubs("It was cold, yet he wore a t-shirt.", "天氣很冷，然而他穿著T恤。");
+    }},
+    // 10 — SO
+    { dur: 6000, label: 'S — so', amb: ['#6EE7B7','#5BC4F5'], fn: async () => {
+        setMeaning('');
+        highlightFanboy('s');
+        await setSentence("I was tired", "I went to bed", "so", "c-so");
+        setMeaning("so = result / consequence");
+        setSubs("I was tired, so I went to bed.", "我很累，所以去睡覺了。");
+    }},
+    // 11 — Semicolon intro
+    { dur: 4500, label: 'Bonus: ;', amb: ['#94A3B8','#C9B1FF'], fn: async () => {
+        setMeaning('');
+        resetFanboys();
+        $('sentence-area').style.opacity = '0';
+        setSubs("There is one more option: the semicolon (;).", "還有另一種方法：分號 (;)。");
+    }},
+    // 12 — Semicolon example
+    { dur: 6500, label: 'Bonus: ;', amb: ['#94A3B8','#5BC4F5'], fn: async () => {
+        $('sentence-area').style.opacity = '1';
+        $('comma').style.display = 'none';
+        await setSentence("I love ice cream", "it is delicious", ";", "c-semi", false);
+        setMeaning("Use ; when the connection is very strong — no conjunction needed");
+        setSubs("I love ice cream; it is delicious.", "我愛冰淇淋；它非常好吃。(Strong connection)");
+    }},
+    // 13 — Outro
+    { dur: 5000, label: 'Done! 🎉', amb: ['#5BC4F5','#6EE7B7'], fn: async () => {
+        setMeaning('');
+        $('sentence-area').style.opacity = '0';
+        $('fanboys-row').style.opacity = '0';
+
+        const tg = $('title-group');
+        tg.style.display = 'block';
+        await sleep(300);
+        document.querySelector('.main-title').innerHTML = 'Well<br><span>Done!</span>';
+        document.querySelector('.level-badge').textContent = 'Compound Sentences ✓';
+        tg.classList.add('show');
+        Audio.success();
+        setSubs("You've mastered Compound Sentences!", "你已掌握合句的用法！");
+    }}
+];
+
+/* ══════════════════════════════════════════════
+   PLAYER ENGINE
+══════════════════════════════════════════════ */
+async function play() {
+    const total = TIMELINE.reduce((s, t) => s + t.dur, 0);
+    let elapsed = 0;
+
+    // Progress bar updater
+    const barTimer = setInterval(() => {
+        if (!isPaused) elapsed += 80;
+        $('progressFill').style.width = `${Math.min((elapsed / total) * 100, 100)}%`;
+        if (elapsed >= total) clearInterval(barTimer);
+    }, 80);
+
+    for (let i = 0; i < TIMELINE.length; i++) {
+        const step = TIMELINE[i];
+        setStep(step.label);
+        if (step.amb) setAmbient(step.amb[0], step.amb[1]);
+        await step.fn();
+        await sleep(step.dur - 100); // subtract fn overhead approx
+    }
+}
+
+/* ══════════════════════════════════════════════
+   INIT
+══════════════════════════════════════════════ */
+document.getElementById('pauseBtn').onclick = togglePause;
+document.getElementById('musicBtn').onclick = () => {
+    const m = Audio.toggle();
+    $('musicBtn').innerHTML = m ? '🔇' : '🔊';
+};
+
+window.onload = () => {
+    setTimeout(() => {
+        Audio.toggle();
+        $('musicBtn').innerHTML = '🔊';
+        play();
+    }, 500);
+};
+
+// Prevent double-tap zoom
+let lastT = 0;
+document.addEventListener('touchend', e => { const n = Date.now(); if (n - lastT < 300) e.preventDefault(); lastT = n; }, false);
+document.addEventListener('touchstart', e => { if (e.touches.length > 1) e.preventDefault(); }, { passive: false });
+</script>
 </body>
 </html>
