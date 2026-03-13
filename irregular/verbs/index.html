@@ -23,14 +23,14 @@
 
     .hero-section {
       background: var(--primary-gradient);
-      padding: 60px 20px 80px;
+      padding: 50px 20px 70px;
       text-align: center;
       color: white;
       clip-path: ellipse(150% 100% at 50% 0%);
-      margin-bottom: -40px;
+      margin-bottom: -30px;
     }
-    .hero-section h1 { font-weight: 800; font-size: 2.8rem; letter-spacing: -1px; margin-bottom: 10px; }
-    .hero-section p { font-weight: 500; opacity: 0.95; font-size: 1.25rem; }
+    .hero-section h1 { font-weight: 800; font-size: 2.5rem; letter-spacing: -1px; margin-bottom: 5px; }
+    .hero-section p { font-weight: 500; opacity: 0.95; font-size: 1.1rem; }
 
     .container { max-width: 900px; margin: 0 auto; padding: 0 15px 50px; position: relative; z-index: 10; }
     
@@ -38,44 +38,61 @@
       background: rgba(255, 255, 255, 0.9);
       backdrop-filter: blur(10px);
       border-radius: var(--radius);
-      padding: 25px;
+      padding: 20px;
       box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-      margin-bottom: 25px;
+      margin-bottom: 20px;
       text-align: center;
     }
 
-    .nav-bar { display: inline-flex; background: #f1f5f9; padding: 4px; border-radius: 12px; margin-bottom: 20px; }
-    .nav-btn { border: none; background: transparent; padding: 10px 22px; border-radius: 10px; font-weight: 700; color: var(--text-sub); cursor: pointer; transition: 0.2s; }
+    .nav-bar { display: inline-flex; background: #f1f5f9; padding: 4px; border-radius: 12px; margin-bottom: 15px; }
+    .nav-btn { border: none; background: transparent; padding: 8px 18px; border-radius: 10px; font-weight: 700; color: var(--text-sub); cursor: pointer; transition: 0.2s; }
     .nav-btn.active { background: white; color: var(--primary); box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
 
-    .search-box { width: 100%; padding: 14px; border-radius: 12px; border: 2px solid #e2e8f0; margin-bottom: 15px; font-size: 1rem; outline: none; }
-    .filter-group { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
-    .filter-btn { padding: 8px 18px; background: white; border: 1.5px solid #e2e8f0; border-radius: 20px; font-size: 0.9rem; cursor: pointer; font-weight: 700; color: var(--text-sub); display: flex; align-items: center; gap: 4px; }
+    .search-box { width: 100%; padding: 12px; border-radius: 12px; border: 2px solid #e2e8f0; margin-bottom: 15px; font-size: 1rem; outline: none; }
+    .filter-group { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-bottom: 15px; }
+    .filter-btn { padding: 6px 14px; background: white; border: 1.5px solid #e2e8f0; border-radius: 20px; font-size: 0.85rem; cursor: pointer; font-weight: 700; color: var(--text-sub); }
     .filter-btn.active { background: #1e293b; color: white; border-color: #1e293b; }
     .filter-btn.fav-mode.active { background: var(--fav-color); color: #854d0e; border-color: var(--fav-color); }
 
+    /* --- 新增：Study Mode 切換鈕 --- */
+    .study-toggle-box { display: flex; justify-content: center; gap: 10px; margin-bottom: 10px; }
+    .toggle-sub-btn { font-size: 0.8rem; padding: 5px 12px; border-radius: 8px; border: 1px solid #cbd5e1; background: white; cursor: pointer; color: var(--text-sub); font-weight: 600; }
+    .toggle-sub-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+    /* 網格列表樣式 */
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
     .card { background: white; border-radius: var(--radius); padding: 22px; border: 1px solid #f1f5f9; position: relative; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
     .card-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; padding-right: 30px; }
     .card-title { font-size: 1.4rem; font-weight: 800; color: #0f172a; }
     
-    /* 星號按鈕 */
-    .star-btn { position: absolute; top: 20px; right: 20px; background: none; border: none; font-size: 1.4rem; cursor: pointer; filter: grayscale(1) opacity(0.3); transition: 0.2s; }
+    .star-btn { position: absolute; top: 20px; right: 20px; background: none; border: none; font-size: 1.4rem; cursor: pointer; filter: grayscale(1) opacity(0.3); transition: 0.2s; z-index: 5; }
     .star-btn.active { filter: grayscale(0) opacity(1); }
 
-    .type-tag { font-size: 0.75rem; padding: 4px 10px; border-radius: 6px; color: white; font-weight: 800; }
-    .v-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 15px; }
-    .v-box { background: #f8fafc; padding: 12px 5px; border-radius: 10px; text-align: center; }
-    .v-label { font-size: 0.7rem; color: #94a3b8; font-weight: 800; display: block; margin-bottom: 4px; }
-    .v-word { font-weight: 700; color: var(--text-main); font-size: 1.1rem; }
+    .type-tag { font-size: 0.7rem; padding: 3px 8px; border-radius: 6px; color: white; font-weight: 800; }
+    .v-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+    .v-box { background: #f8fafc; padding: 10px 5px; border-radius: 10px; text-align: center; }
+    .v-label { font-size: 0.65rem; color: #94a3b8; font-weight: 800; display: block; }
+    .v-word { font-weight: 700; color: var(--text-main); font-size: 1rem; }
 
-    .ex-panel { display: none; margin-top: 12px; padding: 15px; background: #f8fafc; border-radius: 12px; font-size: 0.95rem; border: 1px solid #f1f5f9; line-height: 1.6; }
+    .ex-panel { display: none; margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 10px; font-size: 0.9rem; border: 1px solid #f1f5f9; line-height: 1.5; }
+
+    /* --- 新增：Flash Card 樣式 --- */
+    #flashcard-area { display: flex; flex-direction: column; align-items: center; gap: 20px; perspective: 1000px; }
+    .flashcard { width: 100%; max-width: 400px; height: 350px; position: relative; transform-style: preserve-3d; transition: transform 0.6s; cursor: pointer; }
+    .flashcard.flipped { transform: rotateY(180deg); }
+    .fc-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 30px; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); text-align: center; background: white; border: 2px solid #e2e8f0; }
+    .fc-back { transform: rotateY(180deg); background: #f8fafc; }
+    .fc-v1 { font-size: 2.5rem; font-weight: 800; color: var(--primary); margin-bottom: 10px; }
+    .fc-meaning { font-size: 1.4rem; color: var(--text-sub); margin-bottom: 20px; }
+    .fc-example { font-style: italic; color: #475569; font-size: 1rem; line-height: 1.6; }
+    .fc-controls { display: flex; gap: 15px; align-items: center; }
+    .fc-btn { padding: 10px 20px; border-radius: 12px; border: none; background: #1e293b; color: white; font-weight: 700; cursor: pointer; }
 
     /* Quiz */
     .quiz-card { background: white; border: 2px solid #e2e8f0; padding: 25px; border-radius: 18px; margin-bottom: 22px; }
-    .quiz-sentence { font-size: 1.15rem; color: #1e293b; padding: 18px; background: #f8fafc; border-radius: 12px; border-left: 6px solid var(--primary); margin-bottom: 18px; line-height: 1.6; }
-    .quiz-input { width: 100%; padding: 15px; border-radius: 12px; border: 2.5px solid #e2e8f0; text-align: center; font-size: 1.1rem; outline: none; }
-    .feedback-msg { margin-top: 15px; padding: 12px; border-radius: 10px; font-weight: 800; display: none; }
+    .quiz-sentence { font-size: 1.1rem; color: #1e293b; padding: 15px; background: #f8fafc; border-radius: 12px; border-left: 5px solid var(--primary); margin-bottom: 15px; }
+    .quiz-input { width: 100%; padding: 12px; border-radius: 10px; border: 2px solid #e2e8f0; text-align: center; font-size: 1.1rem; outline: none; }
+    .feedback-msg { margin-top: 15px; padding: 10px; border-radius: 8px; font-weight: 800; display: none; }
     .fb-ok { background: #ecfdf5; color: #059669; display: block; border: 1px solid #10b981; }
     .fb-no { background: #fef2f2; color: #dc2626; display: block; border: 1px solid #ef4444; }
 
@@ -101,6 +118,12 @@
 
     <div id="filter-section">
       <input type="text" id="search" class="search-box" placeholder="搜尋單字或中文意思...">
+      
+      <div id="study-view-toggle" class="study-toggle-box">
+        <button class="toggle-sub-btn active" onclick="setStudyView('overview')">📋 Overview</button>
+        <button class="toggle-sub-btn" onclick="setStudyView('flashcard')">🃏 Flash Card</button>
+      </div>
+
       <div class="filter-group">
         <button class="filter-btn active" data-filter="all">All</button>
         <button class="filter-btn" data-filter="AAA">AAA</button>
@@ -114,14 +137,44 @@
 
   <div id="main-list" class="grid"></div>
 
+  <div id="flashcard-area" class="hidden">
+    <div class="flashcard" id="fc-widget" onclick="this.classList.toggle('flipped')">
+      <div class="fc-face fc-front">
+        <div id="fc-star-placeholder"></div>
+        <div class="fc-v1" id="fc-v1">---</div>
+        <div class="fc-meaning" id="fc-meaning">---</div>
+        <div style="font-size:0.8rem; color:var(--text-sub); margin-bottom:5px;">Example:</div>
+        <div class="fc-example" id="fc-ex1">---</div>
+        <div style="position:absolute; bottom:15px; font-size:0.7rem; color:#94a3b8;">Click to Flip ↺</div>
+      </div>
+      <div class="fc-face fc-back">
+        <div class="v-row" style="width:100%; margin-bottom:20px;">
+          <div class="v-box"><span class="v-label">V2</span><div class="v-word" id="fc-v2" style="font-size:1.3rem;">---</div></div>
+          <div class="v-box"><span class="v-label">V3</span><div class="v-word" id="fc-v3" style="font-size:1.3rem;">---</div></div>
+        </div>
+        <div style="text-align:left; width:100%;">
+           <div style="font-size:0.8rem; color:var(--text-sub); margin-bottom:5px;">V2 Example:</div>
+           <div class="fc-example" id="fc-ex2" style="margin-bottom:15px;">---</div>
+           <div style="font-size:0.8rem; color:var(--text-sub); margin-bottom:5px;">V3 Example:</div>
+           <div class="fc-example" id="fc-ex3">---</div>
+        </div>
+      </div>
+    </div>
+    <div class="fc-controls">
+      <button class="fc-btn" onclick="prevFC()">Prev</button>
+      <span id="fc-counter" style="font-weight:700; color:var(--text-sub);">0 / 0</span>
+      <button class="fc-btn" onclick="nextFC()">Next</button>
+    </div>
+  </div>
+
   <div id="quiz-area" class="hidden">
     <div style="display:flex; justify-content:center; gap:12px; margin-bottom:30px;">
-      <button id="q1-load" style="padding:12px 24px; cursor:pointer; border-radius:12px; border:2px solid var(--primary); background:white; font-weight:bold; color:var(--primary);">Quiz 1: 三態訓練</button>
-      <button id="q2-load" style="padding:12px 24px; cursor:pointer; border-radius:12px; border:2px solid var(--primary); background:white; font-weight:bold; color:var(--primary);">Quiz 2: 句子填空</button>
+      <button id="q1-load" style="padding:12px 24px; cursor:pointer; border-radius:12px; border:2px solid var(--primary); background:white; font-weight:bold; color:var(--primary);">Quiz 1: 三態</button>
+      <button id="q2-load" style="padding:12px 24px; cursor:pointer; border-radius:12px; border:2px solid var(--primary); background:white; font-weight:bold; color:var(--primary);">Quiz 2: 句子</button>
     </div>
     <div id="quiz-items-container"></div>
     <div id="quiz-submit-box" class="hidden">
-      <button id="btn-submit-all" style="width:100%; padding:20px; background:var(--primary-gradient); color:white; border:none; border-radius:14px; font-weight:bold; cursor:pointer; margin-top:20px; font-size:1.1rem;">Submit All Answers</button>
+      <button id="btn-submit-all" style="width:100%; padding:20px; background:var(--primary-gradient); color:white; border:none; border-radius:14px; font-weight:bold; cursor:pointer; margin-top:20px;">Submit All Answers</button>
     </div>
   </div>
 </div>
@@ -133,7 +186,7 @@
   let verbs = [];
   let quizzes = [];
   let favorites = JSON.parse(localStorage.getItem('shirley_favs') || '[]');
-  let state = { mode: 'learn', filter: 'all', search: '', activeQuiz: [], activeType: '' };
+  let state = { mode: 'learn', studyView: 'overview', filter: 'all', search: '', fcIndex: 0 };
 
   async function startApp() {
     try {
@@ -145,7 +198,7 @@
       quizzes = parseQuizzes(qText);
       render();
       initEvents();
-    } catch(e) { console.error("Load fail", e); }
+    } catch(e) { alert("Data load error"); }
   }
 
   function parseVerbs(csv) {
@@ -154,7 +207,6 @@
       const c = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(item => item.trim().replace(/^"|"$/g, ''));
       let rawType = c[0] || "ABC";
       let cleanType = rawType.split('(')[0].trim().toUpperCase(); 
-      if(!["AAA","ABA","ABB","ABC"].includes(cleanType)) cleanType = "ABC";
       return {
         type: cleanType, v1: c[1] || "", meaning: c[2] || "",
         ex1: c[3] || "", v2: c[4] || "", ex2: c[5] || "",
@@ -171,7 +223,8 @@
     });
   }
 
-  function toggleFavorite(word) {
+  function toggleFavorite(word, e) {
+    if(e) e.stopPropagation();
     const index = favorites.indexOf(word);
     if (index > -1) favorites.splice(index, 1);
     else favorites.push(word);
@@ -179,41 +232,92 @@
     render();
   }
 
+  function setStudyView(view) {
+    state.studyView = view;
+    document.querySelectorAll('.toggle-sub-btn').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+    render();
+  }
+
   function render() {
     const list = document.getElementById('main-list');
+    const fcArea = document.getElementById('flashcard-area');
     const qArea = document.getElementById('quiz-area');
     const filterSec = document.getElementById('filter-section');
+    const studyToggle = document.getElementById('study-view-toggle');
+
+    // 隱藏所有區域
+    [list, fcArea, qArea, studyToggle].forEach(el => el.classList.add('hidden'));
 
     if (state.mode === 'quiz') {
-      list.classList.add('hidden'); filterSec.classList.add('hidden');
-      qArea.classList.remove('hidden'); return;
+      qArea.classList.remove('hidden');
+      return;
     }
 
-    list.classList.remove('hidden'); filterSec.classList.remove('hidden');
-    qArea.classList.add('hidden');
+    // 只有在 Study/Review 模式顯示過濾器
+    filterSec.classList.remove('hidden');
 
-    const filtered = verbs.filter(v => {
-      // 過濾邏輯：星號模式 or 類型匹配
+    // 取得過濾後的單字
+    const filteredVerbs = verbs.filter(v => {
       const isFavMode = state.filter === 'fav';
       const matchT = isFavMode ? favorites.includes(v.v1) : (state.filter === 'all' || v.type === state.filter.toUpperCase());
       const matchS = v.v1.toLowerCase().includes(state.search) || v.meaning.toLowerCase().includes(state.search);
       return matchT && matchS;
     });
 
-    if(filtered.length === 0) {
-      list.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:50px; color:var(--text-sub);">
-        ${state.filter === 'fav' ? '還沒有收藏任何單字喔！點擊卡片上的 🌟 來增加。' : 'No verbs found.'}
-      </div>`;
+    if (state.mode === 'learn') {
+      studyToggle.classList.remove('hidden');
+      if (state.studyView === 'flashcard') {
+        fcArea.classList.remove('hidden');
+        renderFlashCard(filteredVerbs);
+        return;
+      }
+    }
+
+    // 列表模式 (Overview)
+    list.classList.remove('hidden');
+    if(filteredVerbs.length === 0) {
+      list.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:50px; color:var(--text-sub);">No items found.</div>`;
     } else {
-      list.innerHTML = filtered.map(v => state.mode === 'learn' ? buildStudy(v) : buildReview(v)).join('');
+      list.innerHTML = filteredVerbs.map(v => state.mode === 'learn' ? buildStudy(v) : buildReview(v)).join('');
     }
   }
+
+  // --- Flash Card 邏輯 ---
+  let currentFCList = [];
+  function renderFlashCard(list) {
+    currentFCList = list;
+    if(list.length === 0) {
+      document.getElementById('fc-widget').classList.add('hidden');
+      document.getElementById('fc-counter').innerText = "0 / 0";
+      return;
+    }
+    document.getElementById('fc-widget').classList.remove('hidden');
+    if(state.fcIndex >= list.length) state.fcIndex = 0;
+    
+    const v = list[state.fcIndex];
+    const isFav = favorites.includes(v.v1);
+    
+    document.getElementById('fc-v1').innerText = v.v1;
+    document.getElementById('fc-meaning').innerText = v.meaning;
+    document.getElementById('fc-ex1').innerText = v.ex1;
+    document.getElementById('fc-v2').innerText = v.v2;
+    document.getElementById('fc-v3').innerText = v.v3;
+    document.getElementById('fc-ex2').innerText = v.ex2;
+    document.getElementById('fc-ex3').innerText = v.ex3;
+    document.getElementById('fc-counter').innerText = `${state.fcIndex + 1} / ${list.length}`;
+    document.getElementById('fc-star-placeholder').innerHTML = `<button class="star-btn ${isFav?'active':''}" onclick="toggleFavorite('${v.v1}', event)">🌟</button>`;
+    document.getElementById('fc-widget').classList.remove('flipped');
+  }
+
+  function nextFC() { if(state.fcIndex < currentFCList.length - 1) { state.fcIndex++; render(); } }
+  function prevFC() { if(state.fcIndex > 0) { state.fcIndex--; render(); } }
 
   function buildStudy(v) {
     const isFav = favorites.includes(v.v1);
     return `
       <div class="card">
-        <button class="star-btn ${isFav?'active':''}" onclick="toggleFavorite('${v.v1}')">🌟</button>
+        <button class="star-btn ${isFav?'active':''}" onclick="toggleFavorite('${v.v1}', event)">🌟</button>
         <div class="card-head">
           <div><div class="card-title">${v.v1}</div><div style="color:var(--text-sub);">${v.meaning}</div></div>
           <span class="type-tag type-${v.type}">${v.type}</span>
@@ -232,15 +336,11 @@
     const isFav = favorites.includes(v.v1);
     return `
       <div class="card">
-        <button class="star-btn ${isFav?'active':''}" onclick="toggleFavorite('${v.v1}')">🌟</button>
-        <div class="card-head">
-          <div><div class="card-title">${v.v1}</div><div style="color:var(--text-sub);">${v.meaning}</div></div>
-          <span class="type-tag type-${v.type}">${v.type}</span>
-        </div>
+        <button class="star-btn ${isFav?'active':''}" onclick="toggleFavorite('${v.v1}', event)">🌟</button>
         <div class="v-row">
           <div class="v-box"><span class="v-label">V1</span><div class="v-word">${v.v1}</div></div>
-          <div class="v-box"><span class="v-label">V2</span><input class="quiz-input" style="padding:5px; font-size:0.9rem;" id="r2-${v.v1}" placeholder="?"></div>
-          <div class="v-box"><span class="v-label">V3</span><input class="quiz-input" style="padding:5px; font-size:0.9rem;" id="r3-${v.v1}" placeholder="?"></div>
+          <div class="v-box"><span class="v-label">V2</span><input class="quiz-input" id="r2-${v.v1}" placeholder="?"></div>
+          <div class="v-box"><span class="v-label">V3</span><input class="quiz-input" id="r3-${v.v1}" placeholder="?"></div>
         </div>
         <button class="nav-btn" style="width:100%; border:1px solid var(--primary); color:var(--primary);" onclick="checkReviewWord('${v.v1}', '${v.v2}', '${v.v3}')">Check</button>
       </div>`;
@@ -249,53 +349,43 @@
   function startQuiz(type) {
     state.activeType = type;
     const container = document.getElementById('quiz-items-container');
-    // 如果在星號模式下點擊 Quiz，則只考星號單字
     let pool = type === 'q1' ? [...verbs] : [...quizzes];
     if (state.filter === 'fav') {
-      if (favorites.length === 0) { alert("請先收藏一些單字才能進行星號測驗！"); return; }
-      if (type === 'q1') pool = verbs.filter(v => favorites.includes(v.v1));
-      else pool = quizzes.filter(q => favorites.some(f => q.answer.includes(f)));
+      if (favorites.length === 0) { alert("Please favorite some words first!"); return; }
+      pool = type === 'q1' ? verbs.filter(v => favorites.includes(v.v1)) : quizzes.filter(q => favorites.some(f => q.answer.includes(f)));
     }
-    
     state.activeQuiz = pool.sort(() => 0.5 - Math.random()).slice(0, 10);
-    container.innerHTML = state.activeQuiz.map((item, i) => {
-      const qTitle = type === 'q1' ? `${item.v1} (${item.meaning})` : `Question ${i+1}`;
-      return `
-        <div class="quiz-card">
-          <div style="font-weight:800; color:var(--primary); margin-bottom:12px;">${qTitle}</div>
-          ${type === 'q2' ? `<div class="quiz-sentence">${item.question.replace('_____', '________')}</div>` : ''}
-          <div style="display:flex; gap:10px;">
-            ${type === 'q1' ? `<input class="quiz-input u-v2" placeholder="V2"> <input class="quiz-input u-v3" placeholder="V3">` : `<input class="quiz-input u-ans" placeholder="Type answer here...">`}
-          </div>
-          <div class="feedback-msg"></div>
-        </div>`;
-    }).join('');
+    container.innerHTML = state.activeQuiz.map((item, i) => `
+      <div class="quiz-card">
+        <div style="font-weight:800; color:var(--primary); margin-bottom:10px;">${type==='q1'?item.v1+' ('+item.meaning+')':'Question '+(i+1)}</div>
+        ${type==='q2'?'<div class="quiz-sentence">'+item.question.replace('_____','________')+'</div>':''}
+        <div style="display:flex; gap:10px;">
+          ${type==='q1'?'<input class="quiz-input u-v2" placeholder="V2"> <input class="quiz-input u-v3" placeholder="V3">':'<input class="quiz-input u-ans" placeholder="Answer...">'}
+        </div>
+        <div class="feedback-msg"></div>
+      </div>`).join('');
     document.getElementById('quiz-submit-box').classList.remove('hidden');
-    window.scrollTo({top: 0, behavior: 'smooth'});
   }
 
   function submitAll() {
     const cards = document.querySelectorAll('.quiz-card');
-    let score = 0;
     cards.forEach((card, i) => {
       const data = state.activeQuiz[i];
       const fb = card.querySelector('.feedback-msg');
       let ok = false; let ans = "";
       if (state.activeType === 'q1') {
-        const uv2 = card.querySelector('.u-v2').value.trim().toLowerCase();
-        const uv3 = card.querySelector('.u-v3').value.trim().toLowerCase();
-        ok = (uv2 === data.v2.toLowerCase() && uv3 === data.v3.toLowerCase());
+        const v2 = card.querySelector('.u-v2').value.trim().toLowerCase();
+        const v3 = card.querySelector('.u-v3').value.trim().toLowerCase();
+        ok = (v2 === data.v2.toLowerCase() && v3 === data.v3.toLowerCase());
         ans = `${data.v2} / ${data.v3}`;
       } else {
-        const uans = card.querySelector('.u-ans').value.trim().toLowerCase();
-        ok = (uans === data.answer.toLowerCase());
+        const u = card.querySelector('.u-ans').value.trim().toLowerCase();
+        ok = (u === data.answer.toLowerCase());
         ans = data.answer;
       }
-      if (ok) score += 10;
-      fb.className = `feedback-msg ${ok ? 'fb-ok' : 'fb-no'}`;
-      fb.innerHTML = ok ? '✓ Correct!' : `✗ Answer: ${ans}`;
+      fb.className = `feedback-msg ${ok?'fb-ok':'fb-no'}`;
+      fb.innerHTML = ok ? '✓ Correct' : `✗ Answer: ${ans}`;
     });
-    alert(`Score: ${score}`);
   }
 
   window.checkReviewWord = (id, v2, v3) => {
@@ -315,7 +405,6 @@
   function initEvents() {
     document.querySelectorAll('.nav-btn').forEach(btn => {
       btn.onclick = () => {
-        if(!btn.dataset.mode) return;
         document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         state.mode = btn.dataset.mode;
@@ -328,6 +417,7 @@
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         state.filter = btn.dataset.filter;
+        state.fcIndex = 0; // 重置字卡索引
         render();
       };
     });
