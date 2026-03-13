@@ -8,10 +8,13 @@
 
   <style>
     :root {
-      --primary: #3b82f6; --primary-dark: #1d4ed8;
+      --primary: #3b82f6;
+      --primary-dark: #1d4ed8;
       --primary-gradient: linear-gradient(135deg, #3b82f6, #2563eb);
-      --text-main: #1e293b; --text-sub: #64748b;
-      --bg-color: #eff6ff; --radius: 20px;
+      --text-main: #1e293b;
+      --text-sub: #64748b;
+      --bg-color: #eff6ff;
+      --radius: 20px;
       --tag-aaa: #f59e0b; --tag-aba: #8b5cf6; --tag-abb: #10b981; --tag-abc: #ef4444;
       --fav-color: #facc15;
     }
@@ -19,15 +22,15 @@
     * { box-sizing: border-box; margin: 0; padding: 0; touch-action: manipulation; }
     body { font-family: 'Inter', 'Noto Sans TC', sans-serif; background: var(--bg-color); color: var(--text-main); overflow-x: hidden; line-height: 1.5; }
 
-    /* Header */
+    /* Header Section */
     .hero { background: var(--primary-gradient); padding: 40px 20px 60px; text-align: center; color: white; clip-path: ellipse(150% 100% at 50% 0%); margin-bottom: -30px; }
     .hero h1 { font-weight: 800; font-size: 2rem; margin-bottom: 5px; }
 
     .container { max-width: 600px; margin: 0 auto; padding: 0 15px 50px; position: relative; z-index: 10; }
     
+    /* Control Panel */
     .card-panel { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-radius: var(--radius); padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 20px; text-align: center; }
 
-    /* Nav & Filters */
     .nav-bar { display: inline-flex; background: #f1f5f9; padding: 4px; border-radius: 12px; margin-bottom: 15px; width: 100%; }
     .nav-btn { flex: 1; border: none; background: transparent; padding: 10px; border-radius: 10px; font-weight: 700; color: var(--text-sub); cursor: pointer; transition: 0.3s; font-size: 0.9rem; }
     .nav-btn.active { background: white; color: var(--primary); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
@@ -40,9 +43,9 @@
     .filter-btn.active { background: #1e293b; color: white; border-color: #1e293b; }
     .filter-btn.fav-mode.active { background: var(--fav-color); color: #854d0e; border-color: var(--fav-color); }
 
-    /* List View */
+    /* List View Content */
     .grid { display: grid; gap: 15px; }
-    .item-card { background: white; border-radius: var(--radius); padding: 20px; position: relative; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border: 1px solid #f1f5f9; }
+    .item-card { background: white; border-radius: var(--radius); padding: 20px; position: relative; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border: 1px solid #f1f5f9; text-align: left; }
     .star-btn { position: absolute; top: 18px; right: 18px; background: none; border: none; font-size: 1.4rem; cursor: pointer; filter: grayscale(1) opacity(0.3); transition: 0.2s; z-index: 5; }
     .star-btn.active { filter: grayscale(0) opacity(1); }
     
@@ -51,30 +54,37 @@
     .v-label { font-size: 0.6rem; color: #94a3b8; font-weight: 800; text-transform: uppercase; }
     .v-word { font-weight: 700; color: var(--text-main); font-size: 1rem; }
 
-    /* Flashcard & Quiz Card */
+    .ex-toggle { font-size: 0.8rem; color: var(--primary); font-weight: 700; cursor: pointer; background: none; border: none; padding: 0; margin-top: 5px; outline: none; }
+    .ex-content { display: none; margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 12px; font-size: 0.85rem; border: 1px solid #edf2f7; color: #4a5568; }
+    .ex-content b { color: var(--primary); }
+
+    /* Flashcard View */
     .stage { display: flex; flex-direction: column; align-items: center; gap: 20px; perspective: 1000px; }
-    .flashcard { width: 100%; height: 400px; position: relative; transform-style: preserve-3d; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; }
+    .flashcard { width: 100%; height: 420px; position: relative; transform-style: preserve-3d; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; }
     .flashcard.flipped { transform: rotateY(180deg); }
-    .face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 30px; border-radius: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); background: white; border: 1px solid #e2e8f0; }
+    .face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 30px; border-radius: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); background: white; border: 1px solid #e2e8f0; text-align: center; }
     .face-back { transform: rotateY(180deg); background: #f8fafc; }
 
-    .q-input { width: 100%; padding: 15px; border-radius: 15px; border: 2px solid #e2e8f0; font-size: 1.2rem; text-align: center; margin-top: 15px; outline: none; }
+    /* Quiz Input */
+    .q-input { width: 100%; padding: 15px; border-radius: 15px; border: 2px solid #e2e8f0; font-size: 1.2rem; text-align: center; margin-top: 10px; outline: none; }
     .q-input:focus { border-color: var(--primary); }
 
-    /* Controls */
+    /* Bottom Controls */
     .ctrl-group { display: flex; align-items: center; gap: 20px; margin-top: 10px; width: 100%; justify-content: space-between; }
     .round-btn { width: 50px; height: 50px; border-radius: 25px; border: none; background: white; color: var(--text-main); font-size: 1.2rem; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; }
-    .round-btn.primary { background: var(--primary); color: white; width: auto; padding: 0 30px; font-weight: 700; }
+    .round-btn.primary { background: var(--primary); color: white; width: auto; padding: 0 30px; font-weight: 700; font-size: 1rem; }
 
     .hidden { display: none !important; }
     .type-tag { font-size: 0.65rem; padding: 3px 8px; border-radius: 6px; color: white; font-weight: 800; margin-bottom: 5px; display: inline-block; }
+    .type-AAA { background: var(--tag-aaa); } .type-ABA { background: var(--tag-aba); }
+    .type-ABB { background: var(--tag-abb); } .type-ABC { background: var(--tag-abc); }
   </style>
 </head>
 <body>
 
 <div class="hero">
-  <h1>Shirley's Irregular Verb Master</h1>
-  <div id="swipe-hint" style="font-size: 0.8rem; opacity: 0.8; margin-top: 5px;">Swipe left/right to navigate</div>
+  <h1>Verb Master Pro</h1>
+  <div style="font-size: 0.8rem; opacity: 0.8; margin-top: 5px;">Swipe left/right to navigate cards</div>
 </div>
 
 <div class="container">
@@ -88,8 +98,8 @@
     <div id="global-filters">
       <input type="text" id="search" class="search-box" placeholder="Search verbs...">
       <div id="study-sub-nav" style="margin-bottom:15px; display: flex; justify-content: center; gap: 10px;">
-        <button class="filter-btn active" onclick="setView('list')">📋 List</button>
-        <button class="filter-btn" onclick="setView('card')">🃏 Card</button>
+        <button class="filter-btn active" onclick="setView('list')">📋 Overview</button>
+        <button class="filter-btn" onclick="setView('card')">🃏 Flash Card</button>
       </div>
       <div class="filter-group">
         <button class="filter-btn active" data-filter="all">All</button>
@@ -97,7 +107,7 @@
         <button class="filter-btn" data-filter="ABA">ABA</button>
         <button class="filter-btn" data-filter="ABB">ABB</button>
         <button class="filter-btn" data-filter="ABC">ABC</button>
-        <button class="filter-btn fav-mode" data-filter="fav">🌟</button>
+        <button class="filter-btn fav-mode" data-filter="fav">🌟 Favorites</button>
       </div>
     </div>
   </div>
@@ -111,36 +121,37 @@
         <div id="fc-type" class="type-tag"></div>
         <h2 id="fc-v1" style="font-size: 3rem; color: var(--primary);"></h2>
         <p id="fc-mean" style="font-size: 1.5rem; color: var(--text-sub);"></p>
-        <div id="fc-ex1" style="margin-top: 20px; font-style: italic; color: #64748b;"></div>
+        <div id="fc-ex1" style="margin-top: 20px; font-style: italic; color: #64748b; font-size: 0.95rem;"></div>
+        <div style="position:absolute; bottom:15px; font-size:0.7rem; color:#cbd5e1;">Click to Flip ↺</div>
       </div>
       <div class="face face-back">
         <div class="v-row" style="width:100%">
-          <div class="v-box"><span class="v-label">V2</span><div class="v-word" id="fc-v2"></div></div>
-          <div class="v-box"><span class="v-label">V3</span><div class="v-word" id="fc-v3"></div></div>
+          <div class="v-box"><span class="v-label">V2</span><div class="v-word" id="fc-v2" style="font-size:1.3rem;"></div></div>
+          <div class="v-box"><span class="v-label">V3</span><div class="v-word" id="fc-v3" style="font-size:1.3rem;"></div></div>
         </div>
-        <div style="text-align: left; font-size: 0.9rem;">
-          <p><b>V2:</b> <span id="fc-ex2"></span></p><br>
-          <p><b>V3:</b> <span id="fc-ex3"></span></p>
+        <div style="text-align: left; font-size: 0.9rem; width: 100%;">
+          <p><b>V2 Example:</b><br><span id="fc-ex2"></span></p><br>
+          <p><b>V3 Example:</b><br><span id="fc-ex3"></span></p>
         </div>
       </div>
     </div>
     <div class="ctrl-group">
       <button class="round-btn" onclick="move(-1)">←</button>
-      <b id="fc-count">0/0</b>
+      <b id="fc-count" style="color:var(--text-sub);">0 / 0</b>
       <button class="round-btn" onclick="move(1)">→</button>
     </div>
   </div>
 
   <div id="quiz-view" class="stage hidden">
-    <div class="item-card" style="width: 100%; min-height: 300px; display: flex; flex-direction: column; justify-content: center;">
-      <div id="q-progress" style="font-size: 0.8rem; color: var(--text-sub); margin-bottom: 10px;">Question 1/10</div>
-      <h2 id="q-text" style="font-size: 1.8rem;"></h2>
-      <div id="q-sentence" style="background: #f8fafc; padding: 15px; border-radius: 12px; margin: 15px 0; display: none;"></div>
+    <div class="item-card" style="width: 100%; min-height: 320px; display: flex; flex-direction: column; justify-content: center; text-align: center;">
+      <div id="q-progress" style="font-size: 0.8rem; color: var(--text-sub); margin-bottom: 10px;">Question 1 / 10</div>
+      <h2 id="q-text" style="font-size: 1.8rem; color: var(--primary);"></h2>
+      <div id="q-sentence" style="background: #f8fafc; padding: 15px; border-radius: 12px; margin: 15px 0; display: none; font-size: 1.1rem;"></div>
       <div id="q-inputs"></div>
-      <div id="q-feedback" style="margin-top: 15px; font-weight: 700; display: none;"></div>
+      <div id="q-feedback" style="margin-top: 15px; font-weight: 800; display: none; padding: 10px; border-radius: 10px;"></div>
     </div>
     <div class="ctrl-group">
-      <button class="round-btn primary" id="btn-q-action" onclick="handleQuizAction()">Check Answer</button>
+      <button class="round-btn primary" id="btn-q-action" onclick="handleQuizAction()" style="width: 100%;">Check Answer</button>
     </div>
   </div>
 </div>
@@ -153,37 +164,50 @@
   let state = { mode: 'learn', view: 'list', filter: 'all', search: '', idx: 0, qIdx: 0, qStep: 'input', activeQs: [] };
 
   async function init() {
-    const [vR, qR] = await Promise.all([fetch(VERB_URL+"?t="+Date.now()), fetch(QUIZ_URL+"?t="+Date.now())]);
-    data.verbs = parseCSV(await vR.text(), true);
-    data.quizzes = parseCSV(await qR.text(), false);
-    render();
-    setupSwipes();
+    try {
+      const [vR, qR] = await Promise.all([
+        fetch(VERB_URL + "?t=" + Date.now()).then(r => r.text()),
+        fetch(QUIZ_URL + "?t=" + Date.now()).then(r => r.text())
+      ]);
+      data.verbs = parseCSV(vR, true);
+      data.quizzes = parseCSV(qR, false);
+      render();
+      setupInteractions();
+    } catch (e) { console.error("Data Load Error", e); }
   }
 
   function parseCSV(text, isVerb) {
-    const rows = text.trim().split('\n').slice(1);
+    const rows = text.trim().split(/\r?\n/).slice(1);
     return rows.map(r => {
       const c = r.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(v => v.trim().replace(/^"|"$/g, ''));
-      if(isVerb) {
-        let t = c[0].split('(')[0].trim().toUpperCase();
-        return { type: t, v1: c[1], mean: c[2], ex1: c[3], v2: c[4], ex2: c[5], v3: c[6], ex3: c[7] };
-      }
+      if(isVerb) return { type: c[0].split('(')[0].trim().toUpperCase(), v1: c[1], mean: c[2], ex1: c[3], v2: c[4], ex2: c[5], v3: c[6], ex3: c[7] };
       return { q: c[0], a: c[1] };
     }).filter(v => isVerb ? v.v1 : v.q);
   }
 
-  function setView(v) { state.view = v; render(); }
+  function setView(v) { 
+    state.view = v; 
+    document.querySelectorAll('#study-sub-nav .filter-btn').forEach(b => b.classList.toggle('active', b.onclick.toString().includes(v)));
+    render(); 
+  }
+
+  function toggleFav(w) {
+    const i = data.favs.indexOf(w);
+    if(i > -1) data.favs.splice(i, 1); else data.favs.push(w);
+    localStorage.setItem('sf_favs', JSON.stringify(data.favs));
+    render();
+  }
 
   function render() {
     const listEl = document.getElementById('list-view');
     const cardEl = document.getElementById('card-view');
     const quizEl = document.getElementById('quiz-view');
-    const filterEl = document.getElementById('global-filters');
+    const filterSec = document.getElementById('global-filters');
 
-    [listEl, cardEl, quizEl, filterEl].forEach(e => e.classList.add('hidden'));
+    [listEl, cardEl, quizEl, filterSec].forEach(e => e.classList.add('hidden'));
 
     const filtered = data.verbs.filter(v => {
-      const mF = state.filter==='fav' ? data.favs.includes(v.v1) : (state.filter==='all' || v.type === state.filter);
+      const mF = state.filter === 'fav' ? data.favs.includes(v.v1) : (state.filter === 'all' || v.type === state.filter);
       const mS = v.v1.toLowerCase().includes(state.search) || v.mean.toLowerCase().includes(state.search);
       return mF && mS;
     });
@@ -193,7 +217,7 @@
       if(state.activeQs.length === 0) startNewQuiz();
       updateQuizUI();
     } else {
-      filterEl.classList.remove('hidden');
+      filterSec.classList.remove('hidden');
       if (state.view === 'list') {
         listEl.classList.remove('hidden');
         listEl.innerHTML = filtered.map(v => `
@@ -202,9 +226,15 @@
             <span class="type-tag type-${v.type}">${v.type}</span>
             <div style="font-weight:800; font-size:1.2rem;">${v.v1} <span style="font-weight:400; color:var(--text-sub); font-size:0.9rem;">${v.mean}</span></div>
             <div class="v-row">
-              <div class="v-box"><div class="v-word">${v.v1}</div></div>
-              <div class="v-box"><div class="v-word">${v.v2}</div></div>
-              <div class="v-box"><div class="v-word">${v.v3}</div></div>
+              <div class="v-box"><span class="v-label">V1</span><div class="v-word">${v.v1}</div></div>
+              <div class="v-box"><span class="v-label">V2</span><div class="v-word">${v.v2}</div></div>
+              <div class="v-box"><span class="v-label">V3</span><div class="v-word">${v.v3}</div></div>
+            </div>
+            <button class="ex-toggle" onclick="toggleEx(this)">Show Examples ▼</button>
+            <div class="ex-content">
+              <p><b>V1:</b> ${v.ex1}</p>
+              <p><b>V2:</b> ${v.ex2}</p>
+              <p><b>V3:</b> ${v.ex3}</p>
             </div>
           </div>`).join('');
       } else {
@@ -214,8 +244,18 @@
     }
   }
 
+  window.toggleEx = (btn) => {
+    const panel = btn.nextElementSibling;
+    const isShow = panel.style.display === 'block';
+    panel.style.display = isShow ? 'none' : 'block';
+    btn.innerText = isShow ? 'Show Examples ▼' : 'Hide Examples ▲';
+  };
+
   function updateCardUI(list) {
-    if(list.length === 0) return;
+    if(list.length === 0) {
+      document.getElementById('fc-count').innerText = "0 / 0";
+      return;
+    }
     if(state.idx >= list.length) state.idx = 0;
     const v = list[state.idx];
     document.getElementById('fc-v1').innerText = v.v1;
@@ -225,15 +265,21 @@
     document.getElementById('fc-ex1').innerText = v.ex1;
     document.getElementById('fc-ex2').innerText = v.ex2;
     document.getElementById('fc-ex3').innerText = v.ex3;
-    document.getElementById('fc-count').innerText = `${state.idx+1} / ${list.length}`;
+    document.getElementById('fc-count').innerText = `${state.idx + 1} / ${list.length}`;
     document.getElementById('fc-type').innerText = v.type;
-    document.getElementById('fc-type').className = 'type-tag type-'+v.type;
+    document.getElementById('fc-type').className = 'type-tag type-' + v.type;
     document.getElementById('fc-fav-pos').innerHTML = `<button class="star-btn ${data.favs.includes(v.v1)?'active':''}" onclick="toggleFav('${v.v1}')">🌟</button>`;
     document.getElementById('fc').classList.remove('flipped');
   }
 
+  function move(dir) {
+    const filtered = data.verbs.filter(v => state.filter === 'fav' ? data.favs.includes(v.v1) : (state.filter === 'all' || v.type === state.filter));
+    if(filtered.length === 0) return;
+    state.idx = (state.idx + dir + filtered.length) % filtered.length;
+    updateCardUI(filtered);
+  }
+
   function startNewQuiz() {
-    // 隨機選 10 題
     const pool = Math.random() > 0.5 ? data.verbs.map(v => ({...v, isVerb: true})) : data.quizzes.map(q => ({...q, isVerb: false}));
     state.activeQs = pool.sort(() => 0.5 - Math.random()).slice(0, 10);
     state.qIdx = 0;
@@ -243,21 +289,20 @@
   function updateQuizUI() {
     const q = state.activeQs[state.qIdx];
     const fb = document.getElementById('q-feedback');
-    const btn = document.getElementById('btn-q-action');
     fb.style.display = 'none';
-    document.getElementById('q-progress').innerText = `Question ${state.qIdx+1} / 10`;
+    document.getElementById('q-progress').innerText = `Question ${state.qIdx + 1} / 10`;
     
     if(q.isVerb) {
       document.getElementById('q-text').innerText = `${q.v1} (${q.mean})`;
       document.getElementById('q-sentence').style.display = 'none';
-      document.getElementById('q-inputs').innerHTML = `<input class="q-input" id="qv2" placeholder="V2"> <input class="q-input" id="qv3" placeholder="V3">`;
+      document.getElementById('q-inputs').innerHTML = `<input class="q-input" id="qv2" placeholder="Enter V2"> <input class="q-input" id="qv3" placeholder="Enter V3">`;
     } else {
-      document.getElementById('q-text').innerText = "Fill in the blank";
+      document.getElementById('q-text').innerText = "Complete the sentence";
       document.getElementById('q-sentence').style.display = 'block';
       document.getElementById('q-sentence').innerText = q.q.replace('_____', '_______');
-      document.getElementById('q-inputs').innerHTML = `<input class="q-input" id="qans" placeholder="Answer">`;
+      document.getElementById('q-inputs').innerHTML = `<input class="q-input" id="qans" placeholder="Enter Answer">`;
     }
-    btn.innerText = "Check Answer";
+    document.getElementById('btn-q-action').innerText = "Check Answer";
   }
 
   function handleQuizAction() {
@@ -266,78 +311,60 @@
     const btn = document.getElementById('btn-q-action');
 
     if(state.qStep === 'input') {
-      let isOk = false;
-      let correct = "";
+      let isOk = false, ansText = "";
       if(q.isVerb) {
         const v2 = document.getElementById('qv2').value.trim().toLowerCase();
         const v3 = document.getElementById('qv3').value.trim().toLowerCase();
         isOk = (v2 === q.v2.toLowerCase() && v3 === q.v3.toLowerCase());
-        correct = `${q.v2} / ${q.v3}`;
+        ansText = `${q.v2} / ${q.v3}`;
       } else {
-        const ans = document.getElementById('qans').value.trim().toLowerCase();
-        isOk = (ans === q.a.toLowerCase());
-        correct = q.a;
+        const u = document.getElementById('qans').value.trim().toLowerCase();
+        isOk = (u === q.a.toLowerCase());
+        ansText = q.a;
       }
-
       fb.style.display = 'block';
+      fb.style.background = isOk ? '#ecfdf5' : '#fef2f2';
       fb.style.color = isOk ? '#059669' : '#dc2626';
-      fb.innerText = isOk ? "✓ Excellent!" : "✗ Correct: " + correct;
+      fb.innerText = isOk ? "✓ Correct!" : "✗ Correct Answer: " + ansText;
       btn.innerText = state.qIdx === 9 ? "Finish Quiz" : "Next Question";
       state.qStep = 'next';
     } else {
-      if(state.qIdx < 9) {
-        state.qIdx++;
-        state.qStep = 'input';
-        updateQuizUI();
-      } else {
-        alert("Quiz Finished!");
-        state.mode = 'learn';
-        state.activeQs = [];
-        render();
-      }
+      if(state.qIdx < 9) { state.qIdx++; state.qStep = 'input'; updateQuizUI(); }
+      else { state.mode = 'learn'; state.activeQs = []; render(); }
     }
   }
 
-  function toggleFav(w) {
-    const i = data.favs.indexOf(w);
-    if(i>-1) data.favs.splice(i,1); else data.favs.push(w);
-    localStorage.setItem('sf_favs', JSON.stringify(data.favs));
-    render();
-  }
+  function setupInteractions() {
+    // Nav Navigation
+    document.querySelectorAll('.nav-btn').forEach(b => b.onclick = () => {
+      document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+      b.classList.add('active');
+      state.mode = b.dataset.mode;
+      render();
+    });
 
-  function move(dir) { state.idx = (state.idx + dir + data.verbs.length) % data.verbs.length; render(); }
+    // Filters
+    document.querySelectorAll('.filter-group .filter-btn').forEach(b => b.onclick = () => {
+      document.querySelectorAll('.filter-group .filter-btn').forEach(btn => btn.classList.remove('active'));
+      b.classList.add('active');
+      state.filter = b.dataset.filter;
+      state.idx = 0;
+      render();
+    });
 
-  function setupSwipes() {
+    // Search
+    document.getElementById('search').oninput = e => { state.search = e.target.value.toLowerCase(); state.idx = 0; render(); };
+
+    // Card Swipe & Flip
+    const fc = document.getElementById('fc');
     let startX = 0;
-    const handleStart = e => startX = e.touches[0].clientX;
-    const handleEnd = e => {
+    fc.addEventListener('touchstart', e => startX = e.touches[0].clientX);
+    fc.addEventListener('touchend', e => {
       const diff = startX - e.changedTouches[0].clientX;
-      if(Math.abs(diff) > 50) {
-        if(state.mode === 'learn' && state.view === 'card') move(diff > 0 ? 1 : -1);
-      }
-    };
-    document.getElementById('fc').addEventListener('touchstart', handleStart);
-    document.getElementById('fc').addEventListener('touchend', handleEnd);
-    document.getElementById('fc').onclick = function(e) { 
-      if(!e.target.closest('.star-btn')) this.classList.toggle('flipped'); 
-    };
+      if (Math.abs(diff) > 50) move(diff > 0 ? 1 : -1);
+    });
+    fc.onclick = (e) => { if(!e.target.closest('.star-btn')) fc.classList.toggle('flipped'); };
   }
-
-  document.querySelectorAll('.nav-btn').forEach(b => b.onclick = () => {
-    document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-    b.classList.add('active');
-    state.mode = b.dataset.mode;
-    render();
-  });
-
-  document.getElementById('search').oninput = e => { state.search = e.target.value.toLowerCase(); state.idx=0; render(); };
-  document.querySelectorAll('.filter-group .filter-btn').forEach(b => b.onclick = () => {
-    document.querySelectorAll('.filter-group .filter-btn').forEach(btn => btn.classList.remove('active'));
-    b.classList.add('active');
-    state.filter = b.dataset.filter;
-    state.idx = 0;
-    render();
-  });
 
   init();
 </script>
