@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Happy Grammar: 5 Sentence Patterns</title>
+    <title>Shirley Grammar: 5 Simple Sentence Structures</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
@@ -11,17 +11,15 @@
             --bg: #F0F4FF;
             --card: #FFFFFF;
             --shadow: rgba(80, 100, 180, 0.12);
-
-            --c-s:  #7EC8E3; /* Subject - sky blue */
-            --c-vi: #FFB347; /* Intransitive Verb - orange */
-            --c-vt: #FF7F7F; /* Transitive Verb - coral */
-            --c-vl: #A8D8A8; /* Linking Verb - sage */
-            --c-o:  #B5EAD7; /* Object - mint */
-            --c-c:  #FFF1A8; /* Complement - lemon */
-            --c-io: #C9B1FF; /* Indirect Object - lavender */
-            --c-do: #9BF6FF; /* Direct Object - cyan */
-            --c-oc: #FFD1BA; /* Object Comp - peach */
-
+            --c-s:  #7EC8E3;
+            --c-vi: #FFB347;
+            --c-vt: #FF7F7F;
+            --c-vl: #A8D8A8;
+            --c-o:  #B5EAD7;
+            --c-c:  #FFF1A8;
+            --c-io: #C9B1FF;
+            --c-do: #9BF6FF;
+            --c-oc: #FFD1BA;
             --text: #2D3561;
             --sub:  #7B82A8;
             --accent: #FF6B6B;
@@ -29,9 +27,7 @@
             --font-en: 'Nunito', sans-serif;
             --font-cn: 'Noto Sans TC', sans-serif;
         }
-
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         body, html {
             width: 100%; height: 100%;
             background: var(--bg);
@@ -40,8 +36,6 @@
             overflow: hidden;
             touch-action: manipulation;
         }
-
-        /* ─── Stage ─────────────────────────────── */
         #stage {
             width: min(96vw, 860px);
             height: min(96vh, 620px);
@@ -53,8 +47,6 @@
             display: flex;
             flex-direction: column;
         }
-
-        /* ─── Top Bar ────────────────────────────── */
         .top-bar {
             display: flex;
             justify-content: space-between;
@@ -62,7 +54,6 @@
             padding: 18px 24px 12px;
             flex-shrink: 0;
         }
-
         .pattern-counter {
             font-family: var(--font-en);
             font-size: 0.85rem;
@@ -71,29 +62,26 @@
             letter-spacing: 1px;
             text-transform: uppercase;
         }
-
         .top-controls { display: flex; gap: 10px; }
-
         .ctrl-btn {
             width: 38px; height: 38px;
             border-radius: 50%;
             border: 2px solid #E8ECF8;
             background: white;
             cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 1.1rem;
             transition: all 0.2s;
             box-shadow: 0 2px 8px var(--shadow);
         }
         .ctrl-btn:hover { transform: scale(1.1); border-color: #C5CCEB; }
-
-        /* ─── Formula Header ─────────────────────── */
         .formula-area {
             text-align: center;
             padding: 0 20px 10px;
             flex-shrink: 0;
         }
-
         .formula-title {
             font-family: var(--font-en);
             font-size: clamp(2rem, 5vw, 2.8rem);
@@ -105,7 +93,6 @@
             transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         .formula-title.show { opacity: 1; transform: translateY(0); }
-
         .formula-desc {
             font-size: clamp(0.8rem, 2vw, 1rem);
             color: var(--sub);
@@ -114,15 +101,12 @@
             transition: opacity 0.5s 0.2s;
         }
         .formula-desc.show { opacity: 1; }
-
-        /* ─── Block Animation Zone ───────────────── */
         .anim-zone {
             flex: 1;
             position: relative;
             overflow: hidden;
             min-height: 0;
         }
-
         .block {
             width: clamp(72px, 10vw, 90px);
             height: clamp(72px, 10vw, 90px);
@@ -139,33 +123,25 @@
             box-shadow: 0 8px 24px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.7);
             transition: transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        .block span {
-            font-size: clamp(0.5rem, 1.2vw, 0.65rem);
-            font-weight: 600;
-            opacity: 0.65;
-            margin-top: 3px;
-            letter-spacing: 0.3px;
-        }
-
-        .b-s  { background: var(--c-s);  }
+        .block span { font-size: clamp(0.5rem, 1.2vw, 0.65rem); font-weight: 600; opacity: 0.65; margin-top: 3px; }
+        .b-s  { background: var(--c-s); }
         .b-vi { background: var(--c-vi); }
         .b-vt { background: var(--c-vt); }
         .b-vl { background: var(--c-vl); }
-        .b-o  { background: var(--c-o);  }
-        .b-c  { background: var(--c-c);  }
+        .b-o  { background: var(--c-o); }
+        .b-c  { background: var(--c-c); }
         .b-io { background: var(--c-io); }
         .b-do { background: var(--c-do); }
         .b-oc { background: var(--c-oc); }
-
-        /* ─── Info Panel ─────────────────────────── */
         .info-panel {
             height: 160px;
             flex-shrink: 0;
             position: relative;
             padding: 0 24px 20px;
-            display: flex; align-items: center; justify-content: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-
         .card {
             position: absolute;
             width: calc(100% - 48px);
@@ -179,8 +155,6 @@
             pointer-events: none;
         }
         .card.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
-
-        /* Usage card */
         .usage-badge {
             display: inline-block;
             background: var(--text);
@@ -189,103 +163,148 @@
             border-radius: 20px;
             font-size: 0.75rem;
             font-weight: 700;
-            letter-spacing: 1px;
             text-transform: uppercase;
             margin-bottom: 10px;
         }
-        .usage-text {
-            font-size: clamp(0.95rem, 2.5vw, 1.15rem);
-            color: var(--text);
-            line-height: 1.6;
-            font-weight: 500;
-        }
-
-        /* Example card */
-        .ex-header {
-            display: flex; align-items: center; gap: 10px;
-            margin-bottom: 10px;
-        }
-        .lvl-dot {
-            width: 10px; height: 10px;
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
+        .usage-text { font-size: clamp(0.95rem, 2.5vw, 1.15rem); color: var(--text); line-height: 1.6; font-weight: 500; }
+        .ex-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+        .lvl-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
         .lvl-low .lvl-dot  { background: var(--green); }
         .lvl-mid .lvl-dot  { background: #F2CC8F; }
         .lvl-high .lvl-dot { background: var(--accent); }
-
-        .lvl-label {
-            font-family: var(--font-en);
-            font-size: 0.75rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1.2px;
-        }
-        .lvl-low  .lvl-label { color: var(--green); }
-        .lvl-mid  .lvl-label { color: #C49A1A; }
+        .lvl-label { font-family: var(--font-en); font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1.2px; }
+        .lvl-low .lvl-label { color: var(--green); }
+        .lvl-mid .lvl-label { color: #C49A1A; }
         .lvl-high .lvl-label { color: var(--accent); }
+        .ex-en { font-family: var(--font-en); font-size: clamp(1.15rem, 3vw, 1.5rem); font-weight: 800; color: var(--text); line-height: 1.3; margin-bottom: 5px; }
+        .ex-cn { font-size: clamp(0.85rem, 2vw, 1rem); color: var(--sub); line-height: 1.4; }
 
-        .ex-en {
-            font-family: var(--font-en);
-            font-size: clamp(1.15rem, 3vw, 1.5rem);
-            font-weight: 800;
-            color: var(--text);
-            line-height: 1.3;
-            margin-bottom: 5px;
-        }
-        .ex-cn {
-            font-size: clamp(0.85rem, 2vw, 1rem);
-            color: var(--sub);
-            line-height: 1.4;
-        }
-
-        /* ─── Progress Bar ───────────────────────── */
-        .progress-rail {
-            height: 5px;
-            background: #EEF1FA;
+        /* 全新可拖拽进度条 + 暂停集成 */
+        .progress-container {
             flex-shrink: 0;
+            padding: 8px 24px 16px;
+            background: transparent;
+            position: relative;
+            z-index: 5;
         }
+        .progress-rail {
+            height: 8px;
+            background: #E2E8F5;
+            border-radius: 10px;
+            cursor: pointer;
+            position: relative;
+            transition: height 0.2s;
+        }
+        .progress-rail:hover { height: 10px; }
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, var(--c-vi), var(--c-io));
+            background: linear-gradient(90deg, #7EC8E3, #C9B1FF);
             width: 0%;
-            transition: width 0.6s ease;
+            border-radius: 10px;
+            pointer-events: none;
+            transition: width 0.2s ease;
+        }
+        .drag-handle {
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 18px;
+            height: 18px;
+            background: white;
+            border: 2px solid #7EC8E3;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            pointer-events: none;
+            transition: left 0.2s ease;
+            z-index: 6;
+        }
+        .progress-status {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 8px;
+            font-size: 0.7rem;
+            font-family: var(--font-en);
+            font-weight: 600;
+            color: var(--sub);
+        }
+        .pause-badge {
+            background: rgba(126,200,227,0.2);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .pause-badge:hover { background: rgba(126,200,227,0.4); }
+        .pause-icon { font-size: 0.8rem; }
+
+        /* 悬浮提示 */
+        .toast-msg {
+            position: fixed;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(45,53,97,0.92);
+            backdrop-filter: blur(8px);
+            color: white;
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            z-index: 200;
+            opacity: 0;
+            transition: opacity 0.2s;
+            pointer-events: none;
+            white-space: nowrap;
+            font-family: var(--font-en);
         }
 
-        /* ─── Overlays ───────────────────────────── */
+        /* Overlays */
         .overlay {
             position: absolute; inset: 0;
             display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
+            justify-content: center;
+            align-items: center;
             z-index: 100;
             padding: 30px 24px;
             text-align: center;
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.4s;
+            background: white;
+            border-radius: 28px;
         }
         .overlay.active { opacity: 1; pointer-events: all; }
-
-        /* Start */
-        #startScreen { background: white; }
-        .start-emoji { font-size: 3.5rem; margin-bottom: 16px; }
-        .start-title {
-            font-family: var(--font-en);
-            font-size: clamp(2rem, 6vw, 3rem);
-            font-weight: 900;
-            color: var(--text);
-            margin-bottom: 8px;
-            line-height: 1.1;
+        .start-emoji { font-size: 3.5rem; margin-bottom: 12px; }
+        .start-title { font-family: var(--font-en); font-size: clamp(2rem, 6vw, 3rem); font-weight: 900; color: var(--text); margin-bottom: 6px; }
+        .start-sub { font-size: clamp(0.85rem, 2.5vw, 1rem); color: var(--sub); margin-bottom: 24px; }
+        .patterns-overview {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin: 20px 0 28px;
+            max-width: 600px;
         }
-        .start-sub {
-            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-            color: var(--sub);
-            margin-bottom: 32px;
-            line-height: 1.5;
+        .overview-card {
+            background: #F8FAFF;
+            border-radius: 28px;
+            padding: 10px 16px;
+            width: calc(33% - 12px);
+            min-width: 100px;
+            text-align: center;
+            border: 1.5px solid #E2E9FC;
+            transition: transform 0.2s;
         }
-
+        .overview-card:hover { transform: translateY(-3px); border-color: var(--c-s); }
+        .overview-formula { font-family: var(--font-en); font-weight: 900; font-size: 0.9rem; background: var(--text); color: white; display: inline-block; padding: 2px 10px; border-radius: 20px; margin-bottom: 6px; }
+        .overview-desc { font-size: 0.7rem; font-weight: 600; color: var(--sub); margin-top: 4px; }
+        .overview-ex { font-size: 0.65rem; color: #5f6790; margin-top: 6px; font-style: italic; }
         .btn-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
-
         .btn {
             padding: 13px 28px;
             font-size: clamp(1rem, 2.5vw, 1.15rem);
@@ -295,622 +314,419 @@
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.2s;
-            min-height: 50px;
         }
-        .btn:hover { transform: translateY(-2px); }
-        .btn:active { transform: translateY(0); }
-
-        .btn-blue   { background: var(--c-s); color: var(--text); box-shadow: 0 6px 20px rgba(126,200,227,0.4); }
-        .btn-coral  { background: var(--c-vt); color: white; box-shadow: 0 6px 20px rgba(255,127,127,0.4); }
-        .btn-purple { background: var(--c-io); color: var(--text); box-shadow: 0 6px 20px rgba(201,177,255,0.4); }
-
-        /* ─── Pause Banner ───────────────────────── */
-        #pauseBanner {
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            z-index: 90;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            padding: 10px 18px;
-            background: rgba(45, 53, 97, 0.92);
-            backdrop-filter: blur(4px);
-            border-radius: 28px 28px 0 0;
-            opacity: 0;
-            pointer-events: none;
-            transform: translateY(-100%);
-            transition: opacity 0.3s, transform 0.3s cubic-bezier(0.4,0,0.2,1);
-        }
-        #pauseBanner.active {
-            opacity: 1;
-            pointer-events: all;
-            transform: translateY(0);
-        }
-        .pause-banner-left {
-            display: flex; align-items: center; gap: 10px;
-        }
-        .pause-banner-icon { font-size: 1.3rem; }
-        .pause-banner-text {
-            font-family: var(--font-en);
-            font-size: 0.95rem;
-            font-weight: 800;
-            color: white;
-            letter-spacing: 0.5px;
-        }
-        .pause-banner-sub {
-            font-size: 0.78rem;
-            color: rgba(255,255,255,0.6);
-            font-weight: 400;
-        }
-        .pause-resume-btn {
-            padding: 7px 18px;
-            background: var(--c-s);
-            color: var(--text);
-            border: none;
-            border-radius: 20px;
-            font-family: var(--font-en);
-            font-size: 0.9rem;
-            font-weight: 800;
-            cursor: pointer;
-            white-space: nowrap;
-            transition: transform 0.15s;
-            flex-shrink: 0;
-        }
-        .pause-resume-btn:hover { transform: scale(1.05); }
-
-        /* Dim the lesson content slightly when paused */
-        #stage.paused .top-bar,
-        #stage.paused .formula-area,
-        #stage.paused .anim-zone,
-        #stage.paused .info-panel {
-            filter: brightness(0.72);
-            transition: filter 0.3s;
-        }
-
-        /* ─── Quiz Overlay ───────────────────────── */
-        #quizScreen { background: white; }
-
-        .quiz-meta {
-            font-family: var(--font-en);
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: var(--sub);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-bottom: 6px;
-        }
-        .quiz-label {
-            font-family: var(--font-en);
-            font-size: 1rem;
-            font-weight: 800;
-            color: var(--c-vt);
-            margin-bottom: 20px;
-            letter-spacing: 0.5px;
-        }
-        .quiz-q {
-            font-family: var(--font-en);
-            font-size: clamp(1.3rem, 4vw, 1.8rem);
-            font-weight: 800;
-            color: var(--text);
-            margin-bottom: 24px;
-            line-height: 1.35;
-            max-width: 550px;
-        }
-        .quiz-opts {
-            display: flex; justify-content: center;
-            gap: 12px; flex-wrap: wrap;
-            width: 100%; max-width: 580px;
-        }
-        .quiz-opt {
-            padding: 12px 20px;
-            font-family: var(--font-en);
-            font-size: clamp(0.9rem, 2vw, 1.05rem);
-            font-weight: 700;
-            border: 2.5px solid #E8ECF8;
-            background: white;
-            border-radius: 14px;
-            cursor: pointer;
-            color: var(--text);
-            transition: all 0.2s;
-            min-width: 120px; min-height: 48px;
-            display: flex; align-items: center; justify-content: center;
-        }
-        .quiz-opt:hover:not(:disabled) { border-color: var(--c-s); transform: translateY(-2px); }
-        .quiz-opt.correct { background: var(--c-o); border-color: #52B788; color: #1B4332; }
-        .quiz-opt.wrong   { background: var(--c-vt); border-color: #d64242; color: white; }
-
-        .quiz-msg {
-            height: 36px;
-            margin-top: 18px;
-            font-family: var(--font-en);
-            font-size: 1.1rem;
-            font-weight: 800;
-            display: flex; align-items: center; justify-content: center; gap: 6px;
-        }
-
-        /* ─── Result Overlay ─────────────────────── */
-        #resultScreen { background: white; }
-        .result-emoji { font-size: 4rem; margin-bottom: 16px; }
-        .result-title {
-            font-family: var(--font-en);
-            font-size: clamp(2rem, 5vw, 2.8rem);
-            font-weight: 900;
-            color: var(--text);
-            margin-bottom: 8px;
-        }
-        .result-sub { font-size: 1rem; color: var(--sub); margin-bottom: 32px; max-width: 400px; line-height: 1.6; }
-
-        /* ─── Decorative Circles ─────────────────── */
-        .deco-circle {
-            position: absolute;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 0;
-        }
+        .btn-blue { background: var(--c-s); color: var(--text); box-shadow: 0 6px 20px rgba(126,200,227,0.4); }
+        .btn-coral { background: var(--c-vt); color: white; }
+        .btn-purple { background: var(--c-io); color: var(--text); }
+        .quiz-meta { font-family: var(--font-en); font-size: 0.8rem; font-weight: 700; color: var(--sub); text-transform: uppercase; margin-bottom: 6px; }
+        .quiz-label { font-family: var(--font-en); font-size: 1rem; font-weight: 800; color: var(--c-vt); margin-bottom: 20px; }
+        .quiz-q { font-family: var(--font-en); font-size: clamp(1.3rem, 4vw, 1.8rem); font-weight: 800; color: var(--text); margin-bottom: 24px; }
+        .quiz-opts { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; max-width: 580px; }
+        .quiz-opt { padding: 12px 20px; font-family: var(--font-en); font-weight: 700; border: 2.5px solid #E8ECF8; background: white; border-radius: 14px; cursor: pointer; }
+        .quiz-opt.correct { background: var(--c-o); border-color: #52B788; }
+        .quiz-opt.wrong { background: var(--c-vt); border-color: #d64242; color: white; }
+        .quiz-msg { height: 36px; margin-top: 18px; font-weight: 800; }
+        .result-emoji { font-size: 4rem; }
+        .result-title { font-family: var(--font-en); font-size: clamp(2rem, 5vw, 2.8rem); font-weight: 900; color: var(--text); }
+        .deco-circle { position: absolute; border-radius: 50%; pointer-events: none; z-index: 0; }
         .dc1 { width: 300px; height: 300px; background: radial-gradient(circle, #E8F4FF 0%, transparent 70%); top: -100px; right: -80px; }
         .dc2 { width: 200px; height: 200px; background: radial-gradient(circle, #FFF0F0 0%, transparent 70%); bottom: -60px; left: -60px; }
-
-        /* ─── Mobile ─────────────────────────────── */
-        @media (max-width: 480px) {
-            #stage { border-radius: 18px; }
-            .info-panel { height: 140px; padding: 0 16px 16px; }
-            .card { padding: 14px 16px; }
-            .top-bar { padding: 14px 16px 10px; }
-        }
-        @media (max-height: 500px) and (orientation: landscape) {
-            #stage { height: 98vh; }
-            .anim-zone { flex: 0.8; }
-            .info-panel { height: 120px; }
-            .block { width: 60px !important; height: 60px !important; font-size: 1.2rem !important; }
-        }
+        @media (max-width: 560px) { .overview-card { width: calc(50% - 12px); } }
+        @media (max-width: 480px) { .info-panel { height: 140px; } .progress-container { padding: 6px 20px 12px; } }
     </style>
 </head>
 <body>
-
 <div id="stage">
-    <!-- Decorative -->
     <div class="deco-circle dc1"></div>
     <div class="deco-circle dc2"></div>
-
-    <!-- ── Top Bar ── -->
     <div class="top-bar">
         <div class="pattern-counter" id="patternCounter">Pattern 1 / 5</div>
         <div class="top-controls">
-            <div class="ctrl-btn" id="pauseBtn" title="Pause">⏸️</div>
             <div class="ctrl-btn" id="musicBtn" title="Music">🔇</div>
         </div>
     </div>
-
-    <!-- ── Formula Header ── -->
     <div class="formula-area">
         <div class="formula-title" id="formulaTitle">S + V</div>
         <div class="formula-desc" id="formulaDesc">Subject + Verb</div>
     </div>
-
-    <!-- ── Block Animation Zone ── -->
     <div class="anim-zone" id="animZone"></div>
-
-    <!-- ── Info Panel ── -->
     <div class="info-panel">
-        <!-- Usage Card -->
-        <div class="card" id="usageCard">
-            <div class="usage-badge">📌 How to use</div>
-            <div class="usage-text" id="usageText">動作不需要受詞</div>
-        </div>
+        <div class="card" id="usageCard"><div class="usage-badge">📌 How to use</div><div class="usage-text" id="usageText"></div></div>
+        <div class="card" id="exCard"><div class="ex-header" id="exHeader"><div class="lvl-dot"></div><div class="lvl-label" id="exLabel">Basic</div></div><div class="ex-en" id="exEn"></div><div class="ex-cn" id="exCn"></div></div>
+    </div>
 
-        <!-- Example Card -->
-        <div class="card" id="exCard">
-            <div class="ex-header" id="exHeader">
-                <div class="lvl-dot"></div>
-                <div class="lvl-label" id="exLabel">Basic</div>
+    <!-- 集成暂停/播放的进度条 -->
+    <div class="progress-container">
+        <div class="progress-rail" id="progressRail">
+            <div class="progress-fill" id="progressFillBar"></div>
+            <div class="drag-handle" id="dragHandle"></div>
+        </div>
+        <div class="progress-status">
+            <span id="progressText">Pattern 1 of 5</span>
+            <div class="pause-badge" id="pauseBadge">
+                <span class="pause-icon" id="pauseIcon">⏸️</span>
+                <span id="pauseLabel">Pause</span>
             </div>
-            <div class="ex-en" id="exEn">Birds fly.</div>
-            <div class="ex-cn" id="exCn">鳥兒飛翔。</div>
         </div>
     </div>
 
-    <!-- ── Progress ── -->
-    <div class="progress-rail"><div class="progress-fill" id="progressFill"></div></div>
-
-    <!-- ── Pause Banner ── -->
-    <div id="pauseBanner">
-        <div class="pause-banner-left">
-            <span class="pause-banner-icon">⏸️</span>
-            <div>
-                <div class="pause-banner-text">Paused</div>
-                <div class="pause-banner-sub">Take your time — content stays visible</div>
-            </div>
-        </div>
-        <button class="pause-resume-btn" onclick="togglePause()">▶ Resume</button>
-    </div>
-
-    <!-- ── Start Screen ── -->
+    <!-- Start Screen with overview -->
     <div class="overlay active" id="startScreen">
-        <div class="start-emoji">✏️</div>
+        <div class="start-emoji">📚✨</div>
         <div class="start-title">Happy Grammar</div>
-        <div class="start-sub">Learn the 5 essential English<br>sentence patterns — clearly & quickly.</div>
-        <div class="btn-row">
-            <button class="btn btn-blue" onclick="startLesson()">Start Learning 🎵</button>
-        </div>
+        <div class="start-sub">Master the 5 essential English sentence patterns — clearly & quickly.</div>
+        <div class="patterns-overview" id="patternsOverview"></div>
+        <div class="btn-row"><button class="btn btn-blue" id="startLearningBtn">Start Learning 🎵</button></div>
     </div>
 
-    <!-- ── Quiz Screen ── -->
     <div class="overlay" id="quizScreen">
         <div class="quiz-meta" id="quizMeta">Question 1 of 5</div>
         <div class="quiz-label">Which sentence pattern is this?</div>
-        <div class="quiz-q" id="quizQ">Sentence here</div>
+        <div class="quiz-q" id="quizQ"></div>
         <div class="quiz-opts" id="quizOpts"></div>
         <div class="quiz-msg" id="quizMsg"></div>
     </div>
 
-    <!-- ── Result Screen ── -->
     <div class="overlay" id="resultScreen">
-        <div class="result-emoji">🎉</div>
+        <div class="result-emoji">🎉🏆</div>
         <div class="result-title">Great Work!</div>
         <div class="result-sub">You've reviewed all 5 sentence patterns. Keep it up — practice makes perfect!</div>
-        <div class="btn-row">
-            <button class="btn btn-purple" onclick="startQuiz()">🧠 Try Again</button>
-            <button class="btn btn-coral" onclick="resetApp()">↩ Back to Start</button>
-        </div>
+        <div class="btn-row"><button class="btn btn-purple" id="quizAgainBtn">🧠 Try Again</button><button class="btn btn-coral" id="resetToStartBtn">↩ Back to Start</button></div>
     </div>
+
+    <div class="toast-msg" id="toastMsg"></div>
 </div>
 
 <script>
-/* ══════════════════════════════════════════════
-   DATA
-══════════════════════════════════════════════ */
-const PATTERNS = [
-    {
-        formula: 'S + Vi',
-        desc: 'Subject + Intransitive Verb',
-        usage: '這個句型表示「主詞自己做動作」。動詞本身意思完整，後面不需要接受動作的對象（受詞）。',
-        blocks: [
-            { code: 'S',  cls: 'b-s',  label: 'Subject' },
-            { code: 'Vi', cls: 'b-vi', label: 'Intrans. V' }
-        ],
-        examples: [
-            { lvl: 'low',  en: 'Time flies.',                         cn: '時光飛逝。' },
-            { lvl: 'mid',  en: 'The sun rises in the east.',           cn: '太陽從東方升起。' },
-            { lvl: 'high', en: 'The negotiations failed completely.',  cn: '談判徹底失敗。' }
-        ]
-    },
-    {
-        formula: 'S + Vl + C',
-        desc: 'Subject + Linking Verb + Complement',
-        usage: '連綴動詞像「等號 =」，連接主詞和補語，說明主詞的「狀態」或「身分」。常見連綴動詞：be, seem, become, look, feel…',
-        blocks: [
-            { code: 'S',  cls: 'b-s',  label: 'Subject' },
-            { code: 'Vl', cls: 'b-vl', label: 'Linking V' },
-            { code: 'C',  cls: 'b-c',  label: 'Complement' }
-        ],
-        examples: [
-            { lvl: 'low',  en: 'She is a teacher.',                       cn: '她是一位老師。' },
-            { lvl: 'mid',  en: 'The idea sounds great.',                   cn: '這個主意聽起來很棒。' },
-            { lvl: 'high', en: 'He remained silent throughout the trial.', cn: '他在整個審判過程中保持沉默。' }
-        ]
-    },
-    {
-        formula: 'S + Vt + O',
-        desc: 'Subject + Transitive Verb + Object',
-        usage: '最常見的句型！主詞做了一個動作，這個動作直接影響到一個對象（受詞）。',
-        blocks: [
-            { code: 'S',  cls: 'b-s',  label: 'Subject' },
-            { code: 'Vt', cls: 'b-vt', label: 'Trans. V' },
-            { code: 'O',  cls: 'b-o',  label: 'Object' }
-        ],
-        examples: [
-            { lvl: 'low',  en: 'I love music.',                          cn: '我愛音樂。' },
-            { lvl: 'mid',  en: 'They discussed the plan.',               cn: '他們討論了這個計畫。' },
-            { lvl: 'high', en: 'The company implemented new policies.',  cn: '公司實施了新政策。' }
-        ]
-    },
-    {
-        formula: 'S + Vt + iO + dO',
-        desc: 'Subject + Verb + Indirect Object + Direct Object',
-        usage: '「給予型」句型。有兩個受詞：直接受詞是東西，間接受詞是收受的人。',
-        blocks: [
-            { code: 'S',  cls: 'b-s',  label: 'Subject' },
-            { code: 'Vt', cls: 'b-vt', label: 'Trans. V' },
-            { code: 'iO', cls: 'b-io', label: 'Indirect O' },
-            { code: 'dO', cls: 'b-do', label: 'Direct O' }
-        ],
-        examples: [
-            { lvl: 'low',  en: 'He bought her a flower.',                        cn: '他買了一朵花給她。' },
-            { lvl: 'mid',  en: 'The teacher gave us some homework.',             cn: '老師給了我們一些作業。' },
-            { lvl: 'high', en: 'The award granted him international acclaim.',   cn: '這個獎項給了他國際讚譽。' }
-        ]
-    },
-    {
-        formula: 'S + Vt + O + OC',
-        desc: 'Subject + Verb + Object + Object Complement',
-        usage: '主詞的動作讓受詞產生變化，OC（受詞補語）補充說明受詞的狀態或結果。',
-        blocks: [
-            { code: 'S',  cls: 'b-s',  label: 'Subject' },
-            { code: 'Vt', cls: 'b-vt', label: 'Trans. V' },
-            { code: 'O',  cls: 'b-o',  label: 'Object' },
-            { code: 'OC', cls: 'b-oc', label: 'Obj. Comp' }
-        ],
-        examples: [
-            { lvl: 'low',  en: 'Keep the room clean.',          cn: '保持房間乾淨。' },
-            { lvl: 'mid',  en: 'They named the baby Joy.',      cn: '他們把嬰兒取名為 Joy。' },
-            { lvl: 'high', en: 'We consider the matter closed.',cn: '我們認為這件事已了結。' }
-        ]
-    }
-];
+    // ========== 句型数据 ==========
+    const PATTERNS = [
+        { formula: 'S + Vi', desc: 'Subject + Intransitive Verb', usage: '這個句型表示「主詞自己做動作」。動詞本身意思完整，後面不需要接受動作的對象（受詞）。', blocks: [{ code: 'S', cls: 'b-s', label: 'Subject' },{ code: 'Vi', cls: 'b-vi', label: 'Intrans. V' }], examples: [{ lvl: 'low', en: 'Time flies.', cn: '時光飛逝。' },{ lvl: 'mid', en: 'The sun rises in the east.', cn: '太陽從東方升起。' },{ lvl: 'high', en: 'The negotiations failed completely.', cn: '談判徹底失敗。' }] },
+        { formula: 'S + Vl + C', desc: 'Subject + Linking Verb + Complement', usage: '連綴動詞像「等號 =」，連接主詞和補語，說明主詞的「狀態」或「身分」。常見連綴動詞：be, seem, become, look, feel…', blocks: [{ code: 'S', cls: 'b-s', label: 'Subject' },{ code: 'Vl', cls: 'b-vl', label: 'Linking V' },{ code: 'C', cls: 'b-c', label: 'Complement' }], examples: [{ lvl: 'low', en: 'She is a teacher.', cn: '她是一位老師。' },{ lvl: 'mid', en: 'The idea sounds great.', cn: '這個主意聽起來很棒。' },{ lvl: 'high', en: 'He remained silent throughout the trial.', cn: '他在整個審判過程中保持沉默。' }] },
+        { formula: 'S + Vt + O', desc: 'Subject + Transitive Verb + Object', usage: '最常見的句型！主詞做了一個動作，這個動作直接影響到一個對象（受詞）。', blocks: [{ code: 'S', cls: 'b-s', label: 'Subject' },{ code: 'Vt', cls: 'b-vt', label: 'Trans. V' },{ code: 'O', cls: 'b-o', label: 'Object' }], examples: [{ lvl: 'low', en: 'I love music.', cn: '我愛音樂。' },{ lvl: 'mid', en: 'They discussed the plan.', cn: '他們討論了這個計畫。' },{ lvl: 'high', en: 'The company implemented new policies.', cn: '公司實施了新政策。' }] },
+        { formula: 'S + Vt + iO + dO', desc: 'Subject + Verb + Indirect Object + Direct Object', usage: '「給予型」句型。有兩個受詞：直接受詞是東西，間接受詞是收受的人。', blocks: [{ code: 'S', cls: 'b-s', label: 'Subject' },{ code: 'Vt', cls: 'b-vt', label: 'Trans. V' },{ code: 'iO', cls: 'b-io', label: 'Indirect O' },{ code: 'dO', cls: 'b-do', label: 'Direct O' }], examples: [{ lvl: 'low', en: 'He bought her a flower.', cn: '他買了一朵花給她。' },{ lvl: 'mid', en: 'The teacher gave us some homework.', cn: '老師給了我們一些作業。' },{ lvl: 'high', en: 'The award granted him international acclaim.', cn: '這個獎項給了他國際讚譽。' }] },
+        { formula: 'S + Vt + O + OC', desc: 'Subject + Verb + Object + Object Complement', usage: '主詞的動作讓受詞產生變化，OC（受詞補語）補充說明受詞的狀態或結果。', blocks: [{ code: 'S', cls: 'b-s', label: 'Subject' },{ code: 'Vt', cls: 'b-vt', label: 'Trans. V' },{ code: 'O', cls: 'b-o', label: 'Object' },{ code: 'OC', cls: 'b-oc', label: 'Obj. Comp' }], examples: [{ lvl: 'low', en: 'Keep the room clean.', cn: '保持房間乾淨。' },{ lvl: 'mid', en: 'They named the baby Joy.', cn: '他們把嬰兒取名為 Joy。' },{ lvl: 'high', en: 'We consider the matter closed.', cn: '我們認為這件事已了結。' }] }
+    ];
 
-/* ══════════════════════════════════════════════
-   AUDIO
-══════════════════════════════════════════════ */
-const Audio = (() => {
-    let ctx = null, muted = true, bgmTimer = null;
+    // ========== 音频 ==========
+    const Audio = (() => {
+        let ctx = null, muted = true, bgmTimer = null;
+        function ctx_() { if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)(); return ctx; }
+        function tone(f, type, dur, vol, delay=0) { if (muted) return; const c = ctx_(); const osc = c.createOscillator(), g = c.createGain(); const t = c.currentTime+delay; osc.type=type; osc.frequency.setValueAtTime(f,t); g.gain.setValueAtTime(vol,t); g.gain.exponentialRampToValueAtTime(0.001,t+dur); osc.connect(g); g.connect(c.destination); osc.start(t); osc.stop(t+dur); }
+        return { get muted() { return muted; }, toggle() { if(!ctx) ctx=new (window.AudioContext||window.webkitAudioContext)(); muted=!muted; if(!muted){ ctx.resume(); this.bgm(); } else { ctx.suspend(); clearInterval(bgmTimer); } return muted; }, chord() { tone(349.23,'sine',1,0.04); tone(440,'sine',1,0.04,0.05); tone(523.25,'sine',1,0.04,0.1); }, pop() { tone(500+Math.random()*200,'triangle',0.1,0.05); }, success() { tone(523.25,'square',0.2,0.04); tone(659.25,'square',0.35,0.04,0.12); }, error() { tone(200,'sawtooth',0.3,0.07); }, bgm() { clearInterval(bgmTimer); const notes=[261.63,329.63,392,523.25,392,329.63]; let i=0; bgmTimer=setInterval(()=>{ if(!muted) tone(notes[i=(i+1)%notes.length],'sine',1.4,0.012); },600); }, suspend() { if(ctx) ctx.suspend(); clearInterval(bgmTimer); }, resume() { if(!muted && ctx) { ctx.resume(); this.bgm(); } } };
+    })();
 
-    function ctx_() {
-        if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
-        return ctx;
-    }
+    // ========== 全局课程控制 ==========
+    let lessonActive = false;
+    let lessonAbortController = null;
+    let isPaused = false;           // 暂停标志
+    let pausePromise = null;
+    let pauseResolve = null;
+    let currentPatternIdx = 0;
+    let currentStepPromise = null;  // 用于步进等待时能被中断
 
-    function tone(f, type, dur, vol, delay = 0) {
-        if (muted) return;
-        const c = ctx_();
-        const osc = c.createOscillator(), g = c.createGain();
-        const t = c.currentTime + delay;
-        osc.type = type; osc.frequency.setValueAtTime(f, t);
-        g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(0.001, t + dur);
-        osc.connect(g); g.connect(c.destination);
-        osc.start(t); osc.stop(t + dur);
-    }
+    // 工具函数
+    function showOverlay(id) { document.getElementById(id).classList.add('active'); }
+    function hideOverlay(id) { document.getElementById(id).classList.remove('active'); }
+    function showToast(msg, duration=1500) { const toast = document.getElementById('toastMsg'); toast.textContent = msg; toast.style.opacity = '1'; setTimeout(() => { toast.style.opacity = '0'; }, duration); }
 
-    return {
-        get muted() { return muted; },
-        toggle() {
-            if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
-            muted = !muted;
-            if (!muted) { ctx.resume(); this.bgm(); }
-            else { ctx.suspend(); clearInterval(bgmTimer); }
-            return muted;
-        },
-        chord()   { tone(349.23,'sine',1.0,0.04); tone(440,'sine',1.0,0.04,0.05); tone(523.25,'sine',1.0,0.04,0.1); },
-        pop()     { tone(500 + Math.random()*200,'triangle',0.1,0.05); },
-        success() { tone(523.25,'square',0.2,0.04); tone(659.25,'square',0.35,0.04,0.12); },
-        error()   { tone(200,'sawtooth',0.3,0.07); },
-        bgm() {
-            clearInterval(bgmTimer);
-            const notes = [261.63,329.63,392,523.25,392,329.63]; let i = 0;
-            bgmTimer = setInterval(() => { if (!muted) tone(notes[i=(i+1)%notes.length],'sine',1.4,0.012); }, 600);
-        },
-        suspend() { if (ctx) ctx.suspend(); clearInterval(bgmTimer); },
-        resume()  { if (!muted && ctx) { ctx.resume(); this.bgm(); } }
-    };
-})();
-
-/* ══════════════════════════════════════════════
-   PAUSE SYSTEM
-══════════════════════════════════════════════ */
-let isPaused = false, pauseResolve = null, pausePromise = null;
-
-function togglePause() {
-    isPaused = !isPaused;
-    const banner = document.getElementById('pauseBanner');
-    const stageEl = document.getElementById('stage');
-    const btn = document.getElementById('pauseBtn');
-
-    if (isPaused) {
-        banner.classList.add('active');
-        stageEl.classList.add('paused');
-        btn.innerHTML = '▶️';
-        Audio.suspend();
-        pausePromise = new Promise(r => { pauseResolve = r; });
-    } else {
-        banner.classList.remove('active');
-        stageEl.classList.remove('paused');
-        btn.innerHTML = '⏸️';
-        Audio.resume();
-        if (pauseResolve) { pauseResolve(); pauseResolve = null; }
-    }
-}
-
-async function sleep(ms) {
-    const deadline = Date.now() + ms;
-    while (Date.now() < deadline) {
-        if (isPaused) await pausePromise;
-        const left = deadline - Date.now();
-        if (left <= 0) break;
-        await new Promise(r => setTimeout(r, Math.min(80, left)));
-    }
-}
-
-/* ══════════════════════════════════════════════
-   HELPERS
-══════════════════════════════════════════════ */
-function showOverlay(id)  { document.getElementById(id).classList.add('active'); }
-function hideOverlay(id)  { document.getElementById(id).classList.remove('active'); }
-
-function blockPositions(n) {
-    if (n === 2) return [33, 67];
-    if (n === 3) return [25, 50, 75];
-    if (n === 4) return [18, 38, 62, 82];
-    return [50];
-}
-
-/* ══════════════════════════════════════════════
-   LESSON
-══════════════════════════════════════════════ */
-async function startLesson() {
-    hideOverlay('startScreen');
-    if (Audio.muted) {
-        Audio.toggle();
-        document.getElementById('musicBtn').innerHTML = '🔊';
-    }
-
-    const titleEl  = document.getElementById('formulaTitle');
-    const descEl   = document.getElementById('formulaDesc');
-    const animZone = document.getElementById('animZone');
-    const usageCard = document.getElementById('usageCard');
-    const exCard    = document.getElementById('exCard');
-
-    for (let i = 0; i < PATTERNS.length; i++) {
-        const p = PATTERNS[i];
-        document.getElementById('progressFill').style.width = `${(i / PATTERNS.length) * 100}%`;
-        document.getElementById('patternCounter').textContent = `Pattern ${i+1} / ${PATTERNS.length}`;
-
-        // Reset
-        titleEl.classList.remove('show'); descEl.classList.remove('show');
-        usageCard.classList.remove('show'); exCard.classList.remove('show');
-        animZone.innerHTML = '';
-        await sleep(400);
-
-        // Formula title
-        titleEl.textContent = p.formula; descEl.textContent = p.desc;
-        titleEl.classList.add('show');
-        Audio.chord();
-        await sleep(400);
-        descEl.classList.add('show');
-        await sleep(500);
-
-        // Blocks
-        const positions = blockPositions(p.blocks.length);
-        for (let j = 0; j < p.blocks.length; j++) {
-            const b = p.blocks[j];
-            const el = document.createElement('div');
-            el.className = `block ${b.cls}`;
-            el.innerHTML = `${b.code}<span>${b.label}</span>`;
-            el.style.left = `${positions[j]}%`;
-            animZone.appendChild(el);
-            await sleep(60);
-            requestAnimationFrame(() => { el.style.transform = 'translate(-50%, -50%) scale(1) rotate(0deg)'; });
-            Audio.pop();
-            await sleep(380);
-        }
-
-        // Usage
-        await sleep(400);
-        document.getElementById('usageText').textContent = p.usage;
-        usageCard.classList.add('show');
-        await sleep(4200);
-        usageCard.classList.remove('show');
-        await sleep(350);
-
-        // Examples
-        for (const ex of p.examples) {
-            const lvlMap = { low: 'Basic', mid: 'Intermediate', high: 'Advanced' };
-            const header = document.getElementById('exHeader');
-            header.className = `ex-header lvl-${ex.lvl}`;
-            document.getElementById('exLabel').textContent = lvlMap[ex.lvl];
-            document.getElementById('exEn').textContent = ex.en;
-            document.getElementById('exCn').textContent = ex.cn;
-            exCard.classList.add('show');
-            Audio.pop();
-            await sleep(3000);
-            exCard.classList.remove('show');
-            await sleep(350);
+    // 可中断的sleep (支持暂停)
+    async function interruptibleSleep(ms) {
+        const startTime = Date.now();
+        while (Date.now() - startTime < ms) {
+            if (lessonAbortController?.signal.aborted) throw new Error('ABORTED');
+            if (isPaused) {
+                if (pauseResolve) await pausePromise;
+                if (lessonAbortController?.signal.aborted) throw new Error('ABORTED');
+            }
+            const remaining = ms - (Date.now() - startTime);
+            if (remaining <= 0) break;
+            await new Promise(r => setTimeout(r, Math.min(80, remaining)));
         }
     }
 
-    document.getElementById('progressFill').style.width = '100%';
-    await sleep(800);
-    startQuiz();
-}
-
-/* ══════════════════════════════════════════════
-   QUIZ
-══════════════════════════════════════════════ */
-let quizIdx = 0;
-const QUIZ_TOTAL = 5;
-
-function startQuiz() {
-    hideOverlay('startScreen');
-    hideOverlay('resultScreen');
-    showOverlay('quizScreen');
-    quizIdx = 0;
-    nextQuestion();
-}
-
-function nextQuestion() {
-    if (quizIdx >= QUIZ_TOTAL) { endQuiz(); return; }
-    quizIdx++;
-
-    document.getElementById('quizMeta').textContent = `Question ${quizIdx} of ${QUIZ_TOTAL}`;
-    document.getElementById('quizMsg').innerHTML = '';
-
-    const correct = PATTERNS[Math.floor(Math.random() * PATTERNS.length)];
-    const ex = correct.examples[Math.floor(Math.random() * correct.examples.length)];
-    document.getElementById('quizQ').textContent = ex.en;
-
-    const opts = [correct.formula];
-    while (opts.length < 3) {
-        const w = PATTERNS[Math.floor(Math.random() * PATTERNS.length)].formula;
-        if (!opts.includes(w)) opts.push(w);
+    // 更新进度条UI
+    function updateProgressUI(patternIndex, totalPatterns) {
+        const percent = ((patternIndex) / totalPatterns) * 100;
+        const fill = document.getElementById('progressFillBar');
+        const handle = document.getElementById('dragHandle');
+        if (fill) fill.style.width = `${percent}%`;
+        if (handle) handle.style.left = `${percent}%`;
+        document.getElementById('progressText').innerText = `Pattern ${patternIndex+1} of ${totalPatterns}`;
+        document.getElementById('patternCounter').textContent = `Pattern ${patternIndex+1} / ${totalPatterns}`;
     }
-    opts.sort(() => Math.random() - 0.5);
 
-    const container = document.getElementById('quizOpts');
-    container.innerHTML = '';
-    opts.forEach(opt => {
-        const btn = document.createElement('button');
-        btn.className = 'quiz-opt';
-        btn.textContent = opt;
-        btn.onclick = () => handleAnswer(btn, opt, correct.formula, container);
-        container.appendChild(btn);
-    });
-}
+    // 暂停/恢复核心逻辑
+    function setPaused(paused) {
+        if (!lessonActive) return;
+        if (paused === isPaused) return;
+        isPaused = paused;
+        const badge = document.getElementById('pauseBadge');
+        const iconSpan = document.getElementById('pauseIcon');
+        const labelSpan = document.getElementById('pauseLabel');
+        if (isPaused) {
+            iconSpan.textContent = '▶️';
+            labelSpan.textContent = 'Resume';
+            pausePromise = new Promise(r => { pauseResolve = r; });
+            Audio.suspend();
+            showToast('⏸ Lesson paused — click Resume or drag to continue', 1800);
+        } else {
+            iconSpan.textContent = '⏸️';
+            labelSpan.textContent = 'Pause';
+            if (pauseResolve) { pauseResolve(); pauseResolve = null; pausePromise = null; }
+            Audio.resume();
+            showToast('▶ Resumed', 800);
+        }
+    }
+    function togglePause() { if (lessonActive) setPaused(!isPaused); }
 
-function handleAnswer(btn, selected, correct, container) {
-    container.querySelectorAll('.quiz-opt').forEach(b => b.disabled = true);
-    const msg = document.getElementById('quizMsg');
+    // 跳转到指定句型 (重启课程)
+    async function seekToPattern(targetIndex) {
+        if (!lessonActive) return;
+        const wasPaused = isPaused;
+        if (wasPaused) setPaused(false);  // 跳转时自动恢复
+        if (lessonAbortController) lessonAbortController.abort();
+        lessonActive = false;
+        await new Promise(r => setTimeout(r, 50));
+        await startLessonAtPattern(targetIndex);
+    }
 
-    if (selected === correct) {
-        btn.classList.add('correct');
-        msg.innerHTML = '✅ Correct!';
-        msg.style.color = '#52B788';
-        Audio.success();
-        setTimeout(nextQuestion, 1400);
-    } else {
-        btn.classList.add('wrong');
-        msg.innerHTML = `❌ It's <strong>${correct}</strong>`;
-        msg.style.color = '#E63946';
-        Audio.error();
-        container.querySelectorAll('.quiz-opt').forEach(b => {
-            if (b.textContent === correct) b.classList.add('correct');
+    // 核心课程播放器
+    async function startLessonAtPattern(startIdx = 0) {
+        if (lessonActive) return;
+        lessonActive = true;
+        isPaused = false;
+        const abortController = new AbortController();
+        lessonAbortController = abortController;
+        currentPatternIdx = startIdx;
+        
+        const titleEl = document.getElementById('formulaTitle');
+        const descEl = document.getElementById('formulaDesc');
+        const animZone = document.getElementById('animZone');
+        const usageCard = document.getElementById('usageCard');
+        const exCard = document.getElementById('exCard');
+        
+        try {
+            for (let i = startIdx; i < PATTERNS.length; i++) {
+                if (abortController.signal.aborted) break;
+                currentPatternIdx = i;
+                updateProgressUI(i, PATTERNS.length);
+                
+                // 重置区域
+                titleEl.classList.remove('show');
+                descEl.classList.remove('show');
+                usageCard.classList.remove('show');
+                exCard.classList.remove('show');
+                animZone.innerHTML = '';
+                await interruptibleSleep(300);
+                if (abortController.signal.aborted) break;
+                
+                // 显示公式
+                const p = PATTERNS[i];
+                titleEl.textContent = p.formula;
+                descEl.textContent = p.desc;
+                titleEl.classList.add('show');
+                Audio.chord();
+                await interruptibleSleep(400);
+                descEl.classList.add('show');
+                await interruptibleSleep(500);
+                if (abortController.signal.aborted) break;
+                
+                // 动画块
+                const positions = (len => {
+                    if (len === 2) return [33, 67];
+                    if (len === 3) return [25, 50, 75];
+                    if (len === 4) return [18, 38, 62, 82];
+                    return [50];
+                })(p.blocks.length);
+                for (let j = 0; j < p.blocks.length; j++) {
+                    if (abortController.signal.aborted) break;
+                    const b = p.blocks[j];
+                    const el = document.createElement('div');
+                    el.className = `block ${b.cls}`;
+                    el.innerHTML = `${b.code}<span>${b.label}</span>`;
+                    el.style.left = `${positions[j]}%`;
+                    animZone.appendChild(el);
+                    await interruptibleSleep(50);
+                    requestAnimationFrame(() => { el.style.transform = 'translate(-50%, -50%) scale(1) rotate(0deg)'; });
+                    Audio.pop();
+                    await interruptibleSleep(350);
+                }
+                if (abortController.signal.aborted) break;
+                
+                // 用法卡片
+                await interruptibleSleep(300);
+                document.getElementById('usageText').textContent = p.usage;
+                usageCard.classList.add('show');
+                await interruptibleSleep(4200);
+                usageCard.classList.remove('show');
+                await interruptibleSleep(350);
+                if (abortController.signal.aborted) break;
+                
+                // 示例轮播
+                for (const ex of p.examples) {
+                    if (abortController.signal.aborted) break;
+                    const lvlMap = { low: 'Basic', mid: 'Intermediate', high: 'Advanced' };
+                    const header = document.getElementById('exHeader');
+                    header.className = `ex-header lvl-${ex.lvl}`;
+                    document.getElementById('exLabel').textContent = lvlMap[ex.lvl];
+                    document.getElementById('exEn').textContent = ex.en;
+                    document.getElementById('exCn').textContent = ex.cn;
+                    exCard.classList.add('show');
+                    Audio.pop();
+                    await interruptibleSleep(3000);
+                    exCard.classList.remove('show');
+                    await interruptibleSleep(350);
+                }
+            }
+            if (!abortController.signal.aborted) {
+                updateProgressUI(PATTERNS.length, PATTERNS.length);
+                await interruptibleSleep(600);
+                startQuiz();
+            }
+        } catch (e) {
+            if (e.message !== 'ABORTED') console.warn(e);
+        } finally {
+            lessonActive = false;
+            lessonAbortController = null;
+            if (pauseResolve) { pauseResolve(); pauseResolve = null; pausePromise = null; }
+            isPaused = false;
+            // 重置暂停按钮图标
+            const iconSpan = document.getElementById('pauseIcon');
+            const labelSpan = document.getElementById('pauseLabel');
+            iconSpan.textContent = '⏸️';
+            labelSpan.textContent = 'Pause';
+        }
+    }
+
+    async function startLesson() {
+        hideOverlay('startScreen');
+        if (Audio.muted) { Audio.toggle(); document.getElementById('musicBtn').innerHTML = '🔊'; }
+        await startLessonAtPattern(0);
+    }
+
+    // 问答模块
+    let quizIdx = 0;
+    const QUIZ_TOTAL = 5;
+    function startQuiz() {
+        hideOverlay('startScreen');
+        hideOverlay('resultScreen');
+        showOverlay('quizScreen');
+        quizIdx = 0;
+        nextQuestion();
+    }
+    function nextQuestion() {
+        if (quizIdx >= QUIZ_TOTAL) { endQuiz(); return; }
+        quizIdx++;
+        document.getElementById('quizMeta').textContent = `Question ${quizIdx} of ${QUIZ_TOTAL}`;
+        document.getElementById('quizMsg').innerHTML = '';
+        const correct = PATTERNS[Math.floor(Math.random() * PATTERNS.length)];
+        const ex = correct.examples[Math.floor(Math.random() * correct.examples.length)];
+        document.getElementById('quizQ').textContent = ex.en;
+        let opts = [correct.formula];
+        while (opts.length < 3) { const w = PATTERNS[Math.floor(Math.random() * PATTERNS.length)].formula; if (!opts.includes(w)) opts.push(w); }
+        opts.sort(() => Math.random() - 0.5);
+        const container = document.getElementById('quizOpts');
+        container.innerHTML = '';
+        opts.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.className = 'quiz-opt';
+            btn.textContent = opt;
+            btn.onclick = () => handleAnswer(btn, opt, correct.formula, container);
+            container.appendChild(btn);
         });
-        setTimeout(nextQuestion, 2400);
     }
-}
+    function handleAnswer(btn, selected, correct, container) {
+        container.querySelectorAll('.quiz-opt').forEach(b => b.disabled = true);
+        const msg = document.getElementById('quizMsg');
+        if (selected === correct) {
+            btn.classList.add('correct');
+            msg.innerHTML = '✅ Correct!';
+            msg.style.color = '#52B788';
+            Audio.success();
+            setTimeout(nextQuestion, 1400);
+        } else {
+            btn.classList.add('wrong');
+            msg.innerHTML = `❌ It's <strong>${correct}</strong>`;
+            msg.style.color = '#E63946';
+            Audio.error();
+            container.querySelectorAll('.quiz-opt').forEach(b => { if (b.textContent === correct) b.classList.add('correct'); });
+            setTimeout(nextQuestion, 2400);
+        }
+    }
+    function endQuiz() { hideOverlay('quizScreen'); showOverlay('resultScreen'); Audio.chord(); }
+    function resetApp() {
+        if (lessonActive && lessonAbortController) lessonAbortController.abort();
+        lessonActive = false;
+        isPaused = false;
+        if (pauseResolve) pauseResolve();
+        pauseResolve = null;
+        hideOverlay('resultScreen');
+        hideOverlay('quizScreen');
+        showOverlay('startScreen');
+        document.getElementById('animZone').innerHTML = '';
+        document.getElementById('formulaTitle').classList.remove('show');
+        document.getElementById('formulaDesc').classList.remove('show');
+        updateProgressUI(0, PATTERNS.length);
+    }
 
-function endQuiz() {
-    hideOverlay('quizScreen');
-    showOverlay('resultScreen');
-    Audio.chord();
-}
+    // 构建概览卡片
+    function buildOverview() {
+        const container = document.getElementById('patternsOverview');
+        container.innerHTML = '';
+        PATTERNS.forEach(p => {
+            const card = document.createElement('div');
+            card.className = 'overview-card';
+            card.innerHTML = `<div class="overview-formula">${p.formula}</div><div class="overview-desc">${p.desc.split(' ').slice(0,5).join(' ')}...</div><div class="overview-ex">${p.examples[0].en}</div>`;
+            container.appendChild(card);
+        });
+    }
+    buildOverview();
 
-function resetApp() {
-    hideOverlay('resultScreen');
-    hideOverlay('quizScreen');
-    showOverlay('startScreen');
-    document.getElementById('animZone').innerHTML = '';
-    document.getElementById('formulaTitle').classList.remove('show');
-    document.getElementById('formulaDesc').classList.remove('show');
-    document.getElementById('progressFill').style.width = '0%';
-    document.getElementById('patternCounter').textContent = 'Pattern 1 / 5';
-}
+    // ========== 进度条拖拽 + 单击暂停 ==========
+    function setupDragAndPauseProgress() {
+        const rail = document.getElementById('progressRail');
+        let isDragging = false;
+        const getPercent = (e) => {
+            const rect = rail.getBoundingClientRect();
+            let clientX = e.clientX;
+            if (e.touches) clientX = e.touches[0].clientX;
+            let percent = (clientX - rect.left) / rect.width;
+            return Math.min(1, Math.max(0, percent)) * 100;
+        };
+        const onMove = (e) => {
+            if (!isDragging) return;
+            e.preventDefault();
+            const percent = getPercent(e);
+            const fill = document.getElementById('progressFillBar');
+            const handle = document.getElementById('dragHandle');
+            fill.style.width = `${percent}%`;
+            handle.style.left = `${percent}%`;
+            const targetIdx = Math.floor((percent / 100) * PATTERNS.length);
+            const seekIdx = Math.min(PATTERNS.length-1, Math.max(0, targetIdx));
+            if (lessonActive && seekIdx !== currentPatternIdx) {
+                seekToPattern(seekIdx);
+                isDragging = false; // 跳转后结束拖拽
+            }
+        };
+        const onEnd = () => { isDragging = false; };
+        rail.addEventListener('mousedown', (e) => { isDragging = true; onMove(e); document.addEventListener('mousemove', onMove); document.addEventListener('mouseup', onEnd); e.preventDefault(); });
+        rail.addEventListener('touchstart', (e) => { isDragging = true; onMove(e); document.addEventListener('touchmove', onMove); document.addEventListener('touchend', onEnd); e.preventDefault(); });
+        // 单击进度条实现暂停/恢复
+        rail.addEventListener('click', (e) => {
+            if (!lessonActive) return;
+            // 避免拖拽结束时的误判
+            if (isDragging) return;
+            togglePause();
+        });
+    }
+    setupDragAndPauseProgress();
 
-/* ══════════════════════════════════════════════
-   INIT
-══════════════════════════════════════════════ */
-document.getElementById('pauseBtn').onclick = togglePause;
-document.getElementById('musicBtn').onclick = () => {
-    const m = Audio.toggle();
-    document.getElementById('musicBtn').innerHTML = m ? '🔇' : '🔊';
-};
-
-// Prevent double-tap zoom on mobile
-let lastTouch = 0;
-document.addEventListener('touchend', e => {
-    const now = Date.now();
-    if (now - lastTouch < 300) e.preventDefault();
-    lastTouch = now;
-}, false);
-document.addEventListener('touchstart', e => { if (e.touches.length > 1) e.preventDefault(); }, { passive: false });
+    // 绑定UI按钮
+    document.getElementById('musicBtn').onclick = () => { const m = Audio.toggle(); document.getElementById('musicBtn').innerHTML = m ? '🔇' : '🔊'; };
+    document.getElementById('startLearningBtn').onclick = startLesson;
+    document.getElementById('quizAgainBtn').onclick = startQuiz;
+    document.getElementById('resetToStartBtn').onclick = resetApp;
+    document.getElementById('pauseBadge').onclick = togglePause;
 </script>
 </body>
 </html>
