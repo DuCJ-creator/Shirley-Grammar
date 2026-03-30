@@ -466,7 +466,7 @@ function studyView(app) {
   app.innerHTML = `
     <span class="section-badge ${type}">${TL[type]}S</span>
     <table class="ov-table ${type}">
-      <thead>汽<th>${TL[type]}</th><th>MEANING</th><th>SAMPLE WORDS (click 🔊)</th><th>★</th> </thead>
+      <thead> <th>${TL[type]}</th><th>MEANING</th><th>SAMPLE WORDS (click 🔊)</th><th>★</th> </thead>
       <tbody>${data.map((d,i)=>`
          <tr>
           <td class="td-item">${esc(d.item)}</td>
