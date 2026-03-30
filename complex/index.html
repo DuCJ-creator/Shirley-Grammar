@@ -3,781 +3,947 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Level 3: Complex Sentences</title>
+    <title>Happy Grammar: Complex Sentences</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg:       #12151F;
-            --stage:    #1A1E2E;
-            --card:     #252A3D;
-            --border:   rgba(255,255,255,0.07);
-            --text:     #E8ECFF;
-            --sub:      #7B82B0;
-            --dim:      #3C4260;
-
-            /* clause colors */
-            --c-main: #7EC8E3;   /* independent / main clause - sky blue */
-            --c-dep:  #FFB3C6;   /* dependent clause - rose pink */
-            --c-conj: #FFD166;   /* conjunction - gold */
-
-            /* type accent colors */
-            --c-adv:  #6EE7B7;   /* adverb clause - mint */
-            --c-adj:  #C9B1FF;   /* adjective clause - lavender */
-            --c-noun: #FFA552;   /* noun clause - orange */
-
+            --bg: #F0F4FF;
+            --card: #FFFFFF;
+            --shadow: rgba(80, 100, 180, 0.12);
+            --text: #2D3561;
+            --sub: #7B82A8;
+            --accent: #FF6B6B;
+            --green: #52B788;
             --font-en: 'Nunito', sans-serif;
             --font-cn: 'Noto Sans TC', sans-serif;
+
+            --c-main: #7EC8E3;
+            --c-dep:  #FFB3C6;
+            --c-conj: #FFD166;
+            --c-adv:  #6EE7B7;
+            --c-adj:  #C9B1FF;
+            --c-noun: #FFA552;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
         body, html {
             width: 100%; height: 100%;
-            background: #0A0C14;
+            background: var(--bg);
             display: flex; justify-content: center; align-items: center;
-            font-family: var(--font-en);
+            font-family: var(--font-cn);
             overflow: hidden;
+            touch-action: manipulation;
         }
 
-        /* ─── Stage (16:9) ───────────────────────── */
         #stage {
-            width: min(100vw, calc(100vh * 16/9));
-            height: min(100vh, calc(100vw * 9/16));
-            background: var(--stage);
+            width: min(96vw, 860px);
+            height: min(96vh, 620px);
+            background: var(--card);
+            border-radius: 28px;
+            box-shadow: 0 20px 60px var(--shadow);
             position: relative;
             overflow: hidden;
-            border-radius: 12px;
-            box-shadow: 0 30px 80px rgba(0,0,0,0.7);
+            display: flex;
+            flex-direction: column;
         }
 
-        /* ─── Ambient Glow ───────────────────────── */
-        .amb {
-            position: absolute; border-radius: 50%;
-            filter: blur(90px); opacity: 0.14;
-            pointer-events: none; z-index: 0;
-            transition: background 1.8s ease;
-        }
-        #amb1 { width: 55%; height: 90%; top: -25%; left: -10%; background: var(--c-main); }
-        #amb2 { width: 45%; height: 70%; bottom: -20%; right: -8%; background: var(--c-dep); }
-
-        /* scanlines */
-        .scanline {
-            position: absolute; inset: 0; z-index: 1; pointer-events: none;
-            background: repeating-linear-gradient(to bottom, transparent 0px, transparent 3px, rgba(0,0,0,0.04) 3px, rgba(0,0,0,0.04) 4px);
-        }
-
-        /* ─── Top Bar ────────────────────────────── */
-        .top-bar {
-            position: absolute; top: 0; left: 0; right: 0; z-index: 50;
-            display: flex; justify-content: space-between; align-items: center;
-            padding: clamp(10px,1.8%,18px) clamp(14px,3%,28px);
-        }
-
-        .step-label {
-            font-size: clamp(0.6rem,1.1vw,0.82rem);
-            font-weight: 700; color: var(--sub);
-            letter-spacing: 1.2px; text-transform: uppercase;
-        }
-
-        .top-controls { display: flex; gap: 10px; }
-
-        .ctrl-btn {
-            width: clamp(32px,4vw,42px); height: clamp(32px,4vw,42px);
-            border-radius: 50%; border: 1.5px solid var(--border);
-            background: rgba(255,255,255,0.05); cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-            font-size: clamp(0.85rem,1.4vw,1.05rem);
-            transition: all 0.2s;
-        }
-        .ctrl-btn:hover { background: rgba(255,255,255,0.11); transform: scale(1.1); }
-
-        /* ─── Pause Banner ───────────────────────── */
-        #pauseBanner {
-            position: absolute; top: 0; left: 0; right: 0; z-index: 80;
-            display: flex; align-items: center; justify-content: space-between; gap: 12px;
-            padding: clamp(8px,1.4%,14px) clamp(14px,3%,28px);
-            background: rgba(6,8,16,0.93); backdrop-filter: blur(6px);
-            border-bottom: 1px solid var(--border);
-            opacity: 0; pointer-events: none;
-            transform: translateY(-100%);
-            transition: opacity 0.3s, transform 0.35s cubic-bezier(0.4,0,0.2,1);
-        }
-        #pauseBanner.active { opacity: 1; pointer-events: all; transform: translateY(0); }
-
-        .p-left { display: flex; align-items: center; gap: 10px; }
-        .p-icon { font-size: clamp(1rem,2vw,1.3rem); }
-        .p-title { font-size: clamp(0.8rem,1.4vw,1rem); font-weight: 800; color: var(--text); }
-        .p-hint  { font-size: clamp(0.62rem,1vw,0.78rem); color: var(--sub); }
-        .resume-btn {
-            padding: clamp(5px,0.8%,8px) clamp(14px,2.5%,20px);
-            background: var(--c-main); color: #0A0C14; border: none; border-radius: 20px;
-            font-family: var(--font-en); font-size: clamp(0.75rem,1.3vw,0.9rem); font-weight: 800;
-            cursor: pointer; white-space: nowrap; transition: transform 0.15s;
-        }
-        .resume-btn:hover { transform: scale(1.05); }
-
-        /* Dim when paused */
-        #stage.paused #scene-area,
-        #stage.paused #subtitle-area { filter: brightness(0.58); transition: filter 0.3s; }
-
-        /* ─── Scene Area ─────────────────────────── */
-        #scene-area {
+        .deco-circle {
             position: absolute;
-            top: 11%; left: 0; right: 0; bottom: 22%;
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .dc1 { width: 300px; height: 300px; background: radial-gradient(circle, #E8F4FF 0%, transparent 70%); top: -100px; right: -80px; }
+        .dc2 { width: 200px; height: 200px; background: radial-gradient(circle, #FFF0F0 0%, transparent 70%); bottom: -60px; left: -60px; }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 24px 12px;
+            flex-shrink: 0;
+            position: relative;
             z-index: 10;
-            gap: clamp(10px,2%,22px);
         }
-
-        /* ─── Title Group ────────────────────────── */
-        #title-group {
-            text-align: center;
-            opacity: 0; transform: translateY(-14px);
-            transition: opacity 0.7s, transform 0.7s;
+        .step-counter {
+            font-family: var(--font-en);
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--sub);
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
-        #title-group.show { opacity: 1; transform: translateY(0); }
-
-        .main-title {
-            font-size: clamp(1.8rem,5vw,4rem);
-            font-weight: 900; color: var(--text);
-            letter-spacing: -1px; line-height: 1.05;
-        }
-        .main-title em { font-style: normal; color: var(--c-dep); }
-
-        .level-badge {
-            display: inline-block; margin-top: 8px;
-            padding: 4px 14px; border: 1.5px solid var(--border); border-radius: 20px;
-            font-size: clamp(0.65rem,1.1vw,0.85rem); font-weight: 700;
-            color: var(--sub); letter-spacing: 2px; text-transform: uppercase;
-        }
-
-        /* ─── Scene Layout (blocks row) ─────────── */
-        .scene-row {
+        .top-controls { display: flex; gap: 10px; }
+        .ctrl-btn {
+            width: 38px; height: 38px;
+            border-radius: 50%;
+            border: 2px solid #E8ECF8;
+            background: white;
+            cursor: pointer;
             display: flex; align-items: center; justify-content: center;
-            gap: clamp(8px,1.5vw,18px);
-            width: 90%;
-            opacity: 0; transition: opacity 0.4s;
+            font-size: 1.1rem;
+            transition: all 0.2s;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+        .ctrl-btn:hover { transform: scale(1.1); border-color: #C5CCEB; }
+
+        /* 主内容区域 */
+        .main-content {
+            flex: 1;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            padding: 0 20px;
+            z-index: 5;
+        }
+
+        /* 开始画面 */
+        .start-screen {
+            position: absolute;
+            inset: 0;
+            background: white;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 24px;
+            text-align: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s;
+            border-radius: 28px;
+            overflow-y: auto;
+        }
+        .start-screen.active { opacity: 1; pointer-events: all; }
+
+        .start-emoji { font-size: 3.5rem; margin-bottom: 12px; }
+        .start-title {
+            font-family: var(--font-en);
+            font-size: clamp(2rem, 6vw, 2.8rem);
+            font-weight: 900;
+            color: var(--text);
+            margin-bottom: 6px;
+        }
+        .start-title span { color: var(--c-dep); }
+        .start-sub {
+            font-size: clamp(0.85rem, 2.5vw, 1rem);
+            color: var(--sub);
+            margin-bottom: 28px;
+            line-height: 1.5;
+        }
+
+        /* 三种子句概览卡片 */
+        .types-overview {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px;
+            margin: 20px 0 28px;
+            max-width: 600px;
+        }
+        .overview-card {
+            background: #F8FAFF;
+            border-radius: 24px;
+            padding: 16px 14px;
+            width: calc(33% - 12px);
+            min-width: 110px;
+            text-align: center;
+            border: 1.5px solid #E2E9FC;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .overview-card:hover { transform: translateY(-3px); border-color: var(--c-main); background: white; }
+        .overview-icon {
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+        .overview-title {
+            font-family: var(--font-en);
+            font-weight: 800;
+            font-size: 1rem;
+            margin: 6px 0;
+        }
+        .overview-ex {
+            font-size: 0.7rem;
+            color: var(--sub);
+            font-style: italic;
+        }
+        .btn {
+            padding: 13px 32px;
+            font-size: 1rem;
+            font-family: var(--font-en);
+            font-weight: 800;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: var(--c-main);
+            color: var(--text);
+            box-shadow: 0 6px 20px rgba(126,200,227,0.4);
+        }
+        .btn:hover { transform: translateY(-2px); }
+
+        /* 课程内容区 */
+        .lesson-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px 0 30px;
+        }
+
+        .title-area {
+            text-align: center;
+            opacity: 0;
+            transform: translateY(-12px);
+            transition: all 0.5s ease;
+        }
+        .title-area.show { opacity: 1; transform: translateY(0); }
+        .main-title {
+            font-family: var(--font-en);
+            font-size: clamp(1.6rem, 4vw, 2.4rem);
+            font-weight: 900;
+            color: var(--text);
+        }
+        .sub-badge {
+            font-size: 0.75rem;
+            color: var(--sub);
+            margin-top: 6px;
+            letter-spacing: 1px;
+        }
+
+        /* 场景行 */
+        .scene-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(8px, 1.5vw, 18px);
+            flex-wrap: wrap;
+            margin: 10px 0;
+            opacity: 0;
+            transition: opacity 0.4s;
         }
         .scene-row.show { opacity: 1; }
 
-        /* ─── Clause Blocks ──────────────────────── */
+        /* 子句块 */
         .clause-block {
-            padding: clamp(10px,1.6%,18px) clamp(14px,2.5%,26px);
-            border-radius: 14px;
-            font-size: clamp(0.8rem,1.8vw,1.3rem);
-            font-weight: 800; color: #111;
+            background: #F7F9FF;
+            border: 2px solid #E8ECF8;
+            border-radius: 20px;
+            padding: 16px 20px;
+            font-family: var(--font-en);
+            font-weight: 700;
+            font-size: clamp(0.85rem, 2vw, 1.2rem);
+            color: var(--text);
             text-align: center;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.35);
-            opacity: 0; transform: scale(0.85) translateY(10px);
-            transition: all 0.55s cubic-bezier(0.34,1.4,0.64,1);
-            position: relative; overflow: visible;
-            flex: 1; min-width: 0;
+            min-width: 140px;
+            flex: 1;
+            opacity: 0;
+            transform: scale(0.92);
+            transition: all 0.5s cubic-bezier(0.34, 1.2, 0.64, 1);
+            position: relative;
         }
-        .clause-block.show { opacity: 1; transform: scale(1) translateY(0); }
-
+        .clause-block.show { opacity: 1; transform: scale(1); }
         .clause-block .blk-label {
             display: block;
-            font-size: clamp(0.5rem,0.9vw,0.7rem);
-            font-weight: 700; letter-spacing: 1px;
-            text-transform: uppercase; opacity: 0.6;
-            margin-bottom: 5px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            opacity: 0.7;
+            margin-bottom: 6px;
         }
 
-        .blk-main { background: var(--c-main); }
-        .blk-dep  { background: var(--c-dep);  }
-        .blk-conj {
-            background: var(--c-conj); color: #111;
-            flex: 0; min-width: auto;
-            padding: clamp(8px,1.2%,14px) clamp(10px,2%,20px);
-            font-size: clamp(0.75rem,1.5vw,1.1rem);
-        }
+        .block-main { background: rgba(126,200,227,0.2); border-color: var(--c-main); }
+        .block-dep { background: rgba(255,179,198,0.15); border-color: var(--c-dep); }
+        .block-conj { background: rgba(255,209,102,0.25); border-color: var(--c-conj); flex: 0; min-width: auto; padding: 12px 18px; }
 
-        /* type-colored borders on dependent clause */
-        .dep-adv  { outline: 3px solid var(--c-adv);  }
-        .dep-adj  { outline: 3px solid var(--c-adj);  }
-        .dep-noun { outline: 3px solid var(--c-noun); }
+        .dep-adv { border-left: 4px solid var(--c-adv); }
+        .dep-adj { border-left: 4px solid var(--c-adj); }
+        .dep-noun { border-left: 4px solid var(--c-noun); }
 
-        /* ─── Type Tag ───────────────────────────── */
-        #type-tag {
-            font-size: clamp(0.65rem,1.2vw,0.9rem);
-            font-weight: 700; color: var(--sub);
-            background: rgba(255,255,255,0.05); border: 1px solid var(--border);
-            border-radius: 20px; padding: 4px 16px;
-            opacity: 0; transform: translateY(6px);
-            transition: opacity 0.4s 0.3s, transform 0.4s 0.3s;
+        /* 类型标签 */
+        .type-tag {
             text-align: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 30px;
+            display: inline-block;
+            margin: 8px auto 0;
+            opacity: 0;
+            transform: translateY(6px);
+            transition: all 0.4s;
+            background: rgba(126,200,227,0.1);
         }
-        #type-tag.show { opacity: 1; transform: translateY(0); }
+        .type-tag.show { opacity: 1; transform: translateY(0); }
 
-        /* ─── Level Comparison Strip ─────────────── */
-        #level-strip {
-            display: none;
+        /* 等级对比条 */
+        .level-strip {
+            display: flex;
             flex-direction: column;
-            gap: clamp(6px,1.2%,12px);
-            width: 85%;
-            opacity: 0; transition: opacity 0.5s;
+            gap: 10px;
+            width: 100%;
+            margin-top: 15px;
+            opacity: 0;
+            transition: opacity 0.5s;
         }
-        #level-strip.show { opacity: 1; }
+        .level-strip.show { opacity: 1; }
+        .level-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #F8FAFF;
+            border: 1px solid #E2E9FC;
+            border-radius: 16px;
+            padding: 10px 16px;
+            opacity: 0;
+            transform: translateX(-12px);
+            transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .level-row.show { opacity: 1; transform: translateX(0); }
+        .level-num {
+            font-size: 0.8rem;
+            font-weight: 900;
+            padding: 4px 12px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+        .level-1 { background: var(--c-main); color: #1e293b; }
+        .level-2 { background: var(--c-conj); color: #1e293b; }
+        .level-3 { background: var(--c-dep); color: #1e293b; }
+        .level-text { font-size: 0.85rem; font-weight: 700; color: var(--text); }
+        .level-cn { font-size: 0.7rem; color: var(--sub); margin-left: auto; }
 
-        .lvl-row {
-            display: flex; align-items: center; gap: 12px;
-            background: var(--card); border: 1.5px solid var(--border);
-            border-radius: 12px; padding: clamp(8px,1.2%,14px) clamp(12px,2%,20px);
-            opacity: 0; transform: translateX(-16px);
-            transition: all 0.5s cubic-bezier(0.4,0,0.2,1);
+        /* 字幕区 */
+        .subtitle-area {
+            background: linear-gradient(to top, rgba(240,244,255,0.95), transparent);
+            padding: 16px 20px 20px;
+            text-align: center;
+            border-top: 1px solid #E8ECF8;
+            flex-shrink: 0;
         }
-        .lvl-row.show { opacity: 1; transform: translateX(0); }
-
-        .lvl-num {
-            font-size: clamp(0.7rem,1.2vw,0.9rem);
-            font-weight: 900; padding: 4px 10px;
-            border-radius: 8px; white-space: nowrap; flex-shrink: 0;
-        }
-        .lvl-1 { background: var(--c-main); color: #0A0C14; }
-        .lvl-2 { background: var(--c-conj); color: #0A0C14; }
-        .lvl-3 { background: var(--c-dep);  color: #0A0C14; }
-
-        .lvl-text {
-            font-size: clamp(0.75rem,1.4vw,1rem);
-            font-weight: 700; color: var(--text);
-        }
-        .lvl-cn {
-            font-family: var(--font-cn);
-            font-size: clamp(0.62rem,1.1vw,0.82rem);
-            color: var(--sub); margin-left: auto; white-space: nowrap; flex-shrink: 0;
-        }
-
-        /* ─── Subtitle Area ──────────────────────── */
-        #subtitle-area {
-            position: absolute; bottom: 0; left: 0; right: 0;
-            height: 22%; z-index: 20;
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-            padding: 0 5% 2%; gap: 5px;
-            background: linear-gradient(to top, rgba(8,10,18,0.96) 55%, transparent);
-        }
-
         .sub-en {
-            font-size: clamp(0.85rem,2vw,1.45rem);
-            font-weight: 700; color: #fff; text-align: center; line-height: 1.3;
-            opacity: 0; transform: translateY(8px);
-            transition: opacity 0.45s, transform 0.45s;
+            font-family: var(--font-en);
+            font-size: clamp(0.85rem, 1.8vw, 1.1rem);
+            font-weight: 700;
+            color: var(--text);
+            opacity: 0;
+            transform: translateY(6px);
+            transition: opacity 0.4s, transform 0.4s;
         }
         .sub-tc {
             font-family: var(--font-cn);
-            font-size: clamp(0.7rem,1.5vw,1.05rem);
-            color: var(--sub); text-align: center; line-height: 1.4;
-            opacity: 0; transform: translateY(8px);
-            transition: opacity 0.45s 0.1s, transform 0.45s 0.1s;
+            font-size: clamp(0.75rem, 1.5vw, 0.95rem);
+            color: var(--sub);
+            margin-top: 5px;
+            opacity: 0;
+            transform: translateY(6px);
+            transition: opacity 0.4s 0.05s, transform 0.4s 0.05s;
         }
         .sub-en.show, .sub-tc.show { opacity: 1; transform: translateY(0); }
 
-        /* ─── Progress ───────────────────────────── */
+        /* 整合暂停功能的进度条 */
+        .progress-container {
+            flex-shrink: 0;
+            padding: 8px 24px 16px;
+            background: transparent;
+            position: relative;
+            z-index: 30;
+        }
         .progress-rail {
-            position: absolute; bottom: 0; left: 0; right: 0;
-            height: 3px; background: rgba(255,255,255,0.05); z-index: 30;
+            height: 8px;
+            background: #E2E8F5;
+            border-radius: 10px;
+            cursor: pointer;
+            position: relative;
+            transition: height 0.2s;
         }
+        .progress-rail:hover { height: 10px; }
         .progress-fill {
-            height: 100%; width: 0%;
+            height: 100%;
             background: linear-gradient(90deg, var(--c-main), var(--c-dep));
-            transition: width 0.15s linear;
-        }
-
-        /* ─── Rain Effect ────────────────────────── */
-        .rain-drop {
-            position: absolute; width: 2px; height: 10px;
-            background: rgba(110,231,183,0.6); border-radius: 2px;
-            top: -20px; animation: rainFall 0.9s linear infinite;
+            width: 0%;
+            border-radius: 10px;
             pointer-events: none;
+            transition: width 0.2s ease;
         }
-        @keyframes rainFall { to { transform: translateY(200px); opacity: 0; } }
-
-        /* ─── Spotlight Pulse ────────────────────── */
-        .spotlight-ring {
-            position: absolute; inset: -5px;
-            border: 2.5px dashed var(--c-adj);
-            border-radius: 16px;
-            animation: pulse 1.8s ease-in-out infinite;
+        .drag-handle {
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 18px;
+            height: 18px;
+            background: white;
+            border: 2px solid var(--c-main);
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
             pointer-events: none;
+            transition: left 0.2s ease;
+            z-index: 6;
         }
-        @keyframes pulse { 0%,100% { opacity: 0.4; transform: scale(1); } 50% { opacity: 1; transform: scale(1.04); } }
+        .progress-status {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 8px;
+            font-size: 0.7rem;
+            font-family: var(--font-en);
+            font-weight: 600;
+            color: var(--sub);
+        }
+        .pause-indicator {
+            background: rgba(126,200,227,0.15);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .pause-indicator:hover { background: rgba(126,200,227,0.3); }
 
-        /* ─── Noun Slot ──────────────────────────── */
-        .noun-slot {
-            border: 2px dashed rgba(255,165,82,0.4);
-            background: rgba(255,165,82,0.06);
-            min-width: clamp(80px,14vw,140px);
-            min-height: clamp(40px,6vw,60px);
+        #stage.paused .main-content,
+        #stage.paused .subtitle-area { filter: brightness(0.65); transition: filter 0.3s; }
+
+        .toast-msg {
+            position: fixed;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(45,53,97,0.92);
+            backdrop-filter: blur(8px);
+            color: white;
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            z-index: 200;
+            opacity: 0;
+            transition: opacity 0.2s;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .result-overlay {
+            position: absolute;
+            inset: 0;
+            background: white;
+            z-index: 110;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 30px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s;
+            border-radius: 28px;
+        }
+        .result-overlay.active { opacity: 1; pointer-events: all; }
+        .result-emoji { font-size: 4rem; margin-bottom: 16px; }
+        .result-title { font-family: var(--font-en); font-size: 2rem; font-weight: 900; color: var(--text); }
+        .btn-outline { background: white; border: 2px solid var(--c-main); color: var(--c-main); padding: 10px 24px; border-radius: 50px; font-weight: 800; cursor: pointer; transition: all 0.2s; }
+        .btn-outline:hover { background: var(--c-main); color: white; transform: translateY(-2px); }
+
+        @media (max-width: 550px) {
+            .types-overview { gap: 10px; }
+            .overview-card { width: calc(33% - 8px); padding: 12px 8px; }
+            .clause-block { padding: 12px 14px; min-width: 100px; }
         }
     </style>
 </head>
 <body>
 <div id="stage">
-    <div class="amb" id="amb1"></div>
-    <div class="amb" id="amb2"></div>
-    <div class="scanline"></div>
+    <div class="deco-circle dc1"></div>
+    <div class="deco-circle dc2"></div>
 
-    <!-- Top Bar -->
     <div class="top-bar">
-        <div class="step-label" id="stepLabel">Intro</div>
+        <div class="step-counter" id="stepCounter">Complex Sentences</div>
         <div class="top-controls">
-            <div class="ctrl-btn" id="pauseBtn">⏸️</div>
             <div class="ctrl-btn" id="musicBtn">🔇</div>
         </div>
     </div>
 
-    <!-- Pause Banner -->
-    <div id="pauseBanner">
-        <div class="p-left">
-            <span class="p-icon">⏸️</span>
-            <div>
-                <div class="p-title">Paused</div>
-                <div class="p-hint">Content stays visible — take your time</div>
-            </div>
+    <!-- 开始画面 -->
+    <div class="start-screen active" id="startScreen">
+        <div class="start-emoji">📚🔗</div>
+        <div class="start-title">Complex <span>Sentences</span></div>
+        <div class="start-sub">Master dependent clauses — Adverb, Adjective, Noun<br>Level 3 Grammar</div>
+        
+        <div class="types-overview" id="typesOverview"></div>
+        
+        <div class="btn-row">
+            <button class="btn" id="startLessonBtn">Start Learning 🎵</button>
         </div>
-        <button class="resume-btn" onclick="togglePause()">▶ Resume</button>
     </div>
 
-    <!-- Scene Area -->
-    <div id="scene-area">
-        <div id="title-group">
-            <div class="main-title">Complex<br><em>Sentences</em></div>
-            <div class="level-badge">Level 3 Grammar</div>
-        </div>
-
-        <!-- Reusable scene row (rebuilt each step) -->
-        <div class="scene-row" id="sceneRow"></div>
-
-        <!-- Level comparison strip -->
-        <div id="level-strip">
-            <div class="lvl-row" id="lvl1">
-                <span class="lvl-num lvl-1">Level 1</span>
-                <span class="lvl-text">Simple — One independent clause</span>
-                <span class="lvl-cn">一個獨立子句</span>
+    <!-- 课程主内容 -->
+    <div class="main-content" id="mainContent" style="display: none;">
+        <div class="lesson-area">
+            <div class="title-area" id="titleArea">
+                <div class="main-title" id="mainTitle">Complex Sentences</div>
+                <div class="sub-badge" id="subBadge">Main + Dependent Clause</div>
             </div>
-            <div class="lvl-row" id="lvl2">
-                <span class="lvl-num lvl-2">Level 2</span>
-                <span class="lvl-text">Compound — Two clauses + FANBOYS</span>
-                <span class="lvl-cn">兩個獨立句 + 連接詞</span>
+            <div class="scene-row" id="sceneRow"></div>
+            <div style="text-align: center;">
+                <div class="type-tag" id="typeTag"></div>
             </div>
-            <div class="lvl-row" id="lvl3">
-                <span class="lvl-num lvl-3">Level 3</span>
-                <span class="lvl-text">Complex — Main + Dependent clause</span>
-                <span class="lvl-cn">主句 + 從屬子句</span>
+            <div class="level-strip" id="levelStrip">
+                <div class="level-row" id="lvl1"><span class="level-num level-1">Level 1</span><span class="level-text">Simple · One independent clause</span><span class="level-cn">一個獨立子句</span></div>
+                <div class="level-row" id="lvl2"><span class="level-num level-2">Level 2</span><span class="level-text">Compound · Two independent clauses + FANBOYS</span><span class="level-cn">兩個獨立子句 + 連接詞</span></div>
+                <div class="level-row" id="lvl3"><span class="level-num level-3">Level 3</span><span class="level-text">Complex · Main + Dependent clause</span><span class="level-cn">主要子句 + 從屬子句</span></div>
             </div>
         </div>
-
-        <!-- Type tag -->
-        <div id="type-tag"></div>
     </div>
 
-    <!-- Subtitles -->
-    <div id="subtitle-area">
+    <!-- 字幕区 -->
+    <div class="subtitle-area" id="subtitleArea" style="display: none;">
         <div class="sub-en" id="subEn"></div>
         <div class="sub-tc" id="subTc"></div>
     </div>
 
-    <div class="progress-rail"><div class="progress-fill" id="progressFill"></div></div>
+    <!-- 进度条 -->
+    <div class="progress-container">
+        <div class="progress-rail" id="progressRail">
+            <div class="progress-fill" id="progressFill"></div>
+            <div class="drag-handle" id="dragHandle"></div>
+        </div>
+        <div class="progress-status">
+            <span id="progressText">Lesson Progress</span>
+            <div class="pause-indicator" id="pauseIndicator">
+                <span>⏸️</span> <span>Click bar to pause</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 结业画面 -->
+    <div class="result-overlay" id="resultScreen">
+        <div class="result-emoji">🎉🏆</div>
+        <div class="result-title">Complex Mastered!</div>
+        <div class="start-sub" style="margin-top: 12px;">You've mastered Adverb, Adjective & Noun Clauses!<br>Complex sentences are now your superpower.</div>
+        <div class="btn-row">
+            <button class="btn-outline" id="restartBtn">🔄 Review Again</button>
+            <button class="btn-outline" id="backStartBtn">🏠 Back to Start</button>
+        </div>
+    </div>
+
+    <div class="toast-msg" id="toastMsg"></div>
 </div>
 
 <script>
-/* ══════════════════════════════════════════════
-   AUDIO
-══════════════════════════════════════════════ */
-const Audio = (() => {
-    let ctx = null, muted = true, bgmTimer = null;
-    function c() { if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)(); return ctx; }
-    function tone(f, type, dur, vol, delay = 0) {
-        if (muted) return;
-        const ac = c(), osc = ac.createOscillator(), g = ac.createGain();
-        const t = ac.currentTime + delay;
-        osc.type = type; osc.frequency.setValueAtTime(f, t);
-        g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(0.001, t + dur);
-        osc.connect(g); g.connect(ac.destination); osc.start(t); osc.stop(t + dur);
+    // ========== 课程步骤数据 ==========
+    const STEPS = [
+        { type: 'intro', duration: 3500, title: 'Complex Sentences', subtitle: 'Main + Dependent Clause', subEn: "A complex sentence has one main clause and at least one dependent clause.", subTc: "複雜句包含一個主要子句和至少一個從屬子句。" },
+        { type: 'levels', duration: 5000, subEn: "Let's review the three sentence levels.", subTc: "先回顧三個句型等級。" },
+        { type: 'level1', duration: 4500, main: "I like music", label1: "Simple Sentence", subEn: "Level 1: One independent clause. Short and complete.", subTc: "Level 1：一個獨立子句。簡短完整。" },
+        { type: 'level2', duration: 5000, main1: "I sing", main2: "she dances", conj: "but", subEn: "Level 2: Two independent clauses joined by FANBOYS.", subTc: "Level 2：兩個獨立子句由連接詞連接。" },
+        { type: 'level3_intro', duration: 4500, subEn: "Level 3: Main clause + Dependent clause.", subTc: "Level 3：主要子句 + 從屬子句（從屬子句不能單獨存在）。" },
+        { type: 'three_types', duration: 4500, subEn: "There are 3 types of dependent clauses.", subTc: "從屬子句分三大類：副詞、形容詞、名詞子句。" },
+        // Adverb Clause
+        { type: 'adv_intro', duration: 3800, subEn: "Type 1: Adverb Clause — tells us WHEN, WHY, HOW.", subTc: "第一類：副詞子句——說明時間、原因或方式。" },
+        { type: 'adv_example', duration: 6500, main: "I stayed home", dep: "because it rained", depLabel: "Adverb Clause · reason", typeText: "Adverb Clause — 'because' answers WHY", subEn: "I stayed home because it rained.", subTc: "我待在家，因為下雨了。" },
+        { type: 'adv_example2', duration: 5500, main: "Call me", dep: "when you arrive", depLabel: "Adverb Clause · time", typeText: "Common words: when / because / if / although", subEn: "Call me when you arrive.", subTc: "你到了就打電話給我。" },
+        // Adjective Clause
+        { type: 'adj_intro', duration: 3800, subEn: "Type 2: Adjective Clause — describes a noun.", subTc: "第二類：形容詞子句——修飾名詞。" },
+        { type: 'adj_example', duration: 7000, main1: "The boy", dep: "who is running", main2: "is my friend", typeText: "Adjective Clause — 'who is running' describes 'The boy'", subEn: "The boy who is running is my friend.", subTc: "那個正在跑步的男孩是我的朋友。" },
+        { type: 'adj_example2', duration: 5500, main1: "The book", dep: "that you gave me", main2: "is fascinating", typeText: "Common words: who / which / that / whom", subEn: "The book that you gave me is fascinating.", subTc: "你給我的那本書非常迷人。" },
+        // Noun Clause
+        { type: 'noun_intro', duration: 3800, subEn: "Type 3: Noun Clause — the whole clause acts as a noun.", subTc: "第三類：名詞子句——整個子句就是一個名詞。" },
+        { type: 'noun_example', duration: 7000, main: "I know", dep: "what you did", typeText: "Noun Clause — 'what you did' fills the object position", subEn: "I know what you did.", subTc: "我知道你做了什麼。" },
+        { type: 'noun_example2', duration: 5500, main: "She believes", dep: "that honesty is important", typeText: "Common words: that / what / whether / if", subEn: "She believes that honesty is important.", subTc: "她相信誠實很重要。" },
+        // Comma Rules
+        { type: 'comma_first', duration: 5500, depFirst: "Because it rained,", mainAfter: "I stayed home.", typeText: "⚠️ Dependent clause first → comma needed", subEn: "Dependent clause first? Add a comma.", subTc: "從屬子句在前面時，需要加逗號。" },
+        { type: 'comma_second', duration: 5500, mainFirst: "I stayed home", depAfter: "because it rained.", typeText: "✅ Main clause first → no comma needed", subEn: "Main clause first? No comma needed!", subTc: "主要子句在前面時，不需要加逗號。" },
+        { type: 'outro', duration: 5000, title: "Well Done!", subtitle: "Complex Sentences Mastered", subEn: "You've mastered all three types of dependent clauses!", subTc: "你已掌握三種從屬子句的用法！恭喜！" }
+    ];
+
+    // 全局状态
+    let isPlaying = false;
+    let isPaused = false;
+    let pauseResolve = null;
+    let pausePromise = null;
+    let currentStepIndex = 0;
+    let lessonAbort = false;
+    let totalDuration = 0;
+    let elapsedTime = 0;
+    let progressInterval = null;
+
+    // DOM 元素
+    const startScreen = document.getElementById('startScreen');
+    const mainContent = document.getElementById('mainContent');
+    const subtitleArea = document.getElementById('subtitleArea');
+    const resultScreen = document.getElementById('resultScreen');
+    const progressFill = document.getElementById('progressFill');
+    const dragHandle = document.getElementById('dragHandle');
+    const progressRail = document.getElementById('progressRail');
+    const progressText = document.getElementById('progressText');
+    const stepCounter = document.getElementById('stepCounter');
+    const titleArea = document.getElementById('titleArea');
+    const mainTitle = document.getElementById('mainTitle');
+    const subBadge = document.getElementById('subBadge');
+    const sceneRow = document.getElementById('sceneRow');
+    const typeTag = document.getElementById('typeTag');
+    const subEn = document.getElementById('subEn');
+    const subTc = document.getElementById('subTc');
+    const pauseIndicator = document.getElementById('pauseIndicator');
+    const toast = document.getElementById('toastMsg');
+    const levelStrip = document.getElementById('levelStrip');
+
+    function showToast(msg) { toast.textContent = msg; toast.style.opacity = '1'; setTimeout(() => { toast.style.opacity = '0'; }, 1500); }
+
+    // 音频模块
+    const AudioFX = (() => {
+        let ctx = null, muted = true, bgmTimer = null;
+        function getCtx() { if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)(); return ctx; }
+        function tone(f, type, dur, vol, delay=0) { if (muted) return; const c = getCtx(); const osc = c.createOscillator(), g = c.createGain(); const t = c.currentTime+delay; osc.type=type; osc.frequency.setValueAtTime(f,t); g.gain.setValueAtTime(vol,t); g.gain.exponentialRampToValueAtTime(0.001,t+dur); osc.connect(g); g.connect(c.destination); osc.start(t); osc.stop(t+dur); }
+        return {
+            get muted() { return muted; },
+            toggle() { if(!ctx) ctx=new AudioContext(); muted=!muted; if(!muted){ ctx.resume(); this.bgm(); } else { ctx.suspend(); clearInterval(bgmTimer); } return muted; },
+            pop() { tone(500+Math.random()*150,'triangle',0.1,0.04); },
+            chord() { tone(392,'sine',0.8,0.035); tone(523.25,'sine',0.8,0.035,0.08); },
+            success() { tone(523.25,'sine',0.2,0.05); tone(659.25,'sine',0.4,0.05,0.15); },
+            bgm() { clearInterval(bgmTimer); const notes=[196,246.94,293.66,349.23]; let i=0; bgmTimer=setInterval(()=>{ if(!muted) tone(notes[i=(i+1)%notes.length],'sine',1.4,0.01); },720); },
+            suspend() { if(ctx) ctx.suspend(); clearInterval(bgmTimer); },
+            resume() { if(!muted && ctx) { ctx.resume(); this.bgm(); } }
+        };
+    })();
+
+    // 暂停/恢复
+    function setPaused(paused) {
+        if (!isPlaying) return;
+        if (paused === isPaused) return;
+        isPaused = paused;
+        const stage = document.getElementById('stage');
+        if (isPaused) {
+            stage.classList.add('paused');
+            pauseIndicator.innerHTML = '<span>▶️</span> <span>Click bar to resume</span>';
+            AudioFX.suspend();
+            pausePromise = new Promise(r => { pauseResolve = r; });
+            showToast('⏸ Lesson paused — click progress bar to resume');
+        } else {
+            stage.classList.remove('paused');
+            pauseIndicator.innerHTML = '<span>⏸️</span> <span>Click bar to pause</span>';
+            if (pauseResolve) { pauseResolve(); pauseResolve = null; pausePromise = null; }
+            AudioFX.resume();
+            showToast('▶ Resumed');
+        }
     }
-    return {
-        get muted() { return muted; },
-        toggle() {
-            if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
-            muted = !muted;
-            if (!muted) { ctx.resume(); this.bgm(); } else { ctx.suspend(); clearInterval(bgmTimer); }
-            return muted;
-        },
-        pop()     { tone(380 + Math.random()*140, 'triangle', 0.12, 0.04); },
-        whoosh()  { tone(200,'triangle',0.4,0.04); tone(80,'triangle',0.4,0.02,0.15); },
-        ding()    { tone(880,'sine',0.8,0.05); tone(1100,'sine',0.5,0.03,0.1); },
-        chord()   { tone(392,'sine',1.0,0.04); tone(493.88,'sine',1.0,0.04,0.06); tone(587.33,'sine',1.0,0.04,0.13); },
-        success() { tone(523.25,'sine',0.2,0.05); tone(659.25,'sine',0.35,0.05,0.15); tone(783.99,'sine',0.5,0.05,0.3); },
-        bgm() {
-            clearInterval(bgmTimer);
-            const notes = [220,261.63,329.63,392,329.63,261.63]; let i = 0;
-            bgmTimer = setInterval(() => { if(!muted) tone(notes[i=(i+1)%notes.length],'sine',1.8,0.01); }, 750);
-        },
-        suspend() { if(ctx) ctx.suspend(); clearInterval(bgmTimer); },
-        resume()  { if(!muted && ctx) { ctx.resume(); this.bgm(); } }
-    };
-})();
+    function togglePause() { if (isPlaying) setPaused(!isPaused); }
+    async function waitWhilePaused() { while (isPaused && pausePromise) await pausePromise; }
 
-/* ══════════════════════════════════════════════
-   PAUSE SYSTEM
-══════════════════════════════════════════════ */
-let isPaused = false, pauseResolve = null, pausePromise = null;
-
-function togglePause() {
-    isPaused = !isPaused;
-    const banner = document.getElementById('pauseBanner');
-    const stageEl = document.getElementById('stage');
-    const btn = document.getElementById('pauseBtn');
-    if (isPaused) {
-        banner.classList.add('active'); stageEl.classList.add('paused');
-        btn.innerHTML = '▶️'; Audio.suspend();
-        pausePromise = new Promise(r => { pauseResolve = r; });
-    } else {
-        banner.classList.remove('active'); stageEl.classList.remove('paused');
-        btn.innerHTML = '⏸️'; Audio.resume();
-        if (pauseResolve) { pauseResolve(); pauseResolve = null; }
+    async function sleep(ms) {
+        const deadline = Date.now() + ms;
+        while (Date.now() < deadline) {
+            if (lessonAbort) throw new Error('abort');
+            await waitWhilePaused();
+            const left = deadline - Date.now();
+            if (left <= 0) break;
+            await new Promise(r => setTimeout(r, Math.min(80, left)));
+        }
     }
-}
 
-async function sleep(ms) {
-    const deadline = Date.now() + ms;
-    while (Date.now() < deadline) {
-        if (isPaused) await pausePromise;
-        const left = deadline - Date.now();
-        if (left <= 0) break;
-        await new Promise(r => setTimeout(r, Math.min(80, left)));
+    function updateProgressUI() {
+        if (totalDuration === 0) return;
+        const percent = Math.min(100, (elapsedTime / totalDuration) * 100);
+        progressFill.style.width = `${percent}%`;
+        dragHandle.style.left = `${percent}%`;
+        const stepNum = Math.min(STEPS.length, Math.floor((elapsedTime / totalDuration) * STEPS.length) + 1);
+        progressText.textContent = `Step ${stepNum}/${STEPS.length}`;
     }
-}
 
-/* ══════════════════════════════════════════════
-   HELPERS
-══════════════════════════════════════════════ */
-const $ = id => document.getElementById(id);
-
-function setAmb(c1, c2) { $('amb1').style.background = c1; $('amb2').style.background = c2; }
-function setStep(t) { $('stepLabel').textContent = t; }
-function setSubs(en, tc) {
-    const e = $('subEn'), t = $('subTc');
-    e.classList.remove('show'); t.classList.remove('show');
-    setTimeout(() => { e.textContent = en; t.textContent = tc; e.classList.add('show'); t.classList.add('show'); }, 320);
-}
-function setTypeTag(text, color) {
-    const el = $('type-tag');
-    el.classList.remove('show');
-    if (text) {
-        setTimeout(() => {
-            el.textContent = text;
-            el.style.color = color || 'var(--sub)';
-            el.style.borderColor = color ? color + '55' : 'var(--border)';
-            el.classList.add('show');
-        }, 400);
+    function clearSceneRow() { sceneRow.innerHTML = ''; sceneRow.classList.remove('show'); }
+    function hideTypeTag() { typeTag.classList.remove('show'); }
+    function showTypeTag(text, color = 'var(--c-main)') { typeTag.textContent = text; typeTag.style.background = `${color}15`; typeTag.classList.add('show'); }
+    function setSubs(en, tc) {
+        subEn.classList.remove('show'); subTc.classList.remove('show');
+        setTimeout(() => { subEn.textContent = en; subTc.textContent = tc; subEn.classList.add('show'); subTc.classList.add('show'); }, 300);
     }
-}
-function hideTitle() {
-    const tg = $('title-group');
-    tg.classList.remove('show'); tg.style.display = 'none';
-}
-function showTitle() {
-    const tg = $('title-group');
-    tg.style.display = 'block';
-    requestAnimationFrame(() => tg.classList.add('show'));
-}
+    function hideTitle() { titleArea.classList.remove('show'); }
+    function showTitle(title, subtitle) { mainTitle.textContent = title; subBadge.textContent = subtitle; titleArea.classList.add('show'); }
 
-/* Build a clause block element */
-function mkBlock(text, label, cls, extra = '') {
-    const d = document.createElement('div');
-    d.className = `clause-block ${cls} ${extra}`;
-    d.innerHTML = `<span class="blk-label">${label}</span>${text}`;
-    return d;
-}
-
-/* Animate a row of blocks in sequence */
-async function showRow(items, rowEl) {
-    rowEl.innerHTML = '';
-    rowEl.classList.remove('show');
-    await sleep(200);
-    rowEl.classList.add('show');
-    for (const item of items) {
-        rowEl.appendChild(item.el);
-        await sleep(80);
-        requestAnimationFrame(() => item.el.classList.add('show'));
-        Audio.pop();
-        await sleep(item.delay || 450);
+    async function showBlocks(blocks, typeText = null) {
+        clearSceneRow(); hideTypeTag(); if (typeText) showTypeTag(typeText);
+        sceneRow.classList.add('show');
+        for (let i = 0; i < blocks.length; i++) {
+            sceneRow.appendChild(blocks[i].el);
+            await sleep(80);
+            requestAnimationFrame(() => blocks[i].el.classList.add('show'));
+            AudioFX.pop();
+            await sleep(blocks[i].delay || 450);
+        }
     }
-}
 
-function clearRow() {
-    const r = $('sceneRow');
-    r.innerHTML = ''; r.classList.remove('show');
-}
+    function createBlock(text, label, blockClass, extraClass = '') {
+        const div = document.createElement('div');
+        div.className = `clause-block ${blockClass} ${extraClass}`;
+        div.innerHTML = `<span class="blk-label">${label}</span>${text}`;
+        return div;
+    }
 
-/* ══════════════════════════════════════════════
-   TIMELINE
-══════════════════════════════════════════════ */
-const TIMELINE = [
-    // 0 ─ Intro title
-    { dur: 4000, label: 'Welcome', amb: ['#7EC8E3','#FFB3C6'], fn: async () => {
-        showTitle();
-        Audio.chord();
-        setSubs("Welcome to Level 3 Grammar.", "歡迎來到第三級文法。");
-    }},
-
-    // 1 ─ The 3 levels recap
-    { dur: 5500, label: 'Recap', amb: ['#7EC8E3','#FFD166'], fn: async () => {
-        hideTitle();
-        clearRow();
-        const strip = $('level-strip');
-        strip.style.display = 'flex';
-        await sleep(200);
-        strip.classList.add('show');
-        const rows = ['lvl1','lvl2','lvl3'];
+    // 显示等级对比条
+    async function showLevelStrip() {
+        levelStrip.classList.add('show');
+        const rows = ['lvl1', 'lvl2', 'lvl3'];
         for (let i = 0; i < rows.length; i++) {
             await sleep(320);
-            $(rows[i]).classList.add('show');
-            Audio.pop();
+            document.getElementById(rows[i]).classList.add('show');
+            AudioFX.pop();
         }
-        setSubs("Let's review all three sentence levels.", "先回顧三個句型等級。");
-    }},
-
-    // 2 ─ Level 1 example
-    { dur: 5000, label: 'Level 1 Review', amb: ['#7EC8E3','#6EE7B7'], fn: async () => {
-        $('level-strip').classList.remove('show');
-        await sleep(400); $('level-strip').style.display = 'none';
-        const b = mkBlock('I like music', 'Simple Sentence', 'blk-main');
-        await showRow([{ el: b, delay: 0 }], $('sceneRow'));
-        setTypeTag('Level 1 · S + V — one complete idea', 'var(--c-main)');
-        setSubs("Level 1: One independent clause. Short and strong.", "Level 1：一個獨立子句。簡短有力。");
-    }},
-
-    // 3 ─ Level 2 example
-    { dur: 5500, label: 'Level 2 Review', amb: ['#FFD166','#7EC8E3'], fn: async () => {
-        setTypeTag('');
-        clearRow();
-        const b1   = mkBlock('I sing', '句子 1', 'blk-main');
-        const conj = mkBlock(', but', 'FANBOYS', 'blk-conj blk-dep clause-block');
-        const b2   = mkBlock('she dances', '句子 2', 'blk-main');
-        await showRow([
-            { el: b1, delay: 450 },
-            { el: conj, delay: 400 },
-            { el: b2, delay: 0 }
-        ], $('sceneRow'));
-        setTypeTag('Level 2 · Two independent clauses joined by FANBOYS', 'var(--c-conj)');
-        setSubs("Level 2: Two equal sentences joined by a conjunction.", "Level 2：兩個對等句子，由連接詞黏在一起。");
-    }},
-
-    // 4 ─ Level 3 intro
-    { dur: 4500, label: 'Level 3 Intro', amb: ['#FFB3C6','#C9B1FF'], fn: async () => {
-        setTypeTag('');
-        clearRow();
-        const main = mkBlock('Main Clause', '主要子句 (獨立)', 'blk-main');
-        const dep  = mkBlock('Dependent Clause', '從屬子句 (不能單獨存在)', 'blk-dep');
-        await showRow([{ el: main, delay: 500 }, { el: dep, delay: 0 }], $('sceneRow'));
-        setTypeTag('Level 3 · Main + Dependent clause', 'var(--c-dep)');
-        Audio.whoosh();
-        setSubs("Level 3: A main clause + a dependent clause.", "Level 3：主要子句 + 從屬子句（從屬子句不能單獨存在）。");
-    }},
-
-    // 5 ─ 3 types overview
-    { dur: 4500, label: '3 Types', amb: ['#6EE7B7','#C9B1FF'], fn: async () => {
-        setTypeTag('');
-        clearRow();
-        const a = mkBlock('Adverb\nClause', '副詞子句', 'blk-dep dep-adv');
-        const b = mkBlock('Adjective\nClause', '形容詞子句', 'blk-dep dep-adj');
-        const n = mkBlock('Noun\nClause', '名詞子句', 'blk-dep dep-noun');
-        a.style.whiteSpace = 'pre'; b.style.whiteSpace = 'pre'; n.style.whiteSpace = 'pre';
-        await showRow([{ el: a, delay: 350 }, { el: b, delay: 350 }, { el: n, delay: 0 }], $('sceneRow'));
-        setSubs("There are 3 types of dependent clause.", "從屬子句分三大類。");
-    }},
-
-    // 6 ─ Adverb Clause intro
-    { dur: 3800, label: 'Type 1 · Adverb', amb: ['#6EE7B7','#7EC8E3'], fn: async () => {
-        setTypeTag('');
-        clearRow();
-        setSubs("Type 1: Adverb Clause — tells us WHEN, WHY, or HOW.", "第一類：副詞子句——說明時間、原因或方式。");
-        Audio.whoosh();
-    }},
-
-    // 7 ─ Adverb Clause example
-    { dur: 6500, label: 'Adverb Clause', amb: ['#6EE7B7','#7EC8E3'], fn: async () => {
-        const main = mkBlock('I stayed home', '主要子句 · 結果', 'blk-main');
-        const dep  = mkBlock('because it rained', '副詞子句 · 原因', 'blk-dep dep-adv');
-        // rain effect inside dep block after show
-        await showRow([{ el: main, delay: 550 }, { el: dep, delay: 0 }], $('sceneRow'));
-        // add rain drops
-        for (let i = 0; i < 12; i++) {
-            const d = document.createElement('div');
-            d.className = 'rain-drop';
-            d.style.left = (Math.random() * 90) + '%';
-            d.style.animationDelay = (Math.random() * 0.9) + 's';
-            dep.appendChild(d);
-        }
-        Audio.ding();
-        setTypeTag('Adverb Clause · "because" answers WHY → modifies the verb', 'var(--c-adv)');
-        setSubs("I stayed home because it rained.", "我待在家，因為下雨了。（「因為」修飾動詞「待在家」）");
-    }},
-
-    // 8 ─ more adverb examples
-    { dur: 5500, label: 'Adverb Clause', amb: ['#6EE7B7','#7EC8E3'], fn: async () => {
-        setTypeTag('');
-        clearRow();
-        const main = mkBlock('Call me', '主要子句', 'blk-main');
-        const dep  = mkBlock('when you arrive', '副詞子句 · 時間', 'blk-dep dep-adv');
-        await showRow([{ el: main, delay: 500 }, { el: dep, delay: 0 }], $('sceneRow'));
-        setTypeTag('Common words: when / because / if / although / before / after', 'var(--c-adv)');
-        setSubs("Call me when you arrive.", "你到了就打電話給我。（「當你到達時」是副詞子句）");
-    }},
-
-    // 9 ─ Adjective Clause intro
-    { dur: 3800, label: 'Type 2 · Adjective', amb: ['#C9B1FF','#7EC8E3'], fn: async () => {
-        setTypeTag('');
-        clearRow();
-        setSubs("Type 2: Adjective Clause — describes a noun.", "第二類：形容詞子句——用來修飾名詞。");
-        Audio.whoosh();
-    }},
-
-    // 10 ─ Adjective Clause example
-    { dur: 7000, label: 'Adjective Clause', amb: ['#C9B1FF','#7EC8E3'], fn: async () => {
-        const n1  = mkBlock('The boy', '名詞', 'blk-main');
-        const dep = mkBlock('who is running', '形容詞子句', 'blk-dep dep-adj');
-        const n2  = mkBlock('is my friend', '動詞 + 補語', 'blk-main');
-        await showRow([{ el: n1, delay: 500 }, { el: dep, delay: 500 }, { el: n2, delay: 0 }], $('sceneRow'));
-        // spotlight ring
-        const ring = document.createElement('div');
-        ring.className = 'spotlight-ring';
-        dep.style.position = 'relative'; dep.appendChild(ring);
-        Audio.ding();
-        setTypeTag('Adjective Clause · "who is running" describes "The boy"', 'var(--c-adj)');
-        setSubs("The boy who is running is my friend.", "那個正在跑步的男孩是我的朋友。（子句修飾名詞 boy）");
-    }},
-
-    // 11 ─ more adjective examples
-    { dur: 5500, label: 'Adjective Clause', amb: ['#C9B1FF','#FFB3C6'], fn: async () => {
-        setTypeTag('');
-        clearRow();
-        const n1  = mkBlock('The book', '名詞', 'blk-main');
-        const dep = mkBlock('that you gave me', '形容詞子句', 'blk-dep dep-adj');
-        const n2  = mkBlock('is fascinating', '動詞 + 補語', 'blk-main');
-        await showRow([{ el: n1, delay: 500 }, { el: dep, delay: 500 }, { el: n2, delay: 0 }], $('sceneRow'));
-        setTypeTag('Common words: who / which / that / whom / whose', 'var(--c-adj)');
-        setSubs("The book that you gave me is fascinating.", "你給我的那本書非常迷人。（that 引導形容詞子句）");
-    }},
-
-    // 12 ─ Noun Clause intro
-    { dur: 3800, label: 'Type 3 · Noun', amb: ['#FFA552','#FFD166'], fn: async () => {
-        setTypeTag('');
-        clearRow();
-        setSubs("Type 3: Noun Clause — the whole clause IS a noun.", "第三類：名詞子句——整個子句就是一個名詞。");
-        Audio.whoosh();
-    }},
-
-    // 13 ─ Noun Clause example
-    { dur: 7000, label: 'Noun Clause', amb: ['#FFA552','#C9B1FF'], fn: async () => {
-        const main = mkBlock('I know', '主詞 + 動詞', 'blk-main');
-        // slot then replace
-        const slot = mkBlock('???', '受詞位置', 'blk-dep dep-noun noun-slot');
-        await showRow([{ el: main, delay: 600 }, { el: slot, delay: 0 }], $('sceneRow'));
-        await sleep(1400);
-        // swap slot for real clause
-        const row = $('sceneRow');
-        slot.classList.remove('show');
-        await sleep(350);
-        row.removeChild(slot);
-        const nc = mkBlock('what you did', '名詞子句 · 整個當受詞', 'blk-dep dep-noun');
-        row.appendChild(nc);
-        await sleep(60);
-        nc.classList.add('show');
-        Audio.ding();
-        setTypeTag('Noun Clause · "what you did" fills the Object position', 'var(--c-noun)');
-        setSubs("I know what you did.", "我知道你做了什麼。（整個「what you did」是受詞）");
-    }},
-
-    // 14 ─ more noun clause
-    { dur: 5500, label: 'Noun Clause', amb: ['#FFA552','#FFD166'], fn: async () => {
-        setTypeTag('');
-        clearRow();
-        const main = mkBlock('She believes', '主詞 + 動詞', 'blk-main');
-        const nc   = mkBlock('that honesty is important', '名詞子句 · 受詞', 'blk-dep dep-noun');
-        await showRow([{ el: main, delay: 550 }, { el: nc, delay: 0 }], $('sceneRow'));
-        setTypeTag('Common words: that / what / whether / if / who / how', 'var(--c-noun)');
-        setSubs("She believes that honesty is important.", "她相信誠實很重要。（that 子句是受詞）");
-    }},
-
-    // 15 ─ Comma rule
-    { dur: 6000, label: 'Comma Rule', amb: ['#FFB3C6','#FFD166'], fn: async () => {
-        setTypeTag('');
-        clearRow();
-        const r1 = mkBlock('Because it rained,', '從屬子句在前 → 加逗號', 'blk-dep dep-adv');
-        const r2 = mkBlock('I stayed home.', '主要子句在後', 'blk-main');
-        await showRow([{ el: r1, delay: 600 }, { el: r2, delay: 0 }], $('sceneRow'));
-        setTypeTag('⚠️ Comma Rule: Dependent first → comma needed', 'var(--c-conj)');
-        setSubs("Dependent clause first? Add a comma before the main clause.", "從屬子句在前面時，需要加逗號。");
-    }},
-
-    // 16 ─ No comma rule
-    { dur: 5500, label: 'Comma Rule', amb: ['#7EC8E3','#6EE7B7'], fn: async () => {
-        setTypeTag('');
-        clearRow();
-        const m = mkBlock('I stayed home', '主要子句在前 → 不加逗號', 'blk-main');
-        const d = mkBlock('because it rained.', '從屬子句在後', 'blk-dep dep-adv');
-        await showRow([{ el: m, delay: 600 }, { el: d, delay: 0 }], $('sceneRow'));
-        setTypeTag('✅ Main clause first → no comma needed', 'var(--c-adv)');
-        setSubs("Main clause first? No comma needed!", "主要子句在前面時，不需要加逗號。");
-    }},
-
-    // 17 ─ Outro
-    { dur: 6000, label: 'Done! 🎉', amb: ['#7EC8E3','#C9B1FF'], fn: async () => {
-        setTypeTag('');
-        clearRow();
-        document.querySelector('.main-title').innerHTML = 'You got<br><em>it!</em>';
-        document.querySelector('.level-badge').textContent = 'Complex Sentences ✓';
-        showTitle();
-        Audio.success();
-        setSubs("You've mastered all three types of Complex Sentences!", "你已掌握三種從屬子句的用法！恭喜！");
-    }}
-];
-
-/* ══════════════════════════════════════════════
-   PLAYER
-══════════════════════════════════════════════ */
-async function play() {
-    const total = TIMELINE.reduce((s, t) => s + t.dur, 0);
-    let elapsed = 0;
-    const barTimer = setInterval(() => {
-        if (!isPaused) elapsed += 80;
-        $('progressFill').style.width = `${Math.min((elapsed / total) * 100, 100)}%`;
-        if (elapsed >= total) clearInterval(barTimer);
-    }, 80);
-
-    for (let i = 0; i < TIMELINE.length; i++) {
-        const step = TIMELINE[i];
-        setStep(step.label);
-        if (step.amb) setAmb(step.amb[0], step.amb[1]);
-        await step.fn();
-        await sleep(step.dur - 100);
     }
-}
 
-/* ══════════════════════════════════════════════
-   INIT
-══════════════════════════════════════════════ */
-document.getElementById('pauseBtn').onclick = togglePause;
-document.getElementById('musicBtn').onclick = () => {
-    const m = Audio.toggle();
-    $('musicBtn').innerHTML = m ? '🔇' : '🔊';
-};
+    // 课程主逻辑
+    async function startLessonAtStep(startStep = 0) {
+        isPlaying = true;
+        lessonAbort = false;
+        isPaused = false;
+        if (pauseResolve) { pauseResolve(); pauseResolve = null; }
+        document.getElementById('stage').classList.remove('paused');
+        pauseIndicator.innerHTML = '<span>⏸️</span> <span>Click bar to pause</span>';
+        
+        totalDuration = STEPS.reduce((sum, s) => sum + s.duration, 0);
+        elapsedTime = STEPS.slice(0, startStep).reduce((sum, s) => sum + s.duration, 0);
+        
+        if (progressInterval) clearInterval(progressInterval);
+        progressInterval = setInterval(() => {
+            if (!isPlaying) return;
+            if (!isPaused && !lessonAbort) {
+                elapsedTime += 80;
+                if (elapsedTime >= totalDuration) elapsedTime = totalDuration;
+                updateProgressUI();
+            }
+        }, 80);
+        
+        try {
+            for (let i = startStep; i < STEPS.length; i++) {
+                if (lessonAbort) break;
+                currentStepIndex = i;
+                const step = STEPS[i];
+                stepCounter.textContent = step.type === 'adv_intro' ? 'Adverb Clause' : (step.type === 'adj_intro' ? 'Adjective Clause' : (step.type === 'noun_intro' ? 'Noun Clause' : 'Complex Sentences'));
+                
+                if (step.type === 'intro') {
+                    hideTitle(); clearSceneRow(); levelStrip.classList.remove('show');
+                    await sleep(200);
+                    showTitle(step.title, step.subtitle);
+                    setSubs(step.subEn, step.subTc);
+                    AudioFX.chord();
+                    await sleep(step.duration);
+                }
+                else if (step.type === 'levels') {
+                    hideTitle(); clearSceneRow(); hideTypeTag();
+                    await sleep(200);
+                    await showLevelStrip();
+                    setSubs(step.subEn, step.subTc);
+                    await sleep(step.duration);
+                }
+                else if (step.type === 'level1') {
+                    levelStrip.classList.remove('show');
+                    clearSceneRow(); hideTypeTag();
+                    await sleep(200);
+                    const block = createBlock(step.main, step.label1, 'block-main');
+                    await showBlocks([{ el: block, delay: 0 }], null);
+                    setSubs(step.subEn, step.subTc);
+                    await sleep(step.duration);
+                }
+                else if (step.type === 'level2') {
+                    clearSceneRow(); hideTypeTag();
+                    const b1 = createBlock(step.main1, 'Clause 1', 'block-main');
+                    const conj = createBlock(step.conj.toUpperCase(), 'FANBOYS', 'block-conj');
+                    const b2 = createBlock(step.main2, 'Clause 2', 'block-main');
+                    await showBlocks([{ el: b1, delay: 500 }, { el: conj, delay: 400 }, { el: b2, delay: 0 }], null);
+                    setSubs(step.subEn, step.subTc);
+                    await sleep(step.duration);
+                }
+                else if (step.type === 'level3_intro') {
+                    clearSceneRow(); hideTypeTag();
+                    const main = createBlock('Main Clause', '主要子句 (獨立)', 'block-main');
+                    const dep = createBlock('Dependent Clause', '從屬子句 (不能單獨存在)', 'block-dep');
+                    await showBlocks([{ el: main, delay: 500 }, { el: dep, delay: 0 }], null);
+                    setSubs(step.subEn, step.subTc);
+                    await sleep(step.duration);
+                }
+                else if (step.type === 'three_types') {
+                    clearSceneRow(); hideTypeTag();
+                    const adv = createBlock('Adverb Clause', '副詞子句', 'block-dep dep-adv');
+                    const adj = createBlock('Adjective Clause', '形容詞子句', 'block-dep dep-adj');
+                    const noun = createBlock('Noun Clause', '名詞子句', 'block-dep dep-noun');
+                    await showBlocks([{ el: adv, delay: 350 }, { el: adj, delay: 350 }, { el: noun, delay: 0 }], null);
+                    setSubs(step.subEn, step.subTc);
+                    await sleep(step.duration);
+                }
+                else if (step.type === 'adv_intro') {
+                    clearSceneRow(); hideTypeTag();
+                    setSubs(step.subEn, step.subTc);
+                    AudioFX.whoosh?.() || AudioFX.chord();
+                    await sleep(step.duration);
+                }
+                else if (step.type === 'adv_example' || step.type === 'adv_example2') {
+                    clearSceneRow();
+                    const main = createBlock(step.main, 'Main Clause', 'block-main');
+                    const dep = createBlock(step.dep, step.depLabel || 'Adverb Clause', 'block-dep dep-adv');
+                    await showBlocks([{ el: main, delay: 550 }, { el: dep, delay: 0 }], step.typeText);
+                    setSubs(step.subEn, step.subTc);
+                    await sleep(step.duration);
+                }
+                else if (step.type === 'adj_intro') {
+                    clearSceneRow(); hideTypeTag();
+                    setSubs(step.subEn, step.subTc);
+                    await sleep(step.duration);
+                }
+                else if (step.type === 'adj_example' || step.type === 'adj_example2') {
+                    clearSceneRow();
+                    const b1 = createBlock(step.main1, 'Noun', 'block-main');
+                    const dep = createBlock(step.dep, 'Adjective Clause', 'block-dep dep-adj');
+                    const b2 = createBlock(step.main2, 'Predicate', 'block-main');
+                    await showBlocks([{ el: b1, delay: 500 }, { el: dep, delay: 500 }, { el: b2, delay: 0 }], step.typeText);
+                    setSubs(step.subEn, step.subTc);
+                    await sleep(step.duration);
+                }
+                else if (step.type === 'noun_intro') {
+                    clearSceneRow(); hideTypeTag();
+                    setSubs(step.subEn, step.subTc);
+                    await sleep(step.duration);
+                }
+                else if (step.type === 'noun_example' || step.type === 'noun_example2') {
+                    clearSceneRow();
+                    const main = createBlock(step.main, 'Subject + Verb', 'block-main');
+                    const dep = createBlock(step.dep, 'Noun Clause', 'block-dep dep-noun');
+                    await showBlocks([{ el: main, delay: 550 }, { el: dep, delay: 0 }], step.typeText);
+                    setSubs(step.subEn, step.subTc);
+                    await sleep(step.duration);
+                }
+                else if (step.type === 'comma_first') {
+                    clearSceneRow();
+                    const dep = createBlock(step.depFirst, 'Dependent Clause First', 'block-dep dep-adv');
+                    const main = createBlock(step.mainAfter, 'Main Clause', 'block-main');
+                    await showBlocks([{ el: dep, delay: 500 }, { el: main, delay: 0 }], step.typeText);
+                    setSubs(step.subEn, step.subTc);
+                    await sleep(step.duration);
+                }
+                else if (step.type === 'comma_second') {
+                    clearSceneRow();
+                    const main = createBlock(step.mainFirst, 'Main Clause First', 'block-main');
+                    const dep = createBlock(step.depAfter, 'Dependent Clause', 'block-dep dep-adv');
+                    await showBlocks([{ el: main, delay: 500 }, { el: dep, delay: 0 }], step.typeText);
+                    setSubs(step.subEn, step.subTc);
+                    await sleep(step.duration);
+                }
+                else if (step.type === 'outro') {
+                    hideTitle(); clearSceneRow(); levelStrip.classList.remove('show'); hideTypeTag();
+                    await sleep(200);
+                    showTitle(step.title, step.subtitle);
+                    setSubs(step.subEn, step.subTc);
+                    AudioFX.success();
+                    await sleep(step.duration);
+                }
+            }
+            if (!lessonAbort) {
+                if (progressInterval) clearInterval(progressInterval);
+                isPlaying = false;
+                mainContent.style.display = 'none';
+                subtitleArea.style.display = 'none';
+                resultScreen.classList.add('active');
+            }
+        } catch (e) { if (e.message !== 'abort') console.warn(e); }
+        finally { if (progressInterval && lessonAbort) clearInterval(progressInterval); }
+    }
 
-window.onload = () => {
-    setTimeout(() => {
-        Audio.toggle(); $('musicBtn').innerHTML = '🔊';
-        play();
-    }, 400);
-};
+    // 进度条交互
+    function setupProgressBar() {
+        let isDragging = false;
+        let dragTargetStep = null;
+        let dragStartTime = 0;
+        
+        const getPercent = (e) => {
+            const rect = progressRail.getBoundingClientRect();
+            let clientX = e.clientX;
+            if (e.touches) clientX = e.touches[0].clientX;
+            return Math.min(1, Math.max(0, (clientX - rect.left) / rect.width)) * 100;
+        };
+        const onMove = (e) => {
+            if (!isDragging || !isPlaying) return;
+            e.preventDefault();
+            const percent = getPercent(e);
+            progressFill.style.width = `${percent}%`;
+            dragHandle.style.left = `${percent}%`;
+            dragTargetStep = Math.min(STEPS.length - 1, Math.max(0, Math.floor((percent / 100) * STEPS.length)));
+            progressText.textContent = `Seeking to step ${dragTargetStep + 1}/${STEPS.length}`;
+        };
+        const onEnd = () => {
+            if (isDragging && isPlaying && dragTargetStep !== null && dragTargetStep !== currentStepIndex) {
+                const wasPaused = isPaused;
+                if (wasPaused) setPaused(false);
+                if (!lessonAbort) {
+                    lessonAbort = true;
+                    setTimeout(() => startLessonAtStep(dragTargetStep), 100);
+                }
+            }
+            isDragging = false;
+            dragTargetStep = null;
+        };
+        progressRail.addEventListener('mousedown', (e) => { if (!isPlaying) return; isDragging = true; dragStartTime = Date.now(); onMove(e); document.addEventListener('mousemove', onMove); document.addEventListener('mouseup', onEnd); e.preventDefault(); });
+        progressRail.addEventListener('touchstart', (e) => { if (!isPlaying) return; isDragging = true; dragStartTime = Date.now(); onMove(e); document.addEventListener('touchmove', onMove); document.addEventListener('touchend', onEnd); e.preventDefault(); });
+        progressRail.addEventListener('click', (e) => { if (Date.now() - dragStartTime < 200 && dragStartTime > 0) { dragStartTime = 0; return; } if (!isPlaying) return; if (isDragging) return; togglePause(); });
+        pauseIndicator.addEventListener('click', (e) => { e.stopPropagation(); togglePause(); });
+    }
 
-let lastT = 0;
-document.addEventListener('touchend', e => { const n = Date.now(); if (n - lastT < 300) e.preventDefault(); lastT = n; }, false);
-document.addEventListener('touchstart', e => { if (e.touches.length > 1) e.preventDefault(); }, { passive: false });
+    // 构建开始画面概览
+    function buildOverview() {
+        const container = document.getElementById('typesOverview');
+        container.innerHTML = `
+            <div class="overview-card"><div class="overview-icon">⏰</div><div class="overview-title">Adverb Clause</div><div class="overview-ex">because / when / if</div></div>
+            <div class="overview-card"><div class="overview-icon">📝</div><div class="overview-title">Adjective Clause</div><div class="overview-ex">who / which / that</div></div>
+            <div class="overview-card"><div class="overview-icon">🔤</div><div class="overview-title">Noun Clause</div><div class="overview-ex">what / that / whether</div></div>
+        `;
+    }
+    buildOverview();
+
+    async function startLesson() {
+        startScreen.classList.remove('active');
+        mainContent.style.display = 'flex';
+        subtitleArea.style.display = 'block';
+        resultScreen.classList.remove('active');
+        document.getElementById('stage').classList.remove('paused');
+        if (pauseResolve) { pauseResolve(); pauseResolve = null; }
+        isPaused = false;
+        lessonAbort = false;
+        await startLessonAtStep(0);
+    }
+    
+    function resetToStart() {
+        if (isPlaying) { lessonAbort = true; isPlaying = false; }
+        if (pauseResolve) { pauseResolve(); pauseResolve = null; }
+        isPaused = false;
+        if (progressInterval) clearInterval(progressInterval);
+        document.getElementById('stage').classList.remove('paused');
+        mainContent.style.display = 'none';
+        subtitleArea.style.display = 'none';
+        resultScreen.classList.remove('active');
+        startScreen.classList.add('active');
+        progressFill.style.width = '0%';
+        dragHandle.style.left = '0%';
+        progressText.textContent = 'Lesson Progress';
+        stepCounter.textContent = 'Complex Sentences';
+        pauseIndicator.innerHTML = '<span>⏸️</span> <span>Click bar to pause</span>';
+        AudioFX.suspend();
+        if (!AudioFX.muted) AudioFX.resume();
+    }
+
+    document.getElementById('musicBtn').onclick = () => { const m = AudioFX.toggle(); document.getElementById('musicBtn').innerHTML = m ? '🔇' : '🔊'; };
+    document.getElementById('startLessonBtn').onclick = startLesson;
+    document.getElementById('restartBtn').onclick = () => { resetToStart(); startLesson(); };
+    document.getElementById('backStartBtn').onclick = resetToStart;
+    setupProgressBar();
+    
+    window.onload = () => { if (AudioFX.muted) document.getElementById('musicBtn').innerHTML = '🔇'; else document.getElementById('musicBtn').innerHTML = '🔊'; };
 </script>
 </body>
 </html>
