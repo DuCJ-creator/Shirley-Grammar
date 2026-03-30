@@ -3,694 +3,942 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Level 4: Compound-Complex Sentences</title>
+    <title>Happy Grammar: Compound-Complex Sentences</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg:     #12151F;
-            --stage:  #1A1E2E;
-            --card:   #252A3D;
-            --border: rgba(255,255,255,0.07);
-            --text:   #E8ECFF;
-            --sub:    #7B82B0;
-            --dim:    #3C4260;
-
-            /* clause colors — consistent with series */
-            --c-ic:   #7EC8E3;   /* independent clause - sky blue */
-            --c-dc:   #FFB3C6;   /* dependent clause - rose pink */
-            --c-conn: #FFD166;   /* connector/FANBOYS - gold */
-
-            /* difficulty tier colors */
-            --d-low:    #6EE7B7;
-            --d-mid:    #C9B1FF;
-            --d-high:   #FFA552;
-            --d-master: #FFD166;
-
+            --bg: #F0F4FF;
+            --card: #FFFFFF;
+            --shadow: rgba(80, 100, 180, 0.12);
+            --text: #2D3561;
+            --sub: #7B82A8;
+            --accent: #FF6B6B;
+            --green: #52B788;
             --font-en: 'Nunito', sans-serif;
             --font-cn: 'Noto Sans TC', sans-serif;
+
+            --c-ic:   #7EC8E3;
+            --c-dc:   #FFB3C6;
+            --c-conn: #FFD166;
+            --d-low:  #6EE7B7;
+            --d-mid:  #C9B1FF;
+            --d-high: #FFA552;
+            --d-master: #FFD166;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
         body, html {
             width: 100%; height: 100%;
-            background: #0A0C14;
+            background: var(--bg);
             display: flex; justify-content: center; align-items: center;
-            font-family: var(--font-en);
+            font-family: var(--font-cn);
             overflow: hidden;
+            touch-action: manipulation;
         }
 
-        /* ─── Stage (16:9) ───────────────────────── */
         #stage {
-            width: min(100vw, calc(100vh * 16/9));
-            height: min(100vh, calc(100vw * 9/16));
-            background: var(--stage);
-            position: relative; overflow: hidden;
-            border-radius: 12px;
-            box-shadow: 0 30px 80px rgba(0,0,0,0.7);
+            width: min(96vw, 860px);
+            height: min(96vh, 620px);
+            background: var(--card);
+            border-radius: 28px;
+            box-shadow: 0 20px 60px var(--shadow);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
-        /* ─── Ambient Glow ───────────────────────── */
-        .amb {
-            position: absolute; border-radius: 50%;
-            filter: blur(90px); opacity: 0.14;
-            pointer-events: none; z-index: 0;
-            transition: background 1.8s ease;
+        .deco-circle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
         }
-        #amb1 { width: 55%; height: 90%; top: -25%; left: -10%; background: var(--c-ic); }
-        #amb2 { width: 45%; height: 70%; bottom: -20%; right: -8%; background: var(--c-dc); }
+        .dc1 { width: 300px; height: 300px; background: radial-gradient(circle, #E8F4FF 0%, transparent 70%); top: -100px; right: -80px; }
+        .dc2 { width: 200px; height: 200px; background: radial-gradient(circle, #FFF0F0 0%, transparent 70%); bottom: -60px; left: -60px; }
 
-        .scanline {
-            position: absolute; inset: 0; z-index: 1; pointer-events: none;
-            background: repeating-linear-gradient(to bottom, transparent 0px, transparent 3px, rgba(0,0,0,0.04) 3px, rgba(0,0,0,0.04) 4px);
-        }
-
-        /* ─── Top Bar ────────────────────────────── */
         .top-bar {
-            position: absolute; top: 0; left: 0; right: 0; z-index: 50;
-            display: flex; justify-content: space-between; align-items: center;
-            padding: clamp(10px,1.8%,18px) clamp(14px,3%,28px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 24px 12px;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 10;
         }
-
-        .step-label {
-            font-size: clamp(0.6rem,1.1vw,0.82rem);
-            font-weight: 700; color: var(--sub);
-            letter-spacing: 1.2px; text-transform: uppercase;
+        .step-counter {
+            font-family: var(--font-en);
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--sub);
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
-
         .top-controls { display: flex; gap: 10px; }
-
         .ctrl-btn {
-            width: clamp(32px,4vw,42px); height: clamp(32px,4vw,42px);
-            border-radius: 50%; border: 1.5px solid var(--border);
-            background: rgba(255,255,255,0.05); cursor: pointer;
+            width: 38px; height: 38px;
+            border-radius: 50%;
+            border: 2px solid #E8ECF8;
+            background: white;
+            cursor: pointer;
             display: flex; align-items: center; justify-content: center;
-            font-size: clamp(0.85rem,1.4vw,1.05rem);
+            font-size: 1.1rem;
+            transition: all 0.2s;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+        .ctrl-btn:hover { transform: scale(1.1); border-color: #C5CCEB; }
+
+        .main-content {
+            flex: 1;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            padding: 0 20px;
+            z-index: 5;
+        }
+
+        /* 开始画面 */
+        .start-screen {
+            position: absolute;
+            inset: 0;
+            background: white;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 24px;
+            text-align: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s;
+            border-radius: 28px;
+            overflow-y: auto;
+        }
+        .start-screen.active { opacity: 1; pointer-events: all; }
+
+        .start-emoji { font-size: 3.5rem; margin-bottom: 12px; }
+        .start-title {
+            font-family: var(--font-en);
+            font-size: clamp(2rem, 6vw, 2.8rem);
+            font-weight: 900;
+            color: var(--text);
+            margin-bottom: 6px;
+        }
+        .start-title span { color: var(--c-conn); }
+        .start-sub {
+            font-size: clamp(0.85rem, 2.5vw, 1rem);
+            color: var(--sub);
+            margin-bottom: 28px;
+            line-height: 1.5;
+        }
+
+        .levels-overview {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin: 20px 0 28px;
+            max-width: 650px;
+        }
+        .overview-card {
+            background: #F8FAFF;
+            border-radius: 24px;
+            padding: 14px 12px;
+            width: calc(25% - 12px);
+            min-width: 95px;
+            text-align: center;
+            border: 1.5px solid #E2E9FC;
             transition: all 0.2s;
         }
-        .ctrl-btn:hover { background: rgba(255,255,255,0.11); transform: scale(1.1); }
-
-        /* ─── Pause Banner ───────────────────────── */
-        #pauseBanner {
-            position: absolute; top: 0; left: 0; right: 0; z-index: 80;
-            display: flex; align-items: center; justify-content: space-between; gap: 12px;
-            padding: clamp(8px,1.4%,14px) clamp(14px,3%,28px);
-            background: rgba(6,8,16,0.93); backdrop-filter: blur(6px);
-            border-bottom: 1px solid var(--border);
-            opacity: 0; pointer-events: none;
-            transform: translateY(-100%);
-            transition: opacity 0.3s, transform 0.35s cubic-bezier(0.4,0,0.2,1);
+        .overview-card:hover { transform: translateY(-3px); border-color: var(--c-ic); background: white; }
+        .overview-level {
+            font-family: var(--font-en);
+            font-weight: 900;
+            font-size: 1.2rem;
+            margin-bottom: 8px;
         }
-        #pauseBanner.active { opacity: 1; pointer-events: all; transform: translateY(0); }
-
-        .p-left { display: flex; align-items: center; gap: 10px; }
-        .p-icon  { font-size: clamp(1rem,2vw,1.3rem); }
-        .p-title { font-size: clamp(0.8rem,1.4vw,1rem); font-weight: 800; color: var(--text); }
-        .p-hint  { font-size: clamp(0.62rem,1vw,0.78rem); color: var(--sub); }
-        .resume-btn {
-            padding: clamp(5px,0.8%,8px) clamp(14px,2.5%,20px);
-            background: var(--c-ic); color: #0A0C14;
-            border: none; border-radius: 20px;
-            font-family: var(--font-en); font-size: clamp(0.75rem,1.3vw,0.9rem); font-weight: 800;
-            cursor: pointer; white-space: nowrap; transition: transform 0.15s;
+        .overview-desc {
+            font-size: 0.65rem;
+            color: var(--sub);
+            line-height: 1.3;
         }
-        .resume-btn:hover { transform: scale(1.05); }
+        .btn {
+            padding: 13px 32px;
+            font-size: 1rem;
+            font-family: var(--font-en);
+            font-weight: 800;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: var(--c-ic);
+            color: var(--text);
+            box-shadow: 0 6px 20px rgba(126,200,227,0.4);
+        }
+        .btn:hover { transform: translateY(-2px); }
 
-        /* Dim lesson content while paused */
-        #stage.paused #scene-area,
-        #stage.paused #subtitle-area { filter: brightness(0.58); transition: filter 0.3s; }
-
-        /* ─── Scene Area ─────────────────────────── */
-        #scene-area {
-            position: absolute;
-            top: 11%; left: 0; right: 0; bottom: 22%;
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-            z-index: 10;
-            gap: clamp(10px,2%,20px);
+        /* 课程内容区 */
+        .lesson-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px 0 30px;
         }
 
-        /* ─── Title Group ────────────────────────── */
-        #title-group {
+        .title-area {
             text-align: center;
-            opacity: 0; transform: translateY(-14px);
-            transition: opacity 0.7s, transform 0.7s;
+            opacity: 0;
+            transform: translateY(-12px);
+            transition: all 0.5s ease;
         }
-        #title-group.show { opacity: 1; transform: translateY(0); }
-
+        .title-area.show { opacity: 1; transform: translateY(0); }
         .main-title {
-            font-size: clamp(1.6rem,4.5vw,3.8rem);
-            font-weight: 900; color: var(--text);
-            letter-spacing: -1px; line-height: 1.05;
+            font-family: var(--font-en);
+            font-size: clamp(1.6rem, 4vw, 2.4rem);
+            font-weight: 900;
+            color: var(--text);
         }
-        .main-title em { font-style: normal; color: var(--c-conn); }
-
-        .level-badge {
-            display: inline-block; margin-top: 8px;
-            padding: 4px 14px; border: 1.5px solid var(--border); border-radius: 20px;
-            font-size: clamp(0.65rem,1.1vw,0.85rem); font-weight: 700;
-            color: var(--sub); letter-spacing: 2px; text-transform: uppercase;
+        .sub-badge {
+            font-size: 0.75rem;
+            color: var(--sub);
+            margin-top: 6px;
+            letter-spacing: 1px;
         }
 
-        /* ─── Formula Row ────────────────────────── */
-        #formula-row {
-            display: flex; align-items: center; justify-content: center;
-            gap: clamp(6px,1.2vw,14px);
+        /* 公式行 */
+        .formula-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(8px, 1.5vw, 16px);
             flex-wrap: wrap;
-            width: 90%;
-            opacity: 0; transition: opacity 0.5s;
+            margin: 5px 0;
+            opacity: 0;
+            transition: opacity 0.5s;
         }
-        #formula-row.show { opacity: 1; }
-
+        .formula-row.show { opacity: 1; }
         .f-block {
-            padding: clamp(8px,1.4%,14px) clamp(12px,2.2%,22px);
+            padding: clamp(8px, 1.2%, 12px) clamp(12px, 2%, 20px);
             border-radius: 12px;
-            font-size: clamp(0.75rem,1.6vw,1.1rem);
-            font-weight: 800; text-align: center;
-            opacity: 0; transform: scale(0.85);
-            transition: all 0.5s cubic-bezier(0.34,1.4,0.64,1);
+            font-size: clamp(0.75rem, 1.4vw, 1rem);
+            font-weight: 800;
+            text-align: center;
+            opacity: 0;
+            transform: scale(0.85);
+            transition: all 0.45s cubic-bezier(0.34, 1.4, 0.64, 1);
         }
         .f-block.show { opacity: 1; transform: scale(1); }
-
-        .f-ic {
-            background: rgba(126,200,227,0.15);
-            border: 2px solid var(--c-ic); color: var(--c-ic);
-        }
-        .f-dc {
-            background: rgba(255,179,198,0.15);
-            border: 2px solid var(--c-dc); color: var(--c-dc);
-        }
+        .f-ic { background: rgba(126,200,227,0.2); border: 2px solid var(--c-ic); color: var(--c-ic); }
+        .f-dc { background: rgba(255,179,198,0.2); border: 2px solid var(--c-dc); color: var(--c-dc); }
         .f-plus {
-            font-size: clamp(1.2rem,2.5vw,2rem);
-            font-weight: 900; color: var(--dim);
-            opacity: 0; transition: opacity 0.4s;
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            font-weight: 900;
+            color: var(--sub);
+            opacity: 0;
+            transition: opacity 0.4s;
         }
         .f-plus.show { opacity: 1; }
 
-        /* ─── Sentence Blocks Row ────────────────── */
-        #sentence-row {
-            display: flex; align-items: center; justify-content: center;
+        /* 句子展示区 */
+        .sentence-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             flex-wrap: wrap;
-            gap: clamp(6px,1.2vw,12px);
-            width: 92%;
-            opacity: 0; transition: opacity 0.4s;
-            min-height: clamp(60px,9vw,100px);
+            gap: clamp(8px, 1.5vw, 14px);
+            min-height: 110px;
+            margin: 8px 0;
+            opacity: 0;
+            transition: opacity 0.4s;
         }
-        #sentence-row.show { opacity: 1; }
-
+        .sentence-row.show { opacity: 1; }
         .sent-block {
-            padding: clamp(10px,1.6%,18px) clamp(12px,2%,22px);
-            border-radius: 14px;
-            font-size: clamp(0.8rem,1.7vw,1.25rem);
-            font-weight: 800; color: #111;
+            padding: clamp(12px, 1.8%, 18px) clamp(14px, 2.2%, 24px);
+            border-radius: 18px;
+            font-size: clamp(0.85rem, 1.8vw, 1.2rem);
+            font-weight: 800;
             text-align: center;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.35);
-            opacity: 0; transform: translateY(12px) scale(0.92);
-            transition: all 0.5s cubic-bezier(0.34,1.4,0.64,1);
-            position: relative;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            opacity: 0;
+            transform: translateY(12px) scale(0.94);
+            transition: all 0.5s cubic-bezier(0.34, 1.2, 0.64, 1);
+            min-width: 110px;
         }
         .sent-block.show { opacity: 1; transform: translateY(0) scale(1); }
-
         .sent-block .blk-label {
             display: block;
-            font-size: clamp(0.48rem,0.85vw,0.65rem);
-            font-weight: 700; letter-spacing: 1px;
-            text-transform: uppercase; opacity: 0.65;
-            margin-bottom: 4px;
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            opacity: 0.7;
+            margin-bottom: 5px;
         }
+        .b-ic { background: var(--c-ic); color: #1e293b; }
+        .b-dc { background: var(--c-dc); color: #1e293b; }
+        .b-conn { background: var(--c-conn); color: #1e293b; }
 
-        .b-ic   { background: var(--c-ic);   }
-        .b-dc   { background: var(--c-dc);   }
-        .b-conn { background: var(--c-conn); }
-
-        /* ─── Difficulty Badge ───────────────────── */
-        #diff-badge {
-            font-size: clamp(0.65rem,1.1vw,0.85rem);
-            font-weight: 900; letter-spacing: 2px; text-transform: uppercase;
-            padding: 5px 16px; border-radius: 20px;
-            border: 1.5px solid var(--border);
-            color: var(--sub);
-            opacity: 0; transform: translateY(6px);
-            transition: all 0.45s 0.2s;
+        /* 难度徽章 */
+        .diff-badge {
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 6px 18px;
+            border-radius: 30px;
+            background: rgba(126,200,227,0.15);
+            border: 1.5px solid var(--sub);
+            display: inline-block;
+            margin: 5px auto 0;
+            opacity: 0;
+            transform: translateY(6px);
+            transition: all 0.4s;
         }
-        #diff-badge.show { opacity: 1; transform: translateY(0); }
+        .diff-badge.show { opacity: 1; transform: translateY(0); }
 
-        /* ─── Type Tag ───────────────────────────── */
-        #type-tag {
-            font-size: clamp(0.62rem,1.1vw,0.85rem);
-            font-weight: 600; color: var(--sub);
-            background: rgba(255,255,255,0.05); border: 1px solid var(--border);
-            border-radius: 20px; padding: 4px 16px;
-            opacity: 0; transform: translateY(6px);
-            transition: opacity 0.4s 0.3s, transform 0.4s 0.3s;
-            text-align: center; max-width: 90%;
+        /* 类型标签 */
+        .type-tag {
+            text-align: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 6px 16px;
+            border-radius: 30px;
+            display: inline-block;
+            margin: 8px auto 0;
+            opacity: 0;
+            transform: translateY(6px);
+            transition: all 0.4s;
+            background: rgba(126,200,227,0.1);
         }
-        #type-tag.show { opacity: 1; transform: translateY(0); }
+        .type-tag.show { opacity: 1; transform: translateY(0); }
 
-        /* ─── Subtitle Area ──────────────────────── */
-        #subtitle-area {
-            position: absolute; bottom: 0; left: 0; right: 0;
-            height: 22%; z-index: 20;
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-            padding: 0 5% 2%; gap: 5px;
-            background: linear-gradient(to top, rgba(8,10,18,0.96) 55%, transparent);
+        /* 字幕区 */
+        .subtitle-area {
+            background: linear-gradient(to top, rgba(240,244,255,0.95), transparent);
+            padding: 14px 20px 18px;
+            text-align: center;
+            border-top: 1px solid #E8ECF8;
+            flex-shrink: 0;
         }
-
         .sub-en {
-            font-size: clamp(0.85rem,1.9vw,1.4rem);
-            font-weight: 700; color: #fff; text-align: center; line-height: 1.35;
-            opacity: 0; transform: translateY(8px);
-            transition: opacity 0.45s, transform 0.45s;
+            font-family: var(--font-en);
+            font-size: clamp(0.85rem, 1.8vw, 1.05rem);
+            font-weight: 700;
+            color: var(--text);
+            opacity: 0;
+            transform: translateY(6px);
+            transition: opacity 0.4s, transform 0.4s;
         }
         .sub-tc {
             font-family: var(--font-cn);
-            font-size: clamp(0.7rem,1.4vw,1rem);
-            color: var(--sub); text-align: center; line-height: 1.45;
-            opacity: 0; transform: translateY(8px);
-            transition: opacity 0.45s 0.1s, transform 0.45s 0.1s;
+            font-size: clamp(0.75rem, 1.5vw, 0.9rem);
+            color: var(--sub);
+            margin-top: 5px;
+            opacity: 0;
+            transform: translateY(6px);
+            transition: opacity 0.4s 0.05s, transform 0.4s 0.05s;
         }
         .sub-en.show, .sub-tc.show { opacity: 1; transform: translateY(0); }
 
-        /* ─── Progress ───────────────────────────── */
-        .progress-rail {
-            position: absolute; bottom: 0; left: 0; right: 0;
-            height: 3px; background: rgba(255,255,255,0.05); z-index: 30;
+        /* 进度条 */
+        .progress-container {
+            flex-shrink: 0;
+            padding: 8px 24px 14px;
+            background: transparent;
+            position: relative;
+            z-index: 30;
         }
+        .progress-rail {
+            height: 8px;
+            background: #E2E8F5;
+            border-radius: 10px;
+            cursor: pointer;
+            position: relative;
+            transition: height 0.2s;
+        }
+        .progress-rail:hover { height: 10px; }
         .progress-fill {
-            height: 100%; width: 0%;
+            height: 100%;
             background: linear-gradient(90deg, var(--c-ic), var(--c-dc));
-            transition: width 0.15s linear;
+            width: 0%;
+            border-radius: 10px;
+            pointer-events: none;
+            transition: width 0.2s ease;
+        }
+        .drag-handle {
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 18px;
+            height: 18px;
+            background: white;
+            border: 2px solid var(--c-ic);
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            pointer-events: none;
+            transition: left 0.2s ease;
+            z-index: 6;
+        }
+        .progress-status {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 8px;
+            font-size: 0.7rem;
+            font-family: var(--font-en);
+            font-weight: 600;
+            color: var(--sub);
+        }
+        .pause-indicator {
+            background: rgba(126,200,227,0.15);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .pause-indicator:hover { background: rgba(126,200,227,0.3); }
+
+        #stage.paused .main-content,
+        #stage.paused .subtitle-area { filter: brightness(0.65); transition: filter 0.3s; }
+
+        .toast-msg {
+            position: fixed;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(45,53,97,0.92);
+            backdrop-filter: blur(8px);
+            color: white;
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            z-index: 200;
+            opacity: 0;
+            transition: opacity 0.2s;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .result-overlay {
+            position: absolute;
+            inset: 0;
+            background: white;
+            z-index: 110;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 30px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s;
+            border-radius: 28px;
+        }
+        .result-overlay.active { opacity: 1; pointer-events: all; }
+        .result-emoji { font-size: 4rem; margin-bottom: 16px; }
+        .result-title { font-family: var(--font-en); font-size: 2rem; font-weight: 900; color: var(--text); }
+        .btn-outline { background: white; border: 2px solid var(--c-ic); color: var(--c-ic); padding: 10px 24px; border-radius: 50px; font-weight: 800; cursor: pointer; transition: all 0.2s; }
+        .btn-outline:hover { background: var(--c-ic); color: white; transform: translateY(-2px); }
+
+        @media (max-width: 600px) {
+            .overview-card { width: calc(50% - 12px); }
+            .sent-block { padding: 10px 12px; min-width: 85px; font-size: 0.75rem; }
+            .f-block { padding: 6px 10px; font-size: 0.7rem; }
         }
     </style>
 </head>
 <body>
 <div id="stage">
-    <div class="amb" id="amb1"></div>
-    <div class="amb" id="amb2"></div>
-    <div class="scanline"></div>
+    <div class="deco-circle dc1"></div>
+    <div class="deco-circle dc2"></div>
 
-    <!-- Top Bar -->
     <div class="top-bar">
-        <div class="step-label" id="stepLabel">Intro</div>
+        <div class="step-counter" id="stepCounter">Compound-Complex</div>
         <div class="top-controls">
-            <div class="ctrl-btn" id="pauseBtn">⏸️</div>
             <div class="ctrl-btn" id="musicBtn">🔇</div>
         </div>
     </div>
 
-    <!-- Pause Banner -->
-    <div id="pauseBanner">
-        <div class="p-left">
-            <span class="p-icon">⏸️</span>
-            <div>
-                <div class="p-title">Paused</div>
-                <div class="p-hint">Content stays visible — take your time</div>
+    <!-- 开始画面 -->
+    <div class="start-screen active" id="startScreen">
+        <div class="start-emoji">🏆✨</div>
+        <div class="start-title">Shirley Grammar<br><span>Compound-Complex</span></div>
+        <div class="start-sub">The most powerful sentence structure —<br>2+ Independent Clauses + 1+ Dependent Clause</div>
+        
+        <div class="levels-overview" id="levelsOverview"></div>
+        
+        <div class="btn-row">
+            <button class="btn" id="startLessonBtn">Start Learning 🎵</button>
+        </div>
+    </div>
+
+    <!-- 课程主内容 -->
+    <div class="main-content" id="mainContent" style="display: none;">
+        <div class="lesson-area">
+            <div class="title-area" id="titleArea">
+                <div class="main-title" id="mainTitle">Compound-Complex</div>
+                <div class="sub-badge" id="subBadge">2+ IC + 1+ DC</div>
+            </div>
+            <div class="formula-row" id="formulaRow">
+                <div class="f-block f-ic" id="fb1">IC 1</div>
+                <div class="f-plus" id="fp1">+</div>
+                <div class="f-block f-ic" id="fb2">IC 2</div>
+                <div class="f-plus" id="fp2">+</div>
+                <div class="f-block f-dc" id="fb3">DC</div>
+            </div>
+            <div class="sentence-row" id="sentenceRow"></div>
+            <div style="text-align: center;">
+                <div class="diff-badge" id="diffBadge"></div>
+                <div class="type-tag" id="typeTag"></div>
             </div>
         </div>
-        <button class="resume-btn" onclick="togglePause()">▶ Resume</button>
     </div>
 
-    <!-- Scene Area -->
-    <div id="scene-area">
-        <div id="title-group">
-            <div class="main-title">Compound-<br><em>Complex</em></div>
-            <div class="level-badge">Level 4 · Advanced Grammar</div>
-        </div>
-
-        <div id="formula-row">
-            <div class="f-block f-ic" id="fb1">Indep. Clause 1</div>
-            <div class="f-plus" id="fp1">+</div>
-            <div class="f-block f-ic" id="fb2">Indep. Clause 2</div>
-            <div class="f-plus" id="fp2">+</div>
-            <div class="f-block f-dc" id="fb3">Dep. Clause</div>
-        </div>
-
-        <div id="sentence-row"></div>
-
-        <div id="diff-badge"></div>
-        <div id="type-tag"></div>
-    </div>
-
-    <!-- Subtitles -->
-    <div id="subtitle-area">
+    <!-- 字幕区 -->
+    <div class="subtitle-area" id="subtitleArea" style="display: none;">
         <div class="sub-en" id="subEn"></div>
         <div class="sub-tc" id="subTc"></div>
     </div>
 
-    <div class="progress-rail"><div class="progress-fill" id="progressFill"></div></div>
+    <!-- 进度条 -->
+    <div class="progress-container">
+        <div class="progress-rail" id="progressRail">
+            <div class="progress-fill" id="progressFill"></div>
+            <div class="drag-handle" id="dragHandle"></div>
+        </div>
+        <div class="progress-status">
+            <span id="progressText">Lesson Progress</span>
+            <div class="pause-indicator" id="pauseIndicator">
+                <span>⏸️</span> <span>Click bar to pause</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 结业画面 -->
+    <div class="result-overlay" id="resultScreen">
+        <div class="result-emoji">🏆🎉</div>
+        <div class="result-title">Level 4 Complete!</div>
+        <div class="start-sub" style="margin-top: 12px;">You've mastered the most advanced sentence structure!<br>Compound-Complex sentences are now your superpower.</div>
+        <div class="btn-row">
+            <button class="btn-outline" id="restartBtn">🔄 Review Again</button>
+            <button class="btn-outline" id="backStartBtn">🏠 Back to Start</button>
+        </div>
+    </div>
+
+    <div class="toast-msg" id="toastMsg"></div>
 </div>
 
 <script>
-/* ══════════════════════════════════════════════
-   AUDIO
-══════════════════════════════════════════════ */
-const Audio = (() => {
-    let ctx = null, muted = true, bgmTimer = null;
-    function c() { if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)(); return ctx; }
-    function tone(f, type, dur, vol, delay = 0) {
-        if (muted) return;
-        const ac = c(), osc = ac.createOscillator(), g = ac.createGain();
-        const t = ac.currentTime + delay;
-        osc.type = type; osc.frequency.setValueAtTime(f, t);
-        g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(0.001, t + dur);
-        osc.connect(g); g.connect(ac.destination); osc.start(t); osc.stop(t + dur);
-    }
-    return {
-        get muted() { return muted; },
-        toggle() {
-            if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
-            muted = !muted;
-            if (!muted) { ctx.resume(); this.bgm(); } else { ctx.suspend(); clearInterval(bgmTimer); }
-            return muted;
-        },
-        pop()     { tone(380 + Math.random()*140, 'triangle', 0.12, 0.04); },
-        snap()    { tone(200,'triangle',0.12,0.05); tone(120,'triangle',0.08,0.03,0.06); },
-        whoosh()  { tone(220,'triangle',0.4,0.04); tone(90,'triangle',0.4,0.025,0.18); },
-        ding()    { tone(880,'sine',0.8,0.05); tone(1100,'sine',0.5,0.03,0.1); },
-        chord()   { tone(392,'sine',1.0,0.04); tone(493.88,'sine',1.0,0.04,0.06); tone(587.33,'sine',1.0,0.04,0.13); },
-        success() { tone(523.25,'sine',0.2,0.05); tone(659.25,'sine',0.35,0.05,0.15); tone(783.99,'sine',0.5,0.05,0.3); },
-        bgm() {
-            clearInterval(bgmTimer);
-            const notes = [246.94,293.66,369.99,440,369.99,293.66]; let i = 0;
-            bgmTimer = setInterval(() => { if(!muted) tone(notes[i=(i+1)%notes.length],'sine',1.8,0.011); }, 750);
-        },
-        suspend() { if(ctx) ctx.suspend(); clearInterval(bgmTimer); },
-        resume()  { if(!muted && ctx) { ctx.resume(); this.bgm(); } }
-    };
-})();
+    // ========== 课程步骤数据 (完整版) ==========
+    const STEPS = [
+        { type: 'intro', duration: 3800, title: 'Compound-Complex Sentences', subtitle: 'The Ultimate Sentence Structure', en: "The most powerful sentence type combines compound and complex structures.", tc: "最強大的句型，結合了合句和複雜句的結構。" },
+        { type: 'definition', duration: 4200, en: "A compound-complex sentence has at least 2 independent clauses and 1 dependent clause.", tc: "複合複雜句包含至少兩個獨立子句和一個從屬子句。" },
+        { type: 'formula', duration: 5000, en: "Formula: IC + IC + DC (in any order)", tc: "公式：獨立子句 + 獨立子句 + 從屬子句（順序可變）" },
+        { type: 'connectors', duration: 3800, en: "ICs are joined by FANBOYS: and, but, or, nor, for, yet, so", tc: "獨立子句用 FANBOYS 連接詞連接。" },
+        { type: 'subordinators', duration: 3800, en: "DCs are introduced by subordinators: because, although, when, if, while...", tc: "從屬子句用從屬連接詞引導。" },
+        // BASIC
+        { type: 'basic_intro', duration: 2800, diff: 'BASIC', diffColor: '#6EE7B7', en: "Level 1: Basic example", tc: "第一級：基本例句" },
+        { type: 'basic_example', duration: 6800, blocks: [
+            { text: "Because I was hungry,", label: "DC · because", cls: "b-dc" },
+            { text: "I cooked pasta,", label: "IC 1", cls: "b-ic" },
+            { text: "and", label: "FANBOYS", cls: "b-conn" },
+            { text: "I ate it all.", label: "IC 2", cls: "b-ic" }
+        ], tag: "DC first → comma required | IC + and + IC", tagColor: "#6EE7B7", en: "Because I was hungry, I cooked pasta, and I ate it all.", tc: "因為我很餓，我煮了義大利麵，而且把它全吃光了。" },
+        { type: 'basic_analysis', duration: 4000, en: "\"Because\" = subordinator | \",\" = DC-first comma | \"and\" = FANBOYS", tc: "「Because」引導從屬子句｜逗號因從屬子句在前｜and 連接兩個獨立子句" },
+        // INTERMEDIATE
+        { type: 'intermediate_intro', duration: 2800, diff: 'INTERMEDIATE', diffColor: '#C9B1FF', en: "Level 2: Intermediate example", tc: "第二級：中階例句" },
+        { type: 'intermediate_example', duration: 6800, blocks: [
+            { text: "Although it was raining,", label: "DC · although", cls: "b-dc" },
+            { text: "we decided to go hiking,", label: "IC 1", cls: "b-ic" },
+            { text: "and", label: "FANBOYS", cls: "b-conn" },
+            { text: "we had a great time.", label: "IC 2", cls: "b-ic" }
+        ], tag: "\"Although\" = concession | DC creates contrast", tagColor: "#C9B1FF", en: "Although it was raining, we decided to go hiking, and we had a great time.", tc: "雖然下著雨，我們還是決定去遠足，而且玩得很開心。" },
+        { type: 'intermediate_variant', duration: 5200, blocks: [
+            { text: "We decided to go hiking,", label: "IC 1", cls: "b-ic" },
+            { text: "and", label: "FANBOYS", cls: "b-conn" },
+            { text: "we had a great time", label: "IC 2", cls: "b-ic" },
+            { text: "although it was raining.", label: "DC · at end", cls: "b-dc" }
+        ], tag: "DC at end → NO comma needed before it", tagColor: "#C9B1FF", en: "We decided to go hiking, and we had a great time although it was raining.", tc: "我們決定去遠足，而且玩得很開心，雖然下著雨。" },
+        // ADVANCED
+        { type: 'advanced_intro', duration: 2800, diff: 'ADVANCED', diffColor: '#FFA552', en: "Level 3: Advanced example", tc: "第三級：進階例句" },
+        { type: 'advanced_example', duration: 6800, blocks: [
+            { text: "While I was studying,", label: "DC · while", cls: "b-dc" },
+            { text: "my roommate was watching TV,", label: "IC 1", cls: "b-ic" },
+            { text: "but", label: "FANBOYS", cls: "b-conn" },
+            { text: "I managed to concentrate.", label: "IC 2", cls: "b-ic" }
+        ], tag: "\"but\" = contrast | \"while\" = simultaneous actions", tagColor: "#FFA552", en: "While I was studying, my roommate was watching TV, but I managed to concentrate.", tc: "當我在讀書時，室友在看電視，但我還是能專心。" },
+        { type: 'advanced_analysis', duration: 4000, en: "\"While\" shows simultaneous events. \"but\" shows contrast between the two ICs.", tc: "「While」表示同時發生的動作。「but」表示兩個獨立子句之間的對比。" },
+        // MASTER
+        { type: 'master_intro', duration: 2800, diff: 'MASTER', diffColor: '#FFD166', en: "Level 4: Master level — academic writing", tc: "第四級：大師級——學術寫作精髓" },
+        { type: 'master_example', duration: 7800, blocks: [
+            { text: "The policy was controversial,", label: "IC 1", cls: "b-ic" },
+            { text: "yet", label: "FANBOYS", cls: "b-conn" },
+            { text: "the government proceeded,", label: "IC 2", cls: "b-ic" },
+            { text: "even though public opposition was fierce.", label: "DC · even though", cls: "b-dc" }
+        ], tag: "\"yet\" = stronger than \"but\" | \"even though\" = strong concession", tagColor: "#FFD166", en: "The policy was controversial, yet the government proceeded, even though public opposition was fierce.", tc: "這項政策備受爭議，政府仍然推進，即使公眾反對聲浪強烈。" },
+        // Comma Rules
+        { type: 'comma_rules', duration: 5200, blocks: [
+            { text: "Because it rained,", label: "DC first", cls: "b-dc" },
+            { text: "I stayed home,", label: "IC 1", cls: "b-ic" },
+            { text: "and", label: "FANBOYS", cls: "b-conn" },
+            { text: "I read a book.", label: "IC 2", cls: "b-ic" }
+        ], tag: "⚠️ DC first = comma after DC | DC last = no comma", tagColor: "#FFD166", en: "Dependent clause first? Add a comma. Dependent clause last? No comma needed.", tc: "從屬子句在前面時加逗號；在後面時不加逗號。" },
+        // Outro
+        { type: 'outro', duration: 4800, title: "Level 4 Complete!", subtitle: "Compound-Complex Sentences Mastered", en: "You've mastered the most advanced sentence structure! Excellent work!", tc: "你已掌握最進階的句型結構！非常出色！" }
+    ];
 
-/* ══════════════════════════════════════════════
-   PAUSE SYSTEM
-══════════════════════════════════════════════ */
-let isPaused = false, pauseResolve = null, pausePromise = null;
+    // 全局状态
+    let isPlaying = false;
+    let isPaused = false;
+    let pauseResolve = null;
+    let pausePromise = null;
+    let currentStepIndex = 0;
+    let lessonAbort = false;
+    let totalDuration = 0;
+    let elapsedTime = 0;
+    let progressInterval = null;
 
-function togglePause() {
-    isPaused = !isPaused;
-    const banner = document.getElementById('pauseBanner');
-    const stageEl = document.getElementById('stage');
-    const btn = document.getElementById('pauseBtn');
-    if (isPaused) {
-        banner.classList.add('active'); stageEl.classList.add('paused');
-        btn.innerHTML = '▶️'; Audio.suspend();
-        pausePromise = new Promise(r => { pauseResolve = r; });
-    } else {
-        banner.classList.remove('active'); stageEl.classList.remove('paused');
-        btn.innerHTML = '⏸️'; Audio.resume();
-        if (pauseResolve) { pauseResolve(); pauseResolve = null; }
-    }
-}
+    // DOM 元素
+    const startScreen = document.getElementById('startScreen');
+    const mainContent = document.getElementById('mainContent');
+    const subtitleArea = document.getElementById('subtitleArea');
+    const resultScreen = document.getElementById('resultScreen');
+    const progressFill = document.getElementById('progressFill');
+    const dragHandle = document.getElementById('dragHandle');
+    const progressRail = document.getElementById('progressRail');
+    const progressText = document.getElementById('progressText');
+    const stepCounter = document.getElementById('stepCounter');
+    const titleArea = document.getElementById('titleArea');
+    const mainTitle = document.getElementById('mainTitle');
+    const subBadge = document.getElementById('subBadge');
+    const formulaRow = document.getElementById('formulaRow');
+    const sentenceRow = document.getElementById('sentenceRow');
+    const diffBadge = document.getElementById('diffBadge');
+    const typeTag = document.getElementById('typeTag');
+    const subEn = document.getElementById('subEn');
+    const subTc = document.getElementById('subTc');
+    const pauseIndicator = document.getElementById('pauseIndicator');
+    const toast = document.getElementById('toastMsg');
+    const fb1 = document.getElementById('fb1');
+    const fb2 = document.getElementById('fb2');
+    const fb3 = document.getElementById('fb3');
+    const fp1 = document.getElementById('fp1');
+    const fp2 = document.getElementById('fp2');
 
-async function sleep(ms) {
-    const deadline = Date.now() + ms;
-    while (Date.now() < deadline) {
-        if (isPaused) await pausePromise;
-        const left = deadline - Date.now();
-        if (left <= 0) break;
-        await new Promise(r => setTimeout(r, Math.min(80, left)));
-    }
-}
+    function showToast(msg) { toast.textContent = msg; toast.style.opacity = '1'; setTimeout(() => { toast.style.opacity = '0'; }, 1500); }
 
-/* ══════════════════════════════════════════════
-   HELPERS
-══════════════════════════════════════════════ */
-const $ = id => document.getElementById(id);
+    // 音频模块
+    const AudioFX = (() => {
+        let ctx = null, muted = true, bgmTimer = null;
+        function getCtx() { if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)(); return ctx; }
+        function tone(f, type, dur, vol, delay=0) { if (muted) return; const c = getCtx(); const osc = c.createOscillator(), g = c.createGain(); const t = c.currentTime+delay; osc.type=type; osc.frequency.setValueAtTime(f,t); g.gain.setValueAtTime(vol,t); g.gain.exponentialRampToValueAtTime(0.001,t+dur); osc.connect(g); g.connect(c.destination); osc.start(t); osc.stop(t+dur); }
+        return {
+            get muted() { return muted; },
+            toggle() { if(!ctx) ctx=new AudioContext(); muted=!muted; if(!muted){ ctx.resume(); this.bgm(); } else { ctx.suspend(); clearInterval(bgmTimer); } return muted; },
+            pop() { tone(500+Math.random()*150,'triangle',0.1,0.04); },
+            snap() { tone(200,'triangle',0.12,0.05); tone(120,'triangle',0.08,0.03,0.06); },
+            whoosh() { tone(220,'triangle',0.4,0.04); tone(90,'triangle',0.4,0.025,0.18); },
+            chord() { tone(392,'sine',0.8,0.035); tone(523.25,'sine',0.8,0.035,0.08); },
+            success() { tone(523.25,'sine',0.2,0.05); tone(659.25,'sine',0.4,0.05,0.15); },
+            bgm() { clearInterval(bgmTimer); const notes=[246.94,293.66,369.99,440,369.99,293.66]; let i=0; bgmTimer=setInterval(()=>{ if(!muted) tone(notes[i=(i+1)%notes.length],'sine',1.6,0.011); },750); },
+            suspend() { if(ctx) ctx.suspend(); clearInterval(bgmTimer); },
+            resume() { if(!muted && ctx) { ctx.resume(); this.bgm(); } }
+        };
+    })();
 
-function setAmb(c1, c2) { $('amb1').style.background = c1; $('amb2').style.background = c2; }
-function setStep(t) { $('stepLabel').textContent = t; }
-
-function setSubs(en, tc) {
-    const e = $('subEn'), t = $('subTc');
-    e.classList.remove('show'); t.classList.remove('show');
-    setTimeout(() => { e.textContent = en; t.textContent = tc; e.classList.add('show'); t.classList.add('show'); }, 320);
-}
-
-function setTag(text, color) {
-    const el = $('type-tag');
-    el.classList.remove('show');
-    if (text) {
-        setTimeout(() => {
-            el.textContent = text;
-            el.style.color = color || 'var(--sub)';
-            el.style.borderColor = color ? color + '55' : 'var(--border)';
-            el.classList.add('show');
-        }, 380);
-    }
-}
-
-function setDiff(label, color) {
-    const el = $('diff-badge');
-    el.classList.remove('show');
-    setTimeout(() => {
-        el.textContent = label;
-        el.style.color = color;
-        el.style.borderColor = color + '55';
-        el.style.background = color + '18';
-        el.classList.add('show');
-        Audio.ding();
-    }, 200);
-}
-
-function clearScene() {
-    const row = $('sentence-row');
-    row.innerHTML = ''; row.classList.remove('show');
-    $('diff-badge').classList.remove('show');
-    $('type-tag').classList.remove('show');
-}
-
-/* Add one block to the sentence row */
-async function addBlock(text, label, cls) {
-    const row = $('sentence-row');
-    if (!row.classList.contains('show')) row.classList.add('show');
-    const d = document.createElement('div');
-    d.className = `sent-block ${cls}`;
-    d.innerHTML = `<span class="blk-label">${label}</span>${text}`;
-    row.appendChild(d);
-    await sleep(60);
-    d.classList.add('show');
-    cls === 'b-conn' ? Audio.snap() : Audio.pop();
-}
-
-/* ══════════════════════════════════════════════
-   TIMELINE
-══════════════════════════════════════════════ */
-const TIMELINE = [
-    // 0 — Title
-    { dur: 4500, label: 'Intro', amb: ['#7EC8E3','#FFB3C6'], fn: async () => {
-        $('title-group').classList.add('show');
-        Audio.chord();
-        setSubs("Level 4: Compound-Complex Sentences — the most powerful sentence type.", "第四級：複合複雜句——最強大的句型。");
-    }},
-
-    // 1 — What is it?
-    { dur: 5000, label: 'Definition', amb: ['#7EC8E3','#C9B1FF'], fn: async () => {
-        setSubs("They combine at least 2 Independent Clauses and 1 Dependent Clause.", "結合至少兩個獨立子句和一個從屬子句。");
-    }},
-
-    // 2 — Formula reveal
-    { dur: 6000, label: 'The Formula', amb: ['#FFD166','#7EC8E3'], fn: async () => {
-        $('title-group').classList.remove('show');
-        await sleep(400);
-        $('title-group').style.display = 'none';
-
-        const fr = $('formula-row');
-        fr.classList.add('show');
-
-        const seqIds = ['fb1','fp1','fb2','fp2','fb3'];
-        for (const id of seqIds) {
-            await sleep(380);
-            $(id).classList.add('show');
-            Audio.pop();
+    // 暂停/恢复
+    function setPaused(paused) {
+        if (!isPlaying) return;
+        if (paused === isPaused) return;
+        isPaused = paused;
+        const stage = document.getElementById('stage');
+        if (isPaused) {
+            stage.classList.add('paused');
+            pauseIndicator.innerHTML = '<span>▶️</span> <span>Click bar to resume</span>';
+            AudioFX.suspend();
+            pausePromise = new Promise(r => { pauseResolve = r; });
+            showToast('⏸ Lesson paused');
+        } else {
+            stage.classList.remove('paused');
+            pauseIndicator.innerHTML = '<span>⏸️</span> <span>Click bar to pause</span>';
+            if (pauseResolve) { pauseResolve(); pauseResolve = null; pausePromise = null; }
+            AudioFX.resume();
+            showToast('▶ Resumed');
         }
-        setSubs("The formula: IC + IC + DC (in any order).", "公式：獨立子句 + 獨立子句 + 從屬子句（順序可變）。");
-    }},
-
-    // 3 — Connector reminder
-    { dur: 4500, label: 'Connectors', amb: ['#FFD166','#FFB3C6'], fn: async () => {
-        setTag('IC + IC are joined by FANBOYS (and / but / or / so…)', 'var(--c-conn)');
-        setSubs("The two Independent Clauses are linked with a FANBOYS conjunction.", "兩個獨立子句用 FANBOYS 連接詞連接。");
-    }},
-
-    // 4 — DC reminder
-    { dur: 4500, label: 'Dependent Clause', amb: ['#FFB3C6','#C9B1FF'], fn: async () => {
-        setTag('DC is introduced by a subordinator: because / although / when / if…', 'var(--c-dc)');
-        setSubs("The Dependent Clause uses a subordinating conjunction.", "從屬子句使用從屬連接詞引導。");
-    }},
-
-    // 5 — LOW example intro
-    { dur: 3500, label: 'Level: Basic', amb: ['#6EE7B7','#7EC8E3'], fn: async () => {
-        setTag('');
-        clearScene();
-        $('formula-row').classList.remove('show');
-        setDiff('● BASIC', 'var(--d-low)');
-        Audio.whoosh();
-        setSubs("Let's start with a basic example.", "先從基本例句開始。");
-    }},
-
-    // 6 — LOW example build
-    { dur: 7000, label: 'Level: Basic', amb: ['#6EE7B7','#7EC8E3'], fn: async () => {
-        await addBlock('Because I was hungry,', '從屬子句 · DC', 'b-dc');
-        await sleep(600);
-        await addBlock('I cooked pasta,', '獨立子句 1 · IC', 'b-ic');
-        await sleep(500);
-        await addBlock('and', 'FANBOYS', 'b-conn');
-        await sleep(400);
-        await addBlock('I ate it all.', '獨立子句 2 · IC', 'b-ic');
-        setTag('DC first → comma required  |  IC + and + IC', 'var(--d-low)');
-        setSubs("Because I was hungry, I cooked pasta, and I ate it all.", "因為我很餓，我煮了義大利麵，而且把它全吃光了。");
-    }},
-
-    // 7 — LOW analysis
-    { dur: 5500, label: 'Level: Basic', amb: ['#6EE7B7','#7EC8E3'], fn: async () => {
-        setSubs('"Because" = subordinator  |  "," = DC-first comma  |  "and" = FANBOYS', '「Because」引導從屬子句 ｜ 逗號因從屬子句在前 ｜ and 連接兩個獨立子句');
-    }},
-
-    // 8 — MEDIUM example intro
-    { dur: 3500, label: 'Level: Intermediate', amb: ['#C9B1FF','#7EC8E3'], fn: async () => {
-        clearScene();
-        setDiff('●● INTERMEDIATE', 'var(--d-mid)');
-        Audio.whoosh();
-        setSubs("Now a more complex example.", "現在來看更複雜的例句。");
-    }},
-
-    // 9 — MEDIUM example build
-    { dur: 7000, label: 'Level: Intermediate', amb: ['#C9B1FF','#FFB3C6'], fn: async () => {
-        await addBlock('Although it was raining,', '從屬子句 · DC', 'b-dc');
-        await sleep(600);
-        await addBlock('we decided to go hiking,', '獨立子句 1 · IC', 'b-ic');
-        await sleep(500);
-        await addBlock('and', 'FANBOYS', 'b-conn');
-        await sleep(400);
-        await addBlock('we had a great time.', '獨立子句 2 · IC', 'b-ic');
-        setTag('"Although" = concession  |  DC creates contrast with the ICs', 'var(--d-mid)');
-        setSubs("Although it was raining, we decided to go hiking, and we had a great time.", "雖然下著雨，我們還是決定去遠足，而且我們玩得很開心。");
-    }},
-
-    // 10 — MEDIUM — IC first variant
-    { dur: 6000, label: 'Level: Intermediate', amb: ['#C9B1FF','#7EC8E3'], fn: async () => {
-        clearScene();
-        await addBlock('We decided to go hiking,', '獨立子句 1 · IC', 'b-ic');
-        await sleep(500);
-        await addBlock('and', 'FANBOYS', 'b-conn');
-        await sleep(400);
-        await addBlock('we had a great time', '獨立子句 2 · IC', 'b-ic');
-        await sleep(500);
-        await addBlock('although it was raining.', '從屬子句 · DC (no comma)', 'b-dc');
-        setTag('DC at the end → NO comma needed before it', 'var(--d-mid)');
-        setSubs("Same meaning — different word order. DC at the end needs no comma.", "同樣的意思，不同語序。從屬子句在後則不需要逗號。");
-    }},
-
-    // 11 — HIGH example intro
-    { dur: 3500, label: 'Level: Advanced', amb: ['#FFA552','#FFD166'], fn: async () => {
-        clearScene();
-        setDiff('●●● ADVANCED', 'var(--d-high)');
-        Audio.whoosh();
-        setSubs("Advanced level — richer vocabulary.", "進階例句——更豐富的詞彙。");
-    }},
-
-    // 12 — HIGH example build
-    { dur: 7000, label: 'Level: Advanced', amb: ['#FFA552','#C9B1FF'], fn: async () => {
-        await addBlock('While I was studying,', '從屬子句 · DC', 'b-dc');
-        await sleep(600);
-        await addBlock('my roommate was watching TV,', '獨立子句 1 · IC', 'b-ic');
-        await sleep(500);
-        await addBlock('but', 'FANBOYS', 'b-conn');
-        await sleep(400);
-        await addBlock('I managed to concentrate.', '獨立子句 2 · IC', 'b-ic');
-        setTag('"but" = contrast  |  "while" = simultaneous actions', 'var(--d-high)');
-        setSubs("While I was studying, my roommate was watching TV, but I managed to concentrate.", "當我在讀書時，室友在看電視，但我還是能專心。");
-    }},
-
-    // 13 — HIGH analysis
-    { dur: 5500, label: 'Level: Advanced', amb: ['#FFA552','#FFB3C6'], fn: async () => {
-        setSubs('"While" shows simultaneous events. "but" shows unexpected contrast between the two ICs.', '「While」表示同時發生的動作。「but」表示兩個獨立子句之間的對比。');
-    }},
-
-    // 14 — MASTER example intro
-    { dur: 3500, label: 'Level: Master', amb: ['#FFD166','#C9B1FF'], fn: async () => {
-        clearScene();
-        setDiff('◆ MASTER', 'var(--d-master)');
-        Audio.whoosh();
-        setSubs("Master level — sophisticated academic writing.", "大師級——學術寫作的精髓。");
-    }},
-
-    // 15 — MASTER example build
-    { dur: 8000, label: 'Level: Master', amb: ['#FFD166','#FFA552'], fn: async () => {
-        await addBlock('The policy was controversial,', '獨立子句 1 · IC', 'b-ic');
-        await sleep(500);
-        await addBlock('yet', 'FANBOYS', 'b-conn');
-        await sleep(400);
-        await addBlock('the government proceeded,', '獨立子句 2 · IC', 'b-ic');
-        await sleep(600);
-        await addBlock('even though public opposition was fierce.', '從屬子句 · DC', 'b-dc');
-        setTag('"yet" = stronger than "but"  |  "even though" = strong concession  |  DC at end → no comma', 'var(--d-master)');
-        setSubs("The policy was controversial, yet the government proceeded, even though public opposition was fierce.", "這項政策備受爭議，政府仍然推進，即使公眾反對聲浪強烈。");
-    }},
-
-    // 16 — Comma rule summary
-    { dur: 6000, label: 'Comma Rules', amb: ['#7EC8E3','#6EE7B7'], fn: async () => {
-        clearScene();
-        await addBlock('Because it rained, IC, and IC.', 'DC first → COMMA ✓', 'b-dc');
-        await sleep(800);
-        await addBlock('IC, and IC because it rained.', 'DC last → no comma ✓', 'b-ic');
-        setTag('⚠️ Comma Rule: DC first = comma  |  DC last = no comma', 'var(--c-conn)');
-        setSubs("Key rule: If the Dependent Clause comes first, add a comma. If it comes last, no comma.", "重要規則：從屬子句在前加逗號；在後不加逗號。");
-    }},
-
-    // 17 — Outro
-    { dur: 6000, label: 'Done! 🎉', amb: ['#7EC8E3','#C9B1FF'], fn: async () => {
-        clearScene();
-        $('title-group').style.display = 'block';
-        document.querySelector('.main-title').innerHTML = 'Level 4<br><em>Complete!</em>';
-        document.querySelector('.level-badge').textContent = 'Compound-Complex ✓';
-        await sleep(200);
-        $('title-group').classList.add('show');
-        Audio.success();
-        setSubs("You've mastered the most advanced sentence structure. Excellent work!", "你已掌握最進階的句型結構。非常出色！");
-    }}
-];
-
-/* ══════════════════════════════════════════════
-   PLAYER
-══════════════════════════════════════════════ */
-async function play() {
-    const total = TIMELINE.reduce((s, t) => s + t.dur, 0);
-    let elapsed = 0;
-    const barTimer = setInterval(() => {
-        if (!isPaused) elapsed += 80;
-        $('progressFill').style.width = `${Math.min((elapsed / total) * 100, 100)}%`;
-        if (elapsed >= total) clearInterval(barTimer);
-    }, 80);
-
-    for (let i = 0; i < TIMELINE.length; i++) {
-        const step = TIMELINE[i];
-        setStep(step.label);
-        if (step.amb) setAmb(step.amb[0], step.amb[1]);
-        await step.fn();
-        await sleep(step.dur - 100);
     }
-}
+    function togglePause() { if (isPlaying) setPaused(!isPaused); }
+    async function waitWhilePaused() { while (isPaused && pausePromise) await pausePromise; }
 
-/* ══════════════════════════════════════════════
-   INIT
-══════════════════════════════════════════════ */
-document.getElementById('pauseBtn').onclick = togglePause;
-document.getElementById('musicBtn').onclick = () => {
-    const m = Audio.toggle();
-    $('musicBtn').innerHTML = m ? '🔇' : '🔊';
-};
+    async function sleep(ms) {
+        const deadline = Date.now() + ms;
+        while (Date.now() < deadline) {
+            if (lessonAbort) throw new Error('abort');
+            await waitWhilePaused();
+            const left = deadline - Date.now();
+            if (left <= 0) break;
+            await new Promise(r => setTimeout(r, Math.min(80, left)));
+        }
+    }
 
-window.onload = () => {
-    setTimeout(() => {
-        Audio.toggle(); $('musicBtn').innerHTML = '🔊';
-        play();
-    }, 400);
-};
+    function updateProgressUI() {
+        if (totalDuration === 0) return;
+        const percent = Math.min(100, (elapsedTime / totalDuration) * 100);
+        progressFill.style.width = `${percent}%`;
+        dragHandle.style.left = `${percent}%`;
+        const stepNum = Math.min(STEPS.length, Math.floor((elapsedTime / totalDuration) * STEPS.length) + 1);
+        progressText.textContent = `Step ${stepNum}/${STEPS.length}`;
+    }
 
-let lastT = 0;
-document.addEventListener('touchend', e => { const n = Date.now(); if (n - lastT < 300) e.preventDefault(); lastT = n; }, false);
-document.addEventListener('touchstart', e => { if (e.touches.length > 1) e.preventDefault(); }, { passive: false });
+    function clearSentenceRow() { sentenceRow.innerHTML = ''; sentenceRow.classList.remove('show'); }
+    function hideTypeTag() { typeTag.classList.remove('show'); }
+    function showTypeTag(text, color) { typeTag.textContent = text; typeTag.style.borderColor = color; typeTag.classList.add('show'); }
+    function setDiff(text, color) { diffBadge.textContent = text; diffBadge.style.borderColor = color; diffBadge.style.color = color; diffBadge.classList.add('show'); AudioFX.whoosh(); }
+    function setSubs(en, tc) {
+        subEn.classList.remove('show'); subTc.classList.remove('show');
+        setTimeout(() => { subEn.textContent = en; subTc.textContent = tc; subEn.classList.add('show'); subTc.classList.add('show'); }, 250);
+    }
+    function hideTitle() { titleArea.classList.remove('show'); }
+    function showTitle(title, subtitle) { mainTitle.textContent = title; subBadge.textContent = subtitle; titleArea.classList.add('show'); }
+
+    async function addBlock(text, label, cls) {
+        const row = sentenceRow;
+        if (!row.classList.contains('show')) row.classList.add('show');
+        const div = document.createElement('div');
+        div.className = `sent-block ${cls}`;
+        div.innerHTML = `<span class="blk-label">${label}</span>${text}`;
+        row.appendChild(div);
+        await sleep(70);
+        div.classList.add('show');
+        if (cls === 'b-conn') AudioFX.snap(); else AudioFX.pop();
+    }
+
+    async function showBlocks(blocks) {
+        clearSentenceRow(); hideTypeTag();
+        for (const b of blocks) {
+            await addBlock(b.text, b.label, b.cls);
+        }
+    }
+
+    function resetFormulaRow() {
+        if (fb1) fb1.classList.remove('show');
+        if (fb2) fb2.classList.remove('show');
+        if (fb3) fb3.classList.remove('show');
+        if (fp1) fp1.classList.remove('show');
+        if (fp2) fp2.classList.remove('show');
+        formulaRow.classList.remove('show');
+    }
+
+    async function showFormula() {
+        resetFormulaRow();
+        formulaRow.classList.add('show');
+        const elements = [fb1, fp1, fb2, fp2, fb3];
+        for (const el of elements) {
+            if (el) {
+                await sleep(350);
+                el.classList.add('show');
+                AudioFX.pop();
+            }
+        }
+    }
+
+    // 课程主逻辑
+    async function startLessonAtStep(startStep = 0) {
+        isPlaying = true;
+        lessonAbort = false;
+        isPaused = false;
+        if (pauseResolve) { pauseResolve(); pauseResolve = null; }
+        document.getElementById('stage').classList.remove('paused');
+        pauseIndicator.innerHTML = '<span>⏸️</span> <span>Click bar to pause</span>';
+        
+        totalDuration = STEPS.reduce((sum, s) => sum + s.duration, 0);
+        elapsedTime = STEPS.slice(0, startStep).reduce((sum, s) => sum + s.duration, 0);
+        
+        if (progressInterval) clearInterval(progressInterval);
+        progressInterval = setInterval(() => {
+            if (!isPlaying) return;
+            if (!isPaused && !lessonAbort) {
+                elapsedTime += 80;
+                if (elapsedTime >= totalDuration) elapsedTime = totalDuration;
+                updateProgressUI();
+            }
+        }, 80);
+        
+        try {
+            for (let i = startStep; i < STEPS.length; i++) {
+                if (lessonAbort) break;
+                currentStepIndex = i;
+                const step = STEPS[i];
+                
+                // 设置步骤标签
+                if (step.type === 'intro') stepCounter.textContent = 'Intro';
+                else if (step.type === 'definition') stepCounter.textContent = 'Definition';
+                else if (step.type === 'formula') stepCounter.textContent = 'Formula';
+                else if (step.type === 'connectors') stepCounter.textContent = 'FANBOYS';
+                else if (step.type === 'subordinators') stepCounter.textContent = 'Subordinators';
+                else if (step.type.includes('basic')) stepCounter.textContent = 'BASIC';
+                else if (step.type.includes('intermediate')) stepCounter.textContent = 'INTERMEDIATE';
+                else if (step.type.includes('advanced')) stepCounter.textContent = 'ADVANCED';
+                else if (step.type.includes('master')) stepCounter.textContent = 'MASTER';
+                else if (step.type === 'comma_rules') stepCounter.textContent = 'Comma Rules';
+                else if (step.type === 'outro') stepCounter.textContent = 'Complete!';
+                
+                if (step.type === 'intro') {
+                    hideTitle(); clearSentenceRow(); resetFormulaRow(); diffBadge.classList.remove('show'); hideTypeTag();
+                    await sleep(200);
+                    showTitle(step.title, step.subtitle);
+                    setSubs(step.en, step.tc);
+                    AudioFX.chord();
+                    await sleep(step.duration);
+                }
+                else if (step.type === 'definition' || step.type === 'connectors' || step.type === 'subordinators') {
+                    clearSentenceRow(); hideTitle(); resetFormulaRow(); diffBadge.classList.remove('show'); hideTypeTag();
+                    setSubs(step.en, step.tc);
+                    await sleep(step.duration);
+                }
+                else if (step.type === 'formula') {
+                    clearSentenceRow(); hideTitle(); diffBadge.classList.remove('show'); hideTypeTag();
+                    await showFormula();
+                    setSubs(step.en, step.tc);
+                    await sleep(step.duration);
+                }
+                else if (step.type === 'basic_intro' || step.type === 'intermediate_intro' || step.type === 'advanced_intro' || step.type === 'master_intro') {
+                    clearSentenceRow(); hideTitle(); resetFormulaRow(); hideTypeTag();
+                    setDiff(step.diff, step.diffColor);
+                    setSubs(step.en, step.tc);
+                    await sleep(step.duration);
+                }
+                else if (step.type === 'basic_example' || step.type === 'intermediate_example' || step.type === 'advanced_example' || step.type === 'master_example' || step.type === 'intermediate_variant' || step.type === 'comma_rules') {
+                    hideTitle(); resetFormulaRow(); diffBadge.classList.remove('show');
+                    await showBlocks(step.blocks);
+                    showTypeTag(step.tag, step.tagColor);
+                    setSubs(step.en, step.tc);
+                    await sleep(step.duration);
+                }
+                else if (step.type === 'basic_analysis' || step.type === 'advanced_analysis') {
+                    clearSentenceRow(); hideTypeTag(); resetFormulaRow(); diffBadge.classList.remove('show');
+                    setSubs(step.en, step.tc);
+                    await sleep(step.duration);
+                }
+                else if (step.type === 'outro') {
+                    hideTitle(); clearSentenceRow(); resetFormulaRow(); diffBadge.classList.remove('show'); hideTypeTag();
+                    await sleep(200);
+                    showTitle(step.title, step.subtitle);
+                    setSubs(step.en, step.tc);
+                    AudioFX.success();
+                    await sleep(step.duration);
+                }
+            }
+            if (!lessonAbort) {
+                if (progressInterval) clearInterval(progressInterval);
+                isPlaying = false;
+                mainContent.style.display = 'none';
+                subtitleArea.style.display = 'none';
+                resultScreen.classList.add('active');
+            }
+        } catch (e) { if (e.message !== 'abort') console.warn(e); }
+        finally { if (progressInterval && lessonAbort) clearInterval(progressInterval); }
+    }
+
+    // 进度条交互
+    function setupProgressBar() {
+        let isDragging = false;
+        let dragTargetStep = null;
+        let dragStartTime = 0;
+        
+        const getPercent = (e) => {
+            const rect = progressRail.getBoundingClientRect();
+            let clientX = e.clientX;
+            if (e.touches) clientX = e.touches[0].clientX;
+            return Math.min(1, Math.max(0, (clientX - rect.left) / rect.width)) * 100;
+        };
+        const onMove = (e) => {
+            if (!isDragging || !isPlaying) return;
+            e.preventDefault();
+            const percent = getPercent(e);
+            progressFill.style.width = `${percent}%`;
+            dragHandle.style.left = `${percent}%`;
+            dragTargetStep = Math.min(STEPS.length - 1, Math.max(0, Math.floor((percent / 100) * STEPS.length)));
+            progressText.textContent = `Seeking to step ${dragTargetStep + 1}/${STEPS.length}`;
+        };
+        const onEnd = () => {
+            if (isDragging && isPlaying && dragTargetStep !== null && dragTargetStep !== currentStepIndex) {
+                if (isPaused) setPaused(false);
+                if (!lessonAbort) {
+                    lessonAbort = true;
+                    setTimeout(() => startLessonAtStep(dragTargetStep), 100);
+                }
+            }
+            isDragging = false;
+            dragTargetStep = null;
+        };
+        progressRail.addEventListener('mousedown', (e) => { if (!isPlaying) return; isDragging = true; dragStartTime = Date.now(); onMove(e); document.addEventListener('mousemove', onMove); document.addEventListener('mouseup', onEnd); e.preventDefault(); });
+        progressRail.addEventListener('touchstart', (e) => { if (!isPlaying) return; isDragging = true; dragStartTime = Date.now(); onMove(e); document.addEventListener('touchmove', onMove); document.addEventListener('touchend', onEnd); e.preventDefault(); });
+        progressRail.addEventListener('click', (e) => { if (Date.now() - dragStartTime < 200 && dragStartTime > 0) { dragStartTime = 0; return; } if (!isPlaying) return; if (isDragging) return; togglePause(); });
+        pauseIndicator.addEventListener('click', (e) => { e.stopPropagation(); togglePause(); });
+    }
+
+    // 构建开始画面概览
+    function buildOverview() {
+        const container = document.getElementById('levelsOverview');
+        container.innerHTML = `
+            <div class="overview-card"><div class="overview-level">📘 BASIC</div><div class="overview-desc">Because... IC, and IC</div></div>
+            <div class="overview-card"><div class="overview-level">📙 INTERMEDIATE</div><div class="overview-desc">Although... IC, and IC</div></div>
+            <div class="overview-card"><div class="overview-level">📗 ADVANCED</div><div class="overview-desc">While... IC, but IC</div></div>
+            <div class="overview-card"><div class="overview-level">🏆 MASTER</div><div class="overview-desc">IC, yet IC, even though...</div></div>
+        `;
+    }
+    buildOverview();
+
+    async function startLesson() {
+        startScreen.classList.remove('active');
+        mainContent.style.display = 'flex';
+        subtitleArea.style.display = 'block';
+        resultScreen.classList.remove('active');
+        document.getElementById('stage').classList.remove('paused');
+        if (pauseResolve) { pauseResolve(); pauseResolve = null; }
+        isPaused = false;
+        lessonAbort = false;
+        await startLessonAtStep(0);
+    }
+    
+    function resetToStart() {
+        if (isPlaying) { lessonAbort = true; isPlaying = false; }
+        if (pauseResolve) { pauseResolve(); pauseResolve = null; }
+        isPaused = false;
+        if (progressInterval) clearInterval(progressInterval);
+        document.getElementById('stage').classList.remove('paused');
+        mainContent.style.display = 'none';
+        subtitleArea.style.display = 'none';
+        resultScreen.classList.remove('active');
+        startScreen.classList.add('active');
+        progressFill.style.width = '0%';
+        dragHandle.style.left = '0%';
+        progressText.textContent = 'Lesson Progress';
+        stepCounter.textContent = 'Compound-Complex';
+        pauseIndicator.innerHTML = '<span>⏸️</span> <span>Click bar to pause</span>';
+        AudioFX.suspend();
+        if (!AudioFX.muted) AudioFX.resume();
+    }
+
+    document.getElementById('musicBtn').onclick = () => { const m = AudioFX.toggle(); document.getElementById('musicBtn').innerHTML = m ? '🔇' : '🔊'; };
+    document.getElementById('startLessonBtn').onclick = startLesson;
+    document.getElementById('restartBtn').onclick = () => { resetToStart(); startLesson(); };
+    document.getElementById('backStartBtn').onclick = resetToStart;
+    setupProgressBar();
+    
+    window.onload = () => { if (AudioFX.muted) document.getElementById('musicBtn').innerHTML = '🔇'; else document.getElementById('musicBtn').innerHTML = '🔊'; };
 </script>
 </body>
 </html>
