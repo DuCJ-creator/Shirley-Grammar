@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Shirley's Roots & Affixes Academy | 詞根詞綴學園</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #f5f0e8;
+    --bg2:       #ede7d8;
+    --bg3:       #e0d8c4;
+    --ink:       #2a1f0e;
+    --ink2:      #5a4a30;
+    --ink3:      #8a7558;
+    --gold:      #b8953a;
+    --gold2:     #d4af5a;
+    --border:    #c8b88a;
+    --shadow:    rgba(90,74,48,.18);
+    --root-col:  #3d5a80;
+    --pre-col:   #6b3fa0;
+    --suf-col:   #3a6b45;
+    --radius:    10px;
+    --font-h:    'Cinzel', serif;
+    --font-b:    'EB Garamond', serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font-b);
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse at 8% 18%,  rgba(184,149,58,.08) 0%, transparent 55%),
+      radial-gradient(ellipse at 92% 82%, rgba(58,107,69,.08)  0%, transparent 55%);
+  }
+
+  /* HEADER */
+  header {
+    background: var(--ink);
+    color: var(--bg);
+    text-align: center;
+    padding: 22px 16px 16px;
+    border-bottom: 3px solid var(--gold);
+  }
+  header h1 {
+    font-family: var(--font-h);
+    font-size: clamp(1.25rem, 5vw, 2.1rem);
+    letter-spacing: .08em;
+    color: var(--gold2);
+    font-weight: 600;
+  }
+  header p { font-style: italic; color: #c8b88a; font-size: .9rem; margin-top: 4px; letter-spacing: 0.5px; }
+  .header-line {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold2), transparent);
+    margin-top: 14px;
+  }
+
+  /* TOOLBAR */
+  .toolbar {
+    display: flex; justify-content: center; gap: 7px; flex-wrap: wrap;
+    padding: 14px 12px 0;
+  }
+  .toolbar button {
+    font-family: var(--font-h); font-size: .7rem; letter-spacing: .08em;
+    padding: 7px 16px; border: 1.5px solid var(--border); border-radius: 22px;
+    background: var(--bg2); color: var(--ink2); cursor: pointer; transition: all .2s;
+  }
+  .toolbar button:hover { background: var(--bg3); }
+  .toolbar button.active { background: var(--ink); color: var(--gold2); border-color: var(--gold); }
+
+  /* TYPE TABS */
+  .type-tabs {
+    display: flex; justify-content: center; margin: 14px auto 0;
+    border: 1.5px solid var(--border); border-radius: var(--radius);
+    overflow: hidden; max-width: 380px;
+  }
+  .type-tabs button {
+    flex: 1; font-family: var(--font-h); font-size: .7rem; letter-spacing: .12em;
+    padding: 9px 4px; border: none; border-right: 1px solid var(--border);
+    background: var(--bg2); color: var(--ink2); cursor: pointer; transition: all .2s;
+  }
+  .type-tabs button:last-child { border-right: none; }
+  .type-tabs button.active[data-type="root"]   { background: var(--root-col); color: #fff; }
+  .type-tabs button.active[data-type="prefix"] { background: var(--pre-col);  color: #fff; }
+  .type-tabs button.active[data-type="suffix"] { background: var(--suf-col);  color: #fff; }
+
+  /* SEARCH — GLOBAL SEARCH BAR */
+  .search-bar {
+    display: none; align-items: center; max-width: 560px;
+    margin: 14px auto 0; padding: 0 16px; gap: 8px;
+  }
+  .search-bar.visible { display: flex; }
+  .search-bar input {
+    flex: 1; font-family: var(--font-b); font-size: 1rem;
+    padding: 10px 18px; border: 1.5px solid var(--border); border-radius: 40px;
+    background: #fff; color: var(--ink); outline: none; transition: 0.2s;
+  }
+  .search-bar input:focus { border-color: var(--gold); box-shadow: 0 0 0 2px rgba(184,149,58,0.2); }
+  .global-search-hint {
+    font-size: 0.7rem; text-align: center; color: var(--ink3); margin-top: 6px;
+    font-style: italic; letter-spacing: 0.3px;
+  }
+
+  /* ORNAMENT */
+  .ornament {
+    text-align: center; color: var(--gold); font-size: 1rem; letter-spacing: .5em;
+    margin: 12px 0 16px; opacity: .55;
+  }
+
+  /* MAIN */
+  main { padding: 0 14px 48px; max-width: 1000px; margin: 0 auto; }
+
+  /* SECTION BADGE */
+  .section-badge {
+    font-family: var(--font-h); font-size: .65rem; letter-spacing: .22em;
+    color: #fff; display: inline-block; padding: 3px 12px; border-radius: 11px; margin-bottom: 10px;
+  }
+  .section-badge.root   { background: var(--root-col); }
+  .section-badge.prefix { background: var(--pre-col); }
+  .section-badge.suffix { background: var(--suf-col); }
+
+  /* LOADING */
+  .msg { text-align: center; padding: 60px 20px; font-style: italic; color: var(--ink3); font-size: 1.05rem; }
+
+  /* OVERVIEW TABLE */
+  .ov-table {
+    width: 100%; border-collapse: collapse;
+    background: #fff; border-radius: var(--radius); overflow: hidden;
+    box-shadow: 0 2px 14px var(--shadow);
+  }
+  .ov-table thead tr { font-family: var(--font-h); font-size: .72rem; letter-spacing: .1em; color: #fff; }
+  .ov-table.root   thead tr { background: var(--root-col); }
+  .ov-table.prefix thead tr { background: var(--pre-col); }
+  .ov-table.suffix thead tr { background: var(--suf-col); }
+  .ov-table thead th { padding: 11px 15px; text-align: left; }
+  .ov-table tbody tr { border-bottom: 1px solid var(--bg3); }
+  .ov-table tbody tr:last-child { border-bottom: none; }
+  .ov-table tbody tr:hover { background: var(--bg); }
+  .ov-table td { padding: 10px 15px; vertical-align: middle; }
+  .ov-table .td-item {
+    font-family: var(--font-h); font-size: 1.05rem; font-weight: 600; color: var(--ink); min-width: 80px;
+  }
+  .ov-table .td-meaning { font-size: 1rem; font-style: italic; color: var(--ink2); }
+  .ov-table .td-star { text-align: center; cursor: pointer; font-size: 1.1rem; width: 42px; }
+
+  .sample-toggle {
+    font-size: .78rem; padding: 3px 10px; border: 1px solid var(--border); border-radius: 12px;
+    background: var(--bg2); color: var(--ink3); cursor: pointer; font-family: var(--font-b);
+    transition: all .18s;
+  }
+  .sample-toggle:hover { background: var(--bg3); }
+  .sample-words { display: none; margin-top: 6px; font-size: .9rem; color: #3a6b45; line-height: 1.75; }
+  .sample-words.vis { display: block; }
+
+  /* FLASHCARD */
+  .fc-wrap { display: flex; flex-direction: column; align-items: center; gap: 20px; padding: 6px 0; }
+  .fc-counter { font-family: var(--font-h); font-size: .78rem; letter-spacing: .1em; color: var(--ink3); }
+  .fc-scene { width: 100%; max-width: 540px; height: 270px; perspective: 900px; cursor: pointer; }
+  .fc-card {
+    width: 100%; height: 100%; position: relative;
+    transform-style: preserve-3d; transition: transform .55s cubic-bezier(.4,0,.2,1);
+  }
+  .fc-card.flipped { transform: rotateY(180deg); }
+  .fc-face {
+    position: absolute; inset: 0; border-radius: 14px; backface-visibility: hidden;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 26px 32px; box-shadow: 0 4px 24px var(--shadow); text-align: center;
+  }
+  .fc-front { background: #fff; border: 2px solid var(--border); }
+  .fc-back  { background: var(--ink); transform: rotateY(180deg); }
+
+  .fc-type-pill {
+    font-family: var(--font-h); font-size: .62rem; letter-spacing: .2em;
+    padding: 3px 12px; border-radius: 11px; margin-bottom: 12px; color: #fff;
+  }
+  .fc-item { font-family: var(--font-h); font-size: clamp(1.5rem,5vw,2.2rem); font-weight: 700; margin-bottom: 8px; }
+  .fc-front .fc-item { color: var(--ink); }
+  .fc-back  .fc-item { color: var(--gold2); }
+  .fc-meaning { font-style: italic; font-size: 1.05rem; line-height: 1.5; }
+  .fc-front .fc-meaning { color: var(--ink2); }
+  .fc-back  .fc-meaning { color: #c8b88a; }
+  .fc-samples { font-size: .95rem; color: var(--gold2); line-height: 1.85; margin-top: 10px; }
+  .fc-hint { font-size: .75rem; font-style: italic; margin-top: 8px; }
+  .fc-front .fc-hint { color: var(--ink3); }
+  .fc-back  .fc-hint { color: #6a5a3a; }
+
+  .fc-nav { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; justify-content: center; }
+  .fc-nav button {
+    font-family: var(--font-h); font-size: .7rem; letter-spacing: .08em;
+    padding: 8px 20px; border: 1.5px solid var(--border); border-radius: 22px;
+    background: var(--bg2); color: var(--ink2); cursor: pointer; transition: all .2s;
+  }
+  .fc-nav button:hover:not(:disabled) { background: var(--ink); color: var(--gold2); border-color: var(--gold); }
+  .fc-nav button:disabled { opacity: .38; cursor: default; }
+
+  /* QUIZ */
+  .quiz-wrap { max-width: 580px; margin: 0 auto; }
+  .quiz-prog { font-family: var(--font-h); font-size: .72rem; letter-spacing: .1em; color: var(--ink3); margin-bottom: 18px; text-align: center; }
+  .quiz-qbox {
+    background: #fff; border-radius: 14px; padding: 26px 26px 20px;
+    box-shadow: 0 3px 18px var(--shadow); margin-bottom: 18px; border-top: 4px solid var(--gold);
+  }
+  .quiz-prompt { font-family: var(--font-h); font-size: .68rem; letter-spacing: .12em; color: var(--ink3); margin-bottom: 8px; }
+  .quiz-badge {
+    display: inline-block; font-family: var(--font-h); font-size: .6rem; letter-spacing: .18em;
+    padding: 2px 10px; border-radius: 10px; color: #fff; margin-bottom: 6px;
+  }
+  .quiz-item { font-family: var(--font-h); font-size: clamp(1.5rem,5vw,2.3rem); font-weight: 700; color: var(--ink); }
+  .opts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .opt-btn {
+    font-family: var(--font-b); font-size: .97rem; font-style: italic; text-align: left;
+    padding: 12px 14px; border: 1.5px solid var(--border); border-radius: var(--radius);
+    background: var(--bg2); color: var(--ink); cursor: pointer; transition: all .18s; line-height: 1.4;
+  }
+  .opt-btn:hover:not(:disabled) { background: var(--bg3); border-color: var(--gold); }
+  .opt-btn.correct { background: #d4edda; border-color: #3a6b45; color: #1a4a28; }
+  .opt-btn.wrong   { background: #f8d7da; border-color: #c0392b; color: #7a1520; }
+  .opt-btn:disabled { cursor: default; }
+  .opt-lbl { font-family: var(--font-h); font-size: .66rem; letter-spacing: .1em; margin-right: 7px; color: var(--ink3); }
+  .quiz-fb { text-align: center; font-size: .97rem; margin-top: 12px; min-height: 22px; color: var(--ink2); font-style: italic; }
+  .quiz-next {
+    display: block; margin: 16px auto 0;
+    font-family: var(--font-h); font-size: .74rem; letter-spacing: .1em;
+    padding: 10px 30px; border: 2px solid var(--gold); border-radius: 22px;
+    background: var(--ink); color: var(--gold2); cursor: pointer; transition: all .2s;
+  }
+  .quiz-next:hover { background: var(--gold); color: var(--ink); }
+  .quiz-result {
+    text-align: center; background: #fff; border-radius: 14px;
+    padding: 48px 28px; box-shadow: 0 3px 18px var(--shadow);
+  }
+  .quiz-result h2 { font-family: var(--font-h); font-size: 1.5rem; color: var(--gold); margin-bottom: 10px; }
+  .quiz-score { font-size: 2.8rem; font-family: var(--font-h); color: var(--ink); margin: 10px 0; }
+  .quiz-score span { color: var(--gold); }
+  .quiz-restart {
+    margin-top: 22px; font-family: var(--font-h); font-size: .74rem; letter-spacing: .1em;
+    padding: 10px 30px; border: 2px solid var(--gold); border-radius: 22px;
+    background: var(--ink); color: var(--gold2); cursor: pointer;
+  }
+  .quiz-restart:hover { background: var(--gold); color: var(--ink); }
+
+  /* REVIEW */
+  .rev-wrap { max-width: 580px; margin: 0 auto; }
+  .rev-card {
+    background: #fff; border-radius: 14px; padding: 28px;
+    box-shadow: 0 3px 18px var(--shadow); margin-bottom: 18px; border-top: 4px solid var(--gold);
+  }
+  .rev-label { font-family: var(--font-h); font-size: .68rem; letter-spacing: .12em; color: var(--ink3); display: block; margin-bottom: 8px; }
+  .rev-prompt { font-size: 1.08rem; font-style: italic; color: var(--ink2); margin-bottom: 14px; line-height: 1.6; }
+  .rev-inp {
+    font-family: var(--font-b); font-size: 1.1rem; padding: 9px 14px;
+    border: 1.5px solid var(--border); border-radius: var(--radius); width: 100%;
+    outline: none; color: var(--ink); background: var(--bg);
+  }
+  .rev-inp:focus { border-color: var(--gold); }
+  .rev-inp.correct { border-color: #3a6b45; background: #d4edda; }
+  .rev-inp.wrong   { border-color: #c0392b; background: #f8d7da; }
+  .rev-check {
+    margin-top: 12px; font-family: var(--font-h); font-size: .7rem; letter-spacing: .1em;
+    padding: 8px 20px; border: 1.5px solid var(--gold); border-radius: 20px;
+    background: var(--ink); color: var(--gold2); cursor: pointer;
+  }
+  .rev-reveal { font-size: .92rem; color: var(--suf-col); margin-top: 8px; font-style: italic; }
+  .rev-nav { display: flex; gap: 12px; justify-content: center; margin-top: 8px; }
+  .rev-nav button {
+    font-family: var(--font-h); font-size: .7rem; letter-spacing: .08em;
+    padding: 8px 20px; border: 1.5px solid var(--border); border-radius: 20px;
+    background: var(--bg2); color: var(--ink2); cursor: pointer; transition: all .18s;
+  }
+  .rev-nav button:hover:not(:disabled) { background: var(--bg3); }
+  .rev-nav button:disabled { opacity: .38; cursor: default; }
+
+  /* STAR WORDS */
+  .star-empty { text-align: center; padding: 60px 20px; font-style: italic; color: var(--ink3); font-size: 1.05rem; }
+  mark { background: #fde68a; border-radius: 3px; padding: 0 2px; color: #2a1f0e; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>⊕ Shirley's Roots & Affixes Academy</h1>
+  <p>Shirley 老師的詞根詞綴學園 · A Classical English Morphology Treasury</p>
+  <div class="header-line"></div>
+</header>
+
+<div class="toolbar" id="toolbar">
+  <button data-mode="study"     class="active">📚 Study</button>
+  <button data-mode="review"              >✏️ Review</button>
+  <button data-mode="quiz"                >🏆 Quiz</button>
+  <button data-mode="search"              >🔍 Search</button>
+  <button data-mode="flashcard"           >🃏 Flashcard</button>
+  <button data-mode="stars"               >⭐ Star Words</button>
+</div>
+
+<div class="type-tabs" id="typeTabs">
+  <button data-type="root"   class="active">Root</button>
+  <button data-type="prefix"             >Prefix</button>
+  <button data-type="suffix"             >Suffix</button>
+</div>
+
+<!-- GLOBAL SEARCH BAR: appears only in Search mode but performs global (across all three types) -->
+<div class="search-bar" id="searchBar">
+  <input type="text" id="searchInput" placeholder="🔍 Global search: root, prefix, suffix, meaning, or sample words...">
+</div>
+<div class="global-search-hint" id="searchHint" style="display: none;">✨ Global search — matches roots, affixes, meanings & sample words across ALL categories</div>
+
+<div class="ornament">· · ·</div>
+
+<main id="app">
+  <div class="msg">Loading data…</div>
+</main>
+
+<script>
+/* ── GLOBAL ROOTS & AFFIXES DATABASE (FULL) ── */
+const CSV = {
+  root:   'https://ducj-creator.github.io/Shirley-Grammar/root%20and%20affix/root.csv',
+  prefix: 'https://ducj-creator.github.io/Shirley-Grammar/root%20and%20affix/prefix.csv',
+  suffix: 'https://ducj-creator.github.io/Shirley-Grammar/root%20and%20affix/suffix.csv',
+};
+const TC = { root:'#3d5a80', prefix:'#6b3fa0', suffix:'#3a6b45' };
+const TL = { root:'ROOT',    prefix:'PREFIX',  suffix:'SUFFIX'  };
+
+let DB  = { root:[], prefix:[], suffix:[] };
+let stars = {};
+try { stars = JSON.parse(localStorage.getItem('ra_stars') || '{}'); } catch(e){}
+
+let mode = 'study', type = 'root';
+let quizQ=[], quizIdx=0, quizScore=0, quizDone=false;
+let fcIdx=0;
+let revPool=[], revIdx=0;
+
+/* ── CSV PARSER ── */
+function parseCSV(txt) {
+  const rows = [];
+  const lines = txt.split(/\r?\n/);
+  for (let i = 1; i < lines.length; i++) {
+    const ln = lines[i].trim();
+    if (!ln) continue;
+    const cols=[], len=ln.length;
+    let cur='', inQ=false;
+    for (let c=0;c<len;c++) {
+      const ch=ln[c];
+      if (ch==='"') inQ=!inQ;
+      else if (ch===','&&!inQ) { cols.push(cur.trim()); cur=''; }
+      else cur+=ch;
+    }
+    cols.push(cur.trim());
+    if (cols[0]) rows.push(cols);
+  }
+  return rows;
+}
+
+function makeEntry(cols, t) {
+  const samples = cols.slice(2)
+    .map(s=>s.trim())
+    .filter(s=>s && s!=='-' && !/_+/.test(s));
+  return { type:t, item:cols[0]||'', meaning:cols[1]||'', samples, key:t+'|'+(cols[0]||'') };
+}
+
+/* ── LOAD ALL ── */
+async function load() {
+  try {
+    const types = ['root','prefix','suffix'];
+    const texts = await Promise.all(types.map(t=>fetch(CSV[t]).then(r=>r.text())));
+    types.forEach((t,i) => DB[t] = parseCSV(texts[i]).map(r=>makeEntry(r,t)));
+    render();
+  } catch(e) {
+    document.getElementById('app').innerHTML =
+      `<div class="msg" style="color:#b00">Could not load data.<br><small>${e.message}</small></div>`;
+  }
+}
+
+/* HELPERS */
+const esc  = s => s.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+const escR = s => s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+const isStar = k => !!stars[k];
+function setStar(k) {
+  if (stars[k]) delete stars[k]; else stars[k]=true;
+  try { localStorage.setItem('ra_stars', JSON.stringify(stars)); } catch(e){}
+}
+function cur() { return DB[type]; }
+
+/* GLOBAL SEARCH (ACROSS root, prefix, suffix) */
+function globalSearch(query) {
+  if (!query) return [];
+  const ql = query.toLowerCase();
+  const results = [];
+  for (const t of ['root','prefix','suffix']) {
+    for (const entry of DB[t]) {
+      if (entry.item.toLowerCase().includes(ql) ||
+          entry.meaning.toLowerCase().includes(ql) ||
+          entry.samples.some(s => s.toLowerCase().includes(ql))) {
+        results.push({ ...entry, originalType: t });
+      }
+    }
+  }
+  return results;
+}
+
+/* RENDER ROUTER */
+function render() {
+  const sb = document.getElementById('searchBar');
+  const hint = document.getElementById('searchHint');
+  sb.classList.toggle('visible', mode==='search');
+  if (mode==='search') {
+    hint.style.display = 'block';
+  } else {
+    hint.style.display = 'none';
+  }
+  const app = document.getElementById('app');
+  if      (mode==='study')     studyView(app);
+  else if (mode==='review')    reviewView(app);
+  else if (mode==='quiz')      quizView(app);
+  else if (mode==='search')    globalSearchView(app, document.getElementById('searchInput').value.trim());
+  else if (mode==='flashcard') flashView(app);
+  else if (mode==='stars')     starsView(app);
+}
+
+/* STUDY (original per-type) */
+function studyView(app) {
+  const data = cur();
+  if (!data.length) { app.innerHTML='<div class="msg">No entries.</div>'; return; }
+  app.innerHTML = `
+    <span class="section-badge ${type}">${TL[type]}S</span>
+    <table class="ov-table ${type}">
+      <thead><tr><th>${TL[type]}</th><th>MEANING</th><th>SAMPLE WORDS</th><th>★</th></tr></thead>
+      <tbody>${data.map((d,i)=>`
+        <tr>
+          <td class="td-item">${esc(d.item)}</td>
+          <td class="td-meaning">${esc(d.meaning)}</td>
+          <td>
+            <button class="sample-toggle" onclick="toggleSW(${i})">Show sample words</button>
+            <div class="sample-words" id="sw${i}">${d.samples.length ? esc(d.samples.join(' · ')) : '<span style="color:#ccc">—</span>'}</div>
+          </td>
+          <td class="td-star" onclick="starCell('${esc(d.key)}',this)">${isStar(d.key)?'⭐':'☆'}</td>
+        </tr>`).join('')}
+      </tbody>
+    </table>`;
+}
+
+function toggleSW(i) {
+  const el=document.getElementById('sw'+i);
+  const btn=el.previousElementSibling;
+  el.classList.toggle('vis');
+  btn.textContent = el.classList.contains('vis') ? 'Hide sample words' : 'Show sample words';
+}
+function starCell(key, cell) { setStar(key); cell.textContent = isStar(key) ? '⭐' : '☆'; }
+
+/* FLASHCARD */
+function flashView(app) {
+  const data = cur();
+  if (!data.length) { app.innerHTML='<div class="msg">No entries.</div>'; return; }
+  if (fcIdx>=data.length) fcIdx=0;
+  const d=data[fcIdx], col=TC[type], lbl=TL[type];
+  const starred=isStar(d.key);
+  app.innerHTML=`
+    <div class="fc-wrap">
+      <div class="fc-counter">${fcIdx+1} / ${data.length}</div>
+      <div class="fc-scene" id="fcScene" onclick="fcFlip()">
+        <div class="fc-card" id="fcCard">
+          <div class="fc-face fc-front">
+            <span class="fc-type-pill" style="background:${col}">${lbl}</span>
+            <div class="fc-item">${esc(d.item)}</div>
+            <div class="fc-meaning">${esc(d.meaning)}</div>
+            <div class="fc-hint">Click to reveal sample words ↺</div>
+          </div>
+          <div class="fc-face fc-back">
+            <span class="fc-type-pill" style="background:${col}bb">${lbl}</span>
+            <div class="fc-item">${esc(d.item)}</div>
+            <div class="fc-meaning">${esc(d.meaning)}</div>
+            <div class="fc-samples">${d.samples.length ? esc(d.samples.join('  ·  ')) : '<em style="color:#666">—</em>'}</div>
+            <div class="fc-hint">Click to flip back ↺</div>
+          </div>
+        </div>
+      </div>
+      <div class="fc-nav">
+        <button onclick="fcGo(-1)" ${fcIdx===0?'disabled':''}>← Prev</button>
+        <button id="fcStarBtn" onclick="fcToggleStar('${esc(d.key)}')">${starred?'⭐ Starred':'☆ Star'}</button>
+        <button onclick="fcGo(1)" ${fcIdx===data.length-1?'disabled':''}>Next →</button>
+      </div>
+    </div>`;
+}
+function fcFlip() { document.getElementById('fcCard').classList.toggle('flipped'); }
+function fcGo(dir) { const data=cur(); fcIdx=Math.max(0,Math.min(data.length-1,fcIdx+dir)); flashView(document.getElementById('app')); }
+function fcToggleStar(key) { setStar(key); document.getElementById('fcStarBtn').textContent = isStar(key)?'⭐ Starred':'☆ Star'; }
+
+/* QUIZ (per-type) */
+function buildQuiz() {
+  const pool=cur();
+  if (pool.length<4) return [];
+  const sh=[...pool].sort(()=>Math.random()-.5);
+  return sh.slice(0,Math.min(10,pool.length)).map(d=>{
+    const wrongs=[...pool].filter(x=>x.key!==d.key).sort(()=>Math.random()-.5).slice(0,3);
+    const opts=[...wrongs,d].sort(()=>Math.random()-.5);
+    return {d, opts, ci:opts.indexOf(d)};
+  });
+}
+function quizView(app) {
+  if (quizDone) {
+    app.innerHTML=`<div class="quiz-wrap"><div class="quiz-result">
+      <h2>Quest Complete</h2>
+      <div class="quiz-score"><span>${quizScore}</span> / ${quizQ.length}</div>
+      <p style="font-style:italic;color:var(--ink3)">${quizScore===quizQ.length?'Perfect score — splendid mastery!':quizScore>=quizQ.length*.7?'Well done, scholar!':'Keep studying — you\'ll get there.'}</p>
+      <button class="quiz-restart" onclick="resetQuiz()">Try Again</button>
+    </div></div>`;
+    return;
+  }
+  if (!quizQ.length) { quizQ=buildQuiz(); quizIdx=0; quizScore=0; if (!quizQ.length) { app.innerHTML='<div class="msg">Need at least 4 entries for a quiz.</div>'; return; } }
+  const q=quizQ[quizIdx], col=TC[type], lbl=TL[type];
+  app.innerHTML=`
+    <div class="quiz-wrap">
+      <div class="quiz-prog">Question ${quizIdx+1} of ${quizQ.length}</div>
+      <div class="quiz-qbox">
+        <div class="quiz-prompt">WHAT DOES THIS ${lbl} MEAN?</div>
+        <span class="quiz-badge" style="background:${col}">${lbl}</span><br>
+        <div class="quiz-item">${esc(q.d.item)}</div>
+      </div>
+      <div class="opts-grid">
+        ${q.opts.map((o,i)=>`<button class="opt-btn" id="o${i}" onclick="answer(${i})"><span class="opt-lbl">${'ABCD'[i]}</span>${esc(o.meaning)}</button>`).join('')}
+      </div>
+      <div class="quiz-fb" id="qfb"></div>
+    </div>`;
+}
+function answer(chosen) {
+  const q=quizQ[quizIdx];
+  [0,1,2,3].forEach(i=>document.getElementById('o'+i).disabled=true);
+  document.getElementById('o'+q.ci).classList.add('correct');
+  const fb=document.getElementById('qfb');
+  if (chosen===q.ci) { quizScore++; fb.textContent='✓ Correct!'; }
+  else { document.getElementById('o'+chosen).classList.add('wrong'); fb.textContent=`✗ Answer: ${q.opts[q.ci].meaning}`; }
+  const nxt=document.createElement('button');
+  nxt.className='quiz-next';
+  nxt.textContent = quizIdx+1<quizQ.length ? 'Next Question →' : 'See Results';
+  nxt.onclick=()=>{ quizIdx++; if(quizIdx>=quizQ.length)quizDone=true; quizView(document.getElementById('app')); };
+  document.querySelector('.quiz-wrap').appendChild(nxt);
+}
+function resetQuiz() { quizQ=[]; quizDone=false; quizView(document.getElementById('app')); }
+
+/* REVIEW */
+function reviewView(app) {
+  if (!revPool.length) { revPool=[...cur()].sort(()=>Math.random()-.5); revIdx=0; }
+  if (!revPool.length) { app.innerHTML='<div class="msg">No entries.</div>'; return; }
+  const d=revPool[revIdx], lbl=TL[type];
+  app.innerHTML=`
+    <div class="rev-wrap">
+      <div class="rev-card">
+        <span class="rev-label">${lbl} — ${revIdx+1} / ${revPool.length}: What is the ${type.toLowerCase()} for this meaning?</span>
+        <div class="rev-prompt">${esc(d.meaning)}</div>
+        <input class="rev-inp" id="revInp" placeholder="Type the ${type}…" autocomplete="off">
+        <button class="rev-check" onclick="checkRev()">Check</button>
+        <div class="rev-reveal" id="revReveal"></div>
+      </div>
+      <div class="rev-nav">
+        <button onclick="revGo(-1)" ${revIdx===0?'disabled':''}>← Prev</button>
+        <button onclick="revGo(1)"  ${revIdx===revPool.length-1?'disabled':''}>Next →</button>
+      </div>
+    </div>`;
+  const inp=document.getElementById('revInp');
+  inp.focus();
+  inp.onkeydown=e=>{ if(e.key==='Enter') checkRev(); };
+}
+function checkRev() {
+  const d=revPool[revIdx];
+  const inp=document.getElementById('revInp');
+  if (inp.disabled) return;
+  const val=inp.value.trim().toLowerCase();
+  const correct=d.item.toLowerCase();
+  inp.disabled=true;
+  const rev=document.getElementById('revReveal');
+  if (val===correct) { inp.classList.add('correct'); rev.textContent='✓ Correct!'; }
+  else { inp.classList.add('wrong'); rev.textContent=`Answer: ${d.item}`; }
+}
+function revGo(dir) { revIdx=Math.max(0,Math.min(revPool.length-1,revIdx+dir)); reviewView(document.getElementById('app')); }
+
+/* ★ GLOBAL SEARCH VIEW (no type tabs restriction) */
+function globalSearchView(app, q) {
+  if (!q) { app.innerHTML='<div class="msg">✨ Enter a word, root, or meaning in the search bar above — global search across Roots, Prefixes & Suffixes.</div>'; return; }
+  const results = globalSearch(q);
+  if (!results.length) { app.innerHTML='<div class="msg">🔍 No matches found across Roots, Prefixes or Suffixes. Try another keyword.</div>'; return; }
+  const hi = (s) => s.replace(new RegExp('('+escR(q)+')','gi'), '<mark>$1</mark>');
+  // group by original type for readability
+  const grouped = { root:[], prefix:[], suffix:[] };
+  results.forEach(r => grouped[r.originalType].push(r));
+  let html = `<div style="margin-bottom:16px;"><span class="section-badge" style="background:var(--gold2); color:var(--ink);">🌍 GLOBAL RESULTS</span> <span style="margin-left:8px; font-style:italic;">${results.length} match(es) for “${esc(q)}”</span></div>`;
+  for (const t of ['root','prefix','suffix']) {
+    if (grouped[t].length===0) continue;
+    const badgeCls = t==='root' ? 'root' : (t==='prefix' ? 'prefix' : 'suffix');
+    html += `<div style="margin-top:28px;"><span class="section-badge ${badgeCls}" style="margin-bottom:5px;">${TL[t]}S (${grouped[t].length})</span>
+             <table class="ov-table ${t}" style="margin-top:6px;">
+               <thead><tr><th>${TL[t]}</th><th>MEANING</th><th>SAMPLE WORDS</th><th>★</th></tr></thead><tbody>`;
+    grouped[t].forEach((d,i_local) => {
+      html += `<tr>
+        <td class="td-item">${hi(esc(d.item))}</td>
+        <td class="td-meaning">${hi(esc(d.meaning))}</td>
+        <td><div class="sample-words vis" style="display:block">${d.samples.length ? hi(esc(d.samples.join(' · '))) : '—'}</div></td>
+        <td class="td-star" onclick="starCell('${esc(d.key)}',this)">${isStar(d.key)?'⭐':'☆'}</td>
+      </tr>`;
+    });
+    html += `</tbody></table></div>`;
+  }
+  app.innerHTML = html;
+}
+
+/* STAR WORDS */
+function starsView(app) {
+  const data = DB[type].filter(d=>isStar(d.key));
+  if (!data.length) {
+    app.innerHTML='<div class="star-empty">⭐ No starred words yet for this category.<br>Click ☆ in Study, Flashcard, or Search to save words here.</div>';
+    return;
+  }
+  app.innerHTML=`
+    <span class="section-badge ${type}">⭐ STARRED ${TL[type]}S</span>
+    <table class="ov-table ${type}">
+      <thead><tr><th>${TL[type]}</th><th>MEANING</th><th>SAMPLE WORDS</th><th>★</th></tr></thead>
+      <tbody>${data.map((d,i)=>`
+        <tr>
+          <td class="td-item">${esc(d.item)}</td>
+          <td class="td-meaning">${esc(d.meaning)}</td>
+          <td><button class="sample-toggle" onclick="toggleSW(${i})">Show sample words</button><div class="sample-words" id="sw${i}">${d.samples.length ? esc(d.samples.join(' · ')) : '—'}</div></td>
+          <td class="td-star" onclick="unStar('${esc(d.key)}')" title="Remove star">⭐</td>
+         </tr>`).join('')}
+      </tbody>
+    </table>`;
+}
+function unStar(key) { setStar(key); starsView(document.getElementById('app')); }
+
+/* EVENT BINDINGS */
+document.getElementById('toolbar').addEventListener('click', e=>{
+  const btn=e.target.closest('[data-mode]');
+  if (!btn) return;
+  mode=btn.dataset.mode;
+  document.querySelectorAll('#toolbar button').forEach(b=>b.classList.toggle('active',b===btn));
+  if (mode==='quiz') { quizQ=[]; quizDone=false; }
+  if (mode==='review') { revPool=[]; }
+  if (mode==='flashcard') { fcIdx=0; }
+  render();
+});
+document.getElementById('typeTabs').addEventListener('click', e=>{
+  const btn=e.target.closest('[data-type]');
+  if (!btn) return;
+  type=btn.dataset.type;
+  document.querySelectorAll('#typeTabs button').forEach(b=>b.classList.toggle('active',b===btn));
+  quizQ=[]; quizDone=false; revPool=[]; fcIdx=0;
+  if (mode !== 'search') render(); else { render(); }
+});
+document.getElementById('searchInput').addEventListener('input', e=>{
+  if (mode === 'search') globalSearchView(document.getElementById('app'), e.target.value.trim());
+  else if (mode !== 'search') { /* optional */ }
+});
+load();
+</script>
+</body>
+</html>
