@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
-  <title>Common Polysemes — Shirley's Lexicon | Academic Study</title>
+  <title>Common Polysemes — Shirley's Lexicon | Audio & Academic Study</title>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
   <style>
     * {
@@ -31,7 +31,7 @@
       --shadow-sm: 0 8px 20px rgba(0, 0, 0, 0.02), 0 2px 4px rgba(0, 0, 0, 0.02);
       --shadow-md: 0 18px 36px -12px rgba(0, 0, 0, 0.12);
       
-      /* 閃卡背面新配色 — 對眼睛友好的暖灰底色 */
+      /* 閃卡背面配色 — 對眼睛友好的暖灰底色 */
       --flash-back-bg: #2c2f36;
       --flash-back-text: #ece8e0;
       --flash-back-subtle: #bfb9ad;
@@ -232,7 +232,7 @@
       color: white;
     }
 
-    /* List view grid — 符合要求: word + pos + meaning (從 csv meaning 欄位) + 點開出現英文例句 + 中文句子 (不重複) */
+    /* List view grid */
     .list-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
@@ -270,9 +270,31 @@
       color: #f4b942;
       text-shadow: 0 0 3px rgba(244, 185, 66, 0.4);
     }
+    /* 發音按鈕 */
+    .speaker-btn {
+      position: absolute;
+      top: 1rem;
+      right: 3rem;
+      background: transparent;
+      border: none;
+      font-size: 1.1rem;
+      cursor: pointer;
+      color: var(--gold);
+      opacity: 0.7;
+      transition: 0.2s;
+      z-index: 3;
+      padding: 2px;
+      border-radius: 50%;
+    }
+    .speaker-btn:hover {
+      opacity: 1;
+      transform: scale(1.05);
+      color: var(--indigo);
+    }
     .word-head {
       display: flex;
       flex-direction: column;
+      padding-right: 60px; /* 為星星和喇叭留空間 */
     }
     .word-text {
       font-family: 'Cormorant Garamond', serif;
@@ -293,7 +315,6 @@
       width: fit-content;
       text-transform: lowercase;
     }
-    /* 主要顯示釋義 (meaning) 直接來自 CSV meaning 欄位 */
     .meaning-short {
       font-size: 0.9rem;
       color: var(--ink);
@@ -305,7 +326,6 @@
       border-radius: 12px;
       border-left: 2px solid var(--gold);
     }
-    /* 中文翻譯不再單獨顯示在外面，避免重複，點開後才出現完整中英對照 */
     .detail-expand {
       margin-top: 12px;
       padding-top: 12px;
@@ -337,7 +357,7 @@
       font-style: normal;
     }
 
-    /* Flashcard mode — 字體更大更易讀，背面改為友好深色 (暖灰) */
+    /* Flashcard mode */
     .flash-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -348,6 +368,31 @@
       height: 300px;
       cursor: pointer;
       animation: fadeUp 0.4s ease backwards;
+      position: relative;
+    }
+    /* 閃卡上的喇叭按鈕 (獨立於翻轉) */
+    .flash-speaker {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(0,0,0,0.4);
+      border: none;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      font-size: 1rem;
+      cursor: pointer;
+      z-index: 20;
+      backdrop-filter: blur(4px);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.2s;
+    }
+    .flash-speaker:hover {
+      background: var(--gold);
+      transform: scale(1.05);
     }
     .flip-inner {
       width: 100%;
@@ -429,7 +474,6 @@
       color: var(--gold-soft);
       margin-bottom: 6px;
     }
-    /* 英文句子在前，中文在後，不加多餘引號 */
     .example-en-first {
       font-size: 0.85rem;
       color: #e6dccf;
@@ -477,6 +521,8 @@
       .list-grid { grid-template-columns: 1fr; }
       .flash-grid { grid-template-columns: 1fr; }
       .fc-word { font-size: 1.9rem; }
+      .speaker-btn { right: 2.5rem; }
+      .word-head { padding-right: 50px; }
     }
   </style>
 </head>
@@ -484,9 +530,9 @@
 
 <div class="container">
   <div class="academic-header">
-    <div class="seal">📖</div>
-    <h1>Common Polysemes <em>常用一詞多義</em></h1>
-    <div class="subhead">Collated by Shirley • one word, many shades</div>
+    <div class="seal">🔊</div>
+    <h1>Common <em>Polysemes</em></h1>
+    <div class="subhead">Collated by Shirley • one word, many shades • tap 🔊 to listen</div>
   </div>
 
   <div class="study-panel">
@@ -503,12 +549,10 @@
 
     <div class="alpha-nav" id="alphaNav"></div>
 
-    <!-- List view section -->
     <div id="listViewSection">
       <div class="list-grid" id="listGrid"></div>
     </div>
 
-    <!-- Flash view section -->
     <div id="flashViewSection" style="display: none;">
       <div class="flash-grid" id="flashGrid"></div>
     </div>
@@ -520,9 +564,9 @@
 <script>
   // ---- CONFIGURATION ----
   const CSV_URL = "https://ducj-creator.github.io/Shirley-Grammar/polysemy.csv";
-  const STORAGE_FAV_KEY = "shirley_polysemes_favs_v4";
+  const STORAGE_FAV_KEY = "shirley_polysemes_favs_v5";
 
-  let fullData = [];            // each entry: { word, pos, meaning, english, chinese }
+  let fullData = [];
   let favorites = new Set();
 
   let currentMode = "list";
@@ -530,11 +574,27 @@
   let currentLetter = "A";
   let searchQuery = "";
 
+  // 發音函數 (使用 Web Speech API)
+  function speakWord(word) {
+    if (!window.speechSynthesis) {
+      console.warn("Browser does not support speech synthesis");
+      return;
+    }
+    // 取消任何正在進行的語音，避免疊加
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(word);
+    utterance.lang = 'en-US';
+    utterance.rate = 0.9;
+    utterance.pitch = 1.0;
+    utterance.volume = 1;
+    window.speechSynthesis.speak(utterance);
+  }
+
   function getRowKey(row) {
     return `${row.word}|${row.pos}|${row.meaning}`.toLowerCase();
   }
 
-  // ---- CSV parsing (robust) ----
+  // CSV 解析
   function parseCSVLine(line) {
     const result = [];
     let current = "";
@@ -588,7 +648,7 @@
         });
       }
       fullData = rows;
-      document.getElementById("footerStats").innerHTML = `📌 ${fullData.length} sense entries · ${new Set(fullData.map(d => d.word)).size} unique word types`;
+      document.getElementById("footerStats").innerHTML = `📌 ${fullData.length} sense entries · ${new Set(fullData.map(d => d.word)).size} unique word types · 🔊 tap speaker for pronunciation`;
     } catch (err) {
       console.error(err);
       document.getElementById("listGrid").innerHTML = `<div class="empty-message">⚠️ Failed to load polysemy data. Please refresh or check network.</div>`;
@@ -619,7 +679,7 @@
     return filtered;
   }
 
-  // ---- LIST VIEW (meaning 直接顯示；點開顯示英文句子在前 + 中文句子在後，不加額外引號，不重複) ----
+  // ---- LIST VIEW (含發音按鈕) ----
   function renderListView(data) {
     const container = document.getElementById("listGrid");
     container.innerHTML = "";
@@ -635,9 +695,8 @@
       card.className = "word-card";
       card.style.animationDelay = `${Math.min(idx * 0.02, 0.3)}s`;
       
-      // 顯示: word, pos, meaning (直接來自 csv meaning 欄位)
-      // 注意：不另外顯示中文，避免重複。點開後才顯示英文例句 + 中文句子 (依照 csv english / chinese)
       card.innerHTML = `
+        <button class="speaker-btn" data-word="${escapeHtml(item.word)}" title="Pronounce">🔊</button>
         <button class="star-icon ${isStarred ? 'active' : ''}" data-key="${key.replace(/"/g, '&quot;')}">★</button>
         <div class="word-head">
           <div class="word-text">${escapeHtml(item.word)}</div>
@@ -646,6 +705,14 @@
         <div class="meaning-short">📖 ${escapeHtml(item.meaning)}</div>
         <div class="detail-expand" style="display: none;"></div>
       `;
+      
+      // 發音按鈕
+      const speakerBtn = card.querySelector(".speaker-btn");
+      speakerBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const word = speakerBtn.getAttribute("data-word");
+        speakWord(word);
+      });
       
       const starBtn = card.querySelector(".star-icon");
       starBtn.addEventListener("click", (e) => {
@@ -659,9 +726,9 @@
       const expandDiv = card.querySelector(".detail-expand");
       card.addEventListener("click", (e) => {
         if (e.target === starBtn || starBtn.contains(e.target)) return;
+        if (e.target === speakerBtn || speakerBtn.contains(e.target)) return;
         if (!expanded) {
           expandDiv.style.display = "block";
-          // 點開後: 先顯示英文句子，再顯示中文句子，不加雙引號，不重複
           let exampleHtml = '';
           if (item.english && item.chinese) {
             exampleHtml = `
@@ -698,7 +765,7 @@
     });
   }
   
-  // ---- FLASHCARD: 字體放大，背面順序：英文句子在前，中文句子在後，不加多餘引號 ----
+  // ---- FLASHCARD: 每個閃卡獨立發音按鈕 ----
   function renderFlashView(data) {
     const container = document.getElementById("flashGrid");
     container.innerHTML = "";
@@ -726,13 +793,22 @@
     
     const groups = Array.from(groupMap.values());
     groups.forEach((group, idx) => {
-      const flipCard = document.createElement("div");
-      flipCard.className = "flip-card";
-      flipCard.style.animationDelay = `${Math.min(idx * 0.04, 0.5)}s`;
+      const cardWrapper = document.createElement("div");
+      cardWrapper.className = "flip-card";
+      cardWrapper.style.animationDelay = `${Math.min(idx * 0.04, 0.5)}s`;
+      
+      // 建立獨立的發音按鈕 (不參與翻轉)
+      const speakerBtn = document.createElement("button");
+      speakerBtn.className = "flash-speaker";
+      speakerBtn.innerHTML = "🔊";
+      speakerBtn.title = `Pronounce ${group.word}`;
+      speakerBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        speakWord(group.word);
+      });
       
       let backHTML = `<div style="width:100%; max-height: 240px; overflow-y: auto; padding-right: 6px;">`;
       group.meanings.forEach((m) => {
-        // 背面顯示: 先顯示釋義 (meaning)，然後英文句子在前，中文在後，不加引號
         backHTML += `
           <div class="meaning-group">
             <div class="meaning-cn">📖 ${escapeHtml(m.meaning)}</div>
@@ -743,21 +819,25 @@
       });
       backHTML += `</div><div class="flip-hint">↺ tap to flip</div>`;
       
-      flipCard.innerHTML = `
+      cardWrapper.innerHTML = `
         <div class="flip-inner">
-          <div class="flip-front">
+          <div class="flip-face flip-front">
             <div class="fc-word">${escapeHtml(group.word)}</div>
             <div class="fc-pos">${escapeHtml(group.pos)}</div>
             <div class="flip-hint" style="margin-top: 20px;">tap to reveal meanings</div>
           </div>
-          <div class="flip-back">
+          <div class="flip-face flip-back">
             ${backHTML}
           </div>
         </div>
       `;
       
-      flipCard.addEventListener("click", () => flipCard.classList.toggle("flipped"));
-      container.appendChild(flipCard);
+      cardWrapper.appendChild(speakerBtn);
+      cardWrapper.addEventListener("click", (e) => {
+        if (e.target === speakerBtn || speakerBtn.contains(e.target)) return;
+        cardWrapper.classList.toggle("flipped");
+      });
+      container.appendChild(cardWrapper);
     });
   }
   
