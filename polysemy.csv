@@ -108,10 +108,10 @@ case,n.,箱子/套子,Put the phone in its case.,把手機放進殼裡。
 case,n.,情況 (in case),"In case of fire, use stairs.",萬一發生火災，請走樓梯。
 channel,n.,頻道/海峽,Switch to the news channel.,轉到新聞頻道。
 channel,n.,途徑/管道,Complaints should go through proper channels.,投訴應透過適當管道。
-channel,noun,頻道/海峽,Switch to the news channel.,轉到新聞頻道。
-channel,noun,管道/途徑,Complaints should go through proper channels.,投訴應透過適當管道。
+channel,n.,頻道/海峽,Switch to the news channel.,轉到新聞頻道。
+channel,n.,管道/途徑,Complaints should go through proper channels.,投訴應透過適當管道。
 channel,v.,引導/集中,She channeled her energy into her work.,她將精力集中在工作上。
-channel,verb,引導/集中 (精力、金錢),She channeled all her energy into her career.,她將所有精力都投入到事業中。
+channel,v.,引導/集中 (精力、金錢),She channeled all her energy into her career.,她將所有精力都投入到事業中。
 character,n.,性格/品質,He has a strong character.,他性格堅強。
 character,n.,角色,Who is your favorite character in the movie?,你最喜歡電影裡的哪個角色？
 character,n.,文字/字符,Chinese characters are hard to learn.,漢字很難學。
@@ -602,10 +602,10 @@ pick,v.,拾起,She picked up the pen.,她撿起筆。
 pick,v.,學習（非正式）,He picked up French in Paris.,他在巴黎學會了法文。
 pitcher,n.,投手（棒球）,The pitcher threw a fastball.,投手投了一個快速球。
 pitcher,n.,水壺/罐子,She filled the pitcher with water.,她往水壺裡裝滿水。
-plant,noun,植物,I bought a new house plant.,我買了一盆新的室內植物。
-plant,noun,工廠/發電廠,They work at a nuclear power plant.,他們在核能發電廠工作。
-plant,verb,種植,We planted some trees in the garden.,我們在花園裡種了一些樹。
-plant,verb,安置/埋伏 (監聽器或炸彈),He planted a secret microphone in the room.,他在房間裡安置了一個秘密竊聽器。
+plant,n.,植物,I bought a new house plant.,我買了一盆新的室內植物。
+plant,n.,工廠/發電廠,They work at a nuclear power plant.,他們在核能發電廠工作。
+plant,v.,種植,We planted some trees in the garden.,我們在花園裡種了一些樹。
+plant,v.,安置/埋伏 (監聽器或炸彈),He planted a secret microphone in the room.,他在房間裡安置了一個秘密竊聽器。
 play,n.,戲劇,I saw a play on Broadway.,我在百老匯看了一齣戲。
 play,n.,比賽中的動作,The rain stopped play.,下雨中斷了比賽。
 play,v.,玩耍,Children play in the park.,孩子們在公園玩耍。
@@ -867,3 +867,179 @@ wrist,v.,用手腕揮動,He wristed the ball into the net.,他用手腕把球甩
 yield,n.,產量/收益,The crop yield was lower this year.,今年的農作物產量較低。
 yield,v.,產生/產出,This investment yields high returns.,這項投資產生了高回報。
 yield,v.,屈服/讓路,He yielded to the pressure.,他屈服於壓力。
+handle,n.,把手/柄,The door handle is broken.,門把壞了。
+handle,v.,處理/應付,She knows how to handle pressure.,她知道如何應付壓力。
+handle,v.,觸摸/拿取,Please handle with care.,請小心拿取（易碎品）。
+room,n.,房間,There are three rooms in the house.,這房子有三個房間。
+room,n.,空間/餘地 (不可數),Is there any room for improvement?,還有進步的空間（餘地）嗎？
+might,auxi.,可能 (may 的過去式),It might rain tonight.,今晚可能會下雨。
+might,n.,力量/威力,They fought with all their might.,他們竭盡全力（力量）戰鬥。
+hide,v.,躲藏/隱藏,They hid the treasure in a cave.,他們把寶藏藏在山洞裡。
+hide,n.,獸皮/皮革,The drums are made of animal hides.,這些鼓是用動物皮革製成的。
+hit,v.,打擊/碰撞,The car hit a tree.,汽車撞上了一棵樹。
+hit,n.,成功/紅極一時的人事物,Her new song is a big hit.,她的新歌非常受歡迎（大紅大紫）。
+hit,v.,突然意識到,It suddenly hit me that I was late.,我突然意識到我遲到了。
+own,adj.,自己的,I saw it with my own eyes.,我親眼所見。
+own,v.,擁有,Who owns this house?,誰擁有這棟房子？
+own,v.,承認 (own up to),He owned his mistakes.,他承認了他的錯誤。
+goal,n.,目標/目的,My goal is to study abroad.,我的目標是出國留學。
+goal,n.,進球/球門,He scored a amazing goal.,他踢進了一個精彩的球。
+knock,v.,敲/擊,Someone is knocking at the door.,有人在敲門。
+knock,n.,敲擊聲,I heard a knock on the window.,我聽到窗戶傳來敲擊聲。
+knock,v.,批評 (口語),Don't knock it until you try it.,沒試過以前不要批評它。
+lack,n.,缺乏/不足,The project failed for lack of funds.,該計畫因缺乏資金而失敗。
+lack,v.,缺少,He lacks the confidence to lead.,他缺少領導的自信。
+lay,v.,放置/產卵,Please lay the book on the table.,請把書放在桌上。
+lay,adj.,外行的/非專業的,"In lay terms, it means...",用外行人的話來說（通俗來說），這意味著...
+lift,v.,舉起/抬起,Can you lift this heavy box?,你能搬起這個重箱子嗎？
+lift,n.,電梯 (英式),We took the lift to the 10th floor.,我們搭電梯到 10 樓。
+lift,n.,搭便車,Can you give me a lift to the station?,你能載我一程去車站嗎？
+limit,n.,限制/界限,There is a speed limit here.,這裡有速度限制。
+limit,v.,限制/限定,We must limit our spending.,我們必須限制開支。
+rule,n.,規則/規定,You must follow the rules.,你必須遵守規則。
+rule,v.,統治/裁決,King Victoria ruled for 63 years.,維多利亞女王統治了 63 年。
+rule,n.,常規/習慣 (as a rule),"As a rule, I get up at six.",通常情況下，我六點起床。
+make,v.,製造/做,I made a cake for his birthday.,我為他的生日做了一個蛋糕。
+make,n.,品牌/型號,What make is your car?,你的車是什麼牌子的？
+make,v.,成為/適合,She will make a great doctor.,她會成為一名優秀的醫生。
+master,n.,主人/大師,He is a master of martial arts.,他是一位武術大師。
+master,v.,精通/掌握,She mastered the French language.,她精通了法語。
+master,n.,碩士學位,He has a Master's degree.,他擁有碩士學位。
+mind,n.,頭腦/理智,Keep an open mind.,保持開放的心態。
+mind,v.,介意/在乎,Do you mind if I smoke?,你介意我抽菸嗎？
+mind,v.,照顧/留神,Mind the gap between the train and platform.,請小心列車與月台間的空隙。
+move,v.,移動/搬家,We are moving to a new office.,我們要搬到新辦公室。
+move,v.,使感動,The movie deeply moved me.,這部電影深深打動了我。
+move,n.,舉動/步驟,It's your move (in chess).,該你走了（下棋時）。
+pass,v.,通過/經過,Did you pass the exam?,你考試通過了嗎？
+pass,n.,通行證/門票,You need a mountain pass to enter.,你需要入山證才能進入。
+pass,v.,傳遞,Please pass the salt.,請把鹽遞給我。
+pass,n.,山隘/山口,The army moved through the mountain pass.,軍隊通過了山隘。
+please,v.,請 (禮貌用語),Please sit down.,請坐。
+please,v.,使高興/取悅,You can't please everyone.,你不可能取悅每一個人。
+print,v.,印刷/列印,I'll print the document for you.,我會為你列印這份文件。
+print,n.,指紋/足跡 (常用於複數),The police found fingerprints.,警察發現了指紋。
+print,n.,印刷字體 (非草寫),Please write in block print.,請以正體（非草寫）書寫。
+party,n.,派對/聚會,We had a great time at the party.,我們在派對上玩得很開心。
+party,n.,政黨,He belongs to the Liberal Party.,他隸屬於自由黨。
+party,n.,當事人/一方 (法律),Both parties signed the contract.,雙方（當事人）都簽署了合約。
+puzzle,n.,謎題/拼圖,I love solving cross-word puzzles.,我喜歡玩填字遊戲（謎題）。
+puzzle,v.,使困惑,The sudden change puzzled me.,突如其來的變化讓我感到困惑。
+wonder,v.,想知道/納悶,I wonder why he is late.,我想知道他為什麼遲到。
+wonder,n.,驚奇/奇觀,The Grand Canyon is a wonder of nature.,大峽谷是大自然的奇觀。
+capture,v.,捕捉/捕獲,The police captured the thief.,警察抓住了小偷。
+capture,v.,留住 (瞬間/美感),The photo captures her smile.,這張照片捕捉到了她的笑容。
+close,v.,關閉,Close the door.,關門！
+close,adj.,親近的/接近的,They are close friends.,他們是親密的朋友。
+close,n.,結束/終結,The meeting came to a close.,會議結束了。
+show,v.,展示/表現,Please show your passport. ,請出示你的護照。
+show,n.,展覽/表演,Did you see the fashion show?,你看時裝秀了嗎？
+show,n.,跡象 (常指病徵),There is no show of improvement.,沒有好轉的跡象。
+trunk,n.,象鼻,The elephant used its trunk to eat.,大象用象鼻吃東西。
+trunk,n.,樹幹,The trunk of this oak is very thick.,這棵橡樹的樹幹很粗。
+trunk,n.,後車廂 (美),Put your bags in the trunk.,把你的行李放在後車廂。
+pretty,adj.,漂亮的,The little girl is pretty.,小女孩很漂亮。
+pretty,adv.,相當地/非常,I am pretty sure about it.,我對此相當確定。
+stream,n.,溪流/小河,We jumped across the stream.,我們跳過了小溪。
+stream,v.,流動/串流 (影音),Sunlight streamed through the window.,陽光從窗戶灑進來（流瀉）。
+sparkle,v.,閃耀/發光,The diamonds sparkled in the light.,鑽石在光線下閃閃發光。
+sparkle,n.,活力/閃光,Her eyes have a bright sparkle.,她的眼睛很有神采（閃爍）。
+stick,n.,棍子/枝條,Use a stick to stir the fire.,用棍子撥火。
+stick,v.,黏貼/固定,Stick the label on the box.,把標籤貼在箱子上。
+stick,v.,堅持 (stick to),We must stick to the plan.,我們必須堅持計劃。
+spear,n.,矛/魚叉,The hunter carried a spear.,獵人拿著一支矛。
+spear,v.,刺/戳,He speared a piece of meat with a fork.,他用叉子叉起一塊肉。
+fall,v.,落下/跌倒,He usually falls asleep in class. ,他經常在課上睡著。
+fall,n.,秋天 (美),I love the colors in the fall.,我喜歡秋天的色彩。
+fall,n.,瀑布 (常用複數 falls),We visited Niagara Falls.,我們參觀了尼加拉瀑布。
+splash,v.,濺起/潑水,The kids were splashing in the pool.,孩子們在池子裡玩水。
+splash,n.,亮點/引人注目的事物,Her dress added a splash of color.,她的裙子增添了一抹亮色。
+burst,v.,爆炸/破裂,The balloon burst.,氣球破了。
+burst,n.,突然爆發,A burst of applause followed the speech.,演講後響起了一陣掌聲。
+share,v.,分享,I have a secret to share with you.,我跟你分享一個秘密。
+share,n.,股份/一份,He sold all his shares in the company.,他賣掉了公司的所有股份。
+turn,v.,轉動/變成,His face turned red.,他的臉紅了。
+turn,n.,輪到的機會,It's your turn to wash the dishes.,輪到你洗碗了。
+family,n.,家庭/家人,There are five people in my family. ,我家有五口人。
+family,n.,(生物分類) 科,Lions belong to the cat family.,獅子屬於貓科。
+school,n.,學校,I go to school by train. ,我坐火車上學。
+school,n.,魚群 (a school of fish),Look at that school of dolphins.,看那一群海豚。
+school,n.,學派/流派,He belongs to a different school of thought.,他屬於不同的思想學派。
+experience,n.,經驗/經歷 (不可數/可數),I have ten years of experience.,我有十年的經驗。
+experience,v.,體驗/遭受,The country is experiencing a crisis.,該國正經歷一場危機。
+study,v.,學習/研究,He is studying.,他在學習。
+study,n.,研究報告/調查,A recent study shows that...,最近的一項研究顯示...
+study,n.,書房,He is reading in his study.,他正在書房裡看書。
+paper,n.,紙張,Write your name on the paper.,在紙上寫下你的名字。
+paper,n.,論文/報告,He published a paper on physics.,他發表了一篇關於物理的論文。
+paper,n.,報紙,Did you read today's paper?,你讀了今天的報紙嗎？
+paper,v.,貼壁紙,We decided to paper the bedroom.,我們決定給臥室貼上壁紙。
+shelter,n.,避難所/遮蔽處,They found shelter from the rain.,他們找到了避雨的地方。
+shelter,v.,庇護/掩護,The trees sheltered us from the sun.,樹木為我們遮擋了陽光。
+can,auxiliary,能夠/可以,Can you help me?,你可以幫我一下嗎？
+can,n.,罐頭/金屬罐,Open a can of soup.,打開一罐湯。
+can,v.,將...裝罐,They can peaches in the factory.,他們在工廠裡把桃子裝成罐頭。
+can,v.,解僱 (美式俚語),He got canned for his poor work.,他因為工作表現差被開除了。
+cause,n.,原因/起因,What was the cause of the fire?,火災的原因是什麼？
+cause,v.,導致/引起,The storm caused a lot of damage.,這場風暴造成了很大的損害。
+cause,n.,理想/事業/訴求,They are fighting for a noble cause.,他們正在為一個高尚的理想而奮鬥。
+document,n.,文件/公文,Please sign this document.,請在這份文件上簽名。
+document,v.,記錄/記載,We need to document the entire process.,我們需要記錄整個過程。
+guide,n.,指南/導遊,Read the user guide carefully.,仔細閱讀使用者指南。
+guide,v.,引導/指導,The stars guided the sailors.,星星引導著水手們。
+attempt,v.,嘗試/企圖,He attempted to break the record.,他嘗試打破紀錄。
+attempt,n.,嘗試/努力,This was his first attempt at cooking.,這是他第一次嘗試下廚。
+pack,v.,打包/裝箱,I need to pack my suitcase.,我需要收拾我的行李箱。
+pack,n.,(動物) 一群/一包,A pack of wolves was howling.,一群狼正在嚎叫。
+pack,v.,擠滿/塞滿,Fans packed the stadium.,歌迷們擠滿了體育場。
+apply,v.,申請,I want to apply for this job.,我想申請這份工作。
+apply,v.,應用/適用,The rule does not apply here.,這項規則在這裡不適用。
+apply,v.,塗抹/敷,Apply the cream to the wound.,將藥膏塗抹在傷口上。
+application,n.,申請(書),Send in your application by Friday.,週五前遞交你的申請。
+application,n.,應用/用途,The technology has many applications.,這項技術有許多用途。
+application,n.,應用程式 (App),Download the mobile application.,下載行動應用程式。
+factor,n.,因素/要素,Price is a key factor in the decision.,價格是決策的關鍵因素。
+factor,n.,因數 (數學),3 is a factor of 15.,3 是 15 的因數。
+factor,v.,把...納入考慮 (factor in),Remember to factor in the cost of shipping.,記得要把運費納入考慮。
+manage,v.,管理/經營,He manages a team of ten people.,他管理一個十人的團隊。
+manage,v.,設法做到/應付,I managed to finish the work on time.,我設法準時完成了工作。
+overall,adj.,全部的/整體的,The overall cost was $100.,總成本（整體費用）是 100 美元。
+overall,n.,工作服/連身褲,He wore blue overalls.,他穿著藍色工作服。
+place,n.,地方/地點,I need a quiet place. ,我需要一個安靜的地方。
+place,v.,放置/安置,She placed the vase on the table.,她把花瓶放在桌上。
+place,v.,名次/排名,He placed second in the race.,他在比賽中獲得第二名。
+area,n.,地區/區域,I know the local area very well. ,我對當地很了解。
+area,n.,面積,What is the area of the square?,這個正方形的面積是多少？
+area,n.,領域/範圍,Physics is not my area of expertise.,物理不是我的專業領域。
+high,adj.,高的,She likes to wear high heels. ,她喜歡穿高跟鞋。
+high,n.,最高點/紀錄,Prices reached a new high.,價格達到了新高。
+work,v.,工作,My brother works in a factory. ,我哥哥在一家工廠工作。
+work,v.,運作；運行,The medicine doesn't work well. ,這種藥不太有效果。
+work,n.,作品/著作,This is a famous work of art.,這是一件著名的藝術作品。
+fold,v.,折疊,Fold the paper in half.,把紙對折。
+fold,n.,摺痕,There was a fold in the map.,地圖上有個摺痕。
+fold,n.,羊圈/圈子 (歸隊),He returned to the family fold.,他回到了家族的圈子（歸隊）。
+tail,n.,尾巴,The dog is waggling its tail. ,夠搖著尾巴。
+tail,v.,尾隨/跟蹤,The detective tailed the suspect.,偵探尾隨了嫌疑犯。
+tail,n.,(硬幣的) 背面,Heads or tails?,正面還是反面？
+field,n.,田地/原野,The students will go on a field trip next week. ,學生下週有校外教學。
+field,n.,領域/學科,He is an expert in the field of AI.,他是 AI 領域的專家。
+field,v.,處理/應付 (問題/球),She fielded some tough questions.,她應付了一些棘手的問題。
+major,adj.,主要的/重大的,A major change is coming.,一場重大的變革即將到來。
+major,n.,主修/專業,My major is Economics.,我的主修（專業）是經濟學。
+major,v.,主修 (major in),I majored in History at college.,我在大學主修歷史。
+majority,n.,多數/過半數,The majority of people agreed.,大多數人都同意。
+majority,n.,法定成年,He has reached his majority.,他已經成年了（達到法定年齡）。
+minor,adj.,次要的/輕微的,It was just a minor mistake.,那只是一個輕微的錯誤。
+minor,n.,輔修學位,She has a minor in Psychology.,她輔修心理學。
+minor,n.,未成年人,Minors are not allowed to drink.,未成年人禁止飲酒。
+minority,n.,少數/少數族群,They are a small minority.,他們是少數群體。
+extreme,adj.,極端的/極度的,The weather was extreme.,天氣非常極端。
+extreme,n.,極端/兩極,Love and hate are two extremes.,愛與恨是兩個極端。
+position,n.,位置/姿勢,We can see the whole city from this position. ,從這個位置可以看到整個城市。
+position,n.,職位/地位,He holds a high position in the firm.,他在公司擔任高職。
+position,n.,立場/態度,What is your position on this issue?,你對這個問題的立場是什麼？
+stamp,n.,郵票,This is a rare stamp.,這張郵票很稀有。
+stamp,v.,蓋章/戳印,They stamped my passport.,他們在我的護照上蓋了章。
+stamp,v.,跺腳,She stamped her foot in anger.,她憤怒地跺腳。
+stamp,n.,標記/特徵,The design bears the stamp of genius.,這個設計帶有天才的印記（特徵）。
