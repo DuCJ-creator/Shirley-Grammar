@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>Shirley's Roots & Affixes Academy | 詞根詞綴學園</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg:        #f5f0e8;
@@ -36,7 +36,7 @@
       radial-gradient(ellipse at 92% 82%, rgba(58,107,69,.08)  0%, transparent 55%);
   }
 
-  /* HEADER */
+  /* HEADER (restored original look) */
   header {
     background: var(--ink);
     color: var(--bg);
@@ -58,7 +58,7 @@
     margin-top: 14px;
   }
 
-  /* TOOLBAR */
+  /* TOOLBAR (original) */
   .toolbar {
     display: flex; justify-content: center; gap: 7px; flex-wrap: wrap;
     padding: 14px 12px 0;
@@ -71,7 +71,7 @@
   .toolbar button:hover { background: var(--bg3); }
   .toolbar button.active { background: var(--ink); color: var(--gold2); border-color: var(--gold); }
 
-  /* TYPE TABS */
+  /* TYPE TABS (original) */
   .type-tabs {
     display: flex; justify-content: center; margin: 14px auto 0;
     border: 1.5px solid var(--border); border-radius: var(--radius);
@@ -87,7 +87,7 @@
   .type-tabs button.active[data-type="prefix"] { background: var(--pre-col);  color: #fff; }
   .type-tabs button.active[data-type="suffix"] { background: var(--suf-col);  color: #fff; }
 
-  /* SEARCH — GLOBAL SEARCH BAR */
+  /* SEARCH BAR (original) */
   .search-bar {
     display: none; align-items: center; max-width: 560px;
     margin: 14px auto 0; padding: 0 16px; gap: 8px;
@@ -122,10 +122,7 @@
   .section-badge.prefix { background: var(--pre-col); }
   .section-badge.suffix { background: var(--suf-col); }
 
-  /* LOADING */
-  .msg { text-align: center; padding: 60px 20px; font-style: italic; color: var(--ink3); font-size: 1.05rem; }
-
-  /* OVERVIEW TABLE */
+  /* OVERVIEW TABLE (original, full featured) */
   .ov-table {
     width: 100%; border-collapse: collapse;
     background: #fff; border-radius: var(--radius); overflow: hidden;
@@ -169,22 +166,23 @@
   .speaker-btn:hover { transform: scale(1.08); color: #c97e0a; background: #fff0d0; }
   .speaker-btn:active { transform: scale(0.96); }
   
-  /* FLASHCARD */
+  /* ===== FLASHCARD with RADIAL BACK (new style preserved) ===== */
   .fc-wrap { display: flex; flex-direction: column; align-items: center; gap: 20px; padding: 6px 0; }
   .fc-counter { font-family: var(--font-h); font-size: .78rem; letter-spacing: .1em; color: var(--ink3); }
-  .fc-scene { width: 100%; max-width: 540px; height: 270px; perspective: 900px; cursor: pointer; }
+  .fc-scene { width: 100%; max-width: 540px; height: 380px; perspective: 2000px; cursor: pointer; }
   .fc-card {
     width: 100%; height: 100%; position: relative;
-    transform-style: preserve-3d; transition: transform .55s cubic-bezier(.4,0,.2,1);
+    transform-style: preserve-3d; transition: transform .6s cubic-bezier(.4,0,.2,1);
   }
   .fc-card.flipped { transform: rotateY(180deg); }
   .fc-face {
-    position: absolute; inset: 0; border-radius: 14px; backface-visibility: hidden;
+    position: absolute; inset: 0; border-radius: 30px; backface-visibility: hidden;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
-    padding: 26px 32px; box-shadow: 0 4px 24px var(--shadow); text-align: center;
+    padding: 20px 24px; box-shadow: 0 15px 40px var(--shadow); text-align: center;
+    border: 3px solid var(--border);
   }
-  .fc-front { background: #fff; border: 2px solid var(--border); }
-  .fc-back  { background: var(--ink); transform: rotateY(180deg); }
+  .fc-front { background: #fff; }
+  .fc-back  { background: #111; transform: rotateY(180deg); overflow: hidden; }
 
   .fc-type-pill {
     font-family: var(--font-h); font-size: .62rem; letter-spacing: .2em;
@@ -192,16 +190,34 @@
   }
   .fc-item { font-family: var(--font-h); font-size: clamp(1.5rem,5vw,2.2rem); font-weight: 700; margin-bottom: 8px; }
   .fc-front .fc-item { color: var(--ink); }
-  .fc-back  .fc-item { color: var(--gold2); }
+  .fc-back .fc-item { color: var(--gold2); }
   .fc-meaning { font-style: italic; font-size: 1.05rem; line-height: 1.5; }
   .fc-front .fc-meaning { color: var(--ink2); }
-  .fc-back  .fc-meaning { color: #c8b88a; }
-  .fc-samples { font-size: .95rem; color: var(--gold2); line-height: 1.85; margin-top: 10px; }
-  .fc-hint { font-size: .75rem; font-style: italic; margin-top: 8px; }
-  .fc-front .fc-hint { color: var(--ink3); }
-  .fc-back  .fc-hint { color: #6a5a3a; }
-
-  .fc-nav { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; justify-content: center; }
+  .fc-back .fc-meaning { color: #c8b88a; }
+  
+  /* RADIAL (放射狀) layout for back side */
+  .rad-container { position: relative; width: 100%; height: 100%; min-height: 280px; }
+  .rad-center {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 110px; height: 110px; border-radius: 50%; border: 2px solid var(--gold);
+    background: rgba(255,255,255,0.05); color: #fff; z-index: 10;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    backdrop-filter: blur(2px);
+  }
+  .rad-center span:first-child { font-family: var(--font-h); font-size: 0.7rem; color: var(--gold); text-transform: uppercase; letter-spacing: 2px; }
+  .rad-center span:last-child { font-family: var(--font-h); font-size: 1.5rem; font-weight: 700; color: var(--gold2); text-transform: lowercase; line-height: 1.2; }
+  .rad-node {
+    position: absolute; width: 160px; text-align: center; top: 50%; left: 50%;
+    transform: translate(-50%, -50%) rotate(var(--angle)) translateY(-145px) rotate(calc(-1 * var(--angle)));
+  }
+  .rad-word { color: var(--gold2); font-family: var(--font-b); font-size: 1.15rem; font-weight: 600; text-transform: none; text-shadow: 0 2px 5px rgba(0,0,0,0.8); background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 20px; display: inline-block; }
+  .rad-line {
+    position: absolute; top: 50%; left: 50%; width: 1px; height: 105px;
+    background: linear-gradient(to top, var(--gold), transparent);
+    transform-origin: bottom center; transform: translate(-50%, -100%) rotate(var(--angle)) translateY(-40px);
+    opacity: 0.5;
+  }
+  .fc-nav { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; margin-top: 8px; }
   .fc-nav button {
     font-family: var(--font-h); font-size: .7rem; letter-spacing: .08em;
     padding: 8px 20px; border: 1.5px solid var(--border); border-radius: 22px;
@@ -210,7 +226,7 @@
   .fc-nav button:hover:not(:disabled) { background: var(--ink); color: var(--gold2); border-color: var(--gold); }
   .fc-nav button:disabled { opacity: .38; cursor: default; }
 
-  /* QUIZ */
+  /* QUIZ & REVIEW original styles */
   .quiz-wrap { max-width: 580px; margin: 0 auto; }
   .quiz-prog { font-family: var(--font-h); font-size: .72rem; letter-spacing: .1em; color: var(--ink3); margin-bottom: 18px; text-align: center; }
   .quiz-qbox {
@@ -256,7 +272,6 @@
   }
   .quiz-restart:hover { background: var(--gold); color: var(--ink); }
 
-  /* REVIEW */
   .rev-wrap { max-width: 580px; margin: 0 auto; }
   .rev-card {
     background: #fff; border-radius: 14px; padding: 28px;
@@ -287,9 +302,13 @@
   .rev-nav button:hover:not(:disabled) { background: var(--bg3); }
   .rev-nav button:disabled { opacity: .38; cursor: default; }
 
-  /* STAR WORDS */
   .star-empty { text-align: center; padding: 60px 20px; font-style: italic; color: var(--ink3); font-size: 1.05rem; }
   mark { background: #fde68a; border-radius: 3px; padding: 0 2px; color: #2a1f0e; }
+  @media (max-width: 600px) {
+    .fc-scene { max-width: 95vw; height: 340px; }
+    .rad-node { width: 130px; transform: translate(-50%, -50%) rotate(var(--angle)) translateY(-120px) rotate(calc(-1 * var(--angle))); }
+    .rad-word { font-size: 0.95rem; }
+  }
 </style>
 </head>
 <body>
@@ -315,7 +334,6 @@
   <button data-type="suffix"             >Suffix</button>
 </div>
 
-<!-- GLOBAL SEARCH BAR -->
 <div class="search-bar" id="searchBar">
   <input type="text" id="searchInput" placeholder="🔍 Global search: root, prefix, suffix, meaning, or sample words...">
 </div>
@@ -323,20 +341,16 @@
 
 <div class="ornament">· · ·</div>
 
-<main id="app">
-  <div class="msg">Loading data…</div>
-</main>
+<main id="app"><div class="msg">Loading data…</div></main>
 
 <script>
-/* ── GLOBAL ROOTS & AFFIXES DATABASE (FULL) ── */
+/* ---------- FULL DATABASE + ALL FEATURES + RADIAL FLASHCARD BACK ---------- */
 const CSV = {
   root:   'https://ducj-creator.github.io/Shirley-Grammar/root%20and%20affix/root.csv',
   prefix: 'https://ducj-creator.github.io/Shirley-Grammar/root%20and%20affix/prefix.csv',
   suffix: 'https://ducj-creator.github.io/Shirley-Grammar/root%20and%20affix/suffix.csv',
 };
-const TC = { root:'#3d5a80', prefix:'#6b3fa0', suffix:'#3a6b45' };
-const TL = { root:'ROOT',    prefix:'PREFIX',  suffix:'SUFFIX'  };
-
+const TL = { root:'ROOT', prefix:'PREFIX', suffix:'SUFFIX' };
 let DB  = { root:[], prefix:[], suffix:[] };
 let stars = {};
 try { stars = JSON.parse(localStorage.getItem('ra_stars') || '{}'); } catch(e){}
@@ -346,7 +360,6 @@ let quizQ=[], quizIdx=0, quizScore=0, quizDone=false;
 let fcIdx=0;
 let revPool=[], revIdx=0;
 
-/* ── CSV PARSER ── */
 function parseCSV(txt) {
   const rows = [];
   const lines = txt.split(/\r?\n/);
@@ -368,13 +381,10 @@ function parseCSV(txt) {
 }
 
 function makeEntry(cols, t) {
-  const samples = cols.slice(2)
-    .map(s=>s.trim())
-    .filter(s=>s && s!=='-' && !/_+/.test(s));
+  const samples = cols.slice(2).map(s=>s.trim()).filter(s=>s && s!=='-' && !/_+/.test(s));
   return { type:t, item:cols[0]||'', meaning:cols[1]||'', samples, key:t+'|'+(cols[0]||'') };
 }
 
-/* ── LOAD ALL ── */
 async function load() {
   try {
     const types = ['root','prefix','suffix'];
@@ -382,56 +392,40 @@ async function load() {
     types.forEach((t,i) => DB[t] = parseCSV(texts[i]).map(r=>makeEntry(r,t)));
     render();
   } catch(e) {
-    document.getElementById('app').innerHTML =
-      `<div class="msg" style="color:#b00">Could not load data.<br><small>${e.message}</small></div>`;
+    document.getElementById('app').innerHTML = `<div class="msg" style="color:#b00">Could not load data.<br><small>${e.message}</small></div>`;
   }
 }
 
-/* 🔊 Text-to-Speech (browser native) */
 function speakWord(word) {
-  if (!window.speechSynthesis) {
-    console.warn("Speech synthesis not supported");
-    return;
-  }
-  // cancel any ongoing speech to avoid overlapping
+  if (!window.speechSynthesis) return;
   window.speechSynthesis.cancel();
   const utterance = new SpeechSynthesisUtterance(word);
   utterance.lang = 'en-US';
   utterance.rate = 0.85;
-  utterance.pitch = 1.0;
   window.speechSynthesis.speak(utterance);
 }
 
-/* Helper: generate sample words HTML with speaker buttons */
 function renderSampleWordsWithAudio(samples) {
   if (!samples.length) return '<span style="color:#ccc">—</span>';
-  return samples.map(w => `
-    <span class="sample-word-item">
-      <span class="sample-word-text">${esc(w)}</span>
-      <button class="speaker-btn" onclick="event.stopPropagation(); speakWord('${esc(w).replace(/'/g, "\\'")}');">🔊</button>
-    </span>
-  `).join('');
+  return samples.map(w => `<span class="sample-word-item"><span class="sample-word-text">${esc(w)}</span><button class="speaker-btn" onclick="event.stopPropagation(); speakWord('${esc(w).replace(/'/g, "\\'")}');">🔊</button></span>`).join('');
 }
 
-/* HELPERS */
-const esc  = s => s.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/'/g, '&#39;');
+const esc = s => s.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/'/g, '&#39;');
 const escR = s => s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
-const isStar = k => !!stars[k];
+function isStar(k) { return !!stars[k]; }
 function setStar(k) {
   if (stars[k]) delete stars[k]; else stars[k]=true;
-  try { localStorage.setItem('ra_stars', JSON.stringify(stars)); } catch(e){}
+  localStorage.setItem('ra_stars', JSON.stringify(stars));
 }
 function cur() { return DB[type]; }
 
-/* GLOBAL SEARCH (ACROSS root, prefix, suffix) */
 function globalSearch(query) {
   if (!query) return [];
   const ql = query.toLowerCase();
-  const results = [];
-  for (const t of ['root','prefix','suffix']) {
-    for (const entry of DB[t]) {
-      if (entry.item.toLowerCase().includes(ql) ||
-          entry.meaning.toLowerCase().includes(ql) ||
+  let results = [];
+  for (let t of ['root','prefix','suffix']) {
+    for (let entry of DB[t]) {
+      if (entry.item.toLowerCase().includes(ql) || entry.meaning.toLowerCase().includes(ql) ||
           entry.samples.some(s => s.toLowerCase().includes(ql))) {
         results.push({ ...entry, originalType: t });
       }
@@ -440,80 +434,45 @@ function globalSearch(query) {
   return results;
 }
 
-/* RENDER ROUTER */
-function render() {
-  const sb = document.getElementById('searchBar');
-  const hint = document.getElementById('searchHint');
-  sb.classList.toggle('visible', mode==='search');
-  if (mode==='search') {
-    hint.style.display = 'block';
-  } else {
-    hint.style.display = 'none';
-  }
-  const app = document.getElementById('app');
-  if      (mode==='study')     studyView(app);
-  else if (mode==='review')    reviewView(app);
-  else if (mode==='quiz')      quizView(app);
-  else if (mode==='search')    globalSearchView(app, document.getElementById('searchInput').value.trim());
-  else if (mode==='flashcard') flashView(app);
-  else if (mode==='stars')     starsView(app);
-}
-
-/* STUDY (with audio for samples) */
-function studyView(app) {
-  const data = cur();
-  if (!data.length) { app.innerHTML='<div class="msg">No entries.</div>'; return; }
-  app.innerHTML = `
-    <span class="section-badge ${type}">${TL[type]}S</span>
-    <table class="ov-table ${type}">
-      <thead> <th>${TL[type]}</th><th>MEANING</th><th>SAMPLE WORDS (click 🔊)</th><th>★</th> </thead>
-      <tbody>${data.map((d,i)=>`
-         <tr>
-          <td class="td-item">${esc(d.item)}</td>
-          <td class="td-meaning">${esc(d.meaning)}</td>
-          <td>
-            <button class="sample-toggle" onclick="toggleSW(${i})">Show sample words</button>
-            <div class="sample-words" id="sw${i}">${renderSampleWordsWithAudio(d.samples)}</div>
-          </td>
-          <td class="td-star" onclick="starCell('${esc(d.key)}',this)">${isStar(d.key)?'⭐':'☆'}</td>
-         </tr>`).join('')}
-      </tbody>
-     </table>`;
-}
-
 function toggleSW(i) {
   const el=document.getElementById('sw'+i);
   const btn=el.previousElementSibling;
   el.classList.toggle('vis');
   btn.textContent = el.classList.contains('vis') ? 'Hide sample words' : 'Show sample words';
 }
-function starCell(key, cell) { setStar(key); cell.textContent = isStar(key) ? '⭐' : '☆'; }
+function starCell(key, cell) { setStar(key); cell.textContent = isStar(key) ? '⭐' : '☆'; render(); }
 
-/* FLASHCARD (samples with audio on back) */
+/* ---------- FLASHCARD with RADIAL BACK ---------- */
 function flashView(app) {
   const data = cur();
   if (!data.length) { app.innerHTML='<div class="msg">No entries.</div>'; return; }
   if (fcIdx>=data.length) fcIdx=0;
-  const d=data[fcIdx], col=TC[type], lbl=TL[type];
+  const d=data[fcIdx];
   const starred=isStar(d.key);
-  const samplesHtml = d.samples.length ? d.samples.map(w => `<span style="display:inline-flex;align-items:center;gap:6px;margin:0 4px;"><strong>${esc(w)}</strong> <button class="speaker-btn" style="background:none;border:none;color:#f3c26b;cursor:pointer;font-size:0.85rem;" onclick="event.stopPropagation(); speakWord('${esc(w).replace(/'/g, "\\'")}');">🔊</button></span>`).join(' ') : '<em>—</em>';
-  app.innerHTML=`
+  const samplesLimited = d.samples.slice(0, 8);
+  const count = samplesLimited.length;
+  const nodes = samplesLimited.map((s, i) => {
+    const angle = (360 / count) * i;
+    return `<div class="rad-line" style="--angle:${angle}deg"></div>
+            <div class="rad-node" style="--angle:${angle}deg"><span class="rad-word">${esc(s)}</span></div>`;
+  }).join('');
+  app.innerHTML = `
     <div class="fc-wrap">
       <div class="fc-counter">${fcIdx+1} / ${data.length}</div>
-      <div class="fc-scene" id="fcScene" onclick="fcFlip()">
+      <div class="fc-scene" id="fcScene" onclick="document.getElementById('fcCard').classList.toggle('flipped')">
         <div class="fc-card" id="fcCard">
           <div class="fc-face fc-front">
-            <span class="fc-type-pill" style="background:${col}">${lbl}</span>
+            <span class="fc-type-pill" style="background:${type==='root'?'#3d5a80':type==='prefix'?'#6b3fa0':'#3a6b45'}">${TL[type]}</span>
             <div class="fc-item">${esc(d.item)}</div>
             <div class="fc-meaning">${esc(d.meaning)}</div>
-            <div class="fc-hint">Click to reveal sample words ↺</div>
+            <div class="fc-hint" style="font-size:.7rem;margin-top:10px;">Click to flip ↺</div>
           </div>
           <div class="fc-face fc-back">
-            <span class="fc-type-pill" style="background:${col}bb">${lbl}</span>
-            <div class="fc-item">${esc(d.item)}</div>
-            <div class="fc-meaning">${esc(d.meaning)}</div>
-            <div class="fc-samples">${samplesHtml}</div>
-            <div class="fc-hint">Click to flip back ↺</div>
+            <div class="rad-container">
+              <div class="rad-center"><span>${TL[type]}</span><span>${esc(d.item)}</span></div>
+              ${nodes}
+            </div>
+            <div style="position:absolute; bottom:12px; left:0; right:0; text-align:center; font-size:0.7rem; color:#b8953a;">Click to flip back</div>
           </div>
         </div>
       </div>
@@ -524,80 +483,81 @@ function flashView(app) {
       </div>
     </div>`;
 }
-function fcFlip() { document.getElementById('fcCard').classList.toggle('flipped'); }
-function fcGo(dir) { const data=cur(); fcIdx=Math.max(0,Math.min(data.length-1,fcIdx+dir)); flashView(document.getElementById('app')); }
-function fcToggleStar(key) { setStar(key); document.getElementById('fcStarBtn').textContent = isStar(key)?'⭐ Starred':'☆ Star'; }
+function fcGo(dir) { const data=cur(); fcIdx=Math.max(0,Math.min(data.length-1,fcIdx+dir)); render(); }
+function fcToggleStar(key) { setStar(key); render(); }
 
-/* QUIZ & REVIEW unchanged but functional */
+/* QUIZ & REVIEW full original */
 function buildQuiz() { const pool=cur(); if(pool.length<4)return[]; const sh=[...pool].sort(()=>Math.random()-.5); return sh.slice(0,Math.min(10,pool.length)).map(d=>{ const wrongs=[...pool].filter(x=>x.key!==d.key).sort(()=>Math.random()-.5).slice(0,3); const opts=[...wrongs,d].sort(()=>Math.random()-.5); return {d, opts, ci:opts.indexOf(d)};});}
 function quizView(app) {
-  if (quizDone) { app.innerHTML=`<div class="quiz-wrap"><div class="quiz-result"><h2>Quest Complete</h2><div class="quiz-score"><span>${quizScore}</span> / ${quizQ.length}</div><p style="font-style:italic;color:var(--ink3)">${quizScore===quizQ.length?'Perfect!':quizScore>=quizQ.length*.7?'Well done!':'Keep studying.'}</p><button class="quiz-restart" onclick="resetQuiz()">Try Again</button></div></div>`; return; }
+  if (quizDone) { app.innerHTML=`<div class="quiz-wrap"><div class="quiz-result"><h2>Quest Complete</h2><div class="quiz-score"><span>${quizScore}</span> / ${quizQ.length}</div><p style="font-style:italic">${quizScore===quizQ.length?'Perfect!':quizScore>=quizQ.length*.7?'Well done!':'Keep studying.'}</p><button class="quiz-restart" onclick="resetQuiz()">Try Again</button></div></div>`; return; }
   if (!quizQ.length) { quizQ=buildQuiz(); quizIdx=0; quizScore=0; if(!quizQ.length){app.innerHTML='<div class="msg">Need at least 4 entries.</div>';return;} }
-  const q=quizQ[quizIdx], col=TC[type], lbl=TL[type];
+  const q=quizQ[quizIdx]; const col=type==='root'?'#3d5a80':type==='prefix'?'#6b3fa0':'#3a6b45'; const lbl=TL[type];
   app.innerHTML=`<div class="quiz-wrap"><div class="quiz-prog">Question ${quizIdx+1} of ${quizQ.length}</div><div class="quiz-qbox"><div class="quiz-prompt">WHAT DOES THIS ${lbl} MEAN?</div><span class="quiz-badge" style="background:${col}">${lbl}</span><br><div class="quiz-item">${esc(q.d.item)}</div></div><div class="opts-grid">${q.opts.map((o,i)=>`<button class="opt-btn" id="o${i}" onclick="answer(${i})"><span class="opt-lbl">${'ABCD'[i]}</span>${esc(o.meaning)}</button>`).join('')}</div><div class="quiz-fb" id="qfb"></div></div>`;}
-function answer(chosen){const q=quizQ[quizIdx];[0,1,2,3].forEach(i=>document.getElementById('o'+i).disabled=true);document.getElementById('o'+q.ci).classList.add('correct');const fb=document.getElementById('qfb');if(chosen===q.ci){quizScore++;fb.textContent='✓ Correct!';}else{document.getElementById('o'+chosen).classList.add('wrong');fb.textContent=`✗ Answer: ${q.opts[q.ci].meaning}`;}const nxt=document.createElement('button');nxt.className='quiz-next';nxt.textContent=quizIdx+1<quizQ.length?'Next Question →':'See Results';nxt.onclick=()=>{quizIdx++;if(quizIdx>=quizQ.length)quizDone=true;quizView(document.getElementById('app'));};document.querySelector('.quiz-wrap').appendChild(nxt);}
-function resetQuiz(){quizQ=[];quizDone=false;quizView(document.getElementById('app'));}
-function reviewView(app){if(!revPool.length){revPool=[...cur()].sort(()=>Math.random()-.5);revIdx=0;}if(!revPool.length){app.innerHTML='<div class="msg">No entries.</div>';return;}const d=revPool[revIdx],lbl=TL[type];app.innerHTML=`<div class="rev-wrap"><div class="rev-card"><span class="rev-label">${lbl} — ${revIdx+1}/${revPool.length}: What is the ${type} for this meaning?</span><div class="rev-prompt">${esc(d.meaning)}</div><input class="rev-inp" id="revInp" placeholder="Type the ${type}…" autocomplete="off"><button class="rev-check" onclick="checkRev()">Check</button><div class="rev-reveal" id="revReveal"></div></div><div class="rev-nav"><button onclick="revGo(-1)" ${revIdx===0?'disabled':''}>← Prev</button><button onclick="revGo(1)" ${revIdx===revPool.length-1?'disabled':''}>Next →</button></div></div>`;const inp=document.getElementById('revInp');inp.focus();inp.onkeydown=e=>{if(e.key==='Enter')checkRev();};}
-function checkRev(){const d=revPool[revIdx];const inp=document.getElementById('revInp');if(inp.disabled)return;const val=inp.value.trim().toLowerCase();const correct=d.item.toLowerCase();inp.disabled=true;const rev=document.getElementById('revReveal');if(val===correct){inp.classList.add('correct');rev.textContent='✓ Correct!';}else{inp.classList.add('wrong');rev.textContent=`Answer: ${d.item}`;}}
-function revGo(dir){revIdx=Math.max(0,Math.min(revPool.length-1,revIdx+dir));reviewView(document.getElementById('app'));}
+function answer(chosen){const q=quizQ[quizIdx];[0,1,2,3].forEach(i=>document.getElementById('o'+i).disabled=true);document.getElementById('o'+q.ci).classList.add('correct');const fb=document.getElementById('qfb');if(chosen===q.ci){quizScore++;fb.textContent='✓ Correct!';}else{document.getElementById('o'+chosen).classList.add('wrong');fb.textContent=`✗ Answer: ${q.opts[q.ci].meaning}`;}const nxt=document.createElement('button');nxt.className='quiz-next';nxt.textContent=quizIdx+1<quizQ.length?'Next Question →':'See Results';nxt.onclick=()=>{quizIdx++;if(quizIdx>=quizQ.length)quizDone=true;render();};document.querySelector('.quiz-wrap').appendChild(nxt);}
+function resetQuiz(){quizQ=[];quizDone=false;render();}
+function reviewView(app){if(!revPool.length){revPool=[...cur()].sort(()=>Math.random()-.5);revIdx=0;}if(!revPool.length){app.innerHTML='<div class="msg">No entries.</div>';return;}const d=revPool[revIdx];const lbl=TL[type];app.innerHTML=`<div class="rev-wrap"><div class="rev-card"><span class="rev-label">${lbl} — ${revIdx+1}/${revPool.length}: What is the ${type} for this meaning?</span><div class="rev-prompt">${esc(d.meaning)}</div><input class="rev-inp" id="revInp" placeholder="Type the ${type}…" autocomplete="off"><button class="rev-check" onclick="checkRev()">Check</button><div class="rev-reveal" id="revReveal"></div></div><div class="rev-nav"><button onclick="revGo(-1)" ${revIdx===0?'disabled':''}>← Prev</button><button onclick="revGo(1)" ${revIdx===revPool.length-1?'disabled':''}>Next →</button></div></div>`;const inp=document.getElementById('revInp');if(inp){inp.focus();inp.onkeydown=e=>{if(e.key==='Enter')checkRev();};}}
+function checkRev(){const d=revPool[revIdx];const inp=document.getElementById('revInp');if(!inp||inp.disabled)return;const val=inp.value.trim().toLowerCase();const correct=d.item.toLowerCase();inp.disabled=true;const rev=document.getElementById('revReveal');if(val===correct){inp.classList.add('correct');rev.textContent='✓ Correct!';}else{inp.classList.add('wrong');rev.textContent=`Answer: ${d.item}`;}}
+function revGo(dir){revIdx=Math.max(0,Math.min(revPool.length-1,revIdx+dir));render();}
 
-/* ★ GLOBAL SEARCH VIEW with audio */
 function globalSearchView(app, q) {
   if (!q) { app.innerHTML='<div class="msg">✨ Enter a word, root, or meaning in the search bar above — global search across Roots, Prefixes & Suffixes.</div>'; return; }
   const results = globalSearch(q);
-  if (!results.length) { app.innerHTML='<div class="msg">🔍 No matches found across Roots, Prefixes or Suffixes. Try another keyword.</div>'; return; }
+  if (!results.length) { app.innerHTML='<div class="msg">🔍 No matches found across Roots, Prefixes or Suffixes.</div>'; return; }
   const hi = (s) => s.replace(new RegExp('('+escR(q)+')','gi'), '<mark>$1</mark>');
   const grouped = { root:[], prefix:[], suffix:[] };
   results.forEach(r => grouped[r.originalType].push(r));
-  let html = `<div style="margin-bottom:16px;"><span class="section-badge" style="background:var(--gold2); color:var(--ink);">🌍 GLOBAL RESULTS</span> <span style="margin-left:8px; font-style:italic;">${results.length} match(es) for “${esc(q)}”</span></div>`;
+  let html = `<div style="margin-bottom:16px;"><span class="section-badge" style="background:var(--gold2); color:var(--ink);">🌍 GLOBAL RESULTS</span> <span style="margin-left:8px;">${results.length} match(es)</span></div>`;
   for (const t of ['root','prefix','suffix']) {
-    if (grouped[t].length===0) continue;
-    const badgeCls = t==='root' ? 'root' : (t==='prefix' ? 'prefix' : 'suffix');
-    html += `<div style="margin-top:28px;"><span class="section-badge ${badgeCls}" style="margin-bottom:5px;">${TL[t]}S (${grouped[t].length})</span>
-             <table class="ov-table ${t}" style="margin-top:6px;">
-               <thead><tr><th>${TL[t]}</th><th>MEANING</th><th>SAMPLE WORDS (🔊)</th><th>★</th></tr></thead><tbody>`;
-    grouped[t].forEach((d) => {
-      const sampleHtmlWithAudio = renderSampleWordsWithAudio(d.samples);
-      html += `<tr>
-        <td class="td-item">${hi(esc(d.item))}</td>
-        <td class="td-meaning">${hi(esc(d.meaning))}</td>
-        <td><div class="sample-words vis" style="display:block">${sampleHtmlWithAudio}</div></td>
-        <td class="td-star" onclick="starCell('${esc(d.key)}',this)">${isStar(d.key)?'⭐':'☆'}</td>
-      </tr>`;
+    if (!grouped[t].length) continue;
+    html += `<div style="margin-top:28px;"><span class="section-badge ${t}">${TL[t]}S (${grouped[t].length})</span>
+             <table class="ov-table ${t}"><thead><tr><th>${TL[t]}</th><th>MEANING</th><th>SAMPLE WORDS (🔊)</th><th>★</th></tr></thead><tbody>`;
+    grouped[t].forEach(d => {
+      html += `<tr><td class="td-item">${hi(esc(d.item))}</td><td class="td-meaning">${hi(esc(d.meaning))}</td>
+               <td><div class="sample-words vis" style="display:block">${renderSampleWordsWithAudio(d.samples)}</div></td>
+               <td class="td-star" onclick="starCell('${esc(d.key)}',this)">${isStar(d.key)?'⭐':'☆'}</td></tr>`;
     });
     html += `</tbody></table></div>`;
   }
   app.innerHTML = html;
 }
 
-/* STAR WORDS (with audio) */
 function starsView(app) {
   const data = DB[type].filter(d=>isStar(d.key));
-  if (!data.length) {
-    app.innerHTML='<div class="star-empty">⭐ No starred words yet for this category.<br>Click ☆ in Study, Flashcard, or Search to save words here.</div>';
-    return;
-  }
-  app.innerHTML=`
-    <span class="section-badge ${type}">⭐ STARRED ${TL[type]}S</span>
-    <table class="ov-table ${type}">
-      <thead><tr><th>${TL[type]}</th><th>MEANING</th><th>SAMPLE WORDS (🔊)</th><th>★</th></tr></thead>
-      <tbody>${data.map((d,i)=>`
-         <tr>
-          <td class="td-item">${esc(d.item)}</td>
-          <td class="td-meaning">${esc(d.meaning)}</td>
-          <td><button class="sample-toggle" onclick="toggleSW(${i})">Show sample words</button><div class="sample-words" id="sw${i}">${renderSampleWordsWithAudio(d.samples)}</div></td>
-          <td class="td-star" onclick="unStar('${esc(d.key)}')" title="Remove star">⭐</td>
-         </tr>`).join('')}
-      </tbody>
-     </table>`;
+  if (!data.length) { app.innerHTML='<div class="star-empty">⭐ No starred words yet for this category.<br>Click ☆ in Study, Flashcard, or Search to save words here.</div>'; return; }
+  app.innerHTML = `<span class="section-badge ${type}">⭐ STARRED ${TL[type]}S</span>
+    <table class="ov-table ${type}"><thead><tr><th>${TL[type]}</th><th>MEANING</th><th>SAMPLE WORDS (🔊)</th><th>★</th></tr></thead><tbody>${data.map((d,i)=>`<tr><td class="td-item">${esc(d.item)}</td><td class="td-meaning">${esc(d.meaning)}</td>
+      <td><button class="sample-toggle" onclick="toggleSW(${i})">Show sample words</button><div class="sample-words" id="sw${i}">${renderSampleWordsWithAudio(d.samples)}</div></td>
+      <td class="td-star" onclick="unStar('${esc(d.key)}')">⭐</td></tr>`).join('')}</tbody></table>`;
+}
+function unStar(key) { setStar(key); render(); }
+
+function studyView(app) {
+  const data = cur();
+  if (!data.length) { app.innerHTML='<div class="msg">No entries.</div>'; return; }
+  app.innerHTML = `<span class="section-badge ${type}">${TL[type]}S</span>
+    <table class="ov-table ${type}"><thead><tr><th>${TL[type]}</th><th>MEANING</th><th>SAMPLE WORDS (click 🔊)</th><th>★</th></tr></thead>
+    <tbody>${data.map((d,i)=>`<tr><td class="td-item">${esc(d.item)}</td><td class="td-meaning">${esc(d.meaning)}</td>
+      <td><button class="sample-toggle" onclick="toggleSW(${i})">Show sample words</button><div class="sample-words" id="sw${i}">${renderSampleWordsWithAudio(d.samples)}</div></td>
+      <td class="td-star" onclick="starCell('${esc(d.key)}',this)">${isStar(d.key)?'⭐':'☆'}</td></tr>`).join('')}</tbody></table>`;
 }
 
-function unStar(key) { setStar(key); starsView(document.getElementById('app')); }
+function render() {
+  const sb = document.getElementById('searchBar');
+  const hint = document.getElementById('searchHint');
+  sb.classList.toggle('visible', mode==='search');
+  hint.style.display = mode==='search' ? 'block' : 'none';
+  const app = document.getElementById('app');
+  if      (mode==='study')     studyView(app);
+  else if (mode==='review')    reviewView(app);
+  else if (mode==='quiz')      quizView(app);
+  else if (mode==='search')    globalSearchView(app, document.getElementById('searchInput').value.trim());
+  else if (mode==='flashcard') flashView(app);
+  else if (mode==='stars')     starsView(app);
+}
 
-/* EVENT BINDINGS */
+// Event listeners
 document.getElementById('toolbar').addEventListener('click', e=>{
-  const btn=e.target.closest('[data-mode]');
-  if (!btn) return;
+  const btn=e.target.closest('[data-mode]'); if(!btn) return;
   mode=btn.dataset.mode;
   document.querySelectorAll('#toolbar button').forEach(b=>b.classList.toggle('active',b===btn));
   if (mode==='quiz') { quizQ=[]; quizDone=false; }
@@ -606,16 +566,13 @@ document.getElementById('toolbar').addEventListener('click', e=>{
   render();
 });
 document.getElementById('typeTabs').addEventListener('click', e=>{
-  const btn=e.target.closest('[data-type]');
-  if (!btn) return;
+  const btn=e.target.closest('[data-type]'); if(!btn) return;
   type=btn.dataset.type;
   document.querySelectorAll('#typeTabs button').forEach(b=>b.classList.toggle('active',b===btn));
   quizQ=[]; quizDone=false; revPool=[]; fcIdx=0;
-  if (mode !== 'search') render(); else { render(); }
+  render();
 });
-document.getElementById('searchInput').addEventListener('input', e=>{
-  if (mode === 'search') globalSearchView(document.getElementById('app'), e.target.value.trim());
-});
+document.getElementById('searchInput').addEventListener('input', e=>{ if(mode==='search') render(); });
 load();
 </script>
 </body>
