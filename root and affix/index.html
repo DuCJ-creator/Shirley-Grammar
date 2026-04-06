@@ -36,7 +36,7 @@
       radial-gradient(ellipse at 92% 82%, rgba(58,107,69,.08)  0%, transparent 55%);
   }
 
-  /* HEADER (restored original look) */
+  /* HEADER */
   header {
     background: var(--ink);
     color: var(--bg);
@@ -58,7 +58,7 @@
     margin-top: 14px;
   }
 
-  /* TOOLBAR (original) */
+  /* TOOLBAR */
   .toolbar {
     display: flex; justify-content: center; gap: 7px; flex-wrap: wrap;
     padding: 14px 12px 0;
@@ -71,7 +71,7 @@
   .toolbar button:hover { background: var(--bg3); }
   .toolbar button.active { background: var(--ink); color: var(--gold2); border-color: var(--gold); }
 
-  /* TYPE TABS (original) */
+  /* TYPE TABS */
   .type-tabs {
     display: flex; justify-content: center; margin: 14px auto 0;
     border: 1.5px solid var(--border); border-radius: var(--radius);
@@ -87,7 +87,7 @@
   .type-tabs button.active[data-type="prefix"] { background: var(--pre-col);  color: #fff; }
   .type-tabs button.active[data-type="suffix"] { background: var(--suf-col);  color: #fff; }
 
-  /* SEARCH BAR (original) */
+  /* SEARCH BAR */
   .search-bar {
     display: none; align-items: center; max-width: 560px;
     margin: 14px auto 0; padding: 0 16px; gap: 8px;
@@ -122,7 +122,7 @@
   .section-badge.prefix { background: var(--pre-col); }
   .section-badge.suffix { background: var(--suf-col); }
 
-  /* OVERVIEW TABLE (original, full featured) */
+  /* OVERVIEW TABLE */
   .ov-table {
     width: 100%; border-collapse: collapse;
     background: #fff; border-radius: var(--radius); overflow: hidden;
@@ -166,7 +166,7 @@
   .speaker-btn:hover { transform: scale(1.08); color: #c97e0a; background: #fff0d0; }
   .speaker-btn:active { transform: scale(0.96); }
   
-  /* ===== FLASHCARD with RADIAL BACK (new style preserved) ===== */
+  /* ===== FLASHCARD with RADIAL BACK (with speaker on each sample) ===== */
   .fc-wrap { display: flex; flex-direction: column; align-items: center; gap: 20px; padding: 6px 0; }
   .fc-counter { font-family: var(--font-h); font-size: .78rem; letter-spacing: .1em; color: var(--ink3); }
   .fc-scene { width: 100%; max-width: 540px; height: 380px; perspective: 2000px; cursor: pointer; }
@@ -193,7 +193,6 @@
   .fc-back .fc-item { color: var(--gold2); }
   .fc-meaning { font-style: italic; font-size: 1.05rem; line-height: 1.5; }
   .fc-front .fc-meaning { color: var(--ink2); }
-  .fc-back .fc-meaning { color: #c8b88a; }
   
   /* RADIAL (放射狀) layout for back side */
   .rad-container { position: relative; width: 100%; height: 100%; min-height: 280px; }
@@ -207,10 +206,22 @@
   .rad-center span:first-child { font-family: var(--font-h); font-size: 0.7rem; color: var(--gold); text-transform: uppercase; letter-spacing: 2px; }
   .rad-center span:last-child { font-family: var(--font-h); font-size: 1.5rem; font-weight: 700; color: var(--gold2); text-transform: lowercase; line-height: 1.2; }
   .rad-node {
-    position: absolute; width: 160px; text-align: center; top: 50%; left: 50%;
+    position: absolute; width: 170px; text-align: center; top: 50%; left: 50%;
     transform: translate(-50%, -50%) rotate(var(--angle)) translateY(-145px) rotate(calc(-1 * var(--angle)));
+    display: flex; align-items: center; justify-content: center; gap: 5px;
   }
-  .rad-word { color: var(--gold2); font-family: var(--font-b); font-size: 1.15rem; font-weight: 600; text-transform: none; text-shadow: 0 2px 5px rgba(0,0,0,0.8); background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 20px; display: inline-block; }
+  .rad-word { 
+    font-family: var(--font-b); font-size: 1.05rem; font-weight: 600; text-transform: none; 
+    text-shadow: 0 2px 5px rgba(0,0,0,0.8); background: rgba(0,0,0,0.4); 
+    padding: 3px 8px; border-radius: 20px; display: inline-block;
+    color: #e8dbaa;
+  }
+  .rad-speaker {
+    background: rgba(0,0,0,0.5); border: none; cursor: pointer; font-size: 0.85rem;
+    padding: 2px 5px; border-radius: 20px; transition: all 0.15s; color: var(--gold2);
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .rad-speaker:hover { transform: scale(1.08); color: #ffdd88; background: rgba(0,0,0,0.7); }
   .rad-line {
     position: absolute; top: 50%; left: 50%; width: 1px; height: 105px;
     background: linear-gradient(to top, var(--gold), transparent);
@@ -226,7 +237,7 @@
   .fc-nav button:hover:not(:disabled) { background: var(--ink); color: var(--gold2); border-color: var(--gold); }
   .fc-nav button:disabled { opacity: .38; cursor: default; }
 
-  /* QUIZ & REVIEW original styles */
+  /* QUIZ & REVIEW */
   .quiz-wrap { max-width: 580px; margin: 0 auto; }
   .quiz-prog { font-family: var(--font-h); font-size: .72rem; letter-spacing: .1em; color: var(--ink3); margin-bottom: 18px; text-align: center; }
   .quiz-qbox {
@@ -306,8 +317,8 @@
   mark { background: #fde68a; border-radius: 3px; padding: 0 2px; color: #2a1f0e; }
   @media (max-width: 600px) {
     .fc-scene { max-width: 95vw; height: 340px; }
-    .rad-node { width: 130px; transform: translate(-50%, -50%) rotate(var(--angle)) translateY(-120px) rotate(calc(-1 * var(--angle))); }
-    .rad-word { font-size: 0.95rem; }
+    .rad-node { width: 140px; transform: translate(-50%, -50%) rotate(var(--angle)) translateY(-120px) rotate(calc(-1 * var(--angle))); }
+    .rad-word { font-size: 0.85rem; }
   }
 </style>
 </head>
@@ -344,7 +355,7 @@
 <main id="app"><div class="msg">Loading data…</div></main>
 
 <script>
-/* ---------- FULL DATABASE + ALL FEATURES + RADIAL FLASHCARD BACK ---------- */
+/* ---------- FULL DATABASE + RADIAL FLASHCARD WITH SPEAKER ON BACK ---------- */
 const CSV = {
   root:   'https://ducj-creator.github.io/Shirley-Grammar/root%20and%20affix/root.csv',
   prefix: 'https://ducj-creator.github.io/Shirley-Grammar/root%20and%20affix/prefix.csv',
@@ -442,7 +453,7 @@ function toggleSW(i) {
 }
 function starCell(key, cell) { setStar(key); cell.textContent = isStar(key) ? '⭐' : '☆'; render(); }
 
-/* ---------- FLASHCARD with RADIAL BACK ---------- */
+/* FLASHCARD with RADIAL BACK and SPEAKER on each sample word */
 function flashView(app) {
   const data = cur();
   if (!data.length) { app.innerHTML='<div class="msg">No entries.</div>'; return; }
@@ -453,8 +464,12 @@ function flashView(app) {
   const count = samplesLimited.length;
   const nodes = samplesLimited.map((s, i) => {
     const angle = (360 / count) * i;
+    const safeWord = esc(s).replace(/'/g, "\\'");
     return `<div class="rad-line" style="--angle:${angle}deg"></div>
-            <div class="rad-node" style="--angle:${angle}deg"><span class="rad-word">${esc(s)}</span></div>`;
+            <div class="rad-node" style="--angle:${angle}deg">
+              <span class="rad-word">${esc(s)}</span>
+              <button class="rad-speaker" onclick="event.stopPropagation(); speakWord('${safeWord}');">🔊</button>
+            </div>`;
   }).join('');
   app.innerHTML = `
     <div class="fc-wrap">
@@ -472,7 +487,7 @@ function flashView(app) {
               <div class="rad-center"><span>${TL[type]}</span><span>${esc(d.item)}</span></div>
               ${nodes}
             </div>
-            <div style="position:absolute; bottom:12px; left:0; right:0; text-align:center; font-size:0.7rem; color:#b8953a;">Click to flip back</div>
+            <div style="position:absolute; bottom:12px; left:0; right:0; text-align:center; font-size:0.65rem; color:#b8953a;">Click to flip back | 🔊 tap to hear words</div>
           </div>
         </div>
       </div>
@@ -516,7 +531,7 @@ function globalSearchView(app, q) {
                <td><div class="sample-words vis" style="display:block">${renderSampleWordsWithAudio(d.samples)}</div></td>
                <td class="td-star" onclick="starCell('${esc(d.key)}',this)">${isStar(d.key)?'⭐':'☆'}</td></tr>`;
     });
-    html += `</tbody></table></div>`;
+    html += `</tbody><table></div>`;
   }
   app.innerHTML = html;
 }
@@ -527,7 +542,7 @@ function starsView(app) {
   app.innerHTML = `<span class="section-badge ${type}">⭐ STARRED ${TL[type]}S</span>
     <table class="ov-table ${type}"><thead><tr><th>${TL[type]}</th><th>MEANING</th><th>SAMPLE WORDS (🔊)</th><th>★</th></tr></thead><tbody>${data.map((d,i)=>`<tr><td class="td-item">${esc(d.item)}</td><td class="td-meaning">${esc(d.meaning)}</td>
       <td><button class="sample-toggle" onclick="toggleSW(${i})">Show sample words</button><div class="sample-words" id="sw${i}">${renderSampleWordsWithAudio(d.samples)}</div></td>
-      <td class="td-star" onclick="unStar('${esc(d.key)}')">⭐</td></tr>`).join('')}</tbody></table>`;
+      <td class="td-star" onclick="unStar('${esc(d.key)}')">⭐</td>`).join('')}</tbody></table>`;
 }
 function unStar(key) { setStar(key); render(); }
 
@@ -538,7 +553,7 @@ function studyView(app) {
     <table class="ov-table ${type}"><thead><tr><th>${TL[type]}</th><th>MEANING</th><th>SAMPLE WORDS (click 🔊)</th><th>★</th></tr></thead>
     <tbody>${data.map((d,i)=>`<tr><td class="td-item">${esc(d.item)}</td><td class="td-meaning">${esc(d.meaning)}</td>
       <td><button class="sample-toggle" onclick="toggleSW(${i})">Show sample words</button><div class="sample-words" id="sw${i}">${renderSampleWordsWithAudio(d.samples)}</div></td>
-      <td class="td-star" onclick="starCell('${esc(d.key)}',this)">${isStar(d.key)?'⭐':'☆'}</td></tr>`).join('')}</tbody></table>`;
+      <td class="td-star" onclick="starCell('${esc(d.key)}',this)">${isStar(d.key)?'⭐':'☆'}</td>`).join('')}</tbody></table>`;
 }
 
 function render() {
@@ -555,7 +570,6 @@ function render() {
   else if (mode==='stars')     starsView(app);
 }
 
-// Event listeners
 document.getElementById('toolbar').addEventListener('click', e=>{
   const btn=e.target.closest('[data-mode]'); if(!btn) return;
   mode=btn.dataset.mode;
