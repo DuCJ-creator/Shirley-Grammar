@@ -315,6 +315,14 @@
 
   .star-empty { text-align: center; padding: 60px 20px; font-style: italic; color: var(--ink3); font-size: 1.05rem; }
   mark { background: #fde68a; border-radius: 3px; padding: 0 2px; color: #2a1f0e; }
+  .study-extra-actions { margin-top: 20px; text-align: center; }
+  .switch-flash-btn {
+    font-family: var(--font-h); font-size: .7rem; letter-spacing: .08em;
+    padding: 8px 24px; border: 2px solid var(--gold); border-radius: 28px;
+    background: #fff; color: var(--ink); cursor: pointer; transition: all .2s;
+    display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 1px 3px var(--shadow);
+  }
+  .switch-flash-btn:hover { background: var(--gold2); border-color: var(--ink); color: var(--ink); }
   @media (max-width: 600px) {
     .fc-scene { max-width: 95vw; height: 340px; }
     .rad-node { width: 140px; transform: translate(-50%, -50%) rotate(var(--angle)) translateY(-120px) rotate(calc(-1 * var(--angle))); }
@@ -370,6 +378,10 @@ let mode = 'study', type = 'root';
 let quizQ=[], quizIdx=0, quizScore=0, quizDone=false;
 let fcIdx=0;
 let revPool=[], revIdx=0;
+
+// ---- 动态闪卡数据源: 正常情况使用当前type的完整列表；但在“搜索”或“星星”视图中可以通过临时闪卡池覆盖 ----
+let dynamicFlashPool = null;      // 如果非空，闪卡模式使用此数组（元素格式与原DB entry相同）
+let dynamicFlashOriginMode = null; // 用于显示提示文字 "Search Results" / "Starred Words"
 
 function parseCSV(txt) {
   const rows = [];
@@ -453,10 +465,15 @@ function toggleSW(i) {
 }
 function starCell(key, cell) { setStar(key); cell.textContent = isStar(key) ? '⭐' : '☆'; render(); }
 
-/* FLASHCARD with RADIAL BACK and SPEAKER on each sample word */
+// ----- 闪卡核心: 支持动态池 -----
+function getFlashcardData() {
+  if (dynamicFlashPool && dynamicFlashPool.length > 0) return dynamicFlashPool;
+  return cur();
+}
+
 function flashView(app) {
-  const data = cur();
-  if (!data.length) { app.innerHTML='<div class="msg">No entries.</div>'; return; }
+  const data = getFlashcardData();
+  if (!data.length) { app.innerHTML='<div class="msg">No entries available for flashcards.</div>'; return; }
   if (fcIdx>=data.length) fcIdx=0;
   const d=data[fcIdx];
   const starred=isStar(d.key);
@@ -471,20 +488,23 @@ function flashView(app) {
               <button class="rad-speaker" onclick="event.stopPropagation(); speakWord('${safeWord}');">🔊</button>
             </div>`;
   }).join('');
+  let sourceLabel = '';
+  if (dynamicFlashPool && dynamicFlashOriginMode === 'search') sourceLabel = ' (Search Results)';
+  else if (dynamicFlashPool && dynamicFlashOriginMode === 'stars') sourceLabel = ' (⭐ Starred)';
   app.innerHTML = `
     <div class="fc-wrap">
-      <div class="fc-counter">${fcIdx+1} / ${data.length}</div>
+      <div class="fc-counter">${fcIdx+1} / ${data.length}${sourceLabel}</div>
       <div class="fc-scene" id="fcScene" onclick="document.getElementById('fcCard').classList.toggle('flipped')">
         <div class="fc-card" id="fcCard">
           <div class="fc-face fc-front">
-            <span class="fc-type-pill" style="background:${type==='root'?'#3d5a80':type==='prefix'?'#6b3fa0':'#3a6b45'}">${TL[type]}</span>
+            <span class="fc-type-pill" style="background:${d.type==='root'?'#3d5a80':d.type==='prefix'?'#6b3fa0':'#3a6b45'}">${TL[d.type]}</span>
             <div class="fc-item">${esc(d.item)}</div>
             <div class="fc-meaning">${esc(d.meaning)}</div>
             <div class="fc-hint" style="font-size:.7rem;margin-top:10px;">Click to flip ↺</div>
           </div>
           <div class="fc-face fc-back">
             <div class="rad-container">
-              <div class="rad-center"><span>${TL[type]}</span><span>${esc(d.item)}</span></div>
+              <div class="rad-center"><span>${TL[d.type]}</span><span>${esc(d.item)}</span></div>
               ${nodes}
             </div>
             <div style="position:absolute; bottom:12px; left:0; right:0; text-align:center; font-size:0.65rem; color:#b8953a;">Click to flip back | 🔊 tap to hear words</div>
@@ -495,24 +515,25 @@ function flashView(app) {
         <button onclick="fcGo(-1)" ${fcIdx===0?'disabled':''}>← Prev</button>
         <button id="fcStarBtn" onclick="fcToggleStar('${esc(d.key)}')">${starred?'⭐ Starred':'☆ Star'}</button>
         <button onclick="fcGo(1)" ${fcIdx===data.length-1?'disabled':''}>Next →</button>
+        ${(dynamicFlashPool && dynamicFlashPool.length>0) ? `<button onclick="exitDynamicFlash()" style="background:#e0c87c;">↺ Exit to Main</button>` : ''}
       </div>
     </div>`;
 }
-function fcGo(dir) { const data=cur(); fcIdx=Math.max(0,Math.min(data.length-1,fcIdx+dir)); render(); }
+function fcGo(dir) { const data=getFlashcardData(); fcIdx=Math.max(0,Math.min(data.length-1,fcIdx+dir)); render(); }
 function fcToggleStar(key) { setStar(key); render(); }
+function exitDynamicFlash() { dynamicFlashPool = null; dynamicFlashOriginMode = null; fcIdx=0; mode='flashcard'; render(); }
 
-/* QUIZ & REVIEW full original */
-function buildQuiz() { const pool=cur(); if(pool.length<4)return[]; const sh=[...pool].sort(()=>Math.random()-.5); return sh.slice(0,Math.min(10,pool.length)).map(d=>{ const wrongs=[...pool].filter(x=>x.key!==d.key).sort(()=>Math.random()-.5).slice(0,3); const opts=[...wrongs,d].sort(()=>Math.random()-.5); return {d, opts, ci:opts.indexOf(d)};});}
-function quizView(app) {
-  if (quizDone) { app.innerHTML=`<div class="quiz-wrap"><div class="quiz-result"><h2>Quest Complete</h2><div class="quiz-score"><span>${quizScore}</span> / ${quizQ.length}</div><p style="font-style:italic">${quizScore===quizQ.length?'Perfect!':quizScore>=quizQ.length*.7?'Well done!':'Keep studying.'}</p><button class="quiz-restart" onclick="resetQuiz()">Try Again</button></div></div>`; return; }
-  if (!quizQ.length) { quizQ=buildQuiz(); quizIdx=0; quizScore=0; if(!quizQ.length){app.innerHTML='<div class="msg">Need at least 4 entries.</div>';return;} }
-  const q=quizQ[quizIdx]; const col=type==='root'?'#3d5a80':type==='prefix'?'#6b3fa0':'#3a6b45'; const lbl=TL[type];
-  app.innerHTML=`<div class="quiz-wrap"><div class="quiz-prog">Question ${quizIdx+1} of ${quizQ.length}</div><div class="quiz-qbox"><div class="quiz-prompt">WHAT DOES THIS ${lbl} MEAN?</div><span class="quiz-badge" style="background:${col}">${lbl}</span><br><div class="quiz-item">${esc(q.d.item)}</div></div><div class="opts-grid">${q.opts.map((o,i)=>`<button class="opt-btn" id="o${i}" onclick="answer(${i})"><span class="opt-lbl">${'ABCD'[i]}</span>${esc(o.meaning)}</button>`).join('')}</div><div class="quiz-fb" id="qfb"></div></div>`;}
-function answer(chosen){const q=quizQ[quizIdx];[0,1,2,3].forEach(i=>document.getElementById('o'+i).disabled=true);document.getElementById('o'+q.ci).classList.add('correct');const fb=document.getElementById('qfb');if(chosen===q.ci){quizScore++;fb.textContent='✓ Correct!';}else{document.getElementById('o'+chosen).classList.add('wrong');fb.textContent=`✗ Answer: ${q.opts[q.ci].meaning}`;}const nxt=document.createElement('button');nxt.className='quiz-next';nxt.textContent=quizIdx+1<quizQ.length?'Next Question →':'See Results';nxt.onclick=()=>{quizIdx++;if(quizIdx>=quizQ.length)quizDone=true;render();};document.querySelector('.quiz-wrap').appendChild(nxt);}
-function resetQuiz(){quizQ=[];quizDone=false;render();}
-function reviewView(app){if(!revPool.length){revPool=[...cur()].sort(()=>Math.random()-.5);revIdx=0;}if(!revPool.length){app.innerHTML='<div class="msg">No entries.</div>';return;}const d=revPool[revIdx];const lbl=TL[type];app.innerHTML=`<div class="rev-wrap"><div class="rev-card"><span class="rev-label">${lbl} — ${revIdx+1}/${revPool.length}: What is the ${type} for this meaning?</span><div class="rev-prompt">${esc(d.meaning)}</div><input class="rev-inp" id="revInp" placeholder="Type the ${type}…" autocomplete="off"><button class="rev-check" onclick="checkRev()">Check</button><div class="rev-reveal" id="revReveal"></div></div><div class="rev-nav"><button onclick="revGo(-1)" ${revIdx===0?'disabled':''}>← Prev</button><button onclick="revGo(1)" ${revIdx===revPool.length-1?'disabled':''}>Next →</button></div></div>`;const inp=document.getElementById('revInp');if(inp){inp.focus();inp.onkeydown=e=>{if(e.key==='Enter')checkRev();};}}
-function checkRev(){const d=revPool[revIdx];const inp=document.getElementById('revInp');if(!inp||inp.disabled)return;const val=inp.value.trim().toLowerCase();const correct=d.item.toLowerCase();inp.disabled=true;const rev=document.getElementById('revReveal');if(val===correct){inp.classList.add('correct');rev.textContent='✓ Correct!';}else{inp.classList.add('wrong');rev.textContent=`Answer: ${d.item}`;}}
-function revGo(dir){revIdx=Math.max(0,Math.min(revPool.length-1,revIdx+dir));render();}
+// ---- 支持从搜索/星星视图跳转到闪卡 ----
+function startFlashWithPool(pool, originLabel) {
+  if (!pool || pool.length===0) { alert('No items to show in flashcards.'); return; }
+  dynamicFlashPool = pool.slice();
+  dynamicFlashOriginMode = originLabel;
+  fcIdx = 0;
+  mode = 'flashcard';
+  // 激活toolbar上的flashcard按钮样式
+  document.querySelectorAll('#toolbar button').forEach(b=>b.classList.toggle('active',b.dataset.mode==='flashcard'));
+  render();
+}
 
 function globalSearchView(app, q) {
   if (!q) { app.innerHTML='<div class="msg">✨ Enter a word, root, or meaning in the search bar above — global search across Roots, Prefixes & Suffixes.</div>'; return; }
@@ -521,28 +542,35 @@ function globalSearchView(app, q) {
   const hi = (s) => s.replace(new RegExp('('+escR(q)+')','gi'), '<mark>$1</mark>');
   const grouped = { root:[], prefix:[], suffix:[] };
   results.forEach(r => grouped[r.originalType].push(r));
-  let html = `<div style="margin-bottom:16px;"><span class="section-badge" style="background:var(--gold2); color:var(--ink);">🌍 GLOBAL RESULTS</span> <span style="margin-left:8px;">${results.length} match(es)</span></div>`;
+  let html = `<div style="margin-bottom:16px;"><span class="section-badge" style="background:var(--gold2); color:var(--ink);">🌍 GLOBAL RESULTS</span> <span style="margin-left:8px;">${results.length} match(es)</span>
+  <div style="margin-top:10px;"><button class="switch-flash-btn" id="searchToFlashBtn">🃏 Study these ${results.length} items with Flashcards →</button></div></div>`;
   for (const t of ['root','prefix','suffix']) {
     if (!grouped[t].length) continue;
     html += `<div style="margin-top:28px;"><span class="section-badge ${t}">${TL[t]}S (${grouped[t].length})</span>
              <table class="ov-table ${t}"><thead><tr><th>${TL[t]}</th><th>MEANING</th><th>SAMPLE WORDS (🔊)</th><th>★</th></tr></thead><tbody>`;
     grouped[t].forEach(d => {
       html += `<tr><td class="td-item">${hi(esc(d.item))}</td><td class="td-meaning">${hi(esc(d.meaning))}</td>
-               <td><div class="sample-words vis" style="display:block">${renderSampleWordsWithAudio(d.samples)}</div></td>
+                <td><div class="sample-words vis" style="display:block">${renderSampleWordsWithAudio(d.samples)}</div></td>
                <td class="td-star" onclick="starCell('${esc(d.key)}',this)">${isStar(d.key)?'⭐':'☆'}</td></tr>`;
     });
-    html += `</tbody><table></div>`;
+    html += `</tbody></table></div>`;
   }
   app.innerHTML = html;
+  const flashBtn = document.getElementById('searchToFlashBtn');
+  if(flashBtn) flashBtn.onclick = () => startFlashWithPool(results, 'search');
 }
 
 function starsView(app) {
   const data = DB[type].filter(d=>isStar(d.key));
   if (!data.length) { app.innerHTML='<div class="star-empty">⭐ No starred words yet for this category.<br>Click ☆ in Study, Flashcard, or Search to save words here.</div>'; return; }
-  app.innerHTML = `<span class="section-badge ${type}">⭐ STARRED ${TL[type]}S</span>
+  app.innerHTML = `<div><span class="section-badge ${type}">⭐ STARRED ${TL[type]}S</span>
+  <div style="margin: 12px 0 6px;"><button class="switch-flash-btn" id="starsToFlashBtn">🃏 Study ${data.length} starred items with Flashcards →</button></div>
+  </div>
     <table class="ov-table ${type}"><thead><tr><th>${TL[type]}</th><th>MEANING</th><th>SAMPLE WORDS (🔊)</th><th>★</th></tr></thead><tbody>${data.map((d,i)=>`<tr><td class="td-item">${esc(d.item)}</td><td class="td-meaning">${esc(d.meaning)}</td>
-      <td><button class="sample-toggle" onclick="toggleSW(${i})">Show sample words</button><div class="sample-words" id="sw${i}">${renderSampleWordsWithAudio(d.samples)}</div></td>
-      <td class="td-star" onclick="unStar('${esc(d.key)}')">⭐</td>`).join('')}</tbody></table>`;
+       <td><button class="sample-toggle" onclick="toggleSW(${i})">Show sample words</button><div class="sample-words" id="sw${i}">${renderSampleWordsWithAudio(d.samples)}</div></td>
+      <td class="td-star" onclick="unStar('${esc(d.key)}')">⭐</td></tr>`).join('')}</tbody></table>`;
+  const flashBtn = document.getElementById('starsToFlashBtn');
+  if(flashBtn) flashBtn.onclick = () => startFlashWithPool(data, 'stars');
 }
 function unStar(key) { setStar(key); render(); }
 
@@ -550,11 +578,33 @@ function studyView(app) {
   const data = cur();
   if (!data.length) { app.innerHTML='<div class="msg">No entries.</div>'; return; }
   app.innerHTML = `<span class="section-badge ${type}">${TL[type]}S</span>
+    <div style="margin: 12px 0 8px;"><button class="switch-flash-btn" id="studyToFlashBtn">🃏 Study all ${data.length} ${TL[type]}s with Flashcards →</button></div>
     <table class="ov-table ${type}"><thead><tr><th>${TL[type]}</th><th>MEANING</th><th>SAMPLE WORDS (click 🔊)</th><th>★</th></tr></thead>
     <tbody>${data.map((d,i)=>`<tr><td class="td-item">${esc(d.item)}</td><td class="td-meaning">${esc(d.meaning)}</td>
-      <td><button class="sample-toggle" onclick="toggleSW(${i})">Show sample words</button><div class="sample-words" id="sw${i}">${renderSampleWordsWithAudio(d.samples)}</div></td>
-      <td class="td-star" onclick="starCell('${esc(d.key)}',this)">${isStar(d.key)?'⭐':'☆'}</td>`).join('')}</tbody></table>`;
+       <td><button class="sample-toggle" onclick="toggleSW(${i})">Show sample words</button><div class="sample-words" id="sw${i}">${renderSampleWordsWithAudio(d.samples)}</div></td>
+      <td class="td-star" onclick="starCell('${esc(d.key)}',this)">${isStar(d.key)?'⭐':'☆'}</td></tr>`).join('')}</tbody></table>`;
+  const btn = document.getElementById('studyToFlashBtn');
+  if(btn) btn.onclick = () => startFlashWithPool(data, 'study');
 }
+
+function reviewView(app){
+  if(!revPool.length){ revPool=[...cur()].sort(()=>Math.random()-.5); revIdx=0;}
+  if(!revPool.length){ app.innerHTML='<div class="msg">No entries.</div>'; return;}
+  const d=revPool[revIdx]; const lbl=TL[type];
+  app.innerHTML=`<div class="rev-wrap"><div class="rev-card"><span class="rev-label">${lbl} — ${revIdx+1}/${revPool.length}: What is the ${type} for this meaning?</span><div class="rev-prompt">${esc(d.meaning)}</div><input class="rev-inp" id="revInp" placeholder="Type the ${type}…" autocomplete="off"><button class="rev-check" onclick="checkRev()">Check</button><div class="rev-reveal" id="revReveal"></div></div><div class="rev-nav"><button onclick="revGo(-1)" ${revIdx===0?'disabled':''}>← Prev</button><button onclick="revGo(1)" ${revIdx===revPool.length-1?'disabled':''}>Next →</button></div></div>`;
+  const inp=document.getElementById('revInp'); if(inp){inp.focus(); inp.onkeydown=e=>{if(e.key==='Enter')checkRev();};}
+}
+function checkRev(){ const d=revPool[revIdx]; const inp=document.getElementById('revInp'); if(!inp||inp.disabled)return; const val=inp.value.trim().toLowerCase(); const correct=d.item.toLowerCase(); inp.disabled=true; const rev=document.getElementById('revReveal'); if(val===correct){ inp.classList.add('correct'); rev.textContent='✓ Correct!'; } else { inp.classList.add('wrong'); rev.textContent=`Answer: ${d.item}`; } }
+function revGo(dir){ revIdx=Math.max(0,Math.min(revPool.length-1,revIdx+dir)); render(); }
+
+function quizView(app) {
+  if (quizDone) { app.innerHTML=`<div class="quiz-wrap"><div class="quiz-result"><h2>Quest Complete</h2><div class="quiz-score"><span>${quizScore}</span> / ${quizQ.length}</div><p style="font-style:italic">${quizScore===quizQ.length?'Perfect!':quizScore>=quizQ.length*.7?'Well done!':'Keep studying.'}</p><button class="quiz-restart" onclick="resetQuiz()">Try Again</button></div></div>`; return; }
+  if (!quizQ.length) { quizQ=buildQuiz(); quizIdx=0; quizScore=0; if(!quizQ.length){app.innerHTML='<div class="msg">Need at least 4 entries.</div>';return;} }
+  const q=quizQ[quizIdx]; const col=type==='root'?'#3d5a80':type==='prefix'?'#6b3fa0':'#3a6b45'; const lbl=TL[type];
+  app.innerHTML=`<div class="quiz-wrap"><div class="quiz-prog">Question ${quizIdx+1} of ${quizQ.length}</div><div class="quiz-qbox"><div class="quiz-prompt">WHAT DOES THIS ${lbl} MEAN?</div><span class="quiz-badge" style="background:${col}">${lbl}</span><br><div class="quiz-item">${esc(q.d.item)}</div></div><div class="opts-grid">${q.opts.map((o,i)=>`<button class="opt-btn" id="o${i}" onclick="answer(${i})"><span class="opt-lbl">${'ABCD'[i]}</span>${esc(o.meaning)}</button>`).join('')}</div><div class="quiz-fb" id="qfb"></div></div>`;}
+function answer(chosen){const q=quizQ[quizIdx];[0,1,2,3].forEach(i=>document.getElementById('o'+i).disabled=true);document.getElementById('o'+q.ci).classList.add('correct');const fb=document.getElementById('qfb');if(chosen===q.ci){quizScore++;fb.textContent='✓ Correct!';}else{document.getElementById('o'+chosen).classList.add('wrong');fb.textContent=`✗ Answer: ${q.opts[q.ci].meaning}`;}const nxt=document.createElement('button');nxt.className='quiz-next';nxt.textContent=quizIdx+1<quizQ.length?'Next Question →':'See Results';nxt.onclick=()=>{quizIdx++;if(quizIdx>=quizQ.length)quizDone=true;render();};document.querySelector('.quiz-wrap').appendChild(nxt);}
+function resetQuiz(){quizQ=[];quizDone=false;render();}
+function buildQuiz() { const pool=cur(); if(pool.length<4)return[]; const sh=[...pool].sort(()=>Math.random()-.5); return sh.slice(0,Math.min(10,pool.length)).map(d=>{ const wrongs=[...pool].filter(x=>x.key!==d.key).sort(()=>Math.random()-.5).slice(0,3); const opts=[...wrongs,d].sort(()=>Math.random()-.5); return {d, opts, ci:opts.indexOf(d)};});}
 
 function render() {
   const sb = document.getElementById('searchBar');
@@ -577,6 +627,8 @@ document.getElementById('toolbar').addEventListener('click', e=>{
   if (mode==='quiz') { quizQ=[]; quizDone=false; }
   if (mode==='review') { revPool=[]; }
   if (mode==='flashcard') { fcIdx=0; }
+  // 切换mode时 如果离开闪卡且当前是动态池，建议保留池？不清空动态池，但只有重新点击flashcard才使用动态池；不过进入其他模式最好清除动态池避免混淆。
+  if(mode !== 'flashcard') { dynamicFlashPool = null; dynamicFlashOriginMode = null; }
   render();
 });
 document.getElementById('typeTabs').addEventListener('click', e=>{
@@ -584,6 +636,7 @@ document.getElementById('typeTabs').addEventListener('click', e=>{
   type=btn.dataset.type;
   document.querySelectorAll('#typeTabs button').forEach(b=>b.classList.toggle('active',b===btn));
   quizQ=[]; quizDone=false; revPool=[]; fcIdx=0;
+  if(mode !== 'flashcard') dynamicFlashPool = null;
   render();
 });
 document.getElementById('searchInput').addEventListener('input', e=>{ if(mode==='search') render(); });
