@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -1620,14 +1619,63 @@ function fetchWithCorsProxy(url, proxyIndex) {
         .catch(() => fetchWithCorsProxy(url, proxyIndex + 1));
 }
 
+// Listen for dimension reports from inside the iframe
+window.addEventListener('message', function(e) {
+    if (e.data && e.data.type === 'shirley-dims') {
+        const iframe = document.getElementById('panel-iframe');
+        const wrap   = document.getElementById('panel-iframe-wrap');
+        applyScale(iframe, wrap, e.data.w, e.data.h);
+    }
+});
+
+function applyScale(iframe, wrap, pageW, pageH) {
+    const wrapW = wrap.clientWidth;
+    const wrapH = wrap.clientHeight;
+    // Scale so the full page width fits the panel, never magnify
+    const scale = Math.min(wrapW / pageW, 1);
+    iframe.style.width     = pageW + 'px';
+    iframe.style.height    = (pageH || (wrapH / scale)) + 'px';
+    iframe.style.transform = `scale(${scale})`;
+}
+
 function rewriteHtmlUrls(html, baseUrl) {
-    // Rewrite all relative URLs in the HTML to absolute using the base URL
-    const base = new URL(baseUrl);
-    // Add/replace <base> tag so relative links inside the iframe work
-    if (/<base\s/i.test(html)) {
-        html = html.replace(/<base[^>]*>/i, `<base href="${baseUrl}">`);
+    // Inject/replace <base> tag so relative links inside the iframe resolve correctly
+    const baseTag = `<base href="${baseUrl}">`;
+    if (/<base[\s>]/i.test(html)) {
+        html = html.replace(/<base[^>]*>/i, baseTag);
     } else {
-        html = html.replace(/<head[^>]*>/i, m => m + `\n<base href="${baseUrl}">`);
+        html = html.replace(/(<head[^>]*>)/i, '$1\n' + baseTag);
+    }
+    // Inject a postMessage script that fires after layout settles,
+    // reporting the true rendered page dimensions back to the parent
+    const measureScript = `
+<script>
+(function() {
+  function report() {
+    var w = Math.max(
+      document.documentElement.scrollWidth,
+      document.body ? document.body.scrollWidth : 0
+    );
+    var h = Math.max(
+      document.documentElement.scrollHeight,
+      document.body ? document.body.scrollHeight : 0
+    );
+    window.parent.postMessage({ type: 'shirley-dims', w: w, h: h }, '*');
+  }
+  // Fire at progressively later times to catch lazy-rendered content
+  window.addEventListener('load', function() {
+    report();
+    setTimeout(report, 300);
+    setTimeout(report, 800);
+    setTimeout(report, 1800);
+  });
+})();
+<\/script>`;
+    // Inject before </body>
+    if (/<\/body>/i.test(html)) {
+        html = html.replace(/<\/body>/i, measureScript + '</body>');
+    } else {
+        html += measureScript;
     }
     return html;
 }
@@ -1654,16 +1702,29 @@ function openPanel(url, key) {
             const patched = rewriteHtmlUrls(html, url);
             iframe.srcdoc = patched;
 
-            // Once loaded, scale the iframe so the full page fits the panel
             iframe.onload = () => {
-                scaleIframe(iframe, wrap);
+                // Show iframe immediately; scaling arrives via postMessage
+                iframe.style.width     = '100%';
+                iframe.style.height    = '100%';
+                iframe.style.transform = '';
+                iframe.style.display   = 'block';
                 loading.classList.add('hidden');
-                iframe.style.display = 'block';
+                // Fallback: if postMessage never arrives, try reading directly
+                setTimeout(() => {
+                    try {
+                        const doc = iframe.contentDocument || iframe.contentWindow.document;
+                        const w = doc.documentElement.scrollWidth;
+                        const h = doc.documentElement.scrollHeight;
+                        if (w > 100) applyScale(iframe, wrap, w, h);
+                    } catch(e) {}
+                }, 500);
             };
         })
         .catch(() => {
             loading.classList.add('hidden');
             iframe.style.display = 'block';
+            iframe.style.width = '100%';
+            iframe.style.height = '100%';
             iframe.srcdoc = `<!DOCTYPE html><html><head>
                 <style>body{font-family:sans-serif;display:flex;flex-direction:column;align-items:center;
                 justify-content:center;height:100vh;margin:0;background:#fffef5;color:#1e4620;text-align:center;padding:20px}</style>
@@ -1673,30 +1734,6 @@ function openPanel(url, key) {
                 <p style="font-size:0.85rem;color:#666;margin-bottom:24px">This page could not be fetched.</p>
                 </body></html>`;
         });
-}
-
-function scaleIframe(iframe, wrap) {
-    // Detect the natural width of the page inside the iframe
-    let pageW = 1400; // fallback assumption
-    try {
-        const doc = iframe.contentDocument || iframe.contentWindow.document;
-        pageW = doc.documentElement.scrollWidth || pageW;
-    } catch(e) { /* cross-origin fallback */ }
-
-    const wrapW = wrap.clientWidth;
-    const wrapH = wrap.clientHeight;
-    const scale = Math.min(wrapW / pageW, 1); // never scale up, only down
-
-    // Size iframe to natural page dimensions, then scale the whole thing down
-    iframe.style.width  = pageW + 'px';
-    iframe.style.height = (wrapH / scale) + 'px';
-    iframe.style.transform = `scale(${scale})`;
-
-    // Update on resize
-    if (!iframe._resizeHandler) {
-        iframe._resizeHandler = () => scaleIframe(iframe, wrap);
-        window.addEventListener('resize', iframe._resizeHandler);
-    }
 }
 
 function closePanel() {
