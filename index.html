@@ -325,6 +325,169 @@
             box-shadow: none;
         }
 
+        /* ── CONTENT PANEL (embedded page viewer) ── */
+        #content-panel {
+            display: none;
+            position: fixed;
+            top: 0; right: 0;
+            width: 100%; height: 100%;
+            z-index: 6000;
+            pointer-events: none;
+        }
+        #content-panel.open {
+            display: block;
+            pointer-events: all;
+        }
+        #panel-backdrop {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(10, 36, 10, 0.52);
+            backdrop-filter: blur(5px);
+            opacity: 0;
+            transition: opacity 0.38s ease;
+            cursor: pointer;
+        }
+        #content-panel.open #panel-backdrop {
+            opacity: 1;
+        }
+        #panel-drawer {
+            position: absolute;
+            top: 0; right: 0;
+            width: min(780px, 100%);
+            height: 100%;
+            background: #fffef5;
+            box-shadow: -8px 0 48px rgba(0,0,0,0.28);
+            display: flex;
+            flex-direction: column;
+            transform: translateX(100%);
+            transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+            border-left: 3px solid var(--lemon-gold);
+        }
+        #content-panel.open #panel-drawer {
+            transform: translateX(0);
+        }
+        #panel-topbar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 20px;
+            background: linear-gradient(135deg, var(--deep-green) 0%, #2d6e30 100%);
+            border-bottom: 3px solid var(--lemon-gold);
+            flex-shrink: 0;
+        }
+        #panel-lemon-icon {
+            font-size: 1.6rem;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+            flex-shrink: 0;
+            animation: panelLemonBounce 2.4s ease-in-out infinite;
+        }
+        @keyframes panelLemonBounce {
+            0%,100% { transform: translateY(0) rotate(-5deg); }
+            50%     { transform: translateY(-4px) rotate(5deg); }
+        }
+        #panel-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.3rem;
+            color: var(--lemon-bright);
+            margin: 0;
+            flex: 1;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+        }
+        #panel-open-external {
+            text-decoration: none;
+            color: rgba(255,239,48,0.75);
+            font-size: 0.78rem;
+            font-weight: 700;
+            padding: 5px 12px;
+            border: 1.5px solid rgba(255,239,48,0.4);
+            border-radius: 20px;
+            transition: all 0.22s;
+            white-space: nowrap;
+        }
+        #panel-open-external:hover {
+            color: var(--lemon-bright);
+            border-color: var(--lemon-bright);
+            background: rgba(255,239,48,0.1);
+        }
+        #panel-close-btn {
+            width: 34px; height: 34px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.15);
+            border: 1.5px solid rgba(255,255,255,0.3);
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+        #panel-close-btn:hover {
+            background: rgba(255,255,255,0.28);
+        }
+        #panel-vine-strip {
+            height: 6px;
+            background: repeating-linear-gradient(
+                90deg,
+                #3a8c3e 0px, #3a8c3e 18px,
+                var(--lemon-gold) 18px, var(--lemon-gold) 22px,
+                #3a8c3e 22px, #3a8c3e 40px
+            );
+            flex-shrink: 0;
+            opacity: 0.7;
+        }
+        #panel-loading {
+            position: absolute;
+            top: 70px; left: 0; right: 0; bottom: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            background: #fffef5;
+            z-index: 2;
+            pointer-events: none;
+        }
+        #panel-loading.hidden { display: none; }
+        .panel-loading-lemon {
+            font-size: 3rem;
+            animation: spin-wobble 1.2s ease-in-out infinite;
+        }
+        @keyframes spin-wobble {
+            0%   { transform: rotate(-15deg) scale(1); }
+            25%  { transform: rotate(0deg) scale(1.15); }
+            50%  { transform: rotate(15deg) scale(1); }
+            75%  { transform: rotate(0deg) scale(0.92); }
+            100% { transform: rotate(-15deg) scale(1); }
+        }
+        #panel-loading p {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.1rem;
+            color: var(--deep-green);
+            opacity: 0.7;
+        }
+        #panel-iframe {
+            flex: 1;
+            border: none;
+            width: 100%;
+            background: white;
+        }
+
+        /* Mobile: panel slides up from bottom */
+        @media (max-width: 600px) {
+            #panel-drawer {
+                top: auto; bottom: 0; right: 0;
+                width: 100%; height: 88%;
+                border-left: none;
+                border-top: 3px solid var(--lemon-gold);
+                transform: translateY(100%);
+                border-radius: 22px 22px 0 0;
+                box-shadow: 0 -8px 48px rgba(0,0,0,0.28);
+            }
+            #content-panel.open #panel-drawer {
+                transform: translateY(0);
+            }
+        }
+
         /* Results screen */
         #result-content {
             display: none;
@@ -1391,6 +1554,25 @@
   </div>
 </div>
 
+<!-- ════ CONTENT PANEL ════ -->
+<div id="content-panel">
+  <div id="panel-backdrop" onclick="closePanel()"></div>
+  <div id="panel-drawer">
+    <div id="panel-topbar">
+      <span id="panel-lemon-icon">🍋</span>
+      <h2 id="panel-title">Grammar Topic</h2>
+      <a id="panel-open-external" href="#" target="_blank" rel="noopener">↗ Open tab</a>
+      <button id="panel-close-btn" onclick="closePanel()">✕</button>
+    </div>
+    <div id="panel-vine-strip"></div>
+    <div id="panel-loading">
+      <div class="panel-loading-lemon">🍋</div>
+      <p>Harvesting knowledge…</p>
+    </div>
+    <iframe id="panel-iframe" title="Grammar Content" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+  </div>
+</div>
+
 <script>
 const grammarCSV = `no.,key point,url
 S-1,simple,https://ducj-creator.github.io/Shirley-Grammar/simple/
@@ -1424,11 +1606,91 @@ function parseCSV(csv) {
 }
 const links = parseCSV(grammarCSV);
 
+// ── Label map for panel titles ──
+const labelMap = {
+    'simple': 'Simple Sentence 簡單句',
+    'compound': 'Compound Sentence 複合句',
+    'complex': 'Complex Sentence 複雜句',
+    'compound-complex': 'Compound-Complex 混和句',
+    'nouns': 'Nouns 名詞',
+    'pronouns': 'Pronouns 代名詞',
+    'adjectives-adverbs': 'Adjectives & Adverbs 形副詞',
+    'verbs': 'Verbs 動詞',
+    'prepositions': 'Prepositions 介係詞',
+    'infinitive': 'Infinitive 不定詞',
+    'gerund': 'Gerund 動名詞',
+    'present-participle': 'Present Participle 現在分詞',
+    'past-participle': 'Past Participle 過去分詞',
+    'noun-clause': 'Noun Clause 名詞子句',
+    'adjective-clause': 'Adjective Clause 形容詞子句',
+    'adverb-clause': 'Adverb Clause 副詞子句',
+    'questions': 'Questions 疑問句',
+    'exclamations': 'Exclamations 感嘆句',
+    'inverted': 'Inverted Sentences 倒裝句',
+    'subjunctive': 'Subjunctive 假設語氣'
+};
+
+function openPanel(url, key) {
+    const panel = document.getElementById('content-panel');
+    const iframe = document.getElementById('panel-iframe');
+    const loading = document.getElementById('panel-loading');
+    const title = document.getElementById('panel-title');
+    const extLink = document.getElementById('panel-open-external');
+
+    title.textContent = labelMap[key] || key;
+    extLink.href = url;
+
+    // Show loading, hide old iframe content
+    loading.classList.remove('hidden');
+    iframe.style.opacity = '0';
+    iframe.src = '';
+
+    panel.classList.add('open');
+    document.body.style.overflow = 'hidden';
+
+    // Small delay for animation, then load
+    setTimeout(() => {
+        iframe.src = url;
+        iframe.onload = () => {
+            loading.classList.add('hidden');
+            iframe.style.opacity = '1';
+            iframe.style.transition = 'opacity 0.3s ease';
+        };
+        // Fallback: if iframe blocked by X-Frame-Options
+        iframe.onerror = () => {
+            loading.classList.add('hidden');
+            iframe.style.opacity = '1';
+        };
+        // Safety timeout in case onload never fires
+        setTimeout(() => {
+            loading.classList.add('hidden');
+            iframe.style.opacity = '1';
+        }, 4500);
+    }, 320);
+}
+
+function closePanel() {
+    const panel = document.getElementById('content-panel');
+    panel.classList.remove('open');
+    document.body.style.overflow = '';
+    setTimeout(() => {
+        document.getElementById('panel-iframe').src = '';
+    }, 450);
+}
+
+// Close panel on Escape key
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closePanel();
+});
+
 function sparkle(el, key) {
     el.classList.add('sparkle');
-    setTimeout(() => { el.classList.remove('sparkle'); if (links[key]) window.open(links[key],'_blank'); }, 620);
+    setTimeout(() => {
+        el.classList.remove('sparkle');
+        if (links[key]) openPanel(links[key], key);
+    }, 620);
 }
-function handleLink(key) { if (links[key]) window.open(links[key],'_blank'); }
+function handleLink(key) { if (links[key]) openPanel(links[key], key); }
 function toggleStalls() {
     const w = document.getElementById('tracks-wrapper');
     w.style.display = (w.style.display === 'flex') ? 'none' : 'flex';
