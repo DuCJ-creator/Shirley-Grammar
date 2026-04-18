@@ -193,6 +193,35 @@
     .btn-cta { background: var(--secondary-tone); color: white; padding: 12px 30px; border-radius: 50px; border: none; font-size: 1rem; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; transition: 0.3s; font-weight: 600; margin-top: 15px; }
     .btn-cta:hover { background: var(--primary-tone); transform: translateY(-2px); }
 
+
+    /* Embedded tool shell */
+    .embed-shell {
+      margin-top: 24px;
+      background: linear-gradient(180deg, #fdfcf8 0%, #f7f3ea 100%);
+      border: 1px solid #eadfc8;
+      border-radius: 24px;
+      padding: 22px;
+      box-shadow: 0 12px 30px rgba(58, 90, 64, 0.08);
+    }
+    .frame-wrap {
+      position: relative;
+      width: 100%;
+      min-height: 72vh;
+      border-radius: 20px;
+      overflow: hidden;
+      background: white;
+      border: 1px solid #e7dfd1;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.55);
+    }
+    .embedded-frame {
+      display: block;
+      width: 100%;
+      height: 72vh;
+      min-height: 640px;
+      border: 0;
+      background: white;
+    }
+
     /* RWD */
     @media (max-width: 768px) {
       body { overflow-y: auto; height: auto; }
@@ -391,22 +420,21 @@
 
     <div id="phrase-modal" class="modal-content">
       <h2>6. Phrasal Verbs 動詞片語</h2>
-      <p>介係詞改變了動詞的意思。</p>
-      <div class="table-responsive">
-        <table>
-          <tr><th>Verb</th><th>Phrase</th><th>Meaning</th></tr>
-          <tr><td><strong>Look</strong></td><td>look for<br>look after</td><td>尋找<br>照顧</td></tr>
-          <tr><td><strong>Give</strong></td><td>give up<br>give in</td><td>放棄<br>屈服</td></tr>
-          <tr><td><strong>Turn</strong></td><td>turn on/off<br>turn up/down</td><td>開/關<br>調大/小聲</td></tr>
-          <tr><td><strong>Get</strong></td><td>get along<br>get over</td><td>相處<br>克服</td></tr>
-        </table>
+      <div class="embed-shell">
+        <div class="frame-wrap">
+          <iframe
+            class="embedded-frame"
+            src="https://ducj-creator.github.io/Shirley-Grammar/phrases"
+            title="Phrasal Verbs Practice"
+            loading="eager"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen>
+          </iframe>
+        </div>
       </div>
-      <a href="https://ducj-creator.github.io/Shirley-Grammar/phrases" target="_blank" class="btn-cta" style="width:100%; justify-content:center;">
-        🧩 前往互動式片語練習區
-      </a>
     </div>
 
-    <div id="mistake-modal" class="modal-content">
+    <div id="mistake-modal" class="modal-content"> class="modal-content">
       <h2>7. Common Mistakes 易錯點</h2>
       <div class="table-responsive">
         <table>
