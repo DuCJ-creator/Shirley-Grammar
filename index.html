@@ -444,35 +444,17 @@
             flex: 1;
             overflow: auto;
             position: relative;
-            background: linear-gradient(180deg, #f7f8fb 0%, #ffffff 100%);
-            display: block;
-            -webkit-overflow-scrolling: touch;
-            padding: 18px 18px 22px;
+            background: white;
+            padding-top: 12px;
         }
         #panel-iframe {
             border: none;
             background: white;
             display: none;
             position: relative;
-            top: auto;
-            left: auto;
             width: 100%;
-            height: calc(100vh - 122px);
-            min-height: 560px;
-            border-radius: 24px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            transform: none;
-            will-change: auto;
-        }
-        @media (max-width: 1024px) {
-            #panel-iframe-wrap {
-                padding: 12px 12px 16px;
-            }
-            #panel-iframe {
-                height: calc(100vh - 108px);
-                min-height: 500px;
-                border-radius: 18px;
-            }
+            height: calc(100% - 12px);
+            min-height: calc(100% - 12px);
         }
 
         /* Results screen */
@@ -1556,7 +1538,7 @@
       <p>Harvesting knowledge…</p>
     </div>
     <div id="panel-iframe-wrap">
-      <iframe id="panel-iframe" title="Grammar Content" loading="eager" referrerpolicy="no-referrer-when-downgrade" allow="autoplay; fullscreen; picture-in-picture; clipboard-read; clipboard-write" allowfullscreen></iframe>
+      <iframe id="panel-iframe" title="Grammar Content"></iframe>
     </div>
   </div>
 </div>
@@ -1618,72 +1600,38 @@ const labelMap = {
     'subjunctive': 'Subjunctive 假設語氣'
 };
 
-function getDeviceProfile() {
-    const vw = window.innerWidth || document.documentElement.clientWidth || 0;
-    const vh = window.innerHeight || document.documentElement.clientHeight || 0;
-    const shortest = Math.min(vw, vh);
-    const coarsePointer = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
-
-    if (shortest <= 640) {
-        return { type: 'phone', baseWidth: 430, baseHeight: 932 };
-    }
-    if (shortest <= 1024 && coarsePointer) {
-        return { type: 'tablet', baseWidth: 1024, baseHeight: 1366 };
-    }
-    return { type: 'desktop', baseWidth: 1440, baseHeight: 900 };
-}
-
-function getPanelMetrics(wrap) {
-    const wrapW = wrap.clientWidth || window.innerWidth;
-    const wrapH = wrap.clientHeight || window.innerHeight;
-    const device = getDeviceProfile();
-    const scale = Math.min(wrapW / device.baseWidth, wrapH / device.baseHeight, 1);
-    const virtualWidth = device.baseWidth;
-    const virtualHeight = Math.max(device.baseHeight, Math.ceil(wrapH / Math.max(scale, 0.01)));
-    return { ...device, wrapW, wrapH, scale, virtualWidth, virtualHeight };
-}
-
-function applyPanelScale() {
-    const panel = document.getElementById('content-panel');
-    if (!panel.classList.contains('open')) return;
-
+function resetPanelFrame() {
     const iframe = document.getElementById('panel-iframe');
-    const wrap   = document.getElementById('panel-iframe-wrap');
-    if (!iframe.getAttribute('src')) return;
-
-    const metrics = getPanelMetrics(wrap);
-
-    iframe.dataset.deviceType = metrics.type;
-    iframe.style.width = metrics.virtualWidth + 'px';
-    iframe.style.height = metrics.virtualHeight + 'px';
-    iframe.style.left = '50%';
-    iframe.style.transform = `translateX(-50%) scale(${metrics.scale})`;
+    iframe.onload = null;
+    iframe.removeAttribute('srcdoc');
+    iframe.removeAttribute('src');
+    iframe.style.display = 'none';
+    iframe.style.width = '100%';
+    iframe.style.height = 'calc(100% - 12px)';
+    iframe.style.minHeight = 'calc(100% - 12px)';
+    iframe.style.transform = 'none';
 }
 
 function openPanel(url, key) {
     const panel   = document.getElementById('content-panel');
     const iframe  = document.getElementById('panel-iframe');
+    const wrap    = document.getElementById('panel-iframe-wrap');
     const loading = document.getElementById('panel-loading');
     const title   = document.getElementById('panel-title');
 
     title.textContent = labelMap[key] || key;
 
-    iframe.onload = null;
-    iframe.removeAttribute('srcdoc');
-    iframe.removeAttribute('src');
-    iframe.style.display = 'none';
-    iframe.style.transform = '';
-    iframe.style.width = '';
-    iframe.style.height = '';
+    resetPanelFrame();
     loading.classList.remove('hidden');
 
     panel.classList.add('open');
     document.body.style.overflow = 'hidden';
+    wrap.scrollTop = 0;
+    wrap.scrollLeft = 0;
 
     iframe.onload = () => {
         iframe.style.display = 'block';
         loading.classList.add('hidden');
-        applyPanelScale();
     };
 
     iframe.src = url;
@@ -1691,27 +1639,18 @@ function openPanel(url, key) {
 
 function closePanel() {
     const panel  = document.getElementById('content-panel');
-    const iframe = document.getElementById('panel-iframe');
     panel.classList.remove('open');
     document.body.style.overflow = '';
     setTimeout(() => {
-        iframe.onload = null;
-        iframe.removeAttribute('srcdoc');
-        iframe.removeAttribute('src');
-        iframe.style.display = 'none';
-        iframe.style.transform = '';
-        iframe.style.width = '';
-        iframe.style.height = '';
-        iframe.style.left = '50%';
+        resetPanelFrame();
     }, 450);
 }
 
-window.addEventListener('resize', applyPanelScale);
-window.addEventListener('orientationchange', () => setTimeout(applyPanelScale, 120));
-if (window.ResizeObserver) {
-    const panelWrap = document.getElementById('panel-iframe-wrap');
-    new ResizeObserver(() => applyPanelScale()).observe(panelWrap);
-}
+// Close panel on Escape key
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closePanel();
+});
+
 function sparkle(el, key) {
     el.classList.add('sparkle');
     setTimeout(() => {
