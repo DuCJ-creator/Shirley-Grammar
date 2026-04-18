@@ -1603,15 +1603,13 @@ const labelMap = {
     'subjunctive': 'Subjunctive 假設語氣'
 };
 
-function getDeviceProfile() {
-    const vw = window.innerWidth || document.documentElement.clientWidth || 0;
-    const vh = window.innerHeight || document.documentElement.clientHeight || 0;
+function getDeviceProfile(viewW, viewH) {
+    const vw = viewW || window.innerWidth || document.documentElement.clientWidth || 0;
+    const vh = viewH || window.innerHeight || document.documentElement.clientHeight || 0;
     const shortest = Math.min(vw, vh);
-    const longest = Math.max(vw, vh);
     const ua = (navigator.userAgent || '').toLowerCase();
     const platform = (navigator.platform || '').toLowerCase();
     const maxTouchPoints = navigator.maxTouchPoints || 0;
-    const hasCoarsePointer = !!(window.matchMedia && window.matchMedia('(any-pointer: coarse)').matches);
     const hasFinePointer = !!(window.matchMedia && window.matchMedia('(any-pointer: fine)').matches);
     const hasHover = !!(window.matchMedia && window.matchMedia('(hover: hover)').matches);
 
@@ -1619,29 +1617,17 @@ function getDeviceProfile() {
     const isPhoneUA = /iphone|ipod|windows phone|mobile/i.test(ua);
     const isAndroid = /android/i.test(ua);
     const isTabletUA = /ipad|tablet|playbook|silk|kindle/i.test(ua) || isiPadOS || (isAndroid && !/mobile/i.test(ua));
-    const isPhone = isPhoneUA || (isAndroid && /mobile/i.test(ua));
+    const isPhoneUAOnly = isPhoneUA || (isAndroid && /mobile/i.test(ua));
 
-    if (isPhone) {
-        return { type: 'phone', baseWidth: 430, baseHeight: 932 };
-    }
-
-    if (isTabletUA) {
-        return { type: 'tablet', baseWidth: 1024, baseHeight: 1366 };
-    }
-
-    if (hasFinePointer || hasHover) {
+    if (vw >= 1180 || hasFinePointer || hasHover) {
         return { type: 'desktop', baseWidth: 1440, baseHeight: 900 };
     }
 
-    if (hasCoarsePointer && longest >= 900 && shortest >= 700) {
-        return { type: 'tablet', baseWidth: 1024, baseHeight: 1366 };
-    }
-
-    if (shortest <= 640) {
+    if (isPhoneUAOnly || shortest <= 520 || vw <= 640) {
         return { type: 'phone', baseWidth: 430, baseHeight: 932 };
     }
 
-    if (shortest <= 1024 && maxTouchPoints > 0) {
+    if (isTabletUA || vw <= 1180 || (maxTouchPoints > 0 && shortest > 520 && vw <= 1366)) {
         return { type: 'tablet', baseWidth: 1024, baseHeight: 1366 };
     }
 
@@ -1651,7 +1637,7 @@ function getDeviceProfile() {
 function getPanelMetrics(wrap) {
     const wrapW = wrap.clientWidth || window.innerWidth;
     const wrapH = wrap.clientHeight || window.innerHeight;
-    const device = getDeviceProfile();
+    const device = getDeviceProfile(wrapW, wrapH);
     const scale = Math.min(wrapW / device.baseWidth, wrapH / device.baseHeight, 1);
     const virtualWidth = device.baseWidth;
     const virtualHeight = Math.max(device.baseHeight, Math.ceil(wrapH / Math.max(scale, 0.01)));
