@@ -442,22 +442,20 @@
         /* iframe wrapper handles scaling */
         #panel-iframe-wrap {
             flex: 1;
-            overflow: auto;
+            overflow: hidden;
             position: relative;
             background: white;
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
         }
         #panel-iframe {
             border: none;
             background: white;
             display: none;
+            /* Scale the page to fit the panel width.
+               The grammar pages appear designed at ~1400px.
+               We use transform-origin top-left and scale down. */
             position: absolute;
-            top: 0;
-            left: 50%;
-            transform-origin: top center;
-            will-change: transform;
+            top: 0; left: 0;
+            transform-origin: top left;
         }
 
         /* Results screen */
@@ -1541,7 +1539,7 @@
       <p>Harvesting knowledge…</p>
     </div>
     <div id="panel-iframe-wrap">
-      <iframe id="panel-iframe" title="Grammar Content" loading="eager" referrerpolicy="no-referrer-when-downgrade" allow="autoplay; fullscreen; picture-in-picture; clipboard-read; clipboard-write" allowfullscreen></iframe>
+      <iframe id="panel-iframe" title="Grammar Content"></iframe>
     </div>
   </div>
 </div>
@@ -1603,91 +1601,232 @@ const labelMap = {
     'subjunctive': 'Subjunctive 假設語氣'
 };
 
-function getDeviceProfile(viewW, viewH) {
-    const vw = viewW || window.innerWidth || document.documentElement.clientWidth || 0;
-    const vh = viewH || window.innerHeight || document.documentElement.clientHeight || 0;
-    const shortest = Math.min(vw, vh);
-    const ua = (navigator.userAgent || '').toLowerCase();
-    const platform = (navigator.platform || '').toLowerCase();
-    const maxTouchPoints = navigator.maxTouchPoints || 0;
-    const hasFinePointer = !!(window.matchMedia && window.matchMedia('(any-pointer: fine)').matches);
-    const hasHover = !!(window.matchMedia && window.matchMedia('(hover: hover)').matches);
+// CORS proxies to try in order
+const CORS_PROXIES = [
+    url => `https://corsproxy.io/?url=${encodeURIComponent(url)}`,
+    url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+    url => `https://cors-anywhere.herokuapp.com/${url}`
+];
 
-    const isiPadOS = platform === 'macintel' && maxTouchPoints > 1;
-    const isPhoneUA = /iphone|ipod|windows phone|mobile/i.test(ua);
-    const isAndroid = /android/i.test(ua);
-    const isTabletUA = /ipad|tablet|playbook|silk|kindle/i.test(ua) || isiPadOS || (isAndroid && !/mobile/i.test(ua));
-    const isPhoneUAOnly = isPhoneUA || (isAndroid && /mobile/i.test(ua));
-
-    if (vw >= 1180 || hasFinePointer || hasHover) {
-        return { type: 'desktop', baseWidth: 1440, baseHeight: 900 };
-    }
-
-    if (isPhoneUAOnly || shortest <= 520 || vw <= 640) {
-        return { type: 'phone', baseWidth: 430, baseHeight: 932 };
-    }
-
-    if (isTabletUA || vw <= 1180 || (maxTouchPoints > 0 && shortest > 520 && vw <= 1366)) {
-        return { type: 'tablet', baseWidth: 1024, baseHeight: 1366 };
-    }
-
-    return { type: 'desktop', baseWidth: 1440, baseHeight: 900 };
+function fetchWithCorsProxy(url, proxyIndex) {
+    if (proxyIndex >= CORS_PROXIES.length) return Promise.reject(new Error('All proxies failed'));
+    const proxyUrl = CORS_PROXIES[proxyIndex](url);
+    return fetch(proxyUrl)
+        .then(r => {
+            if (!r.ok) throw new Error('HTTP ' + r.status);
+            return r.text();
+        })
+        .catch(() => fetchWithCorsProxy(url, proxyIndex + 1));
 }
 
-function getPanelMetrics(wrap) {
+// Listen for dimension reports from inside the iframe
+window.addEventListener('message', function(e) {
+    if (e.data && e.data.type === 'shirley-dims') {
+        const iframe = document.getElementById('panel-iframe');
+        const wrap   = document.getElementById('panel-iframe-wrap');
+        applyScale(iframe, wrap, e.data);
+    }
+});
+
+function detectPanelDevice(wrapW) {
+    const ua = navigator.userAgent || '';
+    const isiPadOS = navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1;
+    const isPhoneUA = /iPhone|Android.+Mobile|Windows Phone|Mobile/i.test(ua);
+    const isTabletUA = /iPad|Tablet|Android(?!.*Mobile)|Silk|PlayBook|Kindle/i.test(ua) || isiPadOS;
+
+    if (isPhoneUA || wrapW <= 767) return 'phone';
+    if (isTabletUA || wrapW <= 1024) return 'tablet';
+    return 'desktop';
+}
+
+function applyScale(iframe, wrap, dims) {
     const wrapW = wrap.clientWidth || window.innerWidth;
     const wrapH = wrap.clientHeight || window.innerHeight;
-    const device = getDeviceProfile(wrapW, wrapH);
-    const scale = Math.min(wrapW / device.baseWidth, wrapH / device.baseHeight, 1);
-    const virtualWidth = device.baseWidth;
-    const virtualHeight = Math.max(device.baseHeight, Math.ceil(wrapH / Math.max(scale, 0.01)));
-    return { ...device, wrapW, wrapH, scale, virtualWidth, virtualHeight };
+    const device = detectPanelDevice(wrapW);
+    const pageW = Math.max(1, dims.w || wrapW);
+    const pageH = Math.max(1, dims.h || wrapH);
+    const focusW = dims.focusW || pageW;
+    const focusH = dims.focusH || pageH;
+
+    const horizontalPadding = device === 'desktop' ? 40 : 16;
+    const verticalPadding = device === 'desktop' ? 24 : 12;
+    const usableW = Math.max(320, wrapW - horizontalPadding * 2);
+    const usableH = Math.max(320, wrapH - verticalPadding * 2);
+
+    let effectiveW = pageW;
+    let effectiveH = pageH;
+
+    if (device === 'desktop') {
+        if (focusW > 0 && focusW < pageW * 0.82) effectiveW = Math.min(pageW, focusW + 80);
+        if (focusH > 0 && focusH < pageH * 0.92) effectiveH = Math.min(pageH, focusH + 48);
+    } else if (device === 'tablet') {
+        if (focusW > 0 && focusW < pageW * 0.75) effectiveW = Math.min(pageW, focusW + 56);
+        if (focusH > 0 && focusH < pageH * 0.9) effectiveH = Math.min(pageH, focusH + 40);
+    }
+
+    const scale = Math.min(usableW / effectiveW, usableH / effectiveH, 1);
+
+    iframe.style.width = pageW + 'px';
+    iframe.style.height = pageH + 'px';
+    iframe.style.left = '50%';
+    iframe.style.transform = `translateX(-50%) scale(${scale})`;
+    iframe.dataset.deviceType = device;
 }
 
-function applyPanelScale() {
-    const panel = document.getElementById('content-panel');
-    if (!panel.classList.contains('open')) return;
+function rewriteHtmlUrls(html, baseUrl) {
+    // Inject/replace <base> tag so relative links inside the iframe resolve correctly
+    const baseTag = `<base href="${baseUrl}">`;
+    if (/<base[\s>]/i.test(html)) {
+        html = html.replace(/<base[^>]*>/i, baseTag);
+    } else {
+        html = html.replace(/(<head[^>]*>)/i, '$1\n' + baseTag);
+    }
+    // Inject a postMessage script that fires after layout settles,
+    // reporting the true rendered page dimensions back to the parent
+    const measureScript = `
+<script>
+(function() {
+  function getFocusBounds() {
+    if (!document.body) return null;
 
-    const iframe = document.getElementById('panel-iframe');
-    const wrap   = document.getElementById('panel-iframe-wrap');
-    if (!iframe.getAttribute('src')) return;
+    var viewportW = window.innerWidth || document.documentElement.clientWidth || 0;
+    var viewportH = window.innerHeight || document.documentElement.clientHeight || 0;
+    var els = Array.prototype.slice.call(document.body.querySelectorAll('*'));
+    var minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity, found = false;
 
-    const metrics = getPanelMetrics(wrap);
+    els.forEach(function(el) {
+      if (!el || !el.tagName) return;
+      if (/^(SCRIPT|STYLE|NOSCRIPT|META|LINK|HEAD)$/i.test(el.tagName)) return;
 
-    iframe.dataset.deviceType = metrics.type;
-    iframe.style.width = metrics.virtualWidth + 'px';
-    iframe.style.height = metrics.virtualHeight + 'px';
-    iframe.style.left = '50%';
-    iframe.style.transform = `translateX(-50%) scale(${metrics.scale})`;
+      var style = window.getComputedStyle(el);
+      if (!style || style.display === 'none' || style.visibility === 'hidden' || Number(style.opacity) === 0) return;
+
+      var rect = el.getBoundingClientRect();
+      if (rect.width < 36 || rect.height < 18) return;
+
+      var area = rect.width * rect.height;
+      var hasText = !!(el.innerText && el.innerText.trim().length);
+      var hasMedia = /^(IMG|SVG|VIDEO|CANVAS|IFRAME|BUTTON|A)$/i.test(el.tagName);
+      var hasBox = (style.backgroundColor && style.backgroundColor !== 'rgba(0, 0, 0, 0)' && style.backgroundColor !== 'transparent') ||
+                   (style.boxShadow && style.boxShadow !== 'none') ||
+                   ((parseFloat(style.borderTopWidth) || 0) + (parseFloat(style.borderRightWidth) || 0) + (parseFloat(style.borderBottomWidth) || 0) + (parseFloat(style.borderLeftWidth) || 0) > 0);
+      var isHugeBackdrop = rect.width >= viewportW * 0.94 && rect.height >= viewportH * 0.5 && !hasText && !hasMedia;
+      var isLikelyMeaningful = hasText || hasMedia || hasBox || area >= 16000;
+
+      if (isHugeBackdrop || !isLikelyMeaningful) return;
+
+      var x1 = rect.left + window.scrollX;
+      var y1 = rect.top + window.scrollY;
+      var x2 = rect.right + window.scrollX;
+      var y2 = rect.bottom + window.scrollY;
+
+      minX = Math.min(minX, x1);
+      minY = Math.min(minY, y1);
+      maxX = Math.max(maxX, x2);
+      maxY = Math.max(maxY, y2);
+      found = true;
+    });
+
+    if (!found) return null;
+
+    return {
+      x: Math.max(0, minX - 24),
+      y: Math.max(0, minY - 24),
+      w: Math.max(1, (maxX - minX) + 48),
+      h: Math.max(1, (maxY - minY) + 48)
+    };
+  }
+
+  function report() {
+    var w = Math.max(
+      document.documentElement.scrollWidth,
+      document.body ? document.body.scrollWidth : 0
+    );
+    var h = Math.max(
+      document.documentElement.scrollHeight,
+      document.body ? document.body.scrollHeight : 0
+    );
+    var focus = getFocusBounds();
+    window.parent.postMessage({
+      type: 'shirley-dims',
+      w: w,
+      h: h,
+      focusW: focus ? focus.w : w,
+      focusH: focus ? focus.h : h
+    }, '*');
+  }
+  // Fire at progressively later times to catch lazy-rendered content
+  window.addEventListener('load', function() {
+    report();
+    setTimeout(report, 300);
+    setTimeout(report, 800);
+    setTimeout(report, 1800);
+  });
+})();
+<\/script>`;
+    // Inject before </body>
+    if (/<\/body>/i.test(html)) {
+        html = html.replace(/<\/body>/i, measureScript + '</body>');
+    } else {
+        html += measureScript;
+    }
+    return html;
 }
 
 function openPanel(url, key) {
     const panel   = document.getElementById('content-panel');
     const iframe  = document.getElementById('panel-iframe');
+    const wrap    = document.getElementById('panel-iframe-wrap');
     const loading = document.getElementById('panel-loading');
     const title   = document.getElementById('panel-title');
 
     title.textContent = labelMap[key] || key;
 
-    iframe.onload = null;
+    // Reset
     iframe.removeAttribute('srcdoc');
-    iframe.removeAttribute('src');
     iframe.style.display = 'none';
-    iframe.style.transform = '';
-    iframe.style.width = '';
-    iframe.style.height = '';
     loading.classList.remove('hidden');
 
     panel.classList.add('open');
     document.body.style.overflow = 'hidden';
 
-    iframe.onload = () => {
-        iframe.style.display = 'block';
-        loading.classList.add('hidden');
-        applyPanelScale();
-    };
+    fetchWithCorsProxy(url, 0)
+        .then(html => {
+            const patched = rewriteHtmlUrls(html, url);
+            iframe.srcdoc = patched;
 
-    iframe.src = url;
+            iframe.onload = () => {
+                // Show iframe immediately; scaling arrives via postMessage
+                iframe.style.width     = '100%';
+                iframe.style.height    = '100%';
+                iframe.style.transform = '';
+                iframe.style.display   = 'block';
+                loading.classList.add('hidden');
+                // Fallback: if postMessage never arrives, try reading directly
+                setTimeout(() => {
+                    try {
+                        const doc = iframe.contentDocument || iframe.contentWindow.document;
+                        const w = doc.documentElement.scrollWidth;
+                        const h = doc.documentElement.scrollHeight;
+                        if (w > 100) applyScale(iframe, wrap, { w, h, focusW: w, focusH: h });
+                    } catch(e) {}
+                }, 500);
+            };
+        })
+        .catch(() => {
+            loading.classList.add('hidden');
+            iframe.style.display = 'block';
+            iframe.style.width = '100%';
+            iframe.style.height = '100%';
+            iframe.srcdoc = `<!DOCTYPE html><html><head>
+                <style>body{font-family:sans-serif;display:flex;flex-direction:column;align-items:center;
+                justify-content:center;height:100vh;margin:0;background:#fffef5;color:#1e4620;text-align:center;padding:20px}</style>
+                </head><body>
+                <div style="font-size:3rem;margin-bottom:16px">🍋</div>
+                <p style="font-size:1.1rem;font-weight:700;margin-bottom:8px">Could not load content</p>
+                <p style="font-size:0.85rem;color:#666;margin-bottom:24px">This page could not be fetched.</p>
+                </body></html>`;
+        });
 }
 
 function closePanel() {
@@ -1695,24 +1834,24 @@ function closePanel() {
     const iframe = document.getElementById('panel-iframe');
     panel.classList.remove('open');
     document.body.style.overflow = '';
+    if (iframe._resizeHandler) {
+        window.removeEventListener('resize', iframe._resizeHandler);
+        iframe._resizeHandler = null;
+    }
     setTimeout(() => {
-        iframe.onload = null;
         iframe.removeAttribute('srcdoc');
-        iframe.removeAttribute('src');
         iframe.style.display = 'none';
         iframe.style.transform = '';
         iframe.style.width = '';
         iframe.style.height = '';
-        iframe.style.left = '50%';
     }, 450);
 }
 
-window.addEventListener('resize', applyPanelScale);
-window.addEventListener('orientationchange', () => setTimeout(applyPanelScale, 120));
-if (window.ResizeObserver) {
-    const panelWrap = document.getElementById('panel-iframe-wrap');
-    new ResizeObserver(() => applyPanelScale()).observe(panelWrap);
-}
+// Close panel on Escape key
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closePanel();
+});
+
 function sparkle(el, key) {
     el.classList.add('sparkle');
     setTimeout(() => {
