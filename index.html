@@ -465,11 +465,17 @@
             color: var(--deep-green);
             opacity: 0.7;
         }
-        #panel-iframe {
+        #panel-content {
             flex: 1;
-            border: none;
-            width: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
             background: white;
+            padding: 0;
+            -webkit-overflow-scrolling: touch;
+        }
+        /* Scope injected page styles so they don't bleed out */
+        #panel-content > * {
+            max-width: 100%;
         }
 
         /* Mobile: panel slides up from bottom */
@@ -1561,7 +1567,7 @@
     <div id="panel-topbar">
       <span id="panel-lemon-icon">🍋</span>
       <h2 id="panel-title">Grammar Topic</h2>
-      <a id="panel-open-external" href="#" target="_blank" rel="noopener">↗ Open tab</a>
+      <a id="panel-open-external" href="#" target="_blank" rel="noopener">↗ Full page</a>
       <button id="panel-close-btn" onclick="closePanel()">✕</button>
     </div>
     <div id="panel-vine-strip"></div>
@@ -1569,7 +1575,7 @@
       <div class="panel-loading-lemon">🍋</div>
       <p>Harvesting knowledge…</p>
     </div>
-    <iframe id="panel-iframe" title="Grammar Content" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+    <div id="panel-content"></div>
   </div>
 </div>
 
@@ -1631,42 +1637,93 @@ const labelMap = {
 };
 
 function openPanel(url, key) {
-    const panel = document.getElementById('content-panel');
-    const iframe = document.getElementById('panel-iframe');
-    const loading = document.getElementById('panel-loading');
-    const title = document.getElementById('panel-title');
-    const extLink = document.getElementById('panel-open-external');
+    const panel    = document.getElementById('content-panel');
+    const content  = document.getElementById('panel-content');
+    const loading  = document.getElementById('panel-loading');
+    const title    = document.getElementById('panel-title');
+    const extLink  = document.getElementById('panel-open-external');
 
     title.textContent = labelMap[key] || key;
     extLink.href = url;
 
-    // Show loading, hide old iframe content
+    // Reset content area
+    content.innerHTML = '';
+    content.style.display = 'none';
     loading.classList.remove('hidden');
-    iframe.style.opacity = '0';
-    iframe.src = '';
 
     panel.classList.add('open');
     document.body.style.overflow = 'hidden';
 
-    // Small delay for animation, then load
-    setTimeout(() => {
-        iframe.src = url;
-        iframe.onload = () => {
+    // Fetch the page HTML just like startRace fetches .txt files
+    fetch(url)
+        .then(r => {
+            if (!r.ok) throw new Error('HTTP ' + r.status);
+            return r.text();
+        })
+        .then(html => {
+            // Parse the fetched HTML
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+
+            // Pull all <style> and <link rel=stylesheet> into our panel
+            const styleFragment = document.createDocumentFragment();
+            doc.querySelectorAll('style').forEach(s => {
+                const clone = document.createElement('style');
+                clone.textContent = s.textContent;
+                styleFragment.appendChild(clone);
+            });
+            doc.querySelectorAll('link[rel="stylesheet"]').forEach(l => {
+                const clone = document.createElement('link');
+                clone.rel = 'stylesheet';
+                // Resolve relative URLs against the fetched origin
+                clone.href = new URL(l.getAttribute('href'), url).href;
+                styleFragment.appendChild(clone);
+            });
+
+            // Get the body content
+            const body = doc.body;
+
+            // Rewrite all relative src/href attributes to absolute URLs
+            body.querySelectorAll('[src]').forEach(el => {
+                const s = el.getAttribute('src');
+                if (s && !s.startsWith('http') && !s.startsWith('data:')) {
+                    el.setAttribute('src', new URL(s, url).href);
+                }
+            });
+            body.querySelectorAll('[href]').forEach(el => {
+                const h = el.getAttribute('href');
+                if (h && !h.startsWith('http') && !h.startsWith('#') && !h.startsWith('javascript')) {
+                    el.setAttribute('href', new URL(h, url).href);
+                }
+            });
+
+            // Wrap in a scoped div
+            const wrapper = document.createElement('div');
+            wrapper.className = 'fetched-page-wrapper';
+            wrapper.appendChild(styleFragment);
+            wrapper.innerHTML += body.innerHTML;
+
+            content.innerHTML = '';
+            content.appendChild(wrapper);
+            content.style.display = 'block';
             loading.classList.add('hidden');
-            iframe.style.opacity = '1';
-            iframe.style.transition = 'opacity 0.3s ease';
-        };
-        // Fallback: if iframe blocked by X-Frame-Options
-        iframe.onerror = () => {
+            content.scrollTop = 0;
+        })
+        .catch(err => {
             loading.classList.add('hidden');
-            iframe.style.opacity = '1';
-        };
-        // Safety timeout in case onload never fires
-        setTimeout(() => {
-            loading.classList.add('hidden');
-            iframe.style.opacity = '1';
-        }, 4500);
-    }, 320);
+            content.style.display = 'block';
+            content.innerHTML = `
+                <div style="padding:40px;text-align:center;font-family:'Quicksand',sans-serif;color:#1e4620;">
+                    <div style="font-size:3rem;margin-bottom:16px;">🍋</div>
+                    <p style="font-size:1.1rem;margin-bottom:12px;font-weight:700;">Could not load this page.</p>
+                    <p style="font-size:0.9rem;color:#666;margin-bottom:24px;">The content may be unavailable or require a different connection.</p>
+                    <a href="${url}" target="_blank" rel="noopener"
+                       style="background:#f5c800;color:#3a2800;padding:10px 28px;border-radius:24px;
+                              text-decoration:none;font-weight:700;font-size:0.95rem;">
+                       ↗ Open in new tab
+                    </a>
+                </div>`;
+        });
 }
 
 function closePanel() {
@@ -1674,7 +1731,7 @@ function closePanel() {
     panel.classList.remove('open');
     document.body.style.overflow = '';
     setTimeout(() => {
-        document.getElementById('panel-iframe').src = '';
+        document.getElementById('panel-content').innerHTML = '';
     }, 450);
 }
 
