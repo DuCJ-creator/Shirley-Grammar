@@ -465,13 +465,12 @@
             color: var(--deep-green);
             opacity: 0.7;
         }
-        #panel-content {
+        #panel-iframe {
             flex: 1;
-            overflow-y: auto;
-            overflow-x: hidden;
+            border: none;
+            width: 100%;
             background: white;
-            padding: 0;
-            -webkit-overflow-scrolling: touch;
+            display: none;
         }
         /* Scope injected page styles so they don't bleed out */
         #panel-content > * {
@@ -1575,7 +1574,7 @@
       <div class="panel-loading-lemon">🍋</div>
       <p>Harvesting knowledge…</p>
     </div>
-    <div id="panel-content"></div>
+    <iframe id="panel-iframe" title="Grammar Content"></iframe>
   </div>
 </div>
 
@@ -1636,102 +1635,88 @@ const labelMap = {
     'subjunctive': 'Subjunctive 假設語氣'
 };
 
+// CORS proxies to try in order
+const CORS_PROXIES = [
+    url => `https://corsproxy.io/?url=${encodeURIComponent(url)}`,
+    url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+    url => `https://cors-anywhere.herokuapp.com/${url}`
+];
+
+function fetchWithCorsProxy(url, proxyIndex) {
+    if (proxyIndex >= CORS_PROXIES.length) return Promise.reject(new Error('All proxies failed'));
+    const proxyUrl = CORS_PROXIES[proxyIndex](url);
+    return fetch(proxyUrl)
+        .then(r => {
+            if (!r.ok) throw new Error('HTTP ' + r.status);
+            return r.text();
+        })
+        .catch(() => fetchWithCorsProxy(url, proxyIndex + 1));
+}
+
+function rewriteHtmlUrls(html, baseUrl) {
+    // Rewrite all relative URLs in the HTML to absolute using the base URL
+    const base = new URL(baseUrl);
+    // Add/replace <base> tag so relative links inside the iframe work
+    if (/<base\s/i.test(html)) {
+        html = html.replace(/<base[^>]*>/i, `<base href="${baseUrl}">`);
+    } else {
+        html = html.replace(/<head[^>]*>/i, m => m + `\n<base href="${baseUrl}">`);
+    }
+    return html;
+}
+
 function openPanel(url, key) {
-    const panel    = document.getElementById('content-panel');
-    const content  = document.getElementById('panel-content');
-    const loading  = document.getElementById('panel-loading');
-    const title    = document.getElementById('panel-title');
-    const extLink  = document.getElementById('panel-open-external');
+    const panel   = document.getElementById('content-panel');
+    const iframe  = document.getElementById('panel-iframe');
+    const loading = document.getElementById('panel-loading');
+    const title   = document.getElementById('panel-title');
+    const extLink = document.getElementById('panel-open-external');
 
     title.textContent = labelMap[key] || key;
     extLink.href = url;
 
-    // Reset content area
-    content.innerHTML = '';
-    content.style.display = 'none';
+    // Reset
+    iframe.removeAttribute('srcdoc');
+    iframe.style.display = 'none';
     loading.classList.remove('hidden');
 
     panel.classList.add('open');
     document.body.style.overflow = 'hidden';
 
-    // Fetch the page HTML just like startRace fetches .txt files
-    fetch(url)
-        .then(r => {
-            if (!r.ok) throw new Error('HTTP ' + r.status);
-            return r.text();
-        })
+    fetchWithCorsProxy(url, 0)
         .then(html => {
-            // Parse the fetched HTML
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, 'text/html');
-
-            // Pull all <style> and <link rel=stylesheet> into our panel
-            const styleFragment = document.createDocumentFragment();
-            doc.querySelectorAll('style').forEach(s => {
-                const clone = document.createElement('style');
-                clone.textContent = s.textContent;
-                styleFragment.appendChild(clone);
-            });
-            doc.querySelectorAll('link[rel="stylesheet"]').forEach(l => {
-                const clone = document.createElement('link');
-                clone.rel = 'stylesheet';
-                // Resolve relative URLs against the fetched origin
-                clone.href = new URL(l.getAttribute('href'), url).href;
-                styleFragment.appendChild(clone);
-            });
-
-            // Get the body content
-            const body = doc.body;
-
-            // Rewrite all relative src/href attributes to absolute URLs
-            body.querySelectorAll('[src]').forEach(el => {
-                const s = el.getAttribute('src');
-                if (s && !s.startsWith('http') && !s.startsWith('data:')) {
-                    el.setAttribute('src', new URL(s, url).href);
-                }
-            });
-            body.querySelectorAll('[href]').forEach(el => {
-                const h = el.getAttribute('href');
-                if (h && !h.startsWith('http') && !h.startsWith('#') && !h.startsWith('javascript')) {
-                    el.setAttribute('href', new URL(h, url).href);
-                }
-            });
-
-            // Wrap in a scoped div
-            const wrapper = document.createElement('div');
-            wrapper.className = 'fetched-page-wrapper';
-            wrapper.appendChild(styleFragment);
-            wrapper.innerHTML += body.innerHTML;
-
-            content.innerHTML = '';
-            content.appendChild(wrapper);
-            content.style.display = 'block';
+            // Inject <base href> so relative assets resolve correctly
+            const patched = rewriteHtmlUrls(html, url);
+            // Write into srcdoc — this bypasses X-Frame-Options entirely
+            iframe.srcdoc = patched;
+            iframe.style.display = 'block';
             loading.classList.add('hidden');
-            content.scrollTop = 0;
         })
-        .catch(err => {
+        .catch(() => {
             loading.classList.add('hidden');
-            content.style.display = 'block';
-            content.innerHTML = `
-                <div style="padding:40px;text-align:center;font-family:'Quicksand',sans-serif;color:#1e4620;">
-                    <div style="font-size:3rem;margin-bottom:16px;">🍋</div>
-                    <p style="font-size:1.1rem;margin-bottom:12px;font-weight:700;">Could not load this page.</p>
-                    <p style="font-size:0.9rem;color:#666;margin-bottom:24px;">The content may be unavailable or require a different connection.</p>
-                    <a href="${url}" target="_blank" rel="noopener"
-                       style="background:#f5c800;color:#3a2800;padding:10px 28px;border-radius:24px;
-                              text-decoration:none;font-weight:700;font-size:0.95rem;">
-                       ↗ Open in new tab
-                    </a>
-                </div>`;
+            iframe.style.display = 'block';
+            iframe.srcdoc = `<!DOCTYPE html><html><head>
+                <style>body{font-family:sans-serif;display:flex;flex-direction:column;align-items:center;
+                justify-content:center;height:100vh;margin:0;background:#fffef5;color:#1e4620;text-align:center;padding:20px}</style>
+                </head><body>
+                <div style="font-size:3rem;margin-bottom:16px">🍋</div>
+                <p style="font-size:1.1rem;font-weight:700;margin-bottom:8px">Could not load content</p>
+                <p style="font-size:0.85rem;color:#666;margin-bottom:24px">This page could not be fetched due to connection restrictions.</p>
+                <a href="${url}" target="_blank"
+                   style="background:#f5c800;color:#3a2800;padding:10px 28px;border-radius:24px;
+                          text-decoration:none;font-weight:700">↗ Open in new tab</a>
+                </body></html>`;
         });
 }
 
 function closePanel() {
-    const panel = document.getElementById('content-panel');
+    const panel  = document.getElementById('content-panel');
+    const iframe = document.getElementById('panel-iframe');
     panel.classList.remove('open');
     document.body.style.overflow = '';
     setTimeout(() => {
-        document.getElementById('panel-content').innerHTML = '';
+        iframe.removeAttribute('srcdoc');
+        iframe.style.display = 'none';
     }, 450);
 }
 
