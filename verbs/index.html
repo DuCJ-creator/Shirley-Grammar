@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -205,8 +206,6 @@
     
     .result-card { text-align: center; padding: 40px; display: none; }
     .result-score { font-size: 4rem; font-family: 'Playfair Display', serif; color: var(--primary-tone); font-weight: 700; }
-
-
 
     /* Embedded tool styling */
     .embed-shell {
@@ -425,13 +424,12 @@
 
     <div id="visual-modal" class="modal-content">
       <h2>5. Tense Visualization 時態可視化</h2>
-      <p>以下直接在同一個 modal 內嵌完整的時態互動頁面，不再跳出新分頁。</p>
 
       <div class="embed-shell">
         <div class="frame-wrap">
           <iframe
             class="embedded-frame"
-            src="https://ducj-creator.github.io/Shirley-Grammar/verbs/tensevisual.html"
+            data-src="https://ducj-creator.github.io/Shirley-Grammar/verbs/tensevisual.html"
             title="Tense Visualization"
             loading="eager"
             referrerpolicy="strict-origin-when-cross-origin"
@@ -447,7 +445,7 @@
         <div class="frame-wrap">
           <iframe
             class="embedded-frame"
-            src="https://ducj-creator.github.io/Shirley-Grammar/irregular/verbs/"
+            data-src="https://ducj-creator.github.io/Shirley-Grammar/irregular/verbs/"
             title="Irregular Verbs Tool"
             loading="eager"
             referrerpolicy="strict-origin-when-cross-origin"
@@ -457,7 +455,7 @@
       </div>
     </div>
 
-    <div id="voice-modal" class="modal-content"> class="modal-content">
+    <div id="voice-modal" class="modal-content">
       <h2>7. Passive Voice 被動語態</h2>
       <p>當「動作接受者」比「執行者」重要時使用。</p>
       <div class="note-box note-tip">
@@ -571,6 +569,16 @@
 
     // === 3. Modal Logic ===
     const overlay = document.getElementById('modalOverlay');
+
+    function loadEmbedFrame(targetId) {
+      const modal = document.getElementById(targetId);
+      if (!modal) return;
+      const frame = modal.querySelector('.embedded-frame[data-src]');
+      if (frame && !frame.getAttribute('src')) {
+        frame.setAttribute('src', frame.getAttribute('data-src'));
+      }
+    }
+
     document.querySelectorAll('.satellite').forEach(btn => {
       btn.addEventListener('click', () => {
         if(btn.classList.contains('special-node') && !btn.hasAttribute('data-target')) return;
@@ -580,11 +588,22 @@
         document.querySelectorAll('.modal-content').forEach(c => c.style.display = 'none');
         document.getElementById(targetId).style.display = 'block';
         overlay.classList.add('active');
+
+        if(targetId === 'visual-modal' || targetId === 'irregular-modal') {
+          loadEmbedFrame(targetId);
+        }
+
         if(targetId === 'quiz-modal') startQuiz();
       });
     });
-    function closeModal() { overlay.classList.remove('active'); }
-    overlay.addEventListener('click', (e) => { if(e.target === overlay) closeModal(); });
+
+    function closeModal() {
+      overlay.classList.remove('active');
+    }
+
+    overlay.addEventListener('click', (e) => {
+      if(e.target === overlay) closeModal();
+    });
 
     // === 4. Quiz Logic (30 Questions) ===
     const quizQuestions = [
