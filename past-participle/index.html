@@ -187,6 +187,33 @@
     .btn-cta { background: var(--secondary-tone); color: white; padding: 12px 30px; border-radius: 50px; border: none; font-size: 1rem; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; transition: 0.3s; font-weight: 600; margin-top: 15px; }
     .btn-cta:hover { background: var(--primary-tone); transform: translateY(-2px); }
 
+
+    /* Embedded tool styling */
+    .embed-shell {
+      margin-top: 24px;
+      background: linear-gradient(180deg, #fffafb 0%, #f8f1f3 100%);
+      border: 1px solid #ead7dd;
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.85), 0 10px 24px rgba(128, 0, 32, 0.08);
+    }
+    .frame-wrap {
+      border-radius: 16px;
+      overflow: hidden;
+      background: #fff;
+      border: 1px solid #e7d9de;
+      box-shadow: 0 18px 35px rgba(0,0,0,0.08);
+    }
+    .embedded-frame {
+      width: 100%;
+      height: 72vh;
+      min-height: 560px;
+      border: none;
+      display: block;
+      background: #fff;
+    }
+
+
     /* RWD */
     @media (max-width: 768px) {
       body { overflow-y: auto; height: auto; }
@@ -376,26 +403,23 @@
 
     <div id="irregular-modal" class="modal-content">
       <h2>7. Common Irregular Participles</h2>
-      <p>不規則變化的 p.p. 必須熟記。</p>
-      <div class="table-responsive">
-        <table>
-          <tr><th>Verb</th><th>Past</th><th>Past Participle (p.p.)</th></tr>
-          <tr><td>do</td><td>did</td><td><strong>done</strong></td></tr>
-          <tr><td>go</td><td>went</td><td><strong>gone</strong></td></tr>
-          <tr><td>eat</td><td>ate</td><td><strong>eaten</strong></td></tr>
-          <tr><td>see</td><td>saw</td><td><strong>seen</strong></td></tr>
-          <tr><td>write</td><td>wrote</td><td><strong>written</strong></td></tr>
-          <tr><td>break</td><td>broke</td><td><strong>broken</strong></td></tr>
-          <tr><td>speak</td><td>spoke</td><td><strong>spoken</strong></td></tr>
-          <tr><td>take</td><td>took</td><td><strong>taken</strong></td></tr>
-        </table>
+      <p>以下改成同一個 modal 內嵌不規則動詞內容，不再跳出新分頁。</p>
+      <div class="embed-shell">
+        <div class="frame-wrap">
+          <iframe
+            id="irregularEmbedFrame"
+            class="embedded-frame"
+            data-src="https://ducj-creator.github.io/Shirley-Grammar/irregular/verbs/"
+            title="Irregular Verbs"
+            loading="lazy"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen>
+          </iframe>
+        </div>
       </div>
-      <a href="https://ducj-creator.github.io/Shirley-Grammar/irregular/verbs/" target="_blank" class="btn-cta" style="width:100%; justify-content:center;">
-        📖 前往不規則動詞表
-      </a>
     </div>
 
-    <div id="quiz-modal" class="modal-content">
+    <div id="quiz-modal" class="modal-content"> class="modal-content">
       <h2>8. Past Participle Challenge (20 Qs) 🏆</h2>
       <p style="margin-bottom:20px; color:#666;">Test your knowledge! Choose the correct answer.</p>
       <div id="quiz-container"></div>
@@ -467,6 +491,14 @@
 
     // === 3. Modal Logic ===
     const overlay = document.getElementById('modalOverlay');
+
+    function loadIrregularEmbed() {
+      const frame = document.getElementById('irregularEmbedFrame');
+      if (frame && !frame.getAttribute('src')) {
+        frame.setAttribute('src', frame.getAttribute('data-src'));
+      }
+    }
+
     document.querySelectorAll('.satellite').forEach(btn => {
       btn.addEventListener('click', () => {
         const targetId = btn.getAttribute('data-target');
@@ -475,9 +507,15 @@
         document.querySelectorAll('.modal-content').forEach(c => c.style.display = 'none');
         document.getElementById(targetId).style.display = 'block';
         overlay.classList.add('active');
+
+        if(targetId === 'irregular-modal') {
+          loadIrregularEmbed();
+        }
+
         if(targetId === 'quiz-modal') startQuiz();
       });
     });
+
     function closeModal() { overlay.classList.remove('active'); }
     overlay.addEventListener('click', (e) => { if(e.target === overlay) closeModal(); });
 
