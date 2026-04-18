@@ -445,16 +445,22 @@
             overflow: auto;
             position: relative;
             background: white;
-            padding-top: 12px;
+            padding: 12px 16px 16px;
+        }
+        #panel-iframe-stage {
+            position: relative;
+            margin: 0 auto;
+            width: 100%;
+            min-height: 100%;
         }
         #panel-iframe {
             border: none;
             background: white;
             display: none;
-            position: relative;
-            width: 100%;
-            height: calc(100% - 12px);
-            min-height: calc(100% - 12px);
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform-origin: top left;
         }
 
         /* Results screen */
@@ -1538,7 +1544,9 @@
       <p>Harvesting knowledge…</p>
     </div>
     <div id="panel-iframe-wrap">
-      <iframe id="panel-iframe" title="Grammar Content"></iframe>
+      <div id="panel-iframe-stage">
+        <iframe id="panel-iframe" title="Grammar Content" loading="eager" referrerpolicy="no-referrer-when-downgrade" allow="autoplay; fullscreen; picture-in-picture"></iframe>
+      </div>
     </div>
   </div>
 </div>
@@ -1600,16 +1608,53 @@ const labelMap = {
     'subjunctive': 'Subjunctive 假設語氣'
 };
 
+function getDeviceProfile() {
+    const w = window.innerWidth || document.documentElement.clientWidth || 0;
+    if (w < 768) {
+        return { name: 'phone', virtualWidth: Math.max(w - 32, 360), virtualHeight: 2200 };
+    }
+    if (w < 1024) {
+        return { name: 'tablet', virtualWidth: 1100, virtualHeight: 2200 };
+    }
+    return { name: 'desktop', virtualWidth: 1440, virtualHeight: 2200 };
+}
+
+function layoutPanelFrame() {
+    const wrap = document.getElementById('panel-iframe-wrap');
+    const stage = document.getElementById('panel-iframe-stage');
+    const iframe = document.getElementById('panel-iframe');
+    if (!wrap || !stage || !iframe || iframe.style.display === 'none') return;
+
+    const profile = getDeviceProfile();
+    const wrapW = Math.max(wrap.clientWidth - 2, 320);
+    const scale = Math.min(wrapW / profile.virtualWidth, 1);
+    const scaledWidth = Math.round(profile.virtualWidth * scale);
+    const scaledHeight = Math.round(profile.virtualHeight * scale);
+
+    stage.style.width = scaledWidth + 'px';
+    stage.style.height = Math.max(scaledHeight, wrap.clientHeight - 4) + 'px';
+
+    iframe.style.width = profile.virtualWidth + 'px';
+    iframe.style.height = profile.virtualHeight + 'px';
+    iframe.style.transform = `scale(${scale})`;
+}
+
 function resetPanelFrame() {
     const iframe = document.getElementById('panel-iframe');
+    const stage = document.getElementById('panel-iframe-stage');
     iframe.onload = null;
     iframe.removeAttribute('srcdoc');
     iframe.removeAttribute('src');
     iframe.style.display = 'none';
-    iframe.style.width = '100%';
-    iframe.style.height = 'calc(100% - 12px)';
-    iframe.style.minHeight = 'calc(100% - 12px)';
+    iframe.style.width = '';
+    iframe.style.height = '';
     iframe.style.transform = 'none';
+    stage.style.width = '100%';
+    stage.style.height = '100%';
+    if (window.__panelResizeHandler) {
+        window.removeEventListener('resize', window.__panelResizeHandler);
+        window.__panelResizeHandler = null;
+    }
 }
 
 function openPanel(url, key) {
@@ -1629,9 +1674,15 @@ function openPanel(url, key) {
     wrap.scrollTop = 0;
     wrap.scrollLeft = 0;
 
+    window.__panelResizeHandler = () => layoutPanelFrame();
+    window.addEventListener('resize', window.__panelResizeHandler);
+
     iframe.onload = () => {
         iframe.style.display = 'block';
+        layoutPanelFrame();
         loading.classList.add('hidden');
+        setTimeout(layoutPanelFrame, 250);
+        setTimeout(layoutPanelFrame, 900);
     };
 
     iframe.src = url;
