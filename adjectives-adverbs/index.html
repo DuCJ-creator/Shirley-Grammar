@@ -268,6 +268,55 @@
     .result-card { text-align: center; padding: 40px 20px; display: none; }
     .result-score { font-size: 3.5rem; font-family: 'Playfair Display', serif; color: var(--primary-tone); font-weight: 700; margin-bottom: 10px; }
 
+
+    /* Embedded tool styling */
+    .embed-shell {
+      margin-top: 24px;
+      background: linear-gradient(180deg, #fdfcf8 0%, #f8f4ea 100%);
+      border: 1px solid #eadfcb;
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.8), 0 10px 24px rgba(58, 90, 64, 0.08);
+    }
+    .embed-tabs {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .embed-tab {
+      background: white;
+      color: var(--primary-tone);
+      border: 1px solid #decfb3;
+      padding: 10px 16px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+    .embed-tab:hover,
+    .embed-tab.active {
+      background: var(--secondary-tone);
+      color: white;
+      border-color: var(--secondary-tone);
+    }
+    .frame-wrap {
+      border-radius: 16px;
+      overflow: hidden;
+      background: #fff;
+      border: 1px solid #e7ddca;
+      box-shadow: 0 18px 35px rgba(0,0,0,0.08);
+    }
+    .embedded-frame {
+      width: 100%;
+      height: 72vh;
+      min-height: 560px;
+      border: none;
+      display: block;
+      background: #fff;
+    }
+
+
     /* RWD */
     @media (max-width: 768px) {
       body { overflow-y: auto; height: auto; }
@@ -447,18 +496,29 @@
 
     <div id="clause-modal" class="modal-content">
       <h2>6. Advanced Clauses 子句</h2>
-      <p>當單字不足以表達時，使用子句來修飾。</p>
-      <div style="display:flex; gap:10px; margin-top:20px; flex-wrap:wrap;">
-        <a href="https://ducj-creator.github.io/Shirley-Grammar/adjective-clause/" target="_blank" class="btn-cta">
-          📖 Adjective Clause
-        </a>
-        <a href="https://ducj-creator.github.io/Shirley-Grammar/adverb-clause/" target="_blank" class="btn-cta">
-          📘 Adverb Clause
-        </a>
+      <p>以下改成同一個 modal 內切換兩種子句，不再跳出新分頁。</p>
+
+      <div class="embed-shell">
+        <div class="embed-tabs">
+          <button class="embed-tab active" type="button" onclick="switchClauseEmbed('adjective', this)">Adjective Clause</button>
+          <button class="embed-tab" type="button" onclick="switchClauseEmbed('adverb', this)">Adverb Clause</button>
+        </div>
+        <div class="frame-wrap">
+          <iframe
+            id="clauseEmbedFrame"
+            class="embedded-frame"
+            data-adjective-src="https://ducj-creator.github.io/Shirley-Grammar/adjective-clause/"
+            data-adverb-src="https://ducj-creator.github.io/Shirley-Grammar/adverb-clause/"
+            title="Advanced Clauses"
+            loading="lazy"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen>
+          </iframe>
+        </div>
       </div>
     </div>
 
-    <div id="mistake-modal" class="modal-content">
+    <div id="mistake-modal" class="modal-content"> class="modal-content">
       <h2>7. Common Mistakes 常見錯誤</h2>
       <div class="table-responsive">
         <table>
@@ -546,15 +606,44 @@
 
     // === 3. Modal Logic ===
     const overlay = document.getElementById('modalOverlay');
+
+    function loadClauseEmbed(mode = 'adjective') {
+      const frame = document.getElementById('clauseEmbedFrame');
+      if (!frame) return;
+
+      const targetSrc = mode === 'adverb'
+        ? frame.getAttribute('data-adverb-src')
+        : frame.getAttribute('data-adjective-src');
+
+      if (frame.getAttribute('src') !== targetSrc) {
+        frame.setAttribute('src', targetSrc);
+      }
+    }
+
+    function switchClauseEmbed(mode, btn) {
+      document.querySelectorAll('#clause-modal .embed-tab').forEach(tab => tab.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      loadClauseEmbed(mode);
+    }
+
     document.querySelectorAll('.satellite').forEach(btn => {
       btn.addEventListener('click', () => {
         const targetId = btn.getAttribute('data-target');
         document.querySelectorAll('.modal-content').forEach(c => c.style.display = 'none');
         document.getElementById(targetId).style.display = 'block';
         overlay.classList.add('active');
+
+        if(targetId === 'clause-modal') {
+          loadClauseEmbed('adjective');
+          const firstTab = document.querySelector('#clause-modal .embed-tab');
+          document.querySelectorAll('#clause-modal .embed-tab').forEach(tab => tab.classList.remove('active'));
+          if (firstTab) firstTab.classList.add('active');
+        }
+
         if(targetId === 'quiz-modal') startQuiz(); // Start quiz when opened
       });
     });
+
     function closeModal() { overlay.classList.remove('active'); }
     overlay.addEventListener('click', (e) => { if(e.target === overlay) closeModal(); });
 
