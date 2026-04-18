@@ -39,7 +39,7 @@
             width: 100%; height: 46%;
             pointer-events: none;
             z-index: 0;
-            overflow: hidden;
+            overflow: auto;
         }
 
         /* ── CLOUDS ── */
@@ -1600,22 +1600,86 @@ const labelMap = {
     'subjunctive': 'Subjunctive 假設語氣'
 };
 
-// CORS proxies to try in order
-const CORS_PROXIES = [
-    url => `https://corsproxy.io/?url=${encodeURIComponent(url)}`,
-    url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
-    url => `https://cors-anywhere.herokuapp.com/${url}`
-];
+function getDeviceType() {
+    const w = window.innerWidth || document.documentElement.clientWidth || 0;
+    if (w < 768) return 'phone';
+    if (w < 1180) return 'tablet';
+    return 'desktop';
+}
 
-function fetchWithCorsProxy(url, proxyIndex) {
-    if (proxyIndex >= CORS_PROXIES.length) return Promise.reject(new Error('All proxies failed'));
-    const proxyUrl = CORS_PROXIES[proxyIndex](url);
-    return fetch(proxyUrl)
-        .then(r => {
-            if (!r.ok) throw new Error('HTTP ' + r.status);
-            return r.text();
-        })
-        .catch(() => fetchWithCorsProxy(url, proxyIndex + 1));
+const PANEL_ZOOM_PRESETS = {
+    desktop: {
+        default: 1.6,
+        simple: 1.9,
+        compound: 1.9,
+        complex: 1.9,
+        'compound-complex': 1.8,
+        nouns: 1.75,
+        pronouns: 1.75,
+        verbs: 1.75,
+        'adjectives-adverbs': 2.15,
+        prepositions: 1.8,
+        infinitive: 1.75,
+        gerund: 1.75,
+        'present-participle': 1.7,
+        'past-participle': 1.7,
+        'noun-clause': 1.7,
+        'adjective-clause': 1.7,
+        'adverb-clause': 1.7,
+        questions: 1.65,
+        exclamations: 1.65,
+        inverted: 1.65,
+        subjunctive: 1.65
+    },
+    tablet: {
+        default: 1.25,
+        simple: 1.35,
+        compound: 1.35,
+        complex: 1.35,
+        'compound-complex': 1.32,
+        'adjectives-adverbs': 1.45
+    },
+    phone: {
+        default: 1
+    }
+};
+
+function getPanelZoom(key) {
+    const device = getDeviceType();
+    const group = PANEL_ZOOM_PRESETS[device] || PANEL_ZOOM_PRESETS.desktop;
+    return group[key] || group.default || 1;
+}
+
+function applyPanelZoom() {
+    const panel = document.getElementById('content-panel');
+    const iframe = document.getElementById('panel-iframe');
+    const wrap = document.getElementById('panel-iframe-wrap');
+
+    if (!panel.classList.contains('open') || !iframe.dataset.key) return;
+
+    const scale = getPanelZoom(iframe.dataset.key);
+    iframe.dataset.scale = String(scale);
+
+    if (scale <= 1.001) {
+        iframe.style.width = '100%';
+        iframe.style.height = '100%';
+        iframe.style.left = '0';
+        iframe.style.top = '0';
+        iframe.style.transformOrigin = 'top left';
+        iframe.style.transform = 'none';
+        wrap.scrollTop = 0;
+        wrap.scrollLeft = 0;
+        return;
+    }
+
+    iframe.style.width = `${100 / scale}%`;
+    iframe.style.height = `${100 / scale}%`;
+    iframe.style.left = '50%';
+    iframe.style.top = '0';
+    iframe.style.transformOrigin = 'top center';
+    iframe.style.transform = `translateX(-50%) scale(${scale})`;
+    wrap.scrollTop = 0;
+    wrap.scrollLeft = Math.max(0, (wrap.scrollWidth - wrap.clientWidth) / 2);
 }
 
 function openPanel(url, key) {
@@ -1638,9 +1702,12 @@ function openPanel(url, key) {
     loading.classList.remove('hidden');
     iframe.style.display = 'none';
     iframe.style.left = '0';
+    iframe.style.top = '0';
     iframe.style.width = '100%';
     iframe.style.height = '100%';
+    iframe.style.transformOrigin = 'top left';
     iframe.style.transform = 'none';
+    iframe.dataset.key = key;
 
     panel.classList.add('open');
     document.body.style.overflow = 'hidden';
@@ -1655,16 +1722,19 @@ function openPanel(url, key) {
         iframe.onload = () => {
             iframe.style.display = 'block';
             loading.classList.add('hidden');
+            requestAnimationFrame(applyPanelZoom);
         };
 
         iframe.onerror = () => {
             loading.classList.add('hidden');
             iframe.style.display = 'block';
+            requestAnimationFrame(applyPanelZoom);
         };
 
         iframe._loadFallbackTimer = setTimeout(() => {
             loading.classList.add('hidden');
             iframe.style.display = 'block';
+            requestAnimationFrame(applyPanelZoom);
         }, 4000);
 
         iframe.src = url;
@@ -1691,11 +1761,19 @@ function closePanel() {
         iframe.src = 'about:blank';
         iframe.style.display = 'none';
         iframe.style.transform = 'none';
+        iframe.style.transformOrigin = 'top left';
         iframe.style.width = '100%';
         iframe.style.height = '100%';
         iframe.style.left = '0';
+        iframe.style.top = '0';
+        delete iframe.dataset.key;
+        delete iframe.dataset.scale;
     }, 450);
 }
+
+window.addEventListener('resize', () => {
+    requestAnimationFrame(applyPanelZoom);
+});
 
 // Close panel on Escape key
 document.addEventListener('keydown', e => {
