@@ -411,9 +411,23 @@
         <div class="audio-card" onclick="speak('tooth teeth')"><span class="audio-text">tooth → teeth</span><span>🔊</span></div>
         <div class="audio-card" onclick="speak('fish fish')"><span class="audio-text">fish → fish</span><span>🔊</span></div>
       </div>
+
+      <div class="embed-shell">
+        <div class="frame-wrap">
+          <iframe
+            id="irregularNounEmbedFrame"
+            class="embedded-frame"
+            data-src="https://ducj-creator.github.io/Shirley-Grammar/irregular/nouns/"
+            title="Irregular Noun Plurals"
+            loading="lazy"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
     </div>
 
-    <div id="uncount-modal" class="modal-content">
+    <div id="uncount-modal" class="modal-content"> class="modal-content">
       <h2>4. Uncountable Nouns 不可數名詞</h2>
       <p>不可數名詞不能加 s，通常不加 a/an。</p>
       <div class="table-responsive">
@@ -459,7 +473,7 @@
       </div>
     </div>
 
-    <div id="mistake-modal" class="modal-content"> class="modal-content">
+    <div id="mistake-modal" class="modal-content">
       <h2>8. Common Mistakes 常見錯誤</h2>
       <div class="table-responsive">
         <table>
@@ -559,15 +573,26 @@
       }
     }
 
+    function loadIrregularNounEmbed() {
+      const frame = document.getElementById('irregularNounEmbedFrame');
+      if (frame && !frame.getAttribute('src')) {
+        frame.setAttribute('src', frame.getAttribute('data-src'));
+      }
+    }
+
     document.querySelectorAll('.satellite').forEach(btn => {
       btn.addEventListener('click', () => {
         const targetId = btn.getAttribute('data-target');
+        if(!targetId) return;
         document.querySelectorAll('.modal-content').forEach(c => c.style.display = 'none');
         document.getElementById(targetId).style.display = 'block';
         overlay.classList.add('active');
 
         if(targetId === 'clause-modal') {
           loadNounClauseEmbed();
+        }
+        if(targetId === 'count-modal') {
+          loadIrregularNounEmbed();
         }
       });
     });
