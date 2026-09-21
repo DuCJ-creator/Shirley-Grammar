@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Intransitive Verbs · 不及物動詞學習</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;1,500&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#faf7f0;
+    --paper-2:#f3efe4;
+    --ink:#2b2822;
+    --ink-soft:#5c584e;
+    --line:#ddd6c5;
+    --accent:#7a4a3a;
+    --accent-2:#8a6d3b;
+    --tag-vi:#5b6b4f;
+    --tag-vt:#7a4a3a;
+    --tag-vl:#3d5a68;
+    --card:#ffffff;
+    --shadow: 0 1px 2px rgba(43,40,34,0.06), 0 6px 20px rgba(43,40,34,0.05);
+    box-sizing:border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  :root:not([data-theme="light"]){
+    @media (prefers-color-scheme: dark){
+      --paper:#1c1a16;
+      --paper-2:#242119;
+      --ink:#efe9dc;
+      --ink-soft:#b8b09b;
+      --line:#3a352a;
+      --card:#242119;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 6px 20px rgba(0,0,0,0.25);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#1c1a16;
+    --paper-2:#242119;
+    --ink:#efe9dc;
+    --ink-soft:#b8b09b;
+    --line:#3a352a;
+    --card:#242119;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 6px 20px rgba(0,0,0,0.25);
+  }
+  html{scroll-padding-top: env(safe-area-inset-top, 0px);}
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Source Sans 3', -apple-system, BlinkMacSystemFont, "PingFang TC", "Microsoft JhengHei", sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{
+    max-width:920px;
+    margin:0 auto;
+    padding:2.5rem 1.25rem 4rem;
+  }
+  header.top{
+    margin-bottom:2rem;
+    border-bottom:1px solid var(--line);
+    padding-bottom:1.5rem;
+  }
+  .eyebrow{
+    font-size:0.72rem;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--accent-2);
+    margin-bottom:0.5rem;
+    font-weight:600;
+  }
+  h1{
+    font-family:'Lora', Georgia, serif;
+    font-weight:600;
+    font-size:clamp(1.5rem, 4vw, 2.1rem);
+    margin:0 0 0.5rem;
+    letter-spacing:-0.01em;
+  }
+  h1 .cn{
+    font-family:'Source Sans 3', sans-serif;
+    font-weight:500;
+    color:var(--ink-soft);
+    font-size:0.6em;
+    margin-left:0.5rem;
+  }
+  .subtitle{
+    color:var(--ink-soft);
+    font-size:0.95rem;
+    line-height:1.6;
+    max-width:60ch;
+  }
+
+  nav.tabs{
+    display:flex;
+    gap:0.4rem;
+    flex-wrap:wrap;
+    margin-bottom:1.75rem;
+  }
+  .tab{
+    appearance:none;
+    border:1px solid var(--line);
+    background:var(--paper-2);
+    color:var(--ink-soft);
+    font-family:inherit;
+    font-size:0.85rem;
+    font-weight:500;
+    padding:0.55rem 0.95rem;
+    border-radius:999px;
+    cursor:pointer;
+    transition:all .15s ease;
+    white-space:nowrap;
+  }
+  .tab:hover{ color:var(--ink); border-color:var(--accent-2); }
+  .tab.active{
+    background:var(--ink);
+    color:var(--paper);
+    border-color:var(--ink);
+  }
+  .tab .count{
+    opacity:0.6;
+    font-size:0.78em;
+    margin-left:0.35em;
+  }
+
+  .panel-desc{
+    font-size:0.88rem;
+    color:var(--ink-soft);
+    margin:-0.75rem 0 1.5rem;
+    padding-left:0.1rem;
+    line-height:1.6;
+  }
+  .panel-desc .legend{
+    display:inline-flex;
+    gap:0.5rem;
+    flex-wrap:wrap;
+    margin-top:0.5rem;
+  }
+  .chip-legend{
+    display:inline-flex;
+    align-items:center;
+    gap:0.3rem;
+    font-size:0.75rem;
+    padding:0.15rem 0.55rem;
+    border-radius:999px;
+    border:1px solid var(--line);
+  }
+  .dot{ width:7px; height:7px; border-radius:50%; display:inline-block; }
+  .dot.vi{ background:var(--tag-vi); }
+  .dot.vt{ background:var(--tag-vt); }
+  .dot.vl{ background:var(--tag-vl); }
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(150px,1fr));
+    gap:0.6rem;
+  }
+  .word-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:0.85rem 0.9rem;
+    cursor:pointer;
+    box-shadow:var(--shadow);
+    transition:transform .12s ease, border-color .12s ease;
+    text-align:left;
+  }
+  .word-card:hover{ transform:translateY(-2px); border-color:var(--accent-2); }
+  .word-card.selected{ border-color:var(--accent); background:var(--paper-2); }
+  .word-card .w{
+    font-family:'Lora', Georgia, serif;
+    font-size:1.05rem;
+    font-weight:600;
+    display:block;
+  }
+  .word-card .tags{
+    margin-top:0.35rem;
+    display:flex;
+    gap:0.3rem;
+  }
+  .tag{
+    font-size:0.65rem;
+    letter-spacing:0.03em;
+    padding:0.1rem 0.4rem;
+    border-radius:5px;
+    font-weight:600;
+    color:#fff;
+  }
+  .tag.vi{ background:var(--tag-vi); }
+  .tag.vt{ background:var(--tag-vt); }
+  .tag.vl{ background:var(--tag-vl); }
+
+  .detail{
+    margin-top:2rem;
+    border-top:1px solid var(--line);
+    padding-top:1.75rem;
+  }
+  .detail.empty{
+    color:var(--ink-soft);
+    font-size:0.9rem;
+    font-style:italic;
+    padding:2rem 0;
+    text-align:center;
+    border:1px dashed var(--line);
+    border-radius:10px;
+  }
+  .detail-head{
+    display:flex;
+    align-items:baseline;
+    gap:0.75rem;
+    flex-wrap:wrap;
+    margin-bottom:0.35rem;
+  }
+  .detail-word{
+    font-family:'Lora', Georgia, serif;
+    font-size:2rem;
+    font-weight:600;
+  }
+  .speak-btn{
+    appearance:none;
+    border:1px solid var(--line);
+    background:var(--paper-2);
+    color:var(--accent);
+    border-radius:8px;
+    width:34px;
+    height:34px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    font-size:1rem;
+    flex:none;
+    transition:background .12s ease;
+  }
+  .speak-btn:hover{ background:var(--line); }
+  .speak-btn.small{
+    width:26px; height:26px; font-size:0.8rem; margin-left:0.4rem;
+  }
+  .meaning{
+    color:var(--ink-soft);
+    font-size:0.95rem;
+    margin-bottom:1.1rem;
+  }
+  .usage-block{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:0.9rem 1.05rem;
+    margin-bottom:0.7rem;
+  }
+  .usage-block .u-tag{
+    display:inline-flex;
+    align-items:center;
+    gap:0.3rem;
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    font-weight:700;
+    color:#fff;
+    padding:0.12rem 0.5rem;
+    border-radius:5px;
+    margin-bottom:0.55rem;
+  }
+  .usage-block .sentence{
+    display:flex;
+    align-items:center;
+    gap:0.5rem;
+    font-size:1rem;
+    line-height:1.55;
+  }
+  .usage-block .sentence span{ flex:1; }
+
+  footer{
+    margin-top:3rem;
+    padding-top:1.25rem;
+    border-top:1px solid var(--line);
+    font-size:0.78rem;
+    color:var(--ink-soft);
+    text-align:center;
+  }
+
+  @media (max-width:480px){
+    .detail-word{ font-size:1.5rem; }
+    .grid{ grid-template-columns:repeat(auto-fill, minmax(120px,1fr)); }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="eyebrow">Grammar · Verb Patterns</div>
+    <h1>Common Intransitive Verbs<span class="cn">常見不及物動詞</span></h1>
+    <p class="subtitle">依動詞用法分為四類：僅作不及物動詞（Vi）、可作不及物與及物動詞（Vi &amp; Vt）、可作不及物與連綴動詞（Vi &amp; Vl）、以及三種用法皆有（Vi &amp; Vl &amp; Vt）。點擊單字查看例句，點擊 🔊 聆聽發音。</p>
+  </header>
+
+  <nav class="tabs" id="tabs"></nav>
+  <div class="panel-desc" id="panelDesc"></div>
+
+  <div class="grid" id="grid"></div>
+
+  <div class="detail empty" id="detail">點擊上方單字，查看意思與例句</div>
+
+  <footer>Web Speech API 語音合成 · 發音可能因瀏覽器與系統而略有差異</footer>
+</div>
+
+<script>
+const DATA = {
+  vi: {
+    label: "只作 Vi",
+    labelEn: "Intransitive Only",
+    desc: "這些動詞只能作不及物動詞使用，後面不能直接接受詞。",
+    words: [
+      {w:"arrive", meaning:"到達目的地", ex:"The train arrived on time."},
+      {w:"exist", meaning:"客觀存在", ex:"Many myths still exist."},
+      {w:"happen", meaning:"發生", ex:"The accident happened suddenly."},
+      {w:"occur", meaning:"發生；出現", ex:"Errors occur when you rush."},
+      {w:"vanish", meaning:"突然消失", ex:"The mist vanished quickly."},
+      {w:"die", meaning:"死亡；停止生存", ex:"The flowers died in the cold."},
+      {w:"cry", meaning:"哭泣；流淚", ex:"The baby cried all night."},
+      {w:"laugh", meaning:"大聲表達愉悅", ex:"We laughed at the joke."},
+      {w:"smile", meaning:"微笑；表達愉悅的表情", ex:"She smiled warmly."},
+      {w:"sneeze", meaning:"不自主地打噴嚏", ex:"Dust made him sneeze."},
+      {w:"cough", meaning:"發出聲音地咳嗽", ex:"He coughed loudly."},
+      {w:"snore", meaning:"睡覺時發出鼾聲", ex:"The dog snores on the rug."},
+      {w:"faint", meaning:"短暫失去意識", ex:"She fainted from heat."},
+      {w:"elapse", meaning:"（時間）流逝", ex:"Minutes elapsed in silence."},
+      {w:"emerge", meaning:"浮現；變得可見", ex:"A figure emerged from the shadows."}
+    ]
+  },
+  vivt: {
+    label: "Vi & Vt",
+    labelEn: "Intransitive & Transitive",
+    desc: "這些動詞既可作不及物動詞（不接受詞），也可作及物動詞（直接接受詞）。",
+    words: [
+      {w:"break", vi:"The glass broke.", vt:"He broke the window."},
+      {w:"eat", vi:"We already ate.", vt:"We ate fresh pizza."},
+      {w:"open", vi:"The gate opened slowly.", vt:"The guard opened the gate."},
+      {w:"run", vi:"She runs every morning.", vt:"She runs a business."},
+      {w:"write", vi:"The author writes daily.", vt:"The author writes novels."},
+      {w:"read", vi:"I like to read in bed.", vt:"I read an article today."},
+      {w:"sing", vi:"The choir sings beautifully.", vt:"The choir sings hymns."},
+      {w:"drive", vi:"He drives carefully.", vt:"He drives a truck."},
+      {w:"shout", vi:"The coach shouted.", vt:"He shouted instructions."},
+      {w:"yell", vi:"Don't yell in here.", vt:"She yelled my name."},
+      {w:"hurt", vi:"My knee hurts when it rains.", vt:"Don't hurt your back."},
+      {w:"burn", vi:"The fire burned all night.", vt:"The chef burned the toast."},
+      {w:"close", vi:"The store closes at 9 PM.", vt:"Please close the book."},
+      {w:"move", vi:"The line didn't move.", vt:"Please move your car."},
+      {w:"cook", vi:"He loves to cook.", vt:"He cooked an amazing dinner."}
+    ]
+  },
+  vivl: {
+    label: "Vi & Vl",
+    labelEn: "Intransitive & Linking",
+    desc: "這些動詞既可作不及物動詞，也可作連綴動詞（後接主詞補語，形容詞或名詞）。",
+    words: [
+      {w:"stay", vi:"Please stay at home.", vl:"Please stay calm."},
+      {w:"remain", vi:"Few ruins remain.", vl:"The crowd remained quiet."},
+      {w:"appear", vi:"A ghost appeared.", vl:"He appears anxious."},
+      {w:"seem", vi:"No solution seems to exist.", vl:"The plan seems perfect."},
+      {w:"go", vi:"We must go now.", vl:"The milk went sour."},
+      {w:"get", vi:"They got there late.", vl:"It is getting colder."}
+    ]
+  },
+  all3: {
+    label: "Vi & Vl & Vt",
+    labelEn: "All Three Patterns",
+    desc: "這些動詞可作不及物、連綴、及物動詞三種用法，是感官動詞常見的用法組合。",
+    words: [
+      {w:"feel", vi:"I can still feel in my fingers.", vl:"The blanket feels soft.", vt:"She felt the rough surface."},
+      {w:"smell", vi:"Bloodhounds live to smell.", vl:"The soup smells delicious.", vt:"He smelled the coffee."},
+      {w:"taste", vi:"He lost his ability to taste.", vl:"The milk tastes sour.", vt:"The chef tasted the sauce."},
+      {w:"look", vi:"Please turn around and look.", vl:"You look magnificent.", vt:"She looked at the painting."},
+      {w:"grow", vi:"The city is growing fast.", vl:"The crowd grew restless.", vt:"The farmer grows corn."},
+      {w:"prove", vi:"His theories rarely prove out.", vl:"The puzzle proved tricky.", vt:"The lawyer proved his innocence."},
+      {w:"sound", vi:"The horn sounded in the fog.", vl:"That idea sounds perfect.", vt:"The captain sounded the alarm."},
+      {w:"turn", vi:"The wheel began to turn.", vl:"The leaves turned red.", vt:"He turned the door handle."}
+    ]
+  }
+};
+
+const TAG_LABEL = { vi:"VI", vt:"VT", vl:"VL" };
+
+let currentCat = "vi";
+let currentWord = null;
+
+const tabsEl = document.getElementById("tabs");
+const gridEl = document.getElementById("grid");
+const detailEl = document.getElementById("detail");
+const panelDescEl = document.getElementById("panelDesc");
+
+function catKeys(item){
+  const keys = [];
+  if (item.ex !== undefined || item.vi !== undefined) keys.push("vi");
+  if (item.vt !== undefined) keys.push("vt");
+  if (item.vl !== undefined) keys.push("vl");
+  return keys;
+}
+
+function renderTabs(){
+  tabsEl.innerHTML = "";
+  Object.keys(DATA).forEach(key=>{
+    const cat = DATA[key];
+    const btn = document.createElement("button");
+    btn.className = "tab" + (key===currentCat ? " active" : "");
+    btn.innerHTML = `${cat.label}<span class="count">${cat.words.length}</span>`;
+    btn.onclick = ()=>{
+      currentCat = key;
+      currentWord = null;
+      renderAll();
+    };
+    tabsEl.appendChild(btn);
+  });
+}
+
+function renderPanelDesc(){
+  const cat = DATA[currentCat];
+  panelDescEl.innerHTML = `${cat.desc}<div class="legend">
+    <span class="chip-legend"><span class="dot vi"></span>Vi 不及物</span>
+    <span class="chip-legend"><span class="dot vl"></span>Vl 連綴</span>
+    <span class="chip-legend"><span class="dot vt"></span>Vt 及物</span>
+  </div>`;
+}
+
+function renderGrid(){
+  const cat = DATA[currentCat];
+  gridEl.innerHTML = "";
+  cat.words.forEach(item=>{
+    const card = document.createElement("button");
+    card.className = "word-card" + (currentWord===item.w ? " selected" : "");
+    const tags = catKeys(item).map(k=>`<span class="tag ${k}">${TAG_LABEL[k]}</span>`).join("");
+    card.innerHTML = `<span class="w">${item.w}</span><span class="tags">${tags}</span>`;
+    card.onclick = ()=>{
+      currentWord = item.w;
+      renderGrid();
+      renderDetail();
+      detailEl.scrollIntoView({behavior:"smooth", block:"nearest"});
+    };
+    gridEl.appendChild(card);
+  });
+}
+
+function speak(text){
+  if(!('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = "en-US";
+  utter.rate = 0.95;
+  window.speechSynthesis.speak(utter);
+}
+
+function speakerIcon(text, small){
+  const btn = document.createElement("button");
+  btn.className = "speak-btn" + (small ? " small" : "");
+  btn.setAttribute("aria-label", "發音: " + text);
+  btn.innerHTML = "🔊";
+  btn.onclick = (e)=>{ e.stopPropagation(); speak(text); };
+  return btn;
+}
+
+function renderDetail(){
+  const cat = DATA[currentCat];
+  const item = cat.words.find(x=>x.w===currentWord);
+  if(!item){
+    detailEl.className = "detail empty";
+    detailEl.textContent = "點擊上方單字，查看意思與例句";
+    return;
+  }
+  detailEl.className = "detail";
+  detailEl.innerHTML = "";
+
+  const head = document.createElement("div");
+  head.className = "detail-head";
+  const wordSpan = document.createElement("span");
+  wordSpan.className = "detail-word";
+  wordSpan.textContent = item.w;
+  head.appendChild(wordSpan);
+  head.appendChild(speakerIcon(item.w, false));
+  detailEl.appendChild(head);
+
+  if(item.meaning){
+    const m = document.createElement("div");
+    m.className = "meaning";
+    m.textContent = item.meaning;
+    detailEl.appendChild(m);
+  }
+
+  const usages = [];
+  if(item.ex !== undefined) usages.push({type:"vi", sentence:item.ex});
+  if(item.vi !== undefined) usages.push({type:"vi", sentence:item.vi});
+  if(item.vl !== undefined) usages.push({type:"vl", sentence:item.vl});
+  if(item.vt !== undefined) usages.push({type:"vt", sentence:item.vt});
+
+  const fullLabel = {vi:"Vi · 不及物", vt:"Vt · 及物", vl:"Vl · 連綴"};
+
+  usages.forEach(u=>{
+    const block = document.createElement("div");
+    block.className = "usage-block";
+    const tag = document.createElement("span");
+    tag.className = "u-tag " + u.type;
+    tag.textContent = fullLabel[u.type];
+    block.appendChild(tag);
+
+    const sentRow = document.createElement("div");
+    sentRow.className = "sentence";
+    const span = document.createElement("span");
+    span.textContent = u.sentence;
+    sentRow.appendChild(span);
+    sentRow.appendChild(speakerIcon(u.sentence, true));
+    block.appendChild(sentRow);
+
+    detailEl.appendChild(block);
+  });
+}
+
+function renderAll(){
+  renderTabs();
+  renderPanelDesc();
+  renderGrid();
+  renderDetail();
+}
+
+renderAll();
+</script>
+</body>
+</html>
