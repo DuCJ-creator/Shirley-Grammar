@@ -338,7 +338,24 @@
           <tr><td><strong>become</strong> (變得)</td><td>He <span class="highlight">became</span> angry.</td></tr>
         </table>
       </div>
-      <a href="https://ducj-creator.github.io/Shirley-Grammar/verbs/linking.html" target="_blank" style="color:var(--primary-tone); font-weight:bold; display:inline-block; margin-bottom:10px;">→ Common Linking Verbs 常見連繫動詞</a>
+      <div class="embed-shell">
+        <div class="embed-header">
+          <div>
+            <div class="embed-kicker">Reference</div>
+            <div class="embed-title">Common Linking Verbs 常見連繫動詞</div>
+          </div>
+        </div>
+        <div class="frame-wrap">
+          <iframe
+            class="embedded-frame"
+            data-src="https://ducj-creator.github.io/Shirley-Grammar/verbs/linking.html"
+            title="Common Linking Verbs"
+            loading="eager"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
 
       <h3>Transitive vs Intransitive 及物/不及物</h3>
       <div class="table-responsive">
@@ -348,7 +365,24 @@
           <tr><td><strong>Intransitive (不及物)</strong></td><td>No (不需要)</td><td>The baby <span class="highlight">sleeps</span>.</td></tr>
         </table>
       </div>
-      <a href="https://ducj-creator.github.io/Shirley-Grammar/verbs/vi.html" target="_blank" style="color:var(--primary-tone); font-weight:bold; display:inline-block;">→ Common Intransitive Verbs 常見不及物動詞</a>
+      <div class="embed-shell">
+        <div class="embed-header">
+          <div>
+            <div class="embed-kicker">Reference</div>
+            <div class="embed-title">Common Intransitive Verbs 常見不及物動詞</div>
+          </div>
+        </div>
+        <div class="frame-wrap">
+          <iframe
+            class="embedded-frame"
+            data-src="https://ducj-creator.github.io/Shirley-Grammar/verbs/vi.html"
+            title="Common Intransitive Verbs"
+            loading="eager"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
     </div>
 
     <div id="type-helper-modal" class="modal-content">
@@ -484,7 +518,6 @@
             <li><strong>give up</strong> (放棄)</li>
             <li><strong>look after</strong> (照顧)</li>
           </ul>
-          <a href="https://ducj-creator.github.io/Shirley-Grammar/phrases" target="_blank" style="color:var(--primary-tone); font-weight:bold;">→ 學習更多片語</a>
         </div>
         <div style="flex:1">
           <h3>Common Mistakes</h3>
@@ -494,6 +527,25 @@
             <li><span style="color:#c62828">X</span> I must to go.</li>
             <li><span style="color:#2e7d32">O</span> I must go. (Modal + VR)</li>
           </ul>
+        </div>
+      </div>
+
+      <div class="embed-shell">
+        <div class="embed-header">
+          <div>
+            <div class="embed-kicker">Reference</div>
+            <div class="embed-title">Phrasal Verbs 動詞片語 (更多)</div>
+          </div>
+        </div>
+        <div class="frame-wrap">
+          <iframe
+            class="embedded-frame"
+            data-src="https://ducj-creator.github.io/Shirley-Grammar/phrases"
+            title="Phrasal Verbs"
+            loading="eager"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen>
+          </iframe>
         </div>
       </div>
     </div>
@@ -574,10 +626,12 @@
     function loadEmbedFrame(targetId) {
       const modal = document.getElementById(targetId);
       if (!modal) return;
-      const frame = modal.querySelector('.embedded-frame[data-src]');
-      if (frame && !frame.getAttribute('src')) {
-        frame.setAttribute('src', frame.getAttribute('data-src'));
-      }
+      const frames = modal.querySelectorAll('.embedded-frame[data-src]');
+      frames.forEach(frame => {
+        if (!frame.getAttribute('src')) {
+          frame.setAttribute('src', frame.getAttribute('data-src'));
+        }
+      });
     }
 
     document.querySelectorAll('.satellite').forEach(btn => {
@@ -590,7 +644,7 @@
         document.getElementById(targetId).style.display = 'block';
         overlay.classList.add('active');
 
-        if(targetId === 'visual-modal' || targetId === 'irregular-modal') {
+        if(targetId === 'visual-modal' || targetId === 'irregular-modal' || targetId === 'type-basic-modal' || targetId === 'keypoint-modal') {
           loadEmbedFrame(targetId);
         }
 
