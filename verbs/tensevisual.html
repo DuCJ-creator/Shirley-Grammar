@@ -2,7 +2,7 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>16 English Tenses Visualization</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
@@ -48,7 +48,7 @@
         .main-content {
             flex: 1;
             position: relative;
-            padding: 4% 2% 0 8%; /* Left padding for Y-axis labels */
+            padding: 3% 2% 0 8%; /* Left padding for Y-axis labels */
             box-sizing: border-box;
             transition: all 1s ease;
         }
@@ -56,10 +56,15 @@
         .grid-wrapper {
             display: grid;
             width: 75%; /* Initial width for 3 columns */
-            height: 85%;
+            height: 70%; /* was 85% — reduced so it never collides with the axis labels below */
             grid-template-columns: repeat(3, 1fr); /* Start with 3 */
-            grid-template-rows: repeat(4, 1fr);
-            gap: 10px;
+            /* minmax(0, 1fr) instead of plain 1fr: this stops rows from growing taller
+               than their share of the grid whenever a cell's content (fixed-size SVG +
+               text) needs more room than allotted. Without the 0 minimum, oversized
+               content pushes the grid taller than its declared height and overlaps
+               whatever sits below it — which was the cause of the overlap. */
+            grid-template-rows: repeat(4, minmax(0, 1fr));
+            gap: 8px;
             position: relative;
             transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
             margin: 0 auto; /* Center horizontally */
@@ -74,8 +79,8 @@
         .y-labels-container {
             position: absolute;
             left: 0;
-            top: 4%; /* Match padding-top of main-content */
-            height: 85%;
+            top: 3%; /* Match padding-top of main-content */
+            height: 70%; /* Match grid-wrapper height */
             width: 8%;
             display: flex;
             flex-direction: column;
@@ -89,7 +94,7 @@
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 700;
             color: #555;
             text-align: left;
@@ -103,11 +108,13 @@
             width: 75%; /* Match grid width */
             margin: 0 auto;
             justify-content: space-around;
-            padding-bottom: 10px;
-            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            /* Fixed, dedicated band below the grid instead of being pinned to the very
+               bottom of main-content. That old bottom:0 rule is what let the label
+               text sit underneath the grid's last row instead of below it. */
             position: absolute;
-            bottom: 0;
-            left: 8%; /* Match padding-left of main-content */
+            top: 78%;
+            left: 8%;
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1), left 1.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         .x-labels-container.expanded {
@@ -120,7 +127,7 @@
             text-align: center;
             font-family: 'Playfair Display', serif;
             font-weight: bold;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             opacity: 0;
             transition: opacity 1s;
         }
@@ -136,7 +143,10 @@
             opacity: 0;
             transform: translateY(20px);
             transition: opacity 0.8s, transform 0.8s;
-            padding: 5px;
+            padding: 4px;
+            overflow: hidden;
+            min-height: 0;
+            min-width: 0;
         }
         
         .cell.visible { opacity: 1; transform: translateY(0); }
@@ -145,26 +155,22 @@
 
         /* Cell Content */
         .tense-title { 
-            font-size: 0.75rem; 
+            font-size: 0.65rem; 
             color: #999; 
             text-transform: uppercase; 
             letter-spacing: 1px; 
-            margin-bottom: 4px; 
-            /* 調整位置，避免與橫軸重疊 */
-            margin-top: -5px;
+            margin-bottom: 2px; 
         }
         .tense-ex { 
             font-family: 'Playfair Display', serif; 
-            font-size: 1.1rem; 
+            font-size: 0.95rem; 
             color: var(--text-main); 
             font-weight: bold; 
-            margin-bottom: 8px; 
+            margin-bottom: 4px; 
             white-space: nowrap; 
-            /* 調整位置，避免與橫軸重疊 */
-            margin-top: -5px;
         }
         
-        .svg-container { width: 100%; height: 45px; }
+        .svg-container { width: 100%; height: 34px; flex-shrink: 0; }
         .graphic { width: 100%; height: 100%; overflow: visible; }
 
         /* Colors */
@@ -498,13 +504,6 @@
     }
 
     function createCells() {
-        // Sort tenses by row then column so we can append correctly in grid flow
-        // But wait, grid auto-placement fills row by row if we define columns.
-        // Let's insert 16 divs. The 4th column ones will be hidden initially.
-        
-        // We need to insert them in the correct order for the DOM: Row 1 (1,2,3,4), Row 2...
-        // tenses array is organized by columns for data, let's map properly.
-        
         let sortedTenses = [];
         for(let r=1; r<=4; r++) {
             for(let c=1; c<=4; c++) {
@@ -573,7 +572,7 @@
         });
         await wait(2000);
 
-        // 2. Reveal 12 Tenses (Column by Column usually clearer for Time, but Row by Row better for aspect comparison. Let's do Row by Row)
+        // 2. Reveal 12 Tenses (Row by Row)
         
         // Row 1: Simple
         setSubtitle("Simple Tense: Just the facts.", "簡單式：單純陳述事實。");
