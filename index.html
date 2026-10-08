@@ -320,6 +320,9 @@
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 12px;
     }
+    .topic-group-list {
+      display: block;
+    }
     .topic-card {
       min-height: 156px;
       border: 1px solid var(--line);
@@ -352,6 +355,11 @@
       border-color: var(--green);
       box-shadow: 0 18px 34px rgba(30,54,38,.12);
     }
+    .point-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--point-accent, var(--green));
+      box-shadow: 0 16px 28px rgba(30,54,38,.12), inset 4px 0 0 var(--point-accent, var(--green));
+    }
     .topic-card:hover::after, .path-card:hover::after { translate: 120% 0; }
     .topic-card .code {
       color: var(--green);
@@ -375,6 +383,35 @@
       font-weight: 850;
     }
     .overview-grid { margin-bottom: 28px; }
+    .topic-group { margin-top: 24px; }
+    .topic-group:first-child { margin-top: 0; }
+    .topic-group-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 12px;
+      color: var(--green-dark);
+      font-family: var(--serif);
+      font-size: 1.35rem;
+      line-height: 1.2;
+    }
+    .topic-group-head .code {
+      min-width: 34px;
+      height: 28px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 999px;
+      background: rgba(31,107,70,.12);
+      color: var(--green);
+      font-family: var(--sans);
+      font-size: .72rem;
+      font-weight: 850;
+      letter-spacing: .08em;
+    }
+    .topic-group[data-group="speech"] .topic-group-head .code { background: var(--mint-soft); }
+    .topic-group[data-group="nonfinite"] .topic-group-head .code { background: var(--gold-soft); }
+    .topic-group[data-group="clauses"] .topic-group-head .code { background: var(--blue-soft); }
+    .topic-group[data-group="special"] .topic-group-head .code { background: var(--rose-soft); }
     .overview-card[data-group="speech"] { background: linear-gradient(180deg, #fff, var(--mint-soft)); }
     .overview-card[data-group="nonfinite"] { background: linear-gradient(180deg, #fff, var(--gold-soft)); }
     .overview-card[data-group="clauses"] { background: linear-gradient(180deg, #fff, var(--blue-soft)); }
@@ -385,6 +422,57 @@
     .topic-card[data-tone="rose"], .path-card[data-tone="rose"] { background: linear-gradient(180deg, #fff, var(--rose-soft)); }
     .topic-card[data-tone="lavender"], .path-card[data-tone="lavender"] { background: linear-gradient(180deg, #fff, var(--lavender-soft)); }
     .topic-card[data-tone="peach"], .path-card[data-tone="peach"] { background: linear-gradient(180deg, #fff, var(--peach-soft)); }
+    .point-card[data-tone="green"] { --point-accent: #2c8b69; background: linear-gradient(135deg, rgba(255,255,255,.9), #dff2ec); border-color: rgba(44,139,105,.48); }
+    .point-card[data-tone="gold"] { --point-accent: #a77b1d; background: linear-gradient(135deg, rgba(255,255,255,.9), #fbefc7); border-color: rgba(167,123,29,.44); }
+    .point-card[data-tone="blue"] { --point-accent: #407da6; background: linear-gradient(135deg, rgba(255,255,255,.9), #dcebf4); border-color: rgba(64,125,166,.44); }
+    .point-card[data-tone="rose"] { --point-accent: #ad6874; background: linear-gradient(135deg, rgba(255,255,255,.9), #f3dfe2); border-color: rgba(173,104,116,.42); }
+    .point-card[data-tone="lavender"] { --point-accent: #7469aa; background: linear-gradient(135deg, rgba(255,255,255,.9), #e7e2f6); border-color: rgba(116,105,170,.42); }
+    .point-card[data-tone="peach"] { --point-accent: #b27655; background: linear-gradient(135deg, rgba(255,255,255,.9), #f5e2d5); border-color: rgba(178,118,85,.42); }
+
+    .point-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 11px;
+    }
+    .point-card {
+      min-height: 82px;
+      border-radius: 999px;
+      padding: 13px 18px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 13px;
+      align-items: center;
+      text-align: left;
+      border-width: 1.5px;
+      color: var(--ink);
+      box-shadow: 0 10px 22px rgba(30,54,38,.08), inset 4px 0 0 var(--point-accent, var(--green));
+      backdrop-filter: blur(10px);
+    }
+    .point-card .code {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: rgba(255,255,255,.64);
+      border: 1px solid rgba(31,107,70,.14);
+      font-size: .68rem;
+    }
+    .point-card .code { color: var(--point-accent, var(--green)); }
+    .point-card h3 {
+      margin: 0;
+      font-family: var(--sans);
+      font-size: .95rem;
+      font-weight: 850;
+      line-height: 1.25;
+    }
+    .point-card .open-line {
+      margin: 0;
+      padding: 0;
+      white-space: nowrap;
+      color: var(--point-accent, var(--green));
+      opacity: .86;
+    }
 
     .path-grid {
       display: grid;
@@ -611,6 +699,7 @@
     @media (max-width: 980px) {
       .hero { grid-template-columns: 1fr; }
       .topic-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .point-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .path-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     @media (max-width: 640px) {
@@ -619,7 +708,7 @@
       .nav a { flex: 1 1 auto; }
       .hero { margin-top: 14px; padding: 18px; }
       .section { margin: 18px 0; padding: 18px; border-radius: 18px; }
-      .topic-grid, .path-grid { grid-template-columns: 1fr; }
+      .topic-grid, .point-grid, .path-grid { grid-template-columns: 1fr; }
       .section-head { display: block; }
       .drawer-panel { width: 100%; }
       .drawer-actions .small-btn:first-child { display: none; }
@@ -814,9 +903,10 @@
       return CARD_TONES[index % CARD_TONES.length];
     }
 
-    function topicCard(topic, index = 0) {
+    function topicCard(topic, index = 0, variant = "topic") {
+      const classes = variant === "point" ? "topic-card point-card" : "topic-card";
       return `
-        <button class="topic-card" type="button" data-open="${escapeHtml(topic.id)}" data-group="${escapeHtml(topic.group)}" data-tone="${escapeHtml(cardTone(topic, index))}">
+        <button class="${classes}" type="button" data-open="${escapeHtml(topic.id)}" data-group="${escapeHtml(topic.group)}" data-tone="${escapeHtml(cardTone(topic, index))}">
           <span class="code">${escapeHtml(topic.code)}</span>
           <h3>${escapeHtml(topic.title)}</h3>
           <span class="open-line">Open lesson</span>
@@ -826,13 +916,29 @@
 
     function renderTopics() {
       const query = state.query.trim().toLowerCase();
-      const filtered = TOPICS.filter(topic => {
+      const matchesTopic = topic => {
         if (state.filter !== "all" && topic.group !== state.filter) return false;
         if (!query) return true;
         return [topic.title, topic.desc, topic.code, topic.id].join(" ").toLowerCase().includes(query);
-      });
+      };
+      const filtered = TOPICS.filter(matchesTopic);
       const grid = document.getElementById("topicGrid");
-      grid.innerHTML = filtered.map(topicCard).join("");
+      if (state.filter === "all") {
+        grid.className = "topic-group-list";
+        grid.innerHTML = GRAMMAR_OVERVIEW.map(group => {
+          const groupItems = TOPICS.filter(topic => topic.group === group.id && matchesTopic(topic));
+          if (!groupItems.length) return "";
+          return `
+            <section class="topic-group" data-group="${escapeHtml(group.group)}">
+              <h3 class="topic-group-head"><span class="code">${escapeHtml(group.code)}</span>${escapeHtml(group.title)}</h3>
+              <div class="point-grid">${groupItems.map((topic, index) => topicCard(topic, index, "point")).join("")}</div>
+            </section>
+          `;
+        }).join("");
+      } else {
+        grid.className = "point-grid";
+        grid.innerHTML = filtered.map((topic, index) => topicCard(topic, index, "point")).join("");
+      }
       document.getElementById("emptyState").style.display = filtered.length ? "none" : "block";
       bindOpenButtons(grid);
     }
