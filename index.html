@@ -1,1934 +1,1118 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shirley's Lemon Grammar Orchard</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,600;0,700;1,600&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --deep-green: #1e4620;
-            --bark-dark:  #2e1608;
-            --bark-mid:   #5c3a1e;
-            --lemon-gold: #f5c800;
-            --lemon-bright: #ffef30;
-            --text: #1a2e1a;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shirley's Grammar Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@600;700&family=Inter:wght@500;650;750;850&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --paper: #fbfbf6;
+      --panel: #ffffff;
+      --line: #dfe5da;
+      --ink: #172118;
+      --muted: #647067;
+      --green: #1f6b46;
+      --green-dark: #12492f;
+      --green-soft: #e8f3ec;
+      --gold: #dfb83d;
+      --gold-soft: #fff5ce;
+      --aqua: #78c7b2;
+      --rose-soft: #f8e7e3;
+      --blue-soft: #e8f0f7;
+      --lavender-soft: #eee9fb;
+      --mint-soft: #e7f5f0;
+      --peach-soft: #faece2;
+      --shadow: 0 18px 48px rgba(30, 54, 38, .11);
+      --serif: "Crimson Pro", Georgia, serif;
+      --sans: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif;
+    }
 
-        body {
-            font-family: 'Quicksand', sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            overflow-x: hidden;
-            background: 
-                linear-gradient(180deg, transparent 0%, transparent 72%, #3a7a10 72%, #2e6008 100%),
-                linear-gradient(180deg,
-                    #aad4ee 0%, #c8e8f5 18%,
-                    #d8f0d4 42%, #e8f5e0 62%, #eff7ea 100%);
-        }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        linear-gradient(115deg, rgba(255,255,255,0) 0 28%, rgba(255,255,255,.36) 34%, rgba(255,255,255,0) 42%) 0 0 / 220% 100%,
+        radial-gradient(circle at 14% 0%, rgba(223,184,61,.18), transparent 24rem),
+        radial-gradient(circle at 82% 8%, rgba(120,199,178,.18), transparent 26rem),
+        linear-gradient(180deg, #fbfbf6 0%, #f4f7ef 100%);
+      color: var(--ink);
+      font-family: var(--sans);
+      animation: pageSheen 18s ease-in-out infinite alternate;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .28;
+      background:
+        linear-gradient(rgba(31,107,70,.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(31,107,70,.08) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(180deg, #000, transparent 70%);
+    }
+    @keyframes pageSheen {
+      from { background-position: 0 0, 0 0, 0 0, 0 0; }
+      to { background-position: 32% 0, 0 0, 0 0, 0 0; }
+    }
 
-        /* ── SKY LAYER ── */
-        #sky-layer {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 46%;
-            pointer-events: none;
-            z-index: 0;
-            overflow: hidden;
-        }
+    a { color: inherit; }
+    button, input { font: inherit; }
 
-        /* ── CLOUDS ── */
-        .cloud {
-            position: absolute;
-            opacity: 0;
-            animation: cloudDrift linear infinite;
-        }
-        @keyframes cloudDrift {
-            0%   { transform: translateX(-340px); opacity: 0; }
-            5%   { opacity: 0.85; }
-            92%  { opacity: 0.85; }
-            100% { transform: translateX(calc(100vw + 340px)); opacity: 0; }
-        }
+    .site-shell { width: min(1160px, calc(100% - 32px)); margin: 0 auto; }
 
-        /* ── BIRDS ── */
-        .bird-flock {
-            position: absolute;
-            animation: birdFly linear infinite;
-            opacity: 0;
-        }
-        @keyframes birdFly {
-            0%   { transform: translateX(-200px) translateY(0); opacity: 0; }
-            4%   { opacity: 1; }
-            94%  { opacity: 1; }
-            100% { transform: translateX(calc(100vw + 200px)) translateY(-35px); opacity: 0; }
-        }
-        .wing-l { animation: flapL 0.42s ease-in-out infinite alternate; transform-origin: 9px 4px; }
-        .wing-r { animation: flapR 0.42s ease-in-out infinite alternate; transform-origin: 9px 4px; }
-        @keyframes flapL { from{transform:rotate(-28deg)} to{transform:rotate(14deg)} }
-        @keyframes flapR { from{transform:rotate(28deg)}  to{transform:rotate(-14deg)} }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      border-bottom: 1px solid rgba(31,107,70,.12);
+      background: rgba(251,251,246,.88);
+      backdrop-filter: blur(14px);
+    }
+    .topbar-inner {
+      width: min(1160px, calc(100% - 32px));
+      min-height: 66px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      text-decoration: none;
+      min-width: 0;
+    }
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      border-radius: 11px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(145deg, var(--green-dark), var(--green));
+      color: #fff6c9;
+      font-family: var(--serif);
+      font-size: 1.25rem;
+      font-weight: 700;
+      box-shadow: 0 8px 20px rgba(31,107,70,.18);
+    }
+    .brand strong { display: block; color: var(--green-dark); font-weight: 850; letter-spacing: 0; }
+    .brand span { display: block; color: var(--muted); font-size: .72rem; margin-top: 2px; }
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .nav a, .small-btn {
+      min-height: 36px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 0 12px;
+      background: rgba(255,255,255,.72);
+      color: var(--green-dark);
+      text-decoration: none;
+      font-size: .74rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform .16s ease, border-color .16s ease, background .16s ease;
+    }
+    .nav a:hover, .small-btn:hover { transform: translateY(-1px); border-color: var(--green); background: var(--green-soft); }
 
-        /* ── GROUND ── */
-        #ground-strip {
-            position: relative;
-            width: 100%;
-            height: 110px;
-            background: radial-gradient(ellipse at 50% 110%, #6aaa26 0%, #4a8a16 45%, #2e5e08 100%);
-            border-radius: 55% 55% 0 0 / 40% 40% 0 0;
-            z-index: 5;
-            margin-top: -80px;
-            flex-shrink: 0;
-        }
+    .hero {
+      position: relative;
+      overflow: hidden;
+      margin: 22px 0 12px;
+      padding: clamp(18px, 3vw, 28px);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(320px, .78fr);
+      gap: clamp(18px, 3vw, 34px);
+      align-items: center;
+      border: 1px solid rgba(31,107,70,.14);
+      border-radius: 18px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.86), rgba(255,255,255,.58)),
+        radial-gradient(circle at 92% 20%, rgba(120,199,178,.22), transparent 18rem);
+      box-shadow: 0 20px 54px rgba(30,54,38,.09);
+      isolation: isolate;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: -40% auto auto -16%;
+      width: 46%;
+      aspect-ratio: 1;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(223,184,61,.22), transparent 70%);
+      filter: blur(6px);
+      animation: slowDrift 12s ease-in-out infinite alternate;
+      z-index: -1;
+    }
+    .eyebrow {
+      margin: 0 0 12px;
+      color: var(--green);
+      font-size: .72rem;
+      font-weight: 850;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 0;
+      color: var(--green-dark);
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4.4vw, 4.1rem);
+      line-height: 1;
+      letter-spacing: 0;
+      max-width: 820px;
+      text-wrap: balance;
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+    .primary-btn, .secondary-btn {
+      min-height: 46px;
+      border-radius: 12px;
+      padding: 0 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: 1px solid transparent;
+      text-decoration: none;
+      font-weight: 850;
+      cursor: pointer;
+    }
+    .primary-btn { background: var(--green); color: #fff; box-shadow: 0 12px 26px rgba(31,107,70,.2); }
+    .primary-btn:hover { background: var(--green-dark); transform: translateY(-1px); }
+    .secondary-btn { background: #fff; color: var(--green-dark); border-color: var(--line); }
+    .secondary-btn:hover { border-color: var(--green); background: var(--green-soft); }
 
-        header {
-            width: 100%;
-            padding: 1.2rem 2rem;
-            display: flex;
-            justify-content: flex-end;
-            position: relative; z-index: 10;
-        }
-        .back-btn {
-            text-decoration: none;
-            color: var(--deep-green);
-            font-weight: 700; font-size: 0.88rem;
-            padding: 0.55rem 1.4rem;
-            border: 2px solid var(--deep-green);
-            border-radius: 25px;
-            transition: all 0.3s;
-            background: rgba(255,255,255,0.76);
-            backdrop-filter: blur(4px);
-        }
-        .back-btn:hover { background: var(--deep-green); color: white; }
+    .quick-panel {
+      border: 1px solid rgba(31,107,70,.15);
+      border-radius: 14px;
+      background: rgba(255,255,255,.74);
+      box-shadow: 0 14px 36px rgba(30,54,38,.09);
+      padding: 14px;
+      backdrop-filter: blur(12px);
+    }
+    .quick-panel h2 {
+      margin: 0 0 10px;
+      color: var(--green-dark);
+      font-family: var(--serif);
+      font-size: 1.18rem;
+    }
+    .search-box {
+      width: 100%;
+      min-height: 44px;
+      border: 1.5px solid var(--line);
+      border-radius: 12px;
+      padding: 0 15px;
+      background: #fff;
+      color: var(--ink);
+      outline: none;
+      font-weight: 650;
+    }
+    .search-box:focus { border-color: var(--green); box-shadow: 0 0 0 4px rgba(31,107,70,.11); }
+    .search-results {
+      display: grid;
+      gap: 9px;
+      margin-top: 14px;
+    }
+    .search-result {
+      min-height: 54px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--green-dark);
+      padding: 10px 12px;
+      text-align: left;
+      cursor: pointer;
+    }
+    .search-result:hover { border-color: var(--green); background: var(--green-soft); }
+    .search-result strong { display: block; font-size: .9rem; font-weight: 850; }
+    .search-result span { display: block; margin-top: 3px; color: var(--muted); font-size: .68rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .search-empty { display: none; margin: 14px 0 0; color: var(--muted); font-size: .82rem; font-weight: 750; }
 
-        .hero-section {
-            text-align: center; margin-bottom: 0;
-            padding: 0 1rem; position: relative; z-index: 10;
-        }
-        h1 {
-            font-family: 'Crimson Pro', serif;
-            font-size: clamp(2rem, 5vw, 3.2rem);
-            color: var(--deep-green);
-            text-shadow: 0 2px 10px rgba(30,70,32,0.18);
-        }
-        h1 span { color: #a07800; font-style: italic; }
-        .hero-section p { color: #5a7a5a; font-size: 0.9rem; margin-top: 4px; }
+    .section {
+      position: relative;
+      margin: 26px 0;
+      padding: clamp(22px, 3vw, 34px);
+      border: 1px solid rgba(31,107,70,.12);
+      border-radius: 22px;
+      box-shadow: 0 16px 44px rgba(30,54,38,.07);
+      overflow: hidden;
+    }
+    .section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(115deg, transparent 0 35%, rgba(255,255,255,.36) 47%, transparent 60%);
+      translate: -36% 0;
+      opacity: .42;
+      pointer-events: none;
+      animation: sectionFlow 15s ease-in-out infinite alternate;
+    }
+    .section > * { position: relative; z-index: 1; }
+    #sentence {
+      background:
+        radial-gradient(circle at 95% 8%, rgba(223,184,61,.2), transparent 18rem),
+        linear-gradient(180deg, rgba(255,249,223,.92), rgba(255,252,239,.68));
+    }
+    #topics {
+      background:
+        radial-gradient(circle at 92% 12%, rgba(120,199,178,.2), transparent 19rem),
+        linear-gradient(180deg, rgba(232,243,236,.9), rgba(249,253,250,.68));
+    }
+    #practice {
+      background:
+        radial-gradient(circle at 94% 12%, rgba(143,126,210,.17), transparent 19rem),
+        linear-gradient(180deg, rgba(238,233,251,.86), rgba(250,249,255,.7));
+    }
+    .hero + .section { margin-top: 16px; }
+    .section-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .section-head h2 {
+      margin: 0;
+      color: var(--green-dark);
+      font-family: var(--serif);
+      font-size: clamp(1.55rem, 3vw, 2.1rem);
+    }
+    .filter-pills {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+    .filter-pill {
+      min-height: 36px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      color: var(--muted);
+      padding: 0 13px;
+      font-size: .75rem;
+      font-weight: 850;
+      cursor: pointer;
+    }
+    .filter-pill.active {
+      background: var(--green);
+      border-color: var(--green);
+      color: #fff;
+    }
 
-        .tree-container {
-            width: 100%; max-width: 1100px;
-            position: relative; z-index: 10;
-        }
-        svg.main-tree { width: 100%; height: auto; overflow: visible; }
+    .topic-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .topic-card {
+      min-height: 156px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      text-align: left;
+      cursor: pointer;
+      box-shadow: 0 2px 0 rgba(31,107,70,.08);
+      position: relative;
+      overflow: hidden;
+      animation: cardRise .5s ease both;
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+    }
+    #sentence .topic-card, .overview-card { min-height: 136px; }
+    .topic-card::after, .path-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      translate: -120% 0;
+      background: linear-gradient(105deg, transparent 0 34%, rgba(255,255,255,.52) 48%, transparent 64%);
+      transition: translate .5s ease;
+      pointer-events: none;
+    }
+    .topic-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--green);
+      box-shadow: 0 18px 34px rgba(30,54,38,.12);
+    }
+    .topic-card:hover::after, .path-card:hover::after { translate: 120% 0; }
+    .topic-card .code {
+      color: var(--green);
+      font-size: .66rem;
+      font-weight: 850;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .topic-card h3 {
+      margin: 11px 0 6px;
+      color: var(--ink);
+      font-family: var(--serif);
+      font-size: 1.12rem;
+      line-height: 1.2;
+    }
+    .topic-card .open-line {
+      margin-top: auto;
+      padding-top: 16px;
+      color: var(--green-dark);
+      font-size: .72rem;
+      font-weight: 850;
+    }
+    .overview-grid { margin-bottom: 28px; }
+    .overview-card[data-group="speech"] { background: linear-gradient(180deg, #fff, var(--mint-soft)); }
+    .overview-card[data-group="nonfinite"] { background: linear-gradient(180deg, #fff, var(--gold-soft)); }
+    .overview-card[data-group="clauses"] { background: linear-gradient(180deg, #fff, var(--blue-soft)); }
+    .overview-card[data-group="special"] { background: linear-gradient(180deg, #fff, var(--rose-soft)); }
+    .topic-card[data-tone="green"], .path-card[data-tone="green"] { background: linear-gradient(180deg, #fff, var(--mint-soft)); }
+    .topic-card[data-tone="gold"], .path-card[data-tone="gold"] { background: linear-gradient(180deg, #fff, var(--gold-soft)); }
+    .topic-card[data-tone="blue"], .path-card[data-tone="blue"] { background: linear-gradient(180deg, #fff, var(--blue-soft)); }
+    .topic-card[data-tone="rose"], .path-card[data-tone="rose"] { background: linear-gradient(180deg, #fff, var(--rose-soft)); }
+    .topic-card[data-tone="lavender"], .path-card[data-tone="lavender"] { background: linear-gradient(180deg, #fff, var(--lavender-soft)); }
+    .topic-card[data-tone="peach"], .path-card[data-tone="peach"] { background: linear-gradient(180deg, #fff, var(--peach-soft)); }
 
-        .branch-header {
-            font-family: 'Crimson Pro', serif;
-            font-size: 17px; font-weight: 700; fill: var(--deep-green);
-        }
+    .path-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .path-card {
+      min-height: 148px;
+      border: 1px solid rgba(31,107,70,.14);
+      border-radius: 8px;
+      background: #fff;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+      cursor: pointer;
+      box-shadow: 0 2px 0 rgba(31,107,70,.07);
+      position: relative;
+      overflow: hidden;
+      animation: cardRise .5s ease both;
+    }
+    .path-card:hover { border-color: var(--green); transform: translateY(-2px); box-shadow: 0 16px 30px rgba(30,54,38,.11); }
+    .path-card strong { color: var(--green-dark); font-family: var(--serif); font-size: 1.08rem; }
+    .path-card small { margin-top: auto; padding-top: 14px; color: var(--green); font-weight: 850; }
 
-        /* Lemon interactions */
-        .lemon-group { cursor: pointer; }
-        .lemon-fruit { transition: filter 0.22s, transform 0.22s cubic-bezier(0.175,0.885,0.32,1.275); }
-        .lemon-group:hover .lemon-fruit {
-            filter: drop-shadow(0 0 13px rgba(255,215,0,0.95)) brightness(1.14);
-            transform: scale(1.13);
-        }
-        .sparkle .lemon-fruit { animation: lemon-pop 0.62s ease-out forwards; }
-        @keyframes lemon-pop {
-            0%  { filter:brightness(1); transform:scale(1); }
-            40% { filter:brightness(2) drop-shadow(0 0 22px gold); transform:scale(1.28) rotate(-6deg); }
-            70% { transform:scale(0.93) rotate(3deg); }
-            100%{ filter:brightness(1); transform:scale(1) rotate(0); }
-        }
-        .lemon-label-bg   { opacity: 1; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.18)); }
-        .lemon-label-text { opacity: 1;
-            font-size: 10.5px; font-weight: 800; fill: #3a2800; text-anchor: middle;
-            font-family: 'Quicksand', sans-serif; }
+    @keyframes cardRise {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slowDrift {
+      from { transform: translate3d(0, 0, 0) scale(1); }
+      to { transform: translate3d(34px, 18px, 0) scale(1.08); }
+    }
+    @keyframes sectionFlow {
+      from { translate: -44% 0; }
+      to { translate: 44% 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      body, .hero::after, .section::before, .topic-card, .path-card { animation: none; }
+      .topic-card, .path-card, .nav a, .small-btn { transition: none; }
+    }
 
-        .trunk-node { cursor: pointer; }
-        .trunk-node .node-bg { transition: fill 0.22s, filter 0.22s; }
-        .trunk-node:hover .node-bg { fill: var(--lemon-bright); filter: drop-shadow(0 3px 8px rgba(200,160,0,0.55)); }
-        .trunk-node text { font-size: 11.5px; font-weight: 700; fill: var(--bark-dark); pointer-events: none; font-family: 'Quicksand', sans-serif; }
+    .empty-state {
+      display: none;
+      padding: 36px 20px;
+      border: 1px dashed var(--line);
+      border-radius: 8px;
+      background: rgba(255,255,255,.72);
+      color: var(--muted);
+      text-align: center;
+      font-weight: 750;
+    }
 
-        /* Market */
-        .market-section {
-            width: 100%; max-width: 1000px;
-            text-align: center; margin: 0 0 0 0;
-            padding: 24px 1rem 60px;
-            position: relative; z-index: 10;
-        }
-        .market-btn {
-            background: rgba(255,255,255,0.88);
-            border: 2.5px solid var(--lemon-gold);
-            padding: 0.85rem 2.5rem;
-            font-family: 'Crimson Pro', serif; font-size: 1.28rem;
-            color: #6a5500; border-radius: 50px; cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 18px rgba(200,160,0,0.18);
-        }
-        .market-btn:hover { background: var(--lemon-bright); transform: scale(1.04); }
-        .stalls-wrapper {
-            display: none; flex-wrap: wrap;
-            justify-content: center; gap: 16px; margin-top: 26px;
-        }
-        .stall-card {
-            width: 144px; background: white;
-            padding: 18px 10px; border-radius: 14px;
-            border-bottom: 5px solid var(--lemon-gold);
-            box-shadow: 0 6px 18px rgba(0,0,0,0.07);
-            cursor: pointer; font-weight: 700; font-size: 0.9rem;
-            color: var(--deep-green); transition: all 0.22s;
-        }
-        .stall-card:hover { transform: translateY(-5px); box-shadow: 0 12px 28px rgba(0,0,0,0.11); }
+    .drawer {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: none;
+    }
+    .drawer.open { display: block; }
+    .drawer-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(18, 45, 30, .58);
+      backdrop-filter: blur(6px);
+    }
+    .drawer-panel {
+      position: absolute;
+      right: 0;
+      top: 0;
+      height: 100%;
+      width: min(1120px, 94vw);
+      background: #fff;
+      box-shadow: -18px 0 54px rgba(0,0,0,.2);
+      display: grid;
+      grid-template-rows: auto 1fr;
+    }
+    .drawer-top {
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 16px 12px 20px;
+      border-bottom: 1px solid var(--line);
+      background: var(--paper);
+    }
+    .drawer-title {
+      min-width: 0;
+      margin: 0;
+      color: var(--green-dark);
+      font-family: var(--serif);
+      font-size: 1.35rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .drawer-actions { display: flex; gap: 8px; flex: 0 0 auto; }
+    .drawer-body { position: relative; overflow: hidden; background: #f7f8f4; }
+    .drawer iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: #fff;
+      display: none;
+    }
+    .loading {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      color: var(--muted);
+      font-weight: 800;
+      background: #fff;
+    }
+    .loading.hidden { display: none; }
 
-        /* ── QUIZ OVERLAY ── */
-        #quiz-overlay {
-            display: none; position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(30,60,30,0.55);
-            backdrop-filter: blur(6px);
-            z-index: 5000; flex-direction: column;
-            align-items: center; justify-content: center;
-            padding: 16px;
-        }
-        .quiz-card {
-            width: 100%; max-width: 600px;
-            background: #fff;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.25);
-        }
-        .quiz-topbar {
-            background: var(--lemon-gold);
-            padding: 14px 24px;
-            display: flex; align-items: center; justify-content: space-between;
-        }
-        .quiz-topbar h2 {
-            font-family: 'Crimson Pro', serif;
-            font-size: 1.4rem; color: #3a2800; margin: 0;
-        }
-        .quiz-close-btn {
-            background: rgba(0,0,0,0.12); border: none;
-            width: 32px; height: 32px; border-radius: 50%;
-            cursor: pointer; font-size: 1rem; color: #3a2800;
-            display: flex; align-items: center; justify-content: center;
-            transition: background 0.2s;
-        }
-        .quiz-close-btn:hover { background: rgba(0,0,0,0.22); }
+    .quiz-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 120;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background: rgba(18,45,30,.58);
+      backdrop-filter: blur(6px);
+    }
+    .quiz-card {
+      width: min(680px, 100%);
+      max-height: min(760px, 92vh);
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      overflow: hidden;
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 24px 70px rgba(0,0,0,.26);
+    }
+    .quiz-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px 18px;
+      background: var(--gold-soft);
+      border-bottom: 1px solid #ead795;
+    }
+    .quiz-top h2 { margin: 0; color: #6b5200; font-family: var(--serif); font-size: 1.35rem; }
+    .quiz-progress { height: 7px; background: #eef2ea; }
+    .quiz-progress span { display: block; height: 100%; width: 0%; background: var(--green); transition: width .28s ease; }
+    .quiz-body {
+      padding: 24px;
+      overflow-y: auto;
+    }
+    .quiz-meta { color: var(--green); font-size: .72rem; font-weight: 850; letter-spacing: .08em; text-transform: uppercase; }
+    .quiz-question {
+      margin: 10px 0 18px;
+      color: var(--ink);
+      font-family: var(--serif);
+      font-size: 1.26rem;
+      line-height: 1.55;
+    }
+    .option-row {
+      display: grid;
+      grid-template-columns: 22px 1fr auto;
+      align-items: center;
+      gap: 12px;
+      min-height: 54px;
+      margin-bottom: 9px;
+      border: 1.5px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 10px 13px;
+      cursor: pointer;
+    }
+    .option-row:hover:not(.locked) { border-color: var(--green); background: var(--green-soft); }
+    .option-row.selected { border-color: var(--gold); background: var(--gold-soft); }
+    .option-row.correct { border-color: #24844e; background: #e1f4e8; }
+    .option-row.wrong { border-color: #c84b40; background: #fae5e2; }
+    .option-dot {
+      width: 19px;
+      height: 19px;
+      border: 2px solid #a9b7ac;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+    }
+    .option-row.selected .option-dot,
+    .option-row.correct .option-dot { border-color: var(--green); }
+    .option-row.selected .option-dot::after,
+    .option-row.correct .option-dot::after {
+      content: "";
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--green);
+    }
+    .option-label { color: var(--ink); font-size: .9rem; line-height: 1.45; }
+    .option-icon { color: var(--green); font-weight: 850; }
+    .feedback {
+      display: none;
+      margin-top: 14px;
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-weight: 800;
+      line-height: 1.5;
+    }
+    .feedback.correct { display: block; background: #e1f4e8; color: #1e623d; }
+    .feedback.wrong { display: block; background: #fae5e2; color: #8c2e25; }
+    .quiz-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 9px;
+      padding: 15px 18px;
+      border-top: 1px solid var(--line);
+      background: var(--paper);
+    }
+    .result { display: none; text-align: center; padding: 34px 26px; }
+    .result h3 { margin: 0; color: var(--green-dark); font-family: var(--serif); font-size: 2rem; }
+    .result-score { margin-top: 10px; color: var(--green); font: 700 3rem/1 var(--serif); }
+    .result p { color: var(--muted); line-height: 1.65; }
 
-        /* Progress bar */
-        .quiz-progress-wrap {
-            height: 6px; background: #e8f0e8;
-        }
-        .quiz-progress-bar {
-            height: 100%; background: var(--deep-green);
-            transition: width 0.4s ease;
-        }
-
-        .quiz-body {
-            padding: 28px 28px 20px;
-        }
-        .quiz-meta {
-            font-size: 0.82rem; font-weight: 700;
-            color: #7a9a7a; margin-bottom: 10px;
-            letter-spacing: 0.04em; text-transform: uppercase;
-        }
-        .quiz-question {
-            font-family: 'Crimson Pro', serif;
-            font-size: 1.2rem; color: var(--text);
-            line-height: 1.5; margin-bottom: 20px;
-        }
-
-        /* Option rows — radio-style */
-        .opt-row {
-            display: flex; align-items: center; gap: 12px;
-            padding: 13px 16px; margin-bottom: 9px;
-            border: 2px solid #ddeedd; border-radius: 11px;
-            cursor: pointer; transition: all 0.18s;
-            background: #fafff8; user-select: none;
-        }
-        .opt-row:hover:not(.opt-disabled) { border-color: var(--lemon-gold); background: #fffde6; }
-        .opt-row.opt-selected { border-color: var(--lemon-gold); background: #fffde6; }
-        .opt-row.opt-correct  { border-color: #28a745; background: #d4edda; cursor: default; }
-        .opt-row.opt-wrong    { border-color: #dc3545; background: #f8d7da; cursor: default; }
-        .opt-row.opt-disabled { cursor: default; }
-
-        .opt-radio {
-            width: 20px; height: 20px; flex-shrink: 0;
-            border-radius: 50%; border: 2.5px solid #aacaaa;
-            display: flex; align-items: center; justify-content: center;
-            transition: all 0.15s;
-        }
-        .opt-row.opt-selected .opt-radio  { border-color: var(--lemon-gold); background: var(--lemon-gold); }
-        .opt-row.opt-correct  .opt-radio  { border-color: #28a745; background: #28a745; }
-        .opt-row.opt-wrong    .opt-radio  { border-color: #dc3545; background: #dc3545; }
-        .opt-dot {
-            width: 8px; height: 8px; border-radius: 50%;
-            background: white; display: none;
-        }
-        .opt-row.opt-selected .opt-dot,
-        .opt-row.opt-correct  .opt-dot,
-        .opt-row.opt-wrong    .opt-dot { display: block; }
-
-        .opt-icon {
-            margin-left: auto; font-size: 1.1rem;
-            display: none; flex-shrink: 0;
-        }
-        .opt-row.opt-correct .opt-icon,
-        .opt-row.opt-wrong   .opt-icon { display: block; }
-
-        .opt-label {
-            font-size: 0.93rem; font-weight: 600;
-            color: var(--text); line-height: 1.4; flex: 1;
-        }
-        .opt-row.opt-correct .opt-label { color: #155724; }
-        .opt-row.opt-wrong   .opt-label { color: #721c24; }
-
-        /* Feedback pill shown after submit */
-        .quiz-feedback {
-            display: none;
-            margin: 4px 0 14px;
-            padding: 10px 16px;
-            border-radius: 9px;
-            font-size: 0.9rem; font-weight: 700;
-        }
-        .quiz-feedback.fb-correct { display: block; background: #d4edda; color: #155724; }
-        .quiz-feedback.fb-wrong   { display: block; background: #f8d7da; color: #721c24; }
-
-        /* Footer buttons */
-        .quiz-footer {
-            padding: 0 28px 24px;
-            display: flex; justify-content: space-between; align-items: center; gap: 12px;
-        }
-        .quiz-btn {
-            padding: 0.7rem 1.8rem;
-            font-family: 'Quicksand', sans-serif;
-            font-size: 0.95rem; font-weight: 700;
-            border-radius: 50px; cursor: pointer;
-            transition: all 0.2s; border: 2px solid transparent;
-        }
-        .quiz-btn-exit {
-            background: transparent;
-            border-color: #aacaaa; color: #4a6a4a;
-        }
-        .quiz-btn-exit:hover { border-color: var(--deep-green); color: var(--deep-green); }
-        .quiz-btn-submit {
-            background: var(--lemon-bright);
-            border-color: var(--lemon-gold); color: #3a2800;
-            box-shadow: 0 4px 14px rgba(200,160,0,0.3);
-        }
-        .quiz-btn-submit:hover { background: var(--lemon-gold); transform: translateY(-1px); }
-        .quiz-btn-submit:disabled {
-            opacity: 0.45; cursor: not-allowed; transform: none;
-            box-shadow: none;
-        }
-
-        /* ── CONTENT PANEL (embedded page viewer) ── */
-        #content-panel {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 6000;
-            pointer-events: none;
-            flex-direction: column;
-            align-items: stretch;
-        }
-        #content-panel.open {
-            display: flex;
-            pointer-events: all;
-        }
-        #panel-backdrop {
-            display: none; /* not needed in full-screen mode */
-        }
-        #panel-drawer {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: #fffef5;
-            display: flex;
-            flex-direction: column;
-            transform: translateY(100%);
-            transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-        #content-panel.open #panel-drawer {
-            transform: translateY(0);
-        }
-        #panel-topbar {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 10px 20px;
-            background: linear-gradient(135deg, var(--deep-green) 0%, #2d6e30 100%);
-            border-bottom: 3px solid var(--lemon-gold);
-            flex-shrink: 0;
-        }
-        #panel-lemon-icon {
-            font-size: 1.4rem;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
-            flex-shrink: 0;
-            animation: panelLemonBounce 2.4s ease-in-out infinite;
-        }
-        @keyframes panelLemonBounce {
-            0%,100% { transform: translateY(0) rotate(-5deg); }
-            50%     { transform: translateY(-4px) rotate(5deg); }
-        }
-        #panel-title {
-            font-family: 'Crimson Pro', serif;
-            font-size: 1.2rem;
-            color: var(--lemon-bright);
-            margin: 0;
-            flex: 1;
-            text-shadow: 0 1px 4px rgba(0,0,0,0.3);
-        }
-        #panel-close-btn {
-            width: 34px; height: 34px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.15);
-            border: 1.5px solid rgba(255,255,255,0.3);
-            color: white;
-            font-size: 1rem;
-            cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-            transition: all 0.2s;
-            flex-shrink: 0;
-        }
-        #panel-close-btn:hover {
-            background: rgba(255,255,255,0.28);
-        }
-        #panel-vine-strip {
-            height: 5px;
-            background: repeating-linear-gradient(
-                90deg,
-                #3a8c3e 0px, #3a8c3e 18px,
-                var(--lemon-gold) 18px, var(--lemon-gold) 22px,
-                #3a8c3e 22px, #3a8c3e 40px
-            );
-            flex-shrink: 0;
-            opacity: 0.7;
-        }
-        #panel-loading {
-            position: absolute;
-            top: 60px; left: 0; right: 0; bottom: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 18px;
-            background: #fffef5;
-            z-index: 2;
-            pointer-events: none;
-        }
-        #panel-loading.hidden { display: none; }
-        .panel-loading-lemon {
-            font-size: 3rem;
-            animation: spin-wobble 1.2s ease-in-out infinite;
-        }
-        @keyframes spin-wobble {
-            0%   { transform: rotate(-15deg) scale(1); }
-            25%  { transform: rotate(0deg) scale(1.15); }
-            50%  { transform: rotate(15deg) scale(1); }
-            75%  { transform: rotate(0deg) scale(0.92); }
-            100% { transform: rotate(-15deg) scale(1); }
-        }
-        #panel-loading p {
-            font-family: 'Crimson Pro', serif;
-            font-size: 1.1rem;
-            color: var(--deep-green);
-            opacity: 0.7;
-        }
-        /* iframe wrapper handles scaling */
-        #panel-iframe-wrap {
-            flex: 1;
-            overflow: auto;
-            position: relative;
-            background: white;
-            padding: 12px 16px 16px;
-        }
-        #panel-iframe-stage {
-            position: relative;
-            margin: 0 auto;
-            width: 100%;
-            min-height: 100%;
-        }
-        #panel-iframe {
-            border: none;
-            background: white;
-            display: none;
-            position: absolute;
-            top: 0;
-            left: 0;
-            transform-origin: top left;
-        }
-
-        /* Results screen */
-        #result-content {
-            display: none;
-            padding: 36px 28px 30px;
-            text-align: center;
-        }
-        .result-emoji { font-size: 3.5rem; margin-bottom: 6px; }
-        .result-title {
-            font-family: 'Crimson Pro', serif;
-            font-size: 1.8rem; color: var(--deep-green);
-            margin-bottom: 6px;
-        }
-        .result-score {
-            font-size: 3rem; font-weight: 700;
-            color: #a07800; margin: 8px 0 4px;
-        }
-        .result-msg { font-size: 0.95rem; color: #5a7a5a; margin-bottom: 22px; }
-        .result-bar-wrap {
-            background: #e8f0e8; border-radius: 20px;
-            height: 14px; margin: 0 auto 24px; max-width: 320px;
-            overflow: hidden;
-        }
-        .result-bar-fill {
-            height: 100%; border-radius: 20px;
-            background: linear-gradient(90deg, #4aac4e, #a8d800);
-            transition: width 0.8s ease 0.3s;
-        }
-    </style>
+    @media (max-width: 980px) {
+      .hero { grid-template-columns: 1fr; }
+      .topic-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .path-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 640px) {
+      .topbar-inner { align-items: flex-start; flex-direction: column; padding: 12px 0; }
+      .nav { width: 100%; justify-content: flex-start; }
+      .nav a { flex: 1 1 auto; }
+      .hero { margin-top: 14px; padding: 18px; }
+      .section { margin: 18px 0; padding: 18px; border-radius: 18px; }
+      .topic-grid, .path-grid { grid-template-columns: 1fr; }
+      .section-head { display: block; }
+      .drawer-panel { width: 100%; }
+      .drawer-actions .small-btn:first-child { display: none; }
+    }
+  </style>
 </head>
 <body>
-
-<!-- ════ SKY: clouds + birds ════ -->
-<div id="sky-layer">
-
-  <!-- CLOUD A — large -->
-  <div class="cloud" style="top:5%; animation-duration:58s; animation-delay:0s;">
-    <svg width="290" height="95" viewBox="0 0 290 95">
-      <defs>
-        <filter id="cA"><feTurbulence type="fractalNoise" baseFrequency="0.038" numOctaves="4" seed="3" result="n"/>
-        <feDisplacementMap in="SourceGraphic" in2="n" scale="8"/></filter>
-      </defs>
-      <g filter="url(#cA)" opacity="0.94">
-        <ellipse cx="82"  cy="66" rx="72" ry="30" fill="white"/>
-        <ellipse cx="148" cy="52" rx="68" ry="40" fill="white"/>
-        <ellipse cx="210" cy="62" rx="62" ry="30" fill="white"/>
-        <ellipse cx="114" cy="46" rx="48" ry="34" fill="white"/>
-        <ellipse cx="174" cy="40" rx="44" ry="32" fill="white"/>
-        <ellipse cx="144" cy="68" rx="96" ry="22" fill="rgba(200,220,245,0.45)"/>
-      </g>
-    </svg>
-  </div>
-
-  <!-- CLOUD B — medium -->
-  <div class="cloud" style="top:14%; animation-duration:76s; animation-delay:20s;">
-    <svg width="210" height="72" viewBox="0 0 210 72">
-      <defs>
-        <filter id="cB"><feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="3" seed="8" result="n"/>
-        <feDisplacementMap in="SourceGraphic" in2="n" scale="6"/></filter>
-      </defs>
-      <g filter="url(#cB)" opacity="0.90">
-        <ellipse cx="62"  cy="53" rx="55" ry="24" fill="white"/>
-        <ellipse cx="108" cy="40" rx="54" ry="32" fill="white"/>
-        <ellipse cx="156" cy="50" rx="48" ry="22" fill="white"/>
-        <ellipse cx="88"  cy="33" rx="38" ry="26" fill="white"/>
-        <ellipse cx="105" cy="56" rx="72" ry="18" fill="rgba(205,225,248,0.42)"/>
-      </g>
-    </svg>
-  </div>
-
-  <!-- CLOUD C — wispy small -->
-  <div class="cloud" style="top:2%; animation-duration:95s; animation-delay:40s;">
-    <svg width="160" height="55" viewBox="0 0 160 55">
-      <defs>
-        <filter id="cC"><feTurbulence type="fractalNoise" baseFrequency="0.06" numOctaves="3" seed="13" result="n"/>
-        <feDisplacementMap in="SourceGraphic" in2="n" scale="5"/></filter>
-      </defs>
-      <g filter="url(#cC)" opacity="0.86">
-        <ellipse cx="48"  cy="40" rx="40" ry="17" fill="white"/>
-        <ellipse cx="84"  cy="30" rx="40" ry="24" fill="white"/>
-        <ellipse cx="120" cy="38" rx="34" ry="16" fill="white"/>
-        <ellipse cx="78"  cy="44" rx="58" ry="13" fill="rgba(205,225,245,0.38)"/>
-      </g>
-    </svg>
-  </div>
-
-  <!-- CLOUD D -->
-  <div class="cloud" style="top:8%; animation-duration:84s; animation-delay:58s;">
-    <svg width="250" height="82" viewBox="0 0 250 82">
-      <defs>
-        <filter id="cD"><feTurbulence type="fractalNoise" baseFrequency="0.042" numOctaves="4" seed="6" result="n"/>
-        <feDisplacementMap in="SourceGraphic" in2="n" scale="7"/></filter>
-      </defs>
-      <g filter="url(#cD)" opacity="0.92">
-        <ellipse cx="74"  cy="58" rx="64" ry="26" fill="white"/>
-        <ellipse cx="136" cy="44" rx="64" ry="36" fill="white"/>
-        <ellipse cx="192" cy="54" rx="56" ry="25" fill="white"/>
-        <ellipse cx="104" cy="38" rx="45" ry="30" fill="white"/>
-        <ellipse cx="160" cy="35" rx="40" ry="28" fill="white"/>
-        <ellipse cx="125" cy="62" rx="88" ry="19" fill="rgba(200,222,246,0.42)"/>
-      </g>
-    </svg>
-  </div>
-
-  <!-- BIRDS flock 1 -->
-  <div class="bird-flock" style="top:22%; animation-duration:30s; animation-delay:7s;">
-    <svg width="130" height="44" viewBox="0 0 130 44">
-      <g transform="translate(0,12)">
-        <path class="wing-l" d="M9,4 Q4,0 0,2 Q4,5 9,4Z" fill="#2a3540"/>
-        <path class="wing-r" d="M9,4 Q14,0 18,2 Q14,5 9,4Z" fill="#2a3540"/>
-        <ellipse cx="9" cy="4" rx="4" ry="2.2" fill="#1e2a34"/>
-      </g>
-      <g transform="translate(34,3)">
-        <path class="wing-l" d="M9,4 Q4,0 0,2 Q4,5 9,4Z" fill="#2a3540"/>
-        <path class="wing-r" d="M9,4 Q14,0 18,2 Q14,5 9,4Z" fill="#2a3540"/>
-        <ellipse cx="9" cy="4" rx="4" ry="2.2" fill="#1e2a34"/>
-      </g>
-      <g transform="translate(66,19)">
-        <path class="wing-l" d="M8,3 Q3,0 0,2 Q3,5 8,3Z" fill="#3a4550"/>
-        <path class="wing-r" d="M8,3 Q13,0 16,2 Q13,5 8,3Z" fill="#3a4550"/>
-        <ellipse cx="8" cy="3" rx="3.5" ry="2" fill="#2a3540"/>
-      </g>
-      <g transform="translate(97,9)">
-        <path class="wing-l" d="M7,3 Q3,0 0,2 Q3,4 7,3Z" fill="#3a4550"/>
-        <path class="wing-r" d="M7,3 Q11,0 14,2 Q11,4 7,3Z" fill="#3a4550"/>
-        <ellipse cx="7" cy="3" rx="3" ry="1.8" fill="#2a3540"/>
-      </g>
-    </svg>
-  </div>
-
-  <!-- BIRDS flock 2 — fewer, higher -->
-  <div class="bird-flock" style="top:8%; animation-duration:44s; animation-delay:24s;">
-    <svg width="86" height="32" viewBox="0 0 86 32">
-      <g transform="translate(0,9)">
-        <path class="wing-l" d="M8,3 Q3,0 0,2 Q3,5 8,3Z" fill="#2a3540"/>
-        <path class="wing-r" d="M8,3 Q13,0 16,2 Q13,5 8,3Z" fill="#2a3540"/>
-        <ellipse cx="8" cy="3" rx="3.5" ry="1.9" fill="#1e2a34"/>
-      </g>
-      <g transform="translate(30,0)">
-        <path class="wing-l" d="M8,3 Q3,0 0,2 Q3,5 8,3Z" fill="#2a3540"/>
-        <path class="wing-r" d="M8,3 Q13,0 16,2 Q13,5 8,3Z" fill="#2a3540"/>
-        <ellipse cx="8" cy="3" rx="3.5" ry="1.9" fill="#1e2a34"/>
-      </g>
-      <g transform="translate(58,13)">
-        <path class="wing-l" d="M7,3 Q3,0 0,2 Q3,4 7,3Z" fill="#3a4550"/>
-        <path class="wing-r" d="M7,3 Q11,0 14,2 Q11,4 7,3Z" fill="#3a4550"/>
-        <ellipse cx="7" cy="3" rx="3" ry="1.6" fill="#2a3540"/>
-      </g>
-    </svg>
-  </div>
-
-</div><!-- #sky-layer -->
-<div class="hero-section">
-  <h1>Shirley's <span>Grammar</span> Orchard</h1>
-  <p>點擊黃金檸檬果，收穫文法知識庫 ✦ Click a lemon to explore grammar</p>
-</div>
-
-<div class="tree-container">
-<svg class="main-tree" viewBox="0 0 1100 980" xmlns="http://www.w3.org/2000/svg">
-<defs>
-
-  <!-- Lemon -->
-  <radialGradient id="lG" cx="30%" cy="24%" r="70%">
-    <stop offset="0%"   stop-color="#ffffc0"/>
-    <stop offset="40%"  stop-color="#ffe418"/>
-    <stop offset="100%" stop-color="#a87800"/>
-  </radialGradient>
-  <radialGradient id="lS" cx="27%" cy="21%" r="40%">
-    <stop offset="0%"   stop-color="rgba(255,255,255,0.84)"/>
-    <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
-  </radialGradient>
-  <!-- Bumpy citrus peel -->
-  <filter id="peel" x="-6%" y="-6%" width="112%" height="112%">
-    <feTurbulence type="fractalNoise" baseFrequency="0.72" numOctaves="3" seed="5" result="pn"/>
-    <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.16 0" in="pn" result="dim"/>
-    <feComposite in="dim" in2="SourceGraphic" operator="in" result="tex"/>
-    <feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="tex"/></feMerge>
-  </filter>
-
-  <!-- Bark -->
-  <linearGradient id="bkG" x1="0%" y1="0%" x2="100%" y2="0%">
-    <stop offset="0%"   stop-color="#180a02"/>
-    <stop offset="18%"  stop-color="#5c3a1e"/>
-    <stop offset="50%"  stop-color="#7a5230"/>
-    <stop offset="82%"  stop-color="#5c3a1e"/>
-    <stop offset="100%" stop-color="#180a02"/>
-  </linearGradient>
-  <linearGradient id="rtG" x1="0%" y1="0%" x2="100%" y2="0%">
-    <stop offset="0%"   stop-color="#100602"/>
-    <stop offset="35%"  stop-color="#4a2c10"/>
-    <stop offset="65%"  stop-color="#6b3f1a"/>
-    <stop offset="100%" stop-color="#100602"/>
-  </linearGradient>
-  <!-- (bark texture is painted directly with SVG paths — no distortion filters) -->
-
-  <!-- Foliage -->
-  <radialGradient id="fDk" cx="50%" cy="55%" r="60%">
-    <stop offset="0%"  stop-color="#1f6023"/><stop offset="100%" stop-color="#0a380e"/>
-  </radialGradient>
-  <radialGradient id="fMd" cx="48%" cy="42%" r="60%">
-    <stop offset="0%"  stop-color="#388e3e"/><stop offset="100%" stop-color="#165c1a"/>
-  </radialGradient>
-  <radialGradient id="fLt" cx="42%" cy="35%" r="58%">
-    <stop offset="0%"  stop-color="#5ab85e"/><stop offset="100%" stop-color="#237828"/>
-  </radialGradient>
-  <radialGradient id="fBr" cx="38%" cy="30%" r="55%">
-    <stop offset="0%"  stop-color="#84d488"/><stop offset="55%" stop-color="#48a84c"/><stop offset="100%" stop-color="#1e6a22"/>
-  </radialGradient>
-
-  <!-- Leaf organic edge: turbulence displacement on FILLED shapes only (safe — no stroke distortion) -->
-  <!-- Strong warp for canopy blob edges — makes them look like real leaf masses -->
-  <filter id="fOrg" x="-18%" y="-18%" width="136%" height="136%">
-    <feTurbulence type="turbulence" baseFrequency="0.028 0.034" numOctaves="2" seed="42" result="warp"/>
-    <feDisplacementMap in="SourceGraphic" in2="warp" scale="14" xChannelSelector="R" yChannelSelector="G"/>
-  </filter>
-  <!-- Lighter warp for surface highlight clusters -->
-  <filter id="fOrgSm" x="-12%" y="-12%" width="124%" height="124%">
-    <feTurbulence type="turbulence" baseFrequency="0.038 0.044" numOctaves="2" seed="17" result="warp"/>
-    <feDisplacementMap in="SourceGraphic" in2="warp" scale="10" xChannelSelector="R" yChannelSelector="G"/>
-  </filter>
-  <!-- Leaf surface: waxy grain only — NO displacement (displacement on animated elements = GPU burn) -->
-  <filter id="lfT" x="-2%" y="-2%" width="104%" height="104%">
-    <feTurbulence type="fractalNoise" baseFrequency="0.18" numOctaves="2" seed="3" result="ln"/>
-    <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0.04  0 0 0 0 0  0 0 0 0.18 0" in="ln" result="lt"/>
-    <feComposite in="lt" in2="SourceGraphic" operator="in"/>
-  </filter>
-
-  <!-- Ground shadow -->
-  <radialGradient id="gSh" cx="50%" cy="50%" r="50%">
-    <stop offset="0%"  stop-color="rgba(8,36,8,0.38)"/>
-    <stop offset="100%" stop-color="rgba(8,36,8,0)"/>
-  </radialGradient>
-
-</defs>
-
-<!-- Ground shadow -->
-<ellipse cx="550" cy="932" rx="272" ry="30" fill="url(#gSh)"/>
-
-<!-- ════ ROOTS ════ -->
-<!-- Base warm-brown roots — no filter, just gradient color -->
-<path d="M490,874 Q424,895 356,916 Q324,924 294,920" fill="none" stroke="#6b3f1a" stroke-width="20" stroke-linecap="round"/>
-<path d="M510,874 Q576,895 644,916 Q676,924 706,920" fill="none" stroke="#6b3f1a" stroke-width="20" stroke-linecap="round"/>
-<path d="M494,884 Q472,906 450,926 Q434,938 416,934" fill="none" stroke="#5c3a1e" stroke-width="13" stroke-linecap="round"/>
-<path d="M506,884 Q528,906 550,926 Q566,938 584,934" fill="none" stroke="#5c3a1e" stroke-width="13" stroke-linecap="round"/>
-<path d="M487,895 Q464,916 444,936" fill="none" stroke="#4a2c10" stroke-width="8" stroke-linecap="round"/>
-<path d="M513,895 Q536,916 556,936" fill="none" stroke="#4a2c10" stroke-width="8" stroke-linecap="round"/>
-<!-- Root shadow/dark edges -->
-<path d="M490,874 Q424,895 356,916 Q324,924 294,920" fill="none" stroke="#2e1608" stroke-width="22" stroke-linecap="round" opacity="0.25"/>
-<path d="M510,874 Q576,895 644,916 Q676,924 706,920" fill="none" stroke="#2e1608" stroke-width="22" stroke-linecap="round" opacity="0.25"/>
-<!-- Root highlight ridge -->
-<path d="M492,876 Q428,896 362,916" fill="none" stroke="#8a5a2a" stroke-width="4" stroke-linecap="round" opacity="0.35"/>
-<path d="M508,876 Q572,896 638,916" fill="none" stroke="#8a5a2a" stroke-width="4" stroke-linecap="round" opacity="0.35"/>
-<!-- Root texture lines (hand-painted fissures running along the root) -->
-<path d="M470,878 Q430,893 398,908" fill="none" stroke="#2e1608" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
-<path d="M452,882 Q418,896 388,910" fill="none" stroke="#2e1608" stroke-width="0.9" stroke-linecap="round" opacity="0.4"/>
-<path d="M530,878 Q570,893 602,908" fill="none" stroke="#2e1608" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
-<path d="M548,882 Q582,896 612,910" fill="none" stroke="#2e1608" stroke-width="0.9" stroke-linecap="round" opacity="0.4"/>
-<!-- Cross-grain bumps on roots -->
-<path d="M420,899 Q422,895 426,898" fill="none" stroke="#2e1608" stroke-width="1.5" stroke-linecap="round" opacity="0.45"/>
-<path d="M360,912 Q362,908 367,911" fill="none" stroke="#2e1608" stroke-width="1.3" stroke-linecap="round" opacity="0.4"/>
-<path d="M580,899 Q578,895 574,898" fill="none" stroke="#2e1608" stroke-width="1.5" stroke-linecap="round" opacity="0.45"/>
-<path d="M640,912 Q638,908 633,911" fill="none" stroke="#2e1608" stroke-width="1.3" stroke-linecap="round" opacity="0.4"/>
-
-
-<!-- ════ CANOPY FOLIAGE — drawn before trunk+branches so wood appears on top ════ -->
-
-<!-- Layer 1 — deep shadow interior -->
-<g opacity="0.80">
-  <path d="M358,310 Q318,260 330,188 Q344,108 420,72 Q496,36 578,56 Q658,76 686,148 Q714,212 680,278 Q728,230 776,262 Q832,304 812,374 Q856,324 902,356 Q952,398 930,464 Q966,492 972,550 Q978,614 930,652 Q892,682 842,665 Q814,706 770,718 Q718,730 678,704 Q640,748 578,754 Q516,760 470,720 Q414,744 366,720 Q304,694 280,642 Q228,666 182,638 Q126,602 148,530 Q110,510 102,456 Q86,388 152,346 Q128,292 168,252 Q204,216 260,226 Q290,172 352,162 Q406,150 432,196 Q390,240 358,310Z" fill="#0e420f"/>
-  <path d="M200,310 Q154,276 140,316 Q90,356 96,418 Q54,444 50,506 Q44,572 102,606 Q84,652 122,682 Q168,714 218,690 Q246,728 298,718 Q352,708 368,652 Q418,664 452,628 Q488,590 468,536 Q506,510 496,454 Q484,396 430,376 Q422,322 380,298 Q340,272 302,292Z" fill="#0a380c"/>
-  <path d="M800,308 Q848,274 898,302 Q950,334 950,392 Q996,420 998,484 Q1002,550 950,582 Q968,632 934,664 Q888,698 836,676 Q806,714 754,712 Q694,710 678,654 Q630,664 590,628 Q554,592 572,538 Q528,514 538,456 Q548,398 604,374 Q612,316 656,294 Q700,268 748,286Z" fill="#0a380c"/>
-</g>
-<!-- Layer 2 — main mid-green body -->
-<g opacity="0.96">
-  <path d="M374,296 Q332,244 346,172 Q362,96 444,62 Q524,28 604,50 Q680,70 706,144 Q732,210 694,274 Q744,222 794,256 Q848,298 826,370 Q870,318 918,350 Q966,392 942,462 Q976,490 982,546 Q988,610 938,648 Q900,678 848,660 Q820,700 774,714 Q720,728 680,702 Q642,748 578,754 Q514,760 468,720 Q410,744 362,720 Q298,694 276,640 Q222,664 178,636 Q122,600 144,528 Q106,508 98,454 Q82,386 150,342 Q126,288 166,248 Q202,212 260,222 Q288,168 352,158 Q408,148 434,196Z" fill="#247026"/>
-  <path d="M448,88 Q440,52 460,32 Q480,14 506,22 Q530,32 534,62 Q514,38 490,42 Q468,46 448,88Z" fill="#1e6420"/>
-  <path d="M504,66 Q498,34 520,16 Q542,0 566,12 Q586,24 582,56 Q560,30 536,34 Q516,40 504,66Z" fill="#1e6822"/>
-  <path d="M378,128 Q360,98 376,68 Q394,40 428,48 Q450,56 448,84 Q428,62 404,68 Q384,76 378,128Z" fill="#1c6020"/>
-  <path d="M618,120 Q638,90 628,62 Q616,36 586,44 Q564,54 566,84 Q582,58 604,64 Q624,72 618,120Z" fill="#1c6220"/>
-  <path d="M208,298 Q162,268 138,308 Q86,348 94,412 Q50,438 48,502 Q42,570 100,604 Q82,652 120,682 Q166,714 218,688 Q246,726 298,716 Q354,706 370,650 Q420,662 454,626 Q490,588 470,532 Q508,508 498,452 Q486,394 432,374 Q424,318 382,296 Q342,272 304,290Z" fill="#237024"/>
-  <path d="M792,296 Q840,264 892,292 Q946,326 946,386 Q994,414 996,478 Q1000,546 946,580 Q966,630 930,664 Q882,698 830,676 Q800,716 748,712 Q686,708 670,650 Q622,660 582,626 Q546,590 564,534 Q518,510 530,452 Q542,394 600,370 Q608,312 654,290 Q700,264 748,282Z" fill="#237026"/>
-</g>
-<!-- Layer 3 — lighter mid -->
-<g opacity="0.78">
-  <path d="M394,278 Q354,228 368,160 Q384,88 460,58 Q534,28 610,52 Q682,74 706,146 Q728,208 690,268 Q738,218 786,250 Q836,292 814,362 Q856,312 902,344 Q946,386 920,456 Q952,482 956,538 Q960,600 912,638 Q876,666 826,650 Q800,688 756,702 Q704,716 666,692 Q630,736 570,742 Q510,748 466,710 Q410,732 364,710 Q302,686 280,634 Q228,656 186,630 Q132,596 152,526 Q116,508 110,454 Q96,388 162,344 Q140,290 178,252 Q214,218 268,226 Q296,174 356,164 Q410,154 436,198Z" fill="#348a38"/>
-  <path d="M116,360 Q84,332 94,298 Q108,266 144,272 Q120,292 118,334Z" fill="#2e7a32"/>
-  <path d="M86,450 Q58,422 68,388 Q84,358 116,364 Q92,384 90,428Z" fill="#2e7a32"/>
-  <path d="M100,548 Q72,520 82,486 Q98,456 130,462 Q106,482 104,526Z" fill="#2e7832"/>
-  <path d="M958,352 Q986,324 972,292 Q958,264 926,272 Q950,290 950,334Z" fill="#2e7a32"/>
-  <path d="M978,444 Q1006,416 990,382 Q976,354 944,362 Q968,380 968,424Z" fill="#2e7a32"/>
-  <path d="M966,540 Q992,514 978,480 Q964,452 932,460 Q956,478 956,522Z" fill="#2e7832"/>
-</g>
-<!-- Layer 4 — sun-hit highlights -->
-<g opacity="0.70">
-  <path d="M412,264 Q376,216 390,152 Q406,84 476,58 Q546,32 616,56 Q680,78 700,148 Q718,208 682,262 Q724,216 764,246 Q806,284 786,348 Q824,302 862,332 Q900,368 878,434 Q906,456 908,508 Q910,562 868,596 Q836,620 792,608 Q768,642 734,654 Q690,664 656,642 Q622,682 566,688 Q510,694 468,658 Q416,676 374,656 Q316,634 296,584 Q250,602 212,578 Q162,548 178,482 Q148,464 142,414 Q128,352 190,314 Q170,264 206,228 Q240,196 292,204 Q318,156 374,148 Q424,140 448,182Z" fill="#4aa44e"/>
-  <path d="M454,210 Q432,172 446,124 Q460,78 498,66 Q536,54 562,86 Q582,112 566,158 Q584,132 608,154 Q628,174 614,210 Q580,178 540,172 Q500,168 454,210Z" fill="#68c26c" opacity="0.88"/>
-  <path d="M148,352 Q122,326 134,294 Q148,264 178,270 Q158,290 156,330Z" fill="#4aa04e"/>
-  <path d="M116,444 Q92,418 102,386 Q116,358 146,364 Q124,382 122,424Z" fill="#4aa04e"/>
-  <path d="M130,542 Q106,516 118,484 Q132,456 162,462 Q140,480 138,522Z" fill="#48a04c"/>
-  <path d="M944,348 Q968,322 954,292 Q940,264 910,272 Q932,290 932,330Z" fill="#4aa04e"/>
-  <path d="M972,440 Q996,414 980,382 Q966,356 936,364 Q958,380 958,420Z" fill="#4aa04e"/>
-  <path d="M960,536 Q984,510 970,480 Q956,452 926,460 Q948,476 948,518Z" fill="#48a04c"/>
-</g>
-<!-- Layer 5 — leaf tip silhouette -->
-<g opacity="0.90">
-  <path d="M470,54 Q464,36 474,22 Q486,36 480,56Z" fill="#2e8030"/>
-  <path d="M490,46 Q487,26 498,14 Q510,28 504,48Z" fill="#2a7a2c"/>
-  <path d="M510,44 Q509,24 520,14 Q530,26 524,46Z" fill="#32863a"/>
-  <path d="M530,50 Q530,30 542,22 Q550,36 542,54Z" fill="#2a7c2e"/>
-  <path d="M550,60 Q552,42 562,32 Q568,48 560,66Z" fill="#2e8232"/>
-  <path d="M452,66 Q444,48 454,36 Q466,50 460,70Z" fill="#267628"/>
-  <path d="M432,80 Q420,62 432,50 Q444,64 440,84Z" fill="#267228"/>
-  <path d="M572,78 Q582,60 594,70 Q588,86 576,90Z" fill="#2e8030"/>
-  <path d="M348,162 Q336,144 350,132 Q362,146 356,166Z" fill="#267228"/>
-  <path d="M654,158 Q666,140 676,150 Q668,166 656,168Z" fill="#287830"/>
-  <path d="M340,180 Q326,162 340,150 Q352,164 346,182Z" fill="#246a26"/>
-  <path d="M670,176 Q682,158 692,168 Q684,184 672,184Z" fill="#267228"/>
-  <path d="M106,356 Q94,340 106,326 Q118,340 114,358Z" fill="#267228"/>
-  <path d="M82,432 Q70,416 82,402 Q94,416 90,434Z" fill="#246c28"/>
-  <path d="M86,516 Q74,500 86,486 Q98,500 94,518Z" fill="#267228"/>
-  <path d="M112,600 Q100,584 114,570 Q126,584 120,602Z" fill="#246a26"/>
-  <path d="M958,348 Q970,332 960,320 Q948,336 952,352Z" fill="#267228"/>
-  <path d="M972,428 Q984,412 974,400 Q962,414 966,432Z" fill="#246c28"/>
-  <path d="M966,514 Q978,498 968,486 Q956,500 960,516Z" fill="#267228"/>
-  <path d="M952,598 Q964,582 954,568 Q942,582 946,600Z" fill="#246a26"/>
-  <path d="M496,40 Q494,22 504,12 Q514,24 508,42Z" fill="#5ab85e"/>
-  <path d="M478,50 Q474,32 484,22 Q494,34 488,52Z" fill="#4cac50"/>
-  <path d="M520,48 Q520,30 530,20 Q538,32 532,50Z" fill="#54b458"/>
-</g>
-
-<!-- ════ TRUNK (barely sways) ════ -->
-<g class="trunk-sway">
-<path d="M468,864 Q458,640 464,400 Q470,270 482,212" fill="none" stroke="#180a02" stroke-width="64" stroke-linecap="round" opacity="0.55"/>
-<path d="M500,864 Q494,640 496,400 Q497,270 500,212" fill="none" stroke="#6b3f1a" stroke-width="56" stroke-linecap="round"/>
-<path d="M474,862 Q466,640 470,400 Q474,274 482,214" fill="none" stroke="#2e1608" stroke-width="18" stroke-linecap="round" opacity="0.55"/>
-<path d="M526,862 Q534,640 530,400 Q526,274 518,214" fill="none" stroke="#2e1608" stroke-width="18" stroke-linecap="round" opacity="0.55"/>
-<path d="M500,864 Q494,640 496,400 Q497,270 500,212" fill="none" stroke="#5c3a1e" stroke-width="40" stroke-linecap="round"/>
-<path d="M496,862 Q494,640 495,400 Q496,274 497,222" fill="none" stroke="#8a5a2a" stroke-width="10" stroke-linecap="round" opacity="0.45"/>
-<path d="M486,856 Q482,640 484,400 Q486,280 488,222" fill="none" stroke="#7a4c22" stroke-width="6" stroke-linecap="round" opacity="0.3"/>
-<path d="M483,850 Q481,760 482,680 Q483,600 484,520 Q485,440 486,360 Q487,300 488,240" fill="none" stroke="#2e1608" stroke-width="1.3" stroke-linecap="round" opacity="0.55"/>
-<path d="M489,848 Q487,758 488,676 Q489,594 490,512 Q491,430 492,352 Q493,292 494,232" fill="none" stroke="#2e1608" stroke-width="1.1" stroke-linecap="round" opacity="0.48"/>
-<path d="M495,848 Q494,756 494,674 Q494,590 494,508 Q494,428 494,350 Q494,290 494,230" fill="none" stroke="#3a1e0a" stroke-width="1.0" stroke-linecap="round" opacity="0.40"/>
-<path d="M502,850 Q503,758 503,676 Q503,592 503,510 Q503,430 503,352 Q503,292 503,232" fill="none" stroke="#2e1608" stroke-width="1.0" stroke-linecap="round" opacity="0.38"/>
-<path d="M509,848 Q511,756 510,674 Q509,590 508,508 Q507,428 506,352 Q505,292 504,232" fill="none" stroke="#2e1608" stroke-width="1.1" stroke-linecap="round" opacity="0.45"/>
-<path d="M516,846 Q518,754 517,672 Q515,586 513,502 Q511,424 510,348 Q509,290 508,232" fill="none" stroke="#2e1608" stroke-width="1.3" stroke-linecap="round" opacity="0.52"/>
-<path d="M521,844 Q523,750 522,668 Q520,582 518,498" fill="none" stroke="#180a02" stroke-width="1.0" stroke-linecap="round" opacity="0.35"/>
-<path d="M478,840 Q476,748 477,666 Q478,582 480,500" fill="none" stroke="#180a02" stroke-width="1.0" stroke-linecap="round" opacity="0.35"/>
-<path d="M479,804 Q487,796 498,800 Q508,806 517,800 Q520,810 508,816 Q496,820 485,814 Z" fill="#180a02" opacity="0.38"/>
-<path d="M482,748 Q490,741 502,744 Q513,750 519,744 Q522,753 511,758 Q498,762 487,756 Z" fill="#180a02" opacity="0.35"/>
-<path d="M478,690 Q488,681 504,684 Q518,688 524,682 Q527,693 514,699 Q499,703 484,697 Z" fill="#180a02" opacity="0.32"/>
-<path d="M481,632 Q490,624 506,627 Q519,633 523,627 Q525,637 513,642 Q499,646 486,640 Z" fill="#180a02" opacity="0.30"/>
-<path d="M484,574 Q492,568 505,571 Q516,576 519,570 Q521,579 510,583 Q498,587 487,582 Z" fill="#180a02" opacity="0.28"/>
-<path d="M486,518 Q493,513 504,516 Q514,520 517,515 Q519,523 509,527 Q498,530 488,525 Z" fill="#180a02" opacity="0.26"/>
-<path d="M488,464 Q494,460 504,462 Q512,466 515,461 Q517,469 507,472 Q497,475 489,470 Z" fill="#180a02" opacity="0.24"/>
-<path d="M490,412 Q495,408 503,410 Q510,413 512,408 Q514,415 505,418 Q496,421 491,416 Z" fill="#180a02" opacity="0.22"/>
-<path d="M492,362 Q497,359 504,361 Q510,364 511,360 Q513,366 504,369 Q495,372 492,367 Z" fill="#180a02" opacity="0.20"/>
-<path d="M489,846 Q494,838 504,840 Q513,844 516,838 Q518,846 507,850 Q496,853 490,848 Z" fill="#180a02" opacity="0.28"/>
-<path d="M506,758 Q511,754 517,756 Q521,760 517,764 Q512,766 507,762 Z" fill="#2e1608" opacity="0.28"/>
-<path d="M483,718 Q488,714 494,716 Q498,720 494,724 Q489,726 484,722 Z" fill="#2e1608" opacity="0.28"/>
-<path d="M509,702 Q514,698 519,700 Q523,703 519,707 Q514,709 510,705 Z" fill="#2e1608" opacity="0.26"/>
-<ellipse cx="476" cy="724" rx="9" ry="4"   fill="#3a6a1e" opacity="0.30" transform="rotate(-9,476,724)"/>
-<ellipse cx="518" cy="760" rx="7" ry="3"   fill="#3a6a1e" opacity="0.24" transform="rotate(13,518,760)"/>
-<ellipse cx="484" cy="644" rx="8" ry="3.5" fill="#4a7a22" opacity="0.22" transform="rotate(-5,484,644)"/>
-<ellipse cx="512" cy="596" rx="6" ry="2.5" fill="#3a6a1e" opacity="0.20" transform="rotate(8,512,596)"/>
-</g><!-- end trunk-sway -->
-
-<!-- ════ BRANCH I — Left lower (Parts of Speech) ════ -->
-<g class="bI-sway">
-<path d="M486,660 Q410,647 330,616 Q232,578 123,538" fill="none" stroke="#6b3f1a" stroke-width="24" stroke-linecap="round"/>
-<path d="M486,660 Q410,647 330,616 Q232,578 123,538" fill="none" stroke="#2e1608" stroke-width="26" stroke-linecap="round" opacity="0.22"/>
-<path d="M326,617 Q286,593 252,562" fill="none" stroke="#5c3a1e" stroke-width="13" stroke-linecap="round"/>
-<path d="M226,582 Q193,565 170,544" fill="none" stroke="#5c3a1e" stroke-width="10" stroke-linecap="round"/>
-<path d="M164,541 Q146,525 130,505" fill="none" stroke="#4a2c10" stroke-width="8"  stroke-linecap="round"/>
-<path d="M336,618 Q312,584 304,553" fill="none" stroke="#5c3a1e" stroke-width="11" stroke-linecap="round"/>
-<path d="M273,574 Q252,555 243,529" fill="none" stroke="#4a2c10" stroke-width="9"  stroke-linecap="round"/>
-<path d="M400,650 Q360,636 320,620" fill="none" stroke="#2e1608" stroke-width="1.0" stroke-linecap="round" opacity="0.40"/>
-<path d="M260,586 Q230,574 200,560" fill="none" stroke="#2e1608" stroke-width="0.9" stroke-linecap="round" opacity="0.35"/>
-
-<!-- ════ TWIG LEAF CLUSTERS ════
-     Each cluster sits at a branch endpoint.
-     Leaves are narrow lanceolate paths with a midrib line,
-     all sprouting from the twig attachment at (0,0).          -->
-
-<style>
-  /* ── NATURAL TREE SWAY ──
-     Real trees: trunk barely moves, branches flex more, twigs flutter most.
-     Each branch has its own speed/phase so they never move in unison.
-     All use transform: rotate() which the GPU handles cheaply (no repaint).   */
-
-  /* Trunk: almost imperceptible lean */
-  .trunk-sway {
-    animation: trunkSway 14s ease-in-out infinite;
-    transform-origin: 500px 870px;
-  }
-  @keyframes trunkSway {
-    0%,100% { transform: rotate(0deg); }
-    35%     { transform: rotate(0.4deg); }
-    70%     { transform: rotate(-0.3deg); }
-  }
-
-  /* Branch I (left lower) — swings down-left, slow */
-  .bI-sway {
-    animation: bISway 11s ease-in-out infinite;
-    transform-origin: 486px 660px;
-  }
-  @keyframes bISway {
-    0%,100% { transform: rotate(0deg); }
-    40%     { transform: rotate(1.8deg); }
-    75%     { transform: rotate(-1.2deg); }
-  }
-
-  /* Branch II (left upper) — lighter, faster */
-  .bII-sway {
-    animation: bIISway 8.5s ease-in-out infinite 1.4s;
-    transform-origin: 488px 492px;
-  }
-  @keyframes bIISway {
-    0%,100% { transform: rotate(0deg); }
-    38%     { transform: rotate(2.4deg); }
-    72%     { transform: rotate(-1.8deg); }
-  }
-
-  /* Branch III (right lower) — out of phase with left */
-  .bIII-sway {
-    animation: bIIISway 12s ease-in-out infinite 2.1s;
-    transform-origin: 514px 580px;
-  }
-  @keyframes bIIISway {
-    0%,100% { transform: rotate(0deg); }
-    42%     { transform: rotate(-1.6deg); }
-    78%     { transform: rotate(1.0deg); }
-  }
-
-  /* Branch IV (right upper) — faster, more flutter */
-  .bIV-sway {
-    animation: bIVSway 7.8s ease-in-out infinite 0.7s;
-    transform-origin: 511px 400px;
-  }
-  @keyframes bIVSway {
-    0%,100% { transform: rotate(0deg); }
-    36%     { transform: rotate(-2.2deg); }
-    68%     { transform: rotate(1.6deg); }
-  }
-
-  /* Twig leaf clusters — small fast flutter, each independently */
-  @keyframes sw1 { 0%,100%{transform:rotate(-4deg)} 50%{transform:rotate(6deg)} }
-  @keyframes sw2 { 0%,100%{transform:rotate(4deg)}  50%{transform:rotate(-6deg)} }
-  @keyframes sw3 { 0%,100%{transform:rotate(-2deg)} 50%{transform:rotate(8deg)} }
-</style>
-
-<!-- Leaf helper: translate to twig tip, leaves grow UPWARD from (0,0).
-     Stem-to-leaf connection is explicit via the 'M0,0' start.  -->
-
-<!-- Branch I tips -->
-<g transform="translate(123,522)">
-  <g style="animation:sw1 4.2s ease-in-out infinite;transform-origin:0 0">
-    <path d="M0,0 Q-16,-28 -6,-50 Q6,-26 0,0Z" fill="#3a8c3e" stroke="#1a5a1e" stroke-width="0.35"/>
-    <path d="M0,0 Q14,-25 22,-46 Q4,-23 0,0Z"  fill="#4ea052" stroke="#1a5a1e" stroke-width="0.35"/>
-    <path d="M0,0 Q-28,-12 -42,-26 Q-18,-8 0,0Z" fill="#3a8c3e" stroke="#1a5a1e" stroke-width="0.35"/>
-    <line x1="0" y1="0" x2="-4" y2="-46" stroke="#155018" stroke-width="0.7" opacity="0.55"/>
-    <line x1="0" y1="0" x2="14" y2="-42" stroke="#155018" stroke-width="0.7" opacity="0.55"/>
-  </g>
-</g>
-<g transform="translate(169,530)">
-  <g style="animation:sw2 5.2s ease-in-out infinite 0.5s;transform-origin:0 0">
-    <path d="M0,0 Q-14,-26 -5,-48 Q7,-24 0,0Z"  fill="#4c9c50" stroke="#1a5a1e" stroke-width="0.35"/>
-    <path d="M0,0 Q12,-23 20,-43 Q3,-21 0,0Z"   fill="#3a8c3e" stroke="#1a5a1e" stroke-width="0.35"/>
-    <path d="M0,0 Q-24,-10 -36,-22 Q-15,-6 0,0Z" fill="#4c9c50" stroke="#1a5a1e" stroke-width="0.35"/>
-    <line x1="0" y1="0" x2="-2" y2="-44" stroke="#155018" stroke-width="0.7" opacity="0.5"/>
-  </g>
-</g>
-<g transform="translate(252,547)">
-  <g style="animation:sw1 4.9s ease-in-out infinite 1.1s;transform-origin:0 0">
-    <path d="M0,0 Q-13,-24 -4,-44 Q6,-22 0,0Z"  fill="#3e8c42" stroke="#1a5a1e" stroke-width="0.35"/>
-    <path d="M0,0 Q11,-22 18,-40 Q3,-20 0,0Z"   fill="#50a256" stroke="#1a5a1e" stroke-width="0.35"/>
-    <path d="M0,0 Q-22,-8 -34,-18 Q-14,-6 0,0Z" fill="#3e8c42" stroke="#1a5a1e" stroke-width="0.35"/>
-  </g>
-</g>
-<g transform="translate(303,539)">
-  <g style="animation:sw2 6.1s ease-in-out infinite 0.8s;transform-origin:0 0">
-    <path d="M0,0 Q-12,-22 -4,-42 Q6,-20 0,0Z"  fill="#468a46" stroke="#1a5a1e" stroke-width="0.35"/>
-    <path d="M0,0 Q10,-20 17,-38 Q3,-18 0,0Z"   fill="#5aac5e" stroke="#1a5a1e" stroke-width="0.35"/>
-    <path d="M0,0 Q-20,-9 -30,-20 Q-12,-6 0,0Z" fill="#468a46" stroke="#1a5a1e" stroke-width="0.35"/>
-  </g>
-</g>
-<g transform="translate(242,514)">
-  <g style="animation:sw1 5.4s ease-in-out infinite 2.1s;transform-origin:0 0">
-    <path d="M0,0 Q-11,-21 -3,-39 Q5,-19 0,0Z"  fill="#3e8e42" stroke="#1a5a1e" stroke-width="0.35"/>
-    <path d="M0,0 Q10,-19 16,-36 Q3,-17 0,0Z"   fill="#4a9a4e" stroke="#1a5a1e" stroke-width="0.35"/>
-    <path d="M0,0 Q-19,-8 -28,-18 Q-11,-5 0,0Z" fill="#3e8e42" stroke="#1a5a1e" stroke-width="0.35"/>
-  </g>
-</g>
-
-<!-- Branch II tips — left upper Non-Finite -->
-</g><!-- end bI-sway -->
-
-<!-- ════ BRANCH II — Left upper (Non-Finite) ════ -->
-<g class="bII-sway">
-<path d="M488,492 Q414,460 342,398 Q282,338 222,266" fill="none" stroke="#6b3f1a" stroke-width="20" stroke-linecap="round"/>
-<path d="M488,492 Q414,460 342,398 Q282,338 222,266" fill="none" stroke="#2e1608" stroke-width="22" stroke-linecap="round" opacity="0.20"/>
-<path d="M344,400 Q312,372 292,342" fill="none" stroke="#5c3a1e" stroke-width="11" stroke-linecap="round"/>
-<path d="M273,352 Q247,324 234,294" fill="none" stroke="#5c3a1e" stroke-width="9"  stroke-linecap="round"/>
-<path d="M226,268 Q208,246 198,220" fill="none" stroke="#4a2c10" stroke-width="7"  stroke-linecap="round"/>
-<path d="M420,468 Q370,440 320,405" fill="none" stroke="#2e1608" stroke-width="0.9" stroke-linecap="round" opacity="0.35"/>
-<path d="M300,358 Q272,336 250,308" fill="none" stroke="#2e1608" stroke-width="0.8" stroke-linecap="round" opacity="0.30"/>
-<g transform="translate(198,205)">
-  <g style="animation:sw1 5.6s ease-in-out infinite 1.3s;transform-origin:0 0">
-    <path d="M0,0 Q-14,-26 -5,-46 Q6,-24 0,0Z"  fill="#3a8e3e" stroke="#1a5a1e" stroke-width="0.35"/>
-    <path d="M0,0 Q13,-24 20,-44 Q4,-22 0,0Z"   fill="#4a9c4e" stroke="#1a5a1e" stroke-width="0.35"/>
-    <path d="M0,0 Q20,-11 30,-26 Q12,-8 0,0Z"   fill="#3a8e3e" stroke="#1a5a1e" stroke-width="0.35"/>
-    <line x1="0" y1="0" x2="-2" y2="-42" stroke="#155018" stroke-width="0.7" opacity="0.5"/>
-  </g>
-</g>
-<g transform="translate(234,278)">
-  <g style="animation:sw2 4.5s ease-in-out infinite 2.2s;transform-origin:0 0">
-    <path d="M0,0 Q-12,-23 -4,-42 Q6,-21 0,0Z"  fill="#52a258" stroke="#1a5a1e" stroke-width="0.35"/>
-    <path d="M0,0 Q11,-21 18,-39 Q3,-19 0,0Z"   fill="#3e8c42" stroke="#1a5a1e" stroke-width="0.35"/>
-    <path d="M0,0 Q21,-10 33,-23 Q13,-7 0,0Z"   fill="#52a258" stroke="#1a5a1e" stroke-width="0.35"/>
-  </g>
-</g>
-<g transform="translate(292,326)">
-  <g style="animation:sw1 6.3s ease-in-out infinite 0.7s;transform-origin:0 0">
-    <path d="M0,0 Q-12,-22 -4,-40 Q5,-20 0,0Z"  fill="#3e8e44" stroke="#1a5a1e" stroke-width="0.35"/>
-    <path d="M0,0 Q10,-20 17,-37 Q3,-18 0,0Z"   fill="#4e9e54" stroke="#1a5a1e" stroke-width="0.35"/>
-    <path d="M0,0 Q-20,-9 -31,-21 Q-13,-6 0,0Z" fill="#3e8e44" stroke="#1a5a1e" stroke-width="0.35"/>
-  </g>
-</g>
-
-<!-- Branch III tips — right lower Clauses -->
-</g><!-- end bII-sway -->
-
-<!-- ════ BRANCH III — Right lower (Clauses) ════ -->
-<g class="bIII-sway">
-<path d="M514,580 Q586,557 686,526 Q796,496 906,466" fill="none" stroke="#6b3f1a" stroke-width="22" stroke-linecap="round"/>
-<path d="M514,580 Q586,557 686,526 Q796,496 906,466" fill="none" stroke="#2e1608" stroke-width="24" stroke-linecap="round" opacity="0.20"/>
-<path d="M682,528 Q720,503 750,473" fill="none" stroke="#5c3a1e" stroke-width="12" stroke-linecap="round"/>
-<path d="M793,498 Q822,473 846,447" fill="none" stroke="#5c3a1e" stroke-width="10" stroke-linecap="round"/>
-<path d="M906,468 Q924,447 936,420" fill="none" stroke="#4a2c10" stroke-width="8"  stroke-linecap="round"/>
-<path d="M600,556 Q650,540 700,526" fill="none" stroke="#2e1608" stroke-width="0.9" stroke-linecap="round" opacity="0.35"/>
-<path d="M750,508 Q790,492 830,476" fill="none" stroke="#2e1608" stroke-width="0.8" stroke-linecap="round" opacity="0.30"/>
-<g transform="translate(936,404)">
-  <g style="animation:sw2 4.7s ease-in-out infinite 0.6s;transform-origin:0 0">
-    <path d="M0,0 Q14,-26 5,-48 Q-7,-24 0,0Z"   fill="#3a8c3e" stroke="#1a5a1e" stroke-width="0.35"/>
-    <path d="M0,0 Q-13,-23 -21,-42 Q-4,-21 0,0Z" fill="#4c9c50" stroke="#1a5a1e" stroke-width="0.35"/>
-    <path d="M0,0 Q23,-10 36,-24 Q15,-7 0,0Z"   fill="#3a8c3e" stroke="#1a5a1e" stroke-width="0.35"/>
-    <line x1="0" y1="0" x2="2" y2="-44" stroke="#155018" stroke-width="0.7" opacity="0.5"/>
-  </g>
-</g>
-<g transform="translate(750,457)">
-  <g style="animation:sw1 5.4s ease-in-out infinite 1.5s;transform-origin:0 0">
-    <path d="M0,0 Q12,-24 4,-44 Q-7,-22 0,0Z"   fill="#4a9c4e" stroke="#1a5a1e" stroke-width="0.35"/>
-    <path d="M0,0 Q-11,-22 -19,-40 Q-4,-20 0,0Z" fill="#3a8a3e" stroke="#1a5a1e" stroke-width="0.35"/>
-    <path d="M0,0 Q22,-10 33,-22 Q13,-7 0,0Z"   fill="#4a9c4e" stroke="#1a5a1e" stroke-width="0.35"/>
-  </g>
-</g>
-<g transform="translate(846,431)">
-  <g style="animation:sw2 5s ease-in-out infinite 1.9s;transform-origin:0 0">
-    <path d="M0,0 Q12,-22 4,-42 Q-6,-20 0,0Z"   fill="#3e8c44" stroke="#1a5a1e" stroke-width="0.35"/>
-    <path d="M0,0 Q-10,-20 -17,-37 Q-3,-18 0,0Z" fill="#52a658" stroke="#1a5a1e" stroke-width="0.35"/>
-    <path d="M0,0 Q20,-9 29,-21 Q11,-6 0,0Z"    fill="#3e8c44" stroke="#1a5a1e" stroke-width="0.35"/>
-  </g>
-</g>
-
-<!-- Branch IV tips — right upper Special -->
-</g><!-- end bIII-sway -->
-
-<!-- ════ BRANCH IV — Right upper (Special) ════ -->
-<g class="bIV-sway">
-<path d="M511,400 Q592,357 700,296 Q793,242 863,182" fill="none" stroke="#6b3f1a" stroke-width="18" stroke-linecap="round"/>
-<path d="M511,400 Q592,357 700,296 Q793,242 863,182" fill="none" stroke="#2e1608" stroke-width="20" stroke-linecap="round" opacity="0.18"/>
-<path d="M698,298 Q728,272 754,244" fill="none" stroke="#5c3a1e" stroke-width="10" stroke-linecap="round"/>
-<path d="M798,245 Q824,220 846,194" fill="none" stroke="#4a2c10" stroke-width="8"  stroke-linecap="round"/>
-<path d="M862,184 Q880,162 892,138" fill="none" stroke="#3a2008" stroke-width="6"  stroke-linecap="round"/>
-<path d="M600,362 Q648,336 698,306" fill="none" stroke="#2e1608" stroke-width="0.8" stroke-linecap="round" opacity="0.30"/>
-<path d="M755,258 Q796,240 836,218" fill="none" stroke="#2e1608" stroke-width="0.7" stroke-linecap="round" opacity="0.28"/>
-<g transform="translate(892,122)">
-  <g style="animation:sw1 5.1s ease-in-out infinite 0.4s;transform-origin:0 0">
-    <path d="M0,0 Q12,-24 4,-45 Q-7,-22 0,0Z"   fill="#3a8c3e" stroke="#1a5a1e" stroke-width="0.35"/>
-    <path d="M0,0 Q-11,-22 -19,-42 Q-3,-20 0,0Z" fill="#4c9e50" stroke="#1a5a1e" stroke-width="0.35"/>
-    <path d="M0,0 Q22,-10 34,-24 Q14,-7 0,0Z"   fill="#3a8c3e" stroke="#1a5a1e" stroke-width="0.35"/>
-    <line x1="0" y1="0" x2="2" y2="-42" stroke="#155018" stroke-width="0.7" opacity="0.5"/>
-  </g>
-</g>
-<g transform="translate(754,228)">
-  <g style="animation:sw2 6.5s ease-in-out infinite 2.4s;transform-origin:0 0">
-    <path d="M0,0 Q11,-22 4,-41 Q-6,-20 0,0Z"   fill="#4a9e4e" stroke="#1a5a1e" stroke-width="0.35"/>
-    <path d="M0,0 Q-10,-20 -17,-37 Q-3,-18 0,0Z" fill="#3a8c3e" stroke="#1a5a1e" stroke-width="0.35"/>
-    <path d="M0,0 Q20,-10 29,-22 Q11,-7 0,0Z"   fill="#4a9e4e" stroke="#1a5a1e" stroke-width="0.35"/>
-  </g>
-</g>
-<g transform="translate(846,178)">
-  <g style="animation:sw1 4.8s ease-in-out infinite 1.7s;transform-origin:0 0">
-    <path d="M0,0 Q11,-21 4,-40 Q-6,-19 0,0Z"   fill="#3e8e44" stroke="#1a5a1e" stroke-width="0.35"/>
-    <path d="M0,0 Q-10,-19 -16,-35 Q-3,-17 0,0Z" fill="#52a458" stroke="#1a5a1e" stroke-width="0.35"/>
-    <path d="M0,0 Q18,-9 27,-21 Q10,-6 0,0Z"    fill="#3e8e44" stroke="#1a5a1e" stroke-width="0.35"/>
-  </g>
-</g>
-
-</g><!-- end bIV-sway -->
-
-<!-- Crown top twig — on trunk-sway -->
-<g class="trunk-sway">
-<g transform="translate(500,68)">
-  <g style="animation:sw1 4s ease-in-out infinite;transform-origin:0 0">
-    <path d="M0,0 Q-9,-22 -3,-40 Q5,-20 0,0Z"  fill="#5abc5e" stroke="#1a5a1e" stroke-width="0.3"/>
-    <path d="M0,0 Q8,-20 13,-36 Q2,-18 0,0Z"   fill="#4aae4e" stroke="#1a5a1e" stroke-width="0.3"/>
-    <path d="M0,0 Q-17,-7 -26,-17 Q-8,-4 0,0Z" fill="#5abc5e" stroke="#1a5a1e" stroke-width="0.3"/>
-    <path d="M0,0 Q17,-7 26,-17 Q8,-4 0,0Z"    fill="#4aae4e" stroke="#1a5a1e" stroke-width="0.3"/>
-  </g>
-</g>
-</g><!-- end trunk-sway crown top -->
-
-
-
-<!-- ════ TRUNK LABELS ════ -->
-<g class="trunk-node" onclick="handleLink('simple')" transform="translate(552,840)">
-  <rect class="node-bg" x="-79" y="-16" width="158" height="32" rx="11" fill="white" stroke="#7a5230" stroke-width="1.5"/>
-  <text x="0" y="5" text-anchor="middle">1. Simple 簡單句</text>
-</g>
-<g class="trunk-node" onclick="handleLink('compound')" transform="translate(552,795)">
-  <rect class="node-bg" x="-79" y="-16" width="158" height="32" rx="11" fill="white" stroke="#7a5230" stroke-width="1.5"/>
-  <text x="0" y="5" text-anchor="middle">2. Compound 複合句</text>
-</g>
-<g class="trunk-node" onclick="handleLink('complex')" transform="translate(552,750)">
-  <rect class="node-bg" x="-79" y="-16" width="158" height="32" rx="11" fill="white" stroke="#7a5230" stroke-width="1.5"/>
-  <text x="0" y="5" text-anchor="middle">3. Complex 複雜句</text>
-</g>
-<g class="trunk-node" onclick="handleLink('compound-complex')" transform="translate(552,705)">
-  <rect class="node-bg" x="-89" y="-16" width="178" height="32" rx="11" fill="white" stroke="#7a5230" stroke-width="1.5"/>
-  <text x="0" y="5" text-anchor="middle">4. Comp-Complex 混和句</text>
-</g>
-
-
-<!-- ════ GROUND FLOWERS ════
-     Positioned along the bottom of the SVG (y ~890–970) in the grass zone.
-     Daisies: white petals around yellow centre.
-     Dandelions: fluffy seed-head on tall thin stem.
-     Grass blades interspersed for realism.                    -->
-
-<!-- ── GROUND FLOWERS & GRASS ── -->
-<defs>
-  <!-- Daisy: stem grows UP from (0,0), flower head at top.
-       Use translate(x,y) where y is the ground line. -->
-  <g id="daisy-lg">
-    <!-- Stem -->
-    <line x1="0" y1="0" x2="-1" y2="-36" stroke="#4a8c18" stroke-width="2" stroke-linecap="round"/>
-    <!-- Leaf -->
-    <path d="M-1,-20 Q-10,-25 -13,-18 Q-7,-13 -1,-20Z" fill="#4a8c18"/>
-    <!-- 8 petals, each is a thin ellipse rotated around the flower centre (0,-40) -->
-    <g transform="translate(0,-40)">
-      <ellipse rx="4" ry="9" fill="white" stroke="#e8e8e8" stroke-width="0.5" transform="rotate(0)   translate(0,-6)"/>
-      <ellipse rx="4" ry="9" fill="white" stroke="#e8e8e8" stroke-width="0.5" transform="rotate(45)  translate(0,-6)"/>
-      <ellipse rx="4" ry="9" fill="white" stroke="#e8e8e8" stroke-width="0.5" transform="rotate(90)  translate(0,-6)"/>
-      <ellipse rx="4" ry="9" fill="white" stroke="#e8e8e8" stroke-width="0.5" transform="rotate(135) translate(0,-6)"/>
-      <ellipse rx="4" ry="9" fill="white" stroke="#e8e8e8" stroke-width="0.5" transform="rotate(180) translate(0,-6)"/>
-      <ellipse rx="4" ry="9" fill="white" stroke="#e8e8e8" stroke-width="0.5" transform="rotate(225) translate(0,-6)"/>
-      <ellipse rx="4" ry="9" fill="white" stroke="#e8e8e8" stroke-width="0.5" transform="rotate(270) translate(0,-6)"/>
-      <ellipse rx="4" ry="9" fill="white" stroke="#e8e8e8" stroke-width="0.5" transform="rotate(315) translate(0,-6)"/>
-      <!-- Yellow centre -->
-      <circle r="6.5" fill="#f5c400"/>
-      <circle r="4.5" fill="#e0a800"/>
-      <circle cx="-1.5" cy="-1" r="1" fill="#b88000" opacity="0.5"/>
-      <circle cx="1.2" cy="1.2" r="0.9" fill="#b88000" opacity="0.5"/>
-      <circle cx="0" cy="-1.8" r="0.9" fill="#b88000" opacity="0.5"/>
-    </g>
-  </g>
-
-  <g id="daisy-sm">
-    <line x1="0" y1="0" x2="1" y2="-26" stroke="#5a9a22" stroke-width="1.6" stroke-linecap="round"/>
-    <path d="M1,-14 Q8,-18 9,-13 Q4,-9 1,-14Z" fill="#5a9a22"/>
-    <g transform="translate(0,-29)">
-      <ellipse rx="3" ry="7" fill="white" stroke="#e0e0e0" stroke-width="0.4" transform="rotate(0)   translate(0,-4.5)"/>
-      <ellipse rx="3" ry="7" fill="white" stroke="#e0e0e0" stroke-width="0.4" transform="rotate(60)  translate(0,-4.5)"/>
-      <ellipse rx="3" ry="7" fill="white" stroke="#e0e0e0" stroke-width="0.4" transform="rotate(120) translate(0,-4.5)"/>
-      <ellipse rx="3" ry="7" fill="white" stroke="#e0e0e0" stroke-width="0.4" transform="rotate(180) translate(0,-4.5)"/>
-      <ellipse rx="3" ry="7" fill="white" stroke="#e0e0e0" stroke-width="0.4" transform="rotate(240) translate(0,-4.5)"/>
-      <ellipse rx="3" ry="7" fill="white" stroke="#e0e0e0" stroke-width="0.4" transform="rotate(300) translate(0,-4.5)"/>
-      <circle r="4.8" fill="#f5c400"/>
-      <circle r="3.2" fill="#e0a800"/>
-    </g>
-  </g>
-
-  <!-- Dandelion seed-head -->
-  <g id="dandelion">
-    <path d="M0,0 Q2,-22 0,-46" fill="none" stroke="#5a8c1a" stroke-width="1.8" stroke-linecap="round"/>
-    <path d="M0,-24 Q-9,-28 -11,-21 Q-5,-16 0,-24Z" fill="#5a9a22"/>
-    <!-- Centre -->
-    <circle cx="0" cy="-48" r="2.2" fill="#d4b840"/>
-    <!-- 16 radiating seed-rays with fluffy tips -->
-    <g stroke="#9ab030" stroke-width="0.8" stroke-linecap="round">
-      <line x1="0" y1="-48" x2="0"    y2="-62"/><circle cx="0"    cy="-63.5" r="2" fill="rgba(255,255,255,0.95)"/>
-      <line x1="0" y1="-48" x2="5.4"  y2="-61"/><circle cx="5.9"  cy="-62.5" r="2" fill="rgba(255,255,255,0.93)"/>
-      <line x1="0" y1="-48" x2="9.9"  y2="-57"/><circle cx="10.8" cy="-58.5" r="2" fill="rgba(255,255,255,0.91)"/>
-      <line x1="0" y1="-48" x2="12.8" y2="-51"/><circle cx="13.9" cy="-52"   r="2" fill="rgba(255,255,255,0.91)"/>
-      <line x1="0" y1="-48" x2="14"   y2="-43"/><circle cx="15.2" cy="-43.5" r="2" fill="rgba(255,255,255,0.90)"/>
-      <line x1="0" y1="-48" x2="12.8" y2="-36"/><circle cx="13.9" cy="-35"   r="2" fill="rgba(255,255,255,0.90)"/>
-      <line x1="0" y1="-48" x2="9.9"  y2="-32"/><circle cx="10.8" cy="-31"   r="2" fill="rgba(255,255,255,0.90)"/>
-      <line x1="0" y1="-48" x2="5.4"  y2="-30"/><circle cx="5.9"  cy="-29"   r="2" fill="rgba(255,255,255,0.91)"/>
-      <line x1="0" y1="-48" x2="0"    y2="-30"/><circle cx="0"    cy="-28.5" r="2" fill="rgba(255,255,255,0.91)"/>
-      <line x1="0" y1="-48" x2="-5.4" y2="-30"/><circle cx="-5.9" cy="-29"   r="2" fill="rgba(255,255,255,0.91)"/>
-      <line x1="0" y1="-48" x2="-9.9" y2="-32"/><circle cx="-10.8" cy="-31"  r="2" fill="rgba(255,255,255,0.90)"/>
-      <line x1="0" y1="-48" x2="-12.8" y2="-36"/><circle cx="-13.9" cy="-35" r="2" fill="rgba(255,255,255,0.90)"/>
-      <line x1="0" y1="-48" x2="-14"  y2="-43"/><circle cx="-15.2" cy="-43.5" r="2" fill="rgba(255,255,255,0.90)"/>
-      <line x1="0" y1="-48" x2="-12.8" y2="-51"/><circle cx="-13.9" cy="-52" r="2" fill="rgba(255,255,255,0.91)"/>
-      <line x1="0" y1="-48" x2="-9.9" y2="-57"/><circle cx="-10.8" cy="-58.5" r="2" fill="rgba(255,255,255,0.91)"/>
-      <line x1="0" y1="-48" x2="-5.4" y2="-61"/><circle cx="-5.9" cy="-62.5" r="2" fill="rgba(255,255,255,0.93)"/>
-    </g>
-  </g>
-
-  <!-- Dandelion yellow bud (not yet opened) -->
-  <g id="dand-bud">
-    <path d="M0,0 Q1,-16 0,-30" fill="none" stroke="#5a8c1a" stroke-width="1.5" stroke-linecap="round"/>
-    <ellipse cx="0" cy="-33" rx="3.5" ry="6" fill="#d4b030"/>
-    <path d="M0,-39 Q-3,-33 0,-30 Q3,-33 0,-39Z" fill="#7ab820" opacity="0.9"/>
-    <path d="M0,-39 Q4,-35 3,-31 Q1,-30 0,-39Z" fill="#5a9820" opacity="0.8"/>
-  </g>
-
-  <!-- Grass blade set (3 blades, use translate to position) -->
-  <g id="grass3">
-    <path d="M-4,0 Q-5,-14 -8,-24" fill="none" stroke="#4a8a18" stroke-width="2.2" stroke-linecap="round"/>
-    <path d="M0,0 Q0,-18 1,-30" fill="none" stroke="#5a9a22" stroke-width="2" stroke-linecap="round"/>
-    <path d="M5,0 Q6,-14 9,-22" fill="none" stroke="#4a8218" stroke-width="1.8" stroke-linecap="round"/>
-  </g>
-</defs>
-
-<!-- Grass along ground -->
-<use href="#grass3" transform="translate(80,940)"/>
-<use href="#grass3" transform="translate(148,940) scale(0.9)"/>
-<use href="#grass3" transform="translate(215,940) scale(1.1)"/>
-<use href="#grass3" transform="translate(285,940)"/>
-<use href="#grass3" transform="translate(355,940) scale(0.85)"/>
-<use href="#grass3" transform="translate(680,940) scale(0.9)"/>
-<use href="#grass3" transform="translate(750,940)"/>
-<use href="#grass3" transform="translate(820,940) scale(1.05)"/>
-<use href="#grass3" transform="translate(890,940) scale(0.9)"/>
-<use href="#grass3" transform="translate(960,940)"/>
-<use href="#grass3" transform="translate(420,940) scale(0.8)" opacity="0.7"/>
-<use href="#grass3" transform="translate(620,940) scale(0.8)" opacity="0.7"/>
-
-<!-- DAISIES — left side -->
-<use href="#daisy-lg" transform="translate(112,940)"/>
-<use href="#daisy-sm" transform="translate(131,942) rotate(-8,131,942)"/>
-<use href="#daisy-lg" transform="translate(172,940) scale(0.88) rotate(6)"/>
-<use href="#daisy-sm" transform="translate(248,942) rotate(-5,248,942)"/>
-<use href="#daisy-lg" transform="translate(318,940) scale(0.92) rotate(-8)"/>
-<use href="#daisy-sm" transform="translate(336,943) rotate(7,336,943)"/>
-
-<!-- DAISIES — right side -->
-<use href="#daisy-lg" transform="translate(792,940) scale(0.94) rotate(-6)"/>
-<use href="#daisy-sm" transform="translate(812,943) rotate(9,812,943)"/>
-<use href="#daisy-lg" transform="translate(868,940) rotate(5)"/>
-<use href="#daisy-sm" transform="translate(888,943) rotate(-4,888,943)"/>
-<use href="#daisy-lg" transform="translate(948,940) scale(0.9) rotate(7)"/>
-<use href="#daisy-sm" transform="translate(968,943) rotate(-6,968,943)"/>
-
-<!-- DANDELIONS — left side -->
-<use href="#dandelion"  transform="translate(152,940) rotate(5,152,940)"/>
-<use href="#dand-bud"   transform="translate(166,942) rotate(-4,166,942)"/>
-<use href="#dandelion"  transform="translate(276,938) scale(0.88) rotate(-6)"/>
-<use href="#dand-bud"   transform="translate(290,942) rotate(8,290,942)"/>
-
-<!-- DANDELIONS — right side -->
-<use href="#dandelion"  transform="translate(836,938) rotate(-5,836,938)"/>
-<use href="#dand-bud"   transform="translate(850,942) rotate(6,850,942)"/>
-<use href="#dandelion"  transform="translate(920,940) scale(0.9) rotate(4)"/>
-<use href="#dand-bud"   transform="translate(934,942) rotate(-7,934,942)"/>
-
-<!-- Small flowers near trunk base -->
-<use href="#daisy-sm"   transform="translate(436,942) scale(0.78) rotate(-10)" opacity="0.85"/>
-<use href="#dand-bud"   transform="translate(464,942) scale(0.82) rotate(5,464,942)" opacity="0.85"/>
-<use href="#daisy-sm"   transform="translate(628,942) scale(0.78) rotate(8)" opacity="0.85"/>
-<use href="#dand-bud"   transform="translate(652,942) scale(0.82) rotate(-6,652,942)" opacity="0.85"/>
-
-<!-- ════ LEMONS — only the 16 linked ones ════
-     Each lemon hangs from a short stem (line) at the branch tip.
-     The leaf pair grows from the SAME stem top — no floating.  -->
-
-<!-- Branch I: Parts of Speech -->
-
-<!-- Nouns -->
-<g class="lemon-group" onclick="sparkle(this,'nouns')" transform="translate(115,504)">
-  <line x1="0" y1="0" x2="0" y2="-12" stroke="#3a6a1e" stroke-width="1.6"/>
-  <g style="animation:sw2 4s ease-in-out infinite;transform-origin:0 -12px">
-    <path d="M0,-12 Q-14,-30 -4,-46 Q5,-28 0,-12Z" fill="#3e8c42"/>
-    <path d="M0,-12 Q12,-28 20,-44 Q3,-26 0,-12Z"  fill="#4ea052"/>
-    <line x1="0" y1="-12" x2="-3" y2="-42" stroke="#1a5018" stroke-width="0.65" opacity="0.5"/>
-  </g>
-  <ellipse class="lemon-fruit" cx="0" cy="14" rx="20" ry="15" fill="url(#lG)" stroke="#a07800" stroke-width="1.2" filter="url(#peel)"/>
-  <ellipse cx="-5" cy="9" rx="9" ry="5.5" fill="url(#lS)" opacity="0.78"/>
-  <rect class="lemon-label-bg" x="-28" y="33" width="56" height="15" rx="6" fill="rgba(255,255,255,0.92)"/>
-  <text class="lemon-label-text" y="43">Nouns 名詞</text>
-</g>
-
-<!-- Pronouns -->
-<g class="lemon-group" onclick="sparkle(this,'pronouns')" transform="translate(165,511)">
-  <line x1="0" y1="0" x2="0" y2="-12" stroke="#3a6a1e" stroke-width="1.6"/>
-  <g style="animation:sw1 5s ease-in-out infinite 0.6s;transform-origin:0 -12px">
-    <path d="M0,-12 Q-13,-28 -4,-44 Q6,-26 0,-12Z" fill="#46924a"/>
-    <path d="M0,-12 Q11,-26 19,-42 Q3,-24 0,-12Z"  fill="#3a8a3e"/>
-  </g>
-  <ellipse class="lemon-fruit" cx="0" cy="14" rx="20" ry="15" fill="url(#lG)" stroke="#a07800" stroke-width="1.2" filter="url(#peel)"/>
-  <ellipse cx="-5" cy="9" rx="9" ry="5.5" fill="url(#lS)" opacity="0.78"/>
-  <rect class="lemon-label-bg" x="-32" y="33" width="64" height="15" rx="6" fill="rgba(255,255,255,0.92)"/>
-  <text class="lemon-label-text" y="43">Pronouns 代名詞</text>
-</g>
-
-<!-- Verbs -->
-<g class="lemon-group" onclick="sparkle(this,'verbs')" transform="translate(249,530)">
-  <line x1="0" y1="0" x2="0" y2="-12" stroke="#3a6a1e" stroke-width="1.6"/>
-  <g style="animation:sw2 4.7s ease-in-out infinite 1.2s;transform-origin:0 -12px">
-    <path d="M0,-12 Q-12,-27 -4,-42 Q5,-25 0,-12Z" fill="#3e9042"/>
-    <path d="M0,-12 Q11,-25 18,-40 Q3,-23 0,-12Z"  fill="#4ea452"/>
-  </g>
-  <ellipse class="lemon-fruit" cx="0" cy="14" rx="20" ry="15" fill="url(#lG)" stroke="#a07800" stroke-width="1.2" filter="url(#peel)"/>
-  <ellipse cx="-5" cy="9" rx="9" ry="5.5" fill="url(#lS)" opacity="0.78"/>
-  <rect class="lemon-label-bg" x="-24" y="33" width="48" height="15" rx="6" fill="rgba(255,255,255,0.92)"/>
-  <text class="lemon-label-text" y="43">Verbs 動詞</text>
-</g>
-
-<!-- Adj/Adv -->
-<g class="lemon-group" onclick="sparkle(this,'adjectives-adverbs')" transform="translate(299,521)">
-  <line x1="0" y1="0" x2="0" y2="-12" stroke="#3a6a1e" stroke-width="1.6"/>
-  <g style="animation:sw1 5.8s ease-in-out infinite 0.9s;transform-origin:0 -12px">
-    <path d="M0,-12 Q-11,-25 -4,-40 Q5,-23 0,-12Z" fill="#428e46"/>
-    <path d="M0,-12 Q10,-23 17,-38 Q3,-21 0,-12Z"  fill="#52a056"/>
-  </g>
-  <ellipse class="lemon-fruit" cx="0" cy="14" rx="20" ry="15" fill="url(#lG)" stroke="#a07800" stroke-width="1.2" filter="url(#peel)"/>
-  <ellipse cx="-5" cy="9" rx="9" ry="5.5" fill="url(#lS)" opacity="0.78"/>
-  <rect class="lemon-label-bg" x="-28" y="33" width="56" height="15" rx="6" fill="rgba(255,255,255,0.92)"/>
-  <text class="lemon-label-text" y="43">Adj/Adv 形副</text>
-</g>
-
-<!-- Prepositions -->
-<g class="lemon-group" onclick="sparkle(this,'prepositions')" transform="translate(240,498)">
-  <line x1="0" y1="0" x2="0" y2="-12" stroke="#3a6a1e" stroke-width="1.6"/>
-  <g style="animation:sw2 6s ease-in-out infinite 2.3s;transform-origin:0 -12px">
-    <path d="M0,-12 Q-11,-24 -3,-39 Q5,-22 0,-12Z" fill="#3a8c3e"/>
-    <path d="M0,-12 Q10,-22 16,-37 Q3,-20 0,-12Z"  fill="#4a9a4e"/>
-  </g>
-  <ellipse class="lemon-fruit" cx="0" cy="14" rx="20" ry="15" fill="url(#lG)" stroke="#a07800" stroke-width="1.2" filter="url(#peel)"/>
-  <ellipse cx="-5" cy="9" rx="9" ry="5.5" fill="url(#lS)" opacity="0.78"/>
-  <rect class="lemon-label-bg" x="-28" y="33" width="56" height="15" rx="6" fill="rgba(255,255,255,0.92)"/>
-  <text class="lemon-label-text" y="43">Prep. 介係詞</text>
-</g>
-
-<!-- Branch II: Non-Finite -->
-
-<!-- Infinitive -->
-<g class="lemon-group" onclick="sparkle(this,'infinitive')" transform="translate(194,185)">
-  <line x1="0" y1="0" x2="0" y2="-12" stroke="#3a6a1e" stroke-width="1.6"/>
-  <g style="animation:sw1 5.5s ease-in-out infinite 1.4s;transform-origin:0 -12px">
-    <path d="M0,-12 Q-12,-28 -4,-44 Q5,-26 0,-12Z" fill="#3e8c42"/>
-    <path d="M0,-12 Q11,-26 18,-42 Q3,-24 0,-12Z"  fill="#4ea452"/>
-  </g>
-  <ellipse class="lemon-fruit" cx="0" cy="14" rx="20" ry="15" fill="url(#lG)" stroke="#a07800" stroke-width="1.2" filter="url(#peel)"/>
-  <ellipse cx="-5" cy="9" rx="9" ry="5.5" fill="url(#lS)" opacity="0.78"/>
-  <rect class="lemon-label-bg" x="-32" y="33" width="64" height="15" rx="6" fill="rgba(255,255,255,0.92)"/>
-  <text class="lemon-label-text" y="43">Infinitive 不定詞</text>
-</g>
-
-<!-- Gerund -->
-<g class="lemon-group" onclick="sparkle(this,'gerund')" transform="translate(230,261)">
-  <line x1="0" y1="0" x2="0" y2="-12" stroke="#3a6a1e" stroke-width="1.6"/>
-  <g style="animation:sw2 4.4s ease-in-out infinite 2.1s;transform-origin:0 -12px">
-    <path d="M0,-12 Q-11,-26 -4,-41 Q5,-24 0,-12Z" fill="#428e46"/>
-    <path d="M0,-12 Q10,-24 16,-39 Q3,-22 0,-12Z"  fill="#3a8a3e"/>
-  </g>
-  <ellipse class="lemon-fruit" cx="0" cy="14" rx="20" ry="15" fill="url(#lG)" stroke="#a07800" stroke-width="1.2" filter="url(#peel)"/>
-  <ellipse cx="-5" cy="9" rx="9" ry="5.5" fill="url(#lS)" opacity="0.78"/>
-  <rect class="lemon-label-bg" x="-28" y="33" width="56" height="15" rx="6" fill="rgba(255,255,255,0.92)"/>
-  <text class="lemon-label-text" y="43">Gerund 動名詞</text>
-</g>
-
-<!-- Pres. Participle -->
-<g class="lemon-group" onclick="sparkle(this,'present-participle')" transform="translate(288,308)">
-  <line x1="0" y1="0" x2="0" y2="-12" stroke="#3a6a1e" stroke-width="1.6"/>
-  <g style="animation:sw1 6.2s ease-in-out infinite 0.8s;transform-origin:0 -12px">
-    <path d="M0,-12 Q-11,-24 -3,-39 Q5,-22 0,-12Z" fill="#3e9042"/>
-    <path d="M0,-12 Q10,-22 16,-37 Q3,-20 0,-12Z"  fill="#4ea050"/>
-  </g>
-  <ellipse class="lemon-fruit" cx="0" cy="14" rx="20" ry="15" fill="url(#lG)" stroke="#a07800" stroke-width="1.2" filter="url(#peel)"/>
-  <ellipse cx="-5" cy="9" rx="9" ry="5.5" fill="url(#lS)" opacity="0.78"/>
-  <rect class="lemon-label-bg" x="-36" y="33" width="72" height="15" rx="6" fill="rgba(255,255,255,0.92)"/>
-  <text class="lemon-label-text" y="43">Pres. Part. 現在分詞</text>
-</g>
-
-<!-- Past Participle -->
-<g class="lemon-group" onclick="sparkle(this,'past-participle')" transform="translate(340,365)">
-  <line x1="0" y1="0" x2="0" y2="-12" stroke="#3a6a1e" stroke-width="1.6"/>
-  <g style="animation:sw2 5.3s ease-in-out infinite 1.6s;transform-origin:0 -12px">
-    <path d="M0,-12 Q-10,-23 -4,-38 Q5,-21 0,-12Z" fill="#3a8c3e"/>
-    <path d="M0,-12 Q9,-21 15,-36 Q3,-19 0,-12Z"   fill="#50a054"/>
-  </g>
-  <ellipse class="lemon-fruit" cx="0" cy="14" rx="20" ry="15" fill="url(#lG)" stroke="#a07800" stroke-width="1.2" filter="url(#peel)"/>
-  <ellipse cx="-5" cy="9" rx="9" ry="5.5" fill="url(#lS)" opacity="0.78"/>
-  <rect class="lemon-label-bg" x="-34" y="33" width="68" height="15" rx="6" fill="rgba(255,255,255,0.92)"/>
-  <text class="lemon-label-text" y="43">Past Part. 過去分詞</text>
-</g>
-
-<!-- Branch III: Clauses -->
-
-<!-- Noun Clause -->
-<g class="lemon-group" onclick="sparkle(this,'noun-clause')" transform="translate(932,385)">
-  <line x1="0" y1="0" x2="0" y2="-12" stroke="#3a6a1e" stroke-width="1.6"/>
-  <g style="animation:sw1 4.8s ease-in-out infinite 0.5s;transform-origin:0 -12px">
-    <path d="M0,-12 Q-12,-27 -4,-43 Q5,-25 0,-12Z" fill="#3e8c42"/>
-    <path d="M0,-12 Q11,-25 18,-41 Q3,-23 0,-12Z"  fill="#4a9a4e"/>
-  </g>
-  <ellipse class="lemon-fruit" cx="0" cy="14" rx="20" ry="15" fill="url(#lG)" stroke="#a07800" stroke-width="1.2" filter="url(#peel)"/>
-  <ellipse cx="-5" cy="9" rx="9" ry="5.5" fill="url(#lS)" opacity="0.78"/>
-  <rect class="lemon-label-bg" x="-34" y="33" width="68" height="15" rx="6" fill="rgba(255,255,255,0.92)"/>
-  <text class="lemon-label-text" y="43">Noun Cl. 名詞子句</text>
-</g>
-
-<!-- Adjective Clause -->
-<g class="lemon-group" onclick="sparkle(this,'adjective-clause')" transform="translate(842,414)">
-  <line x1="0" y1="0" x2="0" y2="-12" stroke="#3a6a1e" stroke-width="1.6"/>
-  <g style="animation:sw2 5.1s ease-in-out infinite 1.3s;transform-origin:0 -12px">
-    <path d="M0,-12 Q-11,-26 -4,-41 Q5,-24 0,-12Z" fill="#428e46"/>
-    <path d="M0,-12 Q10,-24 16,-39 Q3,-22 0,-12Z"  fill="#3a8a3e"/>
-  </g>
-  <ellipse class="lemon-fruit" cx="0" cy="14" rx="20" ry="15" fill="url(#lG)" stroke="#a07800" stroke-width="1.2" filter="url(#peel)"/>
-  <ellipse cx="-5" cy="9" rx="9" ry="5.5" fill="url(#lS)" opacity="0.78"/>
-  <rect class="lemon-label-bg" x="-36" y="33" width="72" height="15" rx="6" fill="rgba(255,255,255,0.92)"/>
-  <text class="lemon-label-text" y="43">Adj Cl. 形容詞子句</text>
-</g>
-
-<!-- Adverb Clause -->
-<g class="lemon-group" onclick="sparkle(this,'adverb-clause')" transform="translate(746,440)">
-  <line x1="0" y1="0" x2="0" y2="-12" stroke="#3a6a1e" stroke-width="1.6"/>
-  <g style="animation:sw1 5.7s ease-in-out infinite 2s;transform-origin:0 -12px">
-    <path d="M0,-12 Q-11,-24 -4,-39 Q5,-22 0,-12Z" fill="#3e8c42"/>
-    <path d="M0,-12 Q10,-22 15,-37 Q3,-20 0,-12Z"  fill="#50a054"/>
-  </g>
-  <ellipse class="lemon-fruit" cx="0" cy="14" rx="20" ry="15" fill="url(#lG)" stroke="#a07800" stroke-width="1.2" filter="url(#peel)"/>
-  <ellipse cx="-5" cy="9" rx="9" ry="5.5" fill="url(#lS)" opacity="0.78"/>
-  <rect class="lemon-label-bg" x="-34" y="33" width="68" height="15" rx="6" fill="rgba(255,255,255,0.92)"/>
-  <text class="lemon-label-text" y="43">Adv Cl. 副詞子句</text>
-</g>
-
-<!-- Branch IV: Special -->
-
-<!-- Questions -->
-<g class="lemon-group" onclick="sparkle(this,'questions')" transform="translate(888,104)">
-  <line x1="0" y1="0" x2="0" y2="-12" stroke="#3a6a1e" stroke-width="1.6"/>
-  <g style="animation:sw2 4.9s ease-in-out infinite 0.4s;transform-origin:0 -12px">
-    <path d="M0,-12 Q-12,-26 -4,-42 Q5,-24 0,-12Z" fill="#3a8c3e"/>
-    <path d="M0,-12 Q11,-24 17,-40 Q3,-22 0,-12Z"  fill="#4a9c4e"/>
-  </g>
-  <ellipse class="lemon-fruit" cx="0" cy="14" rx="20" ry="15" fill="url(#lG)" stroke="#a07800" stroke-width="1.2" filter="url(#peel)"/>
-  <ellipse cx="-5" cy="9" rx="9" ry="5.5" fill="url(#lS)" opacity="0.78"/>
-  <rect class="lemon-label-bg" x="-32" y="33" width="64" height="15" rx="6" fill="rgba(255,255,255,0.92)"/>
-  <text class="lemon-label-text" y="43">Questions 疑問句</text>
-</g>
-
-<!-- Exclamations -->
-<g class="lemon-group" onclick="sparkle(this,'exclamations')" transform="translate(842,160)">
-  <line x1="0" y1="0" x2="0" y2="-12" stroke="#3a6a1e" stroke-width="1.6"/>
-  <g style="animation:sw1 5.2s ease-in-out infinite 1.8s;transform-origin:0 -12px">
-    <path d="M0,-12 Q-10,-23 -3,-38 Q5,-21 0,-12Z" fill="#428e46"/>
-    <path d="M0,-12 Q9,-21 15,-36 Q3,-19 0,-12Z"   fill="#3a8a3e"/>
-  </g>
-  <ellipse class="lemon-fruit" cx="0" cy="14" rx="20" ry="15" fill="url(#lG)" stroke="#a07800" stroke-width="1.2" filter="url(#peel)"/>
-  <ellipse cx="-5" cy="9" rx="9" ry="5.5" fill="url(#lS)" opacity="0.78"/>
-  <rect class="lemon-label-bg" x="-30" y="33" width="60" height="15" rx="6" fill="rgba(255,255,255,0.92)"/>
-  <text class="lemon-label-text" y="43">Exclam. 感嘆句</text>
-</g>
-
-<!-- Inverted -->
-<g class="lemon-group" onclick="sparkle(this,'inverted')" transform="translate(750,210)">
-  <line x1="0" y1="0" x2="0" y2="-12" stroke="#3a6a1e" stroke-width="1.6"/>
-  <g style="animation:sw2 6.4s ease-in-out infinite 2.5s;transform-origin:0 -12px">
-    <path d="M0,-12 Q-10,-22 -4,-36 Q5,-20 0,-12Z" fill="#3e9042"/>
-    <path d="M0,-12 Q9,-20 14,-34 Q3,-18 0,-12Z"   fill="#4ea050"/>
-  </g>
-  <ellipse class="lemon-fruit" cx="0" cy="14" rx="20" ry="15" fill="url(#lG)" stroke="#a07800" stroke-width="1.2" filter="url(#peel)"/>
-  <ellipse cx="-5" cy="9" rx="9" ry="5.5" fill="url(#lS)" opacity="0.78"/>
-  <rect class="lemon-label-bg" x="-28" y="33" width="56" height="15" rx="6" fill="rgba(255,255,255,0.92)"/>
-  <text class="lemon-label-text" y="43">Inverted 倒裝句</text>
-</g>
-
-<!-- Subjunctive -->
-<g class="lemon-group" onclick="sparkle(this,'subjunctive')" transform="translate(592,328)">
-  <line x1="0" y1="0" x2="0" y2="-12" stroke="#3a6a1e" stroke-width="1.6"/>
-  <g style="animation:sw1 5s ease-in-out infinite 1s;transform-origin:0 -12px">
-    <path d="M0,-12 Q-10,-22 -4,-36 Q5,-20 0,-12Z" fill="#3a8c3e"/>
-    <path d="M0,-12 Q9,-20 15,-34 Q3,-18 0,-12Z"   fill="#52a456"/>
-  </g>
-  <ellipse class="lemon-fruit" cx="0" cy="14" rx="20" ry="15" fill="url(#lG)" stroke="#a07800" stroke-width="1.2" filter="url(#peel)"/>
-  <ellipse cx="-5" cy="9" rx="9" ry="5.5" fill="url(#lS)" opacity="0.78"/>
-  <rect class="lemon-label-bg" x="-30" y="33" width="60" height="15" rx="6" fill="rgba(255,255,255,0.92)"/>
-  <text class="lemon-label-text" y="43">Subj. 假設語氣</text>
-</g>
-<!-- ════ BRANCH LABELS — last in SVG so always on top ════ -->
-<rect x="55"  y="488" width="200" height="28" rx="8" fill="rgba(255,255,255,0.88)" stroke="rgba(100,70,30,0.18)" stroke-width="1"/>
-<text x="155" y="507" class="branch-header" text-anchor="middle">I. Parts of Speech 詞性</text>
-
-<rect x="156" y="214" width="226" height="28" rx="8" fill="rgba(255,255,255,0.88)" stroke="rgba(100,70,30,0.18)" stroke-width="1"/>
-<text x="269" y="233" class="branch-header" text-anchor="middle">II. Non-Finite 非限定動詞</text>
-
-<rect x="758" y="423" width="204" height="28" rx="8" fill="rgba(255,255,255,0.88)" stroke="rgba(100,70,30,0.18)" stroke-width="1"/>
-<text x="860" y="442" class="branch-header" text-anchor="middle">III. Clauses 子句</text>
-
-<rect x="766" y="126" width="204" height="28" rx="8" fill="rgba(255,255,255,0.88)" stroke="rgba(100,70,30,0.18)" stroke-width="1"/>
-<text x="868" y="145" class="branch-header" text-anchor="middle">IV. Special 特殊句型</text>
-
-</svg>
-</div><!-- .tree-container -->
-
-<div id="ground-strip"></div>
-
-<!-- Market -->
-<div class="market-section">
-  <button class="market-btn" onclick="toggleStalls()">🧺 Visit Market Stalls (Challenges)</button>
-  <div class="stalls-wrapper" id="tracks-wrapper">
-    <div class="stall-card" onclick="startRace('structure')">🍋<br><br>Structure Stall</div>
-    <div class="stall-card" onclick="startRace('pos')">🧺<br><br>Parts of Speech</div>
-    <div class="stall-card" onclick="startRace('nonfinite')">🌿<br><br>Non-Finite</div>
-    <div class="stall-card" onclick="startRace('clauses')">🍯<br><br>Clauses</div>
-    <div class="stall-card" onclick="startRace('special')">✨<br><br>Special Styles</div>
-  </div>
-</div>
-
-<!-- ════ QUIZ OVERLAY ════ -->
-<div id="quiz-overlay">
-  <div class="quiz-card">
-
-    <!-- Top bar -->
-    <div class="quiz-topbar">
-      <h2>🍋 Lemon Challenge</h2>
-      <button class="quiz-close-btn" onclick="closeQuiz()">✕</button>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#top" aria-label="Grammar Platform Home">
+        <span class="brand-mark">G</span>
+        <span><strong>Grammar Platform</strong><span>Shirley Du English Lab</span></span>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <a href="#sentence">Sentence Structures</a>
+        <a href="#topics">Grammar Topics</a>
+        <a href="#practice">Practice</a>
+      </nav>
     </div>
+  </header>
 
-    <!-- Progress bar -->
-    <div class="quiz-progress-wrap">
-      <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
-    </div>
-
-    <!-- Question panel -->
-    <div id="quiz-content">
-      <div class="quiz-body">
-        <div class="quiz-meta" id="quiz-meta">Question 1 of 10</div>
-        <div class="quiz-question" id="quiz-question"></div>
-        <div id="quiz-options"></div>
-        <div class="quiz-feedback" id="quiz-feedback"></div>
+  <main id="top" class="site-shell">
+    <section class="hero" aria-labelledby="heroTitle">
+      <div>
+        <h1 id="heroTitle">Shirley Du's English Grammar Learning Platform</h1>
       </div>
-      <div class="quiz-footer">
-        <button class="quiz-btn quiz-btn-exit" onclick="closeQuiz()">✕ Exit</button>
-        <button class="quiz-btn quiz-btn-submit" id="submit-btn" onclick="handleSubmit()" disabled>Submit →</button>
+
+      <aside class="quick-panel" aria-labelledby="quickTitle">
+        <h2 id="quickTitle">Find a Grammar Point</h2>
+        <input id="topicSearch" class="search-box" type="search" placeholder="Search: clause, verb, 不定詞, 倒裝..." autocomplete="off" />
+        <div class="search-results" id="searchResults" aria-live="polite"></div>
+        <div class="search-empty" id="searchEmpty">No matching grammar point.</div>
+      </aside>
+    </section>
+
+    <section id="sentence" class="section" aria-labelledby="sentenceTitle">
+      <div class="section-head">
+        <div>
+          <h2 id="sentenceTitle">Sentence Structures</h2>
+        </div>
       </div>
-    </div>
+      <div class="topic-grid" id="sentenceGrid"></div>
+    </section>
 
-    <!-- Results panel -->
-    <div id="result-content">
-      <div class="result-emoji" id="result-emoji">🍋</div>
-      <div class="result-title">Quiz Complete!</div>
-      <div class="result-score"><span id="final-score">0</span> / 100</div>
-      <div class="result-msg" id="result-msg"></div>
-      <div class="result-bar-wrap">
-        <div class="result-bar-fill" id="result-bar" style="width:0%"></div>
+    <section id="topics" class="section" aria-labelledby="topicsTitle">
+      <div class="section-head">
+        <div>
+          <h2 id="topicsTitle">Grammar Topics</h2>
+        </div>
       </div>
-      <button class="quiz-btn quiz-btn-submit" onclick="closeQuiz()">🌳 Return to Orchard</button>
-    </div>
+      <div class="topic-grid overview-grid" id="grammarOverview"></div>
+      <div class="filter-pills" id="filterPills" aria-label="Topic filters"></div>
+      <div class="topic-grid" id="topicGrid"></div>
+      <div class="empty-state" id="emptyState">No matching grammar point.</div>
+    </section>
 
-  </div>
-</div>
+    <section id="practice" class="section" aria-labelledby="practiceTitle">
+      <div class="section-head">
+        <div>
+          <h2 id="practiceTitle">Practice Center</h2>
+        </div>
+      </div>
+      <div class="path-grid" id="practiceGrid"></div>
+    </section>
+  </main>
 
-<!-- ════ CONTENT PANEL ════ -->
-<div id="content-panel">
-  <div id="panel-backdrop" onclick="closePanel()"></div>
-  <div id="panel-drawer">
-    <div id="panel-topbar">
-      <span id="panel-lemon-icon">🍋</span>
-      <h2 id="panel-title">Grammar Topic</h2>
-      <button id="panel-close-btn" onclick="closePanel()">✕</button>
-    </div>
-    <div id="panel-vine-strip"></div>
-    <div id="panel-loading">
-      <div class="panel-loading-lemon">🍋</div>
-      <p>Harvesting knowledge…</p>
-    </div>
-    <div id="panel-iframe-wrap">
-      <div id="panel-iframe-stage">
-        <iframe id="panel-iframe" title="Grammar Content" loading="eager" referrerpolicy="no-referrer-when-downgrade" allow="autoplay; fullscreen; picture-in-picture"></iframe>
+  <div class="drawer" id="contentDrawer" aria-hidden="true">
+    <div class="drawer-backdrop" data-close="drawer"></div>
+    <div class="drawer-panel" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
+      <div class="drawer-top">
+        <h2 class="drawer-title" id="drawerTitle">Grammar Topic</h2>
+        <div class="drawer-actions">
+          <a class="small-btn" id="openNewTab" target="_blank" rel="noopener">Open full page</a>
+          <button class="small-btn" type="button" data-close="drawer">Close</button>
+        </div>
+      </div>
+      <div class="drawer-body">
+        <div class="loading" id="drawerLoading">Loading grammar lesson...</div>
+        <iframe id="topicFrame" title="Grammar lesson" loading="eager" referrerpolicy="no-referrer-when-downgrade" allow="autoplay; fullscreen; picture-in-picture"></iframe>
       </div>
     </div>
   </div>
-</div>
 
-<script>
-const grammarCSV = `no.,key point,url
-S-1,simple,https://ducj-creator.github.io/Shirley-Grammar/simple/
-S-2,compound,https://ducj-creator.github.io/Shirley-Grammar/compound/
-S-3,complex,https://ducj-creator.github.io/Shirley-Grammar/complex/
-S-4,compound-complex,https://ducj-creator.github.io/Shirley-Grammar/compound-complex/
-P-1,nouns,https://ducj-creator.github.io/Shirley-Grammar/nouns/
-P-2,pronouns,https://ducj-creator.github.io/Shirley-Grammar/pronouns/
-P-3,adjectives-adverbs,https://ducj-creator.github.io/Shirley-Grammar/adjectives-adverbs/
-P-4,verbs,https://ducj-creator.github.io/Shirley-Grammar/verbs/
-P-5,prepositions,https://ducj-creator.github.io/Shirley-Grammar/prepositions/
-V-1,infinitive,https://ducj-creator.github.io/Shirley-Grammar/infinitive/
-V-2,gerund,https://ducj-creator.github.io/Shirley-Grammar/gerund/
-V-3,present-participle,https://ducj-creator.github.io/Shirley-Grammar/present-participle/
-V-4,past-participle,https://ducj-creator.github.io/Shirley-Grammar/past-participle/
-C-1,noun-clause,https://ducj-creator.github.io/Shirley-Grammar/noun-clause/
-C-2,adjective-clause,https://ducj-creator.github.io/Shirley-Grammar/adjective-clause/
-C-3,adverb-clause,https://ducj-creator.github.io/Shirley-Grammar/adverb-clause/
-SS-1,questions,https://ducj-creator.github.io/Shirley-Grammar/questions/
-SS-2,exclamations,https://ducj-creator.github.io/Shirley-Grammar/exclamations/
-SS-3,inverted,https://ducj-creator.github.io/Shirley-Grammar/inverted/
-SS-4,subjunctive,https://ducj-creator.github.io/Shirley-Grammar/subjunctive/`;
+  <div class="quiz-overlay" id="quizOverlay" aria-hidden="true">
+    <div class="quiz-card" role="dialog" aria-modal="true" aria-labelledby="quizTitle">
+      <div class="quiz-top">
+        <h2 id="quizTitle">Grammar Practice</h2>
+        <button class="small-btn" type="button" data-close="quiz">Close</button>
+      </div>
+      <div class="quiz-progress"><span id="quizProgress"></span></div>
+      <div class="quiz-body" id="quizContent">
+        <div class="quiz-meta" id="quizMeta">Question 1 of 10</div>
+        <div class="quiz-question" id="quizQuestion">Loading...</div>
+        <div id="quizOptions"></div>
+        <div class="feedback" id="quizFeedback"></div>
+      </div>
+      <div class="result" id="resultContent">
+        <h3>Practice Complete</h3>
+        <div class="result-score"><span id="finalScore">0</span> / 100</div>
+        <p id="resultMessage"></p>
+        <button class="primary-btn" type="button" data-close="quiz">Return to Platform</button>
+      </div>
+      <div class="quiz-footer" id="quizFooter">
+        <button class="secondary-btn" type="button" data-close="quiz">Exit</button>
+        <button class="primary-btn" type="button" id="submitBtn" disabled>Submit</button>
+      </div>
+    </div>
+  </div>
 
-function parseCSV(csv) {
-    const map = {};
-    csv.split('\n').slice(1).forEach(line => {
-        const cols = line.split(',');
-        if (cols.length >= 3) map[cols[1].trim()] = cols[2].trim();
-    });
-    return map;
-}
-const links = parseCSV(grammarCSV);
+  <script>
+    const LESSON_BASE = "https://ducj-creator.github.io/Shirley-Grammar/";
+    const TOPICS = [
+      { id: "nouns", code: "P-1", group: "speech", title: "Nouns 名詞", desc: "People, places, things, ideas, and noun roles." },
+      { id: "pronouns", code: "P-2", group: "speech", title: "Pronouns 代名詞", desc: "Pronoun reference, person, case, and agreement." },
+      { id: "verbs", code: "P-3", group: "speech", title: "Verbs 動詞", desc: "Actions, states, tense, voice, and verb patterns." },
+      { id: "adjectives-adverbs", code: "P-4", group: "speech", title: "Adjectives & Adverbs 形副詞", desc: "Modifiers that describe nouns, verbs, clauses, and sentences." },
+      { id: "prepositions", code: "P-5", group: "speech", title: "Prepositions 介係詞", desc: "Preposition phrases for place, time, direction, and relation." },
+      { id: "infinitive", code: "V-1", group: "nonfinite", title: "Infinitive 不定詞", desc: "To V as noun, adjective, adverb, and complement." },
+      { id: "gerund", code: "V-2", group: "nonfinite", title: "Gerund 動名詞", desc: "V-ing used as noun and after common verbs or phrases." },
+      { id: "present-participle", code: "V-3", group: "nonfinite", title: "Present Participle 現在分詞", desc: "V-ing as modifier, complement, and reduced clause." },
+      { id: "past-participle", code: "V-4", group: "nonfinite", title: "Past Participle 過去分詞", desc: "V-en as modifier, passive meaning, and reduced clause." },
+      { id: "noun-clause", code: "C-1", group: "clauses", title: "Noun Clause 名詞子句", desc: "That, whether, if, and wh- clauses used as nouns." },
+      { id: "adjective-clause", code: "C-2", group: "clauses", title: "Adjective Clause 形容詞子句", desc: "Relative clauses that modify nouns." },
+      { id: "adverb-clause", code: "C-3", group: "clauses", title: "Adverb Clause 副詞子句", desc: "Time, reason, condition, contrast, and result clauses." },
+      { id: "questions", code: "SS-1", group: "special", title: "Questions 疑問句", desc: "Yes/no questions, wh- questions, and question formation." },
+      { id: "exclamations", code: "SS-2", group: "special", title: "Exclamations 感嘆句", desc: "What and how exclamatory patterns." },
+      { id: "inverted", code: "SS-3", group: "special", title: "Inverted Sentences 倒裝句", desc: "Inversion for emphasis, negatives, place, and conditionals." },
+      { id: "subjunctive", code: "SS-4", group: "special", title: "Subjunctive 假設語氣", desc: "Unreal situations, wishes, and hypothetical meaning." }
+    ];
 
-// ── Label map for panel titles ──
-const labelMap = {
-    'simple': 'Simple Sentence 簡單句',
-    'compound': 'Compound Sentence 複合句',
-    'complex': 'Complex Sentence 複雜句',
-    'compound-complex': 'Compound-Complex 混和句',
-    'nouns': 'Nouns 名詞',
-    'pronouns': 'Pronouns 代名詞',
-    'adjectives-adverbs': 'Adjectives & Adverbs 形副詞',
-    'verbs': 'Verbs 動詞',
-    'prepositions': 'Prepositions 介係詞',
-    'infinitive': 'Infinitive 不定詞',
-    'gerund': 'Gerund 動名詞',
-    'present-participle': 'Present Participle 現在分詞',
-    'past-participle': 'Past Participle 過去分詞',
-    'noun-clause': 'Noun Clause 名詞子句',
-    'adjective-clause': 'Adjective Clause 形容詞子句',
-    'adverb-clause': 'Adverb Clause 副詞子句',
-    'questions': 'Questions 疑問句',
-    'exclamations': 'Exclamations 感嘆句',
-    'inverted': 'Inverted Sentences 倒裝句',
-    'subjunctive': 'Subjunctive 假設語氣'
-};
+    const SENTENCE_TOPICS = [
+      { id: "simple", code: "S-1", group: "sentence", title: "Simple Sentence 簡單句", desc: "One independent clause with a clear subject and verb." },
+      { id: "compound", code: "S-2", group: "sentence", title: "Compound Sentence 複合句", desc: "Two independent clauses joined by a connector." },
+      { id: "complex", code: "S-3", group: "sentence", title: "Complex Sentence 複雜句", desc: "One independent clause plus at least one dependent clause." },
+      { id: "compound-complex", code: "S-4", group: "sentence", title: "Compound-Complex 混和句", desc: "Compound structure with one or more dependent clauses." }
+    ];
 
-function getDeviceProfile() {
-    const w = window.innerWidth || document.documentElement.clientWidth || 0;
-    if (w < 768) {
-        return { name: 'phone', virtualWidth: Math.max(w - 32, 360), virtualHeight: 2200 };
+    const GROUPS = [
+      { id: "all", label: "All Topics" },
+      { id: "speech", label: "Parts of Speech" },
+      { id: "nonfinite", label: "Non-Finite Verbs" },
+      { id: "clauses", label: "Clauses" },
+      { id: "special", label: "Special Patterns" }
+    ];
+
+    const GRAMMAR_OVERVIEW = [
+      { id: "speech", code: "I", group: "speech", title: "Parts of Speech 詞性" },
+      { id: "nonfinite", code: "II", group: "nonfinite", title: "Non-Finite Verbs 非限定動詞" },
+      { id: "clauses", code: "III", group: "clauses", title: "Clauses 子句" },
+      { id: "special", code: "IV", group: "special", title: "Special Patterns 特殊句型" }
+    ];
+
+    const PRACTICE = [
+      { id: "structure", title: "Sentence Structure", desc: "Simple, compound, complex, and compound-complex sentence classification.", url: "https://ducj-creator.github.io/Shirley-Grammar/assets/sentence%20structure%20quiz.txt" },
+      { id: "pos", title: "Parts of Speech", desc: "Check your understanding of nouns, verbs, modifiers, and prepositions.", url: "https://ducj-creator.github.io/Shirley-Grammar/assets/I%20part%20of%20speech%20quiz.txt" },
+      { id: "nonfinite", title: "Non-Finite Verbs", desc: "Practice infinitives, gerunds, and participles.", url: "https://ducj-creator.github.io/Shirley-Grammar/assets/II%20non-infinite%20quiz.txt" },
+      { id: "clauses", title: "Clauses", desc: "Identify noun, adjective, and adverb clauses.", url: "https://ducj-creator.github.io/Shirley-Grammar/assets/III%20clauses%20quiz.txt" },
+      { id: "special", title: "Special Patterns", desc: "Questions, exclamations, inversion, and subjunctive mood.", url: "https://ducj-creator.github.io/Shirley-Grammar/assets/IV%20special%20sentence%20quiz.txt" }
+    ];
+
+    const state = { filter: "all", query: "", questions: [], current: 0, score: 0, selected: -1, submitted: false };
+    const CARD_TONES = ["green", "gold", "blue", "rose", "lavender", "peach"];
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
     }
-    if (w < 1024) {
-        return { name: 'tablet', virtualWidth: 1100, virtualHeight: 2200 };
+    function topicUrl(id) { return LESSON_BASE + id + "/"; }
+
+    function renderFilters() {
+      const wrap = document.getElementById("filterPills");
+      wrap.innerHTML = GROUPS.map(group => `
+        <button class="filter-pill${state.filter === group.id ? " active" : ""}" type="button" data-filter="${group.id}">
+          ${escapeHtml(group.label)}
+        </button>
+      `).join("");
+      wrap.querySelectorAll("[data-filter]").forEach(button => {
+        button.addEventListener("click", () => {
+          state.filter = button.dataset.filter;
+          renderFilters();
+          renderTopics();
+        });
+      });
     }
-    return { name: 'desktop', virtualWidth: 1440, virtualHeight: 2200 };
-}
 
-function layoutPanelFrame() {
-    const wrap = document.getElementById('panel-iframe-wrap');
-    const stage = document.getElementById('panel-iframe-stage');
-    const iframe = document.getElementById('panel-iframe');
-    if (!wrap || !stage || !iframe || iframe.style.display === 'none') return;
-
-    const profile = getDeviceProfile();
-    const wrapW = Math.max(wrap.clientWidth - 2, 320);
-    const scale = Math.min(wrapW / profile.virtualWidth, 1);
-    const scaledWidth = Math.round(profile.virtualWidth * scale);
-    const scaledHeight = Math.round(profile.virtualHeight * scale);
-
-    stage.style.width = scaledWidth + 'px';
-    stage.style.height = Math.max(scaledHeight, wrap.clientHeight - 4) + 'px';
-
-    iframe.style.width = profile.virtualWidth + 'px';
-    iframe.style.height = profile.virtualHeight + 'px';
-    iframe.style.transform = `scale(${scale})`;
-}
-
-function resetPanelFrame() {
-    const iframe = document.getElementById('panel-iframe');
-    const stage = document.getElementById('panel-iframe-stage');
-    iframe.onload = null;
-    iframe.removeAttribute('srcdoc');
-    iframe.removeAttribute('src');
-    iframe.style.display = 'none';
-    iframe.style.width = '';
-    iframe.style.height = '';
-    iframe.style.transform = 'none';
-    stage.style.width = '100%';
-    stage.style.height = '100%';
-    if (window.__panelResizeHandler) {
-        window.removeEventListener('resize', window.__panelResizeHandler);
-        window.__panelResizeHandler = null;
+    function cardTone(topic, index = 0) {
+      if (topic.tone) return topic.tone;
+      return CARD_TONES[index % CARD_TONES.length];
     }
-}
 
-function openPanel(url, key) {
-    const panel   = document.getElementById('content-panel');
-    const iframe  = document.getElementById('panel-iframe');
-    const wrap    = document.getElementById('panel-iframe-wrap');
-    const loading = document.getElementById('panel-loading');
-    const title   = document.getElementById('panel-title');
+    function topicCard(topic, index = 0) {
+      return `
+        <button class="topic-card" type="button" data-open="${escapeHtml(topic.id)}" data-group="${escapeHtml(topic.group)}" data-tone="${escapeHtml(cardTone(topic, index))}">
+          <span class="code">${escapeHtml(topic.code)}</span>
+          <h3>${escapeHtml(topic.title)}</h3>
+          <span class="open-line">Open lesson</span>
+        </button>
+      `;
+    }
 
-    title.textContent = labelMap[key] || key;
+    function renderTopics() {
+      const query = state.query.trim().toLowerCase();
+      const filtered = TOPICS.filter(topic => {
+        if (state.filter !== "all" && topic.group !== state.filter) return false;
+        if (!query) return true;
+        return [topic.title, topic.desc, topic.code, topic.id].join(" ").toLowerCase().includes(query);
+      });
+      const grid = document.getElementById("topicGrid");
+      grid.innerHTML = filtered.map(topicCard).join("");
+      document.getElementById("emptyState").style.display = filtered.length ? "none" : "block";
+      bindOpenButtons(grid);
+    }
 
-    resetPanelFrame();
-    loading.classList.remove('hidden');
+    function renderSentenceTopics() {
+      const grid = document.getElementById("sentenceGrid");
+      grid.innerHTML = SENTENCE_TOPICS.map((topic, index) => topicCard(topic, index)).join("");
+      bindOpenButtons(grid);
+    }
 
-    panel.classList.add('open');
-    document.body.style.overflow = 'hidden';
-    wrap.scrollTop = 0;
-    wrap.scrollLeft = 0;
+    function renderGrammarOverview() {
+      const grid = document.getElementById("grammarOverview");
+      grid.innerHTML = GRAMMAR_OVERVIEW.map(item => `
+        <button class="topic-card overview-card" type="button" data-overview="${escapeHtml(item.id)}" data-group="${escapeHtml(item.group)}">
+          <span class="code">${escapeHtml(item.code)}</span>
+          <h3>${escapeHtml(item.title)}</h3>
+          <span class="open-line">View topics</span>
+        </button>
+      `).join("");
+      grid.querySelectorAll("[data-overview]").forEach(button => {
+        button.addEventListener("click", () => {
+          state.filter = button.dataset.overview;
+          renderFilters();
+          renderTopics();
+        });
+      });
+    }
 
-    window.__panelResizeHandler = () => layoutPanelFrame();
-    window.addEventListener('resize', window.__panelResizeHandler);
+    function renderPractice() {
+      const grid = document.getElementById("practiceGrid");
+      grid.innerHTML = PRACTICE.map((item, index) => `
+        <button class="path-card" type="button" data-practice="${escapeHtml(item.id)}" data-tone="${escapeHtml(CARD_TONES[index % CARD_TONES.length])}">
+          <strong>${escapeHtml(item.title)}</strong>
+          <small>Start 10-question practice</small>
+        </button>
+      `).join("");
+      grid.querySelectorAll("[data-practice]").forEach(button => {
+        button.addEventListener("click", () => {
+          const item = PRACTICE.find(p => p.id === button.dataset.practice);
+          if (item) startPractice(item);
+        });
+      });
+    }
 
-    iframe.onload = () => {
-        iframe.style.display = 'block';
-        layoutPanelFrame();
-        loading.classList.add('hidden');
-        setTimeout(layoutPanelFrame, 250);
-        setTimeout(layoutPanelFrame, 900);
-    };
+    function searchableTopics() {
+      return SENTENCE_TOPICS.concat(TOPICS);
+    }
 
-    iframe.src = url;
-}
+    function matchingTopics() {
+      const query = state.query.trim().toLowerCase();
+      if (!query) return [];
+      return searchableTopics().filter(topic =>
+        [topic.title, topic.desc, topic.code, topic.id].join(" ").toLowerCase().includes(query)
+      );
+    }
 
-function closePanel() {
-    const panel  = document.getElementById('content-panel');
-    panel.classList.remove('open');
-    document.body.style.overflow = '';
-    setTimeout(() => {
-        resetPanelFrame();
-    }, 450);
-}
+    function renderSearchResults() {
+      const results = matchingTopics().slice(0, 8);
+      const wrap = document.getElementById("searchResults");
+      const empty = document.getElementById("searchEmpty");
+      wrap.innerHTML = results.map(topic => `
+        <button class="search-result" type="button" data-open="${escapeHtml(topic.id)}">
+          <strong>${escapeHtml(topic.title)}</strong>
+          <span>${escapeHtml(topic.group === "sentence" ? "Sentence Structures" : topic.code)}</span>
+        </button>
+      `).join("");
+      empty.style.display = state.query.trim() && !results.length ? "block" : "none";
+      bindOpenButtons(wrap);
+    }
 
-// Close panel on Escape key
-document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closePanel();
-});
+    function bindOpenButtons(root = document) {
+      root.querySelectorAll("[data-open]").forEach(button => {
+        button.addEventListener("click", () => openTopic(button.dataset.open));
+      });
+    }
 
-function sparkle(el, key) {
-    el.classList.add('sparkle');
-    setTimeout(() => {
-        el.classList.remove('sparkle');
-        if (links[key]) openPanel(links[key], key);
-    }, 620);
-}
-function handleLink(key) { if (links[key]) openPanel(links[key], key); }
-function toggleStalls() {
-    const w = document.getElementById('tracks-wrapper');
-    w.style.display = (w.style.display === 'flex') ? 'none' : 'flex';
-}
+    function openTopic(id) {
+      const topic = TOPICS.concat(SENTENCE_TOPICS).find(item => item.id === id);
+      if (!topic) return;
+      const drawer = document.getElementById("contentDrawer");
+      const frame = document.getElementById("topicFrame");
+      const loading = document.getElementById("drawerLoading");
+      const link = document.getElementById("openNewTab");
+      const url = topicUrl(id);
+      document.getElementById("drawerTitle").textContent = topic.title;
+      link.href = url;
+      frame.style.display = "none";
+      loading.classList.remove("hidden");
+      frame.onload = () => {
+        frame.style.display = "block";
+        loading.classList.add("hidden");
+      };
+      frame.src = url;
+      drawer.classList.add("open");
+      drawer.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    }
 
-let currentQuestions = [], currentIdx = 0, score = 0, selectedIdx = -1, submitted = false;
+    function closeDrawer() {
+      const drawer = document.getElementById("contentDrawer");
+      const frame = document.getElementById("topicFrame");
+      drawer.classList.remove("open");
+      drawer.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+      setTimeout(() => {
+        if (!drawer.classList.contains("open")) {
+          frame.removeAttribute("src");
+          frame.style.display = "none";
+        }
+      }, 250);
+    }
 
-function startRace(id) {
-    const urls = {
-        'structure': 'https://ducj-creator.github.io/Shirley-Grammar/assets/sentence%20structure%20quiz.txt',
-        'pos':       'https://ducj-creator.github.io/Shirley-Grammar/assets/I%20part%20of%20speech%20quiz.txt',
-        'nonfinite': 'https://ducj-creator.github.io/Shirley-Grammar/assets/II%20non-infinite%20quiz.txt',
-        'clauses':   'https://ducj-creator.github.io/Shirley-Grammar/assets/III%20clauses%20quiz.txt',
-        'special':   'https://ducj-creator.github.io/Shirley-Grammar/assets/IV%20special%20sentence%20quiz.txt'
-    };
-    // Show overlay immediately with loading state
-    const overlay = document.getElementById('quiz-overlay');
-    overlay.style.display = 'flex';
-    document.getElementById('quiz-content').style.display = 'block';
-    document.getElementById('result-content').style.display = 'none';
-    document.getElementById('quiz-question').textContent = 'Loading…';
-    document.getElementById('quiz-options').innerHTML = '';
-    document.getElementById('quiz-feedback').className = 'quiz-feedback';
-    document.getElementById('quiz-progress').style.width = '0%';
-
-    fetch(urls[id])
-        .then(r => r.text())
-        .then(txt => {
-            currentQuestions = parseQuiz(txt).slice(0, 10);
-            currentIdx = 0; score = 0;
-            renderQuestion();
+    function startPractice(item) {
+      const overlay = document.getElementById("quizOverlay");
+      document.getElementById("quizTitle").textContent = item.title + " Practice";
+      document.getElementById("quizContent").style.display = "block";
+      document.getElementById("quizFooter").style.display = "flex";
+      document.getElementById("resultContent").style.display = "none";
+      document.getElementById("quizQuestion").textContent = "Loading...";
+      document.getElementById("quizOptions").innerHTML = "";
+      document.getElementById("quizFeedback").className = "feedback";
+      document.getElementById("quizProgress").style.width = "0%";
+      document.getElementById("submitBtn").disabled = true;
+      overlay.style.display = "flex";
+      overlay.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      fetch(item.url)
+        .then(response => response.text())
+        .then(text => {
+          state.questions = parseQuiz(text).slice(0, 10);
+          state.current = 0;
+          state.score = 0;
+          renderQuestion();
         })
         .catch(() => {
-            document.getElementById('quiz-question').textContent = 'Could not load quiz. Please check your connection.';
+          document.getElementById("quizQuestion").textContent = "Could not load this practice set. Please check the connection.";
         });
-}
+    }
 
-function parseQuiz(text) {
-    // The txt format is exactly:
-    //   ◯ Option text  [✖]     <- wrong answer
-    //   ◉ Option text  [✔]     <- correct answer  (◉ = U+25C9 filled circle)
-    //
-    // Strategy:
-    //   1. Detect correct by checking for ◉ at the START of the line (before any stripping)
-    //   2. Then remove ALL marker characters so nothing shows to the student
-
-    return text.split(/\n\s*\n/).map(block => {
-        const lines = block.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+    function parseQuiz(text) {
+      return text.split(/\n\s*\n/).map(block => {
+        const lines = block.split("\n").map(line => line.trim()).filter(Boolean);
         if (lines.length < 2) return null;
-
-        const question = lines[0].replace(/^\d+[\.\)]\s*/, '').trim();
+        const question = lines[0].replace(/^\d+[\.\)]\s*/, "").trim();
         const opts = [];
         let correct = 0;
-
-        lines.slice(1).forEach((rawLine, i) => {
-            // ◉ (U+25C9) at the start = this is the correct option
-            if (rawLine.startsWith('\u25C9')) correct = i;
-
-            const clean = rawLine
-                .replace(/^[\u25C9\u25EF\u25CB\u25CF\u25CE]\s*/, '') // strip leading circle bullets ◉◯○●◎
-                .replace(/\s*\[[\u2714\u2716\u2713\u2717\u2718]\]\s*$/, '') // strip trailing [✔] [✖] [✓] [✗] [✘]
-                .replace(/[\u2714\u2716\u2713\u2717\u2718\u25C9\u25EF\u25CB\u25CF\u25CE]/g, '') // strip any remaining marks
-                .trim();
-
-            if (clean.length > 0) opts.push(clean);
+        lines.slice(1).forEach((rawLine, index) => {
+          if (rawLine.startsWith("\u25C9")) correct = index;
+          const clean = rawLine
+            .replace(/^[\u25C9\u25EF\u25CB\u25CF\u25CE]\s*/, "")
+            .replace(/\s*\[[\u2714\u2716\u2713\u2717\u2718]\]\s*$/, "")
+            .replace(/[\u2714\u2716\u2713\u2717\u2718\u25C9\u25EF\u25CB\u25CF\u25CE]/g, "")
+            .trim();
+          if (clean) opts.push(clean);
         });
-
-        if (opts.length < 2) return null;
-        return { question, opts, correct };
-    }).filter(x => x !== null);
-}
-
-function renderQuestion() {
-    selectedIdx = -1;
-    submitted = false;
-
-    const q = currentQuestions[currentIdx];
-    const total = currentQuestions.length;
-
-    // Progress
-    const pct = (currentIdx / total) * 100;
-    document.getElementById('quiz-progress').style.width = pct + '%';
-    document.getElementById('quiz-meta').textContent = `Question ${currentIdx + 1} of ${total}`;
-    document.getElementById('quiz-question').textContent = q.question;
-
-    // Clear feedback
-    const fb = document.getElementById('quiz-feedback');
-    fb.className = 'quiz-feedback';
-    fb.textContent = '';
-
-    // Build options
-    const container = document.getElementById('quiz-options');
-    container.innerHTML = '';
-    q.opts.forEach((opt, i) => {
-        const row = document.createElement('div');
-        row.className = 'opt-row';
-        row.id = `opt-${i}`;
-        row.innerHTML = `
-            <div class="opt-radio"><div class="opt-dot"></div></div>
-            <div class="opt-label">${opt}</div>
-            <span class="opt-icon"></span>`;
-        row.addEventListener('click', () => selectOption(i));
-        container.appendChild(row);
-    });
-
-    // Reset submit button
-    const btn = document.getElementById('submit-btn');
-    btn.disabled = true;
-    btn.textContent = 'Submit →';
-}
-
-function selectOption(i) {
-    if (submitted) return; // locked after submit
-
-    selectedIdx = i;
-
-    // Update all rows
-    document.querySelectorAll('.opt-row').forEach((row, idx) => {
-        row.classList.toggle('opt-selected', idx === i);
-    });
-
-    // Enable submit
-    document.getElementById('submit-btn').disabled = false;
-}
-
-function handleSubmit() {
-    const btn = document.getElementById('submit-btn');
-
-    if (!submitted) {
-        // ── FIRST CLICK: check answer ──
-        if (selectedIdx === -1) return;
-
-        submitted = true;
-        const q = currentQuestions[currentIdx];
-        const isCorrect = selectedIdx === q.correct;
-
-        if (isCorrect) score += 10;
-
-        // Lock and colour options
-        document.querySelectorAll('.opt-row').forEach((row, idx) => {
-            row.classList.add('opt-disabled');
-            row.removeEventListener('click', selectOption); // belt & suspenders
-            if (idx === q.correct) {
-                row.classList.remove('opt-selected');
-                row.classList.add('opt-correct');
-                row.querySelector('.opt-icon').textContent = '✔';
-            } else if (idx === selectedIdx && !isCorrect) {
-                row.classList.remove('opt-selected');
-                row.classList.add('opt-wrong');
-                row.querySelector('.opt-icon').textContent = '✗';
-            }
-        });
-
-        // Feedback pill
-        const fb = document.getElementById('quiz-feedback');
-        if (isCorrect) {
-            fb.className = 'quiz-feedback fb-correct';
-            fb.textContent = '✔ Correct!';
-        } else {
-            fb.className = 'quiz-feedback fb-wrong';
-            const correctText = currentQuestions[currentIdx].opts[q.correct];
-            fb.textContent = `✗ The correct answer is: "${correctText}"`;
-        }
-
-        // Update progress to show this Q is done
-        const total = currentQuestions.length;
-        document.getElementById('quiz-progress').style.width = ((currentIdx + 1) / total * 100) + '%';
-
-        // Update button
-        const isLast = currentIdx >= currentQuestions.length - 1;
-        btn.textContent = isLast ? 'See Results →' : 'Next Question →';
-        btn.disabled = false;
-
-    } else {
-        // ── SECOND CLICK: advance ──
-        currentIdx++;
-
-        if (currentIdx < currentQuestions.length) {
-            renderQuestion();
-        } else {
-            showResults();
-        }
+        return opts.length >= 2 ? { question, opts, correct } : null;
+      }).filter(Boolean);
     }
-}
 
-function showResults() {
-    document.getElementById('quiz-content').style.display = 'none';
-    const resultEl = document.getElementById('result-content');
-    resultEl.style.display = 'block';
+    function renderQuestion() {
+      if (!state.questions.length) {
+        document.getElementById("quizQuestion").textContent = "No questions were found in this practice set.";
+        return;
+      }
+      state.selected = -1;
+      state.submitted = false;
+      const question = state.questions[state.current];
+      const total = state.questions.length;
+      document.getElementById("quizMeta").textContent = `Question ${state.current + 1} of ${total}`;
+      document.getElementById("quizQuestion").textContent = question.question;
+      document.getElementById("quizProgress").style.width = (state.current / total * 100) + "%";
+      document.getElementById("quizFeedback").className = "feedback";
+      document.getElementById("quizFeedback").textContent = "";
+      document.getElementById("quizOptions").innerHTML = question.opts.map((opt, index) => `
+        <div class="option-row" data-option="${index}">
+          <div class="option-dot"></div>
+          <div class="option-label">${escapeHtml(opt)}</div>
+          <div class="option-icon"></div>
+        </div>
+      `).join("");
+      document.querySelectorAll("[data-option]").forEach(row => {
+        row.addEventListener("click", () => selectOption(Number(row.dataset.option)));
+      });
+      const button = document.getElementById("submitBtn");
+      button.disabled = true;
+      button.textContent = "Submit";
+    }
 
-    const pct = score; // score is already out of 100
-    document.getElementById('final-score').textContent = score;
+    function selectOption(index) {
+      if (state.submitted) return;
+      state.selected = index;
+      document.querySelectorAll("[data-option]").forEach(row => {
+        row.classList.toggle("selected", Number(row.dataset.option) === index);
+      });
+      document.getElementById("submitBtn").disabled = false;
+    }
 
-    let emoji = '🍋', msg = '';
-    if (pct === 100)      { emoji = '🏆'; msg = 'Perfect score! You\'re a grammar master!'; }
-    else if (pct >= 80)   { emoji = '🌟'; msg = 'Excellent work! Almost perfect!'; }
-    else if (pct >= 60)   { emoji = '👍'; msg = 'Good job! Keep practising!'; }
-    else if (pct >= 40)   { emoji = '📚'; msg = 'Keep studying — you\'ll get there!'; }
-    else                  { emoji = '🌱'; msg = 'Don\'t give up — every attempt grows your knowledge!'; }
+    function handleSubmit() {
+      if (!state.submitted) {
+        if (state.selected < 0) return;
+        state.submitted = true;
+        const question = state.questions[state.current];
+        const isCorrect = state.selected === question.correct;
+        if (isCorrect) state.score += 10;
+        document.querySelectorAll("[data-option]").forEach(row => {
+          const index = Number(row.dataset.option);
+          row.classList.add("locked");
+          row.classList.remove("selected");
+          if (index === question.correct) {
+            row.classList.add("correct");
+            row.querySelector(".option-icon").textContent = "Correct";
+          } else if (index === state.selected) {
+            row.classList.add("wrong");
+            row.querySelector(".option-icon").textContent = "Review";
+          }
+        });
+        const feedback = document.getElementById("quizFeedback");
+        if (isCorrect) {
+          feedback.className = "feedback correct";
+          feedback.textContent = "Correct.";
+        } else {
+          feedback.className = "feedback wrong";
+          feedback.textContent = `The correct answer is: ${question.opts[question.correct]}`;
+        }
+        document.getElementById("quizProgress").style.width = ((state.current + 1) / state.questions.length * 100) + "%";
+        document.getElementById("submitBtn").textContent = state.current >= state.questions.length - 1 ? "See Results" : "Next Question";
+        return;
+      }
+      state.current += 1;
+      if (state.current < state.questions.length) renderQuestion();
+      else showResults();
+    }
 
-    document.getElementById('result-emoji').textContent = emoji;
-    document.getElementById('result-msg').textContent = msg;
+    function showResults() {
+      document.getElementById("quizContent").style.display = "none";
+      document.getElementById("quizFooter").style.display = "none";
+      document.getElementById("resultContent").style.display = "block";
+      document.getElementById("finalScore").textContent = state.score;
+      const message = state.score >= 90
+        ? "Excellent. You are ready to move on."
+        : state.score >= 70
+          ? "Good work. Review the missed patterns once more."
+          : "Keep this set as review. Repeating the same category will help the structure settle.";
+      document.getElementById("resultMessage").textContent = message;
+      document.getElementById("quizProgress").style.width = "100%";
+    }
 
-    // Animate bar
-    setTimeout(() => {
-        document.getElementById('result-bar').style.width = pct + '%';
-    }, 50);
+    function closeQuiz() {
+      const overlay = document.getElementById("quizOverlay");
+      overlay.style.display = "none";
+      overlay.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
 
-    // Fill progress bar fully
-    document.getElementById('quiz-progress').style.width = '100%';
-}
+    document.getElementById("topicSearch").addEventListener("input", event => {
+      state.query = event.target.value;
+      renderSearchResults();
+      renderTopics();
+    });
+    document.getElementById("topicSearch").addEventListener("keydown", event => {
+      if (event.key !== "Enter") return;
+      const first = matchingTopics()[0];
+      if (first) openTopic(first.id);
+    });
+    document.getElementById("submitBtn").addEventListener("click", handleSubmit);
+    document.querySelectorAll("[data-close='drawer']").forEach(el => el.addEventListener("click", closeDrawer));
+    document.querySelectorAll("[data-close='quiz']").forEach(el => el.addEventListener("click", closeQuiz));
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") {
+        closeDrawer();
+        closeQuiz();
+      }
+    });
 
-function closeQuiz() {
-    document.getElementById('quiz-overlay').style.display = 'none';
-    // Reset for next time
-    document.getElementById('quiz-content').style.display = 'block';
-    document.getElementById('result-content').style.display = 'none';
-    document.getElementById('result-bar').style.width = '0%';
-}
-</script>
+    renderFilters();
+    renderTopics();
+    renderSentenceTopics();
+    renderGrammarOverview();
+    renderPractice();
+    renderSearchResults();
+  </script>
 </body>
 </html>
