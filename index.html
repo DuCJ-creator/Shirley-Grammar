@@ -262,18 +262,47 @@
       pointer-events: none;
       animation: sectionFlow 15s ease-in-out infinite alternate;
     }
+    .section::after {
+      content: attr(data-mark);
+      position: absolute;
+      right: clamp(18px, 4vw, 46px);
+      top: clamp(14px, 3vw, 32px);
+      color: rgba(18,73,47,.07);
+      font-family: var(--serif);
+      font-size: clamp(4.8rem, 11vw, 9rem);
+      font-weight: 700;
+      line-height: .8;
+      letter-spacing: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .section::before, .section::after { user-select: none; }
     .section > * { position: relative; z-index: 1; }
+    .section-rail {
+      position: absolute;
+      left: 0;
+      top: 26px;
+      bottom: 26px;
+      width: 5px;
+      border-radius: 999px;
+      background: var(--section-accent, var(--green));
+      opacity: .62;
+      z-index: 1;
+    }
     #sentence {
+      --section-accent: #c49a25;
       background:
         radial-gradient(circle at 95% 8%, rgba(223,184,61,.2), transparent 18rem),
         linear-gradient(180deg, rgba(255,249,223,.92), rgba(255,252,239,.68));
     }
     #topics {
+      --section-accent: #2c8b69;
       background:
         radial-gradient(circle at 92% 12%, rgba(120,199,178,.2), transparent 19rem),
         linear-gradient(180deg, rgba(232,243,236,.9), rgba(249,253,250,.68));
     }
     #practice {
+      --section-accent: #7469aa;
       background:
         radial-gradient(circle at 94% 12%, rgba(143,126,210,.17), transparent 19rem),
         linear-gradient(180deg, rgba(238,233,251,.86), rgba(250,249,255,.7));
@@ -291,6 +320,25 @@
       color: var(--green-dark);
       font-family: var(--serif);
       font-size: clamp(1.55rem, 3vw, 2.1rem);
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      text-wrap: balance;
+    }
+    .section-no {
+      min-width: 38px;
+      height: 28px;
+      display: inline-grid;
+      place-items: center;
+      border: 1px solid var(--section-accent, var(--green));
+      border-radius: 999px;
+      background: rgba(255,255,255,.58);
+      color: var(--section-accent, var(--green));
+      font-family: var(--sans);
+      font-size: .72rem;
+      font-weight: 850;
+      letter-spacing: .08em;
+      transform: translateY(-2px);
     }
     .filter-pills {
       display: flex;
@@ -744,19 +792,21 @@
       </aside>
     </section>
 
-    <section id="sentence" class="section" aria-labelledby="sentenceTitle">
+    <section id="sentence" class="section" aria-labelledby="sentenceTitle" data-mark="S+V">
+      <span class="section-rail" aria-hidden="true"></span>
       <div class="section-head">
         <div>
-          <h2 id="sentenceTitle">Sentence Structures</h2>
+          <h2 id="sentenceTitle"><span class="section-no">01</span>Sentence Structures</h2>
         </div>
       </div>
       <div class="topic-grid" id="sentenceGrid"></div>
     </section>
 
-    <section id="topics" class="section" aria-labelledby="topicsTitle">
+    <section id="topics" class="section" aria-labelledby="topicsTitle" data-mark="{ }">
+      <span class="section-rail" aria-hidden="true"></span>
       <div class="section-head">
         <div>
-          <h2 id="topicsTitle">Grammar Topics</h2>
+          <h2 id="topicsTitle"><span class="section-no">02</span>Grammar Topics</h2>
         </div>
       </div>
       <div class="topic-grid overview-grid" id="grammarOverview"></div>
@@ -765,10 +815,11 @@
       <div class="empty-state" id="emptyState">No matching grammar point.</div>
     </section>
 
-    <section id="practice" class="section" aria-labelledby="practiceTitle">
+    <section id="practice" class="section" aria-labelledby="practiceTitle" data-mark="10Q">
+      <span class="section-rail" aria-hidden="true"></span>
       <div class="section-head">
         <div>
-          <h2 id="practiceTitle">Practice Center</h2>
+          <h2 id="practiceTitle"><span class="section-no">03</span>Practice Center</h2>
         </div>
       </div>
       <div class="path-grid" id="practiceGrid"></div>
