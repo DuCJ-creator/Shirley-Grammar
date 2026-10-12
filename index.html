@@ -433,6 +433,12 @@
     .overview-grid { margin-bottom: 28px; }
     .topic-group { margin-top: 24px; }
     .topic-group:first-child { margin-top: 0; }
+    .tree-group {
+      position: relative;
+      display: block;
+      padding: 18px 0 22px;
+    }
+    .tree-group + .tree-group { border-top: 1px solid rgba(31,107,70,.1); }
     .topic-group-head {
       display: flex;
       align-items: center;
@@ -443,6 +449,56 @@
       font-size: 1.35rem;
       line-height: 1.2;
     }
+    .tree-root {
+      position: relative;
+      width: fit-content;
+      min-height: auto;
+      margin: 0;
+      padding: 0;
+      align-items: center;
+      flex-direction: row;
+      justify-content: center;
+    }
+    .tree-root::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: calc(100% + 4px);
+      width: 2px;
+      height: 20px;
+      background: var(--branch-color, rgba(31,107,70,.28));
+    }
+    .tree-branches {
+      position: relative;
+      margin-top: 28px;
+      padding-top: 20px;
+    }
+    .tree-branches::before {
+      content: "";
+      position: absolute;
+      left: 8%;
+      right: 8%;
+      top: 0;
+      height: 2px;
+      width: auto;
+      border-radius: 999px;
+      background: var(--branch-color, rgba(31,107,70,.24));
+    }
+    .tree-branches .point-grid { position: relative; }
+    .tree-branches .point-card {
+      overflow: visible;
+    }
+    .tree-branches .point-card::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: -20px;
+      width: 2px;
+      height: 20px;
+      background: var(--branch-color, rgba(31,107,70,.24));
+      pointer-events: none;
+    }
+    .tree-branches .point-card::after { display: none; }
     .topic-group-head .code {
       min-width: 34px;
       height: 28px;
@@ -460,6 +516,83 @@
     .topic-group[data-group="nonfinite"] .topic-group-head .code { background: var(--gold-soft); }
     .topic-group[data-group="clauses"] .topic-group-head .code { background: var(--blue-soft); }
     .topic-group[data-group="special"] .topic-group-head .code { background: var(--rose-soft); }
+    .topic-group[data-group="speech"] { --branch-color: rgba(44,139,105,.34); }
+    .topic-group[data-group="nonfinite"] { --branch-color: rgba(167,123,29,.34); }
+    .topic-group[data-group="clauses"] { --branch-color: rgba(64,125,166,.34); }
+    .topic-group[data-group="special"] { --branch-color: rgba(173,104,116,.32); }
+    .branch-diagram {
+      --branch-color: rgba(31,107,70,.28);
+      display: block;
+    }
+    .diagram-root {
+      position: relative;
+      width: min(320px, 100%);
+      min-height: 118px;
+      margin: 0 auto;
+      border: 1px solid rgba(31,107,70,.18);
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      background: rgba(255,255,255,.62);
+      color: var(--green-dark);
+      font-family: var(--serif);
+      font-size: 1.25rem;
+      font-weight: 700;
+      text-align: center;
+      box-shadow: 0 10px 24px rgba(30,54,38,.08);
+    }
+    .diagram-root::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 100%;
+      width: 2px;
+      height: 28px;
+      background: var(--branch-color);
+    }
+    .diagram-branches {
+      position: relative;
+      margin-top: 28px;
+      padding-top: 22px;
+    }
+    .diagram-branches::before {
+      content: "";
+      position: absolute;
+      left: 8%;
+      right: 8%;
+      top: 0;
+      height: 2px;
+      width: auto;
+      border-radius: 999px;
+      background: var(--branch-color);
+    }
+    .diagram-branches > .topic-grid,
+    .diagram-branches > .path-grid {
+      position: relative;
+    }
+    .diagram-branches .topic-card,
+    .diagram-branches .path-card {
+      overflow: visible;
+    }
+    .diagram-branches .topic-card::before,
+    .diagram-branches .path-card::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: -22px;
+      width: 2px;
+      height: 22px;
+      background: var(--branch-color);
+      pointer-events: none;
+    }
+    .diagram-branches .topic-card::after,
+    .diagram-branches .path-card::after {
+      display: none;
+    }
+    #sentence .branch-diagram { --branch-color: rgba(196,154,37,.34); }
+    #topics .branch-diagram { --branch-color: rgba(44,139,105,.34); }
+    #practice .branch-diagram { --branch-color: rgba(116,105,170,.34); }
     .overview-card[data-group="speech"] { background: linear-gradient(180deg, #fff, var(--mint-soft)); }
     .overview-card[data-group="nonfinite"] { background: linear-gradient(180deg, #fff, var(--gold-soft)); }
     .overview-card[data-group="clauses"] { background: linear-gradient(180deg, #fff, var(--blue-soft)); }
@@ -749,6 +882,7 @@
       .topic-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .point-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .path-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .diagram-root { min-height: 74px; }
     }
     @media (max-width: 640px) {
       .topbar-inner { align-items: flex-start; flex-direction: column; padding: 12px 0; }
@@ -757,6 +891,13 @@
       .hero { margin-top: 14px; padding: 18px; }
       .section { margin: 18px 0; padding: 18px; border-radius: 18px; }
       .topic-grid, .point-grid, .path-grid { grid-template-columns: 1fr; }
+      .diagram-branches::before,
+      .tree-branches::before { left: 50%; right: auto; width: 2px; height: 14px; }
+      .diagram-branches,
+      .tree-branches { padding-top: 18px; }
+      .diagram-branches .topic-card::before,
+      .diagram-branches .path-card::before,
+      .tree-branches .point-card::before { height: 18px; top: -18px; }
       .section-head { display: block; }
       .drawer-panel { width: 100%; }
       .drawer-actions .small-btn:first-child { display: none; }
@@ -980,15 +1121,21 @@
           const groupItems = TOPICS.filter(topic => topic.group === group.id && matchesTopic(topic));
           if (!groupItems.length) return "";
           return `
-            <section class="topic-group" data-group="${escapeHtml(group.group)}">
-              <h3 class="topic-group-head"><span class="code">${escapeHtml(group.code)}</span>${escapeHtml(group.title)}</h3>
-              <div class="point-grid">${groupItems.map((topic, index) => topicCard(topic, index, "point")).join("")}</div>
+            <section class="topic-group tree-group" data-group="${escapeHtml(group.group)}">
+              <h3 class="topic-group-head tree-root"><span class="code">${escapeHtml(group.code)}</span>${escapeHtml(group.title)}</h3>
+              <div class="tree-branches"><div class="point-grid">${groupItems.map((topic, index) => topicCard(topic, index, "point")).join("")}</div></div>
             </section>
           `;
         }).join("");
       } else {
-        grid.className = "point-grid";
-        grid.innerHTML = filtered.map((topic, index) => topicCard(topic, index, "point")).join("");
+        const group = GRAMMAR_OVERVIEW.find(item => item.id === state.filter);
+        grid.className = "topic-group-list";
+        grid.innerHTML = group ? `
+          <section class="topic-group tree-group" data-group="${escapeHtml(group.group)}">
+            <h3 class="topic-group-head tree-root"><span class="code">${escapeHtml(group.code)}</span>${escapeHtml(group.title)}</h3>
+            <div class="tree-branches"><div class="point-grid">${filtered.map((topic, index) => topicCard(topic, index, "point")).join("")}</div></div>
+          </section>
+        ` : "";
       }
       document.getElementById("emptyState").style.display = filtered.length ? "none" : "block";
       bindOpenButtons(grid);
@@ -996,19 +1143,29 @@
 
     function renderSentenceTopics() {
       const grid = document.getElementById("sentenceGrid");
-      grid.innerHTML = SENTENCE_TOPICS.map((topic, index) => topicCard(topic, index)).join("");
+      grid.className = "branch-diagram";
+      grid.innerHTML = `
+        <div class="diagram-root">Sentence Structures</div>
+        <div class="diagram-branches"><div class="topic-grid">${SENTENCE_TOPICS.map((topic, index) => topicCard(topic, index)).join("")}</div></div>
+      `;
       bindOpenButtons(grid);
     }
 
     function renderGrammarOverview() {
       const grid = document.getElementById("grammarOverview");
-      grid.innerHTML = GRAMMAR_OVERVIEW.map(item => `
-        <button class="topic-card overview-card" type="button" data-overview="${escapeHtml(item.id)}" data-group="${escapeHtml(item.group)}">
-          <span class="code">${escapeHtml(item.code)}</span>
-          <h3>${escapeHtml(item.title)}</h3>
-          <span class="open-line">View topics</span>
-        </button>
-      `).join("");
+      grid.className = "branch-diagram overview-grid";
+      grid.innerHTML = `
+        <div class="diagram-root">Grammar Topics</div>
+        <div class="diagram-branches"><div class="topic-grid">
+          ${GRAMMAR_OVERVIEW.map(item => `
+            <button class="topic-card overview-card" type="button" data-overview="${escapeHtml(item.id)}" data-group="${escapeHtml(item.group)}">
+              <span class="code">${escapeHtml(item.code)}</span>
+              <h3>${escapeHtml(item.title)}</h3>
+              <span class="open-line">View topics</span>
+            </button>
+          `).join("")}
+        </div></div>
+      `;
       grid.querySelectorAll("[data-overview]").forEach(button => {
         button.addEventListener("click", () => {
           state.filter = button.dataset.overview;
@@ -1020,12 +1177,18 @@
 
     function renderPractice() {
       const grid = document.getElementById("practiceGrid");
-      grid.innerHTML = PRACTICE.map((item, index) => `
-        <button class="path-card" type="button" data-practice="${escapeHtml(item.id)}" data-tone="${escapeHtml(CARD_TONES[index % CARD_TONES.length])}">
-          <strong>${escapeHtml(item.title)}</strong>
-          <small>Start 10-question practice</small>
-        </button>
-      `).join("");
+      grid.className = "branch-diagram";
+      grid.innerHTML = `
+        <div class="diagram-root">Practice Center</div>
+        <div class="diagram-branches"><div class="path-grid">
+          ${PRACTICE.map((item, index) => `
+            <button class="path-card" type="button" data-practice="${escapeHtml(item.id)}" data-tone="${escapeHtml(CARD_TONES[index % CARD_TONES.length])}">
+              <strong>${escapeHtml(item.title)}</strong>
+              <small>Start 10-question practice</small>
+            </button>
+          `).join("")}
+        </div></div>
+      `;
       grid.querySelectorAll("[data-practice]").forEach(button => {
         button.addEventListener("click", () => {
           const item = PRACTICE.find(p => p.id === button.dataset.practice);
